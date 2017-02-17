@@ -1,0 +1,15 @@
+linux中df命令参数功能：检查文件系统的磁盘空间占用情况。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。
+
+-k以单位显示磁盘的使用情况
+
+[root@rac1 ~]# df -k
+
+Filesystem 1K-blocks Used Available Use% Mounted on
+
+/dev/sda1 3020140 2333952 532772 82% /
+
+none 213320 0 213320 0% /dev/shm
+
+/dev/sda2 4633108 1818152 2579604 42% /u01
+
+/dev/sde1 524272 81104 443168 16% /ocfs

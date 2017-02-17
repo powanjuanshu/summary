@@ -1,0 +1,25 @@
+ISODate类型字段的查询与导出
+ISODate类型
+算出时间戳
+> ISODate("2012-04-16T16:00:00Z").valueOf() 
+1334592000000
+
+然后根据得到的时间戳查询即可
+db.openapps_visitlog.find({"request_time":{$gte:new Date(1334592000000)}}) 
+
+导出
+mongoexport -d new_q -c openapps_visitlog -q '{request_time:{$gte:new Date(1334592000000)}}' -o  /home/oracle/openapps_visitlog.js
+
+--------------------
+db.getCollection('resources.files').find({ 
+"lifecycle.auditstatus":{"$in": ["0","1","2","3","4"]},
+"properties.rrtlevel1":["08"],
+"general.md5":"4d02d77c8fbaa50676683d7d515c9810",
+"date.uploadtime": {$gte: ISODate("2016-12-22")}
+//"date.uploadtime": {$gte:new Date(2013-02-22 11:03:37)}
+// ISODate("2012-04-16T16:00:00Z").valueOf() //可以选中这句直接执行返回1334592000000
+})
+
+
+
+

@@ -1,0 +1,14 @@
+chmod [who] operator [permission] filename
+* who(u,g,o,a) -- u用户, -- g用户同组, -- o 其他用户, -- a 所有的
+* operator(+,-,=) + 增加, - 减少, = 设置
+* permission(r,w,x,s,t)
+
+chmod u=rwx,g+w,o+r myfile
+
+
+chmod g+s myfile --具有隐患,不建议
+
+
+
+
+

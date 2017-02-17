@@ -1,0 +1,2 @@
+cat /etc/passwd
+显示所有用户

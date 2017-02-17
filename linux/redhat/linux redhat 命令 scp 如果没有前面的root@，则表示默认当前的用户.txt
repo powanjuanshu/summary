@@ -1,0 +1,5 @@
+运行命令：scp /bestpayserver/jack/* root@172.17.9.54:/bestpayserver/rose
+--------------------
+scp -r /bestpayserver/project/tmp_54/* 172.17.9.54:/bestpayserver/project  ---表示默认使用当前登录的bestpay用户
+scp -r /bestpayserver/project/tmp_52/paycenter-http.war root@172.17.9.52:/bestpayserver/project  ---表示使用指定的root用户
+

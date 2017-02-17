@@ -1,0 +1,40 @@
+虚拟机->设置->CD-ROM->选中使用ISO镜像(I):浏览，找到你要共享的文件->确定
+上面的设备状态->勾选上已连接，勾选上打开电源时连接
+必须是iSO镜像文件，才能挂载。所以首先需要打包成iso镜像文件。
+输入命令：mount /mnt/cdrom
+ll /mnt/cdrom/，就会看到文件
+然后cp /mnt/cdrom/* /home/lijie，将文件拷贝到其他目录下
+依次安装一下三个samba文件：
+rpm -ivh 文件名
+samba-common-3.0.4-0.5.1.i386.rpm
+samba-client-3.0.4-0.5.1.i386.rpm
+samba-3.0.4-0.5.1.i386.rpm
+
+查询是否安装成功：rpm -q samba
+
+cat /etc/passwd |mksmbpasswd.sh > /etc/samba/smbpasswd
+给samba客户端设置用户和密码(将linux的用户都赋给了samba用户)
+
+设置密码：
+smbpasswd youyou 
+
+启动samba服务器：
+service smb start
+service smb stop
+service smb restart
+
+特别注意：
+如果linux防火墙开了,那么你可能无法访问我们刚创建的samba服务器,我们需将linux的防火墙关掉：
+输入命令：iptables -F
+或者
+输入命令：/sbin/iptables -F
+关掉防火墙后，再访问samba服务器就可以了
+
+
+
+
+
+
+
+
+

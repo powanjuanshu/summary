@@ -1,0 +1,9 @@
+rpm -e rpm软件包名
+rpm -e jdk 
+如果其他软件包依赖于您要卸载的软件包，卸载时则会产生错误信息。如：
+ rpm -e foo
+ removing these packages would bread dependencies:foo is needed by bar-1.0-1
+若让rpm忽略这个错误继续卸载(这可不是一个好主意，因为依赖于该软件包的程序可能无法运行)，请使用--nodeps 命令行选项。
+-----------------------
+--force 忽略软件包及文件的冲突
+--nodeps 不检查依赖性关系

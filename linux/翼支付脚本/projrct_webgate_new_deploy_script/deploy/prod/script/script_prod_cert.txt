@@ -1,0 +1,7 @@
+option batch on
+option confirm off
+option transfer binary
+open ftp://bestpay:bestpay@180.166.69.55:2100
+rm /bestpayserver/sync/bank-cert.tar.gz
+put C:\alljar\bank-cert.tar.gz /bestpayserver/sync/bank-cert.tar.gz
+exit

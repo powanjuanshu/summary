@@ -1,0 +1,29 @@
+<build>
+  <finalName>paycenter-ws</finalName>
+  <resources>
+    <resource>
+      <directory>src/main/resources</directory>
+      <filtering>true</filtering>
+    </resource>
+  </resources>
+  <filters>
+    <filter>src/main/resources/app-${env}.properties</filter>
+  </filters>
+</build>
+额外的<build>标记是必要的,用来覆盖源代码,以达到Java代码的水平.编译的构建的时候,指定资源文件夹的位置,并过滤资源文件下的某些文件
+
+maven的编译插件默认是JDK 1.4的编译级别,为了让Maven的编译插件使用JDK 5.0的编译级别,需要对编译插件作如下配置:
+<build>
+  <finalName>Test-Module</finalName>
+  <plugins>
+    <plugin>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <configuration>
+        <source>1.6</source>
+        <target>1.6</target>
+	<encoding>UTF-8</encoding> //设置编译字符
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+额外的<build>标记是必要的,用来覆盖源代码,以达到Java代码的水平.默认情况下,采用的是jdk1.4,但您的代码使用了泛型,因而需要jdk 5.0及以上编译.

@@ -1,0 +1,12 @@
+log4j.appender.ydc.File=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.ydc.File.file=abc.log //直接写文件名则java项目时日志文件存放在项目根目录下，web项目时日志文件存放在tomcat根目录下或bin目录下
+log4j.appender.ydc.File.DatePatterns=yyyy-MM-dd
+log4j.appender.ydc.File.layout=org.apache.log4j.PatternLayout
+log4j.appender.ydc.File.layout.ConversionPattern=%d(yyyy-MM-dd HH:mm:ss) %l%m%n
+log4j.appender.ydc.Console=org.apache.log4j.CommonAppender
+log4j.appender.ydc.Console.layout=org.apache.log4j.PatternLayout
+log4j.appender.ydc.Console.layout.ConversionPattern=%d(yyyy-MM-dd HH:mm:ss) %l%m%n
+#logger表示控制单元，本质
+log4j.logger.ca.javass=debug.ydc.File.ydc.Console
+log4j.logger.org.apache.struts2=error.ydc.File.ydc.Console
+log4j.logger.com.opensyonhony.xwork2=error.ydc.File.ydc.Console

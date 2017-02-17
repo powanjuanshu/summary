@@ -1,0 +1,3 @@
+cat jack.txt|wc -l
+¡Ì“ª÷÷–¥∑®£∫
+wc -l jack.txt|awk 'BEGIN{FS=" "}{print $1}'

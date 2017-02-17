@@ -1,0 +1,2 @@
+alias ii='ls -l'
+* 只是临时有效退出当前shell失效

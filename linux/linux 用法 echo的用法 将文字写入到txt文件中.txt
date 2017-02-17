@@ -1,0 +1,2 @@
+echo "Welcome to git" > index.jsp
+没有文件自动创建

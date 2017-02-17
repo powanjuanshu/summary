@@ -1,0 +1,6 @@
+输入命令：/etc/init.d/iptables start
+或者
+输入命令：service iptables start
+------------------
+以上的操作只是临时关闭了防火墙而已，当你的电脑重新启动的时候又会关闭
+

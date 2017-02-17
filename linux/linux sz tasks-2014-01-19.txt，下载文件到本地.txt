@@ -1,0 +1,9 @@
+sz tasks-2014-01-19.txt，下载文件到本地.txt
+下载的路径为：Options->Session Options->SSH2->SFTP Session->Local directory:d:\My Documents
+-----------------
+这程序我在红帽子9测试可以上传文件，但是在最新的linuxAS5中却不能上传文件，RZ命令无效，这是什么问题你试过吗 
+
+- - 由于rz ，sz ，是需要安装的，所以请大家先安装 rzsz-0.12.20-853.2.i586.rpm
+具体安装方法为：
+rpm -ivh rzsz-0.12.20-853.2.i586.rpm 
+

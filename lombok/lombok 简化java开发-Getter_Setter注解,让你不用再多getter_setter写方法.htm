@@ -1,0 +1,641 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Lombok简化java开发 - Getter/Setter注解,让你不用再多getter/setter写方法 - lvjian700的博客 - ITeye技术网站</title>
+    <meta name="description" content="这个内容在之前的帖子中已经有人讨论过,今天再做一更进一步的了解.     本篇会涉及如下三个注解:       @Getter/@Setter: 帮助我们对应的 getter/setter方法  (Come on, 这个没什么意思, Hibernate Tools会生成,　Eclipse 佷智能的好不拉!　是的,　从这个角度出发的确没太大吸引力,　各位看管姑且看之, 　@Data会更有用,　总是会有 ..." />
+    <meta name="keywords" content=" Lombok简化java开发 - Getter/Setter注解,让你不用再多getter/setter写方法" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="lvjian700的博客" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1393920955" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">lvjian700的博客</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://witcheryne.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://witcheryne.iteye.com" class="p-author" target="_blank">witcheryne</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1158554">Lombok简化java开发 - Getter/Setter注解,让你不用再多getter/setter写方法</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/52456">J2SE</a></li><li><a href="/category/132188">工作技巧</a></li><li><a href="/category/174243">Lombok</a></li> </ul>
+        <div class='news_tag'>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <p style="padding-left: 30px;">这个内容在之前的<a href="http://www.iteye.com/topic/798305">帖子</a>中已经有人讨论过,今天再做一更进一步的了解.</p>
+<p style="padding-left: 30px;"> </p>
+<h2>本篇会涉及如下三个注解:</h2>
+<p> </p>
+<ul>
+<li>
+<span style="font-size: medium;">@Getter/@Setter: 帮助我们对应的 getter/setter方法</span>
+<ul>
+<li>(Come on, 这个没什么意思, Hibernate Tools会生成,　Eclipse 佷智能的好不拉!　是的,　从这个角度出发的确没太大吸引力,　各位看管姑且看之, 　<a href="http://projectlombok.org/features/Data.html">@Data</a>会更有用,　总是会有需要手写pojo的情况)</li>
+</ul>
+</li>
+<li><span style="font-size: medium;">@NonNull: 在setter方法中做非null判断,遇到null参数,会抛出NullPointerException</span></li>
+</ul>
+<p> </p>
+<h2>如果你还不知道Lombok是什么,　先看看这篇:</h2>
+<p><span style="white-space: pre;">	</span><span style="font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 21px; background-color: #dee3e7;"><a href="http://www.iteye.com/topic/1113871"><span style="color: #006699;">Lombok简化Java代码　-　</span>code less do more</a></span></p>
+<p> </p>
+<p style="padding-left: 30px;">关于这部分主题,官方文档在这里(E文强力的朋友也看这里)</p>
+<p><span style="white-space: pre;">		<a href="http://projectlombok.org/features/GetterSetter.html">http://projectlombok.org/features/GetterSetter.html</a></span></p>
+<p> </p>
+<h2>代码演示:</h2>
+<p> </p>
+<pre class="java" name="code">package lv.sample.lombok;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
+
+@ToString
+public class GetterSetterUser {
+	
+	@Getter @Setter private int age = 25;
+	
+	@Setter(AccessLevel.PROTECTED) private String address = "shanghai";
+	
+	/*
+	 * add a notnull constraint.
+	 */
+	@Getter @Setter @NonNull
+	private String email = null;
+	
+	/**
+	 * if the setName method has been declared,
+	 * the Lombok does not generate it.
+	 */
+	@Setter @Getter
+	private Object name = null;
+	
+	/**
+	 * code by myself
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.name = name + " from my code";
+	}
+	
+	public static void main(String[] args) {
+		// we test the getter/setter annotation
+		GetterSetterUser bean = new GetterSetterUser();
+		bean.setAge(20);
+		bean.setAddress("xi'an");
+		bean.setName("wity_lv,");
+		
+		/* 
+		 * the toString() method has been instead of the Lombok @ToString
+		 * annotation
+		 */
+		System.out.println(bean.toString());
+		
+		/*
+		 * set a null value to email
+		 */
+		try {
+			bean.setEmail(null);
+		} catch(NullPointerException e) {
+			System.out.println("phone could not be null value");
+		}
+		
+	}
+}
+</pre>
+<p> </p>
+<div class="quote_title">console out 写道</div>
+<div class="quote_div">GetterSetterUser(age=20, address=xi'an, email=null, name=wity_lv, from my code)<br>email could not be null value</div>
+<p> </p>
+<h2>使用 delombok工具反向生成代码,　看看使用注解能省多少代码:</h2>
+<p><span style="white-space: pre;">	</span><span style="color: #ff0000;">注意: lombok的注解是可以直接用的,　delombok工具只是用来查看生成的代码,　不需要将delombok生成的代码复制回工程</span></p>
+<p> </p>
+<div class="quote_title">delombok 写道</div>
+<div class="quote_div">java -jar -cp lib/log4j-1.2.8.jar lib/lombok.jar delombok src -d ./src-delomboked</div>
+<p> </p>
+<p> </p>
+<pre class="java" name="code">// Generated by delombok at Fri Aug 26 10:57:14 CST 2011
+package lv.sample.lombok;
+
+import lombok.NonNull;
+
+public class GetterSetterUser {
+	
+	private int age = 25;
+	private String address = "shanghai";
+	/*
+	 * add a notnull constraint.
+	 */
+	@NonNull
+	private String email = null;
+	/**
+	 * if the setName method has been declared,
+	 * the Lombok does not generate it.
+	 */
+	private Object name = null;
+	/**
+	 * code by myself
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.name = name + " from my code";
+	}
+	
+	public static void main(String[] args) {
+		// we test the getter/setter annotation
+		GetterSetterUser bean = new GetterSetterUser();
+		bean.setAge(20);
+		bean.setAddress("xi\'an");
+		bean.setName("wity_lv,");
+		/* 
+		 * the toString() method has been instead of the Lombok @ToString
+		 * annotation
+		 */
+		System.out.println(bean.toString());
+		/*
+		 * set a null value to email
+		 */
+		try {
+			bean.setEmail(null);
+		} catch (NullPointerException e) {
+			System.out.println("phone could not be null value");
+		}
+	}
+	
+	@java.lang.Override
+	@java.lang.SuppressWarnings("all")
+	public java.lang.String toString() {
+		return "GetterSetterUser(age=" + this.getAge() + ", address=" + this.address + ", email=" + this.getEmail() + ", name=" + this.getName() + ")";
+	}
+	
+	@java.lang.SuppressWarnings("all")
+	public int getAge() {
+		return this.age;
+	}
+	
+	@java.lang.SuppressWarnings("all")
+	public void setAge(final int age) {
+		this.age = age;
+	}
+	
+	@java.lang.SuppressWarnings("all")
+	protected void setAddress(final String address) {
+		this.address = address;
+	}
+	
+	@NonNull
+	@java.lang.SuppressWarnings("all")
+	public String getEmail() {
+		return this.email;
+	}
+	
+	@java.lang.SuppressWarnings("all")
+	public void setEmail(@NonNull final String email) {
+		if (email == null) throw new java.lang.NullPointerException("email");
+		this.email = email;
+	}
+	
+	@java.lang.SuppressWarnings("all")
+	public Object getName() {
+		return this.name;
+	}
+}</pre>
+ 
+<p> </p>
+<h2>话说,为每个字段写@Getter @Setter有些麻烦, 这里有个@Data会省不少事:</h2>
+<p> </p>
+<p> </p>
+<pre class="java" name="code">@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Log4j
+public class LombokUser {
+	
+	private String id = null;
+	private String name = null;
+	
+	@NonNull
+	private String email = null;
+	
+	public static void main(String[] args) {
+		log.info("test the lombok bean");
+		
+		LombokUser u = new LombokUser("001", "wity_lv", "wity_lv@sample.com");
+		log.info(u.toString());
+		
+		LombokUser u2 = new LombokUser("001", "wity_lv", "wity_lv@sample.com");
+		log.info(u.equals(u2));
+		
+		try {
+			u.setEmail(null);
+		} catch(NullPointerException ex) {
+			log.info("email could not be null: " + ex.getMessage());
+		}
+	}
+}
+</pre>
+<p> </p>
+<p> </p>
+<div class="quote_title">console out 写道</div>
+<div class="quote_div">2011-08-26 11:10:40  test the lombok bean<br>2011-08-26 11:10:40  LombokUser(id=001, name=wity_lv, email=wity_lv@sample.com)<br>2011-08-26 11:10:40  true<br>2011-08-26 11:10:40  email could not be null: email</div>
+  </div>
+
+  
+
+
+  
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/1160111" class="next" title="将使用npm管理的node.js项目部署到vCloudLabs">将使用npm管理的node.js项目部署到vCloud ...</a>
+      |
+      <a href="/blog/1156947" class="pre" title="Learning Android 第1章 - 工欲善其事，必先利其器">Learning Android 第1章 - 工欲善其事， ...</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2011-08-26 11:05</li>
+      <li>浏览 1577</li>
+      <li><a href="#comments">评论(0)</a></li>
+       <li>论坛回复 / <a href="http://witcheryne.iteye.com/topic/1113964">浏览</a> (0 / 1476)</li> 
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/1158554" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+    
+      <p style='font-weight: bold; margin: 5px 0;'>文章已被作者锁定，不允许评论。</p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1158554;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'Lombok简化java开发 - Getter/Setter注解,让你不用再多getter/setter写方法');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'Lombok简化java开发 - Getter/Setter注解,让你不用再多getter/setter写方法');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://witcheryne.iteye.com'><img alt="witcheryne的博客" class="logo" src="http://www.iteye.com/upload/logo/user/783508/47cf2768-6449-3c92-ac7b-d7dbebf3ab3e.jpg?1356358023" title="witcheryne的博客: lvjian700的博客" /></a></div>
+  <div id="blog_owner_name">witcheryne</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 264634 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1324994303" title="男" /></li>
+              <li>来自: 上海</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://dylinshi126.iteye.com' target='_blank'><img alt="dylinshi126的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="dylinshi126的博客: " /></a></div>
+                <div class="left"><a href='http://dylinshi126.iteye.com' target='_blank' title='dylinshi126'>dylinshi126</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://softsa.iteye.com' target='_blank'><img alt="softsa的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="softsa的博客: " /></a></div>
+                <div class="left"><a href='http://softsa.iteye.com' target='_blank' title='softsa'>softsa</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://taochenpfj.iteye.com' target='_blank'><img alt="taochenpfj的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="taochenpfj的博客: " /></a></div>
+                <div class="left"><a href='http://taochenpfj.iteye.com' target='_blank' title='taochenpfj'>taochenpfj</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://sirius93.iteye.com' target='_blank'><img alt="sirius93的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="sirius93的博客: " /></a></div>
+                <div class="left"><a href='http://sirius93.iteye.com' target='_blank' title='sirius93'>sirius93</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (84)</a></li>
+                
+                  <li><a href="/category/52456">J2SE (10)</a></li>
+                
+                  <li><a href="/category/52457">Tomcat/Jetty (2)</a></li>
+                
+                  <li><a href="/category/52458">Hibernate/iBatis (3)</a></li>
+                
+                  <li><a href="/category/52459">Log Framework (1)</a></li>
+                
+                  <li><a href="/category/52460">Eclipse (2)</a></li>
+                
+                  <li><a href="/category/56294">Ext JS (4)</a></li>
+                
+                  <li><a href="/category/56295">jQuery (2)</a></li>
+                
+                  <li><a href="/category/63830">Ext GWT (3)</a></li>
+                
+                  <li><a href="/category/86696">Pushlet (3)</a></li>
+                
+                  <li><a href="/category/88462">GWT (2)</a></li>
+                
+                  <li><a href="/category/132188">工作技巧 (13)</a></li>
+                
+                  <li><a href="/category/135378">JMS &amp; ActiveMQ (4)</a></li>
+                
+                  <li><a href="/category/135377">Vim/TextMate (4)</a></li>
+                
+                  <li><a href="/category/136674">Ruby &amp; Rails (6)</a></li>
+                
+                  <li><a href="/category/149381">Javascript (2)</a></li>
+                
+                  <li><a href="/category/151651">MacOS (5)</a></li>
+                
+                  <li><a href="/category/152288">Database (0)</a></li>
+                
+                  <li><a href="/category/170199">Svn/Git (1)</a></li>
+                
+                  <li><a href="/category/173766">android (2)</a></li>
+                
+                  <li><a href="/category/173783">Ant/Maven (2)</a></li>
+                
+                  <li><a href="/category/174243">Lombok (2)</a></li>
+                
+                  <li><a href="/category/174640">node (11)</a></li>
+                
+                  <li><a href="/category/178571">slidershare (1)</a></li>
+                
+                  <li><a href="/category/185714">ubuntu (4)</a></li>
+                
+                  <li><a href="/category/196269">工作总结 (2)</a></li>
+                
+                  <li><a href="/category/249787">iphone &amp; ipad (7)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (500)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (112)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2013-12">2013-12</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2013-08">2013-08</a> (2)</li>
+                
+                  <li><a href="/blog/monthblog/2013-05">2013-05</a> (3)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+              <div id="comments_top">
+                <h5>评论排行榜</h5>
+                <ul>
+                  
+                    <li><a href="/blog/1920817" title="Log4j分包输出日志">Log4j分包输出日志</a></li>
+                  
+                </ul>
+              </div>
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://leo-luck.iteye.com' target='_blank' title='leo_luck'>leo_luck</a>： 
+                  请问一下访问的时候path.exists，一直返回不存在呢我l ...<br />
+                  <a href="/blog/1169854#bc2350302">用node.js建博客(四) - express中的404处理</a>
+                </li>
+                
+                <li>
+                  <a href='http://akwynn.iteye.com' target='_blank' title='akwynn'>akwynn</a>： 
+                  好东西。。。顶起！<br />
+                  <a href="/blog/1734706#bc2344209">Compile ffmpeg for iOS 6, support Simulator &amp; armv7 &amp; armv7s</a>
+                </li>
+                
+                <li>
+                  <a href='http://witcheryne.iteye.com' target='_blank' title='witcheryne'>witcheryne</a>： 
+                  ccccccc2003 写道挺好的文章，不知道为啥有人踩... ...<br />
+                  <a href="/blog/1148745#bc2340035">Linux/Mac OS 个人常用Terminal技巧整理</a>
+                </li>
+                
+                <li>
+                  <a href='http://ccccccc2003.iteye.com' target='_blank' title='ccccccc2003'>ccccccc2003</a>： 
+                  挺好的文章，不知道为啥有人踩...<br />
+                  <a href="/blog/1148745#bc2339925">Linux/Mac OS 个人常用Terminal技巧整理</a>
+                </li>
+                
+                <li>
+                  <a href='http://witcheryne.iteye.com' target='_blank' title='witcheryne'>witcheryne</a>： 
+                  berained 写道可以运行，但是没有声音，是否是声音未解码 ...<br />
+                  <a href="/blog/1734706#bc2324011">Compile ffmpeg for iOS 6, support Simulator &amp; armv7 &amp; armv7s</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2014 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'lvjian700@gmail.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+      
+    
+  </body>
+</html>

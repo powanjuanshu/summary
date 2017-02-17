@@ -1,0 +1,2 @@
+rpm -U rpm包全路径名
+rpm -U cvs-1.11.2-10.i386.rpm

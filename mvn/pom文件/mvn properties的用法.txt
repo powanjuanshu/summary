@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.bestpay.paycenter</groupId>
+	<artifactId>aaaaaaaa</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>XXXXX</name>
+	<properties>
+        	<project.build.encoding>UTF-8</project.build.encoding>
+        	<neethi.version>3.0.2</neethi.version>
+    	</properties>	
+	<dependencies>
+		<dependency>
+            		<groupId>org.apache.neethi</groupId>
+            		<artifactId>neethi</artifactId>
+            		<version>${neethi.version}</version> <!--会替换成上面的properties里neethi.version的值3.0.2-->
+        	</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-resources-plugin</artifactId>
+			<version>2.6</version>
+			<configuration>
+				<encoding>${project.build.encoding}</encoding> <!--会替换成上面的properties里的project.build.encoding的值UTF-8-->
+			</configuration>
+		</plugin>
+		</plugins>
+	</build>
+</project>

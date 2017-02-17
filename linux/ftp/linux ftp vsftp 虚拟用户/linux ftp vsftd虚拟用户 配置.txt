@@ -1,0 +1,42 @@
+<9>虚拟FTP用户设置
+1、建立虚拟用户口令库文件
+#vi /etc/vsftpd/logins.txt
+vuser1
+123
+vuser2
+321
+:wq
+口令库文件中奇数行设置用户名，偶数行设置口令
+2、生成vsftpd的认证文件
+#db_load -T -t hash -f /etc/vsftpd/logins.txt /etc/vsftpd/vsftpd_login.db ##生成认证文件
+3、设置认证文件只对root用户可读可写
+# chmod 600 /etc/vsftpd/vsftpd_login.db
+4、建立虚拟用户所需的PAM配置文件，手工建立vsftpd.vu文件
+# cat /etc/pam.d/vsftpd.vu
+auth required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
+account required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
+5、建立所有FTP虚拟用户帐号使用的系统用户帐号，并设置该帐号宿主目录的权限
+# useradd -d /home -s /sbin/nologin /ftpsite virtual
+# chmod 700 /home/ftpsite
+6、设置vsftpd.conf配置文件
+#vi /etc/vsftpd/vsftpd.conf
+在配置文件中添加虚拟用户的配置内容
+guest_enable=YES
+guest_username=virtual
+pam_service_name=vsftpd.vu（要和刚才建的PAM文件对应）
+user_config_dir=/etc/vsftpd/user_config_dir （指定每个虚拟用户账号配置目录，）
+local_root=/www （这行没有，虚拟用户登入到/ftpsite）
+7、配置虚拟用户名的设置
+#mkdir -p /etc/vsftpd/user_config_dir （主配置文件对应）
+#mkdir -p /www/vuser1    （创建虚拟用主目录）
+#chmod -R 777 /www/vuser1 （设定权限）
+#touch /etc/vsftpd/user_config_dir/vuser1 (为vuser1权限配置文件)
+#echo "anon_world_readable_only=NO
+write_enable=YES
+anon_upload_enable=YES
+anon_other_write_enable=YES
+local_root=/www/feixiang (这个会覆盖上面配置的/www,这行没有而且上面也没有,虚拟用户登入到/ftpsite)
+anon_mkdir_write_enable=YES" >/etc/vsftpd/user_config_dir/vuser1
+8、重新启动vsftpd服务程序
+# service vsftpd restart
+现在就应该可以用虚拟帐号登陆了.

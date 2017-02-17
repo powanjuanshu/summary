@@ -1,0 +1,2 @@
+useradd youyou 创建一个用户youyou，如果没指定组，那么默认会创建一个youyou组，是youyou组的
+passwd youyou 设置用户youyou的密码

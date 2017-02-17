@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>简单介绍Linux下安装Tomcat的步骤 - 51CTO.COM</title>
+<meta name="description" content="Tomcat是一个免费的开源的Serlvet容器，它是Apache基金会的Jakarta项目中的一个核心项目，由Apache，Sun和其它一些公司及个人共同开发而成。由于有了Sun的参与和支持，最新的Servlet和Jsp规范总能在Tomcat中得到体现。"/>
+<meta name="keywords" content="Linux,安装,Tomcat,JDK"/>
+<link href="http://images.51cto.com/images/website/master_top.css" rel="stylesheet" type="text/css" />
+<link href="http://www.51cto.com/images/art/css/master.css" rel="stylesheet" type="text/css" />
+</head>
+<base target="_blank" />
+<script language="javaScript" src="http://www.51cto.com/php/validate2.js"></script>
+<script language="javaScript" src="http://www.51cto.com/php/fb_words_list.php"></SCRIPT>
+<script language="javaScript" src="http://www.51cto.com/php/base2.js"></SCRIPT>
+<script language="javaScript" src="http://www.51cto.com/php/dialog_utf8.js"></SCRIPT>
+<script language="javaScript" src="http://www.51cto.com/mail.js"></script> 
+<script language="javascript" src="http://www.51cto.com/js/article/article.js"></script>
+<script src="http://www.51cto.com/images/homepage/index1.js"></script>
+<script>
+var thistid=58374;
+</script>
+<body>
+<DIV class=top>
+<DIV class=top_nav>
+<DIV class=top_nav_logo title="51CTO.COM - 技术成就梦想 - 领先的中文IT技术网站"></DIV>
+<DIV class=top_nav_r><A href="http://www.51cto.com">51CTO首页</A> | <A href="http://news.51cto.com">新闻</A> | <A href="http://www.51cto.com/col/35">专题</A> | <A href="http://bbs.51cto.com">论坛</A> | <A href="http://blog.51cto.com">博客</A> | <A href="http://g.51cto.com">技术圈</A> | <A href="http://book.51cto.com/">读书</A> | <A class=top_nav_r1 onmouseover=show(1,this) onmouseout=popupClose() href="http://www.51cto.com/col/35/">技术频道 </A>| <A class=top_nav_r1 onmouseover=show(2,this) onmouseout=popupClose() href="http://www.cioage.com/">CIO </A> | <A class=top_nav_r1 onmouseover=show(3,this) onmouseout=popupClose() href="http://www.watchstor.com/">存储 </A> | <A href="http://www.51cto.com/about/map.htm">地图</A> | <A href="http://www.51cto.com/about/aboutus_e.html">English</A></DIV></DIV></DIV>
+<DIV class=subMenu1 id=s1 onmouseover=popupNoClose() onmouseout=popupClose()>
+<UL>
+<LI><A href="http://network.51cto.com">组网建网</A></LI>
+<LI><A href="http://netsecurity.51cto.com">网络安全</A></LI>
+<LI><A href="http://server.51cto.com">服务器</A></LI>
+<LI><A href="http://os.51cto.com">操作系统</A></LI>
+<LI><A href="http://virtual.51cto.com">虚拟化</A></LI>
+<LI><A href="http://developer.51cto.com">开发</A></LI></UL></DIV>
+<DIV class=subMenu2 id=s2 onmouseover=popupNoClose() onmouseout=popupClose()>
+<UL>
+<LI><A href="http://www.cioage.com/news">资讯前沿</A></LI>
+<LI><A href="http://www.cioage.com/insight">业界观察</A></LI>
+<LI><A href="http://www.cioage.com/exp">应用体验</A></LI>
+<LI><A href="http://www.cioage.com/tech">杀手技术</A></LI></UL></DIV>
+<DIV class=subMenu3 id=s3 onmouseover=popupNoClose() onmouseout=popupClose()>
+<UL>
+<LI><A href="http://news.watchstor.com">新闻资讯</A></LI>
+<LI><A href="http://tech.watchstor.com">技术中心</A></LI>
+<LI><A href="http://video.watchstor.com">互动视频</A></LI>
+<LI><A href="http://special.watchstor.com">专题汇聚</A></LI></UL></DIV>
+<div class="banner">
+  <div id="tonglanad" class="banner_l"></div>
+  <div class="banner_r">
+    <ul>
+		<li id="wordlinkad1"></li>
+		<li id="wordlinkad2"></li>
+		<li id="wordlinkad3"></li>
+		<li id="wordlinkad4"></li>
+	</ul>
+  </div>
+</div>
+<div class="subNav">
+  <DIV class=subNav_logo><IMG src="http://www.51cto.com/images/sunbanner/caozuoxitong_logo.gif"></DIV>
+<DIV class=subNav_l><A href="http://os.51cto.com/" target=_blank>首页</A> | <A href="http://os.51cto.com/col/543/" target=_blank>新闻</A> | <A href="http://os.51cto.com/windows2008/" target=_blank>Server 2008</A> | <A href="http://os.51cto.com/windows7/" target=_blank>Windows7</A> | <A href="http://os.51cto.com/Linux/" target=_blank>Linux</A> | <A href="http://os.51cto.com/solaris/" target=_blank>Solaris</A> | <A href="http://os.51cto.com/col/610/" target=_blank>开源</A> | <A href="http://os.51cto.com/col/545/" target=_blank>教程</A> | <A href="http://publish.51cto.com/list/519/" target=_blank>全部文章</A></DIV>
+  <div class="subNav_r"><form name=searchform action="http://www.51cto.com/php/search.php" method=post style="margin:0px; padding:0px;">
+    <div class="subNav_r_l"><input name="keyword" type="text" class="text" /></div>
+    <div class="subNav_r_BTn"><input type="image" src="http://www.51cto.com/images/art/images/BTn_so.gif" width="50" height="24" /></div></form>
+  </div>
+</div>
+<div class="wrap">
+  <div class="m_l">
+    <div class="m_l_menu">您所在的位置： <a href='http://www.51cto.com' target='_blank'>首页</a> &gt; <a href='http://os.51cto.com'>操作系统</a> &gt; <a href='http://os.51cto.com/col/523/'>Linux</a> &gt; <a href='http://os.51cto.com/col/1361/'>Linux基础</a> &gt; <a href='http://os.51cto.com/col/1364/'>Linux安装相关</a> &gt; </div>
+    <div class="m_l_cont">
+      <div class="m_l_cont_title"><h3>简单介绍Linux下安装Tomcat的步骤</h3></div>
+      <div class="m_l_cont_note"><a href="http://os.51cto.com">http://os.51cto.com</a>  &nbsp;2007-10-19 14:54  &nbsp;sixth  &nbsp;赛迪网  &nbsp;<a href="http://www.51cto.com/php/feedbackt.php?id=58374">我要评论(<span id="feedback">0</span>)</a></div>
+      <div class="m_l_cont_note1">
+	    <ul>
+		<li><span class="fa">摘要：</span>Tomcat是一个免费的开源的Serlvet容器，它是Apache基金会的Jakarta项目中的一个核心项目，由Apache，Sun和其它一些公司及个人共同开发而成。由于有了Sun的参与和支持，最新的Servlet和Jsp规范总能在Tomcat中得到体现。</li>
+        <li><span class="fa">标签：</span><a href='http://www.51cto.com/php/search.php?keyword=Linux' target='_blank'>Linux</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=%B0%B2%D7%B0' target='_blank'>安装</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=Tomcat' target='_blank'>Tomcat</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=JDK' target='_blank'>JDK</a></li>
+	    <li class="m_l_cont_note1_r"><script src="http://www.51cto.com/js/article/keywords_ad.js"></script></li></ul>
+      </div>
+      <div class="m_l_cont_text">
+        <p><p>Tomcat是一个免费的开源的Serlvet容器，它是Apache基金会的Jakarta项目中的一个核心项目，由Apache，Sun和其它一些公司及个人共同开发而成。由于有了Sun的参与和支持，最新的Servlet和Jsp规范总能在Tomcat中得到体现。 </p>
+<p>Tomcat是稳固的独立的Web服务器与Servlet Container，不过，其Web服务器的功能则不如许多更健全的Web服务器完整，如Apache Web服务器(举例来说，Tomcat没有大量的选择性模块)。不过，Tomcat是自由的开源软件，而且有许多高手致力于其发展。 </p>
+<p>在安装Tomcat之前需要安装j2sdk(Java 2 Software Development Kit)，也就是JDK </p>
+<p><STRONG>◆1、安装JDK的步骤如下：</STRONG> </p>
+<p>1）下载j2sdk ，如jdk-6u1-linux-i586-rpm.bin </p>
+<p>2）在终端中转到jdk-6u1-linux-i586-rpm.bin所在的目录，输入命令</p>
+<p>#chmod +755 jdk-6u1-linux-i586-rpm.bin；//添加执行的权限。 </p>
+<p>3）执行命令</p>
+<p>#./jdk-6u1-linux-i586-rpm.bin；//生成jdk-6u1-linux-i586.rpm的文件。 </p>
+<p>4）执行命令</p>
+<p>#chmod +755 jdk-6u1-linux-i586.rpm；//给jdk-6u1-linux-i586.rpm添加执行的权限。 </p>
+<p>5）执行命令</p>
+<p>#rpm –ivh jdk-6u1-linux-i586.rpm&nbsp;； //安装jdk。 </p>
+<p>6）安装界面会出现授权协议，按Enter键接受，把jdk安装在/usr/java/jdk1.6.0_01。 </p>
+<p>7)设置环境变量，在 /etc/profile中加入如下内容(可以使用vi进行编辑profile)： </p>
+<p>JAVA_HOME=/usr/java/jdk1.6.0_01 <br>CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib <br>PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/jre/bin <br>export PATH CLASSPATH JAVA_HOME </p>
+<p>8)在终端执行命令java –version，jdk的版本为jdk1.6.0_01则表示jdk已成功安装。 </p>
+<p><STRONG>◆2、安装Tomcat</STRONG> </p>
+<p>1）下载apache-tomcat-6.0.10.tar.gz </p>
+<p>2）#tar -zxvf apache-tomcat-6.0.10.tar.gz ；//解压 </p>
+<p>3）#cp -R apache-tomcat-6.0.10 /usr/local/tomcat ；//拷贝apache-tomcat-6.0.10到/usr/local/下并重命名为tomcat </p>
+<p>4） /usr/local/tomcat/bin/startup.sh； //启动tomcat </p>
+<p>显示 Using CATALINA_BASE: /usr/local/tomcat </p>
+<p>Using CATALINA_HOME: /usr/local/tomcat </p>
+<p>Using CATALINA_TEMDIR: /usr/local/tomcat/temp </p>
+<p>Using JAVA_HOME: /usr/java/jdk1.6.0_01 </p>
+<p>到此tomcat已经安装完成，现在使用浏览器访问 <A href="http://localhost:8080/">http://localhost:8080</A>，出现tomcat默认页面，说明已经安装成功。</p>
+<p><FONT size=4>【相关文章】</FONT></p>
+<UL type=disc>
+<LI><A href="http://os.51cto.com/art/200709/57334.htm" target=_blank><U><FONT color=blue>Linux系统下Jsp环境：Apache,Tomcat配置</FONT></U></A></LI></UL>
+<UL type=disc>
+<LI><A href="http://os.51cto.com/art/200709/57327.htm" target=_blank><U><FONT color=blue>Linux下Tomcat与Apache Web服务器的整合</FONT></U></A></LI></UL>
+<UL type=disc>
+<LI><A href="http://os.51cto.com/art/200709/55149.htm" target=_blank><U><FONT color=blue>Linux系统下Apache与Tomcat整合的简单方法</FONT></U></A></LI></UL><DIV align=right>【责任编辑：<A class=ln href='mailto:liubing@51cto.com'>刘兵</A> TEL：（010）68476606】</DIV><br>
+      </div>
+    </div>
+    <div class="m_l_cont_tips">上一篇： <a href='http://os.51cto.com/art/200710/58310.htm' target='_self'>新手学堂：Linux操作系统中安装网卡驱动</a>    下一篇： <a href='http://os.51cto.com/art/200710/58460.htm' target='_self'>用Linux系统自身做一个L2TP的VPN服务器</a></div>
+    <div class="m_l_list">
+      <div class="m_l_list_l">
+	  <ul>
+	  <li class="m_l_list_l1"><img src="http://www.51cto.com/images/art/images/ico1.gif" width="5" height="9" /> 相关文章</li>
+	  <li>·<a href="http://os.51cto.com/art/200906/128816.htm" title="刀片服务器硬盘启动Linux独立安装">刀片服务器硬盘启动Linux独立安装</a></li><li>·<a href="http://os.51cto.com/art/200903/112925.htm" title="Ubuntu系统下手动安装JDK">Ubuntu系统下手动安装JDK</a></li><li>·<a href="http://os.51cto.com/art/200903/112921.htm" title="CoreAVC for Linux 安装指南">CoreAVC for Linux 安装指南</a></li><li>·<a href="http://os.51cto.com/art/200903/112246.htm" title="Linux实战攻略之NFS服务器安装配置">Linux实战攻略之NFS服务器安装配置</a></li><li>·<a href="http://os.51cto.com/art/200902/111196.htm" title="否定五个针对Linux系统的荒诞说法">否定五个针对Linux系统的荒诞说法</a></li>
+	  </ul></div>
+      <div class="m_l_list_r">
+        <ul>
+          <li class="m_l_list_r1"><img src="http://www.51cto.com/images/art/images/ico1.gif" width="5" height="9" /> 频道热门</li>
+		  
+          <li>·<a href="http://os.51cto.com/art/200907/136854.htm" title="金山：决胜Office的三种姿态">金山：决胜Office的三种姿态</a></li>
+          
+          <li>·<a href="http://os.51cto.com/art/200907/138018.htm" title="微软发2万行Linux驱动代码 意在虚拟化">微软发2万行Linux驱动代码 意在虚拟化</a></li>
+          
+          <li>·<a href="http://os.51cto.com/art/200907/137582.htm" title="微软终于锁定Windows 7 RTM正式版">微软终于锁定Windows 7 RTM正式版</a></li>
+          
+          <li>·<a href="http://os.51cto.com/art/200907/138005.htm" title="Windows 7 RTM Build各版ISO详细介绍">Windows 7 RTM Build各版ISO详细介绍</a></li>
+          
+          <li>·<a href="http://os.51cto.com/art/200907/137728.htm" title="让Linux更安全的超简配置法">让Linux更安全的超简配置法</a></li>
+          
+        </ul>
+      </div>
+    </div>
+    <div class="m_l_list_hot">
+	<div class="m_l_list_hot1"><a href="http://virtual.51cto.com/art/200903/113013.htm" title="XenDesktop server 2.0安装配置指南"><img src="http://images.51cto.com/files/uploadimg/20090304/175018958.jpg" alt="XenDesktop server 2.0安装配置指南" width="100" height="80" border="0" /></a></div><div class="m_l_list_hot1"><a href="http://os.51cto.com/art/200901/104870.htm" title="Linux从入门到高手技术进阶路线图"><img src="http://images.51cto.com/files/uploadimg/20090104/182206140.jpg" alt="Linux从入门到高手技术进阶路线图" width="100" height="80" border="0" /></a></div><div class="m_l_list_hot1"><a href="http://os.51cto.com/art/200810/93255.htm" title="DNS服务器安装优化全攻略"><img src="http://images.51cto.com/files/uploadimg/20081017/111233101.jpg" alt="DNS服务器安装优化全攻略" width="100" height="80" border="0" /></a></div><div class="m_l_list_hot1"><a href="http://os.51cto.com/art/200712/62180.htm" title="Linux——从菜鸟到高手"><img src="http://images.51cto.com/files/uploadimg/20080415/141303789.gif" alt="Linux——从菜鸟到高手" width="100" height="80" border="0" /></a></div><div class="m_l_list_hot1"><a href="http://os.51cto.com/art/200706/49181.htm" title="Ubuntu安装配置专题频道"><img src="http://images.51cto.com/files/uploadimg/20070613/195816929.jpg" alt="Ubuntu安装配置专题频道" width="100" height="80" border="0" /></a></div>
+    </div>
+    <div class="m_l_comm">
+      <div class="m_l_comm_l">
+	  <a href="http://www.51cto.com/php/feedbackt.php?id=58374"><span class="m_l_comm_l1">查看所有评论</span></a>(<span class="fd" id="pinglun2"></span>)</div>
+    </div>
+    <div class="m_l_Comments" id="artcomments">
+      <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#DADADA">
+        <script src="http://www.51cto.com/php/artcomment.php?artid=58374"></script>
+      </table>
+    </div>
+    <div class="m_l_Comments1">
+      <div><script src="http://www.51cto.com/authart.php?referer=http://os.51cto.com/art/200710/58374.htm"></script>&nbsp;</div>
+	  <form action='http://www.51cto.com/php/sendfeedback.php' target="_self" method='post' name='feedback' id='feedback' onsubmit='return commentSubmit(this)' style="padding:0px; margin:0px;">
+      <div class="m_l_Comments2"><span class="m_l_Comments2_l">
+	  <input type="hidden" name="artID" value="58374" />
+	<input type="hidden" name="quick" value="0" />
+	<input type="hidden" name="author2" value="51CTO网友" />
+        <textarea name="msg" id="msg" class="test2"></textarea>
+      </span></div>
+      <div>&nbsp;验证码：<input name="authnum" type="text" class="test3" /> <img id="secunum" src="http://www.51cto.com/php/seccode.php" onclick="refimg()" style="cursor : pointer;" /> (点击刷新验证码)
+        &nbsp;
+        <input name="nouser" type="checkbox" value="1" onClick="if( islogin==1 ){if (this.checked==true) {document.getElementById('author2').value=document.getElementById('username2').value;document.getElementById('username2').value='51CTO网友';}else{ document.getElementById('username2').value=document.getElementById('author2').value}}">匿名发表<input type="submit" name="Submit23" value="提交" /></form>
+      </div>
+    </div>
+  </div>
+  <div class="m_r">
+    <div class="m_r_news">
+	<span class="m_r_news_l"><h2><a href="/click/1364">频道推荐</a></h2>
+	</span><span class="m_r_news_r"><a href="/click/1364">更多&gt;&gt;</a></span></div>
+    <div class="m_r_news_list"><ul>
+	
+		<li>·<a href="http://os.51cto.com/art/200907/136854.htm" title="金山：决胜Office的三种姿态">金山：决胜Office的三种姿态</a></li>
+    
+		<li>·<a href="http://os.51cto.com/art/200907/138018.htm" title="微软发2万行Linux驱动代码 意在虚拟化">微软发2万行Linux驱动代码 意在虚拟化</a></li>
+    
+		<li>·<a href="http://os.51cto.com/art/200907/137582.htm" title="微软终于锁定Windows 7 RTM正式版">微软终于锁定Windows 7 RTM正式版</a></li>
+    </ul></div>
+    <div id="hzhad" class="m_r_banner"><script language="JavaScript" src="http://www.51cto.com/ad/art/hzh/ad.js"></script></div><!--here-->
+    <div class="m_r_news"> <span class="m_r_news_l">
+      <h2><a href="http://www.51cto.com/">热点标签</a></h2>
+    </span><span class="m_r_news_r"></span></div>
+    <div class="m_r_news_list">
+	<a href="http://server.51cto.com/Blade" target="_blank" title="刀片服务器专区">刀片服务器</a>&nbsp;&nbsp;
+<a href="http://cloud.51cto.com" target="_blank" title="云计算频道全新上线">云计算</a>&nbsp;&nbsp;
+<a href="http://netsecurity.51cto.com/art/200609/31897.htm" target="_blank" title="ARP攻击与防御">ARP攻防</a>&nbsp;&nbsp;
+<a href="http://training.51cto.com/cisco" target="_blank" title="思科培训技术专区">思科培训</a>&nbsp;&nbsp;
+    </div>
+    <div class="m_r_news"> <span class="m_r_news_l">
+      <h2><a href="http://www.51cto.com/">全站热点</a></h2>
+    </span><span class="m_r_news_r"><a href="http://www.51cto.com/">更多&gt;&gt;</a></span></div>
+    <div class="m_r_news_im">
+	
+      <div class="m_r_news_im_l">
+        <div class="m_r_news_im_l1"><a href="http://netsecurity.51cto.com/art/200609/31897.htm" title="ARP攻击防范与解决方案"><img src="http://new.51cto.com/files/uploadimg/20080902/110058602.jpg" alt="ARP攻击防范与解决方案" width="100" height="80" /></a></div>
+        <div class="m_r_news_im_l2"><a href="http://netsecurity.51cto.com/art/200609/31897.htm" title="ARP攻击防范与解决方案">ARP攻击防范与..</a></div>
+      </div>
+	  
+      <div class="m_r_news_im_r">
+        <div class="m_r_news_im_l1"><a href="http://training.51cto.com/art/200804/71335.htm" title="2009年上半年软考最新试题与答案"><img src="http://images.51cto.com/files/uploadimg/20081219/160429111.gif" alt="2009年上半年软考最新试题与答案" width="100" height="80" /></a></div>
+        <div class="m_r_news_im_l2"><a href="http://training.51cto.com/art/200804/71335.htm" title="2009年上半年软考最新试题与答案">2009年上半年..</a></div>
+      </div>
+    </div>
+    <div class="m_r_news_list"><ul>
+      
+	<li>·<a href="http://network.51cto.com/art/200907/137241.htm" title="成本速度定成败 四种宽带接入技术大比拼">成本速度定成败 四种宽带接入技术大比拼</a></li>
+   
+	<li>·<a href="http://netsecurity.51cto.com/art/200907/132905.htm" title="H3C交换机配置案例：防止同网段ARP攻击">H3C交换机配置案例：防止同网段ARP攻击</a></li>
+   
+	<li>·<a href="http://news.51cto.com/art/200907/137687.htm" title="7月第3周要闻回顾：Firefox兵祸连结 微软谷歌再起战端">7月第3周要闻回顾：Firefox兵祸连结 微软谷歌..</a></li>
+   
+	<li>·<a href="http://developer.51cto.com/art/200907/137210.htm" title="半数软件开发商因收购重新审视Java">半数软件开发商因收购重新审视Java</a></li>
+   
+	<li>·<a href="http://os.51cto.com/art/200907/136854.htm" title="金山：决胜Office的三种姿态">金山：决胜Office的三种姿态</a></li>
+   </ul>
+    </div>
+    <div class="m_r_news"> <span class="m_r_news_l">
+      <h2><a href="http://fellow.51cto.com/">技术人</a></h2>
+    </span><span class="m_r_news_r"><a href="http://fellow.51cto.com/">更多&gt;&gt;</a></span></div>
+    <div class="m_r_news_im">
+	
+      <div class="m_r_news_im_l">
+        <div class="m_r_news_im_l1"><a href="http://fellow.51cto.com/art/200906/130832.htm" title="乔布斯病假月底结束 能否上岗决定苹果前途"><img src="http://images.51cto.com/files/uploadimg/20090622/170638210.jpg" width="100" height="80" border="0" /></a></div>
+        <div class="m_r_news_im_l2"><a href="http://fellow.51cto.com/art/200906/130832.htm" title="乔布斯病假月底结束 能否上岗决定苹果前途">乔布斯病假月底..</a></div>
+      </div>
+	  
+      <div class="m_r_news_im_r">
+        <div class="m_r_news_im_l1"><a href="http://fellow.51cto.com/art/200906/126354.htm" title="魔兽易主，三大矛盾存隐患"><img src="http://images.51cto.com/files/uploadimg/20090601/155116576.jpg" width="100" height="80" border="0" /></a></div>
+        <div class="m_r_news_im_l2"><a href="http://fellow.51cto.com/art/200906/126354.htm" title="魔兽易主，三大矛盾存隐患">魔兽易主，三大..</a></div>
+      </div>
+    </div>
+    <div class="m_r_news_list">
+      <ul>
+        <li>·<a href="http://fellow.51cto.com/art/200907/137755.htm" title="熊猫烧香主犯将出狱 接受专访称想去大网络公司工作">熊猫烧香主犯将出狱 接受专访称想去大网络公司..</a></li>
+        
+        <li>·<a href="http://job.51cto.com/art/200907/136796.htm" title="《魔兽》负责人李日强：网易被暗算">《魔兽》负责人李日强：网易被暗算</a></li>
+        
+        <li>·<a href="http://fellow.51cto.com/art/200907/137213.htm" title="魔兽玩家掀起史上最大规模维权 称行政审批应便民">魔兽玩家掀起史上最大规模维权 称行政审批应便..</a></li>
+        
+        <li>·<a href="http://training.51cto.com/art/200907/137727.htm" title="职业教育与学历教育，哪个更重要？">职业教育与学历教育，哪个更重要？</a></li>
+        
+        <li>·<a href="http://fellow.51cto.com/art/200907/136823.htm" title="8条体面的程序员偷懒技巧">8条体面的程序员偷懒技巧</a></li>
+        </li>
+      </ul>
+    </div>
+    <div class="m_r_news"> <span class="m_r_news_l">
+      <h2><a href="http://book.51cto.com/">读书</a></h2>
+    </span><span class="m_r_news_r"><a href="http://book.51cto.com/">更多&gt;&gt;</a></span></div>
+    <div class="m_r_book_im">
+      <div class="m_r_book_im_l"><a href="http://book.51cto.com/art/200907/137586.htm" title="我也能做CTO之程序员职业规划"><img src="http://images.51cto.com/files/uploadimg/20090719/140709295.jpg" width="98" height="144" border="0" /></a></div>
+      <div class="m_r_book_im_r"><ul>
+	    <li><h2><a href="http://book.51cto.com/art/200907/137586.htm">我也能做CTO之程序员职业规划</a></h2></li>
+        <li>作者：高阳</li>
+      <li class="m_r_book_im_r1">你是否每天例行的上下班很累，感觉自己就像一个木头人被推着走这走那？你是否感觉不满：重复的工作真的很无聊，目前凭我的能力..</li></ul></div>
+    </div>
+    <div class="m_r_news_list">
+      <ul>
+        <li>·<a href="http://book.51cto.com/art/200906/131809.htm" title="Java程序员 上班那点事儿">Java程序员 上班那点事儿</a></li>
+        
+        <li>·<a href="http://book.51cto.com/art/200906/131503.htm" title="亮剑.NET. 图解C#开发实战">亮剑.NET. 图解C#开发实战</a></li>
+        
+        <li>·<a href="http://book.51cto.com/art/200907/134805.htm" title="Oracle PL/SQL实例精解">Oracle PL/SQL实例精解</a></li>
+        
+        <li>·<a href="http://book.51cto.com/art/200907/133513.htm" title="把脉VC++">把脉VC++</a></li>
+        
+      </ul>
+    </div>
+    <div class="m_r_news"><span class="m_r_news_l"><h2><a href="http://blog.51cto.com/">优秀博文</a></h2></span><span class="m_r_news_r"><a href="http://blog.51cto.com/">更多&gt;&gt;</a></span></div>
+    <div class="m_r_news_list">
+      <ul>
+        <script src="http://www.51cto.com/homepage/bloghtml/art_blog.htm"></script>
+      </ul>
+    </div>
+    <div class="m_r_news"> <span class="m_r_news_l"><h2><a href="http://bbs.51cto.com/hotthreads.php">最新热帖</a></h2></span><span class="m_r_news_r"><a href="http://bbs.51cto.com/hotthreads.php">更多&gt;&gt;</a></span></div>
+    <div class="m_r_news_list">
+      <ul>
+        <script src="http://www.51cto.com/homepage/bbshtml/art_bbshot.htm"></script>
+      </ul>
+    </div>
+    <div class="m_r_news"><h2><a href="http://www.51cto.com/col/1323/">技术快讯</a></h2></div>
+	 <form action="http://newsletter.51cto.com/newsletter/mail.php" method="post" onSubmit="return mail_process(email.value)" style="margin:0px; padding:0px;">
+    <div class="m_r_Alerts">
+     <div class="m_r_Alerts1"><input name="email" type="text" class="test1" onClick="this.value=''" onFocus="this.select()"/><input type="hidden" name="mailsub" value="">
+</div>
+     <div class="m_r_Alerts2"><a href="http://www.51cto.com/col/1323/">查看样刊</a> </div>
+	 <div class="m_r_Alerts3"><input type="image" value="ding" src="http://www.51cto.com/images/newhomepage/images/dingyue.gif" width="40" height="18" onClick="mailsub.value='ding'"/>
+	 </div>
+	 <div class="m_r_Alerts3"><input type="image" value="tui" src="http://www.51cto.com/images/newhomepage/images/tuiding.gif" width="40" height="18" onClick="mailsub.value='tui'" />
+	 </div>
+    </div></form><!--here-->
+<center style="padding-bottom:4px">
+<iframe frameborder="0" width="300" height="250" src="http://www.51cto.com/iframe/article/baidu.htm"></iframe>
+</center></div>
+  <div class="cle"></div>
+</div>
+<div class="foot">Copyright&copy;2005-2009 51CTO.COM 版权所有</div>
+<span id="pinglunnum"><script language="JavaScript" src="http://www.51cto.com/php/getArtCount.php?artid=58374&type=all"></script></span>
+<SCRIPT>
+	document.getElementById('feedback').innerHTML=document.getElementById('pinglunnum').innerHTML;
+	document.getElementById('pinglun2').innerHTML=document.getElementById('pinglunnum').innerHTML;
+	document.getElementById('pinglunnum').innerHTML="";
+	document.getElementById('feedback').innerHTML = trim(document.getElementById('feedback').innerHTML);
+	//去左空格; 
+	function ltrim(s){ 
+		return s.replace( /^\s*/, ""); 
+	} 
+	//去右空格; 
+	function rtrim(s){ 
+		return s.replace( /\s*$/, ""); 
+	} 
+	//去左右空格; 
+	function trim(s){ 
+		return rtrim(ltrim(s)); 
+	}
+	function refimg(){
+		var randval = Math.random();
+		document.getElementById('secunum').src='http://www.51cto.com/php/seccode.php?rnum='+randval;
+	}
+</SCRIPT>
+<iframe frameborder="0" scrolling="no" width="0" height="0" src="http://log.51cto.com/pageview.php?frompos=www_art"></iframe>
+<div style="display:none">
+<span id="wordlink_1"><script src="http://www.51cto.com/ad/art/wordlink/wordlink1.js"></script></span>
+<span id="wordlink_2"><script src="http://www.51cto.com/ad/art/wordlink/wordlink2.js"></script></span>
+<span id="wordlink_3"><script src="http://www.51cto.com/ad/art/wordlink/wordlink3.js"></script></span>
+<span id="wordlink_4"><script src="http://www.51cto.com/ad/art/wordlink/wordlink4.js"></script></span>
+<script src="http://www.51cto.com/ad/art/wordlink/ad.js"></script>
+<span id="tonglan"><script language="JavaScript" src="http://www.51cto.com/ad/art/tonglan/ad.js"></script></span>
+<span id="wordlink"><script language="JavaScript" src="http://www.51cto.com/ad/art/wordlink/ad.js"></script></span>
+</div>
+<SCRIPT>
+	document.getElementById('tonglanad').innerHTML=document.getElementById('tonglan').innerHTML;
+    document.getElementById('tonglan').innerHTML="";
+</SCRIPT>
+<script src="http://logs.51cto.com/rizhi/count/count.js"></script>
+<script src="http://www.51cto.com/php/count.php?view=yes&artID=58374" language="javascript"></script>
+</body>
+</html>

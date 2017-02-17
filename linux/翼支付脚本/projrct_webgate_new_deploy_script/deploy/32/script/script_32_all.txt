@@ -1,0 +1,15 @@
+option batch on
+option confirm off
+option transfer binary
+open ftp://test:test123,@180.166.69.54:2100
+rm /bestpayserver/project/*.jar
+rm /bestpayserver/project/*.war
+put C:\alljar\*.jar /bestpayserver/project/
+put C:\alljar\*.war /bestpayserver/project/
+rm /bestpayserver/project/paycenter-bank/bank-lib.tar.gz
+rm /bestpayserver/project/paycenter-manager/manager-lib.tar.gz
+put C:\alljar\bank-lib.tar.gz /bestpayserver/project/paycenter-bank/
+put C:\alljar\manager-lib.tar.gz /bestpayserver/project/paycenter-manager/
+rm /bestpayserver/project/bank-cert/*
+put C:\alljar\bank-cert.tar.gz /bestpayserver/project/bank-cert/
+exit

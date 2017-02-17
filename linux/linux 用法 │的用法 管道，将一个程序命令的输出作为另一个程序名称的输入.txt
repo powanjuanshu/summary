@@ -1,0 +1,25 @@
+管 道
+将一个程序或命令的输出作为另一个程序或命令的输入。是Linux所提供的管道功能。
+管道可以把一系列命令连接起来，这意味着第一个命令的输出会作为第二个命令的输入通过管道传给第二个命令，第二个命令的输出又会作为第三个命令的输入，以此类推。
+显示在屏幕上的是管道行中最后一个命令的输出。
+通过使用管道符“|”来建立一个管道行。
+$ ls /usr/bin|wc -w
+1789
+再如：
+$ cat sample.txt|grep "High"|wc -l
+管道将cat命令（列出一个文件的内容）的输出送给grep命令。grep命令在输入里查找单词High，grep命令的输出则是所有包含单词High的行，这个输出又被送给wc命令，
+wc命令统计出输入中的行数。假设sample.txt文件的内容如下：
+Things to do today:
+Low:Go grocery shopping
+High:Return movie
+High:Clear level 3 in Alien vs. Predator
+Medium:Pick up clothes from dry cleaner
+那么该管道行的结果是2。
+-------------------------------------------------------
+ps -ef | grep java
+ps -ef | grep weblogic
+
+-------------------------------------------------------
+在linux和unix系统中，|就是管道命令
+把上一个命令的结果交给|的后面的命令处理
+

@@ -1,0 +1,31 @@
+文件awkfile如下：
+----------------
+#这是注释，/bin/awk，标识为awk程序，找到以Mary开头的行
+/^Mary/ {print $0}
+----------------
+文件employees_db_file如下：
+----------------
+Mary ! How are you?
+Oh, I am fine ! And you?
+Jack , I am fine too .
+----------------
+输入命令：
+awk -f awkfile employees_db_file
+----------------
+输出：
+Mary ! How are you?
+----------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,2 @@
+查看当前目录的全路径
+present work directory就是当前工作目录的意思，如你在/home下输入的话，就显示/home这个当前工作目录

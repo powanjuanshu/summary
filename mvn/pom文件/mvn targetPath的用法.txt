@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-app</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+  <build>
+    <resources><!--如果没有resources,则默认会将src/main/resources下的所有文件打进jar包-->
+      <resource>
+        <directory>src/main/resources</directory><!--这里也可以写成${basedir}/src/main/resources-->
+          <includes>
+            <include>jdbc.properties</include><!--如果写了include那么,打jar包时只打include的文件,其他文件不会打进去,如果需要打则,加入<include>*.*</include>-->
+				              <!--<include>*.*</include>会将除下面exclude外的所有文件打进jar包,如果没有,则只打上面include的文件-->
+          </includes>
+	  <excludes>
+	    <exclude>upmputil.properties</exclude><!--不会将这个文件打包进jar包,而且不会被过滤,如果需要打进jar包,切不会被过滤,则应加下面注释的resource一段-->
+	  </excludes>
+	  <filtering>true</filtering><!--运用profile最重要的是这段,这个配置的意思是过滤上面指定属性文件中的占位符,占位符是${jdbc.url}这样的形式,maven会自动读取配置文件,然后解析其中的占位符,使用下面的的属性文件进行替换-->
+	  <targetPath>${basedir}/WebRoot/WEB-INF/classes</targetPath><!--会将文件复制到${basedir}/WebRoot/WEB-INF/classes这个目录,而不会默认的复制到target目录的classes目录下,如果没有这项,那么会默认复制到target目录下的classes目录-->
+      </resource>
+      <!--
+      <resource>
+        <directory>src/main/resources</directory>
+	  <includes>
+	    <include>upmputil.properties</include>
+	  </includes>
+	  <excludes>
+	    <exclude>jdbc.properties</exclude>
+	  </excludes>
+	  <filtering>false</filtering>
+      </resource>
+      -->
+    </resources>
+  </build>
+  <properties>
+    <jdbc.url>jdbc:mysql://localhost:3306/abc</jdbc.url>
+    <jdbc.username>root</jdbc.username>
+    <jdbc.password>root</jdbc.password>
+  </properties>
+  <profiles>
+    <profile>
+      <id>product</id>
+      <properties>
+        <jdbc.url>jdbc:mysql://localhost:3306/abc123</jdbc.url>
+        <jdbc.username>rootuser</jdbc.username>
+        <jdbc.password>rootpwd</jdbc.password><!--如果这项没有,则mvn clean packeag -P product会运用上面默认的root-->
+      </properties>
+    </profile>
+  </profiles>
+</project>

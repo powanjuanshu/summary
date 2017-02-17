@@ -1,0 +1,11 @@
+查看主机名:
+* 输入命令:hostname
+* 输出:localhost.localdomain 
+
+临时修改主机名:
+* 输入命令:hostname www.baidu.com
+
+永久修改主机名:
+* 修改vi /etc/sysconfig/network
+* NETWORKING=yes
+  HOSTNAME=localhost.localdomain

@@ -1,0 +1,135 @@
+du -sh:则递归累积了目录里面所包含的所有文件所占据的总的磁盘空间的大小
+ls -ldh:显示的是目录本身作为一个文件所占据的磁盘空间大小
+所以前者具有实际意义,后者一般没啥用
+
+du查看目录大小,df查看磁盘使用情况.
+我常使用的命令(必要时,sudo使用root权限),
+1.查看某个目录的大小:du -hs /home/master/documents
+  查看目录下所有目录的大小并按大小降序排列:sudo du -sm /etc/* | sort -nr | less
+2.查看磁盘使用情况(文件系统的使用情况):sudo df -h
+  df --block-size=GB
+
+-h是使输出结果更易于人类阅读;du -s只展示目录的使用总量(不分别展示各个子目录情况),-m是以MB为单位展示目录的大小(当然-k/-g就是KB/GB了).
+
+du - estimate file space usage
+Summarize disk usage of each FILE, recursively for directories.
+
+df - report file system disk space usage
+Show information about the file system on which each FILE resides, or all file systems by default.
+df displays the amount of disk space available on the file system containing each file nameargument. If no file name is given, the space available on all currently mounted file systems is shown.
+
+du
+du的英文为:disk usage,含义是磁盘空间使用情况,功能是逐级进入指定目录的每一个子目录并显示该目录占用文件系统数据块的情况,如果没有指定目录,则对当前的目录进行统计.
+du的命令各个选项含义如下:
+
+a:显示全部目录和其次目录下的每个档案所占的磁盘空间
+s:只显示各档案大小的总合 
+b:大小用bytes来表示
+x:跳过在不同文件系统上的目录不予统计
+a:递归地显示指定目录中各文件及子孙目录中各文件占用的数据块数
+
+使用du进行查看
+root@tech163:/home/htmlfile# du
+16      ./test
+60      ./bbb
+84      .
+
+其中第一列是以块为单位计的磁盘空间容量,第二列列出目录中使用这些空间的目录名称
+
+1)查看当前目录包含子目录的大小
+root@tech163:/home/htmlfile# du -sm .
+1       .
+其中的du -sm . 的.是代表当前目录.
+
+2)查看当前目录以及子目录的大小
+root@tech163:/home/htmlfile# du -h
+16K     ./test
+60K     ./bbb
+84K     .
+其中 -h 表示使用K,M,G的人性化形式显示.
+
+3)看到当前目录下的bbb目录大小,但不想查看其他目录以及子目录
+root@tech163:/home/htmlfile# du -ch bbb | tail -n 1
+60K     total
+使用了管道包含了du和tail两个命令,-c表示最后计算出所列目录的大小之和.
+
+4)列出当前目录下所有目录和文件的大小
+root@tech163:/home/htmlfile# du -ah bbb
+4.0K    bbb/mysql.php
+4.0K    bbb/index.htm
+4.0K    bbb/p.php
+28K     bbb/memcache.php
+12K     bbb/.session.php.swp
+4.0K    bbb/hello.html
+60K     bbb
+其中-a表示包含目录和文件
+
+5)不换行列出目录以及子目录大小的信息
+root@tech163:/home/htmlfile# du -0h
+16K     ./test60K       ./bbb84K        .root@tech163:/home/htmlfile# 
+其中 -0 表示列出一条信息后不换行,接着输出第二条信息.
+
+df
+于du不同的是,du是面向文件的命令,只计算被文件占用的空间.不计算文件系统metadata 占用的空间.df则是基于文件系统总体来计算,通过文件系统中未分配空间来确定系统中已经分配空间的大小.df命令可以获取硬盘占用了多少空间,还剩下多少空间,它也可以显示所有文件系统对i节点和磁盘块的使用情况.
+
+df命令各个选择的含义如下:
+
+a:显示全部的档案系统和各分割区的磁盘使用情形
+i:显示i -nodes的使用量
+k:大小用k来表示 (默认值)
+t:显示某一个档案系统的所有分割区磁盘使用量
+x:显示不是某一个档案系统的所有分割区磁盘使用量
+T:显示每个分割区所属的档案系统名称 
+....
+
+使用df进行查看
+
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/cciss/c0d0p1      2068156    611572   1351528  32% /
+tmpfs                  1038080         4   1038076   1% /lib/init/rw
+udev                     10240        64     10176   1% /dev
+tmpfs                  1038080         4   1038076   1% /dev/shm
+/dev/cciss/c0d0p9    130700120  44034236  86665884  34% /home
+/dev/cciss/c0d0p7      2068156     68932   1999224   4% /tmp
+/dev/cciss/c0d0p8      4132372   1760620   2161840  45% /usr
+/dev/cciss/c0d0p6      2068156    330104   1632996  17% /var
+
+第一行是文件系统对应的硬盘分区
+第二行是分区包含的数据块的数据(1数据库为1024字节)
+第三四行是已用和未用的数据块数组
+第五行是普通用户空间使用的百分比
+第六行是文件系统的安装点
+
+其中第三四行已用和未用数据块相加并不等于第二行总数据块,这是因为分区留了少量空间提供给
+
+系统管理员使用.
+
+1)
+chenyz@gzhouse:~$ df -h
+文件系统              容量  已用 可用 已用% 挂载点
+/dev/cciss/c0d0p1     2.0G  598M  1.3G  32% /
+tmpfs                1014M  4.0K 1014M   1% /lib/init/rw
+udev                   10M   64K   10M   1% /dev
+tmpfs                1014M  4.0K 1014M   1% /dev/shm
+/dev/cciss/c0d0p9     125G   42G   83G  34% /home
+/dev/cciss/c0d0p7     2.0G   68M  2.0G   4% /tmp
+/dev/cciss/c0d0p8     4.0G  1.7G  2.1G  45% /usr
+/dev/cciss/c0d0p6     2.0G  333M  1.6G  18% /var
+其中 -h 表示使用K,M,G的人性化形式显示.
+
+2)
+chenyz@gzhouse:~$ df -ia
+文件系统               Inode (I)已用 (I)可用 (I)已用% 挂载点
+/dev/cciss/c0d0p1     262752   60150  202602   23% /
+tmpfs                 224142      10  224132    1% /lib/init/rw
+proc                       0       0       0    -  /proc
+sysfs                      0       0       0    -  /sys
+procbususb                 0       0       0    -  /proc/bus/usb
+udev                  224142     770  223372    1% /dev
+tmpfs                 224142       3  224139    1% /dev/shm
+devpts                     0       0       0    -  /dev/pts
+/dev/cciss/c0d0p9    130763968 1972907 128791061    2% /home
+/dev/cciss/c0d0p7     262752      54  262698    1% /tmp
+/dev/cciss/c0d0p8     524832   35743  489089    7% /usr
+/dev/cciss/c0d0p6     262752    4896  257856    2% /var
+     所谓的 inode 是用来存放档案及目录的基本信息,包含时间、档名、使用者及群组等.在分割扇区时,系统会先做出一堆 inode 以供以后使用,inode 的数量关系着系统中可以建立的档案及目录总数.如果要存的档案大部分都很小,则同样大小的硬盘中会有较多的档案,也就是说需要较多的 inode 来挂档案及目录

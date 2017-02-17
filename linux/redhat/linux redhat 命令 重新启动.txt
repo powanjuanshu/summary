@@ -1,0 +1,2 @@
+在命令行输入：shutdown -r now 立刻启动计算机
+或者：reboot 立刻启动计算机

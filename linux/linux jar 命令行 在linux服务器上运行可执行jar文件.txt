@@ -1,0 +1,13 @@
+切换到jar文件目录
+输入命令
+java -jar xxx.jar
+回车
+
+如果依赖其他jar包则：
+java
+ -Ddefault.client.encoding=GBK
+ -Dfile.encoding=GBK
+ -Dlog4j.configuration=file:///app/webgate/apps/httpclientserver/log4j.properties
+ -classpath
+ .:/app/webgate/apps/httpclientserver/libs/log4j-1.2.14.jar:/app/webgate/apps/httpclientserver/libs/commons-logging.jar:/app/webgate/apps/httpclientserver/libs/commons-httpclient-3.0.jar:/app/webgate/apps/httpclientserver/libs/commons-codec-1.3.jar:/app/webgate/apps/httpclientserver/httpcstester.jar
+ client.HttpClientTest2 &

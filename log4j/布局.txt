@@ -1,0 +1,4 @@
+log4j.appender.hum.layout=org.apache.log4j.HTMLLayout （以html表格形式布局）
+log4j.appender.hum.layout=org.apache.log4j.SimpleLayout （包含级别和内容及字符串）
+log4j.appender.hum.layout=org.apache.log4j.TTCCLayout （包含日志产生时间、类别等信息）
+log4j.appender.hum.layout=org.apache.log4j.PatternLayout （指定布局模式）

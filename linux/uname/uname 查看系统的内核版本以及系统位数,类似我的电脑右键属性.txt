@@ -1,0 +1,59 @@
+当你在控制台模式下,无法通过我的电脑右键属性获取操作系统信息.可以使用uname命令完成这些工作,uname是unix name的缩写
+
+解释:
+  -a, --all                print all information, in the following order:
+  -s, --kernel-name        print the kernel name
+  -n, --nodename           print the network node hostname
+  -r, --kernel-release     print the kernel release
+  -v, --kernel-version     print the kernel version
+  -m, --machine            print the machine hardware name
+  -p, --processor          print the processor type
+  -i, --hardware-platform  print the hardware platform
+  -o, --operating-system   print the operating system
+
+uname -s // 显示内核名称（译注：可以在其他的类Unix系统上运行这个命令看看，比如mac就会显示Darwin）
+输出:
+Linux
+
+uname -r // 显示内核发行版（指不同的内核打包版本）
+输出:
+2.4.20-8
+
+uname -v // 显示内核版本,获取更详细的内核版本信息（译注：不是版本号，是指该内核建立的时间和CPU架构等）
+输出:
+#1 Thu Mar 13 17:54:28 EST 2003
+
+uname -n // 显示节点的主机名，举例来说，如果你的主机名是“dev-machine”，-n参数就会把主机名打印出来
+输出:
+localhost.localdomain
+
+uname -m // 显示硬件信息,它将告诉你关于硬件的信息,i686表明了你用的是32位的操作系统，如果是X86_64则表明你用的是64位的系统
+输出:
+i686
+
+uname -i // 与硬件名称类似，显示你的硬件平台（译注：硬件名称i686是属于硬件平台i386系列的）,i386意味这是正在运行一个32位的系统，如果输出的是X86_64则说明你正在运行一个64位的系统。
+输出:
+i386
+
+uname -p // 显示处理器类型。如果uname无法识别，它会显示 ‘unknown’ 作为输出。
+输出:
+i686
+
+uname -o // 显示你正在运行的操作系统信息
+输出:
+GNU/Linux
+
+uname -a // 显示所有信息
+输出:
+Linux localhost.localdomain 2.4.20-8 #1 Thu Mar 13 17:54:28 EST 2003 i686 i686 i386 GNU/Linux
+
+注意:
+对于RedHat和CentOS用户来说，你也可以通过more /etc/redhat_release文件来查看
+也可以通过more /proc/version文件来查看
+
+
+
+
+
+
+

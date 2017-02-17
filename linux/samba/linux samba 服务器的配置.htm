@@ -1,0 +1,1398 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<script id="allmobilize" charset="utf-8" src="http://a.yunshipei.com/ac0ecd4968d76dbea889a1a0f28e176f/allmobilize.min.js"></script><meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+<meta http-equiv="Content-Type"	content="text/html;	charset=gb2312">
+<title>Samba服务器的配置 - 杨雪军 - 51CTO技术博客</title>
+<meta name="description" content="Samba服务器的配置实验步骤：1、安装有关Samba的RPM包(samba、samba-common、samba-client)2、创建Samba用户3、修改配置文件4、重启samba服务5、设置目录访问权限6、测试具体步骤如下：1、安装RPM包(缺省情况下RH..">
+<meta name="keywords" content="服务器,Samba,休闲,职场">
+<meta http-equiv="Cache-Control" content="private">
+<base href="http://yangxuejun.blog.51cto.com/"></base>
+<script src="/js/def.js"></script>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/message.js" type=text/javascript></SCRIPT>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/user_comment.js" type=text/javascript></SCRIPT>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/base2.js" type=text/javascript></SCRIPT>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/dialog_utf8.js" type=text/javascript></SCRIPT>
+<link href="/css/skin/30.css" rel="stylesheet" type="text/css">
+<link rel="alternate" href="../rss.php?uid=623927" type="application/rss+xml" title="RSS 2.0">
+<link rel="edituri" type="application/rsd+xml" title="rsd" href="xmlrpc.php?rsd=1" />
+<link href="http://blog.51cto.com/group/css/header_master_top.css" rel="stylesheet" type="text/css" />
+<link href="http://blog.51cto.com/css/skin/base.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	.mainNav li a{display:inline-block}
+</style>
+<script>
+var myid = "";
+function add_flink(){
+	if(myid==""){
+
+        var refurlk = "http://yangxuejun.blog.51cto.com/623927/180224";
+
+				//commentSubmit("",refurlk);
+				location.href="http://home.51cto.com/index.php?reback="+encodeURIComponent(encodeURIComponent(refurlk));
+				return false;
+	}else{
+      		var url='/mod/edit_flink.php?type=addflink&uid=623927&flink=http://yangxuejun.blog.51cto.com';
+		var ajax = InitAjax1();
+		ajax.open("GET", url, true);
+		ajax.onreadystatechange = function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				if(ajax.responseText==""){
+					alert("添加成功。");
+				}
+				if(ajax.responseText=="1"){
+				alert("链接指向自己。");
+				}
+				if(ajax.responseText=="2"){
+				alert("友情链接已存在。")
+				}
+			}
+		}
+		ajax.send(null);
+	}
+
+
+
+}
+function sendmessage(){
+
+	var refurlk = "http://yangxuejun.blog.51cto.com/623927/180224";
+
+	if(myid){
+		return true;
+	}else{
+		commentSubmit("",refurlk);
+		return false;
+	}
+}
+function copylink(ourl){
+	if(!ourl){
+		var clipBoardContent = "http://yangxuejun.blog.51cto.com";
+	}else{
+		var clipBoardContent = ourl;
+	}
+	window.clipboardData.setData("Text",clipBoardContent);
+	alert("复制成功!");
+	return false;
+}
+function correctPNG() {
+if (document.getElementById('blog_touxian'))
+{
+var img = document.getElementById('blog_touxian');
+      var imgName = img.src.toUpperCase()
+      var imgID = (img.id) ? "id='" + img.id + "' " : ""
+      var imgClass = (img.className) ? "class='" + img.className + "' " : ""
+      var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
+      var imgStyle = "display:inline-block;" + img.style.cssText
+      if (img.align == "left") imgStyle = "float:left;" + imgStyle
+      if (img.align == "right") imgStyle = "float:right;" + imgStyle
+      if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
+      var strNewHTML = "<span " + imgID + imgClass + imgTitle
+         + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+         + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+         + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" ;
+      img.outerHTML = strNewHTML;
+}
+}
+//window.attachEvent("onload", correctPNG);
+window.onload=correctPNG;
+
+function copy(){
+var text=document.getElementById("txtUser").value;
+if(copy2Clipboard(text)!=false){ 
+alert("复制成功了！ "); 
+} 
+}
+function copy2Clipboard(txt){ 
+if(window.clipboardData){ 
+window.clipboardData.clearData(); 
+window.clipboardData.setData("Text",txt); 
+}else if(navigator.userAgent.indexOf("Opera")!=-1){ 
+window.location=txt; 
+}else if(window.netscape){ 
+try{ 
+netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+} 
+catch(e){ 
+alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。"); 
+return false; 
+} 
+var clip=Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard); 
+if(!clip)return; 
+var trans=Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable); 
+if(!trans)return; 
+trans.addDataFlavor('text/unicode'); 
+var str=new Object(); 
+var len=new Object(); 
+var str=Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString); 
+var copytext=txt;str.data=copytext; 
+trans.setTransferData("text/unicode",str,copytext.length*2); 
+var clipid=Components.interfaces.nsIClipboard; 
+if(!clip)return false; 
+clip.setData(trans,null,clipid.kGlobalClipboard); 
+return true;
+} 
+}
+
+function mod_close(){
+  document.getElementById('mod_tg').style.display="none";
+}
+
+function match_invite(uid) {
+    var url='/mod/match_invite.php';
+	var ajax = InitAjax();
+    var re = 'uid=' + uid;
+	ajax.open("POST", url, true);
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	ajax.send(re);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            if(ajax.responseText == 1){
+                alert("邀请信息已经发送成功。");
+            } else if(ajax.responseText=="-1"){
+                alert("邀请失败，请稍候再试。");
+            } else if(ajax.responseText=="2"){
+                alert("该用户已经报名了。")
+            }
+        }
+    }
+}
+
+</script>
+<style type="text/css">
+/*
+.artContent img {max-width:450px !important;}
+.showContent img{max-width:650px!important;}
+*/
+
+.artContent img{max-width: 450px; width:expression(this.width > 450 ? "450px" : this.width)}
+/*
+.showContent img{max-width: 450px; width:expression(this.width > 650 ? "650px" : this.width)}
+*/
+
+
+</style>
+</head>
+
+<body >
+
+<div id="home_top">
+<div class="top_nav" style="width:990px;">
+<div class="left"  style="margin-top:10px; width:440px;"><a href="http://blog.51cto.com/" target="_blank"><img src="images/head_blog_sibebar_logo.gif" align="absmiddle" style="margin-top:-4px;" /></a><a target="_blank" href="http://www.51cto.com">51CTO首页</a><img height="25" align="absmiddle" width="16" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="margin-top:-4px;" ><a href="http://blog.51cto.com/" target="_blank">51CTO博客</a><img height="25" align="absmiddle" width="16" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="margin-top:-4px;" ><a href="http://home.51cto.com?reback=http%253A%252F%252Fyangxuejun.blog.51cto.com%252F623927%252F180224" >我的博客</a><img height="25" align="absmiddle" width="16" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="margin-top:-4px;" >
+
+<a target="_blank" href="http://blog.51cto.com/search.php">搜索</a>
+<a href="javascript:void(0);" style="color:#FF0000; text-decoration:underline; display:none" id="showMessagerDim">每日博报</a>
+</div>
+
+<div class="right" style="width:550px;">
+<div class="more"><img height="16" align="absmiddle" width="27" src="http://home.51cto.com/public/themes/blue/images/top_shequ.gif">社区：<a target="_blank" href="http://edu.51cto.com/">学院</a><a target="_blank" href="http://bbs.51cto.com">论坛</a><a target="_blank" href="http://blog.51cto.com">博客</a><a target="_blank" href="http://down.51cto.com">下载</a><a href="javascript:viod(0);" onmouseout="popupClose()" onmouseover="show(3,this)">更多<img align="absmiddle" style="padding-left: 4px;" src="http://images.51cto.com/images/art/top_images/nav_ico1.gif"></a>            </div>            <span id="login_status"><div class="login" id="login_status"></div>    </span>                </div>    </div></div>
+
+
+
+<div class="subMenu3" id="s3" onmouseover="popupNoClose()" onmouseout="popupClose()">
+<ul>
+<li><a href="http://home.51cto.com" target="_blank">家园</a></li>
+<li><a href="http://edu.51cto.com" target="_blank">学院</a></li>
+<li><a href="http://blog.51cto.com" target="_blank">博客</a></li>
+<li><a href="http://bbs.51cto.com" target="_blank">论坛</a></li>
+<li><a href="http://down.51cto.com" target="_blank">下载</a></li>
+
+<li><a href="http://selftest.51cto.com" target="_blank">自测</a></li>
+<li><a href="http://doctor.51cto.com" target="_blank">门诊</a></li>
+<li><a href="http://blog.51cto.com/newsletter/" target="_blank">周刊</a></li>
+<li><a href="http://book.51cto.com" target="_blank">读书</a></li>
+<li><a href="http://g.51cto.com" target="_blank">技术圈</a></li>
+</ul>
+</div>
+<!--简导航end-->
+
+
+
+<div class="headerBox">
+<div class="header">
+<div class="header_l">
+<div class="logo_blogname">
+
+
+
+<div class="blogName">
+<a href="http://yangxuejun.blog.51cto.com"><h1>杨雪军</h1></a>
+</div>
+</div><!--logo_blogname end-->
+<div class="blogLink">
+
+<a href="http://yangxuejun.blog.51cto.com">http://yangxuejun.blog.51cto.com</a> <input id="txtUser" type="hidden" size=32 value="http://yangxuejun.blog.51cto.com" />   <a href="javascript:void(0);" onclick="copy();">【复制】</a> <a href='/rss.php?uid=623927' target='_blank'><a href='/rss.php?uid=623927' target='_blank'>【订阅】</a>
+
+</div>
+
+
+
+</div><!--header_l end-->
+<div class="header_r">
+<div class="blogInfo"><span><a href="http://yangxuejun.blog.51cto.com/623927/o" title="察看yangxuejun所有原创文章">原创</a>:33</span><span><a href="http://yangxuejun.blog.51cto.com/623927/t" title="察看yangxuejun所有翻译文章">翻译</a>:0</span><span><a href="http://yangxuejun.blog.51cto.com/623927/c" title="察看yangxuejun所有转载文章">转载</a>:0</span></div>
+<div class="blogNav"><a href="/">博 客</a>|<a href="http://home.51cto.com/apps/photo/index.php?s=/Index/photos/uid/623927">图库</a>|<a href="/addblog.php">写博文</a>|<a href="http://51ctoblog.blog.51cto.com/all/26414/4" target="_blank">帮 助</a></div>
+</div>
+</div>
+<!--header end-->
+</div><!--headerBox end-->
+<div class="mainNav">
+<span class="mainNavT"></span>
+<ul>
+<li><a href="/">首页</a></li>|<li><a href="/623927/d-1">win2003</a></li>|<li><a href="/623927/d-2">ISA</a></li>|<li><a href="/623927/d-3">Exchange</a></li>|<li><a href="/623927/d-4">Forefront</a></li>|<li><a href="/623927/d-5">虚拟化</a></li>|<li><a href="/623927/d-6">Linux</a></li>|<li><a href="/623927/d-7">SMS/SCCM</a></li>|<li><a href="/623927/d-8">CISCO</a></li>
+</ul>
+<span class="mainNavB"></span>
+</div>
+<!--mainNav end-->
+
+<script type="text/javascript" src="http://blog.51cto.com/js/jquery-1.7.1.min.js"></script>
+<!--[if IE 6]>
+  <script type="text/javascript" src="http://images.watchstor.com/newhomes/png.js"></script>
+  <script>
+    DD_belatedPNG.fix('img,input,ul,li, .get-box, div, .add, .sub, .ui-slider-handle, .footer-chopper');
+  </script>
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="/neweditor/editor/css/fck_editorarea.css"></link>
+<script type="text/javascript" charset="gbk" src="/e/u/third-party/SyntaxHighlighter/shCores.js"></script>
+<link rel="stylesheet" type="text/css" href="/e/u/third-party/SyntaxHighlighter/shCoreDefault.css"/>
+<script type="text/javascript" charset="gbk" src="/e/u/uparse.js"></script>
+<script type="text/javascript">
+	uParse('.showContent');
+	$(function(){
+		//SyntaxHighlighter.config.clipboardSwf = 'http://bbs.51cto.com/plugins/syntaxhighlighter/scripts/clipboard.swf'; 
+		//为了在编辑器之外能展示高亮代码
+		SyntaxHighlighter.highlight();
+	}); 
+</script>
+<script type="text/javascript">
+/**
+ * 回复评论需要用的js
+ * 2012-5-14
+ * by:chengtao
+ */
+ jQuery(function(){
+	blogpost.init();//初始化博客回复功能
+ })
+ /**
+  * 处理博文评论功能优化
+  */
+ blogpost={
+	abstruct_list:null,
+	init:function(){
+		blogpost.bind();//绑定一些时间
+		this.abstruct_list=new Array();//初始化保存评论信息的数组
+	},
+	/**
+	 * 博客回复需要绑定的一些事件
+	 */
+	bind:function(){
+		/**
+		 * 点击回复的事件
+		 */
+		jQuery('.repost').live('click',function(){
+			blogpost.repost(jQuery(this).attr('user_name'),jQuery(this).attr('parentid'));
+			return false;
+		});
+		/**
+		 * 点击楼层进行翻页且找到锚点
+		 */
+		jQuery('.anchor_page').live('click',function(){
+			var parentid = $(this).attr('parentid');
+			var tid=$(this).attr('tid');
+			$.get('/comments.php?tid='+tid+'&parentid='+parentid,function(data){
+				$('#artcomment').html(data);
+				window.location.hash=''+parentid;
+			})
+			return false;
+		}),
+		jQuery('.anchor_page').live('mouseover',function(){
+			var parentid = $(this).attr('parentid');
+			if(!blogpost.abstruct_list[parentid]){
+				var this_t = $(this);
+				$.get('/comments.php?cid='+parentid,function(data,textStatus){
+					blogpost.abstruct_list[parentid]=data;
+					this_t.attr('title',this_t.text()+':'+ blogpost.abstruct_list[parentid]);
+				});
+			}else{
+				$(this).attr('title',$(this).text()+':'+blogpost.abstruct_list[parentid]);
+			}
+		})
+	},
+	/**
+	 * @param user_name 用户名
+	 * @param parentid  父评论id
+	 */
+	repost:function(user_name,parentid){
+		window.location.hash='comment';
+		jQuery('#parentid').val(parentid);
+		jQuery('#commentcontent').val('回复 '+user_name+":\n").focus();
+		if(!$.browser.mozilla){
+			var elem = jQuery('#commentcontent')[0];		
+			var caretPos = elem.value.length;
+			if (elem.createTextRange) {
+				var range = elem.createTextRange();
+				range.move('character', caretPos);
+				range.select();
+			}else{
+				elem.setSelectionRange(caretPos, caretPos);	
+			}
+		}
+	},
+	/**
+	 * 发送完毕之后清理表单数据 不是ajax可能用不到
+	 */
+	clean:function(){
+		
+	}
+ }
+</script>
+<script type="text/javascript">
+jQuery(function(){
+	var anchor = document.location.hash;
+	var comment_id=anchor.split('#')[1];
+	if(!isNaN(parseInt(comment_id))){//是整形
+		jQuery.get('/comments.php?tid=180224&parentid='+comment_id,function(data){
+			jQuery('#artcomment').html(data);
+			window.location.hash=''+comment_id;
+		})
+	}
+});
+</script>
+
+
+
+<script type="text/javascript">
+jQuery(function() {
+	jQuery('#favourdiv').mouseover(function(){
+		if(jQuery(this).attr('className') == 'support01')
+		{
+			jQuery(this).attr('className', "support02");
+			jQuery(this).html('+1人');
+			jQuery(this).attr('title', "赞一个，我支持TA");
+		}
+		else if(jQuery(this).attr('className') == 'support03')
+		{
+			jQuery(this).attr('title', "你已经赞了这篇博文！");
+		}
+		
+	});
+	jQuery('#favourdiv').mouseout(function(){
+		if(jQuery(this).attr('className') == 'support02')
+		{
+			jQuery(this).attr('className', "support01");
+			jQuery(this).html("1人");
+		}
+	});
+	jQuery('.blog_match_yq').click(function(){
+		var wind_uid = '';
+		if(!wind_uid){
+			alert("请先登录！");
+			return false;
+		}
+		jQuery.ajax({
+			   type: "POST",
+			   url:"/contest2012/index.php?mod=sendmsg",
+			   dataType: "html",
+			   data: "vuid=" + 623927,
+			   success: function(data) {
+					if(data == 0)
+					{
+						alert("查无此人！");
+						return false;
+					}else if(data == 1){
+						alert("请先登录！");
+						return false;
+					}else if(data == 2){
+						alert("不能邀请自己！");
+						return false;
+					}else if(data == 22){  
+						alert("邀请信息已发出！");
+						return false;
+					}
+			   }
+		  });
+	});
+	jQuery('#favourdiv').click(function(){
+			jQuery.ajax({
+			   type: "POST",
+			   url:"/mod/favour.php",
+			   dataType: "html",
+			   data: "tid=" + 180224,
+			   success: function(data) {
+					if(data == 0)
+					{
+						alert("您还未登录或者已过期，请重新登录");
+						location.href = "http://home.51cto.com/index.php?reback=http%253A%252F%252Fyangxuejun.blog.51cto.com%252F623927%252F180224";
+						return false;
+					}
+					else if(data == '-1')
+					{
+						alert("参数传递错误！");
+						return false;
+					}
+					else if(data == '-2')
+					{
+						alert("该博文已被删除或者不存在！");
+						return false;
+					}
+					else if(data == '-3')
+					{
+						alert("您已经赞过了！");
+						return false;
+					}
+					else if(data == '-4')
+					{
+						alert("赞操作失败！");
+						return false;
+					}
+					else
+					{  
+						//alert("操作成功，你已经赞了这篇博文！");
+						jQuery('#favourdiv').attr('className', "support03");
+
+						var num = 1 + 1 + "人";
+						jQuery('#favourdiv').html(num);
+						jQuery('#favourer').html(data);
+						return false;
+					}
+			   }
+		  });
+	});
+	//Jaydar http://blog.51cto.com/js/header.php?uid=blogdb[uid]&tid=tid
+	jQuery.post('/js/header.php',{uid:623927,tid:180224},function(data){
+		jQuery('#readNum').html(data[0]);
+		jQuery('#cmtNum').html(data[1]);
+	},'json');
+	
+
+})
+
+jQuery(function(){
+	jQuery('#darid').bind('click',function(){
+		if(confirm("你确定删除此篇文章？")){
+			jQuery.ajax({
+				'type':'post',
+				'url':'user_index.php?action=delarticle',
+				'data':{'job':'del', 'selid':'180224', 'mhash':''},
+				'dataType':'html',
+				'success':function(res){
+					if('ok' == res){
+						location.href="http://.blog.51cto.com";
+					}
+				
+				}
+			});
+		}
+	});
+});
+</script>
+
+
+
+
+<style type="text/css">
+.m_sharelinks{ 
+	line-height:30px; 
+	text-align:left; 
+	padding-left:20px; 
+	//background:url(http://img1.51cto.com/images/share/ico_lb.gif) no-repeat left center;
+	float:left; 
+	width:600px; 
+	height:30px;
+}
+.m_sharelinks a{ margin-left:10px;}
+.m_sharebtn{ height:50px; width:726px; margin:0 auto;}
+.m_sharebtn01{width:520px; float:left;}
+.weibo_51cto{ background:url(http://img1.51cto.com/images/share/ico_mweibo.gif) no-repeat center center; display:block; width:33px; height:33px; float:left; margin:3px 3px 0 0;cursor:pointer;}
+.shareMored {
+    line-height: 30px;
+	float:right; 
+	text-align:right; 
+	width:100px; 
+	height:30px;
+}
+
+.showContent {
+	margin:20px 15px 8px;
+}
+.userImage img {
+    text-align: center;
+	border:0;
+	padding:0;
+}
+.photo_links{ line-height:30px; padding-top:5px; font-size:13px;width:170px; margin:0 auto;}
+.photo_links_blue{ text-align:center;}
+.photo_links_blue a:link,.photo_links_blue a:visited,.photo_links_blue a:hover,.photo_links_blue a:active{ color:#015F91; text-decoration: underline;}
+.photo_links_red{ text-align:left;}
+.photo_links_red a:link,.photo_links_red a:visited,.photo_links_red a:hover,.photo_links_red a:active{ color:#fc4343; text-decoration:underline;}
+.photo_links_red02{ text-align:center;}
+
+.vlist{ margin:10px 10px; height:65px;}
+.vlist img{ float:left; margin-right:10px;}
+.vlist dl{ text-align:left;}
+.vlist dl dt{ height:40px;line-height: 20px; overflow:hidden; padding-top:5px;}
+.vlist dl dt,.vlist dl dt a{ color:#262626;}
+.vlist dl dd,.vlist dl dd a{ color:#777;}
+
+.video-icon{
+    position: relative;
+}
+.video-icon a.i_video {
+    background: url("http://www.51cto.com/images/homepage/Images/eduplay.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    height: 25px;
+    left:31px;
+    position: absolute;
+    top:22px;
+    width: 25px;
+    z-index: 10;
+}
+</style>
+<script language="JavaScript" type="text/javascript" src="http://g.51cto.com/js/group.js"></script>
+<div id="add_sys_type_div" style="width:600px;border:1px #58B0DD solid; background-color:#FFF; position:absolute;left:30%;top:300px;display:none;z-index:255"></div>
+<div id="add_sys_type_divs" style="width:550px;border:1px #58B0DD solid; background-color:#FFF; position:absolute;left:30%;top:300px;display:none;z-index:255"></div>
+
+
+
+<div class="blogMain">
+<div class="blogLeft">
+
+
+<div class="box moduleUser">
+<div class="title">
+<h2><strong>yangxuejun</strong> 的BLOG  </h2>
+</div>
+<div class="modCon">
+
+<div class="userImage" style="margin: 10px auto 5px;text-align: center;width: 130px;border: 1px solid #D4D4D4;">
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td valign="middle" align="center" height="130"><script src="http://blog.51cto.com/mod/userface.php?useruid=623927"></script></td>
+		</tr>
+	</table>
+</div>
+<div class="photo_links">
+</div>
+
+
+
+
+
+
+
+
+
+<div class="crumbs">
+<a href="http://home.51cto.com/index.php?s=/space/623927#message" class="writeMessage" target="_blank">写留言</a><a href="http://edu.51cto.com/" class="inCircle" target="_blank">去学院学习</a><a href="http://home.51cto.com/index.php?s=/Notify/write/uid/623927" class="message"  target="_blank">发消息</a> <a href='/' onclick='add_flink(623927);return false' class="joinLinks">加友情链接</a><a href="http://home.51cto.com/index.php?s=/space/623927" class="joinFriends"  target="_blank">进家园 加好友</a>
+</div>
+
+<div style="width:239px;height:64px;display:none;">
+
+
+<div style="float:left;"><p style="padding:15px 0 0 28px; line-height:20px;">2012年度IT博客大赛<br><a target="_blank" href="http://blog.51cto.com/contest2012/#top10000" style="color:#F00; text-decoration:underline;">十大杰出IT博客诞生</a></p></div>
+<div style="float:right;"><a target="_blank" href="http://blog.51cto.com/contest2012/"><img width="57" height="27" src="http://img1.51cto.com/images/blog_match_endlook.jpg" style="margin:23px 20px 0 0;"></a></div>
+<!-- <div style="float:left;"><p style="padding:15px 0 0 28px; line-height:20px;">星光评委正在评选<br><a target="_blank" href="http://blog.51cto.com/contest2012/index.php?mod=userlist_sec" style="color:#F00; text-decoration:underline;">2012年度IT博客大赛50强</a></p></div>
+<div style="float:right;"><img class="blog_match_yq" width="57" height="27" src="http://img1.51cto.com/images/blog_match_invite.jpg" style="margin:23px 20px 0 0;"></div> -->
+
+
+
+<div class="clear"></div>
+</div>
+
+
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="infoList box">
+<div class="title">
+<h2>博客统计信息</h2>
+</div>
+<div class="modCon">
+<p>
+<span class="infoListHead"></span>
+用户名：yangxuejun<br />
+文章数：33<br />
+评论数：20<br />
+访问量：115176<br />
+<a href="http://home.51cto.com/index.php?s=/Account/credit" target="_blank">无忧币</a>：20<br />
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客积分</a>：306<br />
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客等级</a>：2<br />
+注册日期：2008-12-19<br />
+<script src="http://blog.51cto.com/active/no1/blogno1countdown.php"></script> 
+</p>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="infoList box">
+	<div class="title">
+		<h2 class="fl">热门专题</h2>
+		<a target="_blank" class="fr" href="http://blog.51cto.com/zt">更多&gt;&gt;</a>
+	</div>
+	<div class="modCon">
+
+		
+		
+	</div>
+	<span class="modBot"></span>
+</div>
+
+
+<div class="hotArt box">
+<div class="title">
+<h2>热门文章</h2>
+</div>
+<div class="modCon">
+<ul>
+<li><a href="/623927/180224">Samba服务器的配置</a></li>
+<li><a href="/623927/185706">创建&ldquo;用Active Dir..</a></li>
+<li><a href="/623927/162947">利用DNS实现WPAD</a></li>
+<li><a href="/623927/155054">重设&ldquo;目录服务还原..</a></li>
+<li><a href="/623927/170596">App-V Management Server..</a></li>
+<li><a href="/623927/163462">ISA搭建VPN之PPTP</a></li>
+<li><a href="/623927/163526">Forefront Security for ..</a></li>
+<li><a href="/623927/180234">Exchange OWA的发布</a></li>
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+<div class="search box">
+<div class="title"><h2>搜索BLOG文章</h2></div>
+<div class="modCon">
+<form method=post action="search.php?" tabindex="99">
+<input type="hidden" name="step" value="2">
+<input type="hidden" name="authorid" value="623927">
+<input type="hidden" name="sch_area" value="S">
+<input type="text" value="" name="keyword"  class="searchInput" />
+<input type="submit" value="搜 索" class="searchBtn" />
+</form>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="box recentGuests">
+<div class="title">
+<h2>最近访客</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://8759833.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=8749833&size=middle" /></a>
+<p><a href="http://8759833.blog.51cto.com">kd168..</a></p>
+
+<li><a href="http://8572242.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=8562242&size=middle" /></a>
+<p><a href="http://8572242.blog.51cto.com">Terry..</a></p>
+
+<li><a href="http://4560613.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=4550613&size=middle" /></a>
+<p><a href="http://4560613.blog.51cto.com">winte..</a></p>
+
+<li><a href="http://cyhow.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=892355&size=middle" /></a>
+<p><a href="http://cyhow.blog.51cto.com">cyhow</a></p>
+
+<li><a href="http://7605124.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=7595124&size=middle" /></a>
+<p><a href="http://7605124.blog.51cto.com">在树..</a></p>
+
+<li><a href="http://5624410.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=5614410&size=middle" /></a>
+<p><a href="http://5624410.blog.51cto.com">cetia..</a></p>
+
+<li><a href="http://7328929.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=7318929&size=middle" /></a>
+<p><a href="http://7328929.blog.51cto.com">0000q..</a></p>
+
+<li><a href="http://zhangrong.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=2196532&size=middle" /></a>
+<p><a href="http://zhangrong.blog.51cto.com">srjay111</a></p>
+
+<li><a href="http://7390754.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=7380754&size=middle" /></a>
+<p><a href="http://7390754.blog.51cto.com">59171..</a></p>
+
+<li><a href="http://8692944.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=8682944&size=middle" /></a>
+<p><a href="http://8692944.blog.51cto.com">ding45</a></p>
+
+<li><a href="http://1116492.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=1106492&size=middle" /></a>
+<p><a href="http://1116492.blog.51cto.com">gongjx</a></p>
+
+<li><a href="http://uchase.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=880483&size=middle" /></a>
+<p><a href="http://uchase.blog.51cto.com">ca2ju3</a></p>
+
+</ul>
+<span class="clear"></span>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="newComments box">
+<div class="title">
+<h2>最新评论 
+
+</h2>
+
+
+
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href='http://7346606.blog.51cto.com/' class='operlink' target=_blank><b>1124396507</b></a>：<a href="/623927/185706" target=_blank>请问创建FTP 域隔离用户，，怎样允..</a></li>
+
+<li><a href='http://8292004.blog.51cto.com/' class='operlink' target=_blank><b>浩浩哥来了</b></a>：<a href="/623927/180224" target=_blank>你的文件目录没有设定上下文就根本..</a></li>
+
+<li><a href='http://2382015.blog.51cto.com/' class='operlink' target=_blank><b>cqjdxyy</b></a>：<a href="/623927/185706" target=_blank>先谢过了。</a></li>
+
+<li><a href='http://dnsdhcp.blog.51cto.com/' class='operlink' target=_blank><b>dnsdhcp</b></a>：<a href="/623927/162944" target=_blank>DHCP你玩的很熟练啊。、</a></li>
+
+<li>[匿名]学生：<a href="/623927/125154" target=_blank>请问博主？私有根的SOA和NS的FQDN是..</a></li>
+
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="hotBlogArt box">
+<div class="title">
+  <h2 class="fl">51CTO推荐博文</h2>
+  <a href="http://blog.51cto.com/artcommend" class="fr">更多&gt;&gt;</a></div>
+<div class="modCon">
+<ul>
+<li><a href="http://dynamic.blog.51cto.com/711418/1554943" title="Lync 小技巧-36-Lync与LyncOnline联盟-不能-传-文件" target="_blank">Lync 小技巧-36-Lync与LyncOnline..</a></li>
+<li><a href="http://9528du.blog.51cto.com/8979089/1554905" title="LVS的dr模型的工作原理" target="_blank">LVS的dr模型的工作原理</a></li>
+<li><a href="http://hubuxcg.blog.51cto.com/2559426/1554927" title="利用ADMT进行Exchange跨域迁移之二：配置ADMT迁移AD" target="_blank">利用ADMT进行Exchange跨域迁移之..</a></li>
+<li><a href="http://winda.blog.51cto.com/55153/1554993" title="实验：华为MUX VLAN配置与管理" target="_blank">实验：华为MUX VLAN配置与管理</a></li>
+<li><a href="http://guoting.blog.51cto.com/8886857/1553462" title="DRBD原理知识" target="_blank">DRBD原理知识</a></li>
+<li><a href="http://legend2011.blog.51cto.com/3018495/1554916" title="在VMware Workstation 9下安装CentOS 5.5" target="_blank">在VMware Workstation 9下安装Cen..</a></li>
+<li><a href="http://caiguangguang.blog.51cto.com/1652935/1554549" title="python调用shell命令小结" target="_blank">python调用shell命令小结</a></li>
+<li><a href="http://skypegnu1.blog.51cto.com/8991766/1554561" title="CentOS 上部署Discuz!X论坛3 - Discuz设置" target="_blank">CentOS 上部署Discuz!X论坛3 - Di..</a></li>
+<li><a href="http://guoting.blog.51cto.com/8886857/1553451" title="基于ansible Role实现批量部署lamp平台" target="_blank">基于ansible Role实现批量部署lam..</a></li>
+<li><a href="http://ixdba.blog.51cto.com/2895551/1554238" title="安全运维之：文件系统安全" target="_blank">安全运维之：文件系统安全</a></li>
+<li><a href="http://ilanni.blog.51cto.com/526870/1553125" title="烂泥：NFS做存储与KVM集成" target="_blank">烂泥：NFS做存储与KVM集成</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="friendLink box">
+<div class="title">
+  <h2>友情链接</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://edu.51cto.com" title="IT精品课程" target="_blank">IT精品课程</a></li>
+
+<li><a href="http://tonyxiaohome.blog.51cto.com" title="肖舸的blog" target="_blank">肖舸的blog</a></li>
+
+<li><a href="http://fsjoy.blog.51cto.com" title="李骥平" target="_blank">李骥平</a></li>
+
+<li><a href="http://xuanbo.blog.51cto.com" title="张选波博客" target="_blank">张选波博客</a></li>
+
+<li><a href="http://xingyi.blog.51cto.com" title="心意" target="_blank">心意</a></li>
+
+<li><a href="http://renpeng.blog.51cto.com" title="任鹏的博客" target="_blank">任鹏的博客</a></li>
+
+<li><a href="http://liuyuanljy.blog.51cto.com" title="雪源梅香" target="_blank">雪源梅香</a></li>
+
+<li><a href="http://yixuelian.blog.51cto.com" title="夕阳流水" target="_blank">夕阳流水</a></li>
+
+<li><a href="http://ming228.blog.51cto.com" title="yangming.com" target="_blank">yangming.com</a></li>
+
+<li><a href="http://bisheng.blog.51cto.com" title="Bisheng.Hu" target="_blank">Bisheng.Hu</a></li>
+
+<li><a href="http://cteam.blog.51cto.com" title="综合布线工作组" target="_blank">综合布线工作组</a></li>
+
+<li><a href="http://jary3000.blog.51cto.com" title="千山岛主之微软技术空间站" target="_blank">千山岛主之微软技..</a></li>
+
+<li><a href="http://struggle.blog.51cto.com" title="激情因梦想而存在" target="_blank">激情因梦想而存在</a></li>
+
+<li><a href="http://zhangzhengtao.blog.51cto.com" title="张正涛" target="_blank">张正涛</a></li>
+
+<li><a href="http://yuelei.blog.51cto.com" title="岳雷的微软网络课堂" target="_blank">岳雷的微软网络课堂</a></li>
+
+<li><a href="http://dufei.blog.51cto.com" title="杜飞" target="_blank">杜飞</a></li>
+
+<li><a href="http://dynamic.blog.51cto.com" title="IT-Standardization" target="_blank">IT-Standardization</a> <img src='http://img1.51cto.com/images/tubiao2.gif' alt='三日内更新'></li>
+
+<li><a href="http://devliangel.blog.51cto.com" title="睥睨天下" target="_blank">睥睨天下</a></li>
+
+<li><a href="http://18682.blog.51cto.com" title="岭西 浮城" target="_blank">岭西 浮城</a></li>
+
+<li><a href="http://51ctoblog.blog.51cto.com" title="51CTO博客开发" target="_blank">51CTO博客开发</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+
+</div>
+<!--left end-->
+
+<script type="text/javascript">
+    var favor_url = "http://yangxuejun.blog.51cto.com/623927/180224";
+    var favor_title = "Samba服务器的配置";
+    var favor_fuid = "623927";
+</script>
+<script type="text/javascript" src="http://home.51cto.com/apps/favorite/Tpl/default/Public/js/favorbox.js"></script>
+<div class="blogRight">
+
+
+	<div class="box edu-col-a" style="display:none;">
+		<div class="title">的视频课程</div>
+		<div class="vbox" style="">
+
+			<div class="clear hr10"></div>
+		</div>
+	</div>
+	
+	<div class="box edu-col-b" style="width:100%;">
+		<div class="title"><a target="_blank" href="http://edu.51cto.com">相关视频课程</a>
+		<a href="http://edu.51cto.com" target="_blank" style="float:right;">更多</a>
+		</div>
+		<div class="vbox" style="">
+		
+			<div class="vlist video-icon" style="margin: 2px 8px;"> 
+				<a href="http://edu.51cto.com/course/course_id-1488.html" target="_blank"><img src="http://s2.51cto.com/wyfs02/M01/31/3F/wKiom1OqZ1DAQPryAAE00b4f-8c621.jpg" height="63" width="86"></a>
+				<dl>
+					<dt> <a href="http://edu.51cto.com/course/course_id-1488.html" target="_blank" title="linux企业windows跨域共享-[国内No1全新马哥linux视频系列十六]">linux企业windows跨域共享-[国内No1全新马哥linux视频系列十六](共2课时)</a></dt>
+					<dd>253人学习</dd>
+				</dl>
+				<a class="i_video" href="http://edu.51cto.com/course/course_id-1488.html" target="_blank"></a>
+			</div>
+		
+			<div class="vlist video-icon" style="margin: 2px 8px;"> 
+				<a href="http://edu.51cto.com/course/course_id-1518.html" target="_blank"><img src="http://s2.51cto.com/wyfs02/M00/31/3E/wKioL1OqZu_gk61iAAE06qXCoYI707.jpg" height="63" width="86"></a>
+				<dl>
+					<dt> <a href="http://edu.51cto.com/course/course_id-1518.html" target="_blank" title="linux企业级文件共享服务-[国内No1全新马哥linux视频系列十五]">linux企业级文件共享服务-[国内No1全新马哥linux视频系列十五](共5课时)</a></dt>
+					<dd>575人学习</dd>
+				</dl>
+				<a class="i_video" href="http://edu.51cto.com/course/course_id-1518.html" target="_blank"></a>
+			</div>
+		
+			<div class="vlist video-icon" style="margin: 2px 8px;"> 
+				<a href="http://edu.51cto.com/course/course_id-113.html" target="_blank"><img src="http://s2.51cto.com/wyfs02/M00/24/A4/wKiom1NUhYKSm4HgAAFm_pGafy4786.jpg" height="63" width="86"></a>
+				<dl>
+					<dt> <a href="http://edu.51cto.com/course/course_id-113.html" target="_blank" title="《Linux从入门到精通》教学视频">《Linux从入门到精通》教学视频(共24课时)</a></dt>
+					<dd>20776人学习</dd>
+				</dl>
+				<a class="i_video" href="http://edu.51cto.com/course/course_id-113.html" target="_blank"></a>
+			</div>
+			
+			<div class="clear hr10"></div>
+		</div>
+	</div>
+	<p style="clear:both;"></p>
+	<style type="text/css">
+.vlist {
+    float: left;
+    padding: 2px 0 0 10px;
+    width: 218px;
+	
+}
+.vlist img {
+    float: left;
+    margin-right: 10px;
+}
+.vlist dl {
+    float: left;
+    text-align: left;
+    width: 122px;
+}
+.vlist dl dt {
+    height: 44px;
+    overflow: hidden;
+    padding-top: 5px;
+}
+.vlist dl dt, .vlist dl dt a {
+    color: #262626;
+}
+.vlist dl dd, .vlist dl dd a {
+    color: #777777;
+}
+.vbox_tit {
+    border-bottom: 1px solid #B3D0E6;
+    color: #666666;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: left;
+}
+.video-icon {
+    position: relative;
+}
+.video-icon a.i_video {
+    background: url("http://www.51cto.com/images/homepage/Images/eduplay.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    height: 25px;
+    left: 41px;
+    position: absolute;
+    top: 22px;
+    width: 25px;
+    z-index: 10;
+}
+.vbox2 .vlist1{margin:0;}
+.edu-col-a{ float:left;margin-right:6px;}
+.edu-col-b{ float:left;}
+	</style><!--modCon end-->
+
+
+
+	<div class="artShow box" style="margin-top:5px;">
+   	  <div class="share" id="share">
+
+    <div class="shareItem">
+		<div class="m_sharelinks"><a target="_blank" href="" style="color:red;"></a><a target="_blank" href="" style="color:blue;"></a><a target="_blank" href="" style="color:blue;"></a></div>
+		<p class="shareMored"><a href="/all/623927">博主的更多文章>></a></p>
+	</div>
+      </div>
+       <div class="modCon">
+   	  <div class="showBox" style="margin:0 0 10px;">
+      <div class="line_hd_r"></div>
+      <div class="art_tj">
+
+      </div>
+
+ 
+    		<div class="showHead">
+    		  <div class="showTitleBOx" style="text-align:center">
+              <div class="showTitle">
+
+             <img src="http://blog.51cto.com/image/skin/artType01.jpg">
+
+
+    		    Samba服务器的配置
+                </div>
+  		    </div>
+   		    <span class="artTime">2009-07-18 21:40:47</span></div><!--showHead end-->
+    <div class="showTags">标签：<a href="http://blog.51cto.com/tag-服务器.html" target="_blank" class="operlink">服务器</a> <a href="http://blog.51cto.com/tag-Samba.html" target="_blank" class="operlink">Samba</a> <a href="http://blog.51cto.com/tag-休闲.html" target="_blank" class="operlink">休闲</a> <a href="http://blog.51cto.com/tag-职场.html" target="_blank" class="operlink">职场</a>
+
+	</div>
+
+			<div class="CopyrightStatement lh22">
+            原创作品，允许转载，转载时请务必以超链接形式标明文章 <a href="/623927/180224" target="_blank" style="text-decoration:underline">原始出处</a> 、作者信息和本声明。否则将追究法律责任。<a href="/623927/180224">http://yangxuejun.blog.51cto.com/623927/180224</a>
+            </div>
+
+
+            <!--正文 begin-->
+    		<div class="showContent">
+    		  <div style="color: rgb(255, 0, 0); text-align: center;"><font size="3"><b>Samba服务器</b><b>的配置</b></font></div>  <div style="color: rgb(255, 0, 0);"><font size="3"><b>实验步骤：</b></font></div>  <div><font size="3">1、安装有关Samba的RPM包(samba、samba-common、samba-client)</font></div>  <div><font size="3">2、创建Samba用户</font></div>  <div><font size="3">3、修改配置文件</font></div>  <div><font size="3">4、重启samba服务</font></div>  <div><font size="3">5、设置目录访问权限</font></div>  <div><font size="3">6、测试</font></div>  <div style="color: rgb(255, 0, 0);"><font size="3"><b>具体步骤如下：</b></font></div>  <div style="color: rgb(0, 0, 255);"><font size="3"><b>1</b><b>、安装</b><b>RPM</b><b>包</b><b>(</b><b>缺省情况下</b><b>RHEL5</b><b>安装了</b><b>samba</b><b>的相关软件包，可以用如下命令查看</b><b>)</b></font></div>  <div><font size="3">[root@localhost ~]#rpm -qa | grep samba</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924379cIKz.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image002" style="border: 0px none ;" alt="clip_image002" src="http://img1.51cto.com/attachment/200907/18/623927_1247924380KSf8.jpg" 558="" border="0" height="418" /></a></font></div>  <div><font size="3">samba -----samba服务器程序的所有文件</font></div>  <div><font size="3">samba-common -----提供了Samba服务器和客户机中都必须使用的公共文件</font></div>  <div><font size="3">samba-client -----提供了Samba客户机的所有文件</font></div>  <div><font size="3">samba-swat -----以Web界面的形式提供了对Samba服务器的管理功能</font></div>  <div style="color: rgb(0, 0, 255);"><font size="3"><b>2</b><b>、创建</b><b>samba</b><b>用户</b></font></div>  <div><font size="3">[root@localhost ~]#smbpasswd -a user1 （“-a”是创建samba用户，“-x”是删 [root@localhost ~]#smbpasswd -a user2 除samba用户，“-d”是禁用samba用</font></div>  <div><font size="3">[root@localhost ~]#smbpasswd -a user3 户帐号，“-e”是启用samba用户帐号）</font></div>  <div style="color: rgb(0, 0, 255);"><font size="3"><b>3</b><b>、修改配置文件</b></font></div>  <div><font size="3">samba配置文件的位置：/etc/samba/smb.conf</font></div>  <div><font size="3">[root@localhost ~]#vim /etc/samba/smb.conf</font></div>  <div style="color: rgb(255, 0, 0);"><font size="3"><b>Vi</b><b>大开配置文件后，首先介绍一下</b><b>Samba</b><b>服务器的安全级别，如图所示：系统默认设置“</b><b>user</b><b>”</b></font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924383Rxoc.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image003" style="border: 0px none ;" alt="clip_image003" src="http://img1.51cto.com/attachment/200907/18/623927_1247924385v7IB.jpg" 579="" border="0" height="438" /></a></font></div>  <div><font size="3">Samba服务器的安全级别分为5种，分别是user、share、server、domain和ads。在设置不同的级别时，samba服务器还会使用口令服务器和加密口令。</font></div>  <div><font size="3">1、user -----客户端访问服务器时需要输入用户名和密码，通过验证后，才能使用服务器的共享资源。此级别使用加密的方式传送密码。</font></div>  <div><font size="3">2、share -----客户端连接服务器时不需要输入用户名和密码</font></div>  <div><font size="3">3、server -----客户端在访问时同样需要输入用户名和密码，但是，密码验证需要密码验证服务器来负责。</font></div>  <div><font size="3">4、domain -----采用域控制器对用户进行身份验证</font></div>  <div><font size="3">5、ads -----若samba服务器加入到Windows活动目录中，则使用ads安全级别，ads安全级别也必须指定口令服务器</font></div>  <div style="color: rgb(255, 0, 0);"><font size="3"><b>共享目录的配置</b></font></div>  <div><font size="3"><b><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924387rsHZ.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image004" style="border: 0px none ;" alt="clip_image004" src="http://img1.51cto.com/attachment/200907/18/623927_1247924388jMob.jpg" 586="" border="0" height="444" /></a></b></font></div>  <div><font size="3">[homes] -----samba用户的宿主目录</font></div>  <div><font size="3">comment = Home Directories -----设置共享的说明信息</font></div>  <div><font size="3">browseable = no -----目录浏览权限</font></div>  <div><font size="3">writable = yes -----用户对共享目录可写</font></div>  <div><font size="3">这个共享目录只有用户本身可以使用，默认情况下，用户主目录位于/home目录下，每个Linux用户有一个以用户名命名的子目录。</font></div>  <div><font size="3">以下是共享打印机的设置：</font></div>  <div><font size="3">[printers] -----共享打印机</font></div>  <div><font size="3">comment = All Printers -----设置共享的说明信息</font></div>  <div><font size="3">path = /var/spool/samba -----指定共享目录的路径</font></div>  <div><font size="3">browseable = no -----目录浏览权限</font></div>  <div><font size="3">guest ok = no -----允许来宾访问</font></div>  <div><font size="3">writable = no -----用户对共享目录可写</font></div>  <div><font size="3">printable = yes -----可以打印</font></div>  <div><font size="3">以上是系统默认设置</font></div>  <div><font size="3">添加自定义的共享目录：( user1对/ASUS有所有权，user2拥有只读权限，其他用户不能访问；public共享目录允许所有用户访问及上传文件)</font></div>  <div><font size="3">[ASUS]</font></div>  <div><font size="3">comment = user1 Directories -----设置共享的说明信息</font></div>  <div><font size="3">browseable = yes -----所有samba用户都可以看到该目录</font></div>  <div><font size="3">writable = yes -----用户对共享目录可写</font></div>  <div><font size="3">path = /ASUS -----指定共享目录的路径</font></div>  <div><font size="3">[public]</font></div>  <div><font size="3">comment = all user Directories -----设置共享的说明信息</font></div>  <div><font size="3">browseable = yes -----所有samba用户都可以看到该目录</font></div>  <div><font size="3">writable = yes -----用户对共享目录可写</font></div>  <div><font size="3">path = /public -----指定共享目录的路径</font></div>  <div><font size="3">guest ok = yes -----允许来宾访问</font></div>  <div style="color: rgb(0, 0, 255);"><font size="3"><b>4</b><b>、修改完配置文件后需要重启</b><b>samba</b><b>服务</b></font></div>  <div><font size="3">[root@localhost ~]#service smb restart</font></div>  <div><font size="3">Samba服务器包括两个服务程序</font></div>  <div><font size="3">2 smbd</font></div>  <div><font size="3">? smbd服务程序为客户机提供了服务器中共享资源的访问</font></div>  <div><font size="3">2 nmbd</font></div>  <div><font size="3">? nmbd服务程序提供了NetBIOS主机名称的解析，为Windows网络中域或者工作组内的主机进行主机名称的解析</font></div>  <div style="color: rgb(0, 0, 255);"><font size="3"><b>5</b><b>、设置目录权限</b></font></div>  <div><font size="3">[root@localhost ~]#mkdir /ASUS ------创建要共享目录</font></div>  <div><font size="3">[root@localhost ~]#mkdir /public ------创建要共享的目录</font></div>  <div><font size="3">[root@localhost ~]#chmod 750 /ASUS ------修改/ASUS权限（属主拥有</font></div>  <div><font size="3">所有权，属组只读，其它用户不能访问）</font></div>  <div><font size="3">[root@localhost ~]#chown user1 /ASUS ------将/ASUS的属主改为user1</font></div>  <div><font size="3">[root@localhost ~]#groupadd ASUS ------添加ASUS组</font></div>  <div><font size="3">[root@localhost ~]#usermod –G ASUS user1 ------将user1加入到ASUS组</font></div>  <div><font size="3">[root@localhost ~]#usermod –G ASUS user2 ------将user2加入到ASUS组</font></div>  <div><font size="3">[root@localhost ~]#chgrp ASUS /ASUS ------将/ASUS的属组改为</font></div>  <div><font size="3">ASUS</font></div>  <div><font size="3">[root@localhost ~]#chmod 777 /public ------给所有用户分配完全控制</font></div>  <div><font size="3">权限</font></div>  <div><font size="3">配置完成后，还要检查/etc/service文件中以“netbios”开头的记录，正确的文件</font></div>  <div><font size="3">记录如下所示，如果这些记录前有#或没有这些记录，应手工添加，否则用户无</font></div>  <div><font size="3">法访问Linux服务器上的共享资源</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924393qonJ.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image005" style="border: 0px none ;" alt="clip_image005" src="http://img1.51cto.com/attachment/200907/18/623927_1247924395tJfD.jpg" 582="" border="0" height="440" /></a></font></div>  <div style="color: rgb(0, 0, 255); font-weight: bold;"><font size="3">6、测试</font></div>  <div><font size="3">找一台内网windows客户端，打开“网上邻居 ”，输入samba服务器的IP点击</font></div>  <div><font size="3">“搜索”</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924397frTu.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image007" style="border: 0px none ;" alt="clip_image007" src="http://img1.51cto.com/attachment/200907/18/623927_1247924399ZegL.jpg" 557="" border="0" height="420" /></a></font></div>  <div><font size="3">如图所示：已经搜索到</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924400uYu2.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image009" style="border: 0px none ;" alt="clip_image009" src="http://img1.51cto.com/attachment/200907/18/623927_1247924401ZIL8.jpg" 557="" border="0" height="416" /></a></font></div>  <div><font size="3">双击打开，如图所示：提示输入用户名和密码，先来输入user1的用户名和密码</font></div>  <div><font size="3">作测试。</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924402xfWj.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image011" style="border: 0px none ;" alt="clip_image011" src="http://img1.51cto.com/attachment/200907/18/623927_1247924404XIFQ.jpg" 557="" border="0" height="418" /></a></font></div>  <div><font size="3">登录成功，</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924405DSNh.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image013" style="border: 0px none ;" alt="clip_image013" src="http://img1.51cto.com/attachment/200907/18/623927_1247924406vkaj.jpg" 557="" border="0" height="420" /></a></font></div>  <div><font size="3">打开user1的宿主目录，此目录user1是拥有所有权限的，创建一个目录测试一</font></div>  <div><font size="3">下，如图所示：可以创建</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924408eix3.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image015" style="border: 0px none ;" alt="clip_image015" src="http://img1.51cto.com/attachment/200907/18/623927_1247924409mWCz.jpg" 557="" border="0" height="418" /></a></font></div>  <div><font size="3">Public目录是允许任何用户上传、下载及删除文件，如图所示</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924410mwDr.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image017" style="border: 0px none ;" alt="clip_image017" src="http://img1.51cto.com/attachment/200907/18/623927_1247924412hjy5.jpg" 557="" border="0" height="418" /></a></font></div>  <div><font size="3">User1对ASUS目录拥有完全控制权限，所以user1可以在此目录下作任何操作</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924413GH0f.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image019" style="border: 0px none ;" alt="clip_image019" src="http://img1.51cto.com/attachment/200907/18/623927_12479244144zG6.jpg" 557="" border="0" height="417" /></a></font></div>  <div><font size="3">切换另一个用户测试，由于我们在同一台计算机上作测试，测试之前首先要清楚</font></div>  <div><font size="3">计算机上的缓存，如图所示：打开 “命令提示符模式”，“net use /del *”是清</font></div>  <div><font size="3">除计算机上缓存</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924416kpDV.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image021" style="border: 0px none ;" alt="clip_image021" src="http://img1.51cto.com/attachment/200907/18/623927_1247924417Fwft.jpg" 557="" border="0" height="361" /></a></font></div>  <div><font size="3">重新打开网上邻居，找到Samba 服务器的共享资源，以user2的身份登录</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924418mr7Y.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image023" style="border: 0px none ;" alt="clip_image023" src="http://img1.51cto.com/attachment/200907/18/623927_1247924420evkP.jpg" 557="" border="0" height="419" /></a></font></div>  <div><font size="3">以下几幅图片可以看到，user2对ASUS目录拥有只读权限，对public、user2目</font></div>  <div><font size="3">录拥有所有权</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924421Isw8.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image025" style="border: 0px none ;" alt="clip_image025" src="http://img1.51cto.com/attachment/200907/18/623927_12479244223t95.jpg" 557="" border="0" height="418" /></a></font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924424Hs4g.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image027" style="border: 0px none ;" alt="clip_image027" src="http://img1.51cto.com/attachment/200907/18/623927_1247924425dgFG.jpg" 557="" border="0" height="418" /></a></font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924427vYmJ.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image029" style="border: 0px none ;" alt="clip_image029" src="http://img1.51cto.com/attachment/200907/18/623927_1247924428hYQf.jpg" 557="" border="0" height="418" /></a></font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924430ToU5.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image031" style="border: 0px none ;" alt="clip_image031" src="http://img1.51cto.com/attachment/200907/18/623927_1247924431uNFB.jpg" 557="" border="0" height="419" /></a></font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924433Ln80.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image033" style="border: 0px none ;" alt="clip_image033" src="http://img1.51cto.com/attachment/200907/18/623927_1247924434YStx.jpg" 557="" border="0" height="417" /></a></font></div>  <div><font size="3">再切换一个用户登录，记得要清除缓存哦，输入user3的用户名及密码</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924436atEa.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image035" style="border: 0px none ;" alt="clip_image035" src="http://img1.51cto.com/attachment/200907/18/623927_1247924437rKJE.jpg" 557="" border="0" height="420" /></a></font></div>  <div><font size="3">如图所示：user3无法访问ASUS目录</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924439mK9z.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image037" style="border: 0px none ;" alt="clip_image037" src="http://img1.51cto.com/attachment/200907/18/623927_1247924440ANgy.jpg" 558="" border="0" height="418" /></a></font></div>  <div><font size="3">User3只对user3和public目录拥有所有权</font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924442ULwO.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image039" style="border: 0px none ;" alt="clip_image039" src="http://img1.51cto.com/attachment/200907/18/623927_1247924444XxeL.jpg" 557="" border="0" height="419" /></a></font></div>  <div><font size="3"><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/200907/18/623927_1247924445Z4s7.jpg"><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' onclick="window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)" title="clip_image041" style="border: 0px none ;" alt="clip_image041" src="http://img1.51cto.com/attachment/200907/18/623927_1247924446VStt.jpg" 557="" border="0" height="416" /></a></font></div>  <div style="color: rgb(255, 255, 255);"><font size="3"><font style="background-color: rgb(255, 0, 0);">验证过程很啰嗦哈！以上如有错误请大家纠正了，谢谢！</font></font></div><p>本文出自 “<a href='http://yangxuejun.blog.51cto.com'>杨雪军</a>” 博客，请务必保留此出处<a href='http://yangxuejun.blog.51cto.com/623927/180224'>http://yangxuejun.blog.51cto.com/623927/180224</a></p>
+    		</div><!--正文 end-->
+<script type="text/javascript">
+	var kevent = 'onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onresize|onselect|onsubmit|onunload';
+	var aevent = kevent.split('|');
+
+	jQuery('.showContent img').each(function(){
+		var nimg = this;
+		jQuery.each(aevent, function(i, n){
+			if (n!='onload') {
+				jQuery(nimg).attr(n, '');
+			} else {
+				if (jQuery(nimg).attr(n) != 'if(this.width>650) this.width=650;') {
+					jQuery(nimg).attr(n, '');
+				}
+			}
+		});
+	});
+</script>
+<script type="text/javascript" charset="utf-8">
+var encodetitle = encodeURI('一篇很棒的博文分享给大家：《Samba服务器的配置》');
+
+function show51share(){
+
+	window.open('http://t.51cto.com/index.php?m=share&url=http://yangxuejun.blog.51cto.com/623927/180224&type=l&count=&relateUid=&appkey=3843950324&title=' + encodetitle);
+}
+</script>		
+<div class="m_sharebtn clear">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td width="11%" height="43" align="center" valign="middle"><img src="http://img1.51cto.com/images/share/ssk.png" alt="分享至"/></td>
+		<td width="77%" align="left" valign="top">
+<!-- 			
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_mshare" data-cmd="mshare" title="分享到一键分享"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_bdhome" data-cmd="bdhome" title="分享到百度新首页"></a><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_bdysc" data-cmd="bdysc" title="分享到百度云收藏"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></div>
+<script>
+var bds_config = {'wbUid':1706976420};
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false, 'bdPic':'http://blog.51cto.com/attachment/201305/173413310.jpg',"bdStyle":"1","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+ -->
+
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_mshare" data-cmd="mshare" title="分享到一键分享"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_bdhome" data-cmd="bdhome" title="分享到百度新首页"></a><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_bdysc" data-cmd="bdysc" title="分享到百度云收藏"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{"tsina":"2065779340"},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"http://blog.51cto.com/img/blog_down0731.jpg","bdStyle":"1","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+	<!-- Baidu Button END --></td>
+		<td width="12%" align="right" valign="middle"><a href="javascript:favorBox('open');" title="一键收藏，随时查看，分享好友！"><img src="http://home.51cto.com/public/themes/blue/images/favorite_add_small.gif" border="0" alt="一键收藏，随时查看，分享好友！" /></a></td>
+	  </tr>
+	</table>
+
+</div>			
+    		<div class="showBottom">
+            <!--<div class="reviews"><span class="fl" style="cursor:pointer;"><a onclick="openFavoulist();" id="favourer">浩浩哥来了</a>
+
+            </span><div id="favourdiv" class="support01">1人</div>
+              <span class="fl">了这篇文章</span></div>-->
+              <table width="720" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td  align="right"><img src="http://phpanddb.blog.51cto.com/image/skin/25/icon01.png" width="15" height="16" /> <span style="cursor:pointer;"><a onclick="openFavoulist();" id="favourer">浩浩哥来了</a></span></td>
+    <td width="70" align="left"><div style="line-height:28px;" id="favourdiv" class="support01">1人</div></td>
+    <td width="60" align="left">了这篇文章</td>
+  </tr>
+</table>
+
+
+
+
+            <div class="showType">类别：<a href="/623927/d-6" class="operlink">Linux</a>┆阅读(<span id="readNum">0</span>)┆评论(<span id='cmtNum' >0</span>)
+
+
+┆
+<a href="/">返回博主首页</a>┆<a href="http://blog.51cto.com">返回博客首页</a></div>
+            <div class="prevNext">
+
+			上一篇 <a href="/623927/180222" class="operlink" title="配置虚拟主机">配置虚拟主机</a>
+
+
+			下一篇 <a href="/623927/180234" class="operlink" title="Exchange OWA的发布">Exchange OWA的发布</a>
+
+
+            </div>
+
+            </div>
+
+	  </div><!--showBottom end-->
+      </div><!--modCon-->
+    <span class="modBot"></span>
+    </div><!--artShow end-->
+    <span class="blank"></span>
+	
+	<div class="relatedArt box">
+<a href="http://edu.51cto.com/" target="_blank"><img src="http://s2.51cto.com/wyfs02/M02/3F/FF/wKioL1PNvcuCm_pIAADO8xoie5E911.jpg" /></a>
+</div>
+	
+
+
+    <div class="relatedArt box">
+    <div class="title" name="zhuanti" id="zhuanti"><h2>相关文章</h2></div>
+    <div class="modCon">
+<ul>
+
+<li><a href="http://zycbeyond.blog.51cto.com/264758/49953" title="red flag 6.0下的samba服务器配置" target="_blank">red flag 6.0下的samba服务器配置</a></li>
+
+
+<li><a href="http://yuanchi.blog.51cto.com/310344/107087" title="samba服务器在企业中的一个应用实例" target="_blank">samba服务器在企业中的一个应用实例</a></li>
+
+
+<li><a href="http://eric86.blog.51cto.com/115287/48311" title="samba服务器初步搭建" target="_blank">samba服务器初步搭建</a></li>
+
+
+<li><a href="http://ygliang.blog.51cto.com/69909/53255" title="samba使用大全----服务器" target="_blank">samba使用大全----服务器</a></li>
+
+
+<li><a href="http://godoha.blog.51cto.com/108180/153456" title="CentOS4.4平台下搭建Samba服务器笔记V1.0" target="_blank">CentOS4.4平台下搭建Samba服务器笔记V1.0</a></li>
+
+
+<li><a href="http://chinagg.blog.51cto.com/294200/56107" title="samba的具体操作" target="_blank">samba的具体操作</a></li>
+
+
+<li><a href="http://linuxsky.blog.51cto.com/362206/72968" title="samba服务器的配置---匿名访问方式" target="_blank">samba服务器的配置---匿名访问方式</a></li>
+
+
+<li><a href="http://lhtwy.blog.51cto.com/375221/90363" title="在LINUX中部署Samba服务器" target="_blank">在LINUX中部署Samba服务器</a></li>
+
+
+
+</ul>
+
+
+
+<span class="blank6"></span>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div><!--相关文章 end-->
+
+
+<div class="artComm box">
+    <div class="title"><a name="replay"></a><h2>文章评论</h2></div>
+    <div class="modCon"  id="artcomment">
+		<div>  &nbsp;</div><a name='595837'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid0'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[1楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://8292004.blog.51cto.com' class='operlink' ref='nofollow'><b>浩浩哥来了</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='浩浩哥来了' parentid='595837' >回复</a></label></div></div><div align=right>2013-11-30 12:40:59</div><div class='commentcontent'>你的文件目录没有设定上下文就根本行不通</div></div><br><div>  &nbsp;</div>
+    </div><!--modCon-->
+        <span class="modBot"></span>
+</div><!--commBox end-->
+<a href="" id="com_top_top"></a>
+<form action='/comment.php?' method='post' name='form1' id='form1' onSubmit='return commentSubmit(this,"");'>
+<span class="blank1"></span>
+<div class="box writeComm" style="min-height:30px;">
+<a name='comment'></a>
+<input type='hidden' name='action' value='comment'>
+<input  id='commenttid' type='hidden' name='tid' value='180224'>
+<input type="hidden" name="com_count_ajax" id="com_count_ajax" value="1" />
+
+ <div class="title">
+	<h2 class="fl">发表评论&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+	<span class="fl"><a class="mred" target="_blank" href="http://home.51cto.com/apps/event/index.php?s=/Index/eventDetail/id/367/uid/1805422">2014阿里百川无线开放大会，等你来参加！</a></span>
+	<style type="text/css">
+		a.mred:link{ color:#ff0000; text-decoration:underline;}
+		a.mred:visited{color:#ff0000;}
+		a.mred:hover{color:#ff0000;}
+		a.mred:active{color:#ff0000;}
+	</style>
+</div>
+ <div class="modCon">
+
+ <div class="commForm">
+<dl>
+<dt>昵&nbsp;&nbsp;称：</dt>
+<dd>
+
+<input type="text" id='commentusername' name='username' value='' class="commInput fl" /><span><a href='http://home.51cto.com/index.php?reback=http%253A%252F%252Fyangxuejun.blog.51cto.com%252F623927%252F180224' style='text-decoration:underline' >登录</a>&nbsp;&nbsp;<a href='http://ucenter.51cto.com/reg_01.php?reback=http://blog.51cto.com' target='_blank' style='text-decoration: underline;'>快速注册</a></span>
+
+
+
+</dd>
+</dl>
+
+
+
+<dl id="commentyanzheng">
+
+
+<dt>验证码：</dt>
+<dd><input class="code" type="text" value=""  id="commentauthnum" name="authnum" onclick="displaysecunum();"/>
+
+  <img width="78" class="fl" height="29"  id="secunum" onclick="refimg()" style="display:none;"/><p class="fl"><span style="display:none;" id="spanfont">点击图片可刷新验证码</span><span style="display:inline;" id="clickfont">请点击后输入验证码</span><span class="pl5"><a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank" style="text-decoration: underline;">博客过2级，无需填写验证码</a></span></p></dd>
+</dl>
+<dl>
+<dt>内&nbsp;&nbsp;容：</dt>
+<dd>
+<textarea class="writeCommCon f12"  id="commentcontent" name='content'></textarea>
+</dd>
+</dl>
+</div>
+<div class="writeCommBot">
+  <input type="hidden" name="parentid" value="" id="parentid"/>
+  <input class="commBtn fl"   name='submit' type='button' id="commentsubmit" value='' onclick="commentSubmitend2()"/>
+
+ <p class="fl" style="display:none;"><input class="fl" type="checkbox" name="favour" id="favour" checked="" value="1" /><span class="fl">同时赞一个</span></p>
+
+</div>
+<span class="blank"></span>
+
+</div><!--modCon-->
+<span class="modBot"></span>
+</div>
+</form>
+
+<iframe id=iframe1 name=iframe1 width=0 height=0></iframe>
+<!--发表评论 end-->
+</div>
+</div>
+<div id="f_close_box" style="width:150px; height:300px; position:fixed; top:42%;left:0; z-index:100; _position:absolute; _margin-top: 0; _top:expression(documentElement.scrollTop+(documentElement.clientHeight-this.offsetHeight)/2+50);">
+
+	<img src="http://img1.blog.51cto.com/image/ad/down-wx.jpg" border="0" usemap="#Map1" />
+    <map name="Map1" id="Map1">
+      <area shape="rect" coords="124,7,143,25" href="javascript:void(0);" onclick="document.getElementById('f_close_box').style.display='none';" />
+    </map>
+    
+</div>
+<script language="javascript">
+	function refimg(){
+		var randval = Math.random();
+		document.getElementById("secunum").src="/seccode.php?rnum="+randval;
+	}
+	function displaysecunum()
+	{
+		var displaystr = document.getElementById("secunum").style.display;
+		if(displaystr == 'none')
+		{
+			refimg();
+			document.getElementById("clickfont").style.display = 'none';
+			document.getElementById("secunum").style.display = 'inline';
+			document.getElementById("spanfont").style.display = 'inline';
+		}
+	}
+
+	function showMsn(){
+		document.getElementById("c02").style.display = "none";
+		document.getElementById("c01").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+	function showBBS(){
+		document.getElementById("c01").style.display = "none";
+		document.getElementById("c02").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+
+	//资源页面，分享按钮
+	function copyShareUrl(title){
+
+		if (window.clipboardData){
+
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				copy = "推荐：" + title + "http://yangxuejun.blog.51cto.com/623927/180224";
+				var alertText = "复制成功，你可以粘贴到MSN或QQ中发给好友。";
+			}
+			else
+			{
+				copy = "[url=" + "http://yangxuejun.blog.51cto.com/623927/180224" + "][u]" + title + "[/u][/url]";
+				var alertText = "复制成功，你可以粘贴到论坛分享给坛友。";
+			}
+			window.clipboardData.clearData();
+			window.clipboardData.setData("Text", copy);
+			alert(alertText);
+		}
+		else if (window.netscape){
+			alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。");
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				document.getElementById("shareTextQM").value = "推荐：" + title + "http://yangxuejun.blog.51cto.com/623927/180224";
+				document.getElementById("shareTextQM").select();
+			}
+			else
+			{
+				document.getElementById("shareTextBBS").value = "[url=" + "http://yangxuejun.blog.51cto.com/623927/180224" + "][u]" + title + "[/u][/url]";
+                document.getElementById("shareTextBBS").select();
+			}
+		}
+		return false;
+	}
+	function select_login(){
+		document.getElementById('fixed').style.display='';
+	}
+	function commentcheck()
+	{
+		if(document.form1.content.value == "")
+		{
+			alert("评论内容为空!");
+			document.form1.content.focus();
+			return false;
+		}
+	}
+	function changename(){
+
+	var memberid=0;
+	memberid="";
+
+	if(document.getElementById('commentniming').checked){
+		document.getElementById('commentusername').disabled=false;
+		document.getElementById('commentusername').value='';
+		document.getElementById("indexhidden").style.display="none";
+		document.getElementById("commentindex").value='';
+		document.getElementById("commentyanzheng").style.display="";
+	}else{
+		document.getElementById('commentusername').disabled=true;
+		document.getElementById('commentusername').value="";
+		document.getElementById("indexhidden").style.display="";
+		document.getElementById("commentindex").value="http://.blog.51cto.com";
+		if(memberid>8)
+		{
+			document.getElementById("commentyanzheng").style.display="none";
+		}
+	}
+	}
+	function openFavoulist()
+	{
+		window.open ('http://blog.51cto.com/mod/favourlist.php?tid=180224','newwindow','height=300,width=500,top=400,left=400,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no,z-look=yes');
+	}
+
+	var e_zti = document.getElementById('zti');//有专题锚点
+	var maodian = window.location.href;//锚点
+	if (e_zti) {
+		//e_zti.href= (/[#]+/.test(maodian)) ? maodian : maodian + "#zhuanti";
+	}
+</script>
+<script src="http://blog.51cto.com/js/jquery-1.7.1.min.js"></script>
+<script src="http://blog.51cto.com/js/jquery.cookie.js"></script>
+<script src="http://blog.51cto.com/js/jquery.messager.js"></script>
+<link href="http://blog.51cto.com/css/blog_top/blog_top.css" rel="stylesheet" type="text/css" />
+<script src="http://blog.51cto.com/js/blog_top_list.php" type="text/javascript" language="javascript"></script>
+<style>
+.backToTop {
+    display: none;
+	WIDTH: 45px;
+	height:45px;
+	BOTTOM: 20px;
+     position: fixed;
+    _position: absolute;
+    right: 140px;
+    bottom: 10px;
+    _bottom: "auto";
+    cursor: pointer;
+    opacity: .6;
+    filter: Alpha(opacity=60);
+	text-indent:-9999px;
+}
+.tops { background:url(/images/tops.jpg) no-repeat center center; }
+</style>
+<script type="text/javascript">
+(function() {
+    var backToTopTxt = "返回顶部", backToTopEle = $('<div class="backToTop tops"></div>').appendTo($("body"))
+        .text(backToTopTxt).attr("title", backToTopTxt).click(function() {
+            $("html, body").animate({ scrollTop: 0 }, 520);
+    }), backToTopFun = function() {
+        var st = $(document).scrollTop(), winh = $(window).height();
+        (st > 0)? backToTopEle.show(): backToTopEle.hide();    
+        //IE6下的定位
+        if (!window.XMLHttpRequest) {
+            backToTopEle.css("top", st + winh - 60);    
+        }
+    };
+    $(window).bind("scroll", backToTopFun);
+    $(function() { backToTopFun(); });
+})();
+</script>
+
+
+
+
+</div>
+</div>
+<div class="clear"></div>
+<!-- <script>
+jQuery(function(){
+	var html= "<div id=\"sogou_se_tgbar\" style=\"text-align:center;margin:0px auto 2px auto;clear:both;background:url(http://home.51cto.com/public/images/notice/sogou_se_tgbar_bg_final1.gif) repeat-x;width:950px;color:#000;font-size:13px;height:36px;z-index:21474836471\"><div style=\"float:left;cursor:pointer;width:910px;text-align:center;border-left:solid #efbf00 1px;height:32px; line-height:32px;txt-align:center;\"><span style=\"\">	<a href=\"http://51ctoblog.blog.51cto.com/26414/1093282\">【新年祝福征集】51CTO社区年底嘉年华活动正在征集博主祝福语，祝福以红包的形式随机的赠送给访问51CTO的网友 点此送祝福>></a></span></div><div onclick=\"document.getElementById('sogou_se_tgbar').style.display = 'none';\" style=\"float:right;width:20px;cursor:pointer;height:28px;padding:4px 8px 0px 8px;border-right:solid #efbf00 1px\"><img style=\"border:none;margin:4px 0px 0px 0px;\" src=\"http://home.51cto.com/public/images/notice/sogou_se_tgbar_close_final1.gif\"></div></div>"
+	jQuery('body').prepend(html);
+})
+</script> -->
+</div>
+<div id="footer">
+  <div id="innerFooter">
+	<center>
+		<small>
+			Copyright By 51CTO.COM 版权所有<br><br>
+			<a href="http://blog.51cto.com" target="_blank"><img src="http://img1.51cto.com/image/skin/30/copyright.jpg"></a>
+	  </small>
+	</center>
+  </div>
+</div>
+<script src="http://home.51cto.com/index.php?s=/Index/getLoginStatus/reback/http%253A%252F%252Fyangxuejun.blog.51cto.com%252F623927%252F180224" charset='utf-8'></script>
+<div style="display:none">
+<script src="http://logs.51cto.com/rizhi/count/count.js"></script>
+
+<iframe frameborder="0" scrolling="no" width="0" height="0" src="http://log.51cto.com/pageview.php?frompos=blog_art"></iframe>
+</div>
+<div style="display:none;"><script src="http://s24.cnzz.com/stat.php?id=4274540&web_id=4274540&show=pic" language="JavaScript"></script><div>
+<script src="http://blog.51cto.com/js/poptop.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38670657-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

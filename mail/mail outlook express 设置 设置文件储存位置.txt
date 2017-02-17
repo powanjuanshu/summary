@@ -1,0 +1,3 @@
+工具->选项->维护->储存文件夹->更改->确定
+默认是在
+C:\Documents and Settings\Administrator\Local Settings\Application Data\Identities\{B339FD6C-849F-460F-AACE-293CB59E3549}\Microsoft\Outlook Express

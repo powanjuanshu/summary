@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>为Maven jetty插件（maven-jetty-plugin）配置数据源 - casheen - ITeye技术网站</title>
+    <meta name="description" content="在使用jetty插件调试maven war项目时，我们可能需要为servlet容器（这里是jetty）配置一个数据源。下面介绍如何为jetty插件配置数据源。 1. 在src/main/resources目录下创建jetty-env.xml文件，用来配置数据源，文件内容如下： &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&g ..." />
+    <meta name="keywords" content="maven, JDBC, XML, MySQL, JSP 为Maven jetty插件（maven-jetty-plugin）配置数据源" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="casheen" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1393920955" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">casheen</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://casheen.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://casheen.iteye.com" class="p-author" target="_blank">casheen</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/406013">为Maven jetty插件（maven-jetty-plugin）配置数据源</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/68473">Maven</a></li> </ul>
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/maven">maven</a><a href="http://www.iteye.com/blogs/tag/JDBC">JDBC</a><a href="http://www.iteye.com/blogs/tag/XML">XML</a><a href="http://www.iteye.com/blogs/tag/MySQL">MySQL</a><a href="http://www.iteye.com/blogs/tag/JSP">JSP</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    在使用jetty插件调试maven war项目时，我们可能需要为servlet容器（这里是jetty）配置一个数据源。下面介绍如何为jetty插件配置数据源。<br /><br />1. 在src/main/resources目录下创建jetty-env.xml文件，用来配置数据源，文件内容如下：<br /><br /><pre name="code" class="xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN"
+"http://jetty.mortbay.org/configure.dtd"&gt;
+&lt;Configure class="org.mortbay.jetty.webapp.WebAppContext"&gt;
+    &lt;New id="dataSource" class="org.mortbay.jetty.plus.naming.Resource"&gt;
+        &lt;Arg&gt;jdbc/osworkflow&lt;/Arg&gt;
+        &lt;Arg&gt;
+            &lt;New class="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"&gt;
+                &lt;Set name="url"&gt;jdbc:mysql://localhost:3306/osworkflow?useUnicode=true&amp;characterEncoding=UTF-8&lt;/Set&gt;
+                &lt;Set name="user"&gt;root&lt;/Set&gt;
+                &lt;Set name="password"&gt;&lt;/Set&gt;
+            &lt;/New&gt;
+        &lt;/Arg&gt;
+    &lt;/New&gt;
+&lt;/Configure&gt;</pre><br /><br />2. 在配置jetty插件时，指定这个数据源配置文件：<br /><br /><pre name="code" class="xml">        &lt;plugins&gt;
+            &lt;!- jetty -&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-jetty-plugin&lt;/artifactId&gt;
+                &lt;version&gt;6.1.9&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;scanIntervalSeconds&gt;10&lt;/scanIntervalSeconds&gt;
+                    &lt;jettyEnvXml&gt;src/main/resources/jetty-env.xml&lt;/jettyEnvXml&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;</pre><br /><br />3. 测试。在index.jsp中进行如下测试：<br /><pre name="code" class="jsp">
+&lt;%@ page contentType="text/html; charset=UTF-8"%&gt;
+&lt;%@ page import="javax.naming.InitialContext,javax.sql.DataSource"%&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;JNDI datasource test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt;数据源初始化成功！&lt;/h2&gt;
+&lt;%
+    InitialContext context = new InitialContext();
+    DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/osworkflow");
+%&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+  </div>
+
+  
+
+
+  <IFRAME SRC="/iframe_ggbd/794" SCROLLING=no WIDTH=468 HEIGHT=60 FRAMEBORDER=0></IFRAME>
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/469096" class="next" title="RBAC权限模型">RBAC权限模型</a>
+      |
+      <a href="/blog/295348" class="pre" title="Spring注解入门">Spring注解入门</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2009-06-10 15:07</li>
+      <li>浏览 2650</li>
+      <li><a href="#comments">评论(0)</a></li>
+       <li>论坛回复 / <a href="http://casheen.iteye.com/topic/406013">浏览</a> (0 / 2496)</li> 
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/architecture">企业架构</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/406013" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 406013;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', '为Maven jetty插件（maven-jetty-plugin）配置数据源');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', '为Maven jetty插件（maven-jetty-plugin）配置数据源');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://casheen.iteye.com'><img alt="casheen的博客" class="logo" src="http://www.iteye.com/upload/logo/user/108490/e47bfc4a-bddd-3368-9ad7-f9184cf14399.jpg?1243398626" title="casheen的博客: casheen" /></a></div>
+  <div id="blog_owner_name">casheen</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 51034 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1324994303" title="男" /></li>
+              <li>来自: 上海</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://dylinshi126.iteye.com' target='_blank'><img alt="dylinshi126的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="dylinshi126的博客: " /></a></div>
+                <div class="left"><a href='http://dylinshi126.iteye.com' target='_blank' title='dylinshi126'>dylinshi126</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://bafony.iteye.com' target='_blank'><img alt="bafony的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="bafony的博客: bafony" /></a></div>
+                <div class="left"><a href='http://bafony.iteye.com' target='_blank' title='bafony'>bafony</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://chengcheng222e.iteye.com' target='_blank'><img alt="chengcheng222e的博客" class="logo" src="http://www.iteye.com/upload/logo/user/709860/f58580a9-3864-34ce-a257-32aebd276b45-thumb.jpeg?1342658001" title="chengcheng222e的博客: " /></a></div>
+                <div class="left"><a href='http://chengcheng222e.iteye.com' target='_blank' title='chengcheng222e'>chengcheng222e</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://lohasle.iteye.com' target='_blank'><img alt="lohasle的博客" class="logo" src="http://www.iteye.com/upload/logo/user/641628/e89a1e95-da64-3da6-97b4-9332c530dcc3-thumb.jpg?1330858679" title="lohasle的博客: " /></a></div>
+                <div class="left"><a href='http://lohasle.iteye.com' target='_blank' title='lohasle'>lohasle</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (38)</a></li>
+                
+                  <li><a href="/category/79454">UML (0)</a></li>
+                
+                  <li><a href="/category/79455">权限管理 (2)</a></li>
+                
+                  <li><a href="/category/63193">Spring (1)</a></li>
+                
+                  <li><a href="/category/63194">ORM (8)</a></li>
+                
+                  <li><a href="/category/63196">SpringSide (1)</a></li>
+                
+                  <li><a href="/category/63197">ExtJS (0)</a></li>
+                
+                  <li><a href="/category/68473">Maven (5)</a></li>
+                
+                  <li><a href="/category/79459">招聘与面试 (1)</a></li>
+                
+                  <li><a href="/category/260723">数据库 (1)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (14)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (4)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2012-12">2012-12</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2010-12">2010-12</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2010-10">2010-10</a> (1)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://51even.iteye.com' target='_blank' title='chenxiang105'>chenxiang105</a>： 
+                  Nice!!<br />
+                  <a href="/blog/1749916#bc2340535">数据库版本管理工具Flyway——基础篇</a>
+                </li>
+                
+                <li>
+                  <a href='http://sgq0085.iteye.com' target='_blank' title='sgq0085'>sgq0085</a>： 
+                  savon_cn 写道你这个不能回滚啊，我觉得数据库如果能回滚 ...<br />
+                  <a href="/blog/1749916#bc2335525">数据库版本管理工具Flyway——基础篇</a>
+                </li>
+                
+                <li>
+                  <a href='http://savon-cn.iteye.com' target='_blank' title='savon_cn'>savon_cn</a>： 
+                  你这个不能回滚啊，我觉得数据库如果能回滚，那就nice了<br />
+                  <a href="/blog/1749916#bc2328466">数据库版本管理工具Flyway——基础篇</a>
+                </li>
+                
+                <li>
+                  <a href='http://hanmiao.iteye.com' target='_blank' title='hanmiao'>hanmiao</a>： 
+                  谢谢，长见识了。<br />
+                  <a href="/blog/540385#bc2322865">为Maven项目配置多个源文件夹</a>
+                </li>
+                
+                <li>
+                  <a href='http://dhcc.iteye.com' target='_blank' title='dhcc'>dhcc</a>： 
+                  好像明白了<br />
+                  <a href="/blog/295348#bc2321099">Spring注解入门</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2014 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+    
+  </body>
+</html>

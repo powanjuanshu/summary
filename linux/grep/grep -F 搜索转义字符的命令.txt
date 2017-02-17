@@ -1,0 +1,2 @@
+grep -F ********3619 /bestpayserver/project/logs/bank-2014-07-30.log
+如果不加-F，那么前面的*会按正则表达式里的通配符来搜索。

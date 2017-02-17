@@ -1,0 +1,869 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head id="Head"><title>
+	Maven入门--概念与实例(原) - Jiangshachina - BlogJava
+</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta id="metaKeywords" name="keywords" content="Maven入门--概念与实例(原)" /><link type="text/css" rel="stylesheet" href="/css/common.css" /><link id="MainCss" type="text/css" rel="stylesheet" href="http://www.blogjava.net/Skins/Cogitation/style.css" /><link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://www.blogjava.net/jiangshachina/rss.aspx" /></head>
+<body>
+<form name="Form1" method="post" action="67080.html" onSubmit="javascript:return WebForm_OnSubmit();" id="Form1">
+      <script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form1'];
+if (!theForm) {
+    theForm = document.Form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=hCqqcDq62xC48aLO1-oizzph91mftTcpBQYAMmX9y1_MEKckib0uai68YudFFqahbIRj8ZaZB19FpMr30&amp;t=634604713351482412" type="text/javascript"></script>
+
+<script language=JavaScript>
+									function ctlent(evt,id)
+											{
+												if(evt.ctrlKey && evt.keyCode == 13)
+												{	
+													try
+													{
+														TempSave(id);
+													}
+													catch(ex)
+													{
+													}
+													finally
+													{
+													    __doPostBack('AjaxHolder$PostComment$btnSubmit','')
+													}
+												}
+		
+												}</script>
+												<script language=JavaScript>function SetReplyAuhor(author){document.getElementById('AjaxHolder_PostComment_tbComment').value+="@"+author+"\n";document.getElementById('AjaxHolder_PostComment_tbComment').focus();return false}</script>
+<script src="/ScriptResource.axd?d=TB76SHHPXs0c-M9_tGhAxuTARlsiSpe5Dn70CMDyMu0Be8A_MPH2Z7oqJoDwyxmBxB28VcgK9C-XqFdMNI_DuigegyGH79krj7asDjvAKLqzs7DlCIm2xb4oSA4lM05RrYsRw4Ulp-jfriIG0&amp;t=634604713351482412" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=-BecoVNwDVCZ4TW3gB_ZzPWfgjCQ_C64O4hNc3pweA4UGq0B-lWFnUMMAtqURN0AZF_f7fxk9s5U1gsq0foUhwHdXezBbn_OgCN5EL300MOu7Jb-c7WU_a2OCK01&amp;t=634979389729873750" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=4npu1eCN6HUVuTPPO5YDuuBNC2hrBvTsGEVYQhhAo9CX_hfoT2Mz1UGnoo5C32pPXZvBizBLMnY0_szRgrGRkyv7-BsG0CvEejE8Vl3Xt8nd-D_58kXSDmaBFOFFj7w3EMKivQ2&amp;t=634979389729873750" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+<div id="leftmenu" style="display:none">
+	
+	    <table id="Calendar1_entryCal" class="Cal" cellspacing="0" cellpadding="0" title="日历" border="0" style="border-width:1px;border-style:solid;border-collapse:collapse;">
+	<tr><td colspan="7" style="background-color:Silver;"><table class="CalTitle" cellspacing="0" border="0" style="width:100%;border-collapse:collapse;">
+		<tr><td class="CalNextPrev" style="width:15%;"><a href="javascript:__doPostBack('Calendar1$entryCal','V2404')" style="color:Black" title="转到上一个月">&lt;</a></td><td align="center" style="width:70%;">2006年9月</td><td class="CalNextPrev" align="right" style="width:15%;"><a href="javascript:__doPostBack('Calendar1$entryCal','V2465')" style="color:Black" title="转到下一个月">&gt;</a></td></tr>
+	</table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center" style="width:14%;">27</td><td class="CalOtherMonthDay" align="center" style="width:14%;">28</td><td class="CalOtherMonthDay" align="center" style="width:14%;">29</td><td class="CalOtherMonthDay" align="center" style="width:14%;">30</td><td class="CalOtherMonthDay" align="center" style="width:14%;">31</td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/jiangshachina/archive/2006/09/01.html"><u>1</u></a></td><td class="CalWeekendDay" align="center" style="width:14%;">2</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">3</td><td align="center" style="width:14%;">4</td><td align="center" style="width:14%;">5</td><td align="center" style="width:14%;">6</td><td align="center" style="width:14%;">7</td><td align="center" style="width:14%;">8</td><td class="CalWeekendDay" align="center" style="width:14%;"><a href="http://www.blogjava.net/jiangshachina/archive/2006/09/09.html"><u>9</u></a></td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">10</td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/jiangshachina/archive/2006/09/11.html"><u>11</u></a></td><td align="center" style="width:14%;">12</td><td align="center" style="width:14%;">13</td><td align="center" style="width:14%;">14</td><td align="center" style="width:14%;">15</td><td class="CalWeekendDay" align="center" style="width:14%;">16</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">17</td><td align="center" style="width:14%;">18</td><td align="center" style="width:14%;">19</td><td align="center" style="width:14%;">20</td><td align="center" style="width:14%;">21</td><td align="center" style="width:14%;">22</td><td class="CalWeekendDay" align="center" style="width:14%;">23</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">24</td><td align="center" style="width:14%;">25</td><td align="center" style="width:14%;">26</td><td align="center" style="width:14%;">27</td><td align="center" style="width:14%;">28</td><td align="center" style="width:14%;">29</td><td class="CalWeekendDay" align="center" style="width:14%;">30</td></tr><tr><td class="CalOtherMonthDay" align="center" style="width:14%;">1</td><td class="CalOtherMonthDay" align="center" style="width:14%;">2</td><td class="CalOtherMonthDay" align="center" style="width:14%;">3</td><td class="CalOtherMonthDay" align="center" style="width:14%;">4</td><td class="CalOtherMonthDay" align="center" style="width:14%;">5</td><td class="CalOtherMonthDay" align="center" style="width:14%;">6</td><td class="CalOtherMonthDay" align="center" style="width:14%;">7</td></tr>
+</table>
+
+		
+		
+<H3>留言簿</H3>
+<ul>
+	<li>
+		<a id="SingleColumn1_ctl00_lnkMessages" href="http://www.blogjava.net/jiangshachina/Contact.aspx?id=1">给我留言</a>
+	<li>
+		<a id="SingleColumn1_ctl00_lnkPublicMsgView" href="http://www.blogjava.net/jiangshachina/default.aspx?opt=msg">查看公开留言</a>
+	<li>
+		<a id="SingleColumn1_ctl00_lnkPrivateMsgView" href="http://www.blogjava.net/jiangshachina/admin/MyMessages.aspx">查看私人留言</a>
+	</li>
+</ul>
+
+		<h3>随笔分类<span style="font-size:11px;font-weight:normal">(347)</span></h3>
+		
+				<ul>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl01_Link" href="http://www.blogjava.net/jiangshachina/category/38728.html">Algorithm(3)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl01_RssLink" title="Subscribe to Algorithm(3)" href="http://www.blogjava.net/jiangshachina/category/38728.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl02_Link" href="http://www.blogjava.net/jiangshachina/category/46245.html">Android(4)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl02_RssLink" title="Subscribe to Android(4)" href="http://www.blogjava.net/jiangshachina/category/46245.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl03_Link" href="http://www.blogjava.net/jiangshachina/category/16094.html">App Server(1)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl03_RssLink" title="Subscribe to App Server(1)" href="http://www.blogjava.net/jiangshachina/category/16094.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl04_Link" href="http://www.blogjava.net/jiangshachina/category/32702.html">Applet(5)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl04_RssLink" title="Subscribe to Applet(5)" href="http://www.blogjava.net/jiangshachina/category/32702.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl05_Link" href="http://www.blogjava.net/jiangshachina/category/35488.html">Build(2)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl05_RssLink" title="Subscribe to Build(2)" href="http://www.blogjava.net/jiangshachina/category/35488.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl06_Link" href="http://www.blogjava.net/jiangshachina/category/26908.html">Concurrency(5)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl06_RssLink" title="Subscribe to Concurrency(5)" href="http://www.blogjava.net/jiangshachina/category/26908.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl07_Link" href="http://www.blogjava.net/jiangshachina/category/30635.html">CoreJavaTechTips(3)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl07_RssLink" title="Subscribe to CoreJavaTechTips(3)" href="http://www.blogjava.net/jiangshachina/category/30635.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl08_Link" href="http://www.blogjava.net/jiangshachina/category/16091.html">Database(10)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl08_RssLink" title="Subscribe to Database(10)" href="http://www.blogjava.net/jiangshachina/category/16091.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl09_Link" href="http://www.blogjava.net/jiangshachina/category/23791.html">db4o(2)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl09_RssLink" title="Subscribe to db4o(2)" href="http://www.blogjava.net/jiangshachina/category/23791.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl10_Link" href="http://www.blogjava.net/jiangshachina/category/16093.html">Eclipse(5)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl10_RssLink" title="Subscribe to Eclipse(5)" href="http://www.blogjava.net/jiangshachina/category/16093.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl11_Link" href="http://www.blogjava.net/jiangshachina/category/16087.html">English(4)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl11_RssLink" title="Subscribe to English(4)" href="http://www.blogjava.net/jiangshachina/category/16087.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl12_Link" href="http://www.blogjava.net/jiangshachina/category/23551.html">Generics(2)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl12_RssLink" title="Subscribe to Generics(2)" href="http://www.blogjava.net/jiangshachina/category/23551.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl13_Link" href="http://www.blogjava.net/jiangshachina/category/33265.html">GUI(12)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl13_RssLink" title="Subscribe to GUI(12)" href="http://www.blogjava.net/jiangshachina/category/33265.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl14_Link" href="http://www.blogjava.net/jiangshachina/category/23789.html">Java(76)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl14_RssLink" title="Subscribe to Java(76)" href="http://www.blogjava.net/jiangshachina/category/23789.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl15_Link" href="http://www.blogjava.net/jiangshachina/category/16090.html">JavaEE</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl15_RssLink" title="Subscribe to JavaEE" href="http://www.blogjava.net/jiangshachina/category/16090.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl16_Link" href="http://www.blogjava.net/jiangshachina/category/16089.html">JavaSE(26)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl16_RssLink" title="Subscribe to JavaSE(26)" href="http://www.blogjava.net/jiangshachina/category/16089.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl17_Link" href="http://www.blogjava.net/jiangshachina/category/27393.html">JavaTutorials(2)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl17_RssLink" title="Subscribe to JavaTutorials(2)" href="http://www.blogjava.net/jiangshachina/category/27393.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl18_Link" href="http://www.blogjava.net/jiangshachina/category/34178.html">JFreeChart(2)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl18_RssLink" title="Subscribe to JFreeChart(2)" href="http://www.blogjava.net/jiangshachina/category/34178.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl19_Link" href="http://www.blogjava.net/jiangshachina/category/34177.html">JStockChart(2)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl19_RssLink" title="Subscribe to JStockChart(2)" href="http://www.blogjava.net/jiangshachina/category/34177.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl20_Link" href="http://www.blogjava.net/jiangshachina/category/32067.html">JUnit(4)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl20_RssLink" title="Subscribe to JUnit(4)" href="http://www.blogjava.net/jiangshachina/category/32067.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl21_Link" href="http://www.blogjava.net/jiangshachina/category/16088.html">Linux(4)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl21_RssLink" title="Subscribe to Linux(4)" href="http://www.blogjava.net/jiangshachina/category/16088.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl22_Link" href="http://www.blogjava.net/jiangshachina/category/16092.html">Maven(6)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl22_RssLink" title="Subscribe to Maven(6)" href="http://www.blogjava.net/jiangshachina/category/16092.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl23_Link" href="http://www.blogjava.net/jiangshachina/category/35489.html">Methodology(5)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl23_RssLink" title="Subscribe to Methodology(5)" href="http://www.blogjava.net/jiangshachina/category/35489.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl24_Link" href="http://www.blogjava.net/jiangshachina/category/46014.html">Mobile(2)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl24_RssLink" title="Subscribe to Mobile(2)" href="http://www.blogjava.net/jiangshachina/category/46014.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl25_Link" href="http://www.blogjava.net/jiangshachina/category/23788.html">MySQL(6)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl25_RssLink" title="Subscribe to MySQL(6)" href="http://www.blogjava.net/jiangshachina/category/23788.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl26_Link" href="http://www.blogjava.net/jiangshachina/category/23790.html">NetBeans(3)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl26_RssLink" title="Subscribe to NetBeans(3)" href="http://www.blogjava.net/jiangshachina/category/23790.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl27_Link" href="http://www.blogjava.net/jiangshachina/category/27188.html">OpenWorld/JavaOne/SunTechDays(20)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl27_RssLink" title="Subscribe to OpenWorld/JavaOne/SunTechDays(20)" href="http://www.blogjava.net/jiangshachina/category/27188.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl28_Link" href="http://www.blogjava.net/jiangshachina/category/23792.html">Oracle(2)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl28_RssLink" title="Subscribe to Oracle(2)" href="http://www.blogjava.net/jiangshachina/category/23792.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl29_Link" href="http://www.blogjava.net/jiangshachina/category/16086.html">Others(18)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl29_RssLink" title="Subscribe to Others(18)" href="http://www.blogjava.net/jiangshachina/category/16086.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl30_Link" href="http://www.blogjava.net/jiangshachina/category/33264.html">Swing(7)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl30_RssLink" title="Subscribe to Swing(7)" href="http://www.blogjava.net/jiangshachina/category/33264.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl31_Link" href="http://www.blogjava.net/jiangshachina/category/32066.html">UnitTest(5)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl31_RssLink" title="Subscribe to UnitTest(5)" href="http://www.blogjava.net/jiangshachina/category/32066.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl32_Link" href="http://www.blogjava.net/jiangshachina/category/47778.html">Watches(1)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl32_RssLink" title="Subscribe to Watches(1)" href="http://www.blogjava.net/jiangshachina/category/47778.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl33_Link" href="http://www.blogjava.net/jiangshachina/category/50359.html">原创(32)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl33_RssLink" title="Subscribe to 原创(32)" href="http://www.blogjava.net/jiangshachina/category/50359.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl34_Link" href="http://www.blogjava.net/jiangshachina/category/27200.html">翻译(58)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl34_RssLink" title="Subscribe to 翻译(58)" href="http://www.blogjava.net/jiangshachina/category/27200.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl35_Link" href="http://www.blogjava.net/jiangshachina/category/45615.html">非技术(8)</a> <a id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl35_RssLink" title="Subscribe to 非技术(8)" href="http://www.blogjava.net/jiangshachina/category/45615.html/rss">(rss)</a></li>
+			
+				</ul>
+			
+	
+		<h3>随笔档案<span style="font-size:11px;font-weight:normal">(112)</span></h3>
+		
+				<ul>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl01_Link" href="http://www.blogjava.net/jiangshachina/archive/2013/08.html">2013年8月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl02_Link" href="http://www.blogjava.net/jiangshachina/archive/2013/07.html">2013年7月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl03_Link" href="http://www.blogjava.net/jiangshachina/archive/2013/06.html">2013年6月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl04_Link" href="http://www.blogjava.net/jiangshachina/archive/2013/05.html">2013年5月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl05_Link" href="http://www.blogjava.net/jiangshachina/archive/2013/03.html">2013年3月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl06_Link" href="http://www.blogjava.net/jiangshachina/archive/2013/02.html">2013年2月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl07_Link" href="http://www.blogjava.net/jiangshachina/archive/2013/01.html">2013年1月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl08_Link" href="http://www.blogjava.net/jiangshachina/archive/2012/12.html">2012年12月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl09_Link" href="http://www.blogjava.net/jiangshachina/archive/2012/11.html">2012年11月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl10_Link" href="http://www.blogjava.net/jiangshachina/archive/2012/10.html">2012年10月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl11_Link" href="http://www.blogjava.net/jiangshachina/archive/2012/07.html">2012年7月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl12_Link" href="http://www.blogjava.net/jiangshachina/archive/2012/06.html">2012年6月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl13_Link" href="http://www.blogjava.net/jiangshachina/archive/2012/02.html">2012年2月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl14_Link" href="http://www.blogjava.net/jiangshachina/archive/2012/01.html">2012年1月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl15_Link" href="http://www.blogjava.net/jiangshachina/archive/2011/12.html">2011年12月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl16_Link" href="http://www.blogjava.net/jiangshachina/archive/2011/11.html">2011年11月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl17_Link" href="http://www.blogjava.net/jiangshachina/archive/2011/10.html">2011年10月 (3)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl18_Link" href="http://www.blogjava.net/jiangshachina/archive/2011/07.html">2011年7月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl19_Link" href="http://www.blogjava.net/jiangshachina/archive/2011/05.html">2011年5月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl20_Link" href="http://www.blogjava.net/jiangshachina/archive/2011/03.html">2011年3月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl21_Link" href="http://www.blogjava.net/jiangshachina/archive/2011/02.html">2011年2月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl22_Link" href="http://www.blogjava.net/jiangshachina/archive/2010/12.html">2010年12月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl23_Link" href="http://www.blogjava.net/jiangshachina/archive/2010/11.html">2010年11月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl24_Link" href="http://www.blogjava.net/jiangshachina/archive/2010/10.html">2010年10月 (3)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl25_Link" href="http://www.blogjava.net/jiangshachina/archive/2010/09.html">2010年9月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl26_Link" href="http://www.blogjava.net/jiangshachina/archive/2010/08.html">2010年8月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl27_Link" href="http://www.blogjava.net/jiangshachina/archive/2010/07.html">2010年7月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl28_Link" href="http://www.blogjava.net/jiangshachina/archive/2010/06.html">2010年6月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl29_Link" href="http://www.blogjava.net/jiangshachina/archive/2010/05.html">2010年5月 (4)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl30_Link" href="http://www.blogjava.net/jiangshachina/archive/2010/02.html">2010年2月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl31_Link" href="http://www.blogjava.net/jiangshachina/archive/2010/01.html">2010年1月 (3)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl32_Link" href="http://www.blogjava.net/jiangshachina/archive/2009/12.html">2009年12月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl33_Link" href="http://www.blogjava.net/jiangshachina/archive/2009/11.html">2009年11月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl34_Link" href="http://www.blogjava.net/jiangshachina/archive/2009/10.html">2009年10月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl35_Link" href="http://www.blogjava.net/jiangshachina/archive/2009/09.html">2009年9月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl36_Link" href="http://www.blogjava.net/jiangshachina/archive/2009/08.html">2009年8月 (3)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl37_Link" href="http://www.blogjava.net/jiangshachina/archive/2009/07.html">2009年7月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl38_Link" href="http://www.blogjava.net/jiangshachina/archive/2009/06.html">2009年6月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl39_Link" href="http://www.blogjava.net/jiangshachina/archive/2009/05.html">2009年5月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl40_Link" href="http://www.blogjava.net/jiangshachina/archive/2009/04.html">2009年4月 (4)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl41_Link" href="http://www.blogjava.net/jiangshachina/archive/2008/12.html">2008年12月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl42_Link" href="http://www.blogjava.net/jiangshachina/archive/2008/11.html">2008年11月 (3)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl43_Link" href="http://www.blogjava.net/jiangshachina/archive/2008/10.html">2008年10月 (6)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl44_Link" href="http://www.blogjava.net/jiangshachina/archive/2008/09.html">2008年9月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl45_Link" href="http://www.blogjava.net/jiangshachina/archive/2008/08.html">2008年8月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl46_Link" href="http://www.blogjava.net/jiangshachina/archive/2008/07.html">2008年7月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl47_Link" href="http://www.blogjava.net/jiangshachina/archive/2008/06.html">2008年6月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl48_Link" href="http://www.blogjava.net/jiangshachina/archive/2008/05.html">2008年5月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl49_Link" href="http://www.blogjava.net/jiangshachina/archive/2008/04.html">2008年4月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl50_Link" href="http://www.blogjava.net/jiangshachina/archive/2008/02.html">2008年2月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl51_Link" href="http://www.blogjava.net/jiangshachina/archive/2007/12.html">2007年12月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl52_Link" href="http://www.blogjava.net/jiangshachina/archive/2007/11.html">2007年11月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl53_Link" href="http://www.blogjava.net/jiangshachina/archive/2007/10.html">2007年10月 (2)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl54_Link" href="http://www.blogjava.net/jiangshachina/archive/2007/09.html">2007年9月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl55_Link" href="http://www.blogjava.net/jiangshachina/archive/2007/07.html">2007年7月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl56_Link" href="http://www.blogjava.net/jiangshachina/archive/2007/06.html">2007年6月 (3)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl57_Link" href="http://www.blogjava.net/jiangshachina/archive/2007/05.html">2007年5月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl58_Link" href="http://www.blogjava.net/jiangshachina/archive/2007/04.html">2007年4月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl59_Link" href="http://www.blogjava.net/jiangshachina/archive/2007/03.html">2007年3月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl60_Link" href="http://www.blogjava.net/jiangshachina/archive/2007/01.html">2007年1月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl61_Link" href="http://www.blogjava.net/jiangshachina/archive/2006/12.html">2006年12月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl62_Link" href="http://www.blogjava.net/jiangshachina/archive/2006/11.html">2006年11月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl63_Link" href="http://www.blogjava.net/jiangshachina/archive/2006/10.html">2006年10月 (1)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl64_Link" href="http://www.blogjava.net/jiangshachina/archive/2006/09.html">2006年9月 (3)</a> </li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl65_Link" href="http://www.blogjava.net/jiangshachina/archive/2006/08.html">2006年8月 (9)</a> </li>
+			
+				</ul>
+			
+	
+		<h3>文章分类</h3>
+		
+				<ul>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl01_Link" href="http://www.blogjava.net/jiangshachina/category/26906.html">Concurrency</a> <a id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl01_RssLink" title="Subscribe to Concurrency" href="http://www.blogjava.net/jiangshachina/category/26906.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl02_Link" href="http://www.blogjava.net/jiangshachina/category/26905.html">Java</a> <a id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl02_RssLink" title="Subscribe to Java" href="http://www.blogjava.net/jiangshachina/category/26905.html/rss">(rss)</a></li>
+			
+				<li><a id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl03_Link" href="http://www.blogjava.net/jiangshachina/category/26907.html">Java SE</a> <a id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl03_RssLink" title="Subscribe to Java SE" href="http://www.blogjava.net/jiangshachina/category/26907.html/rss">(rss)</a></li>
+			
+				</ul>
+			
+	
+		<h3>Attach</h3>
+		
+				<ul>
+			
+				</ul>
+			
+	
+
+<script language="JavaScript">
+function SearchGoogle(key,evt,site)
+		{
+			if(evt.keyCode==13 || evt.keyCode==0 || evt.type =='click')
+			{
+				key.focus();
+				var keystr = encodeURIComponent(key.value);
+				url = "http://www.google.com/search?q=";
+				url = url+keystr;
+				url += "&ie=UTF-8&oe=GB2312&hl=zh-CN&domains="+site+"&sitesearch="+site;
+				window.location=url;
+				return false;
+			}
+		}
+</script>
+<H3>搜索</H3>
+<ul>
+	<li>
+	  <li><input style="WIDTH: 130px" type="text" name="q" id="q" onKeyDown="return SearchGoogle(document.getElementById('q'),event,'www.blogjava.net/jiangshachina')">&nbsp;<input onClick="SearchGoogle(document.getElementById('q'),event,'www.blogjava.net/jiangshachina')" type="button" value="搜索" name="sa">
+	</li>
+</ul>
+
+<H3>积分与排名</H3>
+<ul>
+	<li>
+		积分 -
+		252043
+	<li>
+		排名 -
+		105
+	</li>
+</ul>
+
+<h3>最新评论
+	<a id="SingleColumn1__ff0641_RSSHyperlink1" href="http://www.blogjava.net/jiangshachina/CommentsRSS.aspx"><img src="/images/xml.gif" style="border-width:0px;" /></a></h3>
+<div class="RecentComment">
+	
+			<ul>
+		
+			<li style="word-break:break-all">
+				<a id="SingleColumn1__ff0641_CommentList_ctl01_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2013/07/26/401546.html#402002">1. re: 世界一直在变(原)[未登录]</a>
+			</li>
+			<li style="word-break:break-all">
+				Agree
+			</li>
+			<li style="text-align:right;margin-right:4px">
+				--Oscar</li>
+		
+			<li style="word-break:break-all">
+				<a id="SingleColumn1__ff0641_CommentList_ctl02_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2013/07/16/401546.html#401624">2. re: 世界一直在变(原)</a>
+			</li>
+			<li style="word-break:break-all">
+				@车尘马足显者事，酒盏花枝隐士缘<br>The same to you
+			</li>
+			<li style="text-align:right;margin-right:4px">
+				--Sha Jiang</li>
+		
+			<li style="word-break:break-all">
+				<a id="SingleColumn1__ff0641_CommentList_ctl03_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2013/07/16/401546.html#401617">3. re: 世界一直在变(原)</a>
+			</li>
+			<li style="word-break:break-all">
+				good luck coders .
+			</li>
+			<li style="text-align:right;margin-right:4px">
+				--车尘马足显者事，酒盏花枝隐士缘</li>
+		
+			<li style="word-break:break-all">
+				<a id="SingleColumn1__ff0641_CommentList_ctl04_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2013/07/05/401088.html#401247">4. re: 你不是全面的专家(译)</a>
+			</li>
+			<li style="word-break:break-all">
+				专家就是专家呀
+			</li>
+			<li style="text-align:right;margin-right:4px">
+				--俄罗斯认证</li>
+		
+			<li style="word-break:break-all">
+				<a id="SingleColumn1__ff0641_CommentList_ctl05_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2013/06/08/369898.html#400377">5. re: 理解Java对象序列化(原)</a>
+			</li>
+			<li style="word-break:break-all">
+				不错@dzwillpower<br>
+			</li>
+			<li style="text-align:right;margin-right:4px">
+				--gsg</li>
+		
+			<li style="word-break:break-all">
+				<a id="SingleColumn1__ff0641_CommentList_ctl06_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2013/06/05/367802.html#400251">6. re: 探索JUnit4扩展：深入Rule(原)</a>
+			</li>
+			<li style="word-break:break-all">
+				@eric<br>了解到内部实现之后，这些所谓的扩展设计似乎也傻傻滴@_@
+			</li>
+			<li style="text-align:right;margin-right:4px">
+				--Sha Jiang</li>
+		
+			<li style="word-break:break-all">
+				<a id="SingleColumn1__ff0641_CommentList_ctl07_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2013/06/05/367802.html#400233">7. re: 探索JUnit4扩展：深入Rule(原)[未登录]</a>
+			</li>
+			<li style="word-break:break-all">
+				太好了，解决了我很多的问题，谢谢，学习了
+			</li>
+			<li style="text-align:right;margin-right:4px">
+				--eric</li>
+		
+			<li style="word-break:break-all">
+				<a id="SingleColumn1__ff0641_CommentList_ctl08_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2013/05/16/125293.html#399336">8. re: Java Tutorials -- Generics(译)</a>
+			</li>
+			<li style="word-break:break-all">
+				评论内容较长,点击标题查看
+			</li>
+			<li style="text-align:right;margin-right:4px">
+				--jianfeng</li>
+		
+			<li style="word-break:break-all">
+				<a id="SingleColumn1__ff0641_CommentList_ctl09_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2013/05/07/364367.html#398953">9. re: 详解Eclipse断点(原)</a>
+			</li>
+			<li style="word-break:break-all">
+				啥呀这是
+			</li>
+			<li style="text-align:right;margin-right:4px">
+				--呵呵呵</li>
+		
+			<li style="word-break:break-all">
+				<a id="SingleColumn1__ff0641_CommentList_ctl10_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2013/03/20/369898.html#396765">10. re: 理解Java对象序列化(原)</a>
+			</li>
+			<li style="word-break:break-all">
+				写的不错，受益匪浅
+			</li>
+			<li style="text-align:right;margin-right:4px">
+				--Jesse Zhang</li>
+		
+			</ul>
+		
+</div>
+
+<h3>阅读排行榜</h3>
+<div class="RecentComment">
+	
+			<ul style="word-break:break-all">
+		
+			<li>
+				<a id="SingleColumn1__10559d1_TopList_ctl01_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2006/09/01/67080.html">1. Maven入门--概念与实例(原)(23028)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__10559d1_TopList_ctl02_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2006/12/12/79093.html">2. Maven入门--较复杂的实例(原)(7823)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__10559d1_TopList_ctl03_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2006/08/11/63050.html">3. 在Linux上安装Oracle10g(原)(5789)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__10559d1_TopList_ctl04_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2012/02/13/369898.html">4. 理解Java对象序列化(原)(5355)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__10559d1_TopList_ctl05_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2010/05/02/319888.html">5. 你所不知道的五件事情--Java集合框架API(第一部分)(译)(5255)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__10559d1_TopList_ctl06_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2011/11/20/364367.html">6. 详解Eclipse断点(原)(4763)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__10559d1_TopList_ctl07_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2006/09/11/68944.html">7. Maven Weed(原)(4469)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__10559d1_TopList_ctl08_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2006/09/09/68680.html">8. Continuum入门--实例(原)(4100)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__10559d1_TopList_ctl09_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2008/07/24/217214.html">9. 判定一个点是否在三角形内(原)(3728)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__10559d1_TopList_ctl10_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2009/04/01/263241.html">10. 树的遍历(原)(3569)</a>
+			</li>
+		
+			</ul>
+		
+</div>
+
+<h3>评论排行榜</h3>
+<div class="RecentComment">
+	
+			<ul style="word-break:break-all">
+		
+			<li>
+				<a id="SingleColumn1__28919cf_TopList_ctl01_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2008/08/28/225345.html">1. JStockChart -- Preview(原)(57)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__28919cf_TopList_ctl02_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2006/09/11/68944.html">2. Maven Weed(原)(34)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__28919cf_TopList_ctl03_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2006/09/01/67080.html">3. Maven入门--概念与实例(原)(25)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__28919cf_TopList_ctl04_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2006/12/12/79093.html">4. Maven入门--较复杂的实例(原)(19)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__28919cf_TopList_ctl05_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2007/06/20/125293.html">5. Java Tutorials -- Generics(译)(16)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__28919cf_TopList_ctl06_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2008/09/08/227555.html">6. JStockChart -- Getting Started(Timeseries)(原)(15)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__28919cf_TopList_ctl07_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2007/10/30/144709.html">7. Sun Tech Days 2007 -- Preview(原)(14)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__28919cf_TopList_ctl08_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2008/07/24/217214.html">8. 判定一个点是否在三角形内(原)(13)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__28919cf_TopList_ctl09_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2010/01/11/308867.html">9. 优秀的Java开发者应得更好的薪酬(译)(13)</a>
+			</li>
+		
+			<li>
+				<a id="SingleColumn1__28919cf_TopList_ctl10_Hyperlink1" href="http://www.blogjava.net/jiangshachina/archive/2011/11/20/364367.html">10. 详解Eclipse断点(原)(12)</a>
+			</li>
+		
+			</ul>
+		
+</div>
+
+<ul><li>
+<div id="cnblogsgooglead" width="180" height="150"></div>
+<div id="cnblogsgoogleadcode" style="display:none">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4210569241504288";
+google_ad_width = 180;
+google_ad_height = 150;
+google_ad_format = "180x150_as";
+google_ad_channel ="";
+google_ad_type = "text";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+</li></ul>
+	
+	<!--
+	<br><br>
+	<p align="center">
+	<a href="http://www.WebHost4Life.com/default.asp?refid=MarkHWagner">
+	<img src="http://www.WebHost4Life.com/images/banner3.gif" width="120"
+	height="60" border="0" alt="Join WebHost4Life.com"></a>
+	</p>
+-->
+</div>
+<div id="main">
+	
+					
+<div class="post">
+  <div class="postText">
+		<div align="center"><font size="4"><strong>Maven入门--概念与实例</strong> </font><br />
+</div>
+<font size="2"><font size="3"><font size="2">&nbsp;&nbsp;&nbsp; 最近由于工作原因在研究、应用Maven，有了一些体会就写成了此文。本文虽然是Maven2的入门文章，但并不涉及Maven的历史、下载与安装，这些内容可以到Maven的官方网站上了解。本文主要是关注Maven中的重要概念，并以一个实例来阐述使用Maven的基本方法。</font> <br />
+<strong>1 关键名词</strong> </font><br />
+&nbsp;&nbsp;&nbsp; <strong>Project</strong>：任何您想build的事物，Maven都可以认为它们是工程。这些工程被定义为工程对象模型(POM，Poject Object Model)。一个工程可以依赖其它的工程；一个工程也可以由多个子工程构成。<br />
+&nbsp;&nbsp;&nbsp; <strong>POM</strong>：POM(pom.xml)是Maven的核心文件，它是指示Maven如何工作的元数据文件，类似于Ant中的build.xml文件。POM文件位于每个工程的根目录中。<br />
+&nbsp;&nbsp;&nbsp; <strong>GroupId</strong>：groupId是一个工程的在全局中唯一的标识符，一般地，它就是工程名。groupId有利于使用一个完全的包名，将一个工程从其它有类似名称的工程里区别出来。<br />
+&nbsp;&nbsp;&nbsp; <strong>Artifact</strong>：artifact是工程将要产生或需要使用的文件，它可以是jar文件，源文件，二进制文件，war文件，甚至是pom文件。每个artifact都由groupId和artifactId组合的标识符唯一识别。需要被使用(依赖)的artifact都要放在仓库(见Repository)中，否则Maven无法找到(识别)它们。<br />
+&nbsp;&nbsp;&nbsp; <strong>Dependency</strong>：为了能够build或运行，一个典型的Java工程会依赖其它的包。在Maven中，这些被依赖的包就被称为dependency。dependency一般是其它工程的artifact。<br />
+&nbsp;&nbsp;&nbsp; <strong>Plug-in</strong>：Maven是由插件组织的，它的每一个功能都是由插件提供的。插件提供goal(类似于Ant中的target)，并根据在POM中找到的元数据去完成工作。主要的Maven插件要是由Java写成的，但它也支持用Beanshell或Ant脚本写成的插件。<br />
+&nbsp;&nbsp;&nbsp; <strong>Repository</strong>：仓库用于存放artifact，它可以是本地仓库，也可以是远程仓库。Maven有一个默认的远程仓库--central，可以从<font color="#0000ff">http://www.ibiblio.org/maven2/</font>下载其中的artifact。在Windows平台上，本地仓库的默认地址是<font color="#0000ff"><em>User_Home</em>\.m2\repository</font>。<br />
+&nbsp;&nbsp;&nbsp; <strong>Snapshot</strong>：工程中可以(也应该)有一个特殊版本，它的版本号包括<em>SNAPSHOT</em>字样。该版本可以告诉Maven，该工程正处于开发阶段，会经常更新(但还未发布)。当其它工程使用此类型版本的artifact时，Maven会在仓库中寻找该artifact的最新版本，并自动下载、使用该最新版。<br />
+<strong><font size="3">2 Maven Build Life Cycle</font></strong><br />
+&nbsp;&nbsp;&nbsp; 软件项目一般都有相似的开发过程：准备，编译，测试，打包和部署，Maven将上述过程称为Build Life Cycle。在Maven中，这些生命周期由一系列的短语组成，每个短语对应着一个(或多个)操作；或对应着一个(或多个)goal(类似于Ant中的target)。<br />
+&nbsp;&nbsp;&nbsp; 如编译源文件的命令<font color="#0000ff">mvn compile</font>中的compile是一个生命周期短语。同时该命令也可以等价于<font color="#0000ff">mvn compiler:compile</font>，其中的compiler是一个插件，它提供了compile(<strong>此compile与mvn compile中的compile意义不同</strong>)goal；compiler还可提供另一个goal--testCompile，该goal用于编译junit测试类。<br />
+&nbsp;&nbsp;&nbsp; 在执行某一个生命周期时，Maven会首先执行该生命周期之前的其它周期。如要执行compile，那么将首先执行validate，generate-source，process-source和generate-resources，最后再执行compile本身。<em>关于Maven中默认的生命周期短语，请见参考资源[6]中的附录B.3</em>。<br />
+<font size="3"><strong>3 标准目录布局</strong></font><br />
+&nbsp;&nbsp;&nbsp; Maven为工程中的源文件，资源文件，配置文件，生成的输出和文档都制定了一个标准的目录结构。Maven鼓励使用标准目录布局，这样就不需要进行额外的配置，而且有助于各个不同工程之间的联接。当然，Maven也允许定制个性的目录布局，这就需要进行更多的配置。<em>关于Maven的标准目录布局，请见参考资源[6]中的附录B.1</em>。<br />
+<strong><font size="3">4 Maven的优点</font></strong><br />
+&nbsp;&nbsp;&nbsp; [1]build逻辑可以被重用。在Ant中可能需要多次重复地写相同的语句，但由于POM的继承性，可以复用其它的POM文件中的语句。这样既可以写出清晰的build语句，又可以构造出层次关系良好的build工程。<br />
+&nbsp;&nbsp;&nbsp; [2]不必关注build工作的实现细节。我们只需要使用一些build生命周期短语就可以达到我们的目标，而不必管Maven是如何做到这些的。如，只需要告诉Maven要安装(install)，那么它自然就会验证，编译，打包，及安装。<br />
+&nbsp;&nbsp;&nbsp; [3]Maven会自动加载工程依赖的artifact所依赖的其它artifact(Transitive Dependency)，而不用显示的将这些artifact全部写到dependency中。<br />
+&nbsp;&nbsp;&nbsp; [4]如果完全使用Maven的标准目录布局，那么可以极大地减少配置细节。<br />
+<font size="3"><strong>5 实例</strong></font><br />
+<strong>5.1 构想</strong><br />
+&nbsp;&nbsp;&nbsp; 由于只是阐述Maven的基本使用方法，所以本文将要设计的实例，只是一个简单的Maven demo。该实例包含两个工程：普通应用程序工程(app)和Web应用工程(webapp)。app工程提供一个简单的Java类；webapp工程只包含一个Servlet，并将使用app中的Java类。<br />
+&nbsp;&nbsp;&nbsp; 该Demo的目标是能够正确地将webapp制成war包，以供部署时使用。要能够正确制作war，自然首先就必须要能够正确的编译源代码，且要将App模块制成jar包。本文创建的工程所在的目录是<font color="#0000ff">D:\maven\demo</font>。<br />
+<strong>5.2 App工程</strong><br />
+&nbsp;&nbsp;&nbsp; 可以使用Maven的archetype插件来创建新工程，命令如下：<br />
+&nbsp;&nbsp;&nbsp; <font color="#0000ff">D:\maven\demo&gt;mvn archetype:create -DgroupId=ce.demo.mvn -DartifactId=app</font><br />
+该工程的groupId是ce.demo.mvn，那么该工程的源文件将放在Java包ce.demo.mvn中。artifactId是app，那么该工程根目录的名称将为app。<br />
+&nbsp;&nbsp;&nbsp; 当第一次执行该命令时，Maven会从central仓库中下载一些文件。这些文件包含插件archetype，以及它所依赖的其它包。该命令执行完毕后，在目录D:\maven\demo下会出现如下目录布局：<br />
+<div style="border: 1px solid #cccccc; padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: #eeeeee;"><!--<br />
+<br />
+Code highlighting produced by Actipro CodeHighlighter (freeware)<br />
+http://www.CodeHighlighter.com/<br />
+<br />
+--><span style="color: #000000;">app<br />
+|--&nbsp;pom.xml<br />
+`--&nbsp;src<br />
+&nbsp;&nbsp;&nbsp;&nbsp;|--&nbsp;main<br />
+&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;`--&nbsp;java<br />
+&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;ce<br />
+&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;demo<br />
+&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;mvn<br />
+&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;App.java<br />
+&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;test<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;java<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;ce<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;demo<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;mvn<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;AppTest.java</span></div>
+因本文暂时不涉及JUnit测试，故请将目录<font color="#0000ff">app\src\test</font>目录删除(不删除也没关系 ^_^)。然后再修改App.java文件，其完全内容如下：<br />
+<font color="#008000">
+<div style="border: 1px solid #cccccc; padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: #eeeeee;"><img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /><span style="color: #0000ff;">package</span><span style="color: #000000;">&nbsp;ce.demo.mvn;<br />
+<img id="Codehighlighter1_38_105_Open_Image" onClick="this.style.display='none'; codehighlighter1_38_105_open_text.style.display=" none=""  ;="" codehighlighter1_38_105_closed_image.style.="" codehighlighter1_38_105_closed_text.style.="" display="'inline';" src="http://www.blogjava.net/Images/OutliningIndicators/ExpandedBlockStart.gif" alt="" align="top"><img id="Codehighlighter1_38_105_Closed_Image" style="display: none;" onClick="this.style.display='none'; codehighlighter1_38_105_closed_text.style.display=" none=""  ;="" codehighlighter1_38_105_open_image.style.="" codehighlighter1_38_105_open_text.style.="" display="'inline';" src="http://www.blogjava.net/Images/OutliningIndicators/ContractedBlock.gif" alt="" align="top"></span><span style="color: #0000ff;">public</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">class</span><span style="color: #000000;">&nbsp;App&nbsp;</span><span id="Codehighlighter1_38_105_Closed_Text" style="border: 1px solid #808080; display: none; background-color: #ffffff;"><img src="http://www.blogjava.net/Images/dot.gif" alt="" /></span><span id="Codehighlighter1_38_105_Open_Text"><span style="color: #000000;">{<br />
+<img id="Codehighlighter1_77_103_Open_Image" onClick="this.style.display='none'; codehighlighter1_77_103_open_text.style.display=" none=""  ;="" codehighlighter1_77_103_closed_image.style.="" codehighlighter1_77_103_closed_text.style.="" display="'inline';" src="http://www.blogjava.net/Images/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"><img id="Codehighlighter1_77_103_Closed_Image" style="display: none;" onClick="this.style.display='none'; codehighlighter1_77_103_closed_text.style.display=" none=""  ;="" codehighlighter1_77_103_open_image.style.="" codehighlighter1_77_103_open_text.style.="" display="'inline';" src="http://www.blogjava.net/Images/OutliningIndicators/ContractedSubBlock.gif" alt="" align="top">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">public</span><span style="color: #000000;">&nbsp;String&nbsp;getStr(String&nbsp;str)&nbsp;</span><span id="Codehighlighter1_77_103_Closed_Text" style="border: 1px solid #808080; display: none; background-color: #ffffff;"><img src="http://www.blogjava.net/Images/dot.gif" alt="" /></span><span id="Codehighlighter1_77_103_Open_Text"><span style="color: #000000;">{<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/InBlock.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">return</span><span style="color: #000000;">&nbsp;str;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;}</span></span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/ExpandedBlockEnd.gif" alt="" align="top" />}</span></span></div>
+</font>其实，如果我们能够清楚地知道Maven的标准目录布局，就可以不使用archetype插件来创建工程原型；如果我们要定制个性的目录布局，那么就更没有必要使用archetype插件了。<br />
+<strong>5.3 WebApp工程</strong><br />
+&nbsp;&nbsp;&nbsp; 我们仍然如创建app工程一样使用archetype插件来创建webapp工程，命令如下：<br />
+&nbsp;&nbsp;&nbsp; <font color="#0000ff">D:\maven\demo&gt;mvn archetype:create -DgroupId=ce.demo.mvn -DartifactId=webapp -DarchetypeArtifactId=maven-archetype-webapp</font><br />
+&nbsp;&nbsp;&nbsp; 第一次运行此命令时，也会从central仓库中下载一些与Web应用相关的artifact(如javax.servlet)。此命令与创建app的命令的不同之处是，多设置了一个属性archetypeArtifacttId，该属性的值为maven-archetype-webapp。即告诉Maven，将要创建的工程是一个Web应用工程。创建app工程时没有使用该属性值，是由于archetype默认创建的是应用程序工程。同样的，执行完该命令之后，会出现如下标准目录布局：<br />
+<div style="border: 1px solid #cccccc; padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: #eeeeee;"><!--<br />
+<br />
+Code highlighting produced by Actipro CodeHighlighter (freeware)<br />
+http://www.CodeHighlighter.com/<br />
+<br />
+--><span style="color: #000000;">webapp<br />
+|--&nbsp;pom.xml<br />
+`--&nbsp;src<br />
+&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;main<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--&nbsp;webapp<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><font size="-0"><font size="2"><span style="color: #000000;">|</span></font></font><span style="color: #000000;">--&nbsp;index.jsp<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |--&nbsp;WEB-INF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; `--&nbsp;web.xml</span></div>
+&nbsp;&nbsp;&nbsp; 根据5.1节的构想，webapp工程将只包含一个Servlet，所以我们不需要index.jsp文件，请将其删除。此时大家可以发现，目前的目录布局中并没有放Servlet，即Java源文件的地方。根据参考资源[6]中的附录B.1，以及app工程中Java源文件的布局，可以知道Servlet（它仍然是一个Java类文件）仍然是放在<font color="#0000ff">webapp\src\main\java</font>目录中，请新建该目录。此处的Servlet是一个简单HelloServlet，其完整代码如下：<br />
+<div style="border: 1px solid #cccccc; padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: #eeeeee;"><font color="#008000"><img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></font><span style="color: #0000ff;">package</span><span style="color: #000000;">&nbsp;hello;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #0000ff;">import</span><span style="color: #000000;">&nbsp;java.io.IOException;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #0000ff;">import</span><span style="color: #000000;">&nbsp;java.io.PrintWriter;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #0000ff;">import</span><span style="color: #000000;">&nbsp;javax.servlet.ServletException;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #0000ff;">import</span><span style="color: #000000;">&nbsp;javax.servlet.http.HttpServlet;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #0000ff;">import</span><span style="color: #000000;">&nbsp;javax.servlet.http.HttpServletRequest;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #0000ff;">import</span><span style="color: #000000;">&nbsp;javax.servlet.http.HttpServletResponse;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #0000ff;">import</span><span style="color: #000000;">&nbsp;ce.demo.mvn.App;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">&nbsp;引用app工程中的App类</span><span style="color: #008000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #000000;"><br />
+<img id="Codehighlighter1_333_776_Open_Image" onClick="this.style.display='none'; codehighlighter1_333_776_open_text.style.display=" none=""  ;="" codehighlighter1_333_776_closed_image.style.="" codehighlighter1_333_776_closed_text.style.="" display="'inline';" src="http://www.blogjava.net/Images/OutliningIndicators/ExpandedBlockStart.gif" alt="" align="top"><img id="Codehighlighter1_333_776_Closed_Image" style="display: none;" onClick="this.style.display='none'; codehighlighter1_333_776_closed_text.style.display=" none=""  ;="" codehighlighter1_333_776_open_image.style.="" codehighlighter1_333_776_open_text.style.="" display="'inline';" src="http://www.blogjava.net/Images/OutliningIndicators/ContractedBlock.gif" alt="" align="top"></span><span style="color: #0000ff;">public</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">class</span><span style="color: #000000;">&nbsp;HelloServlet&nbsp;</span><span style="color: #0000ff;">extends</span><span style="color: #000000;">&nbsp;HttpServlet&nbsp;</span><span id="Codehighlighter1_333_776_Closed_Text" style="border: 1px solid #808080; display: none; background-color: #ffffff;"><img src="http://www.blogjava.net/Images/dot.gif" alt="" /></span><span id="Codehighlighter1_333_776_Open_Text"><span style="color: #000000;">{<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/InBlock.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">private</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">static</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">final</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">long</span><span style="color: #000000;">&nbsp;serialVersionUID&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;</span><span style="color: #000000;">-</span><span style="color: #000000;">3696470690560528247L</span><span style="color: #000000;">;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/InBlock.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">public</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">void</span><span style="color: #000000;">&nbsp;doGet(HttpServletRequest&nbsp;request,&nbsp;HttpServletResponse&nbsp;response)<br />
+<img id="Codehighlighter1_536_774_Open_Image" onClick="this.style.display='none'; codehighlighter1_536_774_open_text.style.display=" none=""  ;="" codehighlighter1_536_774_closed_image.style.="" codehighlighter1_536_774_closed_text.style.="" display="'inline';" src="http://www.blogjava.net/Images/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"><img id="Codehighlighter1_536_774_Closed_Image" style="display: none;" onClick="this.style.display='none'; codehighlighter1_536_774_closed_text.style.display=" none=""  ;="" codehighlighter1_536_774_open_image.style.="" codehighlighter1_536_774_open_text.style.="" display="'inline';" src="http://www.blogjava.net/Images/OutliningIndicators/ContractedSubBlock.gif" alt="" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">throws</span><span style="color: #000000;">&nbsp;ServletException,&nbsp;IOException&nbsp;</span><span id="Codehighlighter1_536_774_Closed_Text" style="border: 1px solid #808080; display: none; background-color: #ffffff;"><img src="http://www.blogjava.net/Images/dot.gif" alt="" /></span><span id="Codehighlighter1_536_774_Open_Text"><span style="color: #000000;">{<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/InBlock.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;App&nbsp;app&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">new</span><span style="color: #000000;">&nbsp;App();<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/InBlock.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;str&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;app.getStr(</span><span style="color: #000000;">"</span><span style="color: #000000;">CE&nbsp;Maven&nbsp;Demo</span><span style="color: #000000;">"</span><span style="color: #000000;">);<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/InBlock.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PrintWriter&nbsp;out&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;response.getWriter();<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/InBlock.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out.print(</span><span style="color: #000000;">"</span><span style="color: #000000;">&lt;html&gt;&lt;body&gt;</span><span style="color: #000000;">"</span><span style="color: #000000;">);<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/InBlock.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out.print(</span><span style="color: #000000;">"</span><span style="color: #000000;">&lt;h1&gt;</span><span style="color: #000000;">"</span><span style="color: #000000;">&nbsp;</span><span style="color: #000000;">+</span><span style="color: #000000;">&nbsp;str);<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/InBlock.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out.print(</span><span style="color: #000000;">"</span><span style="color: #000000;">&lt;/body&gt;&lt;/html&gt;</span><span style="color: #000000;">"</span><span style="color: #000000;">);<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;}</span></span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/ExpandedBlockEnd.gif" alt="" align="top" />}</span></span></div>
+<strong>5.4 POM文件</strong><br />
+&nbsp;&nbsp;&nbsp; 大家可以发现，在前面新建工程时，我们并没有提到各个工程中的pom.xml文件。现在将要讨论这个问题。我们先看看app工程中的POM文件，其完整内容如下：<br />
+<div style="border: 1px solid #cccccc; padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: #eeeeee;"><img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">project</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">modelVersion</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">4.0.0</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">modelVersion</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">ce.demo.mvn</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">app</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">packaging</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">jar</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">packaging</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">1.0</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">name</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">CE&nbsp;Maven&nbsp;Demo&nbsp;--&nbsp;App</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">name</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">project</span><span style="color: #0000ff;">&gt;</span></div>
+&nbsp;&nbsp;&nbsp; 大家可以发现此我帖出来的内容与实际由archetype插件生成的POM文件的内容有些不同，但基本上是一致的。只是为了使文件中的语句更清晰，此处删除了一些冗余的内容，并修改了该工程的version和name的值，以与此例子的背景来符合。在目前情况下modelVersion值将被固定为4.0.0，这也是Maven2唯一能够识别的model版本。groupId，artifactId的值与创建工程时使用的命令中的相关属性值是一致的。packaging的值由工程的类型决定，如应用程序工程的packaging值为jar，Web应用工程的packaging值为war。上述情况也可以从webapp的POM文件中看出，下面将看看这个pom的完整内容。<br />
+<div style="border: 1px solid #cccccc; padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: #eeeeee;"><img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">project</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">modelVersion</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">4.0.0</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">modelVersion</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">ce.demo.mvn</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">webapp</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">packaging</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">war</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">packaging</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">1.0</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">name</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">CE&nbsp;Maven&nbsp;Demo&nbsp;--&nbsp;WebApp</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">name</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">ce.demo.mvn</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">app</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">1.0</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">javax.servlet</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">servlet-api</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">2.4</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">provided</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">&nbsp;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">project</span><span style="color: #0000ff;">&gt;</span></div>
+&nbsp;&nbsp;&nbsp; 比较app与webapp中的POM，除前面已经提过的packaging的差别外，我们还可以发现webapp中的POM多了dependencies项。由于webapp需要用到app工程中的类(见HelloServlet源代码)，它还需要javax.servlet包(因为该包并不默认存在于jsdk中)。故，我们必须要将它们声明到依赖关系中。<br />
+<strong>5.5 执行</strong><br />
+&nbsp;&nbsp;&nbsp; 上述两个工程创建完毕后，就需要执行一些命令来看看会有什么结果出现。我们首先进入app目录，并执行命令<font color="#0000ff">mvn compile</font>，然后会在该目录下发现新生成的目录target\classes，即编译后的class文件(包括它的包目录)就放在了这里。再执行命令mvn package，在目录target中就会生成app-1.0.jar文件。该文件的全名由如下形式确定：<strong>artifactId-version.packaging</strong>。根据第2章的叙述可以知道，执行命令<font color="#0000ff">mvn package</font>时，将首先将产生执行命令<font color="#0000ff">mvn compile</font>之后的结果，故如果要打包，那么只需要执行<font color="#0000ff">mvn package</font>即可。<br />
+&nbsp;&nbsp;&nbsp; 在app工程中执行完之后，就需要进入webapp工程了。进入webapp目录，此次将只执行<font color="#0000ff">mvn package</font>命令(隐示地执行了compile过程)。此次命令的执行并不成功，会出现如下问题：<br />
+<font color="#0000ff">
+<div style="border: 1px solid #cccccc; padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: #eeeeee;"><!--<br />
+<br />
+Code highlighting produced by Actipro CodeHighlighter (freeware)<br />
+http://www.CodeHighlighter.com/<br />
+<br />
+--><span style="color: #000000;">D:\maven\demo\webapp&gt;mvn&nbsp;package<br />
+&#8230;&#8230;<br />
+<strong>Downloading:&nbsp;http://repo1.maven.org/maven2/ce/demo/mvn/app/</strong></span><strong><span style="color: #000000;">1.0</span><span style="color: #000000;">/app-</span><span style="color: #000000;">1.0</span></strong><span style="color: #000000;"><strong>.pom</strong><br />
+</span><span style="font-weight: bold; color: #800000;">[</span><span style="color: #800000;">INFO</span><span style="font-weight: bold; color: #800000;">]</span><span style="color: #000000;">&nbsp;------------------------------------------------------------------------<br />
+</span><span style="font-weight: bold; color: #800000;">[</span><span style="color: #800000;">ERROR</span><span style="font-weight: bold; color: #800000;">]</span><span style="color: #000000;">&nbsp;BUILD&nbsp;ERROR<br />
+</span><span style="font-weight: bold; color: #800000;">[</span><span style="color: #800000;">INFO</span><span style="font-weight: bold; color: #800000;">]</span><span style="color: #000000;">&nbsp;------------------------------------------------------------------------<br />
+</span><span style="font-weight: bold; color: #800000;">[</span><span style="color: #800000;">INFO</span><span style="font-weight: bold; color: #800000;">]</span><span style="color: #000000;">&nbsp;Error&nbsp;building&nbsp;POM&nbsp;(may&nbsp;not&nbsp;be&nbsp;this&nbsp;project's&nbsp;POM).<br />
+Project&nbsp;ID:&nbsp;ce.demo.mvn:app<br />
+Reason:&nbsp;Error&nbsp;getting&nbsp;POM&nbsp;for&nbsp;'ce.demo.mvn:app'&nbsp;from&nbsp;the&nbsp;repository:&nbsp;Error&nbsp;transferring&nbsp;file<br />
+&nbsp;&nbsp;ce.demo.mvn:app:pom:</span><span style="color: #000000;">1.0</span><span style="color: #000000;"><br />
+from&nbsp;the&nbsp;specified&nbsp;remote&nbsp;repositories:<br />
+&nbsp;&nbsp;central&nbsp;(http://repo1.maven.org/maven2)<br />
+&#8230;&#8230;</span></div>
+</font>&nbsp;&nbsp;&nbsp; 由粗体内容可知，Maven正试图从central仓库下载app工程的artifact，但central仓库肯定不会有这个artifact，其结果只能是执行失败!由第1章artifact名词的解释可知，被依赖的artifact必须存在于仓库(远程或本地)中，但目前webapp所依赖的app必不存在于仓库中，所以执行只能失败。<br />
+&nbsp;&nbsp;&nbsp; 解决这个问题有两种方法：[1]将app-1.0.jar安装到仓库中，使它成为一个artifact；[2]构建一个更高层次的工程，使app和webapp成为这个工程的子工程，然后从这个更高层次工程中执行命令。<br />
+&nbsp;&nbsp;&nbsp; 第一种方法比较简单（<font color="#0000ff"><font color="#000000">见</font>http://www.blogjava.net/jiangshachina/admin/EditPosts.aspx<font color="#000000">中的第一个主题</font></font>），此处将详细讨论第2种方法(见5.6节)。<br />
+<strong>5.6 更高层次工程</strong><br />
+&nbsp;&nbsp;&nbsp; 我们可以将app和webapp的上一级目录demo作为这两个工程的</font> <font size="2">一个</font> <font size="2">更高层次工程，即使用app和webapp成为这个工程的子工程。为了使demo目录成为一个demo工程，只需要在这个目录下添加一个pom.xml文件，该文件内容如下：<br />
+<div style="border: 1px solid #cccccc; padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: #eeeeee;"><img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">project</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">modelVersion</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">4.0.0</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">modelVersion</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">ce.demo</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">mvn-demo</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">packaging</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">pom</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">packaging</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">1.0</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">name</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">CE&nbsp;Maven&nbsp;Demo</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">name</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;<br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">modules</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">module</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">app</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">module</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">module</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">webapp</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">module</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">modules</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;"><br />
+<img src="http://www.blogjava.net/Images/OutliningIndicators/None.gif" alt="" align="top" /></span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">project</span><span style="color: #0000ff;">&gt;</span></div>
+&nbsp;&nbsp;&nbsp; 与app和webapp中的POM相比，demo的POM使用了modules项，modules用于声明本工程的子工程，module中的值对应于子工程的artifact名。而且该POM的packaging类型必须为pom。<br />
+&nbsp;&nbsp;&nbsp; 有了demo工程后，我们只需要在demo目录下执行相关命令就可以了。通过如下命令即可验证：<br />
+&nbsp;&nbsp;&nbsp; [1]<font color="#0000ff">mvn clean</font> &#8211; 消除工程(包括所有子工程)中产生的所有输出。这本文的实例中，实际上是删除target目录。由于之前的操作只有app工程产生了target目录，而webapp并没有，所以将只会删除app工程中的target目录。<br />
+&nbsp;&nbsp;&nbsp; [2]<font color="#0000ff">mvn package</font> &#8211; 将工程制作成相应的包，app工程是作成jar包(app-1.0.jar)，webapp工程是作成war包(webapp-1.0.war)。打开webapp-1.0.war包，可以发现app-1.0.jar被放到了WEB-INF的lib目录中。<br />
+<font size="3"><strong>6 小结</strong></font><br />
+&nbsp;&nbsp;&nbsp; 通过以上的叙述与实例，应该可以对Maven有一个粗略的认识了。使用Maven关键是要弄清楚如何写pom.xml文件，就如同使用Ant要会写build.xml文件一样。在POM中可以直接写入Ant的task脚本，也可以调用Ant的build.xml文件(推荐)，所以Maven也可以完成Ant的绝大多数工作(但不必安装Ant)。注意：<strong>使用Maven就不要再过多的使用Ant脚本</strong>。<br />
+&nbsp;&nbsp;&nbsp; 利用好Maven的继承特性及子工程的关系，可以很好地简化POM文件，并能够构建层次结构良好的工程，有利于工程的维护。<br />
+<font size="3"><strong>7 参考资源</strong></font><br />
+[1]Maven官方网站. http://maven.apache.org<br />
+[2]Maven POM文件参考结构. http://maven.apache.org/ref/current/maven-model/maven.html<br />
+[3]Super POM. http://maven.apache.org/guides/introduction/introduction-to-the-pom.html<br />
+[4]Maven主要插件的列表. http://maven.apache.org/plugins<br />
+[5]Maven基本使用指南. http://maven.apache.org/guides/index.html<br />
+[6]Better Build with Maven. http://www.mergere.com/m2book_download.jsp -- 强烈推荐<br />
+[7]介绍Maven2. http://www.javaworld.com/javaworld/jw-12-2005 /jw-1205-maven_p.html<br />
+[8]揭秘Maven2 POM. http://www.javaworld.com/javaworld/jw-05-2006/jw-0529-maven.html<br />
+[9]Maven让事情变得简单. http://www-128.ibm.com/developerworks/cn/java/j-maven<br />
+[10]Maven文档集. http://docs.codehaus.org/display/MAVENUSER/Home<br />
+[11]有效利用Maven2的站点生成功能. http://www.matrix.org.cn/resource/article/44/44491_Maven2.html<br />
+</font><br />
+  </div>
+	
+	<div class="postfoot"></div>
+</div>
+<img src ="http://www.blogjava.net/jiangshachina/aggbug/67080.html?webview=1" width = "1" height = "1" /></div>
+<p id="footer">
+  <script type="text/javascript">
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("AjaxHolder_PostComment_ValidationSummary1"));
+var Page_Validators =  new Array(document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator1"), document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator2"), document.getElementById("AjaxHolder_PostComment_Requiredfieldvalidator4"), document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator3"));
+//]]>
+  </script>
+
+  <script type="text/javascript">
+//<![CDATA[
+var AjaxHolder_PostComment_RequiredFieldValidator1 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator1"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator1");
+AjaxHolder_PostComment_RequiredFieldValidator1.controltovalidate = "AjaxHolder_PostComment_tbTitle";
+AjaxHolder_PostComment_RequiredFieldValidator1.errormessage = "请输入标题";
+AjaxHolder_PostComment_RequiredFieldValidator1.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator1.initialvalue = "";
+var AjaxHolder_PostComment_RequiredFieldValidator2 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator2"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator2");
+AjaxHolder_PostComment_RequiredFieldValidator2.controltovalidate = "AjaxHolder_PostComment_tbName";
+AjaxHolder_PostComment_RequiredFieldValidator2.errormessage = "请输入你的姓名";
+AjaxHolder_PostComment_RequiredFieldValidator2.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator2.initialvalue = "";
+var AjaxHolder_PostComment_Requiredfieldvalidator4 = document.all ? document.all["AjaxHolder_PostComment_Requiredfieldvalidator4"] : document.getElementById("AjaxHolder_PostComment_Requiredfieldvalidator4");
+AjaxHolder_PostComment_Requiredfieldvalidator4.controltovalidate = "AjaxHolder_PostComment_CodeNumberTextBox";
+AjaxHolder_PostComment_Requiredfieldvalidator4.errormessage = "请输入验证码";
+AjaxHolder_PostComment_Requiredfieldvalidator4.display = "Dynamic";
+AjaxHolder_PostComment_Requiredfieldvalidator4.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_Requiredfieldvalidator4.initialvalue = "";
+var AjaxHolder_PostComment_RequiredFieldValidator3 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator3"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator3");
+AjaxHolder_PostComment_RequiredFieldValidator3.controltovalidate = "AjaxHolder_PostComment_tbComment";
+AjaxHolder_PostComment_RequiredFieldValidator3.errormessage = "请输入评论内容";
+AjaxHolder_PostComment_RequiredFieldValidator3.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator3.initialvalue = "";
+var AjaxHolder_PostComment_ValidationSummary1 = document.all ? document.all["AjaxHolder_PostComment_ValidationSummary1"] : document.getElementById("AjaxHolder_PostComment_ValidationSummary1");
+AjaxHolder_PostComment_ValidationSummary1.showmessagebox = "True";
+AjaxHolder_PostComment_ValidationSummary1.showsummary = "False";
+//]]>
+  </script>
+
+
+  <script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        
+document.getElementById('AjaxHolder_PostComment_ValidationSummary1').dispose = function() {
+    Array.remove(Page_ValidationSummaries, document.getElementById('AjaxHolder_PostComment_ValidationSummary1'));
+}
+Sys.Application.initialize();
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator1').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator1'));
+}
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator2').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator2'));
+}
+
+document.getElementById('AjaxHolder_PostComment_Requiredfieldvalidator4').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_Requiredfieldvalidator4'));
+}
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator3').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator3'));
+}
+//]]>
+  </script>
+</p>
+</form>
+    <script type="text/javascript" src="/script/ShowHidden.js"></script>
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-476124-3']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+</body>
+</html>

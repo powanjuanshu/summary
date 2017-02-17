@@ -1,0 +1,1561 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<script id="allmobilize" charset="utf-8" src="http://a.yunshipei.com/ac0ecd4968d76dbea889a1a0f28e176f/allmobilize.min.js"></script><meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+<meta http-equiv="Content-Type"	content="text/html;	charset=gb2312">
+<title>Jetty使用总结 - 技术改变生活商业成就梦想 - 51CTO技术博客</title>
+<meta name="description" content="配置指南：http://blog.csdn.net/ph9527/article/details/50631571、Jetty的配置参数&nbsp;关于其他命令的更多信息请查阅Jetty文档中的mvnjetty:runpage、mvnjetty:run-explodedpage、mvnjetty:run-warpage。自动..">
+<meta name="keywords" content="职场,休闲,jetty">
+<meta http-equiv="Cache-Control" content="private">
+<base href="http://tianya23.blog.51cto.com/"></base>
+<script src="/js/def.js"></script>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/message.js" type=text/javascript></SCRIPT>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/user_comment.js" type=text/javascript></SCRIPT>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/base2.js" type=text/javascript></SCRIPT>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/dialog_utf8.js" type=text/javascript></SCRIPT>
+<link href="/css/skin/30.css" rel="stylesheet" type="text/css">
+<link rel="alternate" href="../rss.php?uid=1081650" type="application/rss+xml" title="RSS 2.0">
+<link rel="edituri" type="application/rsd+xml" title="rsd" href="xmlrpc.php?rsd=1" />
+<link href="http://blog.51cto.com/group/css/header_master_top.css" rel="stylesheet" type="text/css" />
+<link href="http://blog.51cto.com/css/skin/base.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	.mainNav li a{display:inline-block}
+</style>
+<script>
+var myid = "";
+function add_flink(){
+	if(myid==""){
+
+        var refurlk = "http://tianya23.blog.51cto.com/1081650/423405";
+
+				//commentSubmit("",refurlk);
+				location.href="http://home.51cto.com/index.php?reback="+encodeURIComponent(encodeURIComponent(refurlk));
+				return false;
+	}else{
+      		var url='/mod/edit_flink.php?type=addflink&uid=1081650&flink=http://tianya23.blog.51cto.com';
+		var ajax = InitAjax1();
+		ajax.open("GET", url, true);
+		ajax.onreadystatechange = function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				if(ajax.responseText==""){
+					alert("添加成功。");
+				}
+				if(ajax.responseText=="1"){
+				alert("链接指向自己。");
+				}
+				if(ajax.responseText=="2"){
+				alert("友情链接已存在。")
+				}
+			}
+		}
+		ajax.send(null);
+	}
+
+
+
+}
+function sendmessage(){
+
+	var refurlk = "http://tianya23.blog.51cto.com/1081650/423405";
+
+	if(myid){
+		return true;
+	}else{
+		commentSubmit("",refurlk);
+		return false;
+	}
+}
+function copylink(ourl){
+	if(!ourl){
+		var clipBoardContent = "http://tianya23.blog.51cto.com";
+	}else{
+		var clipBoardContent = ourl;
+	}
+	window.clipboardData.setData("Text",clipBoardContent);
+	alert("复制成功!");
+	return false;
+}
+function correctPNG() {
+if (document.getElementById('blog_touxian'))
+{
+var img = document.getElementById('blog_touxian');
+      var imgName = img.src.toUpperCase()
+      var imgID = (img.id) ? "id='" + img.id + "' " : ""
+      var imgClass = (img.className) ? "class='" + img.className + "' " : ""
+      var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
+      var imgStyle = "display:inline-block;" + img.style.cssText
+      if (img.align == "left") imgStyle = "float:left;" + imgStyle
+      if (img.align == "right") imgStyle = "float:right;" + imgStyle
+      if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
+      var strNewHTML = "<span " + imgID + imgClass + imgTitle
+         + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+         + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+         + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" ;
+      img.outerHTML = strNewHTML;
+}
+}
+//window.attachEvent("onload", correctPNG);
+window.onload=correctPNG;
+
+function copy(){
+var text=document.getElementById("txtUser").value;
+if(copy2Clipboard(text)!=false){ 
+alert("复制成功了！ "); 
+} 
+}
+function copy2Clipboard(txt){ 
+if(window.clipboardData){ 
+window.clipboardData.clearData(); 
+window.clipboardData.setData("Text",txt); 
+}else if(navigator.userAgent.indexOf("Opera")!=-1){ 
+window.location=txt; 
+}else if(window.netscape){ 
+try{ 
+netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+} 
+catch(e){ 
+alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。"); 
+return false; 
+} 
+var clip=Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard); 
+if(!clip)return; 
+var trans=Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable); 
+if(!trans)return; 
+trans.addDataFlavor('text/unicode'); 
+var str=new Object(); 
+var len=new Object(); 
+var str=Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString); 
+var copytext=txt;str.data=copytext; 
+trans.setTransferData("text/unicode",str,copytext.length*2); 
+var clipid=Components.interfaces.nsIClipboard; 
+if(!clip)return false; 
+clip.setData(trans,null,clipid.kGlobalClipboard); 
+return true;
+} 
+}
+
+function mod_close(){
+  document.getElementById('mod_tg').style.display="none";
+}
+
+function match_invite(uid) {
+    var url='/mod/match_invite.php';
+	var ajax = InitAjax();
+    var re = 'uid=' + uid;
+	ajax.open("POST", url, true);
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	ajax.send(re);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            if(ajax.responseText == 1){
+                alert("邀请信息已经发送成功。");
+            } else if(ajax.responseText=="-1"){
+                alert("邀请失败，请稍候再试。");
+            } else if(ajax.responseText=="2"){
+                alert("该用户已经报名了。")
+            }
+        }
+    }
+}
+
+</script>
+<style type="text/css">
+/*
+.artContent img {max-width:450px !important;}
+.showContent img{max-width:650px!important;}
+*/
+
+.artContent img{max-width: 450px; width:expression(this.width > 450 ? "450px" : this.width)}
+/*
+.showContent img{max-width: 450px; width:expression(this.width > 650 ? "650px" : this.width)}
+*/
+
+
+</style>
+</head>
+
+<body >
+
+<div id="home_top">
+<div class="top_nav" style="width:990px;">
+<div class="left"  style="margin-top:10px; width:440px;"><a href="http://blog.51cto.com/" target="_blank"><img src="images/head_blog_sibebar_logo.gif" align="absmiddle" style="margin-top:-4px;" /></a><a target="_blank" href="http://www.51cto.com">51CTO首页</a><img height="25" align="absmiddle" width="16" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="margin-top:-4px;" ><a href="http://blog.51cto.com/" target="_blank">51CTO博客</a><img height="25" align="absmiddle" width="16" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="margin-top:-4px;" ><a href="http://home.51cto.com?reback=http%253A%252F%252Ftianya23.blog.51cto.com%252F1081650%252F423405" >我的博客</a><img height="25" align="absmiddle" width="16" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="margin-top:-4px;" >
+
+<a target="_blank" href="http://blog.51cto.com/search.php">搜索</a>
+<a href="javascript:void(0);" style="color:#FF0000; text-decoration:underline; display:none" id="showMessagerDim">每日博报</a>
+</div>
+
+<div class="right" style="width:550px;">
+<div class="more"><img height="16" align="absmiddle" width="27" src="http://home.51cto.com/public/themes/blue/images/top_shequ.gif">社区：<a target="_blank" href="http://edu.51cto.com/">学院</a><a target="_blank" href="http://bbs.51cto.com">论坛</a><a target="_blank" href="http://blog.51cto.com">博客</a><a target="_blank" href="http://down.51cto.com">下载</a><a href="javascript:viod(0);" onmouseout="popupClose()" onmouseover="show(3,this)">更多<img align="absmiddle" style="padding-left: 4px;" src="http://images.51cto.com/images/art/top_images/nav_ico1.gif"></a>            </div>            <span id="login_status"><div class="login" id="login_status"></div>    </span>                </div>    </div></div>
+
+
+
+<div class="subMenu3" id="s3" onmouseover="popupNoClose()" onmouseout="popupClose()">
+<ul>
+<li><a href="http://home.51cto.com" target="_blank">家园</a></li>
+<li><a href="http://edu.51cto.com" target="_blank">学院</a></li>
+<li><a href="http://blog.51cto.com" target="_blank">博客</a></li>
+<li><a href="http://bbs.51cto.com" target="_blank">论坛</a></li>
+<li><a href="http://down.51cto.com" target="_blank">下载</a></li>
+
+<li><a href="http://selftest.51cto.com" target="_blank">自测</a></li>
+<li><a href="http://doctor.51cto.com" target="_blank">门诊</a></li>
+<li><a href="http://blog.51cto.com/newsletter/" target="_blank">周刊</a></li>
+<li><a href="http://book.51cto.com" target="_blank">读书</a></li>
+<li><a href="http://g.51cto.com" target="_blank">技术圈</a></li>
+</ul>
+</div>
+<!--简导航end-->
+
+
+
+<div class="headerBox">
+<div class="header">
+<div class="header_l">
+<div class="logo_blogname">
+
+
+<div class="blogLogo">
+<a href="http://blog.51cto.com/blogcommend" target="_blank"><img src="http://blog.51cto.com/image/skin/blogLogo01.png" width="161px;" height="70px;"></a>
+</div>
+
+
+<div class="blogName">
+<a href="http://tianya23.blog.51cto.com"><h1>技术改变生活商业成就梦想</h1></a>
+</div>
+</div><!--logo_blogname end-->
+<div class="blogLink">
+
+<a href="http://tianya23.blog.51cto.com">http://tianya23.blog.51cto.com</a> <input id="txtUser" type="hidden" size=32 value="http://tianya23.blog.51cto.com" />   <a href="javascript:void(0);" onclick="copy();">【复制】</a> <a href='/rss.php?uid=1081650' target='_blank'><a href='/rss.php?uid=1081650' target='_blank'>【订阅】</a>
+
+</div>
+
+
+
+</div><!--header_l end-->
+<div class="header_r">
+<div class="blogInfo"><span><a href="http://tianya23.blog.51cto.com/1081650/o" title="察看tianya23所有原创文章">原创</a>:410</span><span><a href="http://tianya23.blog.51cto.com/1081650/t" title="察看tianya23所有翻译文章">翻译</a>:0</span><span><a href="http://tianya23.blog.51cto.com/1081650/c" title="察看tianya23所有转载文章">转载</a>:283</span></div>
+<div class="blogNav"><a href="/">博 客</a>|<a href="http://home.51cto.com/apps/photo/index.php?s=/Index/photos/uid/1081650">图库</a>|<a href="/addblog.php">写博文</a>|<a href="http://51ctoblog.blog.51cto.com/all/26414/4" target="_blank">帮 助</a></div>
+</div>
+</div>
+<!--header end-->
+</div><!--headerBox end-->
+<div class="mainNav">
+<span class="mainNavT"></span>
+<ul>
+<li><a href="/">首页</a></li>|<li><a href="/1081650/d-16">计算机基础</a></li>|<li><a href="/1081650/d-1">Java基础</a></li>|<li><a href="/1081650/d-9">Java Web</a></li>|<li><a href="/1081650/d-12">JavaEE</a></li>|<li><a href="/1081650/d-2">Linux Shell</a></li>|<li><a href="/1081650/d-13">Linux系统管理</a></li>|<li><a href="/1081650/d-3">Oralce基础篇</a></li>|<li><a href="/1081650/d-23">Oracle调优篇</a></li>|<li><a href="/1081650/d-10">Open Source</a></li>|<li><a href="/1081650/d-6">Apache & Jboss</a></li>|<li><a href="/1081650/d-7">Ant & Maven</a></li>|<li><a href="/1081650/d-17">C & C++</a></li>|<li><a href="/1081650/d-14">功能测试</a></li>|<li><a href="/1081650/d-15">性能测试&Jmeter</a></li>|<li><a href="/1081650/d-8">IT技术 -Windows系列</a></li>|<li><a href="/1081650/d-19">常用工具</a></li>|<li><a href="/1081650/d-5">IT发展＋IT的商业模式</a></li>|<li><a href="/1081650/d-18">情感生活</a></li>|<li><a href="/1081650/d-20">IT历史</a></li>|<li><a href="/1081650/d-21">项目总结</a></li>|<li><a href="/1081650/d-22">SQL语法篇</a></li>|<li><a href="/1081650/d-11">Mysql基础篇</a></li>|<li><a href="/1081650/d-24">Mysql调优篇</a></li>|<li><a href="/1081650/d-25">Eclipse使用技巧</a></li>|<li><a href="/1081650/d-26">杂项</a></li>|<li><a href="/1081650/d-27">文学常识</a></li>|<li><a href="/1081650/d-28">持续集成&Hudson</a></li>|<li><a href="/1081650/d-29">Python</a></li>|<li><a href="/1081650/d-30">页面技术</a></li>|<li><a href="/1081650/d-31">设计模式</a></li>|<li><a href="/1081650/d-32">并发编程</a></li>|<li><a href="/1081650/d-33">Spring</a></li>|<li><a href="/1081650/d-34">Android开发</a></li>|<li><a href="/1081650/d-35">OSGI</a></li>|<li><a href="/1081650/d-36">编译原理</a></li>|<li><a href="/1081650/d-37">性能与安全</a></li>|<li><a href="/1081650/d-38">Ubuntu</a></li>|<li><a href="/1081650/d-39">Webx</a></li>|<li><a href="/1081650/d-40">ExtJS</a></li>
+</ul>
+<span class="mainNavB"></span>
+</div>
+<!--mainNav end-->
+
+<script type="text/javascript" src="http://blog.51cto.com/js/jquery-1.7.1.min.js"></script>
+<!--[if IE 6]>
+  <script type="text/javascript" src="http://images.watchstor.com/newhomes/png.js"></script>
+  <script>
+    DD_belatedPNG.fix('img,input,ul,li, .get-box, div, .add, .sub, .ui-slider-handle, .footer-chopper');
+  </script>
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="/neweditor/editor/css/fck_editorarea.css"></link>
+<script type="text/javascript" charset="gbk" src="/e/u/third-party/SyntaxHighlighter/shCores.js"></script>
+<link rel="stylesheet" type="text/css" href="/e/u/third-party/SyntaxHighlighter/shCoreDefault.css"/>
+<script type="text/javascript" charset="gbk" src="/e/u/uparse.js"></script>
+<script type="text/javascript">
+	uParse('.showContent');
+	$(function(){
+		//SyntaxHighlighter.config.clipboardSwf = 'http://bbs.51cto.com/plugins/syntaxhighlighter/scripts/clipboard.swf'; 
+		//为了在编辑器之外能展示高亮代码
+		SyntaxHighlighter.highlight();
+	}); 
+</script>
+<script type="text/javascript">
+/**
+ * 回复评论需要用的js
+ * 2012-5-14
+ * by:chengtao
+ */
+ jQuery(function(){
+	blogpost.init();//初始化博客回复功能
+ })
+ /**
+  * 处理博文评论功能优化
+  */
+ blogpost={
+	abstruct_list:null,
+	init:function(){
+		blogpost.bind();//绑定一些时间
+		this.abstruct_list=new Array();//初始化保存评论信息的数组
+	},
+	/**
+	 * 博客回复需要绑定的一些事件
+	 */
+	bind:function(){
+		/**
+		 * 点击回复的事件
+		 */
+		jQuery('.repost').live('click',function(){
+			blogpost.repost(jQuery(this).attr('user_name'),jQuery(this).attr('parentid'));
+			return false;
+		});
+		/**
+		 * 点击楼层进行翻页且找到锚点
+		 */
+		jQuery('.anchor_page').live('click',function(){
+			var parentid = $(this).attr('parentid');
+			var tid=$(this).attr('tid');
+			$.get('/comments.php?tid='+tid+'&parentid='+parentid,function(data){
+				$('#artcomment').html(data);
+				window.location.hash=''+parentid;
+			})
+			return false;
+		}),
+		jQuery('.anchor_page').live('mouseover',function(){
+			var parentid = $(this).attr('parentid');
+			if(!blogpost.abstruct_list[parentid]){
+				var this_t = $(this);
+				$.get('/comments.php?cid='+parentid,function(data,textStatus){
+					blogpost.abstruct_list[parentid]=data;
+					this_t.attr('title',this_t.text()+':'+ blogpost.abstruct_list[parentid]);
+				});
+			}else{
+				$(this).attr('title',$(this).text()+':'+blogpost.abstruct_list[parentid]);
+			}
+		})
+	},
+	/**
+	 * @param user_name 用户名
+	 * @param parentid  父评论id
+	 */
+	repost:function(user_name,parentid){
+		window.location.hash='comment';
+		jQuery('#parentid').val(parentid);
+		jQuery('#commentcontent').val('回复 '+user_name+":\n").focus();
+		if(!$.browser.mozilla){
+			var elem = jQuery('#commentcontent')[0];		
+			var caretPos = elem.value.length;
+			if (elem.createTextRange) {
+				var range = elem.createTextRange();
+				range.move('character', caretPos);
+				range.select();
+			}else{
+				elem.setSelectionRange(caretPos, caretPos);	
+			}
+		}
+	},
+	/**
+	 * 发送完毕之后清理表单数据 不是ajax可能用不到
+	 */
+	clean:function(){
+		
+	}
+ }
+</script>
+<script type="text/javascript">
+jQuery(function(){
+	var anchor = document.location.hash;
+	var comment_id=anchor.split('#')[1];
+	if(!isNaN(parseInt(comment_id))){//是整形
+		jQuery.get('/comments.php?tid=423405&parentid='+comment_id,function(data){
+			jQuery('#artcomment').html(data);
+			window.location.hash=''+comment_id;
+		})
+	}
+});
+</script>
+
+
+
+<script type="text/javascript">
+jQuery(function() {
+	jQuery('#favourdiv').mouseover(function(){
+		if(jQuery(this).attr('className') == 'support01')
+		{
+			jQuery(this).attr('className', "support02");
+			jQuery(this).html('+1人');
+			jQuery(this).attr('title', "赞一个，我支持TA");
+		}
+		else if(jQuery(this).attr('className') == 'support03')
+		{
+			jQuery(this).attr('title', "你已经赞了这篇博文！");
+		}
+		
+	});
+	jQuery('#favourdiv').mouseout(function(){
+		if(jQuery(this).attr('className') == 'support02')
+		{
+			jQuery(this).attr('className', "support01");
+			jQuery(this).html("2人");
+		}
+	});
+	jQuery('.blog_match_yq').click(function(){
+		var wind_uid = '';
+		if(!wind_uid){
+			alert("请先登录！");
+			return false;
+		}
+		jQuery.ajax({
+			   type: "POST",
+			   url:"/contest2012/index.php?mod=sendmsg",
+			   dataType: "html",
+			   data: "vuid=" + 1081650,
+			   success: function(data) {
+					if(data == 0)
+					{
+						alert("查无此人！");
+						return false;
+					}else if(data == 1){
+						alert("请先登录！");
+						return false;
+					}else if(data == 2){
+						alert("不能邀请自己！");
+						return false;
+					}else if(data == 22){  
+						alert("邀请信息已发出！");
+						return false;
+					}
+			   }
+		  });
+	});
+	jQuery('#favourdiv').click(function(){
+			jQuery.ajax({
+			   type: "POST",
+			   url:"/mod/favour.php",
+			   dataType: "html",
+			   data: "tid=" + 423405,
+			   success: function(data) {
+					if(data == 0)
+					{
+						alert("您还未登录或者已过期，请重新登录");
+						location.href = "http://home.51cto.com/index.php?reback=http%253A%252F%252Ftianya23.blog.51cto.com%252F1081650%252F423405";
+						return false;
+					}
+					else if(data == '-1')
+					{
+						alert("参数传递错误！");
+						return false;
+					}
+					else if(data == '-2')
+					{
+						alert("该博文已被删除或者不存在！");
+						return false;
+					}
+					else if(data == '-3')
+					{
+						alert("您已经赞过了！");
+						return false;
+					}
+					else if(data == '-4')
+					{
+						alert("赞操作失败！");
+						return false;
+					}
+					else
+					{  
+						//alert("操作成功，你已经赞了这篇博文！");
+						jQuery('#favourdiv').attr('className', "support03");
+
+						var num = 2 + 1 + "人";
+						jQuery('#favourdiv').html(num);
+						jQuery('#favourer').html(data);
+						return false;
+					}
+			   }
+		  });
+	});
+	//Jaydar http://blog.51cto.com/js/header.php?uid=blogdb[uid]&tid=tid
+	jQuery.post('/js/header.php',{uid:1081650,tid:423405},function(data){
+		jQuery('#readNum').html(data[0]);
+		jQuery('#cmtNum').html(data[1]);
+	},'json');
+	
+
+})
+
+jQuery(function(){
+	jQuery('#darid').bind('click',function(){
+		if(confirm("你确定删除此篇文章？")){
+			jQuery.ajax({
+				'type':'post',
+				'url':'user_index.php?action=delarticle',
+				'data':{'job':'del', 'selid':'423405', 'mhash':''},
+				'dataType':'html',
+				'success':function(res){
+					if('ok' == res){
+						location.href="http://.blog.51cto.com";
+					}
+				
+				}
+			});
+		}
+	});
+});
+</script>
+
+
+
+
+<style type="text/css">
+.m_sharelinks{ 
+	line-height:30px; 
+	text-align:left; 
+	padding-left:20px; 
+	//background:url(http://img1.51cto.com/images/share/ico_lb.gif) no-repeat left center;
+	float:left; 
+	width:600px; 
+	height:30px;
+}
+.m_sharelinks a{ margin-left:10px;}
+.m_sharebtn{ height:50px; width:726px; margin:0 auto;}
+.m_sharebtn01{width:520px; float:left;}
+.weibo_51cto{ background:url(http://img1.51cto.com/images/share/ico_mweibo.gif) no-repeat center center; display:block; width:33px; height:33px; float:left; margin:3px 3px 0 0;cursor:pointer;}
+.shareMored {
+    line-height: 30px;
+	float:right; 
+	text-align:right; 
+	width:100px; 
+	height:30px;
+}
+
+.showContent {
+	margin:20px 15px 8px;
+}
+.userImage img {
+    text-align: center;
+	border:0;
+	padding:0;
+}
+.photo_links{ line-height:30px; padding-top:5px; font-size:13px;width:170px; margin:0 auto;}
+.photo_links_blue{ text-align:center;}
+.photo_links_blue a:link,.photo_links_blue a:visited,.photo_links_blue a:hover,.photo_links_blue a:active{ color:#015F91; text-decoration: underline;}
+.photo_links_red{ text-align:left;}
+.photo_links_red a:link,.photo_links_red a:visited,.photo_links_red a:hover,.photo_links_red a:active{ color:#fc4343; text-decoration:underline;}
+.photo_links_red02{ text-align:center;}
+
+.vlist{ margin:10px 10px; height:65px;}
+.vlist img{ float:left; margin-right:10px;}
+.vlist dl{ text-align:left;}
+.vlist dl dt{ height:40px;line-height: 20px; overflow:hidden; padding-top:5px;}
+.vlist dl dt,.vlist dl dt a{ color:#262626;}
+.vlist dl dd,.vlist dl dd a{ color:#777;}
+
+.video-icon{
+    position: relative;
+}
+.video-icon a.i_video {
+    background: url("http://www.51cto.com/images/homepage/Images/eduplay.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    height: 25px;
+    left:31px;
+    position: absolute;
+    top:22px;
+    width: 25px;
+    z-index: 10;
+}
+</style>
+<script language="JavaScript" type="text/javascript" src="http://g.51cto.com/js/group.js"></script>
+<div id="add_sys_type_div" style="width:600px;border:1px #58B0DD solid; background-color:#FFF; position:absolute;left:30%;top:300px;display:none;z-index:255"></div>
+<div id="add_sys_type_divs" style="width:550px;border:1px #58B0DD solid; background-color:#FFF; position:absolute;left:30%;top:300px;display:none;z-index:255"></div>
+
+
+
+<div class="blogMain">
+<div class="blogLeft">
+
+
+<div class="box moduleUser">
+<div class="title">
+<h2><strong>tianya23</strong> 的BLOG  </h2>
+</div>
+<div class="modCon">
+
+<div class="userImage" style="margin: 10px auto 5px;text-align: center;width: 130px;border: 1px solid #D4D4D4;">
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td valign="middle" align="center" height="130"><script src="http://blog.51cto.com/mod/userface.php?useruid=1081650"></script></td>
+		</tr>
+	</table>
+</div>
+<div class="photo_links">
+</div>
+
+
+
+
+
+
+
+
+
+<div class="crumbs">
+<a href="http://home.51cto.com/index.php?s=/space/1081650#message" class="writeMessage" target="_blank">写留言</a><a href="http://edu.51cto.com/" class="inCircle" target="_blank">去学院学习</a><a href="http://home.51cto.com/index.php?s=/Notify/write/uid/1081650" class="message"  target="_blank">发消息</a> <a href='/' onclick='add_flink(1081650);return false' class="joinLinks">加友情链接</a><a href="http://home.51cto.com/index.php?s=/space/1081650" class="joinFriends"  target="_blank">进家园 加好友</a>
+</div>
+
+<div style="width:239px;height:64px;display:none;">
+
+
+<div style="float:left;"><p style="padding:15px 0 0 28px; line-height:20px;">2012年度IT博客大赛<br><a target="_blank" href="http://blog.51cto.com/contest2012/#top10000" style="color:#F00; text-decoration:underline;">十大杰出IT博客诞生</a></p></div>
+<div style="float:right;"><a target="_blank" href="http://blog.51cto.com/contest2012/"><img width="57" height="27" src="http://img1.51cto.com/images/blog_match_endlook.jpg" style="margin:23px 20px 0 0;"></a></div>
+<!-- <div style="float:left;"><p style="padding:15px 0 0 28px; line-height:20px;">星光评委正在评选<br><a target="_blank" href="http://blog.51cto.com/contest2012/index.php?mod=userlist_sec" style="color:#F00; text-decoration:underline;">2012年度IT博客大赛50强</a></p></div>
+<div style="float:right;"><img class="blog_match_yq" width="57" height="27" src="http://img1.51cto.com/images/blog_match_invite.jpg" style="margin:23px 20px 0 0;"></div> -->
+
+
+
+<div class="clear"></div>
+</div>
+
+
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="infoList box">
+<div class="title">
+<h2>博客统计信息</h2>
+</div>
+<div class="modCon">
+<p>
+<span class="infoListHead"><a href="http://blog.51cto.com/blogcommend" target="_blank" class="operlink"><b>51CTO推荐博客</b></a> <br></span>
+用户名：tianya23<br />
+文章数：887<br />
+评论数：54<br />
+访问量：879262<br />
+<a href="http://home.51cto.com/index.php?s=/Account/credit" target="_blank">无忧币</a>：3014<br />
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客积分</a>：6162<br />
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客等级</a>：8<br />
+注册日期：2009-12-09<br />
+<script src="http://blog.51cto.com/active/no1/blogno1countdown.php"></script> 
+</p>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="infoList box">
+	<div class="title">
+		<h2 class="fl">热门专题</h2>
+		<a target="_blank" class="fr" href="http://blog.51cto.com/zt">更多&gt;&gt;</a>
+	</div>
+	<div class="modCon">
+
+	
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/634" target="_blank"><img width="63" height="63" src="http://s3.51cto.com/wyfs02/M02/26/8A/wKiom1NrPWuAkPa_AAA0dLr6TW8919.jpg" /></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/634" target="_blank" title="微软公有云学习系列">微软公有云学习系列</a></dt>
+		<dd>阅读量：1816</dd>
+		</dl>
+		</div>
+	
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/632" target="_blank"><img width="63" height="63" src="http://s3.51cto.com/wyfs02/M01/26/1F/wKiom1Np5rHwOcktAAAxPphVe6o918.jpg" /></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/632" target="_blank" title="揭秘DB2的备份与恢复">揭秘DB2的备份与恢复</a></dt>
+		<dd>阅读量：2870</dd>
+		</dl>
+		</div>
+	
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/631" target="_blank"><img width="63" height="63" src="http://s3.51cto.com/wyfs02/M02/25/A1/wKiom1Nl3qzSn18aAAAzCb-14a8520.jpg" /></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/631" target="_blank" title="提升Exchange Server 2013 核心能力">提升Exchange Server 2013 核心能力</a></dt>
+		<dd>阅读量：1462</dd>
+		</dl>
+		</div>
+	
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/636" target="_blank"><img width="63" height="63" src="http://s3.51cto.com/wyfs02/M02/2A/4B/wKioL1ODCqjT-9kyAAA1W4eEzsA190.jpg" /></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/636" target="_blank" title="Exchange Server 2013 服务器配置详解">Exchange Server 2013 服务器配置详解</a></dt>
+		<dd>阅读量：709</dd>
+		</dl>
+		</div>
+		
+		
+	</div>
+	<span class="modBot"></span>
+</div>
+
+
+<div class="hotArt box">
+<div class="title">
+<h2>热门文章</h2>
+</div>
+<div class="modCon">
+<ul>
+<li><a href="/1081650/386908">Maven仓库汇总</a></li>
+<li><a href="/1081650/289363">Maven问题总结 - 1</a></li>
+<li><a href="/1081650/288325">使用Maven2快速创建项目</a></li>
+<li><a href="/1081650/702673">Spring整个Ibatis之SqlMa..</a></li>
+<li><a href="/1081650/247314">用Instant Client，不安..</a></li>
+<li><a href="/1081650/436137">java方式ssh协议远程调用..</a></li>
+<li><a href="/1081650/289877">Maven -  error in openi..</a></li>
+<li><a href="/1081650/1102778">java.lang.OutOfMemoryEr..</a></li>
+<li><a href="/1081650/831546">Ibatis -  Open quote is..</a></li>
+<li><a href="/1081650/415146"> Java静态检测工具的简单..</a></li>
+<li><a href="/1081650/782668">Eclipse maven工程 Missi..</a></li>
+<li><a href="/1081650/583613">TCP端口状态说明ESTABLIS..</a></li>
+<li><a href="/1081650/620885">FreeMarker中获取Map内容</a></li>
+<li><a href="/1081650/841901">ibatis报错：There is no..</a></li>
+<li><a href="/1081650/275292">JdbcTemplate详解 -1</a></li>
+<li><a href="/1081650/289393">Maven构建web工程</a></li>
+<li><a href="/1081650/243805">EXP数据库时，SET_NO_OUT..</a></li>
+<li><a href="/1081650/295940">Eclipse使用总结</a></li>
+<li><a href="/1081650/386891">Maven问题总结 - 3</a></li>
+<li><a href="/1081650/851385">ECLIPSE里面SVN图标消失,..</a></li>
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+<div class="search box">
+<div class="title"><h2>搜索BLOG文章</h2></div>
+<div class="modCon">
+<form method=post action="search.php?" tabindex="99">
+<input type="hidden" name="step" value="2">
+<input type="hidden" name="authorid" value="1081650">
+<input type="hidden" name="sch_area" value="S">
+<input type="text" value="" name="keyword"  class="searchInput" />
+<input type="submit" value="搜 索" class="searchBtn" />
+</form>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="box recentGuests">
+<div class="title">
+<h2>最近访客</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://756270.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=746270&size=middle" /></a>
+<p><a href="http://756270.blog.51cto.com">walla..</a></p>
+
+<li><a href="http://byjth.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=4127898&size=middle" /></a>
+<p><a href="http://byjth.blog.51cto.com">frankxzb</a></p>
+
+<li><a href="http://5074646.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=5064646&size=middle" /></a>
+<p><a href="http://5074646.blog.51cto.com">alexy..</a></p>
+
+<li><a href="http://3636622.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=3626622&size=middle" /></a>
+<p><a href="http://3636622.blog.51cto.com">bccug..</a></p>
+
+<li><a href="http://5326276.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=5316276&size=middle" /></a>
+<p><a href="http://5326276.blog.51cto.com">SCUQI..</a></p>
+
+<li><a href="http://8174104.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=8164104&size=middle" /></a>
+<p><a href="http://8174104.blog.51cto.com">Saxysss</a></p>
+
+<li><a href="http://4567809.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=4557809&size=middle" /></a>
+<p><a href="http://4567809.blog.51cto.com">angel..</a></p>
+
+<li><a href="http://7963403.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=7953403&size=middle" /></a>
+<p><a href="http://7963403.blog.51cto.com">Ynot123</a></p>
+
+<li><a href="http://3272147.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=3262147&size=middle" /></a>
+<p><a href="http://3272147.blog.51cto.com">lvyua..</a></p>
+
+<li><a href="http://xjl456852.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=524998&size=middle" /></a>
+<p><a href="http://xjl456852.blog.51cto.com">xjl45..</a></p>
+
+<li><a href="http://zxx287856774.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=3417296&size=middle" /></a>
+<p><a href="http://zxx287856774.blog.51cto.com">zxx28..</a></p>
+
+<li><a href="http://1149662.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=1139662&size=middle" /></a>
+<p><a href="http://1149662.blog.51cto.com">pdzero</a></p>
+
+</ul>
+<span class="clear"></span>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="newComments box">
+<div class="title">
+<h2>最新评论 
+
+</h2>
+
+
+
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href='http://zuidaima.blog.51cto.com/' class='operlink' target=_blank><b>最代码</b></a>：<a href="/1081650/295940" target=_blank>最代码上有更详细的步骤文档： 如..</a></li>
+
+<li><a href='http://1747879.blog.51cto.com/' class='operlink' target=_blank><b>q786773109</b></a>：<a href="/1081650/815163" target=_blank>能提供下 工程的代码呢么？</a></li>
+
+<li><a href='http://sdvdxl.blog.51cto.com/' class='operlink' target=_blank><b>sdvdxl</b></a>：<a href="/1081650/678001" target=_blank>spring mvc 没用过， 不过struts..</a></li>
+
+<li><a href='http://2310697.blog.51cto.com/' class='operlink' target=_blank><b>lucheng</b></a>：<a href="/1081650/565034" target=_blank>try {   &nbsp;  &nbsp;  &nbsp; ..</a></li>
+
+<li><a href='http://7825079.blog.51cto.com/' class='operlink' target=_blank><b>王何伟</b></a>：<a href="/1081650/271921" target=_blank>新版本没有了</a></li>
+
+<li><a href='http://8129130.blog.51cto.com/' class='operlink' target=_blank><b>qq1909434428</b></a>：<a href="/1081650/641782" target=_blank>memcache中getStats函数返回统计信..</a></li>
+
+<li><a href='http://8038343.blog.51cto.com/' class='operlink' target=_blank><b>wnli456</b></a>：<a href="/1081650/582256" target=_blank>除了避免,有什么解决办法吗?</a></li>
+
+<li><a href='http://ae6623.blog.51cto.com/' class='operlink' target=_blank><b>ae6623</b></a>：<a href="/1081650/799082" target=_blank>帮了大忙了。</a></li>
+
+<li>[匿名]faof：<a href="/1081650/579773" target=_blank>请问，这个问题该如何解决呢？</a></li>
+
+<li><a href='http://ae6623.blog.51cto.com/' class='operlink' target=_blank><b>ae6623</b></a>：<a href="/1081650/638703" target=_blank>问题依旧木有解决，但是感觉楼主的..</a></li>
+
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="hotBlogArt box">
+<div class="title">
+  <h2 class="fl">51CTO推荐博文</h2>
+  <a href="http://blog.51cto.com/artcommend" class="fr">更多&gt;&gt;</a></div>
+<div class="modCon">
+<ul>
+<li><a href="http://peiquan.blog.51cto.com/7518552/1420159" title="从 apache duutils 所学到的" target="_blank">从 apache duutils 所学到的</a></li>
+<li><a href="http://runtime.blog.51cto.com/7711135/1419377" title="【Apache Shiro】Non-Spring web app configuration" target="_blank">【Apache Shiro】Non-Spring web ..</a></li>
+<li><a href="http://yangrong.blog.51cto.com/6945369/1419445" title="Nagios插件开发之监控服务器负载" target="_blank">Nagios插件开发之监控服务器负载</a></li>
+<li><a href="http://yuhongchun.blog.51cto.com/1604432/1419501" title="如何快速导入SVN服务器的项目代码" target="_blank">如何快速导入SVN服务器的项目代码</a></li>
+<li><a href="http://yueliangdao0608.blog.51cto.com/397025/1419728" title="【原创】PostgreSQL hstore 列性能提升一例 " target="_blank">【原创】PostgreSQL hstore 列性..</a></li>
+<li><a href="http://a3147972.blog.51cto.com/2366547/1419856" title="ThinkPHP关联模型详解" target="_blank">ThinkPHP关联模型详解</a></li>
+<li><a href="http://gomic.blog.51cto.com/8689134/1418598" title="scrapy深入学习----（3）" target="_blank">scrapy深入学习----（3）</a></li>
+<li><a href="http://runtime.blog.51cto.com/7711135/1417815" title="【Apache Shiro】Session Management" target="_blank">【Apache Shiro】Session Management</a></li>
+<li><a href="http://peiquan.blog.51cto.com/7518552/1417879" title="连贯接口（方法链）的使用" target="_blank">连贯接口（方法链）的使用</a></li>
+<li><a href="http://liam2199.blog.51cto.com/2879872/1417892" title="关于C++默认拷贝构造函数产生的问题的讨论" target="_blank">关于C++默认拷贝构造函数产生的问..</a></li>
+<li><a href="http://hzcsky.blog.51cto.com/1560073/1417112" title="python分析postfix邮件日志的状态" target="_blank">python分析postfix邮件日志的状态</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="friendLink box">
+<div class="title">
+  <h2>友情链接</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://51ctoblog.blog.51cto.com" title="51CTO博客开发" target="_blank">51CTO博客开发</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+
+</div>
+<!--left end-->
+
+<script type="text/javascript">
+    var favor_url = "http://tianya23.blog.51cto.com/1081650/423405";
+    var favor_title = "Jetty使用总结";
+    var favor_fuid = "1081650";
+</script>
+<script type="text/javascript" src="http://home.51cto.com/apps/favorite/Tpl/default/Public/js/favorbox.js"></script>
+<div class="blogRight">
+
+
+	<div class="box edu-col-a" style="display:none;">
+		<div class="title">的视频课程</div>
+		<div class="vbox" style="">
+
+			<div class="clear hr10"></div>
+		</div>
+	</div>
+	
+	<div class="box edu-col-b" style="width:100%;">
+		<div class="title"><a target="_blank" href="http://edu.51cto.com">相关视频课程</a>
+		<a href="http://edu.51cto.com" target="_blank" style="float:right;">更多</a>
+		</div>
+		<div class="vbox" style="">
+		
+			<div class="vlist video-icon" style="margin: 2px 8px;"> 
+				<a href="http://edu.51cto.com/course/course_id-1385.html" target="_blank"><img src="http://s2.51cto.com/wyfs02/M02/2B/BD/wKioL1OJSj3TvKFPAAC8JAMzbko977.jpg" height="63" width="86"></a>
+				<dl>
+					<dt> <a href="http://edu.51cto.com/course/course_id-1385.html" target="_blank" title="最新CCNA经典力作--实战CCNA(寒影主讲)">最新CCNA经典力作--实战CCNA(寒影主讲)(共130课时)</a></dt>
+					<dd>172人学习</dd>
+				</dl>
+				<a class="i_video" href="http://edu.51cto.com/course/course_id-1385.html" target="_blank"></a>
+			</div>
+		
+			<div class="vlist video-icon" style="margin: 2px 8px;"> 
+				<a href="http://edu.51cto.com/course/course_id-951.html" target="_blank"><img src="http://s2.51cto.com/wyfs01/M02/53/6A/wKioJlMewNOBSUU9AADlAveGZy4964.jpg" height="63" width="86"></a>
+				<dl>
+					<dt> <a href="http://edu.51cto.com/course/course_id-951.html" target="_blank" title="Linux高级优化和大数据云平台Linux运维企业高级应用进阶晋升【马哥Linux全新套餐教程-资深】">Linux高级优化和大数据云平台Linux运维企业高级应用进阶晋升【马哥Linux全新套餐教程-资深】(共47课时)</a></dt>
+					<dd>2177人学习</dd>
+				</dl>
+				<a class="i_video" href="http://edu.51cto.com/course/course_id-951.html" target="_blank"></a>
+			</div>
+		
+			<div class="vlist video-icon" style="margin: 2px 8px;"> 
+				<a href="http://edu.51cto.com/course/course_id-1231.html" target="_blank"><img src="http://s2.51cto.com/wyfs02/M01/25/43/wKioL1Nc6qmyVEfVAAIuaCHtMWg700.jpg" height="63" width="86"></a>
+				<dl>
+					<dt> <a href="http://edu.51cto.com/course/course_id-1231.html" target="_blank" title="生产环境中的Hyper-V系列：高可用性运维部署与管理（非SCVMM）">生产环境中的Hyper-V系列：高可用性运维部署与管理（非SCVMM）(共29课时)</a></dt>
+					<dd>154人学习</dd>
+				</dl>
+				<a class="i_video" href="http://edu.51cto.com/course/course_id-1231.html" target="_blank"></a>
+			</div>
+			
+			<div class="clear hr10"></div>
+		</div>
+	</div>
+	<p style="clear:both;"></p>
+	<style type="text/css">
+.vlist {
+    float: left;
+    padding: 2px 0 0 10px;
+    width: 218px;
+	
+}
+.vlist img {
+    float: left;
+    margin-right: 10px;
+}
+.vlist dl {
+    float: left;
+    text-align: left;
+    width: 122px;
+}
+.vlist dl dt {
+    height: 44px;
+    overflow: hidden;
+    padding-top: 5px;
+}
+.vlist dl dt, .vlist dl dt a {
+    color: #262626;
+}
+.vlist dl dd, .vlist dl dd a {
+    color: #777777;
+}
+.vbox_tit {
+    border-bottom: 1px solid #B3D0E6;
+    color: #666666;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: left;
+}
+.video-icon {
+    position: relative;
+}
+.video-icon a.i_video {
+    background: url("http://www.51cto.com/images/homepage/Images/eduplay.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    height: 25px;
+    left: 41px;
+    position: absolute;
+    top: 22px;
+    width: 25px;
+    z-index: 10;
+}
+.vbox2 .vlist1{margin:0;}
+.edu-col-a{ float:left;margin-right:6px;}
+.edu-col-b{ float:left;}
+	</style><!--modCon end-->
+
+
+
+	<div class="artShow box" style="margin-top:5px;">
+   	  <div class="share" id="share">
+
+    <div class="shareItem">
+		<div class="m_sharelinks"><a target="_blank" href="" style="color:red;"></a><a target="_blank" href="" style="color:blue;"></a><a target="_blank" href="" style="color:blue;"></a></div>
+		<p class="shareMored"><a href="/all/1081650">博主的更多文章>></a></p>
+	</div>
+      </div>
+       <div class="modCon">
+   	  <div class="showBox" style="margin:0 0 10px;">
+      <div class="line_hd_r"></div>
+      <div class="art_tj">
+
+      <a href="http://blog.51cto.com/artcommend" target="_blank"><img src="http://blog.51cto.com/image/skin/30/tj.png" /></a>
+
+      </div>
+
+ 
+    		<div class="showHead">
+    		  <div class="showTitleBOx" style="text-align:center">
+              <div class="showTitle">
+
+             <img src="http://blog.51cto.com/image/skin/artType01.jpg">
+
+
+    		    Jetty使用总结
+                </div>
+  		    </div>
+   		    <span class="artTime">2010-11-15 11:31:06</span></div><!--showHead end-->
+    <div class="showTags">标签：<a href="http://blog.51cto.com/tag-职场.html" target="_blank" class="operlink">职场</a> <a href="http://blog.51cto.com/tag-休闲.html" target="_blank" class="operlink">休闲</a> <a href="http://blog.51cto.com/tag-jetty.html" target="_blank" class="operlink">jetty</a>
+
+	</div>
+
+
+            <!--正文 begin-->
+    		<div class="showContent">
+    		  <p>配置指南：<a href="http://blog.csdn.net/ph9527/article/details/5063157">http://blog.csdn.net/ph9527/article/details/5063157</a></p>
+<h2>1、Jetty的配置参数</h2>
+<p><span class="Apple-style-span" style="font-family: Tahoma; line-height: 18px; border-spacing: 1px; "> </span></p>
+<p align="left" style="margin-top: 7.5pt; margin-right: 0cm; margin-bottom: 7.5pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Arial; ">&nbsp;</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">关于其他命令的更多信息请查阅</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">Jetty</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">文档中的</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; "><a rel="nofollow" style="color: rgb(0, 102, 153); text-decoration: underline; " href="http://jetty.mortbay.org/maven-plugin/run-mojo.html"><span style="color: rgb(0, 111, 247); ">mvn jetty:run page</span></a></span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">、</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; "><a rel="nofollow" style="color: rgb(0, 102, 153); text-decoration: underline; " href="http://jetty.mortbay.org/maven-plugin/run-exploded-mojo.html"><span style="color: rgb(0, 111, 247); ">mvn jetty:run-exploded page</span></a></span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">、</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; "><a rel="nofollow" style="color: rgb(0, 102, 153); text-decoration: underline; " href="http://jetty.mortbay.org/maven-plugin/run-war-mojo.html"><span style="color: rgb(0, 111, 247); ">mvn jetty:run-war page</span></a></span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">。</span></p>
+<p align="left" style="margin-top: 7.5pt; margin-right: 0cm; margin-bottom: 7.5pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: small; "><strong style="font-weight: bold; "><span style="color: rgb(0, 51, 102); ">自动执行插件</span></strong></span></p>
+<p align="left" style="margin-top: 7.5pt; margin-right: 0cm; margin-bottom: 7.5pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Arial; ">&nbsp;&nbsp;&nbsp;</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">有时候，例如在做集成测试时，你当然希望在测试开始时自动运行你的项目，测试完成时停止，而不只是手动的在命令行执行</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">mvn jetty:run</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">吧。</span></p>
+<p align="left" style="margin-top: 7.5pt; margin-right: 0cm; margin-bottom: 7.5pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Arial; ">&nbsp;&nbsp;&nbsp;</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">要做到这一点，你需要为</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">jetty&nbsp;</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">插件创建几个</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&lt;execution&gt;</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">脚本，并使用<span lang="EN-US">&lt;daemon&gt;true&lt;/daemon&gt;</span>配置选项来预防<span lang="EN-US">Jetty</span>无限期运行，迫使它只在执行<span lang="EN-US">Maven</span>时才运行。</span></p>
+<p align="left" style="margin-top: 7.5pt; margin-right: 0cm; margin-bottom: 7.5pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp; 像下面<span lang="EN-US">pom.xml</span>片段中描述的<span lang="EN-US">pre-integration-test</span>和<span lang="EN-US">post-integration-test&nbsp;</span>就是</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">用来触发执行和关闭</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">Jetty</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">：</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&lt;plugin&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;maven-jetty-plugin&lt;/artifactId&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;version&gt;6.1.10&lt;/version&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;configuration&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;scanIntervalSeconds&gt;10&lt;/scanIntervalSeconds&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;stopKey&gt;foo&lt;/stopKey&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;stopPort&gt;9999&lt;/stopPort&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/configuration&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;executions&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;execution&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;id&gt;start-jetty&lt;/id&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;phase&gt;pre-integration-test&lt;/phase&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;goals&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;goal&gt;run&lt;/goal&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/goals&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;configuration&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;scanIntervalSeconds&gt;0&lt;/scanIntervalSeconds&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;daemon&gt;</span><span lang="EN-US" style="font-size: 9pt; ">true<span style="color: rgb(0, 0, 0); ">&lt;/daemon&gt;</span></span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/configuration&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/execution&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;execution&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;id&gt;stop-jetty&lt;/id&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;phase&gt;post-integration-test&lt;/phase&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;goals&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;goal&gt;stop&lt;/goal&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/goals&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/execution&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/executions&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&lt;/plugin&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span lang="EN-US" style="font-size: 9pt; ">&nbsp;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; text-indent: -18pt; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); "><span style="font-family: 'Times New Roman'; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><em style="font-style: italic; "><span style="font-size: 9pt; color: rgb(255, 0, 0); ">注意</span></em><span style="font-size: 9pt; color: rgb(0, 0, 0); ">：</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">Maven</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">默认都是通过</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">org.apache.maven.plugins</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">的</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">groupId</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">来查找插件的，即使这个</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">groupId</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">跟上面要表达的内容完全不同。为了更明确的指向这个</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">groupId</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">是我们需要的插件，唯一的办法就是在</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">settings.xml</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">也做如下设置：</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; text-indent: -18pt; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); "><span style="font-family: 'Times New Roman'; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span lang="EN-US" style="font-size: 9pt; ">&lt;profile&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; text-indent: -18pt; line-height: 13pt; text-align: left; "><span lang="EN-US" style="font-size: 9pt; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: rgb(0, 0, 0); ">&nbsp;&nbsp;...</span></span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; text-indent: -18pt; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); "><span style="font-family: 'Times New Roman'; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 9pt; ">&lt;pluginGroups&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; text-indent: -18pt; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); "><span style="font-family: 'Times New Roman'; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 9pt; ">&lt;pluginGroup&gt;<span style="color: rgb(0, 0, 0); ">org.mortbay.jetty</span>&lt;/pluginGroup&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; text-indent: -18pt; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); "><span style="font-family: 'Times New Roman'; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 9pt; ">&lt;/pluginGroups&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span lang="EN-US" style="font-size: 9pt; ">&lt;/profile&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">&nbsp;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; text-align: left; "><span style="font-size: small; "><strong style="font-weight: bold; "><span style="color: rgb(0, 51, 102); ">如何通过命令行停止插件</span></strong></span></p>
+<p align="left" style="margin-top: 7.5pt; margin-right: 0cm; margin-bottom: 7.5pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp; 委托</span><span style="font-size: 9pt; color: rgb(0, 0, 0); font-family: Helvetica; ">Jetty</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">插件无限期运行的目标包括</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">run</span><span style="font-size: 9pt; color: rgb(0, 0, 0); ">、<span lang="EN-US">run-war</span>和<span lang="EN-US">run-exploded</span>。你可以在视窗控制终端（如<span lang="EN-US">DOS</span>窗口）使用<span lang="EN-US">&lt;ctrl-c&gt;</span>关闭它，或者在另一个视窗控制终端使用<span lang="EN-US">stop</span>目标关闭。如果你希望能使用<span lang="EN-US">mvn jetty:stop&nbsp;</span>执行关闭命令，则需要你在插件中配置一个特殊的端口和控制键。</span><span style="font-size: 9pt; ">下面是一个例子配置：</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span lang="EN-US" style="font-size: 9pt; ">&lt;plugin&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 9pt; ">&lt;groupId&gt;<span style="color: rgb(0, 0, 0); ">org.mortbay.jetty</span>&lt;/groupId&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 9pt; ">&lt;artifactId&gt;<span style="color: rgb(0, 0, 0); ">maven-jetty-plugin</span>&lt;/artifactId&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 9pt; ">&lt;version&gt;<span style="color: rgb(0, 0, 0); ">6.1.10</span>&lt;/version&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 9pt; ">&lt;configuration&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 9pt; ">&lt;stopPort&gt;<span style="color: rgb(0, 0, 0); ">9966</span>&lt;/stopPort&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 9pt; ">&lt;stopKey&gt;<span style="color: rgb(0, 0, 0); ">foo</span>&lt;/stopKey&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</span><span lang="EN-US" style="font-size: 9pt; ">&lt;/configuration&gt;</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span lang="EN-US" style="font-size: 9pt; ">&lt;/plugin&gt;</span></p>
+<p align="left" style="margin-top: 7.5pt; margin-right: 0cm; margin-bottom: 7.5pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">开始：</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">mvn jetty:start</span></p>
+<p align="left" style="margin-top: 7.5pt; margin-right: 0cm; margin-bottom: 7.5pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">关闭：</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span style="font-size: 9pt; color: rgb(0, 0, 0); ">mvn jetty:stop</span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; ">&nbsp;</p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; "><span class="Apple-style-span" style="font-family: Arial, sans-serif, Helvetica, Tahoma; line-height: 18px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; "> </span></p>
+<div class="blog_title" style="margin-bottom: 15px; ">
+<h2><span style="color: rgb(255, 0, 0); ">2、</span><a style="color: rgb(16, 138, 198); text-decoration: underline; " href="http://casheen.javaeye.com/blog/406013"><span style="color: rgb(255, 0, 0); ">为Maven jetty插件（maven-jetty-plugin）配置数据源</span></a></h2>
+</div>
+<div class="blog_content">在使用jetty插件调试maven war项目时，我们可能需要为servlet容器（这里是jetty）配置一个数据源。下面介绍如何为jetty插件配置数据源。&nbsp;<br />
+<br />
+1. 在src/main/resources目录下创建jetty-env.xml文件，用来配置数据源，文件内容如下：&nbsp;<br />
+<br />
+<div class="dp-highlighter" style="font-family: Monaco, 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Consolas, 'Courier New', monospace; font-size: 12px; background-color: transparent; width: 694px; overflow-x: auto; overflow-y: auto; margin-left: 9px; padding-top: 1px; padding-right: 1px; padding-bottom: 1px; padding-left: 1px; word-break: break-all; word-wrap: break-word; ">
+<div class="bar">
+<div class="tools" style="padding-top: 3px; padding-right: 3px; padding-bottom: 3px; padding-left: 3px; text-align: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: black; font-weight: bold; ">Xml代码&nbsp;<embed src="http://casheen.javaeye.com/javascripts/syntaxhighlighter/clipboard_new.swf" width="14" height="15" flashvars="clipboard=%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0A%3C!DOCTYPE%20Configure%20PUBLIC%20%22-%2F%2FMort%20Bay%20Consulting%2F%2FDTD%20Configure%2F%2FEN%22%0A%22http%3A%2F%2Fjetty.mortbay.org%2Fconfigure.dtd%22%3E%0A%3CConfigure%20class%3D%22org.mortbay.jetty.webapp.WebAppContext%22%3E%0A%20%20%20%20%3CNew%20id%3D%22dataSource%22%20class%3D%22org.mortbay.jetty.plus.naming.Resource%22%3E%0A%20%20%20%20%20%20%20%20%3CArg%3Ejdbc%2Fosworkflow%3C%2FArg%3E%0A%20%20%20%20%20%20%20%20%3CArg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3CNew%20class%3D%22com.mysql.jdbc.jdbc2.optional.MysqlDataSource%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CSet%20name%3D%22url%22%3Ejdbc%3Amysql%3A%2F%2Flocalhost%3A3306%2Fosworkflow%3FuseUnicode%3Dtrue%26characterEncoding%3DUTF-8%3C%2FSet%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CSet%20name%3D%22user%22%3Eroot%3C%2FSet%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CSet%20name%3D%22password%22%3E%3C%2FSet%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FNew%3E%0A%20%20%20%20%20%20%20%20%3C%2FArg%3E%0A%20%20%20%20%3C%2FNew%3E%0A%3C%2FConfigure%3E" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></div>
+</div>
+<ol start="1" class="dp-xml" style="font-size: 1em; line-height: 1.4em; margin-top: 0px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; padding-top: 2px; padding-right: 0px; padding-bottom: 2px; padding-left: 0px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: rgb(209, 215, 220); border-right-color: rgb(209, 215, 220); border-bottom-color: rgb(209, 215, 220); border-left-color: rgb(209, 215, 220); list-style-type: decimal; list-style-position: initial; list-style-image: initial; background-color: rgb(255, 255, 255); color: rgb(43, 145, 175); ">
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; "><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;?</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">xml</span><span style="color: black; ">&nbsp;</span><span class="attribute" style="color: red; ">version</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">&quot;1.0&quot;</span><span style="color: black; ">&nbsp;</span><span class="attribute" style="color: red; ">encoding</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">&quot;utf-8&quot;</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">?&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;!DOCTYPE&nbsp;Configure&nbsp;PUBLIC&nbsp;&quot;-//Mort&nbsp;Bay&nbsp;Consulting//DTD&nbsp;Configure//EN&quot;&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&quot;http://jetty.mortbay.org/configure.dtd&quot;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; "><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Configure</span><span style="color: black; ">&nbsp;</span><span class="attribute" style="color: red; ">class</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">&quot;org.mortbay.jetty.webapp.WebAppContext&quot;</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">New</span><span style="color: black; ">&nbsp;</span><span class="attribute" style="color: red; ">id</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">&quot;dataSource&quot;</span><span style="color: black; ">&nbsp;</span><span class="attribute" style="color: red; ">class</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">&quot;org.mortbay.jetty.plus.naming.Resource&quot;</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Arg</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">jdbc/osworkflow</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Arg</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Arg</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">New</span><span style="color: black; ">&nbsp;</span><span class="attribute" style="color: red; ">class</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">&quot;com.mysql.jdbc.jdbc2.optional.MysqlDataSource&quot;</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Set</span><span style="color: black; ">&nbsp;</span><span class="attribute" style="color: red; ">name</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">&quot;url&quot;</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">jdbc:mysql://localhost:3306/osworkflow?</span><span class="attribute" style="color: red; ">useUnicode</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">true</span><span style="color: black; ">&amp;</span><span class="attribute" style="color: red; ">characterEncoding</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">UTF</span><span style="color: black; ">-8</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Set</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Set</span><span style="color: black; ">&nbsp;</span><span class="attribute" style="color: red; ">name</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">&quot;user&quot;</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">root</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Set</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Set</span><span style="color: black; ">&nbsp;</span><span class="attribute" style="color: red; ">name</span><span style="color: black; ">=</span><span class="attribute-value" style="color: blue; ">&quot;password&quot;</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Set</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">New</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Arg</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">New</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; "><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">Configure</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+</ol>
+</div>
+<br />
+<br />
+2. 在配置jetty插件时，指定这个数据源配置文件：&nbsp;<br />
+<br />
+<div class="dp-highlighter" style="font-family: Monaco, 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Consolas, 'Courier New', monospace; font-size: 12px; background-color: transparent; width: 694px; overflow-x: auto; overflow-y: auto; margin-left: 9px; padding-top: 1px; padding-right: 1px; padding-bottom: 1px; padding-left: 1px; word-break: break-all; word-wrap: break-word; ">
+<div class="bar">
+<div class="tools" style="padding-top: 3px; padding-right: 3px; padding-bottom: 3px; padding-left: 3px; text-align: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: black; font-weight: bold; ">Xml代码&nbsp;<embed src="http://casheen.javaeye.com/javascripts/syntaxhighlighter/clipboard_new.swf" width="14" height="15" flashvars="clipboard=%20%20%20%20%20%20%20%20%3Cplugins%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C!-%20jetty%20-%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cplugin%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CgroupId%3Eorg.mortbay.jetty%3C%2FgroupId%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CartifactId%3Emaven-jetty-plugin%3C%2FartifactId%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cversion%3E6.1.9%3C%2Fversion%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cconfiguration%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CscanIntervalSeconds%3E10%3C%2FscanIntervalSeconds%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CjettyEnvXml%3Esrc%2Fmain%2Fresources%2Fjetty-env.xml%3C%2FjettyEnvXml%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fconfiguration%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fplugin%3E%0A%20%20%20%20%20%20%20%20%3C%2Fplugins%3E" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></div>
+</div>
+<ol start="1" class="dp-xml" style="font-size: 1em; line-height: 1.4em; margin-top: 0px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; padding-top: 2px; padding-right: 0px; padding-bottom: 2px; padding-left: 0px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: rgb(209, 215, 220); border-right-color: rgb(209, 215, 220); border-bottom-color: rgb(209, 215, 220); border-left-color: rgb(209, 215, 220); list-style-type: decimal; list-style-position: initial; list-style-image: initial; background-color: rgb(255, 255, 255); color: rgb(43, 145, 175); ">
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; "><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">plugins</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-&nbsp;jetty&nbsp;-<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">plugin</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">groupId</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">org.mortbay.jetty</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">groupId</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">artifactId</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">maven-jetty-plugin</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">artifactId</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">version</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">6.1.9</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">version</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">configuration</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">scanIntervalSeconds</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">10</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">scanIntervalSeconds</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">jettyEnvXml</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">src/main/resources/jetty-env.xml</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">jettyEnvXml</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">configuration</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">plugin</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; "><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&lt;/</span><span class="tag-name" style="color: rgb(0, 102, 153); font-weight: bold; ">plugins</span><span class="tag" style="color: rgb(0, 102, 153); font-weight: bold; ">&gt;</span><span style="color: black; ">&nbsp;&nbsp;</span></span></li>
+</ol>
+</div>
+<br />
+<br />
+3. 测试。在index.jsp中进行如下测试：&nbsp;<br />
+<div class="dp-highlighter" style="font-family: Monaco, 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Consolas, 'Courier New', monospace; font-size: 12px; background-color: transparent; width: 694px; overflow-x: auto; overflow-y: auto; margin-left: 9px; padding-top: 1px; padding-right: 1px; padding-bottom: 1px; padding-left: 1px; word-break: break-all; word-wrap: break-word; ">
+<div class="bar">
+<div class="tools" style="padding-top: 3px; padding-right: 3px; padding-bottom: 3px; padding-left: 3px; text-align: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: black; font-weight: bold; ">Jsp代码&nbsp;<embed src="http://casheen.javaeye.com/javascripts/syntaxhighlighter/clipboard_new.swf" width="14" height="15" flashvars="clipboard=%3C%25%40%20page%20contentType%3D%22text%2Fhtml%3B%20charset%3DUTF-8%22%25%3E%0A%3C%25%40%20page%20import%3D%22javax.naming.InitialContext%2Cjavax.sql.DataSource%22%25%3E%0A%3Chtml%3E%0A%3Chead%3E%0A%3Ctitle%3EJNDI%20datasource%20test%3C%2Ftitle%3E%0A%3C%2Fhead%3E%0A%3Cbody%3E%0A%3Ch2%3E%E6%95%B0%E6%8D%AE%E6%BA%90%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%8A%9F%EF%BC%81%3C%2Fh2%3E%0A%3C%25%0A%20%20%20%20InitialContext%20context%20%3D%20new%20InitialContext()%3B%0A%20%20%20%20DataSource%20dataSource%20%3D%20(DataSource)%20context.lookup(%22java%3Acomp%2Fenv%2Fjdbc%2Fosworkflow%22)%3B%0A%25%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></div>
+</div>
+<ol start="1" class="dp-default" style="font-size: 1em; line-height: 1.4em; margin-top: 0px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; padding-top: 2px; padding-right: 0px; padding-bottom: 2px; padding-left: 0px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: rgb(209, 215, 220); border-right-color: rgb(209, 215, 220); border-bottom-color: rgb(209, 215, 220); border-left-color: rgb(209, 215, 220); list-style-type: decimal; list-style-position: initial; list-style-image: initial; background-color: rgb(255, 255, 255); color: rgb(43, 145, 175); ">
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; "><span style="color: black; ">&lt;%@&nbsp;page&nbsp;contentType=</span><span class="string" style="color: blue; ">&quot;text/html;&nbsp;charset=UTF-8&quot;</span><span style="color: black; ">%&gt;&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;%@&nbsp;page&nbsp;import=<span class="string" style="color: blue; ">&quot;javax.naming.InitialContext,javax.sql.DataSource&quot;</span><span style="color: black; ">%&gt;&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;html&gt;&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;head&gt;&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;title&gt;JNDI&nbsp;datasource&nbsp;test&lt;/title&gt;&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;/head&gt;&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;body&gt;&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;h2&gt;数据源初始化成功！&lt;/h2&gt;&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;%&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;InitialContext&nbsp;context&nbsp;=&nbsp;new&nbsp;InitialContext();&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&nbsp;&nbsp;&nbsp;&nbsp;DataSource&nbsp;dataSource&nbsp;=&nbsp;(DataSource)&nbsp;context.lookup(<span class="string" style="color: blue; ">&quot;java:comp/env/jdbc/osworkflow&quot;</span><span style="color: black; ">);&nbsp;&nbsp;</span></span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">%&gt;&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;/body&gt;&nbsp;&nbsp;</span></li>
+    <li style="font-size: 1em; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 38px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(209, 215, 220); background-color: rgb(250, 250, 250); line-height: 18px; "><span style="color: black; ">&lt;/html&gt; &nbsp;</span></li>
+</ol>
+</div>
+</div>
+<p>&nbsp;4、Jetty中配置根目录启动应用，不再需要输入工程名称</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span class="tag">&lt;</span><span class="tag-name">configuration</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><span style="color: rgb(255, 0, 0); ">&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">contextPath</span><span class="tag">&gt;</span>/<span class="tag">&lt;/</span><span class="tag-name">contextPath</span><span class="tag">&gt;</span>&nbsp;</span></strong></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span><span class="tag-name">configuration</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li></ol></pre>
+<p>完整版本：</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span class="tag">&lt;</span><span class="tag-name">jetty-version</span><span class="tag">&gt;</span><span>6.1.22</span><span class="tag">&lt;/</span><span class="tag-name">jetty-version</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt">&nbsp;</li><li><span>&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">plugin</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">groupId</span><span class="tag">&gt;</span><span>org.mortbay.jetty</span><span class="tag">&lt;/</span><span class="tag-name">groupId</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">artifactId</span><span class="tag">&gt;</span><span>maven-jetty-plugin</span><span class="tag">&lt;/</span><span class="tag-name">artifactId</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">version</span><span class="tag">&gt;</span><span>${jetty-version}</span><span class="tag">&lt;/</span><span class="tag-name">version</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">configuration</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: rgb(255, 0, 0); "><strong>&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">contextPath</span><span class="tag">&gt;</span>/<span class="tag">&lt;/</span><span class="tag-name">contextPath</span><span class="tag">&gt;</span>&nbsp;</strong></span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">connectors</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">connector</span><span>&nbsp;</span><span class="attribute">implementation</span><span>=</span><span class="attribute-value">&quot;org.mortbay.jetty.nio.SelectChannelConnector&quot;</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">port</span><span class="tag">&gt;</span><span>8081</span><span class="tag">&lt;/</span><span class="tag-name">port</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">maxIdleTime</span><span class="tag">&gt;</span><span>60000</span><span class="tag">&lt;/</span><span class="tag-name">maxIdleTime</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span><span class="tag-name">connector</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span><span class="tag-name">connectors</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">requestLog</span><span>&nbsp;</span><span class="attribute">implementation</span><span>=</span><span class="attribute-value">&quot;org.mortbay.jetty.NCSARequestLog&quot;</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">filename</span><span class="tag">&gt;</span><span>target/access.log</span><span class="tag">&lt;/</span><span class="tag-name">filename</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">retainDays</span><span class="tag">&gt;</span><span>90</span><span class="tag">&lt;/</span><span class="tag-name">retainDays</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">append</span><span class="tag">&gt;</span><span>false</span><span class="tag">&lt;/</span><span class="tag-name">append</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">extended</span><span class="tag">&gt;</span><span>false</span><span class="tag">&lt;/</span><span class="tag-name">extended</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">logTimeZone</span><span class="tag">&gt;</span><span>GMT+8:00</span><span class="tag">&lt;/</span><span class="tag-name">logTimeZone</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span><span class="tag-name">requestLog</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">systemProperties</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">systemProperty</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">name</span><span class="tag">&gt;</span><span>productionMode</span><span class="tag">&lt;/</span><span class="tag-name">name</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span><span class="tag-name">value</span><span class="tag">&gt;</span><span>false</span><span class="tag">&lt;/</span><span class="tag-name">value</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span><span class="tag-name">systemProperty</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span><span class="tag-name">systemProperties</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span><span class="tag-name">configuration</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span><span class="tag-name">plugin</span><span class="tag">&gt;</span><span>&nbsp;</span></span></li></ol></pre>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; ">&nbsp;5、Jetty Debug</p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; ">方式1：<span style="font-size: 12px; ">set&nbsp;<span class="Apple-style-span" style="color: rgb(102, 102, 102); font-family: Arial; line-height: normal; background-color: rgb(255, 255, 255); ">MAVEN_OPTS =</span><span class="Apple-style-span" style="color: rgb(102, 102, 102); font-family: monospace; line-height: normal; white-space: pre; background-color: rgb(247, 247, 247); ">-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n</span></span></p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; ">&nbsp;</p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; ">方式2：mvndebug jetty:run</p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; ">&nbsp;</p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; ">&nbsp;</p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; ">&nbsp;</p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; ">&nbsp;</p>
+<p align="left" style="margin-top: 0cm; margin-right: 0cm; margin-bottom: 0pt; margin-left: 0cm; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; line-height: 13pt; text-align: left; ">&nbsp;</p>
+<p>&nbsp;</p>
+    		</div><!--正文 end-->
+<script type="text/javascript">
+	var kevent = 'onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onresize|onselect|onsubmit|onunload';
+	var aevent = kevent.split('|');
+
+	jQuery('.showContent img').each(function(){
+		var nimg = this;
+		jQuery.each(aevent, function(i, n){
+			if (n!='onload') {
+				jQuery(nimg).attr(n, '');
+			} else {
+				if (jQuery(nimg).attr(n) != 'if(this.width>650) this.width=650;') {
+					jQuery(nimg).attr(n, '');
+				}
+			}
+		});
+	});
+</script>
+<script type="text/javascript" charset="utf-8">
+var encodetitle = encodeURI('一篇很棒的博文分享给大家：《Jetty使用总结》');
+
+function show51share(){
+
+	window.open('http://t.51cto.com/index.php?m=share&url=http://tianya23.blog.51cto.com/1081650/423405&type=l&count=&relateUid=&appkey=3843950324&title=' + encodetitle);
+}
+</script>		
+<div class="m_sharebtn clear">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td width="11%" height="43" align="center" valign="middle"><img src="http://img1.51cto.com/images/share/ssk.png" alt="分享至"/></td>
+		<td width="77%" align="left" valign="top">
+			<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare" data="{'wbuid':1706976420}">
+				<a class="bds_tsina"></a>
+				<a class="bds_qzone"></a>
+				<a class="bds_tqq"></a>
+				<a class="bds_baidu"></a>
+				<a class="bds_renren"></a>
+				<a class="bds_qq"></a>
+				<a class="bds_douban"></a>
+				<a class="bds_hi"></a>
+				<a class="bds_msn"></a>
+				<em title="分享到51CTO微博" class="weibo_51cto" onMouseOut="this.style.backgroundImage='url(http://img1.51cto.com/images/share/ico_mweibo.gif)'" onMouseOver="this.style.backgroundImage='url(http://img1.51cto.com/images/share/ico_mweibob.gif)'" onClick="show51share();"></em>
+				<span class="bds_more">更多</span>
+				
+				<a class="shareCount"></a>
+			</div>
+	<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=559183" ></script>
+	<script type="text/javascript" id="bdshell_js"></script>
+	<script type="text/javascript">
+		var bds_config = {'wbUid':1706976420, 'bdPic':'http://blog.51cto.com/attachment/201305/173413310.jpg'};
+		document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+	</script>
+	<!-- Baidu Button END --></td>
+		<td width="12%" align="right" valign="middle"><a href="javascript:favorBox('open');" title="一键收藏，随时查看，分享好友！"><img src="http://home.51cto.com/public/themes/blue/images/favorite_add_small.gif" border="0" alt="一键收藏，随时查看，分享好友！" /></a></td>
+	  </tr>
+	</table>
+
+</div>			
+    		<div class="showBottom">
+            <!--<div class="reviews"><span class="fl" style="cursor:pointer;"><a onclick="openFavoulist();" id="favourer">pseudoam、huangyouliang10</a>
+
+            </span><div id="favourdiv" class="support01">2人</div>
+              <span class="fl">了这篇文章</span></div>-->
+              <table width="720" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td  align="right"><img src="http://phpanddb.blog.51cto.com/image/skin/25/icon01.png" width="15" height="16" /> <span style="cursor:pointer;"><a onclick="openFavoulist();" id="favourer">pseudoam、huangyouliang10</a></span></td>
+    <td width="70" align="left"><div style="line-height:28px;" id="favourdiv" class="support01">2人</div></td>
+    <td width="60" align="left">了这篇文章</td>
+  </tr>
+</table>
+
+
+
+
+            <div class="showType">类别：<a href="/1081650/d-7" class="operlink">Ant & Maven</a>┆阅读(<span id="readNum">0</span>)┆评论(<span id='cmtNum' >0</span>)
+
+
+┆
+<a href="/">返回博主首页</a>┆<a href="http://blog.51cto.com">返回博客首页</a></div>
+            <div class="prevNext">
+
+			上一篇 <a href="/1081650/422655" class="operlink" title="Spring知识点总结-2">Spring知识点总结-2</a>
+
+
+			下一篇 <a href="/1081650/423544" class="operlink" title="Base64与Base62">Base64与Base62</a>
+
+
+            </div>
+
+            </div>
+
+	  </div><!--showBottom end-->
+      </div><!--modCon-->
+    <span class="modBot"></span>
+    </div><!--artShow end-->
+    <span class="blank"></span>
+	
+	<div class="relatedArt box">
+<a href="http://blog.51cto.com/" target="_blank"><img src="http://s3.51cto.com/wyfs02/M01/23/16/wKiom1MxIyaSB27pAADprZnUlrk234.jpg" /></a>
+</div>
+	
+
+
+    <div class="relatedArt box">
+    <div class="title" name="zhuanti" id="zhuanti"><h2>相关文章</h2></div>
+    <div class="modCon">
+<ul>
+
+<li><a href="http://eastsky0.blog.51cto.com/631812/300737" title="Google 选择 Jetty 放弃 Tomcat" target="_blank">Google 选择 Jetty 放弃 Tomcat</a></li>
+
+
+<li><a href="http://tangjj.blog.51cto.com/1848040/346823" title="对MAVEN JETTY插件进行DEBUG" target="_blank">对MAVEN JETTY插件进行DEBUG</a></li>
+
+
+<li><a href="http://abenking.blog.51cto.com/798457/261333" title="Google 选择 Jetty 放弃 Tomcat" target="_blank">Google 选择 Jetty 放弃 Tomcat</a></li>
+
+
+
+</ul>
+
+
+
+<span class="blank6"></span>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div><!--相关文章 end-->
+
+
+<div class="artComm box">
+    <div class="title"><a name="replay"></a><h2>文章评论</h2></div>
+    <div class="modCon"  id="artcomment">
+		<div>  &nbsp;</div><a name='354859'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid0'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[1楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://1572091hyl10.blog.51cto.com' class='operlink' ref='nofollow'><b>huangyouliang10</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='huangyouliang10' parentid='354859' >回复</a></label></div></div><div align=right>2010-11-15 23:12:32</div><div class='commentcontent'>  好文章，支持</div></div><br><div>  &nbsp;</div>
+    </div><!--modCon-->
+        <span class="modBot"></span>
+</div><!--commBox end-->
+<a href="" id="com_top_top"></a>
+<form action='/comment.php?' method='post' name='form1' id='form1' onSubmit='return commentSubmit(this,"");'>
+<span class="blank1"></span>
+<div class="box writeComm" style="min-height:30px;">
+<a name='comment'></a>
+<input type='hidden' name='action' value='comment'>
+<input  id='commenttid' type='hidden' name='tid' value='423405'>
+<input type="hidden" name="com_count_ajax" id="com_count_ajax" value="1" />
+
+ <div class="title">
+	<h2 class="fl">发表评论&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+	<span class="fl"><a class="mred" target="_blank" href="http://edu.51cto.com/course/course_id-1189.html">2014 WOT全球软件技术峰会【火热抢票中】</a></span>
+	<style type="text/css">
+		a.mred:link{ color:#ff0000; text-decoration:underline;}
+		a.mred:visited{color:#ff0000;}
+		a.mred:hover{color:#ff0000;}
+		a.mred:active{color:#ff0000;}
+	</style>
+</div>
+ <div class="modCon">
+
+ <div class="commForm">
+<dl>
+<dt>昵&nbsp;&nbsp;称：</dt>
+<dd>
+
+<input type="text" id='commentusername' name='username' value='' class="commInput fl" /><span><a href='http://home.51cto.com/index.php?reback=http%253A%252F%252Ftianya23.blog.51cto.com%252F1081650%252F423405' style='text-decoration:underline' >登录</a>&nbsp;&nbsp;<a href='http://ucenter.51cto.com/reg_01.php?reback=http://blog.51cto.com' target='_blank' style='text-decoration: underline;'>快速注册</a></span>
+
+
+
+</dd>
+</dl>
+
+
+
+<dl id="commentyanzheng">
+
+
+<dt>验证码：</dt>
+<dd><input class="code" type="text" value=""  id="commentauthnum" name="authnum" onclick="displaysecunum();"/>
+
+  <img width="78" class="fl" height="29"  id="secunum" onclick="refimg()" style="display:none;"/><p class="fl"><span style="display:none;" id="spanfont">点击图片可刷新验证码</span><span style="display:inline;" id="clickfont">请点击后输入验证码</span><span class="pl5"><a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank" style="text-decoration: underline;">博客过2级，无需填写验证码</a></span></p></dd>
+</dl>
+<dl>
+<dt>内&nbsp;&nbsp;容：</dt>
+<dd>
+<textarea class="writeCommCon f12"  id="commentcontent" name='content'></textarea>
+</dd>
+</dl>
+</div>
+<div class="writeCommBot">
+  <input type="hidden" name="parentid" value="" id="parentid"/>
+  <input class="commBtn fl"   name='submit' type='button' id="commentsubmit" value='' onclick="commentSubmitend2()"/>
+
+ <p class="fl" style="display:none;"><input class="fl" type="checkbox" name="favour" id="favour" checked="" value="1" /><span class="fl">同时赞一个</span></p>
+
+</div>
+<span class="blank"></span>
+
+</div><!--modCon-->
+<span class="modBot"></span>
+</div>
+</form>
+
+<iframe id=iframe1 name=iframe1 width=0 height=0></iframe>
+<!--发表评论 end-->
+</div>
+</div>
+<script language="javascript">
+	function refimg(){
+		var randval = Math.random();
+		document.getElementById("secunum").src="/seccode.php?rnum="+randval;
+	}
+	function displaysecunum()
+	{
+		var displaystr = document.getElementById("secunum").style.display;
+		if(displaystr == 'none')
+		{
+			refimg();
+			document.getElementById("clickfont").style.display = 'none';
+			document.getElementById("secunum").style.display = 'inline';
+			document.getElementById("spanfont").style.display = 'inline';
+		}
+	}
+
+	function showMsn(){
+		document.getElementById("c02").style.display = "none";
+		document.getElementById("c01").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+	function showBBS(){
+		document.getElementById("c01").style.display = "none";
+		document.getElementById("c02").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+
+	//资源页面，分享按钮
+	function copyShareUrl(title){
+
+		if (window.clipboardData){
+
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				copy = "推荐：" + title + "http://tianya23.blog.51cto.com/1081650/423405";
+				var alertText = "复制成功，你可以粘贴到MSN或QQ中发给好友。";
+			}
+			else
+			{
+				copy = "[url=" + "http://tianya23.blog.51cto.com/1081650/423405" + "][u]" + title + "[/u][/url]";
+				var alertText = "复制成功，你可以粘贴到论坛分享给坛友。";
+			}
+			window.clipboardData.clearData();
+			window.clipboardData.setData("Text", copy);
+			alert(alertText);
+		}
+		else if (window.netscape){
+			alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。");
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				document.getElementById("shareTextQM").value = "推荐：" + title + "http://tianya23.blog.51cto.com/1081650/423405";
+				document.getElementById("shareTextQM").select();
+			}
+			else
+			{
+				document.getElementById("shareTextBBS").value = "[url=" + "http://tianya23.blog.51cto.com/1081650/423405" + "][u]" + title + "[/u][/url]";
+                document.getElementById("shareTextBBS").select();
+			}
+		}
+		return false;
+	}
+	function select_login(){
+		document.getElementById('fixed').style.display='';
+	}
+	function commentcheck()
+	{
+		if(document.form1.content.value == "")
+		{
+			alert("评论内容为空!");
+			document.form1.content.focus();
+			return false;
+		}
+	}
+	function changename(){
+
+	var memberid=0;
+	memberid="";
+
+	if(document.getElementById('commentniming').checked){
+		document.getElementById('commentusername').disabled=false;
+		document.getElementById('commentusername').value='';
+		document.getElementById("indexhidden").style.display="none";
+		document.getElementById("commentindex").value='';
+		document.getElementById("commentyanzheng").style.display="";
+	}else{
+		document.getElementById('commentusername').disabled=true;
+		document.getElementById('commentusername').value="";
+		document.getElementById("indexhidden").style.display="";
+		document.getElementById("commentindex").value="http://.blog.51cto.com";
+		if(memberid>8)
+		{
+			document.getElementById("commentyanzheng").style.display="none";
+		}
+	}
+	}
+	function openFavoulist()
+	{
+		window.open ('http://blog.51cto.com/mod/favourlist.php?tid=423405','newwindow','height=300,width=500,top=400,left=400,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no,z-look=yes');
+	}
+
+	var e_zti = document.getElementById('zti');//有专题锚点
+	var maodian = window.location.href;//锚点
+	if (e_zti) {
+		//e_zti.href= (/[#]+/.test(maodian)) ? maodian : maodian + "#zhuanti";
+	}
+</script>
+<script src="http://blog.51cto.com/js/jquery-1.7.1.min.js"></script>
+<script src="http://blog.51cto.com/js/jquery.cookie.js"></script>
+<script src="http://blog.51cto.com/js/jquery.messager.js"></script>
+<link href="http://blog.51cto.com/css/blog_top/blog_top.css" rel="stylesheet" type="text/css" />
+<script src="http://blog.51cto.com/js/blog_top_list.php" type="text/javascript" language="javascript"></script>
+<style>
+.backToTop {
+    display: none;
+	WIDTH: 45px;
+	height:45px;
+	BOTTOM: 20px;
+     position: fixed;
+    _position: absolute;
+    right: 140px;
+    bottom: 10px;
+    _bottom: "auto";
+    cursor: pointer;
+    opacity: .6;
+    filter: Alpha(opacity=60);
+	text-indent:-9999px;
+}
+.tops { background:url(/images/tops.jpg) no-repeat center center; }
+</style>
+<script type="text/javascript">
+(function() {
+    var backToTopTxt = "返回顶部", backToTopEle = $('<div class="backToTop tops"></div>').appendTo($("body"))
+        .text(backToTopTxt).attr("title", backToTopTxt).click(function() {
+            $("html, body").animate({ scrollTop: 0 }, 520);
+    }), backToTopFun = function() {
+        var st = $(document).scrollTop(), winh = $(window).height();
+        (st > 0)? backToTopEle.show(): backToTopEle.hide();    
+        //IE6下的定位
+        if (!window.XMLHttpRequest) {
+            backToTopEle.css("top", st + winh - 60);    
+        }
+    };
+    $(window).bind("scroll", backToTopFun);
+    $(function() { backToTopFun(); });
+})();
+</script>
+
+
+
+
+</div>
+</div>
+<div class="clear"></div>
+<!-- <script>
+jQuery(function(){
+	var html= "<div id=\"sogou_se_tgbar\" style=\"text-align:center;margin:0px auto 2px auto;clear:both;background:url(http://home.51cto.com/public/images/notice/sogou_se_tgbar_bg_final1.gif) repeat-x;width:950px;color:#000;font-size:13px;height:36px;z-index:21474836471\"><div style=\"float:left;cursor:pointer;width:910px;text-align:center;border-left:solid #efbf00 1px;height:32px; line-height:32px;txt-align:center;\"><span style=\"\">	<a href=\"http://51ctoblog.blog.51cto.com/26414/1093282\">【新年祝福征集】51CTO社区年底嘉年华活动正在征集博主祝福语，祝福以红包的形式随机的赠送给访问51CTO的网友 点此送祝福>></a></span></div><div onclick=\"document.getElementById('sogou_se_tgbar').style.display = 'none';\" style=\"float:right;width:20px;cursor:pointer;height:28px;padding:4px 8px 0px 8px;border-right:solid #efbf00 1px\"><img style=\"border:none;margin:4px 0px 0px 0px;\" src=\"http://home.51cto.com/public/images/notice/sogou_se_tgbar_close_final1.gif\"></div></div>"
+	jQuery('body').prepend(html);
+})
+</script> -->
+</div>
+<div id="footer">
+  <div id="innerFooter">
+	<center>
+		<small>
+			Copyright By 51CTO.COM 版权所有<br><br>
+			<a href="http://blog.51cto.com" target="_blank"><img src="http://img1.51cto.com/image/skin/30/copyright.jpg"></a>
+	  </small>
+	</center>
+  </div>
+</div>
+<script src="http://home.51cto.com/index.php?s=/Index/getLoginStatus/reback/http%253A%252F%252Ftianya23.blog.51cto.com%252F1081650%252F423405" charset='utf-8'></script>
+<div style="display:none">
+<script src="http://logs.51cto.com/rizhi/count/count.js"></script>
+
+<iframe frameborder="0" scrolling="no" width="0" height="0" src="http://log.51cto.com/pageview.php?frompos=blog_art"></iframe>
+</div>
+<div style="display:none;"><script src="http://s24.cnzz.com/stat.php?id=4274540&web_id=4274540&show=pic" language="JavaScript"></script><div>
+<script src="http://blog.51cto.com/js/poptop.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38670657-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

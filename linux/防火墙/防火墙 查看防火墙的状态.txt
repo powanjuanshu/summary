@@ -1,0 +1,2 @@
+输入命令：service iptables status
+在关闭防火墙之前我们需要查看防火墙的状态，可以使用service iptables status命令来查看，确定防火墙是否开启再来进行关闭操作。

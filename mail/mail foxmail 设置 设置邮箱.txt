@@ -1,0 +1,2 @@
+工具->帐号管理->新建->Email地址：coolwindinmyhair@163.com->下一步->邮箱类型：POP3->密码：lj379183595lj->帐号描述：coolwindinmyhair@163.com（要写全，带上后面的@163.com）
+->测试->如果全是绿色的勾表示测试成功->完成

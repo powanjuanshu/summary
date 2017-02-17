@@ -1,0 +1,17 @@
+1.将apache-tomcat-6.0.32.tar.gz拷贝到home目录中
+2.然后切换到home输入命令：tar zxvf apache-tomcat-6.0.32.tar.gz -C /home/aaa
+3./usr/local/tomcat/bin/startup.sh； //启动tomcat 
+
+显示 
+Using CATALINA_BASE: /usr/local/tomcat 
+Using CATALINA_HOME: /usr/local/tomcat 
+Using CATALINA_TEMDIR: /usr/local/tomcat/temp 
+Using JAVA_HOME: /usr/java/jdk1.6.0_01 
+
+到此tomcat已经安装完成，现在使用浏览器访问 http://localhost:8080，出现tomcat默认页面，说明已经安装成功。
+
+
+
+
+
+

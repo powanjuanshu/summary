@@ -1,0 +1,920 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head id="Head"><title>
+	grep使用多个查询条件－－或 - zhyiwww  - BlogJava
+</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta id="metaKeywords" name="keywords" content="grep使用多个查询条件－－或" /><link type="text/css" rel="stylesheet" href="/css/common.css" /><link id="MainCss" type="text/css" rel="stylesheet" href="http://www.blogjava.net/Skins/marvin3/style.css" /><link id="MainCss2" type="text/css" rel="stylesheet" href="http://www.blogjava.net/Skins/marvin3/green.css" /><link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://www.blogjava.net/zhyiwww/rss.aspx" /></head>
+<body>
+    <form name="Form1" method="post" action="252170.html" onsubmit="javascript:return WebForm_OnSubmit();" id="Form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="
+__VIEWSTATE" value="" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form1'];
+if (!theForm) {
+    theForm = document.Form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=hCqqcDq62xC48aLO1-oizzph91mftTcpBQYAMmX9y1_MEKckib0uai68YudFFqahbIRj8ZaZB19FpMr30&amp;t=634604713351482412" type="text/javascript"></script>
+
+<script language=JavaScript>
+									function ctlent(evt,id)
+											{
+												if(evt.ctrlKey && evt.keyCode == 13)
+												{	
+													try
+													{
+														TempSave(id);
+													}
+													catch(ex)
+													{
+													}
+													finally
+													{
+													    __doPostBack('AjaxHolder$PostComment$btnSubmit','')
+													}
+												}
+		
+												}</script>
+												<script language=JavaScript>function SetReplyAuhor(author){document.getElementById('AjaxHolder_PostComment_tbComment').value+="@"+author+"\n";document.getElementById('AjaxHolder_PostComment_tbComment').focus();return false}</script>
+<script src="/ScriptResource.axd?d=TB76SHHPXs0c-M9_tGhAxuTARlsiSpe5Dn70CMDyMu0Be8A_MPH2Z7oqJoDwyxmBxB28VcgK9C-XqFdMNI_DuigegyGH79krj7asDjvAKLqzs7DlCIm2xb4oSA4lM05RrYsRw4Ulp-jfriIG0&amp;t=634604713351482412" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=-BecoVNwDVCZ4TW3gB_ZzPWfgjCQ_C64O4hNc3pweA4UGq0B-lWFnUMMAtqURN0AZF_f7fxk9s5U1gsq0foUhwHdXezBbn_OgCN5EL300MOu7Jb-c7WU_a2OCK01&amp;t=634979389729873750" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=4npu1eCN6HUVuTPPO5YDuuBNC2hrBvTsGEVYQhhAo9CX_hfoT2Mz1UGnoo5C32pPXZvBizBLMnY0_szRgrGRkyv7-BsG0CvEejE8Vl3Xt8nd-D_58kXSDmaBFOFFj7w3EMKivQ2&amp;t=634979389729873750" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+        <meta name="verify-v1" content="eeDswb5Rws3gSjmtZkt/FTqvCVnD9C94wj9wxCvJv9U=" />
+<meta name="keywords" content="java,j2ee,gis,tilecache,mapserver,arcgis,正则表达式,linux,unix,debian,webgis,ubuntu,debin,配置管理" />
+<meta name="author" content="zhyiwww" />
+<meta name="robots" content="all" />
+
+
+<div id="top">
+	
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.blogjava.net/zhyiwww/">zhyiwww </a></h1>
+<p id="tagline">用平实的笔，记录编程路上的点点滴滴………</p>
+</div>
+<div id="leftmenu" style="DISPLAY:none">
+	
+		
+<h3>导航</h3>
+<ul>
+			<li><a id="MyLinks1_HomeLink" href="http://www.blogjava.net/">BlogJava</a></li>
+			<li><a id="MyLinks1_MyHomeLink" href="http://www.blogjava.net/zhyiwww/">首页</a></li>
+			<li><a id="MyLinks1_NewPostLink" href="http://www.blogjava.net/zhyiwww/admin/EditPosts.aspx?opt=1">新随笔</a></li>
+			<li><a id="MyLinks1_ContactLink" accesskey="9" href="http://www.blogjava.net/zhyiwww/contact.aspx?id=1">联系</a></li>
+			<li><a id="MyLinks1_Syndication" href="http://www.blogjava.net/zhyiwww/rss">聚合</a><a id="MyLinks1_XMLLink" href="http://www.blogjava.net/zhyiwww/rss"><img src="http://www.blogjava.net/images/xml.gif" style="border-width:0px;" /></a>
+			<li><a id="MyLinks1_Admin" href="http://www.blogjava.net/zhyiwww/admin/EditPosts.aspx">管理</a></li>
+</ul>
+		<table id="Calendar1_entryCal" class="Cal" cellspacing="0" cellpadding="0" title="日历" border="0" style="border-width:1px;border-style:solid;border-collapse:collapse;">
+	<tr><td colspan="7" style="background-color:Silver;"><table class="CalTitle" cellspacing="0" border="0" style="width:100%;border-collapse:collapse;">
+		<tr><td class="CalNextPrev" style="width:15%;"><a href="javascript:__doPostBack('Calendar1$entryCal','V3257')" style="color:Black" title="转到上一个月">&lt;</a></td><td align="center" style="width:70%;">2009年1月</td><td class="CalNextPrev" align="right" style="width:15%;"><a href="javascript:__doPostBack('Calendar1$entryCal','V3319')" style="color:Black" title="转到下一个月">&gt;</a></td></tr>
+	</table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center" style="width:14%;">28</td><td class="CalOtherMonthDay" align="center" style="width:14%;">29</td><td class="CalOtherMonthDay" align="center" style="width:14%;">30</td><td class="CalOtherMonthDay" align="center" style="width:14%;">31</td><td align="center" style="width:14%;">1</td><td align="center" style="width:14%;">2</td><td class="CalWeekendDay" align="center" style="width:14%;">3</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;"><a href="http://www.blogjava.net/zhyiwww/archive/2009/01/04.html"><u>4</u></a></td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/zhyiwww/archive/2009/01/05.html"><u>5</u></a></td><td align="center" style="width:14%;">6</td><td align="center" style="width:14%;">7</td><td align="center" style="width:14%;">8</td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/zhyiwww/archive/2009/01/09.html"><u>9</u></a></td><td class="CalWeekendDay" align="center" style="width:14%;">10</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">11</td><td align="center" style="width:14%;">12</td><td align="center" style="width:14%;">13</td><td align="center" style="width:14%;">14</td><td align="center" style="width:14%;">15</td><td align="center" style="width:14%;">16</td><td class="CalWeekendDay" align="center" style="width:14%;">17</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">18</td><td align="center" style="width:14%;">19</td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/zhyiwww/archive/2009/01/20.html"><u>20</u></a></td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/zhyiwww/archive/2009/01/21.html"><u>21</u></a></td><td align="center" style="width:14%;">22</td><td align="center" style="width:14%;">23</td><td class="CalWeekendDay" align="center" style="width:14%;">24</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">25</td><td align="center" style="width:14%;">26</td><td align="center" style="width:14%;">27</td><td align="center" style="width:14%;">28</td><td align="center" style="width:14%;">29</td><td align="center" style="width:14%;">30</td><td class="CalWeekendDay" align="center" style="width:14%;">31</td></tr><tr><td class="CalOtherMonthDay" align="center" style="width:14%;">1</td><td class="CalOtherMonthDay" align="center" style="width:14%;">2</td><td class="CalOtherMonthDay" align="center" style="width:14%;">3</td><td class="CalOtherMonthDay" align="center" style="width:14%;">4</td><td class="CalOtherMonthDay" align="center" style="width:14%;">5</td><td class="CalOtherMonthDay" align="center" style="width:14%;">6</td><td class="CalOtherMonthDay" align="center" style="width:14%;">7</td></tr>
+</table>
+
+		
+<h3>公告</h3>
+	<div align="left">-------------------------------------------<br />
+<strong><span style="color: #0000ff">崇尚原创精神,</span><br />
+<span style="color: #0000ff">文章欢迎转载，</span><br />
+<span style="color: #0000ff">请您注明出处，</span><br />
+<span style="color: #0000ff">在此特别声明。</span><br />
+<span style="color: #008000">版权所有&#64;zhyiwww</span><br />
+<span style="color: #ff6600">引用链接<br />
+http://www.blogjava.net/zhyiwww</span></strong><br />
+-------------------------------------------- </div>
+
+
+		
+		<h3>随笔分类<span style="font-size:11px;font-weight:normal">(622)</span></h3>
+		
+				<ul>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl01_Link" href="http://www.blogjava.net/zhyiwww/category/31911.html">ajax(3)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl01_RssLink" title="Subscribe to ajax(3)" href="http://www.blogjava.net/zhyiwww/category/31911.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl02_Link" href="http://www.blogjava.net/zhyiwww/category/12118.html">code demo -java(21)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl02_RssLink" title="Subscribe to code demo -java(21)" href="http://www.blogjava.net/zhyiwww/category/12118.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl03_Link" href="http://www.blogjava.net/zhyiwww/category/8901.html">database(68)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl03_RssLink" title="Subscribe to database(68)" href="http://www.blogjava.net/zhyiwww/category/8901.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl04_Link" href="http://www.blogjava.net/zhyiwww/category/36860.html">debian(40)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl04_RssLink" title="Subscribe to debian(40)" href="http://www.blogjava.net/zhyiwww/category/36860.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl05_Link" href="http://www.blogjava.net/zhyiwww/category/16561.html">discuss(3)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl05_RssLink" title="Subscribe to discuss(3)" href="http://www.blogjava.net/zhyiwww/category/16561.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl06_Link" href="http://www.blogjava.net/zhyiwww/category/15486.html">dos(5)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl06_RssLink" title="Subscribe to dos(5)" href="http://www.blogjava.net/zhyiwww/category/15486.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl07_Link" href="http://www.blogjava.net/zhyiwww/category/16335.html">english(3)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl07_RssLink" title="Subscribe to english(3)" href="http://www.blogjava.net/zhyiwww/category/16335.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl08_Link" href="http://www.blogjava.net/zhyiwww/category/12715.html">gis(36)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl08_RssLink" title="Subscribe to gis(36)" href="http://www.blogjava.net/zhyiwww/category/12715.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl09_Link" href="http://www.blogjava.net/zhyiwww/category/8511.html">j2ee(95)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl09_RssLink" title="Subscribe to j2ee(95)" href="http://www.blogjava.net/zhyiwww/category/8511.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl10_Link" href="http://www.blogjava.net/zhyiwww/category/8510.html">java basic(25)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl10_RssLink" title="Subscribe to java basic(25)" href="http://www.blogjava.net/zhyiwww/category/8510.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl11_Link" href="http://www.blogjava.net/zhyiwww/category/21210.html">javascript(10)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl11_RssLink" title="Subscribe to javascript(10)" href="http://www.blogjava.net/zhyiwww/category/21210.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl12_Link" href="http://www.blogjava.net/zhyiwww/category/12323.html">linux(174)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl12_RssLink" title="Subscribe to linux(174)" href="http://www.blogjava.net/zhyiwww/category/12323.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl13_Link" href="http://www.blogjava.net/zhyiwww/category/12867.html">luence(3)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl13_RssLink" title="Subscribe to luence(3)" href="http://www.blogjava.net/zhyiwww/category/12867.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl14_Link" href="http://www.blogjava.net/zhyiwww/category/37785.html">oracle(13)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl14_RssLink" title="Subscribe to oracle(13)" href="http://www.blogjava.net/zhyiwww/category/37785.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl15_Link" href="http://www.blogjava.net/zhyiwww/category/37784.html">Postgis(5)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl15_RssLink" title="Subscribe to Postgis(5)" href="http://www.blogjava.net/zhyiwww/category/37784.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl16_Link" href="http://www.blogjava.net/zhyiwww/category/37783.html">Postgres(11)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl16_RssLink" title="Subscribe to Postgres(11)" href="http://www.blogjava.net/zhyiwww/category/37783.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl17_Link" href="http://www.blogjava.net/zhyiwww/category/36483.html">ruby on rails(5)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl17_RssLink" title="Subscribe to ruby on rails(5)" href="http://www.blogjava.net/zhyiwww/category/36483.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl18_Link" href="http://www.blogjava.net/zhyiwww/category/9157.html">software(27)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl18_RssLink" title="Subscribe to software(27)" href="http://www.blogjava.net/zhyiwww/category/9157.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl19_Link" href="http://www.blogjava.net/zhyiwww/category/16755.html">vml(4)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl19_RssLink" title="Subscribe to vml(4)" href="http://www.blogjava.net/zhyiwww/category/16755.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl20_Link" href="http://www.blogjava.net/zhyiwww/category/16061.html">windows(13)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl20_RssLink" title="Subscribe to windows(13)" href="http://www.blogjava.net/zhyiwww/category/16061.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl21_Link" href="http://www.blogjava.net/zhyiwww/category/12771.html">wml(7)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl21_RssLink" title="Subscribe to wml(7)" href="http://www.blogjava.net/zhyiwww/category/12771.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl22_Link" href="http://www.blogjava.net/zhyiwww/category/9767.html">励志(7)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl22_RssLink" title="Subscribe to 励志(7)" href="http://www.blogjava.net/zhyiwww/category/9767.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl23_Link" href="http://www.blogjava.net/zhyiwww/category/12353.html">数据结构和算法(5)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl23_RssLink" title="Subscribe to 数据结构和算法(5)" href="http://www.blogjava.net/zhyiwww/category/12353.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl24_Link" href="http://www.blogjava.net/zhyiwww/category/12772.html">概念辩晰(4)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl24_RssLink" title="Subscribe to 概念辩晰(4)" href="http://www.blogjava.net/zhyiwww/category/12772.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl25_Link" href="http://www.blogjava.net/zhyiwww/category/20765.html">正则表达式(8)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl25_RssLink" title="Subscribe to 正则表达式(8)" href="http://www.blogjava.net/zhyiwww/category/20765.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl26_Link" href="http://www.blogjava.net/zhyiwww/category/52764.html">知识管理(1)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl26_RssLink" title="Subscribe to 知识管理(1)" href="http://www.blogjava.net/zhyiwww/category/52764.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl27_Link" href="http://www.blogjava.net/zhyiwww/category/11940.html">软件测试(19)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl27_RssLink" title="Subscribe to 软件测试(19)" href="http://www.blogjava.net/zhyiwww/category/11940.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl28_Link" href="http://www.blogjava.net/zhyiwww/category/48598.html">配置管理(7)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl28_RssLink" title="Subscribe to 配置管理(7)" href="http://www.blogjava.net/zhyiwww/category/48598.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl29_Link" href="http://www.blogjava.net/zhyiwww/category/53035.html">项目管理</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl29_RssLink" title="Subscribe to 项目管理" href="http://www.blogjava.net/zhyiwww/category/53035.html/rss">(rss)</a></li>
+			
+				</ul>
+			
+	
+		<h3>随笔档案<span style="font-size:11px;font-weight:normal">(529)</span></h3>
+		
+				<ul>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl01_Link" href="http://www.blogjava.net/zhyiwww/archive/2014/06.html">2014年6月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl02_Link" href="http://www.blogjava.net/zhyiwww/archive/2014/02.html">2014年2月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl03_Link" href="http://www.blogjava.net/zhyiwww/archive/2013/10.html">2013年10月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl04_Link" href="http://www.blogjava.net/zhyiwww/archive/2013/07.html">2013年7月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl05_Link" href="http://www.blogjava.net/zhyiwww/archive/2013/04.html">2013年4月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl06_Link" href="http://www.blogjava.net/zhyiwww/archive/2012/12.html">2012年12月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl07_Link" href="http://www.blogjava.net/zhyiwww/archive/2012/10.html">2012年10月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl08_Link" href="http://www.blogjava.net/zhyiwww/archive/2012/08.html">2012年8月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl09_Link" href="http://www.blogjava.net/zhyiwww/archive/2012/07.html">2012年7月 (7)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl10_Link" href="http://www.blogjava.net/zhyiwww/archive/2012/04.html">2012年4月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl11_Link" href="http://www.blogjava.net/zhyiwww/archive/2012/03.html">2012年3月 (5)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl12_Link" href="http://www.blogjava.net/zhyiwww/archive/2012/02.html">2012年2月 (4)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl13_Link" href="http://www.blogjava.net/zhyiwww/archive/2012/01.html">2012年1月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl14_Link" href="http://www.blogjava.net/zhyiwww/archive/2011/11.html">2011年11月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl15_Link" href="http://www.blogjava.net/zhyiwww/archive/2011/10.html">2011年10月 (4)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl16_Link" href="http://www.blogjava.net/zhyiwww/archive/2011/09.html">2011年9月 (4)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl17_Link" href="http://www.blogjava.net/zhyiwww/archive/2011/08.html">2011年8月 (4)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl18_Link" href="http://www.blogjava.net/zhyiwww/archive/2011/07.html">2011年7月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl19_Link" href="http://www.blogjava.net/zhyiwww/archive/2011/06.html">2011年6月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl20_Link" href="http://www.blogjava.net/zhyiwww/archive/2011/05.html">2011年5月 (6)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl21_Link" href="http://www.blogjava.net/zhyiwww/archive/2011/04.html">2011年4月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl22_Link" href="http://www.blogjava.net/zhyiwww/archive/2011/03.html">2011年3月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl23_Link" href="http://www.blogjava.net/zhyiwww/archive/2011/01.html">2011年1月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl24_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/12.html">2010年12月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl25_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/11.html">2010年11月 (6)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl26_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/10.html">2010年10月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl27_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/09.html">2010年9月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl28_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/08.html">2010年8月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl29_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/07.html">2010年7月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl30_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/06.html">2010年6月 (6)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl31_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/05.html">2010年5月 (8)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl32_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/04.html">2010年4月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl33_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/03.html">2010年3月 (10)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl34_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/02.html">2010年2月 (14)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl35_Link" href="http://www.blogjava.net/zhyiwww/archive/2010/01.html">2010年1月 (14)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl36_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/12.html">2009年12月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl37_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/11.html">2009年11月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl38_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/10.html">2009年10月 (5)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl39_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/09.html">2009年9月 (4)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl40_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/08.html">2009年8月 (12)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl41_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/07.html">2009年7月 (14)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl42_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/06.html">2009年6月 (16)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl43_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/05.html">2009年5月 (9)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl44_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/04.html">2009年4月 (9)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl45_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/03.html">2009年3月 (8)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl46_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/02.html">2009年2月 (12)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl47_Link" href="http://www.blogjava.net/zhyiwww/archive/2009/01.html">2009年1月 (7)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl48_Link" href="http://www.blogjava.net/zhyiwww/archive/2008/12.html">2008年12月 (29)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl49_Link" href="http://www.blogjava.net/zhyiwww/archive/2008/11.html">2008年11月 (28)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl50_Link" href="http://www.blogjava.net/zhyiwww/archive/2008/10.html">2008年10月 (7)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl51_Link" href="http://www.blogjava.net/zhyiwww/archive/2008/09.html">2008年9月 (5)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl52_Link" href="http://www.blogjava.net/zhyiwww/archive/2008/08.html">2008年8月 (6)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl53_Link" href="http://www.blogjava.net/zhyiwww/archive/2008/07.html">2008年7月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl54_Link" href="http://www.blogjava.net/zhyiwww/archive/2008/06.html">2008年6月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl55_Link" href="http://www.blogjava.net/zhyiwww/archive/2008/05.html">2008年5月 (5)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl56_Link" href="http://www.blogjava.net/zhyiwww/archive/2008/04.html">2008年4月 (4)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl57_Link" href="http://www.blogjava.net/zhyiwww/archive/2008/02.html">2008年2月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl58_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/12.html">2007年12月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl59_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/11.html">2007年11月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl60_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/10.html">2007年10月 (4)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl61_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/09.html">2007年9月 (8)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl62_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/08.html">2007年8月 (8)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl63_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/07.html">2007年7月 (4)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl64_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/06.html">2007年6月 (7)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl65_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/05.html">2007年5月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl66_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/04.html">2007年4月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl67_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/03.html">2007年3月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl68_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/02.html">2007年2月 (6)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl69_Link" href="http://www.blogjava.net/zhyiwww/archive/2007/01.html">2007年1月 (8)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl70_Link" href="http://www.blogjava.net/zhyiwww/archive/2006/12.html">2006年12月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl71_Link" href="http://www.blogjava.net/zhyiwww/archive/2006/11.html">2006年11月 (6)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl72_Link" href="http://www.blogjava.net/zhyiwww/archive/2006/10.html">2006年10月 (14)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl73_Link" href="http://www.blogjava.net/zhyiwww/archive/2006/09.html">2006年9月 (4)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl74_Link" href="http://www.blogjava.net/zhyiwww/archive/2006/08.html">2006年8月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl75_Link" href="http://www.blogjava.net/zhyiwww/archive/2006/07.html">2006年7月 (20)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl76_Link" href="http://www.blogjava.net/zhyiwww/archive/2006/06.html">2006年6月 (81)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl77_Link" href="http://www.blogjava.net/zhyiwww/archive/2006/05.html">2006年5月 (8)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl78_Link" href="http://www.blogjava.net/zhyiwww/archive/2006/04.html">2006年4月 (8)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl79_Link" href="http://www.blogjava.net/zhyiwww/archive/2006/03.html">2006年3月 (4)</a> </li>
+			
+				</ul>
+			
+	
+
+	
+</div>
+<div id="rightmenu">
+	
+		
+<h3>统计</h3>
+	<ul>
+		<li>随笔 - 531
+		<li>文章 - 0
+		<li>评论 - 383
+		<li>引用 - 0
+	</li>
+</ul>
+		
+<H3>留言簿<span style="font-size:11px;font-weight:normal;">(31)</span></H3>
+<ul>
+	<li>
+		<a id="MyMessages1_lnkMessages" href="http://www.blogjava.net/zhyiwww/Contact.aspx?id=1">给我留言</a>
+	<li>
+		<a id="MyMessages1_lnkPublicMsgView" href="http://www.blogjava.net/zhyiwww/default.aspx?opt=msg">查看公开留言</a>
+	<li>
+		<a id="MyMessages1_lnkPrivateMsgView" href="http://www.blogjava.net/zhyiwww/admin/MyMessages.aspx">查看私人留言</a>
+	</li>
+</ul>
+
+        
+<H3>积分与排名</H3>
+<ul>
+	<li>
+		积分 -
+		887636
+	<li>
+		排名 -
+		16
+	</li>
+</ul>
+
+		
+		<h3>朋友的博客</h3>
+		
+				<ul>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl00_LinkList_ctl01_Link" href="http://zhaoningbo.iteye.com/">zhaoningbo</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl00_LinkList_ctl02_Link" href="http://nuysoft.iteye.com/blog/1190542">云云的博客</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl00_LinkList_ctl03_Link" href="http://javamail.cublog.cn">小林的博客</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl00_LinkList_ctl04_Link" href="http://www.gissky.net/blog/user2/xiaodong/index.html">晓东的博客</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl00_LinkList_ctl05_Link" href="http://guanhw.blog.hexun.com/">老关的博客</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl00_LinkList_ctl06_Link" href="http://blog.163.com/kangzye">老谭的博客</a> </li>
+			
+				</ul>
+			
+	
+
+        
+<h3>阅读排行榜</h3>
+<div class="RecentComment">
+	
+			<ul style="word-break:break-all;width:100%">
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl01_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2006/10/27/77622.html">1. 如何在Eclipse中显示行号(100830)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl02_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2007/01/16/94235.html">2. java.lang.UnsupportedClassVersionError问题的解决方法(54938)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl03_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2006/04/06/39576.html">3. Hibernate实现级联删除(22227)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl04_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2006/06/19/53786.html">4. Linux 中如何卸载已安装的软件(转载)(20183)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl05_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2006/10/09/74052.html">5. 如何设置windows 2003的最大远程连接数(19265)</a>
+			</li>
+		
+			</ul>
+		
+</div>
+
+		
+<h3>评论排行榜</h3>
+<div class="RecentComment">
+	
+			<ul style="word-break:break-all;width:100%">
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl01_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2006/10/27/77622.html">1. 如何在Eclipse中显示行号(55)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl02_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2006/05/23/47692.html">2. 如何用Select 语句查询oracle表的前几条记录？(15)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl03_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2007/04/05/108774.html">3. javascript鼠标画线的VML实现(11)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl04_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2007/02/06/98410.html">4. Linux中，自己的数据存在哪？(10)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl05_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2007/09/18/146081.html">5. 正则表达式删除空行(9)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl06_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2007/06/03/121707.html">6. 关于windows的文件夹的访问权限设置的问题(8)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl07_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2006/10/27/77663.html">7. 一段代码的疑问(8)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl08_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2006/05/23/47679.html">8. Oracle循环插入测试数据(8)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl09_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2006/10/09/74052.html">9. 如何设置windows 2003的最大远程连接数(7)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl10_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2007/04/03/108217.html">10. javascript鼠标拉框（框选）的实现(7)</a>
+			</li>
+		
+			</ul>
+		
+</div>
+
+	
+</div>
+<div id="main">
+	
+					
+	<div class="post">
+		<h2>
+			<a id="viewpost1_TitleUrl" href="http://www.blogjava.net/zhyiwww/archive/2009/01/21/252170.html">grep使用多个查询条件－－或</a>
+		</h2>
+		[root&#64;mail ~]# grep 'usrquota<strong><font color="#ff0000" size="4">\|</font></strong>grpquota' /etc/fstab<br />
+LABEL=/1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; /&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ext3&nbsp; &nbsp; defaults,usrquota,grpquota&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;1 1<br />
+/dev/hda10&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;/mnt/test1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ext3&nbsp; &nbsp; defaults,grpquota&nbsp; &nbsp;&nbsp; &nbsp; 1 3<br />
+[root&#64;mail ~]#<br />
+<br />
+上面的这个方法是从网上找的。活色的部分可以实现多个条件的<strong><font color="#0000ff" size="4">或</font></strong>关系查询。<br />
+<br />
+其他方法：<br />
+<br />
+『1』使用多个 -e 参数<br />
+如：<br />
+netstat -an | grep -E&nbsp; "ESTABLISHED|WAIT"<br />
+注意：<br />
+&nbsp;netstat -an | grep -e EST -e WAIT<br />
+并列使用多个 -e参数可以实现或条件<br />
+<br />
+『2』使用扩展<br />
+如：<br />
+netstat -an | grep <span style="color: red;">-E</span>&nbsp; <span style="color: red;">"</span>ESTABLISHED|WAIT"<br />
+注意：<br />
+此处的 -E 是大写 ，匹配条件一定要加 引号<br />
+<br><br>|----------------------------------------------------------------------------------------|<br />
+&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 版权声明&nbsp; 版权所有 @zhyiwww<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 引用请注明来源 http://www.blogjava.net/zhyiwww &nbsp;&nbsp; <br />
+|----------------------------------------------------------------------------------------|<br />
+
+		<p class="postfoot">
+			posted on 2009-01-21 09:41 <a href='http://www.blogjava.net/zhyiwww/'>zhyiwww</a> 阅读(12313) <a href='#Post'>评论(0)</a> &nbsp;<a href="http://www.blogjava.net/zhyiwww/admin/EditPosts.aspx?postid=252170">编辑</a> &nbsp;<a href="http://www.blogjava.net/zhyiwww/AddToFavorite.aspx?id=252170">收藏</a>  所属分类: <a href='http://www.blogjava.net/zhyiwww/category/12323.html'>linux</a> 
+		</p>
+	</div>
+	<img src ="http://www.blogjava.net/zhyiwww/aggbug/252170.html?webview=1" width = "1" height = "1" />
+	
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://www.blogjava.net/zhyiwww/archive/2009/01/21/252170.html"
+dc:identifier="http://www.blogjava.net/zhyiwww/archive/2009/01/21/252170.html"
+dc:title="grep使用多个查询条件－－或"
+trackback:ping="http://www.blogjava.net/zhyiwww/services/trackbacks/252170.aspx" />
+</rdf:RDF>
+-->
+
+	<script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('AjaxHolder$scriptmanager1', document.getElementById('Form1'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls(['tAjaxHolder$UpdatePanel1'], [], [], 90);
+//]]>
+</script>
+
+<div id="AjaxHolder_UpdatePanel1">
+	    
+    
+<style>
+td { font-size: 12px }
+.commentTextBox 
+{ 
+    font-family : Verdana; 
+    font-size: 13px;
+ }
+</style>
+<!--Beging Temp Save-->
+<STYLE>.userData { BEHAVIOR: url(#default#userdata) }
+	</STYLE>
+<DIV class="userData" id="CommentsPersistDiv"></DIV>
+
+<script type="text/javascript">
+function pageLoad()
+{
+    Sys.WebForms.PageRequestManager.getInstance().add_initializeRequest(handleInitializeRequest);
+    //Sys.WebForms.PageRequestManager.getInstance().add_endRequest(handleEndRequest);
+}
+
+function handleInitializeRequest(sender, args)
+{
+    var prm = Sys.WebForms.PageRequestManager.getInstance();
+    var eid = args.get_postBackElement().id;
+    if (eid.indexOf("DeleteLink")>0) 
+    {
+       args.get_postBackElement().innerHTML = "<font color='red'>正在删除...</font>";         
+    }    
+    else if (eid.indexOf("btnSubmit")>0) 
+    {
+       document.getElementById("AjaxHolder_PostComment_ltSubmitMsg").innerHTML="正在提交...";
+       document.getElementById("AjaxHolder_PostComment_btnSubmit").disabled = true;       
+    }   
+    else if(eid.indexOf("refreshList")>0)
+    {
+        document.getElementById("AjaxHolder_PostComment_refreshList").innerHTML="<font color='red'>正在刷新...</font>";
+    }
+   
+}	
+
+function TempSave(ElementID)
+{
+	try
+	{
+	CommentsPersistDiv.setAttribute("CommentContent",document.getElementById(ElementID).value);
+	CommentsPersistDiv.save("CommentXMLStore");
+	}
+	catch(ex)
+	{
+	}
+	
+}
+function Restore(ElementID)
+{
+	CommentsPersistDiv.load("CommentXMLStore");
+	document.getElementById(ElementID).value=CommentsPersistDiv.getAttribute("CommentContent");
+}	
+			
+			
+</script>
+<!--Ene TempSave-->
+<div id="divRefreshComments" style="text-align:right;margin-right:10px;margin-bottom:5px;font-size:12px"><a href="/RequireRegister.aspx">新用户注册</a>&nbsp;&nbsp;<a id="AjaxHolder_PostComment_refreshList" href="javascript:__doPostBack('AjaxHolder$PostComment$refreshList','')">刷新评论列表</a>&nbsp;&nbsp;</div>
+<div class="commentform">
+<span id="AjaxHolder_PostComment_ltSubmitMsg" style="color:Red;"></span>
+<br />
+<a name="Feedback"></a>
+	<TABLE cellSpacing="1" cellPadding="1" border="0">	
+		<tr>
+		<td id="AjaxHolder_PostComment_tdOnCommentForm" colspan="3" style="line-height:1.5">		
+		</td>
+	
+		</tr>
+		<div id="AjaxHolder_PostComment_divCommnentArea">
+		<TR>
+			<TD colSpan="3"></TD>
+		</TR>
+		<TR>
+			<TD width="75"></TD>
+			<TD></TD>
+			<TD></TD>
+		</TR>
+		<TR>
+			<TD></TD>
+			<TD colSpan="2">
+			<a href="http://www.cnblogs.com" target="_blank">博客园</a>&nbsp;  <a href="http://q.cnblogs.com/" target="_blank">博问</a>&nbsp; <a href="http://news.cnblogs.com" target="_blank">IT新闻</a>&nbsp; <a href="http://job.cnblogs.com/cate-java_programmer/" target="_blank">Java程序员招聘</a>
+			</TD>
+		</TR>
+		<TR>
+			<TD width="55">标题</TD>
+			<TD><input name="AjaxHolder$PostComment$tbTitle" type="text" value="re: grep使用多个查询条件－－或" id="AjaxHolder_PostComment_tbTitle" class="commenttb" style="width:320" /></TD>
+			<TD><span id="AjaxHolder_PostComment_RequiredFieldValidator1" style="color:Red;visibility:hidden;">请输入标题</span></TD>
+		</TR>
+		<TR>
+			<TD>姓名</TD>
+			<TD><input name="AjaxHolder$PostComment$tbName" type="text" id="AjaxHolder_PostComment_tbName" class="commenttb" style="width:320" /></TD>
+			<TD><span id="AjaxHolder_PostComment_RequiredFieldValidator2" style="color:Red;visibility:hidden;">请输入你的姓名</span></TD>
+		</TR>
+		<TR>
+			<TD>主页</TD>
+			<TD><input name="AjaxHolder$PostComment$tbUrl" type="text" id="AjaxHolder_PostComment_tbUrl" class="commenttb" style="width:320" /></TD>
+			<TD><FONT face="宋体"></FONT></TD>
+		</TR>
+		<tr>
+			<td align="left" colSpan="3">
+				<table id="AjaxHolder_PostComment_tbCaptchaImage" class="CommentForm" cellspacing="0" cellpadding="0" border="0">
+		<tr>
+			<td colspan="3">
+							<span id="AjaxHolder_PostComment_Requiredfieldvalidator4" style="color:Red;display:none;">请输入验证码</span>
+							<span id="AjaxHolder_PostComment_lblImage" style="color:Red;font-weight:bold;"></span>
+						</td>
+		</tr>
+		<tr>
+			<td width="78">验证码</td>
+			<td><input name="AjaxHolder$PostComment$CodeNumberTextBox" type="text" id="AjaxHolder_PostComment_CodeNumberTextBox" />*&nbsp;&nbsp;<img src="http://www.blogjava.net/Modules/CaptchaImage/JpegImage.aspx?cacheid=20140915100940"/></td>
+			<td align="left"></td>
+		</tr>
+	</table>
+	
+			</td>
+		</tr>
+		<TR>
+			<TD colSpan="3">内容(请不要发表任何与政治相关的内容)
+				<span id="AjaxHolder_PostComment_RequiredFieldValidator3" style="color:Red;visibility:hidden;">请输入评论内容</span><BR>
+				<textarea name="AjaxHolder$PostComment$tbComment" rows="10" cols="50" id="AjaxHolder_PostComment_tbComment" class="commentTextBox" onkeydown="ctlent(event,'AjaxHolder_PostComment_tbComment')" style="Width:480;Height:220"></textarea></TD>
+		</TR>
+		<TR>
+			<TD colSpan="3">
+		<span id="AjaxHolder_PostComment_Message" style="color:Red;"></span>
+		</td>
+		<TR>
+			<TD colSpan="3"><input id="AjaxHolder_PostComment_chkRemember" type="checkbox" name="AjaxHolder$PostComment$chkRemember" checked="checked" tabindex="-1" /><label for="AjaxHolder_PostComment_chkRemember">Remember Me?</label></TD>
+		</TR>
+		<TR>
+			<TD height="23"><input type="submit" name="AjaxHolder$PostComment$btnSubmit" value="提交" onclick="TempSave('AjaxHolder_PostComment_tbComment');WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;AjaxHolder$PostComment$btnSubmit&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="AjaxHolder_PostComment_btnSubmit" class="commentButton" />
+				</TD>
+			<td colSpan="2" height="23">&nbsp;
+				<a id="AjaxHolder_PostComment_lnkLogin" href="http://www.blogjava.net/login.aspx?ReturnURL=http://www.blogjava.net/zhyiwww/archive/2009/01/21/252170.html&amp;SourceURL=/zhyiwww/archive/2009/01/21/252170.html">登录</a>&nbsp;&nbsp;<!--<a id="AjaxHolder_PostComment_linkLoginComment" OnClick="if(document.getElementById('AjaxHolder_PostComment_tbComment').value != '') return confirm('未提交的评论内容将会丢失, 你真的要进入高级评论吗?');" href="http://www.blogjava.net/zhyiwww/archive/2009/01/21/252170.html?login=1#Post">使用高级评论</a>&nbsp;&nbsp;<a href="http://www.blogjava.net/RequireRegister.aspx">新用户注册</a>&nbsp;&nbsp;<A href="#Top">返回页首</A>&nbsp;&nbsp;<a id="AjaxHolder_PostComment_lbRestore" OnClick="Restore('AjaxHolder_PostComment_tbComment'); return false;" href="/zhyiwww/archive/2009/01/21/252170.html#Post">恢复上次提交</a>&nbsp;&nbsp;-->&nbsp;&nbsp;&nbsp;&nbsp;
+				</td>
+		</TR>
+		<TR>
+			<TD colSpan="3"><label class="CtrlEnter">[使用Ctrl+Enter键可以直接提交]</label></TD>
+		</TR>
+		</div>
+		
+		<TR>
+			<TD colSpan="3"><!--该文被作者在 2010-06-19 09:44 编辑过--></TD>
+		</TR>
+		<!--
+		<TR>
+			<TD colSpan="3" height="5"></TD>
+		</TR>	
+		-->	
+		<TR>
+		<TD colSpan="3">
+		
+<script type='text/javascript'>
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+(function() {
+var gads = document.createElement('script');
+gads.async = true;
+gads.type = 'text/javascript';
+var useSSL = 'https:' == document.location.protocol;
+gads.src = (useSSL ? 'https:' : 'http:') + 
+'//www.googletagservices.com/tag/js/gpt.js';
+var node = document.getElementsByTagName('script')[0];
+node.parentNode.insertBefore(gads, node);
+})();
+</script>
+
+<script type='text/javascript'>
+googletag.cmd.push(function() {
+googletag.defineSlot('/1090369/blogjava_blogpost_bottom', [300, 250], 'div-gpt-ad-1364133350381-0').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.enableServices();
+});
+</script>
+<!-- blogjava_blogpost_bottom -->
+<div id='div-gpt-ad-1364133350381-0' style='width:300px; height:250px;'>
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1364133350381-0'); });
+</script>
+</div>
+<br/>
+
+		</TD>
+		</TR>
+		<tr>			
+		<td colspan="3">
+		
+		</td>
+		</tr>
+		<TR>
+		<TD colSpan="3"></TD>
+		</TR>
+		<TR>
+			<TD colSpan="3" height="1">网站导航:<div id="blogsite">
+			<a href="http://www.cnblogs.com" title="开发者的网上家园">博客园</a>&nbsp;&nbsp;
+			<a href="http://news.cnblogs.com">IT新闻</a>&nbsp;&nbsp;
+			<a href="http://kb.cnblogs.com">知识库</a>&nbsp;&nbsp;
+			<a href="http://www.cppblog.com">C++博客</a>&nbsp;&nbsp;
+			<a href="http://job.cnblogs.com">程序员招聘</a>&nbsp;&nbsp;
+			<a href="/zhyiwww/archive/2009/01/21/252170.html?opt=admin">管理</a>
+			</div>
+		</TD>
+		</TR>
+		<TR>
+			<TD colSpan="3" height="5">
+<div id="divRelativePosts">
+相关文章:
+	
+			<ul style="margin-top:0px;padding-left:0px;">
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl01_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2014/06/30/415268.html">禅道PDO_MySQL扩展的安装</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl02_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2014/06/16/414808.html">apache+subversion+ssl配置</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl03_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2012/08/23/386119.html">tar打包时排除一些文件或者目录</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl04_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2012/08/23/386105.html">find仅列某一级目录的内容</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl05_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2012/08/23/386103.html">linux查看目录大小</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl06_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2012/07/26/384028.html">红帽5.4企业版上yum的安装和配置</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl07_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2012/07/19/383510.html">Shell脚本执行时出现declare: not found的解决方法</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl08_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2012/07/19/383481.html">Shell把字符串声明成变量</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl09_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2012/07/09/382607.html">Ubuntu下修改PDF默认打开程序</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl10_Hyperlink1" href="http://www.blogjava.net/zhyiwww/archive/2012/07/06/382368.html">Linux字符串分割显示</a>
+			</li>
+		
+			</ul>
+		
+</div>
+</TD>
+		</TR>	
+		<TR>
+			<TD colSpan="3">&nbsp;</TD>
+		</TR>
+		<TR>
+			<TD colSpan="3" height="5"></TD>
+		</TR>
+		<TR>
+			<TD colSpan="3">
+				</TD>
+		</TR>		
+	</TABLE>	
+</div>
+<div id="AjaxHolder_PostComment_ValidationSummary1" style="color:Red;display:none;">
+
+	</div>
+
+</div>
+
+				
+</div>
+
+<p id="footer">
+	Powered by: 
+	<br />
+	
+	<a id="Footer1_Hyperlink3" NAME="Hyperlink1" href="http://www.blogjava.net/" style="font-family:Verdana;font-size:12px;">BlogJava</a>
+	<br />
+	Copyright &copy; zhyiwww
+</p>
+
+    
+<script type="text/javascript">
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("AjaxHolder_PostComment_ValidationSummary1"));
+var Page_Validators =  new Array(document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator1"), document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator2"), document.getElementById("AjaxHolder_PostComment_Requiredfieldvalidator4"), document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator3"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var AjaxHolder_PostComment_RequiredFieldValidator1 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator1"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator1");
+AjaxHolder_PostComment_RequiredFieldValidator1.controltovalidate = "AjaxHolder_PostComment_tbTitle";
+AjaxHolder_PostComment_RequiredFieldValidator1.errormessage = "请输入标题";
+AjaxHolder_PostComment_RequiredFieldValidator1.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator1.initialvalue = "";
+var AjaxHolder_PostComment_RequiredFieldValidator2 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator2"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator2");
+AjaxHolder_PostComment_RequiredFieldValidator2.controltovalidate = "AjaxHolder_PostComment_tbName";
+AjaxHolder_PostComment_RequiredFieldValidator2.errormessage = "请输入你的姓名";
+AjaxHolder_PostComment_RequiredFieldValidator2.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator2.initialvalue = "";
+var AjaxHolder_PostComment_Requiredfieldvalidator4 = document.all ? document.all["AjaxHolder_PostComment_Requiredfieldvalidator4"] : document.getElementById("AjaxHolder_PostComment_Requiredfieldvalidator4");
+AjaxHolder_PostComment_Requiredfieldvalidator4.controltovalidate = "AjaxHolder_PostComment_CodeNumberTextBox";
+AjaxHolder_PostComment_Requiredfieldvalidator4.errormessage = "请输入验证码";
+AjaxHolder_PostComment_Requiredfieldvalidator4.display = "Dynamic";
+AjaxHolder_PostComment_Requiredfieldvalidator4.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_Requiredfieldvalidator4.initialvalue = "";
+var AjaxHolder_PostComment_RequiredFieldValidator3 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator3"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator3");
+AjaxHolder_PostComment_RequiredFieldValidator3.controltovalidate = "AjaxHolder_PostComment_tbComment";
+AjaxHolder_PostComment_RequiredFieldValidator3.errormessage = "请输入评论内容";
+AjaxHolder_PostComment_RequiredFieldValidator3.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator3.initialvalue = "";
+var AjaxHolder_PostComment_ValidationSummary1 = document.all ? document.all["AjaxHolder_PostComment_ValidationSummary1"] : document.getElementById("AjaxHolder_PostComment_ValidationSummary1");
+AjaxHolder_PostComment_ValidationSummary1.showmessagebox = "True";
+AjaxHolder_PostComment_ValidationSummary1.showsummary = "False";
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        
+document.getElementById('AjaxHolder_PostComment_ValidationSummary1').dispose = function() {
+    Array.remove(Page_ValidationSummaries, document.getElementById('AjaxHolder_PostComment_ValidationSummary1'));
+}
+Sys.Application.initialize();
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator1').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator1'));
+}
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator2').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator2'));
+}
+
+document.getElementById('AjaxHolder_PostComment_Requiredfieldvalidator4').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_Requiredfieldvalidator4'));
+}
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator3').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator3'));
+}
+//]]>
+</script>
+</form>
+    <script type="text/javascript" src="/script/ShowHidden.js"></script>
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-476124-3']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+</body>
+</html>

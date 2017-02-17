@@ -1,0 +1,7 @@
+【SecureCRT中Home/End移动到行首/行尾】
+
+经过尝试，将终端类型设置为Linux或者Xterm，即：
+
+Options -> Session Options -> Terminal -> Emulation -> Terminal，选择为Linux或Xterm
+
+即可支持通过按Home或End实现移动到行首或行尾。

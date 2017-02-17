@@ -1,0 +1,3 @@
+grep 07221035 --color=auto 搜索的关键字为红色
+Options -> Session Options -> Appearance - > Current color scheme -> Traditional -> Edit -> Bold -> Foregroud选择红色 -> OK
+

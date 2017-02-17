@@ -1,0 +1,13 @@
+1.将jdk-6u20-linux-i586.bin拷贝到home目录中
+2.然后切换到home输入命令：./jdk-6u20-linux-i586.bin
+3.然后设置环境变量，修改/etc/profile： 
+JAVA_HOME=/usr/java/jdk1.6.0_01 
+CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib 
+PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/jre/bin 
+export PATH CLASSPATH JAVA_HOME
+
+
+
+
+
+

@@ -1,0 +1,582 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+
+<title>1.3.1 Jetty 的下载和安装 - 51CTO.COM</title>
+<meta name="description" content="《轻量级J2EE 企业应用实战: Struts+Spring+Hibernate整合开发》第1章主要讲述的是J2EE 应用运行及开发环境的安装与配置，本小节为大家介绍Jetty 的下载和安装。"/>
+<meta name="keywords" content="J2EE,Struts,Spring,Jetty,Web,Hibernate轻量级J2EE企业应用实战"/>
+<base target="_blank" />
+<link href="http://images.51cto.com/images/art1105/css/grid.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="http://images.51cto.com/images/art/css/art_master_top.css" />
+<link href="http://book.51cto.com/images/bookspec/css/css3.css" rel="stylesheet" type="text/css" />
+<script language="javaScript" src="http://www.51cto.com/php/base_art.js"></SCRIPT>
+<script src="http://www.51cto.com/images/homepage/index_1_down.js"></script>
+<style type="text/css">
+.bds_tools a{ padding:0; margin:0;}
+</style>
+</head>
+<body >
+<!-- 导航 开始-->
+<script id="allmobilize" charset="utf-8" src="http://a.yunshipei.com/a3b9823c927173ada250e3f2f84f4703/allmobilize.min.js"></script><meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+<div id="home_top">    <div class="top_nav">        <div class="left" style="width:400px"><div class="logo_51cto" title="51CTO.COM - 技术成就梦想 -  中国领先的IT技术网站"></div><a href="http://www.51cto.com/">首页</a><img width="16" height="25" align="absmiddle" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="padding-top: 2px;"><a onmouseover="show(1,this);" onmouseout="popupClose();" href="http://www.51cto.com/col/35/" target="_blank">技术频道<img align="absmiddle" src="http://images.51cto.com/images/art/top_images/nav_ico1.gif" style="padding-left: 4px;"></a><img width="16" height="25" align="absmiddle" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif"><a onmouseover="show(2,this);" onmouseout="popupClose();" href="http://www.51cto.com" target="_blank">51CTO旗下网站<img align="absmiddle" src="http://images.51cto.com/images/art/top_images/nav_ico1.gif" style="padding-left: 4px;"></a><img width="16" height="25" align="absmiddle" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif"><a href="http://www.51cto.com/about/map.htm" target="_blank">地图</a> <a href="http://www.51cto.com/about/rss.html" target="_blank"><img src="http://images.51cto.com/files/uploadimg/20110922/143749870.gif" style="vertical-align:middle; margin-bottom: 5px; margin-left:5px;"></a>       </div>        <div class="right">            <div class="more"><img width="27" height="16" align="absmiddle" src="http://home.51cto.com/public/themes/blue/images/top_shequ.gif">社区：<a href="http://edu.51cto.com/" target="_blank" style="color:#CC0000">学院</a><a href="http://down.51cto.com" target="_blank">下载</a><a href="http://bbs.51cto.com" target="_blank">论坛</a><a href="http://blog.51cto.com" target="_blank">博客</a><a onmouseover="show(3,this)" onmouseout="popupClose()" href="javascript:viod(0);">更多<img align="absmiddle" src="http://images.51cto.com/images/art/top_images/nav_ico1.gif" style="padding-left: 4px;"></a>            </div>            <span id="login_status"><div class="login" id="login_status"></div>    </span>                </div>    </div></div>
+<div class="subMenu1" id="s1" onmouseover="popupNoClose();" onmouseout="popupClose();">
+<ul>
+<li><a href="http://network.51cto.com" target="_blank">网络</a></li>
+<li><a href="http://netsecurity.51cto.com" target="_blank">安全</a></li>
+<li><a href="http://developer.51cto.com" target="_blank">开发</a></li>
+<li><a href="http://database.51cto.com" target="_blank">数据库</a></li>
+<li><a href="http://server.51cto.com" target="_blank">服务器</a></li>
+<li><a href="http://os.51cto.com" target="_blank">系统</a></li>
+<li><a href="http://virtual.51cto.com" target="_blank">虚拟化</a></li>
+<li><a href="http://cloud.51cto.com" target="_blank">云计算</a></li>
+<li><a href="http://developer.51cto.com/embed/" target="_blank">嵌入式</a></li>
+<li><a href="http://mobile.51cto.com/" target="_blank">移动开发</a></li>
+</ul>
+</div> 
+<div class="subMenu2" id="s2" onmouseover="popupNoClose()" onmouseout="popupClose()">
+<ul>
+<li><a href="http://www.51cto.com" target="_blank" title="中国领先的IT技术网站">51CTO.COM</a></li>
+<li><a href="http://www.cioage.com" target="_blank" title="中国首个专门服务于CIO的专业网站">CIOage.com</a></li>
+<li><a href="http://www.watchstor.com/" target="_blank"  title="领先的中文存储网络媒体">WatchStor.com</a></li>
+<li><a href="http://www.hc3i.cn/" target="_blank"  title="中国首家专注于数字医疗及医疗信息化的专业网站">HC3i.cn</a></li>
+</ul>
+</div>
+<script src="http://www.51cto.com/js/jquery-1.8.3.min.js"></script>
+<script>
+$(function(){
+	$(".bann").height(265);	 
+	$(".bann").css("background-color","white");
+});
+var edunum=2;
+$(function(){
+	$("#change").click(function(){
+		$("#edu > ul").css("display","none");
+		var eduid='edu'+edunum;
+		$("#" + eduid).css("display","block");	
+		if(edunum<4){
+			edunum++;	
+		}else{
+			edunum=1;	
+		}							
+	});  
+});
+</script>
+
+<script src="http://www.51cto.com/head_art_more1.js"></script>
+<!-- 登陆信息 -->
+<!-- 导航 结束--> 
+ <div class="g_39 mb10">
+	<div id="tonglanad" class="fl"></div>
+	<div id="list4" class="fr">
+		<ul>
+			<li id="wordlinkad1"></li>
+			<li id="wordlinkad2"></li>
+			<li id="wordlinkad3"></li>
+			<li id="wordlinkad4"></li>
+		</ul>
+	</div>
+<br class="dle"/>
+</div>
+
+<div class="g_39 menu">
+<div class="subNav_logo"><img src="http://www.51cto.com/images/sunbanner/dushu_logo.gif" /></div>
+  <div class="subNav_l"><A href="http://book.51cto.com/" target=_blank>首页</A> | <A href="http://www.51cto.com/col/1198/" target=_blank>网络</A> | <A href="http://www.51cto.com/col/1203/" target=_blank>安全</A> | <A href="http://www.51cto.com/col/1210/" target=_blank>系统</A> | <A href="http://www.51cto.com/col/1216/" target=_blank>数据库</A> | <A href="http://www.51cto.com/col/1221/" target=_blank>开发</A> | <A href="http://www.51cto.com/col/1232/" target=_blank>Web应用</A> | <A href="http://www.51cto.com/col/1235/" target=_blank>考试认证</A> | <A href="http://www.51cto.com/col/1260/" target=_blank>职场</A> | <A href="http://www.51cto.com/col/1259/" target=_blank>管理</A> | <A href="http://publish.51cto.com/list/1192/" target=_blank>全部文章</A></div>  
+<div class="search fr">
+<dl>
+<form name=searchform action="http://www.51cto.com/php/search.php" target="_blank" method=post style="margin:0px; padding:0px;">
+<dt class="fl"><input name="keyword" type="text" class="searchInput f14 input" value="请输入关键字" onfocus="doempty(this, '请输入关键字');" onblur="doempty(this, '请输入关键字');" /></dt>
+<dd class="fl"><input type="image" src="http://images.51cto.com/images/art/newart1012/images/search.gif" /></dd></form>
+</dl>
+</div>
+<br class="dle"/>
+</div>
+<div class="g_39 b3-s-4273B3 rel">
+<!--width : 26*25 - 15 = 635px-->
+<div class="g_26 fl m_l">
+<div class="brief bgF8F8F8">
+<p class="crumb ">您所在的位置：<a href='http://book.51cto.com'>读书频道</a> &gt; <a href='http://book.51cto.com/col/1221/'>设计开发</a> &gt; <a href='http://book.51cto.com/col/1223/'>Java系列</a> &gt;  <b>1.3.1 Jetty 的下载和安装</b> </p>
+<h1>1.3.1 Jetty 的下载和安装</h1>
+<div class="msg">
+<div>2008-08-24 14:51  李刚  电子工业出版社 <span class="f12-a"><a href="#commment" target="_self"></a></span> 字号：<span class="f14-b"><a href="javascript:setfont(12);" target="_self">T</a></span> | <span class="f16-b"><a href="javascript:setfont(16);" target="_self">T</a></span></div>
+<div class='artHd' id='books' style='padding:5px 25px;'></div>
+<div class="fav"><a href="javascript:favorBox('open');" title="一键收藏，随时查看，分享好友！" target="_self"><img src="http://images.51cto.com/images/art/newart1012/images/Fav.gif" alt="一键收藏，随时查看，分享好友！" border="0" /></a></div>
+</div>
+<div class="brieftext">
+<p class="f14 green">《轻量级J2EE 企业应用实战: Struts+Spring+Hibernate整合开发》第1章主要讲述的是J2EE 应用运行及开发环境的安装与配置，本小节为大家介绍Jetty 的下载和安装。</p>
+<p class="ad">AD：<script src="http://www.51cto.com/js/article/keywords_ad_new.js"></script>
+</p>
+</div>
+</div>
+<div class="tag bgF8F8F8" id="indexlist" style="display:none;">
+<ul id="indexliststr">
+</ul>
+<br class="dle"/>
+</div>
+<div class="content bgF8F8F8 f14">
+<div id="content">
+<p><p><STRONG>1.3&nbsp; Jetty 的下载和安装</STRONG></p>
+<p>Jetty 是 Java 领域另一个出色的 Web 服务器，这个服务器同样是开源项目。相对于Tomcat, Jetty 有更大的优点一一可作为一个嵌入式服务器，即如果在应用中加入 Jetty的 Jar文件，则应用可在代码中对外提供 Web 服务。</p>
+<p>下面主要介绍 Jetty 的下载、安装和基本配置。</p>
+<p><STRONG>1.3.1 Jetty 的下载和安装</STRONG></p>
+<p>Jetty 也是与平台无关的 Java Web 服务器，既可以在 Windows 平台上运行，也可以在 Linux 平台上运行，下载和安装 Jetty 请按如下步骤进行。</p>
+<p>(1) 登录 <A href="http://jetty.mortbay.comljetty/index.htm1">http://jetty.mortbay.comljetty/index.htm1</A>站点，下载 Jetty 的最新版本。笔者成书之时， Jetty 的最新版本是 jetty-6.0.0rcO，下载 jetty-6.0.0rcO且p 文件，该文件是与平台无关的压缩包，不管是 Windows 还是Linux 都可使用该压缩包。</p>
+<p>(2) 解压缩jetty-6.0.OrcO.zip 文件，应得到如下的文件结构。</p>
+<p>etc:该路径用于存放Jetty的配置文件。</p>
+<p>examples:该路径用于存放Jetty的示例。</p>
+<p>legal:该路径用于存放该项目的Lisence信息。</p>
+<p>lib:该路径用于存放运行Jetty必需的J缸文件。</p>
+<p>modules:该路径用于存放Jetty的模块，包括API文档。</p>
+<p>patches:包含一些补丁说明。</p>
+<p>pom.xm1:是Jetty的build文件，该文件不是Ant的build文件，而是mavaen2的build文件。</p>
+<p>project-site:包含Jetty的网站的必需的样式文件。</p>
+<p>readme.txt:包含最基本的使用信息。</p>
+<p>start.jar:启动Jetty的启动文件。</p>
+<p>version.txt:Jetty版本更新日志的简单版本。</p>
+<p>webapps: 该路径用于存放自动部署的 Web 应用，只要将用户的 Web 应用复制到该路径下， Web 应用将自动部署。</p>
+<p>webapps-plus: 存放一些用于演示 Jetty 扩展属性的 Web 应用，该路径下的 Web应用也可自动部署。</p>
+<p>(3)将解压缩后的文件放在任意路径即可。运行 Jetty 需要使用如下命令:</p>
+<TABLE cellSpacing=0 borderColorDark=#ffffff cellPadding=2 width=400 align=center borderColorLight=black border=1>
+<TBODY>
+<TR>
+<TD class=code bgColor=#e6e6e6><PRE>java -jar start.jar</PRE></TD></TR></TBODY></TABLE>
+<p>建议将上面命令写成脚本，如在Windows下写成批处理命令，Linux下写成一个shell脚本。每次直接运行其脚本文件即可。</p>
+<p>运行成功后，启动浏览器并在地址栏输入<A href="http://localhost:8080/">http://localhost:8080/</A>，然后回车，出现如图1.14 所示的界面，即表示 Jetty 安装成功。</p>
+<TABLE class=ln cellSpacing=0 borderColorDark=#ffffff align=center bgColor=#ddddd borderColorLight=#999999 border=1>
+<TBODY>
+<TR>
+<TD bgColor=#ffffff><A href="http://new.51cto.com/files/uploadimg/20080824/163452796.jpg" target=_blank><IMG  class='fit-image' onload='javascript:if(this.width>498)this.width=498;' onmousewheel = 'javascript:return big(this)' height=242 alt="" src="http://new.51cto.com/files/uploadimg/20080824/163452796.jpg" width=437 border=0></A>&nbsp;<A href="/files/uploadimg/20060921/153223104.gif" target=_blank></A></TD></TR>
+<TR>
+<TD class=it align=middle bgColor=#dddddd>图1.14Jetty安装成功的界面</TD></TR></TBODY></TABLE>
+<DIV align=right>【责任编辑：<A class=ln href="mailto:limian@51cto.com">夏书</A> TEL：（010）68476606】</DIV><br><table align='center'><tr><td><a href='http://book.51cto.com/art/200808/87121.htm'><b>回书目</b></a>&nbsp;&nbsp;&nbsp;<a href='http://book.51cto.com/art/200808/86009.htm' target='_self'><b>上一节</b></a>&nbsp;&nbsp;&nbsp;<a href='http://book.51cto.com/art/200808/86011.htm' target='_self'><b>下一节</b></a>  </td></tr></table>
+ 
+<p class="blank10"></p> 
+ 
+ 
+
+
+<div class="f12"> <span class="fl">原文：<a href="http://book.51cto.com/art/200808/86010.htm" class="blue"><b>1.3.1 Jetty 的下载和安装</b></a></span> <span class="fr"><a href="http://book.51cto.com">返回读书频道首页</a></span> </div>
+<p class="blank1"></p>
+</div>
+<iframe width="600" height="239" frameborder="0" src="http://widget.weibo.com/relationship/bulkfollow.php?language=zh_cn&amp;uids=1708729084,1706976420,1422974343,1734475394,1653470065,1807469867&amp;wide=0&amp;color=C2D9F2,FFFFFF,0082CB,666666&amp;showtitle=1&amp;showinfo=1&amp;sense=0&amp;verified=1&amp;count=6&amp;refer='+encodeURIComponent(location.href)+'&amp;dpc=1" scrolling="no"></iframe>
+<div class="tips">
+<div style="float:left;">
+<span style="float:left; margin-top:4px;">分享到：</span>
+<!-- Baidu Button BEGIN -->
+    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" style="margin-right:5px; float:left;">
+        <a class="bds_qzone"></a>
+        <a class="bds_tsina"></a>
+        <a class="bds_tqq"></a>
+        <a class="bds_renren"></a>
+        <a class="bds_t163"></a>
+        <span class="bds_more"></span>
+		<a class="shareCount"></a>
+
+</div>
+<!--<div class="fl"> 
+    </div>
+--><script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=585532" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+	var bds_config = {'snsKey':{'tsina':'2378297317'}};
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script>
+<!-- Baidu Button END -->
+
+
+
+</div><div class="fr blue"><a href="javascript:AddFavorite(document.location.href,document.title);" target="_self">收藏</a>|<a href="javascript:window.print();" target="_self">打印</a>|<a id="msnqqcopy" title="分享本资源给好友" target="_self">复制</a></div>
+</div>
+</div>
+<!--内容 end-->
+<div class="topbiaoqing">
+<div class="biaoqing fixfloat pad" >
+<ul>
+<li><a href='javascript:getcountscom(86010,1)' target="_self"><img src="http://images.51cto.com/images/art1105/images/bq1.jpg" /></a>
+<div><a href='javascript:getcountscom(86010,1)' target="_self">给力</a></div>
+<span id="86010_1">(0票)</span></li>
+<li><a href='javascript:getcountscom(86010,2)'  target="_self"><img src="http://images.51cto.com/images/art1105/images/bq2.jpg" /></a>
+<div><a href='javascript:getcountscom(86010,2)'  target="_self">动心</a></div>
+<span id="86010_2">(0票)</span></li>
+<li><a href='javascript:getcountscom(86010,3)'  target="_self"><img src="http://images.51cto.com/images/art1105/images/bq3.jpg" /></a>
+<div><a href='javascript:getcountscom(86010,3)'  target="_self">废话</a></div>
+<span id="86010_3">(0票)</span></li>
+<li><a href='javascript:getcountscom(86010,4)'  target="_self"><img src="http://images.51cto.com/images/art1105/images/bq4.jpg" /></a>
+<div><a href='javascript:getcountscom(86010,4)'  target="_self">专业</a></div>
+<span id="86010_4">(0票)</span></li>
+<li><a href='javascript:getcountscom(86010,5)'  target="_self"><img src="http://images.51cto.com/images/art1105/images/bq5.jpg" /></a>
+<div><a href='javascript:getcountscom(86010,5)'  target="_self">标题党</a></div>
+<span id="86010_5">(0票)</span></li>
+<li><a href='javascript:getcountscom(86010,6)'  target="_self"><img src="http://images.51cto.com/images/art1105/images/bq6.jpg" /></a>
+<div><a href='javascript:getcountscom(86010,6)'  target="_self">路过</a></div>
+<span id="86010_6">(0票)</span></li>
+</ul>
+</div>
+<script language="javascript"> 
+getcountscom(86010,11);
+
+</script>
+</div>
+<p class="blank10"></p>
+<!--reltag end-->
+
+<p class="blank10"></p>
+<div class="uyan">
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1609262"></script>
+</div>
+<!--box end-->
+
+<div class="bor">
+<div class="titbg pl15">关于<a href='http://www.51cto.com/php/search.php?keyword=J2EE' target='_blank' class='underline'>J2EE</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=Struts' target='_blank' class='underline'>Struts</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=Spring' target='_blank' class='underline'>Spring</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=Jetty' target='_blank' class='underline'>Jetty</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=Web' target='_blank' class='underline'>Web</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=Hibernate%C7%E1%C1%BF%BC%B6J2EE%C6%F3%D2%B5%D3%A6%D3%C3%CA%B5%D5%BD' target='_blank' class='underline'>Hibernate轻量级J2EE企业应用实战</a>的更多文章</div>
+<div class="reltag">
+<ul class="fl list02">
+  <li><a href="http://book.51cto.com/art/201309/411537.htm" title="Web之困：现代Web应用安全指南">Web之困：现代Web应用安全指南</a></li><li><a href="http://book.51cto.com/art/201311/418692.htm" title="Cucumber：行为驱动开发指南">Cucumber：行为驱动开发指南</a></li><li><a href="http://book.51cto.com/art/201311/417501.htm" title="了不起的Node.js: 将JavaScript进行到底">了不起的Node.js: 将JavaScript进行到底</a></li><li><a href="http://book.51cto.com/art/201311/417505.htm" title="前言">前言</a></li><li><a href="http://book.51cto.com/art/201311/417504.htm" title="目录（3）">目录（3）</a></li>
+</ul>
+<div class="fr">
+<div class="h5 f12"><a href="http://mobile.51cto.com/mobile-409592.htm" title="Web App与Native App技术点大整合"><b>Web App与Native App技术点大整合</b></a></div>
+<a href="http://mobile.51cto.com/mobile-409592.htm" title="Web App与Native App技术点大整合"><img src="http://s7.51cto.com/wyfs01/M00/19/8F/wKioOVIn34Dw27GUAABNr0X-ixw960.png" alt="Web App与Native App技术点大整合" width="100" height="80" border="0" /></a>
+<p class="c666">当下移动互联网的发展势头迅猛，各式各样的App也在横空出世，最<a class="blue"href="http://mobile.51cto.com/mobile-409592.htm" title="Web App与Native App技术点大整合">[详细]</a></p>
+</div>
+</div></div>
+
+<p class="blank10"></p>
+
+
+
+<div class="relart fl bor">
+<div class="titbg">
+<h3 class="fl t1">栏目热门</h3>
+<a href="/click/1223" class="tmore">更多&gt;&gt;</a></div>
+<ul>
+  
+	  <li><a href="http://book.51cto.com/art/201311/416398.htm" title="用AngularJS开发下一代Web应用">用AngularJS开发下一代Web应用</a></li>
+	  
+	  <li><a href="http://book.51cto.com/art/201311/416161.htm" title="Java核心技术 卷I 基础知识（原书第9版）">Java核心技术 卷I 基础知识（原书第9版）</a></li>
+	  
+	  <li><a href="http://book.51cto.com/art/201311/416186.htm" title="1.5   关于Java的常见误解">1.5   关于Java的常见误解</a></li>
+	  
+	  <li><a href="http://book.51cto.com/art/201311/417122.htm" title="Java JDK 7实例宝典">Java JDK 7实例宝典</a></li>
+	  
+	  <li><a href="http://book.51cto.com/art/201311/417145.htm" title="5.13  使用正则表达式操作字符串（3）">5.13  使用正则表达式操作字符串（3）</a></li>
+	  
+</ul>
+</div>
+<div class="cathot fr bor">
+<div class="titbg">
+<h3 class="fl t1">同期最新</h3>
+<a href="/col/1223" class="tmore">更多&gt;&gt;</a></div>
+<ul>
+	
+	  <li><a href="http://book.51cto.com/art/200808/86009.htm" title="1.2.3 Tomcat 的数据源配置">1.2.3 Tomcat 的数据源配置</a></li>
+	  
+	  <li><a href="http://book.51cto.com/art/200808/86008.htm" title="1.2.2 Tomcat 的基本配置（2）">1.2.2 Tomcat 的基本配置（2）</a></li>
+	  
+	  <li><a href="http://book.51cto.com/art/200808/86007.htm" title="1.2.2 Tomcat 的基本配置（1）">1.2.2 Tomcat 的基本配置（1）</a></li>
+	  
+	  <li><a href="http://book.51cto.com/art/200808/86006.htm" title="1.2.1 Tomcat 的下载和安装">1.2.1 Tomcat 的下载和安装</a></li>
+	  
+	  <li><a href="http://book.51cto.com/art/200808/86005.htm" title="1.1.2 Linux 下 JDK 的下载和安装">1.1.2 Linux 下 JDK 的下载和安装</a></li>
+	  
+</ul>
+</div>
+<p class="blank10"></p>
+<div class="bor">
+<div class="titbg">
+<h3 class="fl t1"><a href="http://book.51cto.com">读书频道</a></h3>
+<span class="pl10">频道导航</span></div>
+ <UL class=xtlist>
+<LI><SPAN class=tit>网络维护</SPAN> 
+<DIV><A href="http://book.51cto.com/col/1199/">网络管理</A>|<A href="http://book.51cto.com/col/1200/">布线</A>|<A href="http://book.51cto.com/col/1201/">网络协议</A>|<A href="http://book.51cto.com/col/1211/">服务器与存储</A>|<A href="http://book.51cto.com/col/1202/">Cisco</A>|</DIV></LI>
+<LI><SPAN class=tit>安全</SPAN> 
+<DIV><A href="http://book.51cto.com/col/1208/">网络安全</A>|<A href="http://book.51cto.com/col/1207/">数据安全</A>|<A href="http://book.51cto.com/col/1205/">病毒</A>|<A href="http://book.51cto.com/col/1204/">综合</A></DIV></LI>
+<LI><SPAN class=tit>操作系统</SPAN> 
+<DIV><A href="http://book.51cto.com/col/1213">Linux</A>|<A href="http://book.51cto.com/col/1212">Windows</A>|<A href="http://book.51cto.com/col/1214">Unix</A>|<A href="http://book.51cto.com/col/1215">其他</A></DIV></LI>
+<LI><SPAN class=tit>数据库</SPAN> 
+<DIV><A href="http://book.51cto.com/col/1217/">Oracle</A>|<A href="http://book.51cto.com/col/1218/">SQL Server</A>|<A href="http://book.51cto.com/col/1219/">MySQL</A>|<A href="http://book.51cto.com/col/1220/">综合</A></DIV></LI>
+<LI><SPAN class=tit>设计开发</SPAN> 
+<DIV><A href="http://book.51cto.com/col/1222">.Net系列</A>|<A href="http://book.51cto.com/col/1223">Java系列</A>|<A href="http://book.51cto.com/col/1224">C++</A>|<A href="http://book.51cto.com/col/1225">数据库开发</A>|<A href="http://book.51cto.com/col/1226">网站开发|<A href="http://book.51cto.com/col/1227">其他开发|<A href="http://book.51cto.com/col/1228">软件工程</A></DIV></LI>
+<LI><SPAN class=tit>网络应用</SPAN> 
+<DIV><A href="http://book.51cto.com/col/1232/">Web应用</A>|<A href="http://book.51cto.com/col/1234/">ERP/BI</A>|<A href="http://book.51cto.com/col/1231/">Office</A></DIV></LI>
+<LI><SPAN class=tit>考试认证</SPAN> 
+<DIV><A href="http://book.51cto.com/col/1236/">综合</A>|<A href="http://book.51cto.com/col/1237/">软考</A>|<A href="http://book.51cto.com/col/1238/">网工</A>|<A href="http://book.51cto.com/col/1240/">等考</A></DIV></LI>
+<LI class=last><SPAN class=tit>管理生活</SPAN> 
+<DIV><A href="http://book.51cto.com/col/1259/">企业管理</A>|<A href="http://book.51cto.com/col/1260/">技术职场</A></DIV></LI></UL> 
+</div> 
+<p class="blank10"></p>
+<DIV class=leftbotcon>
+<DIV class="bor jdlist">
+<DIV class=titbg>
+<H3 class=t2>热点推荐</H3></DIV>
+<UL>
+<LI><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-t-4']);" href="http://mobile.51cto.com/mobile-182392.htm"><IMG src="http://images.51cto.com/files/uploadimg/20100202/153546162.jpg"></A> 
+<DIV class=name><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-t-4']);" href="http://mobile.51cto.com/mobile-182392.htm">Android开发应用详解</A></DIV></LI>
+<LI><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-t-4']);" href="http://developer.51cto.com/art/201106/266369.htm"><IMG src="http://images.51cto.com/files/uploadimg/20110608/133620622.jpg"></A> 
+<DIV class=name><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-t-4']);" href="http://developer.51cto.com/art/201106/266369.htm">那些性感的让人尖叫的程序员</A></DIV></LI>
+<LI><A href="http://developer.51cto.com/art/200907/133407.htm"><IMG src="http://images.51cto.com/files/uploadimg/20090702/134217922.jpg"></A> 
+<DIV class=name><A href="http://developer.51cto.com/art/200907/133407.htm">HTML5 下一代Web开发标准详解</A></DIV></LI>
+<LI><A href="http://developer.51cto.com/art/201104/257581.htm"><IMG src="http://images.51cto.com/files/uploadimg/20110426/123123954.jpg"></A> 
+<DIV class=name><A href="http://developer.51cto.com/art/201104/257581.htm">高性能WEB开发应用指南</A></DIV></LI>
+<LI><A href="http://os.51cto.com/art/200706/49181.htm"><IMG src="http://images.51cto.com/files/uploadimg/20070613/195816929.jpg"></A> 
+<DIV class=name><A href="http://os.51cto.com/art/200706/49181.htm">Ubuntu开源技术交流频道</A></DIV></LI></UL></DIV>
+<P class=blank10></P>
+<DIV class="bor hotTag"><STRONG>热门标签：</STRONG> <A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-2]);" href="http://os.51cto.com/windows/">windows频道</A><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-w']);" href="http://mobile.51cto.com/">移动开发</A><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-w']);" href="http://cloud.51cto.com/">云计算</A><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-w']);" href="http://mobile.51cto.com/mobile/objc/">objective-c</A><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-w']);" href="http://network.51cto.com/art/200909/151122.htm">tp-link路由器设置图解</A><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-w']);" href="http://developer.51cto.com/art/200907/133407.htm">html5</A> </DIV></DIV>
+<div class="leftbotbox"> </div>
+</div>
+<!--left end-->
+<div class="g_13 fr">
+<div class="focus fixfloat"> 
+ <img width="298" style="border: 1px solid #CCCCCC; margin:5px 0px 5px;" src="http://www.51cto.com/images/weixin.png"><div class="hot">
+<ul>
+<li class="tit"><em>热点</em> <a href="http://book.51cto.com/art/201110/298391.htm">黑客：计算机革命的英雄</a> </li>
+<li class="con"><dl><dt><a href="http://book.51cto.com/art/201110/298391.htm"><img border="0" src="http://images.51cto.com/files/uploadimg/20111107/105906683.jpg"/></a></dt>
+<dd>本书描述了黑客用默默无闻的行动为数字世界照亮了一条道路的故事。 </dd>
+</dl></li></ul><ol class="hotlist"><li><a href="http://book.51cto.com/art/201108/282390.htm">Linux服务器配置全程实录</a></li><li><a href="http://book.51cto.com/art/201107/278179.htm">揭秘--优秀PPT这样制作</a></li></ol></div>
+<p id="hzh_one">
+<script language="JavaScript" src="http://www.51cto.com/ad/art/hzh/ad.js" type="text/javascript"></script>
+</p>
+</div>
+<div class="rank">
+<div class="tlt">
+      <h3>文章排行</h3>
+      <a onmouseover="change_top10(3);" id="top_3">本月</a><a onmouseover="change_top10(2);" id="top_2">本周</a><a onmouseover="change_top10(1);" class="myon" id="top_1">24小时</a> </div>
+ <div id="top10_1" style="display: block;" class="list"><ul>
+<li><a href="http://book.51cto.com/art/200807/79080.htm" target="_blank" title="jQuery基础教程">jQuery基础教程</a>
+<li><a href="http://book.51cto.com/art/201411/457158.htm" target="_blank" title="Go并发编程实战">Go并发编程实战</a>
+<li><a href="http://book.51cto.com/art/201411/456485.htm" target="_blank" title="从零开始学C语言（第2版）">从零开始学C语言（第2版）</a>
+<li><a href="http://book.51cto.com/art/201411/456933.htm" target="_blank" title="疯狂Java讲义精粹（第2版）">疯狂Java讲义精粹（第2版）</a>
+<li><a href="http://book.51cto.com/art/201410/455224.htm" target="_blank" title="Photoshop网站UI设计全程揭秘-全彩">Photoshop网站UI设计全程揭秘-全彩</a>
+<li><a href="http://book.51cto.com/art/201409/450835.htm" target="_blank" title="程序员健康指南">程序员健康指南</a>
+<li><a href="http://book.51cto.com/art/200708/54941.htm" target="_blank" title="C语言核心技术">C语言核心技术</a>
+<li><a href="http://book.51cto.com/art/201411/456391.htm" target="_blank" title="Arduino魔法书：实现梦想的工具和技术">Arduino魔法书：实现梦想的工具和技术</a>
+<li><a href="http://book.51cto.com/art/201410/455377.htm" target="_blank" title="Storm源码分析">Storm源码分析</a>
+<li><a href="http://book.51cto.com/art/201305/394677.htm" target="_blank" title="Cocos2d-x高级开发教程">Cocos2d-x高级开发教程</a>
+</ul></div>
+<div id="top10_2" style="display: none;" class="list"><ul>
+<li><a href="http://book.51cto.com/art/201411/457788.htm" target="_blank" title="Kali Linux & BackTrack渗透测试实战">Kali Linux & BackTrack渗透测试实战</a>
+<li><a href="http://book.51cto.com/art/201411/457866.htm" target="_blank" title="数学与生活：（第2版）修订版">数学与生活：（第2版）修订版</a>
+<li><a href="http://book.51cto.com/art/201411/457839.htm" target="_blank" title="计算的本质: 深入剖析程序和计算机">计算的本质: 深入剖析程序和计算机</a>
+<li><a href="http://book.51cto.com/art/201411/457821.htm" target="_blank" title="Scratch少儿趣味编程">Scratch少儿趣味编程</a>
+<li><a href="http://book.51cto.com/art/201411/458126.htm" target="_blank" title="UNIX/Linux网络日志分析与流量监控">UNIX/Linux网络日志分析与流量监控</a>
+<li><a href="http://book.51cto.com/art/201411/457742.htm" target="_blank" title="乖，摸摸头">乖，摸摸头</a>
+<li><a href="http://book.51cto.com/art/201411/457771.htm" target="_blank" title="Hello Kitty的秘密">Hello Kitty的秘密</a>
+<li><a href="http://book.51cto.com/art/201411/457699.htm" target="_blank" title="美国制造：国家繁荣为什么离不开制造业">美国制造：国家繁荣为什么离不开制造业</a>
+<li><a href="http://book.51cto.com/art/201411/457715.htm" target="_blank" title="软件性能测试与LoadRunner实战教程">软件性能测试与LoadRunner实战教程</a>
+<li><a href="http://book.51cto.com/art/201411/458098.htm" target="_blank" title="编程人生: 15位软件先驱访谈录.上卷">编程人生: 15位软件先驱访谈录.上卷</a>
+</ul></div>
+<div id="top10_3" style="display: none;" class="list"><ul>
+<li><a href="http://book.51cto.com/art/201411/456391.htm" target="_blank" title="Arduino魔法书：实现梦想的工具和技术">Arduino魔法书：实现梦想的工具和技术</a>
+<li><a href="http://book.51cto.com/art/201411/456933.htm" target="_blank" title="疯狂Java讲义精粹（第2版）">疯狂Java讲义精粹（第2版）</a>
+<li><a href="http://book.51cto.com/art/201411/456318.htm" target="_blank" title="Linux系统架构和应用技巧">Linux系统架构和应用技巧</a>
+<li><a href="http://book.51cto.com/art/201411/456485.htm" target="_blank" title="从零开始学C语言（第2版）">从零开始学C语言（第2版）</a>
+<li><a href="http://book.51cto.com/art/201411/456694.htm" target="_blank" title="Python自动化运维：技术与最佳实践">Python自动化运维：技术与最佳实践</a>
+<li><a href="http://book.51cto.com/art/201411/457158.htm" target="_blank" title="Go并发编程实战">Go并发编程实战</a>
+<li><a href="http://book.51cto.com/art/201411/457087.htm" target="_blank" title="PhoneGap 3.0移动应用开发实战详解">PhoneGap 3.0移动应用开发实战详解</a>
+<li><a href="http://book.51cto.com/art/201411/456167.htm" target="_blank" title="设备故障诊断及远程维护技术">设备故障诊断及远程维护技术</a>
+<li><a href="http://book.51cto.com/art/201411/457788.htm" target="_blank" title="Kali Linux & BackTrack渗透测试实战">Kali Linux & BackTrack渗透测试实战</a>
+<li><a href="http://book.51cto.com/art/201411/457233.htm" target="_blank" title="股市法则（第4版）——熊市赚钱、牛市">股市法则（第4版）——熊市赚钱、牛市</a>
+</ul></div>
+ 
+ </div>
+<p class="blank1"></p>
+
+<div class="bor">
+<div class="titbg">
+<h3 class="fl t1">热点专题</h3>
+<a href="http://book.51cto.com/speclist/1223" class="tmore">更多&gt;&gt;</a></div>
+<ul class="plist01">
+<li><a href="http://book.51cto.com/art/201311/417314.htm" title="大数据的力量"><img src="http://s7.51cto.com/wyfs01/M01/32/8A/wKioJlKEnDuzv0RhAAArR5mIm8w043.gif" alt="大数据的力量" width="100" height="80" /></a>
+<h5><a href="http://book.51cto.com/art/201311/417314.htm" title="大数据的力量">大数据的力量</a></h5>
+<div class="c666">联系当前大数据的发展现状，对照微软、IBM、GE等世界5</div>
+</li><li><a href="http://book.51cto.com/art/201311/417241.htm" title="卓越领导者"><img src="http://s3.51cto.com/wyfs01/M00/32/89/wKioOVKEZejDV7HjAAAbXqdgPDY796.gif" alt="卓越领导者" width="100" height="80" /></a>
+<h5><a href="http://book.51cto.com/art/201311/417241.htm" title="卓越领导者">卓越领导者</a></h5>
+<div class="c666">与其他关于领导力的作品不同的是，本书作者采用完整的</div>
+</li><li><a href="http://book.51cto.com/art/201311/417230.htm" title="创意是根钉"><img src="http://s6.51cto.com/wyfs01/M00/32/87/wKioJlKEXo7DJp3cAAApFgloaDE082.gif" alt="创意是根钉" width="100" height="80" /></a>
+<h5><a href="http://book.51cto.com/art/201311/417230.htm" title="创意是根钉">创意是根钉</a></h5>
+<div class="c666">中国有没有一本案例书，让我们可以看到营销策划的全过</div>
+</li> 
+</ul>
+</div>
+<p class="blank10"></p>
+<div class="tagCloud">
+<div class="tlt">
+<h3>热点标签</h3>
+</div>
+<div class="taglist"><A title=网络管理 href="http://book.51cto.com/col/1199/">网络管理</A> <A title=Windows href="http://book.51cto.com/col/1212/">Windows</A> <A title=Linux href="http://book.51cto.com/col/1213/">Linux</A> <A title="SQL Server" href="http://book.51cto.com/col/1218/">SQL Server</A> <A title=Oracle href="http://book.51cto.com/col/1217/">Oracle</A> <A class=imp title=Java系列 href="http://book.51cto.com/col/1223/">Java系列</A> <A title=软件工程 href="http://book.51cto.com/col/1228/">软件工程</A> <A title=.Net系列 href="http://book.51cto.com/col/1222/">.Net系列</A> <A title=Web开发 href="http://book.51cto.com/col/1226/">Web开发</A> <A title=技术职场 href="http://book.51cto.com/col/1260/">技术职场</A></div>
+</div>
+<div class="rss">
+<ul>
+<li class="lin f12-c"><a href="http://news.51cto.com/col/1323/"><strong>点击这里查看样刊</strong></a></li>
+<li>
+<dl>
+<dt> </dt>
+<dd><a href="http://home.51cto.com/index.php?s=/Subscribe"><img src="http://images.51cto.com/images/art0910/images/dingy.gif" /></a></dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="bor">
+<div class="titbg">
+<h3 class="t1">全站热点</h3>
+</div>
+<div class="webhot fixfloat">
+<ul>
+
+<li>
+  <a href="http://network.51cto.com/network/content2013/5gwifi/"  title="企业如何备战802.11ac"><img src="http://s2.51cto.com/wyfs01/M01/16/43/wKioOVIW2dOgub5LAABZtwznUdA440.jpg" /></a>
+  <div><a href="http://network.51cto.com/network/content2013/5gwifi/"  title="企业如何备战802.11ac">企业如何备战802.11ac</a></div>
+</li>
+
+<li>
+  <a href="http://os.51cto.com/art/201308/406340.htm"  title="《Linux运维趋势》2013年7月号"><img src="http://s5.51cto.com/wyfs01/M00/14/3A/wKioOVICDfvTa2lOAAAW5Oyqt7M979.jpg" /></a>
+  <div><a href="http://os.51cto.com/art/201308/406340.htm"  title="《Linux运维趋势》2013年7月号">《Linux运维趋势》2013年7月号</a></div>
+</li>
+
+</ul>
+</div>
+<p class="blank1"></p>
+<ul class="list03">
+
+<li><a href="http://server.51cto.com/Micro-410060.htm"  title="惠普最新“Moonshot”配备英特尔Avoton芯片">惠普最新“Moonshot”配备英特尔Avot</a></li>
+
+<li><a href="http://developer.51cto.com/art/201309/410055.htm"  title="10gen以数据库产品MongoDB命名 结合更多语言打造新应用">10gen以数据库产品MongoDB命名 结合</a></li>
+
+<li><a href="http://server.51cto.com/sSecurity-410014.htm"  title="你的云服务器是否也有这样的安全隐患？">你的云服务器是否也有这样的安全隐患</a></li>
+
+<li><a href="http://book.51cto.com/art/201309/410008.htm"  title="品味移动设计">品味移动设计</a></li>
+
+<li><a href="http://server.51cto.com/Review-410007.htm"  title="英特尔IDF前瞻：凌动和数据中心技术关注">英特尔IDF前瞻：凌动和数据中心技术</a></li>
+
+</ul>
+</div>
+<p class="blank10"></p>
+<div class="bor">
+<div class="titbg">
+<h3 class="t1">读书</h3>
+</div>
+  
+<div class="catbook"><a href="http://book.51cto.com/art/200709/56163.htm" title="解密SEO：搜索引擎优化与网站成功战略"><img src="http://images.51cto.com/files/uploadimg/20070913/151217823.gif" width="66" height="98" border="0" /></a>
+<h5><a href="http://book.51cto.com/art/200709/56163.htm">解密SEO：搜索引擎优化与网站成功战略</a></h5>
+<div class="c666 text">本书是作者根据十年网站营销经验，特别是搜索引擎优化（SEO）实现营销方面的技术和实践总结。本书帮助读者建立搜索营销的概念，</div>
+</div>
+
+
+<ul class="list03">
+
+<li><a href="http://book.51cto.com/art/200801/63546.htm" title="Eclipse从入门到精通(第2版)">Eclipse从入门到精通(第2版)</a></li>
+
+<li><a href="http://book.51cto.com/art/200801/63550.htm" title="Eclipse Web开发从入门到精通（实例版）">Eclipse Web开发从入门到精通（实例版）</a></li>
+
+<li><a href="http://book.51cto.com/art/200801/63571.htm" title="Silverlight范例导学">Silverlight范例导学</a></li>
+
+<li><a href="http://book.51cto.com/art/200801/63577.htm" title="代码质量（注释版）">代码质量（注释版）</a></li>
+
+</ul>
+</div>
+<p class="blank10"></p>
+<div class="bor">
+<div class="titbg">
+<h3 class="t1 fl">博文推荐</h3>
+<a class="tmore" href="http://blog.51cto.com/">更多&gt;&gt;</a></div>
+
+<ul class="list03">
+ <li><a href="http://yangfei520.blog.51cto.com/1041581/246905/" target="_blank" title="HQL小结">HQL小结</a></li><li><a href="http://543925535.blog.51cto.com/639838/246384/" target="_blank" title="学习笔记：部署趋势科技企业安全无忧版——客户端部署攻略（二）">学习笔记：部署趋势科技企业安全无忧</a></li><li><a href="http://simeon.blog.51cto.com/18680/246350/" target="_blank" title="巧用G6FTPServer账号渗透台湾某图书服务器">巧用G6FTPServer账号渗透台湾某图书</a></li><li><a href="http://yangfei520.blog.51cto.com/1041581/246283/" target="_blank" title="Advice只有切面化之后才能显现出AOP的巨大优势">Advice只有切面化之后才能显现出AOP</a></li>
+</ul>
+</div>
+<p class="blank10"></p>
+<div class="tj">
+<div class="tlt">
+<h3>最新热帖</h3>
+<a class="more" href="http://bbs.51cto.com/hotthreads.php">更多&gt;&gt;</a></div>
+<ul>
+<li><a href="http://bbs.51cto.com/thread-26429-1.html" target="_blank" title="通用WAP网站生成系统(PowerDiamond) v.1">通用WAP网站生成系统(PowerDiamond) </a></li><li><a href="http://bbs.51cto.com/thread-11063-1.html" target="_blank" title="八类大学毕业生求职时不受欢迎">八类大学毕业生求职时不受欢迎</a></li><li><a href="http://bbs.51cto.com/thread-6946-1.html" target="_blank" title="IT人为什么难以拿到高薪？【转帖】">IT人为什么难以拿到高薪？【转帖】</a></li><li><a href="http://bbs.51cto.com/thread-4333-1.html" target="_blank" title="想去外企上班">想去外企上班</a></li>
+</ul>
+</div>
+<div class="picAD">
+<script language="JavaScript" src="http://www.51cto.com/ad/art/baidugoogle/ad.js" type="text/javascript"></script>
+</div>
+</div>
+<p class="blank1"></p> 
+<!--leftbotcon end-->
+</div> 
+<div class="subweb">
+<h4>51CTO旗下网站</h4>
+<div>
+<a target="_blank" href="http://www.51cto.com/">领先的IT技术网站 51CTO</a>
+<a target="_blank" href="http://www.watchstor.com/">领先的中文存储媒体 WatchStor</a>
+<a target="_blank" href="http://www.cioage.com/">中国首个CIO网站 CIOage</a>
+<a target="_blank" href="http://www.hc3i.cn/">中国首家数字医疗网站 HC3i</a>
+</div>
+</div>
+<div id="ft"><div id="foot" align="center"><script src="http://images.51cto.com/images/copy_right/copy_right.js"></script></div></div>
+<script src="http://logs.51cto.com/rizhi/count/count.js"></script>
+<script type="text/javascript">
+
+	$("#uyan_cmt_list").next().remove();	
+	$("#uyan_cmt_list").next().css("display","none");	
+</script>
+<style>
+.Nfloat {
+    position: fixed;
+    right: 2%;
+    top: 35%;
+    z-index: 801;
+}
+</style>
+<div style="display:none">
+<script> 
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ 
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), 
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) 
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga'); 
+
+ga('create', 'UA-56422726-1', 'auto'); 
+ga('send', 'pageview'); 
+
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F3fe9272bf48a68ad34ff7d08e600bc4b' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+
+<!-- 新监测代码 -->
+<!-- 新监测代码 -->
+<div id="MyMoveAd" style="display:none">
+<span id="wordlink_1"><script src="http://www.51cto.com/ad/art/wordlink/wordlink1.js"></script></span>
+<span id="wordlink_2"><script src="http://www.51cto.com/ad/art/wordlink/wordlink2.js"></script></span>
+<span id="wordlink_3"><script src="http://www.51cto.com/ad/art/wordlink/wordlink3.js"></script></span>
+<span id="wordlink_4"><script src="http://www.51cto.com/ad/art/wordlink/wordlink4.js"></script></span>
+<span id="pinglun"><script language="JavaScript" src="http://www.51cto.com/php/getArtCount.php?artid=86010&type=all"></script></span>
+<span id="tonglan"><script language="JavaScript" src="http://www.51cto.com/ad/art/tonglan/ad.js"></script></span>
+<span id="wordlink"><script language="JavaScript" src="http://www.51cto.com/ad/art/wordlink/ad.js"></script></span>
+<script src="http://www.51cto.com/ad/art/wordlink/ad.js"></script>
+<span id="bookss"><script language="JavaScript" src="http://www.51cto.com/php/getBookData.php?artid=87121"></script></span>
+</div>   
+<script language="javascript" src="http://www.51cto.com/js/article/favorite.js"></script>
+
+<script language="javaScript" src="http://www.51cto.com/php/dialog_utf8.js"></SCRIPT>
+<script language="javaScript" src="http://www.51cto.com/mail.js"></script>  
+<script type="text/javascript" src="http://home.51cto.com/apps/favorite/Tpl/default/Public/js/favorbox.js"></script>
+<script language="javascript" src="http://images.51cto.com/images/art/newart1012/clipboard.js"></script>
+<script language="javaScript"> 
+	var thistid=86010; 
+	
+	//收藏按钮
+	var favor_url = 'http://book.51cto.com/art/200808/86010.htm';  // 如：http://bbs.51cto.com/thread-789649-1.html
+	var favor_title = '1.3.1 Jetty 的下载和安装';       //  
+	
+	//绑定复制按钮
+	copy('msnqqcopy', 'http://book.51cto.com/art/200808/86010.htm', '分享到MSN/QQ的链接复制成功!');
+//	copy('bbscopy', '[url=http://book.51cto.com/art/200808/86010.htm][u]1.3.1 Jetty 的下载和安装[/u][/url]', '分享到论坛的UBB代码复制成功!');
+
+</script> 
+<script src=" http://home.51cto.com/index.php?s=/Index/getLoginStatus/reback/http%253A%252F%252Fbook.51cto.com%252Fart%252F200808%252F86010.htm" charset='utf-8'></script>
+<script src="http://www.51cto.com/php/count.php?view=yes&artID=86010" language="javascript"></script>
+<script language="javascript">
+document.getElementById('books').innerHTML = document.getElementById("bookss").innerHTML; 
+</script>
+
+</body>
+</html>

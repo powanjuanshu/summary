@@ -1,0 +1,3 @@
+ÃüÁî:ls -a
+* -a, --all
+* do not ignore entries starting with .

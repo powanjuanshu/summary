@@ -1,0 +1,481 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>常用Maven插件介绍（下） - yaowj2的专栏 - 博客频道 - CSDN.NET</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="转自：http://www.infoq.com/cn/news/2011/05/xxb-maven-8-plugin&#160; &#160;&#160;我们都知道Maven本质上是一个插件框架，它的核心并不执行任何具体的构建任务，所有这些任务都交给插件来完成，例如编译源代码是由maven- compiler-plugin完成的。进一步说，每个任务对应了一个插件目标（goal），每个插件会有一个或者多个目标，例如mav" />
+<script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+<link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/default/css/style.css?v=1.1" />
+<link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/yaowj2/rss/list" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+</head>
+<body>
+<script src="http://csdnimg.cn/pubnav/js/pub_topnav_2011.js"type="text/javascript"></script>
+
+<div id="container">
+<div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h1><a href="http://blog.csdn.net/yaowj2">yaowj2的专栏</a></h1>
+            <h2></h2>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg"></div>
+    <div class="navigator">
+        <ul>
+            <li id="btnContents"><a href="http://blog.csdn.net/yaowj2?viewmode=contents"><span><img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+            <li id="btnView"><a href="http://blog.csdn.net/yaowj2?viewmode=list"><span><img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+            <li id="btnRss"><a href="http://blog.csdn.net/yaowj2/rss/list"><span><img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>
+</ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "yaowj2";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/yaowj2";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";
+</script>
+
+<div id="body">
+<div id="main">
+<div class="main">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+<a href="http://www.csdn.net/article/2013-10-15/2817185" target="_blank">
+<font color=blue>IT俱乐部创始人杜鸿飞专访</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/12576603" target="_blank"><font color=red>2013年10月微软MVP当选名单揭晓！ 
+</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/csdnproduct/article/details/12423189"target="_blank">
+<font color=blue>Tag功能介绍—我们为什么打Tag 
+ </font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/11975399"target="_blank">
+<font color=red>“说说家乡的互联网”主题有奖征文
+ </font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://newsletter.csdn.net/show_book/show_book_list?type=5"target="_blank">
+<font color=red>订阅CSDN社区周刊，及时了解社区精华内容
+ </font></a>
+
+</div><link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+
+<div id="article_details" class="details">
+    <div class="article_title">
+    <span class="ico ico_type_Repost"></span>
+    <h3>
+        <span class="link_title"><a href="/yaowj2/article/details/7198267">
+        常用Maven插件介绍（下）
+        </a></span>
+    </h3>
+</div>
+
+        
+    <div class="article_manage">
+        <span class="link_categories">
+        分类：
+            <a href="/yaowj2/article/category/891338">maven</a> 
+        </span>
+    <span class="link_postdate">2012-01-13 11:08</span>
+    <span class="link_view" title="阅读次数">513人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="#comments">评论</a>(0)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:collectArticle('常用Maven插件介绍（下）','7198267');return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="#report"  onclick="javascript:report(7198267,2);return false;" title="举报">举报</a></span>
+    
+</div>
+<div class="tag2box"><a href='http://blog.csdn.net/tag/details.html?tag=maven' target=_blank>maven</a><a href='http://blog.csdn.net/tag/details.html?tag=%e6%b5%8b%e8%af%95' target=_blank>测试</a><a href='http://blog.csdn.net/tag/details.html?tag=%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba' target=_blank>项目构建</a><a href='http://blog.csdn.net/tag/details.html?tag=java' target=_blank>java</a><a href='http://blog.csdn.net/tag/details.html?tag=%e4%bb%bb%e5%8a%a1' target=_blank>任务</a><a href='http://blog.csdn.net/tag/details.html?tag=apache' target=_blank>apache</a></div>
+
+
+    
+<div id="article_content" class="article_content">
+
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+转自：<a href="http://www.infoq.com/cn/news/2011/05/xxb-maven-8-plugin">http://www.infoq.com/cn/news/2011/05/xxb-maven-8-plugin</a>&nbsp; &nbsp;</p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+&nbsp;我们都知道Maven本质上是一个插件框架，它的核心并不执行任何具体的构建任务，所有这些任务都交给插件来完成，例如编译源代码是由maven- compiler-plugin完成的。进一步说，每个任务对应了一个插件目标（goal），每个插件会有一个或者多个目标，例如maven- compiler-plugin的compile目标用来编译位于<code style="font:normal normal normal 90%/130% 'Courier New',Courier">src/main/java/</code>目录下的主源码，testCompile目标用来编译位于<code style="font:normal normal normal 90%/130% 'Courier New',Courier">src/test/java/</code>目录下的测试源码。</p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+用户可以通过两种方式调用Maven插件目标。第一种方式是将插件目标与生命周期阶段（lifecycle phase）绑定，这样用户在命令行只是输入生命周期阶段而已，例如Maven默认将maven-compiler-plugin的compile目标与compile生命周期阶段绑定，因此命令<strong>mvn compile</strong>实际上是先定位到compile这一生命周期阶段，然后再根据绑定关系调用maven-compiler-plugin的compile目标。第二种方式是直接在命令行指定要执行的插件目标，例如<strong>mvn
+ archetype:generate</strong>&nbsp;就表示调用maven-archetype-plugin的generate目标，这种带冒号的调用方式与生命周期无关。</p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+认识上述Maven插件的基本概念能帮助你理解Maven的工作机制，不过要想更高效率地使用Maven，了解一些常用的插件还是很有必要的，这可以帮助你避免一不小心重新发明轮子。多年来Maven社区积累了大量的经验，并随之形成了一个成熟的插件生态圈。Maven官方有两个插件列表，第一个列表的GroupId为org.apache.maven.plugins，这里的插件最为成熟，具体地址为：<a href="http://maven.apache.org/plugins/index.html" style="color:rgb(11,89,178)">http://maven.apache.org/plugins/index.html</a>。第二个列表的GroupId为org.codehaus.mojo，这里的插件没有那么核心，但也有不少十分有用，其地址为：<a href="http://mojo.codehaus.org/plugins.html" style="color:rgb(11,89,178)">http://mojo.codehaus.org/plugins.html</a>。</p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+接下来笔者根据自己的经验介绍一些最常用的Maven插件，在不同的环境下它们各自都有其出色的表现，熟练地使用它们能让你的日常构建工作事半功倍。本文为下半部分。（上半部分内容参见<a href="http://www.infoq.com/cn/news/2011/04/xxb-maven-7-plugin" style="color:rgb(11,89,178)">Maven实战（七）——常用Maven插件介绍（上）&nbsp;</a>）</p>
+<h2 style="font-size:19px; padding-top:4px; padding-right:160px; padding-bottom:4px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; font:normal normal bold 1em/normal arial; letter-spacing:-1px">
+maven-resources-plugin</h2>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+<a href="http://maven.apache.org/plugins/maven-resources-plugin/" style="color:rgb(11,89,178)">http://maven.apache.org/plugins/maven-resources-plugin/</a></p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+为了使项目结构更为清晰，Maven区别对待Java代码文件和资源文件，maven-compiler-plugin用来编译Java代码，maven-resources-plugin则用来处理资源文件。默认的主资源文件目录是<code style="font:normal normal normal 90%/130% 'Courier New',Courier">src/main/resources</code>，很多用户会需要添加额外的资源文件目录，这个时候就可以通过配置maven-resources-plugin来实现。此外，资源文件过滤也是Maven的一大特性，你可以在资源文件中使用<em>${propertyName}</em>形式的Maven属性，然后配置maven-resources-plugin开启对资源文件的过滤，之后就可以针对不同环境通过命令行或者Profile传入属性的&#20540;，以实现更为灵活的构建。</p>
+<h2 style="font-size:19px; padding-top:4px; padding-right:160px; padding-bottom:4px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; font:normal normal bold 1em/normal arial; letter-spacing:-1px">
+maven-surefire-plugin</h2>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+<a href="http://maven.apache.org/plugins/maven-surefire-plugin/" style="color:rgb(11,89,178)">http://maven.apache.org/plugins/maven-surefire-plugin/</a></p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+可能是由于历史的原因，Maven 2/3中用于执行测试的插件不是maven-test-plugin，而是maven-surefire-plugin。其实大部分时间内，只要你的测试类遵循通用的命令约定（以Test结尾、以TestCase结尾、或者以Test开头），就几乎不用知晓该插件的存在。然而在当你想要跳过测试、排除某些测试类、或者使用一些TestNG特性的时候，了解maven-surefire-plugin的一些配置选项就很有用了。例如&nbsp;<strong>mvn test -Dtest=FooTest</strong>&nbsp;这样一条命令的效果是仅运行FooTest测试类，这是通过控制maven-surefire-plugin的test参数实现的。</p>
+<h2 style="font-size:19px; padding-top:4px; padding-right:160px; padding-bottom:4px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; font:normal normal bold 1em/normal arial; letter-spacing:-1px">
+build-helper-maven-plugin</h2>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+<a href="http://mojo.codehaus.org/build-helper-maven-plugin/" style="color:rgb(11,89,178)">http://mojo.codehaus.org/build-helper-maven-plugin/</a></p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+Maven默认只允许指定一个主Java代码目录和一个测试Java代码目录，虽然这其实是个应当尽量遵守的约定，但偶尔你还是会希望能够指定多个源码目录（例如为了应对遗留项目），build-helper-maven-plugin的add-source目标就是服务于这个目的，通常它被绑定到默认生命周期的generate-sources阶段以添加额外的源码目录。需要强调的是，这种做法还是不推荐的，因为它破坏了 Maven的约定，而且可能会遇到其他严&#26684;遵守约定的插件工具无法正确识别额外的源码目录。</p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+build-helper-maven-plugin的另一个非常有用的目标是attach-artifact，使用该目标你可以以classifier的形式选取部分项目文件生成附属构件，并同时install到本地仓库，也可以deploy到远程仓库。</p>
+<h2 style="font-size:19px; padding-top:4px; padding-right:160px; padding-bottom:4px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; font:normal normal bold 1em/normal arial; letter-spacing:-1px">
+exec-maven-plugin</h2>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+<a href="http://mojo.codehaus.org/exec-maven-plugin/" style="color:rgb(11,89,178)">http://mojo.codehaus.org/exec-maven-plugin/</a></p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+exec-maven-plugin很好理解，顾名思义，它能让你运行任何本地的系统程序，在某些特定情况下，运行一个Maven外部的程序可能就是最简单的问题解决方案，这就是<strong>exec:exec</strong>的用途，当然，该插件还允许你配置相关的程序运行参数。除了exec目标之外，exec-maven-plugin还提供了一个java目标，该目标要求你提供一个mainClass参数，然后它能够利用当前项目的依赖作为classpath，在同一个JVM中运行该mainClass。有时候，为了简单的演示一个命令行Java程序，你可以在POM中配置好exec-maven-plugin的相关运行参数，然后直接在命令运行&nbsp;<strong>mvn
+ exec:java</strong>&nbsp;以查看运行效果。</p>
+<h2 style="font-size:19px; padding-top:4px; padding-right:160px; padding-bottom:4px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; font:normal normal bold 1em/normal arial; letter-spacing:-1px">
+jetty-maven-plugin</h2>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+<a href="http://wiki.eclipse.org/Jetty/Feature/Jetty_Maven_Plugin" style="color:rgb(11,89,178)">http://wiki.eclipse.org/Jetty/Feature/Jetty_Maven_Plugin</a></p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+在进行Web开发的时候，打开浏览器对应用进行手动的测试几乎是无法避免的，这种测试方法通常就是将项目打包成war文件，然后部署到Web容器中，再启动容器进行验证，这显然十分耗时。为了帮助开发者节省时间，jetty-maven-plugin应运而生，它完全兼容 Maven项目的目录结构，能够周期性地检查源文件，一旦发现变更后自动更新到内置的Jetty Web容器中。做一些基本配置后（例如Web应用的contextPath和自动扫描变更的时间间隔），你只要执行&nbsp;<strong>mvn jetty:run</strong>&nbsp;，然后在IDE中修改代码，代码经IDE自动编译后产生变更，再由jetty-maven-plugin侦测到后更新至Jetty容器，这时你就可以直接测试Web页面了。需要注意的是，jetty-maven-plugin并不是宿主于Apache或Codehaus的官方插件，因此使用的时候需要额外的配置<code style="font:normal normal normal 90%/130% 'Courier New',Courier">settings.xml</code>的pluginGroups元素，将org.mortbay.jetty这个pluginGroup加入。</p>
+<h2 style="font-size:19px; padding-top:4px; padding-right:160px; padding-bottom:4px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; font:normal normal bold 1em/normal arial; letter-spacing:-1px">
+versions-maven-plugin</h2>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+<a href="http://mojo.codehaus.org/versions-maven-plugin/" style="color:rgb(11,89,178)">http://mojo.codehaus.org/versions-maven-plugin/</a></p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+很多Maven用户遇到过这样一个问题，当项目包含大量模块的时候，为他们集体更新版本就变成一件烦人的事情，到底有没有自动化工具能帮助完成这件事情呢？（当然你可以使用sed之类的文本操作工具，不过不在本文讨论范围）答案是肯定的，versions-maven- plugin提供了很多目标帮助你管理Maven项目的各种版本信息。例如最常用的，命令&nbsp;<strong>mvn versions:set -DnewVersion=1.1-SNAPSHOT</strong>&nbsp;就能帮助你把所有模块的版本更新到1.1-SNAPSHOT。该插件还提供了其他一些很有用的目标，display-dependency-
+ updates能告诉你项目依赖有哪些可用的更新；类&#20284;的display-plugin-updates能告诉你可用的插件更新；然后use- latest-versions能自动帮你将所有依赖升级到最新版本。最后，如果你对所做的更改满意，则可以使用&nbsp;<strong>mvn versions:commit</strong>&nbsp;提交，不满意的话也可以使用&nbsp;<strong>mvn versions:revert</strong>&nbsp;进行撤销。</p>
+<h2 style="font-size:19px; padding-top:4px; padding-right:160px; padding-bottom:4px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; font:normal normal bold 1em/normal arial; letter-spacing:-1px">
+小结</h2>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+本文介绍了一些最常用的Maven插件，这里指的“常用”是指经常需要进行配置的插件，事实上我们用Maven的时候很多其它插件也是必须的，例如默认的编译插件maven-compiler-plugin和默认的打包插件maven-jar-plugin，但因为很少需要对它们进行配置，因此不在本文讨论范围。了解常用的Maven插件能帮助你事倍功半地完成项目构建任务，反之你就可能会因为经常遇到一些难以解决的问题而感到沮丧。本文介绍的插件基本能覆盖大部分Maven用户的日常使用需要，如果你真有非常特殊的需求，自行编写一个Maven插件也不是难事，更何况还有这么多开放源代码的插件供你参考。</p>
+<p style="font-family:Lucida,'Lucida Grande',Tahoma,sans-serif; font-size:13px; line-height:19px">
+本文的这个插件列表并不是一个完整列表，读者有兴趣的话也可以去仔细浏览一下Apache和Codehaus Mojo的Maven插件列表，以的到一个更为全面的认识。最后，在线的Maven仓库搜索引擎如<a href="http://search.maven.org/" style="color:rgb(11,89,178)">http://search.maven.org/</a>也能帮助你快速找到自己感兴趣的Maven插件。</p>
+
+</div>
+
+<div class="share_buttons" id="sharePanel"></div>
+<!--192.168.100.34-->
+<div class="article_next_prev">
+    <li class="prev_article"><span>上一篇：</span><a href="/yaowj2/article/details/7198255">常用Maven插件介绍（上）</a></li>
+    <li class="next_article"><span>下一篇：</span><a href="/yaowj2/article/details/7231139">Java实例对象占用内存</a></li>
+</div>
+
+
+    
+</div>
+<div id="ad_cen">
+<script type="text/javascript" >BAIDU_CLB_SLOT_ID = "117306";</script>
+<script type="text/javascript" src="http://cbjs.baidu.com/js/o.js"></script>
+</div>
+<script type="text/javascript">
+    //new Ad(4, 'ad_cen');
+</script>
+<div id="comment_title" class="panel_head">查看评论<a name="comments"></a></div>
+<div id="comment_list"></div>
+<div id="comment_bar"></div>
+<div id="comment_form"></div>
+<div class="announce">* 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+<script type="text/javascript">
+    var fileName = '7198267';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+<div id="ad_bot"></div>
+<script type="text/javascript">
+    new Ad(5, 'ad_bot');
+</script>
+<div id="report_dialog"></div>
+
+<div id="d-top" style="display:none;">
+<a id="d-top-a" href="#" title="回到顶部">
+<img src="http://static.blog.csdn.net/images/top.png" alt="TOP" /></a>
+</div>
+<script type="text/javascript">
+    $(function(){
+        var d_top=$('#d-top');
+        document.onscroll=function(){
+            var scrTop=(document.body.scrollTop||document.documentElement.scrollTop);
+            if(scrTop>500){
+                d_top.show();
+            }else{
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function(){
+            scrollTo(0,0);
+            this.blur();
+            return false;
+        });
+    });
+  
+</script>
+
+<div class="clear"></div>
+</div>
+</div>
+
+<div id="side">
+<div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/yaowj2" target="_blank">
+    <img src="http://avatar.csdn.net/1/1/D/1_yaowj2.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/yaowj2" class="user_name" target="_blank">yaowj2</a></span>
+</div>
+<div class="interact">
+<a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+<a href="javascript:void(0);" class="letter" onclick="loginto(1)" title="[发私信]"></a>
+</div>
+<div id="blog_medal">
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>24883次</span></li>
+    <li>积分：<span>562分</span></li>
+    <li>排名：<span>千里之外</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>25篇</span></li>
+    <li>转载：<span>43篇</span></li>
+    <li>译文：<span>1篇</span></li>
+    <li>评论：<span>2条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="submit" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855881">java</a><span>(14)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855882">spring</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855883">webx</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855885">struts</a><span>(1)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855886">多线程与并发</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855888">数据库</a><span>(5)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855889">hibernate</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855891">ibatis</a><span>(1)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855892">项目管理</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855894">性能调优</a><span>(4)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855895">生活、工作</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855900">数据结构</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855901">搜索、移动技术</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/855902">互联网</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/871817">linux</a><span>(13)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/891338">maven</a><span>(7)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/891339">svn</a><span>(1)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/898482">activemq</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/920603">c/c++</a><span>(1)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/939659">面向对象设计</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/940641">jtester</a><span>(1)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/1063968">系统架构</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/1109126">jvm</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/1259857">web</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yaowj2/article/category/1259870">编程工具</a><span>(1)</span>
+</li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="http://blog.csdn.net/yaowj2/article/month/2013/10">2013年10月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2013/09">2013年09月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2013/08">2013年08月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2013/06">2013年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2013/03">2013年03月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2013/01">2013年01月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2012/12">2012年12月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2012/11">2012年11月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2012/10">2012年10月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2012/09">2012年09月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2012/07">2012年07月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2012/06">2012年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2012/04">2012年04月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2012/03">2012年03月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2012/02">2012年02月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2012/01">2012年01月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2011/12">2011年12月</a><span>(9)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2011/11">2011年11月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2011/10">2011年10月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2011/09">2011年09月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2011/08">2011年08月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yaowj2/article/month/2011/07">2011年07月</a><span>(1)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head"><span>阅读排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/yaowj2/article/details/7431440" title="java线程池主线程等待子线程执行完成">java线程池主线程等待子线程执行完成</a><span>(3897)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/7427550" title="linux 下执行shell脚本报权限不够">linux 下执行shell脚本报权限不够</a><span>(1412)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/6794129" title="maven 创建自己的archetype">maven 创建自己的archetype</a><span>(1282)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/7168318" title="Bash Reference Card">Bash Reference Card</a><span>(1153)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/7107818" title="jvm 内存查看与分析工具">jvm 内存查看与分析工具</a><span>(974)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/8453477" title="ubuntu 装chrome提示libxss1 is not installed">ubuntu 装chrome提示libxss1 is not installed</a><span>(918)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/7031466" title="java5 多线程编程">java5 多线程编程</a><span>(871)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/6839077" title="解决MAVEN内存溢出">解决MAVEN内存溢出</a><span>(805)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/8055475" title="plsqldev远程连接oracle">plsqldev远程连接oracle</a><span>(756)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/7801757" title="vim常用命令">vim常用命令</a><span>(674)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/yaowj2/article/details/6735710" title="maven jar导入本地仓库">maven jar导入本地仓库</a><span>(2)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/12851883" title="为什么匿名内部类参数必须为final类型">为什么匿名内部类参数必须为final类型</a><span>(0)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/8278374" title="ubuntu 远程桌面d键冲突">ubuntu 远程桌面d键冲突</a><span>(0)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/8224680" title="apache日志分析常用命令">apache日志分析常用命令</a><span>(0)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/8215430" title="ubuntu终端快捷键">ubuntu终端快捷键</a><span>(0)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/8084440" title="十六个eclipse常用快捷键">十六个eclipse常用快捷键</a><span>(0)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/8084384" title="js跨域访问">js跨域访问</a><span>(0)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/8055475" title="plsqldev远程连接oracle">plsqldev远程连接oracle</a><span>(0)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/8004227" title="由12306.cn谈谈网站性能技术">由12306.cn谈谈网站性能技术</a><span>(0)</span>
+</li>
+<li>
+<a href="/yaowj2/article/details/7972443" title="textarea换行">textarea换行</a><span>(0)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend"></ul>
+</div>
+<script type="text/javascript">
+ new Ad(12, 'ad_commend');
+</script><div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+    <a href="/yaowj2/article/details/6735710#comments">maven jar导入本地仓库</a>
+    <p style="margin:0px;"><a href="/yaowj2" class="user_name">yaowj2</a>:
+设置了maven的环境变量后，如果是windows可以直接在cmd上执行。如果是linux用shel...
+    </p>
+    </li>
+    <li>
+    <a href="/yaowj2/article/details/6735710#comments">maven jar导入本地仓库</a>
+    <p style="margin:0px;"><a href="/shyarhwang" class="user_name">shyarhwang</a>:
+mvn install:install-file -Dfile=xxx.jar -DgroupId=...
+    </p>
+    </li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+</div>
+
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js?v=1.1"></script>
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=248018"></script>
+
+<script type="text/javascript">
+document.write('<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js?' + Math.floor(new Date()/120000).toString(36) + '="></'+'script>');
+</script>
+
+<script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js?v=1"></script>
+
+
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+
+<script type="text/javascript" src="http://zz.csdn.net/js/count.js"></script>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+将打包好的项目文件放到nexus私服上去,
+-u的意思是对其他项目中的使用的snapshots包强制更新
+-o是离线工作的意思,不会去download相应的jar包
+
+具体意思可以只用命令行的参考文档:
+-U,--update-snapshots                  Forces a check for updated
+                                       releases and snapshots on remote
+                                       repositories

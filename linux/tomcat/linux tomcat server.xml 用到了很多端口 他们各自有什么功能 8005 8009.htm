@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<!--STATUS OK-->
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=9" />
+		<meta http-equiv="content-type" content="text/html;charset=gbk" />
+		<meta property="wb:webmaster" content="3aababe5ed22e23c" />
+		<title>tomcat中&lt;server.xml&gt;用到了很多端口,他们各自有什么功能？_百度知道</title>
+		
+<script type="text/javascript">
+//
+void function(e,t,n,a,o,i,m){e.alogObjectName=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=e[o].l||+new Date,i=t.createElement(n),i.asyn=1,i.src=a,m=t.getElementsByTagName(n)[0],m.parentNode.insertBefore(i,m)}(window,document,"script","http://img.baidu.com/hunter/alog.min.js","alog");
+//
+void function(e,o){var t,n="Other";(t=/\b(safari|firefox|chrome|opera)\b.*?(\d+)/i.exec(o))&&(n=t[1]),(t=/MSIE ([0-9]*)/.exec(o))&&(n="IE"+t[1]),!/^IE/.test(n)&&(t=/trident\/.* rv:([\w]+)?/i.exec(o))&&(n="IE"+t[1]),/(M?QQBrowser)\/([0-9.]*)/.test(o)&&(n="QQ Browser"),/SE 2.X MetaSr/.test(o)&&(n="Sogou Explorer"),alog("exception.set","browser",n);var r=!1;e.onerror=function(e,o,t,n){var c=!0;return!o&&/^script error/i.test(e)&&(r?c=!1:r=!0),c&&alog("exception.send","exception",{msg:e,js:o,ln:t,col:n}),!1},alog("exception.on","catch",function(e){alog("exception.send","exception",{msg:e.msg,js:e.path,ln:e.ln,method:e.method,flag:"catch"})}),alog("exception.on","count",function(e){alog("exception.send","exception",{msg:e.toString(),flag:"count"})})}(window,navigator.userAgent);
+</script>
+
+		        
+<meta name="keywords" content="tomcat,server.xml,端口"/>
+<meta name="description" content="tomcat中&amp;lt;server.xml&amp;gt;用到了很多端口,他们各自有什么功能？"/>
+<link rel="canonical" href="http://zhidao.baidu.com/question/292305520.html"/>
+<script>
+    if (location.hash && location.hash.indexOf('bdres2exe=') > -1) {
+        document.write('<script src="http://m.baidu.com/static/as/res2exe/js/res2exe_1.0.3.min.js?v=091818"></' + 'script>');
+    }
+</script>
+
+		<script type="text/javascript">
+			!function(){var n={},t={};n.context=function(n,e){var i=arguments.length;if(i>1)t[n]=e;else if(1==i){if("object"!=typeof n)return t[n];for(var o in n)n.hasOwnProperty(o)&&(t[o]=n[o])}},"F"in window||(window.F=n)}();;
+																																																												
+			F.context('user', {"isLogin":"1","stoken":"b07baa4e27d64da577be73b741d6f26f","name":"Xiao_qing_Li","id":"966502582","wealth":"20","gradeIndex":"1","encryptedBDUSS":"1800aGs1x1+5Zsdv+gXPrv9\/8xcz70aqNoxjjnc2B8sf9Nz3C4W1Th6spyq4sZCh8WjxVIwbXpWFrn4Ltr777FGZ4OI9lvtpSl0lkC5STxEzPEO7mGfIDbW2BOEAOebS\/Df5YSerfQKHuRAElBan7nynOZIwJyMLUuhi8Rx0mFLPzwPixkd\/Kqz2jy9LOqPTcRYcqu+47hy01GrTg+NiFCX4mboZ7S4qu0QzHZT9B\/OEZUV8fyQSE+Ptbk\/PlkqUNvNio4Dg0L\/9x2mJ4p3XOsWV\/IBVhIXIiPeaykk","ECBD":"6OkXNIchnlaE8161+oLkqBskhbIqtUTZhuEbCju8GggPRskjSMprfnT3eoK8f4TDMH3Z486JGws2RfMn69RNW7iQWXmcWd9BCbvZ6thVfErChgJtuCHfbRhq1mYE0YsN08KjYnw5e6pCUYvQ3u1UqlIGgsXt1R\/+AqMm\/fojoQykoUKuxp\/iX+886aHOrgI7LZlUPW5T9aT3PqW\/M90Z9MZ7Adbw0cV2zW5n\/9zQazwhc9UbRcgIMH4nRRKYXz7QehudaB6l7jKLaJqwa5NrDA==","experience":"160"});
+			F.context('user')['internalAdmin'] = null;
+
+							F.context('defaultQuery', '{"title":"","value":""}');
+																					F.context('zhimaTagOpen', {
+					'open': 1,
+					'url': 'http://zhidao.baidu.com/s/continue-sign/index.html',
+					'text': '#天天爱答题#'
+				});
+			
+					        		        		            		        		            		        		        
+		        F.context({
+		            'sign-in' : {
+		                'isSignIn' : '0',
+		                'signinDays' : '[]',
+		                'speedToday': '0',
+		                'dayNum': '0',
+		                'wealth': '0',
+		                'newDayNum': '0' % 60,
+		                'signCardCanUsed': '5',
+		                'reSignItemId': '70',
+		                'noSignDays': '0',
+		                'maybeSignNum': '0'
+		            } 
+		        });
+		    		</script>
+
+		
+<script type="text/javascript">
+	
+    F.context('page',{
+    	isAdopted: '1'
+                        ,misAsk: '0'
+        ,delAsk: '0'
+        ,isLocked: '0'
+        ,isReplyLocked: '0'
+        ,isFromWap: "0"
+        ,cid: '870'
+        ,cidTop: '74'
+        ,cidMid: '1073'
+        ,qid: '292305520'
+        ,tags: ''
+        ,title: 'tomcat中&lt;server.xml&gt;用到了很多端口,他们各自有什么功能？'
+        ,giveScore: '10'
+                ,uid: '98706018'
+        ,imId: '62226861697a656934393234e205'
+        ,passPhoto: '0'
+                        ,qbInnerLinkTest: '1'
+                ,rpRecommand: 'false'                ,rankFile: '1' 
+                ,userName: 'haizei4924'
+        ,user : {
+            sex: '1'
+            ,iconType: '6'
+            ,gradeIndex: '2'
+            ,gradeIndexC: '二'
+                                                                                                                    }
+                        ,con: ''
+                        ,answerNum: ''
+        ,isView: '1'
+        ,isGetWealth:'0'
+                ,pgcArr: [790,791,792,794,795]
+        ,isPgcArr: '0'
+        ,isCompanyIask: '0'
+        ,bdplayer:'mozilla\/5.0 (windows nt 5.1) applewebkit\/537.36 (khtml, like gecko) chrome\/35.0.1916.114 safari\/537.36'
+    });
+    
+    F.context('user')['internalAdmin'] = null;
+
+    	F.context('user')['isAsker'] = '0';
+	F.context('user')['isReplyer'] = '0';
+    F.context('user')['uid'] = '966502582';
+    F.context('user')['isNew'] = '0';
+    F.context('user')['isHaveCid'] = '0';
+    F.context('user')['stoken'] = 'b07baa4e27d64da577be73b741d6f26f';
+    F.context('user')['isMavin'] = '0';
+    
+    F.context('user')['replyBold'] = '0';
+    F.context('user')['replyRed'] = '0';
+    F.context('user')['delSelfReply'] = '0';
+    F.context('user')['delSelfQuestion'] = '0';
+    F.context('user')['highQualityNum'] = '0';
+    F.context('privilege', {
+                            'replyBold': {
+                'is_card': '0',
+                'remain_time': '',
+                'number': '',
+                'days': ''
+            },
+                                    'replyRed': {
+                'is_card': '0',
+                'remain_time': '',
+                'number': '',
+                'days': ''
+            }
+                    });
+        F.context('answers', {});
+    F.context('relateWords', {});
+        F.context('egg', {
+        id: '8'
+        ,flashUrl: 'http:\/\/img.iknow.bdimg.com\/gglft\/gglft_flash.swf'
+        ,onlineTime: '2013-11-15'
+        ,offlineTime: '2013-12-01'
+        ,loginRate: '0.7'
+        ,notLoginRate: '0.3'
+        ,targetUrl: 'http:\/\/zhidao.baidu.com\/s\/gglft\/index.html?isegg=1'
+        ,btnText: '确定'
+        ,dialogText: '恭喜你捡到一张刮刮卡，立刻参与刮刮乐翻天活动，拍立得、iPad mini、iPhone 5手机等超多大奖等你刮出来~'
+        ,dialogBackground: ''
+        ,dialogTextMargin: '0'
+        ,active: '0'
+        ,activeUrl: ''
+        ,activeStatus: ''
+        ,guideLogin: '1'
+        ,dialogTextLogin: ''
+        ,btnTextLogin: ''
+        ,dialogTextActive: ''
+        ,btnTextActive: ''
+        ,dialogBackground: ''
+        ,limitGrade: '0'
+        ,limitGoodRate: '0'
+    });
+            F.context('cmsTopic', [
+                        {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/qinliugan.html',
+            'title': 'H7N9禽流感病毒问题解答',
+            'qid': '538944731,538944974,538945159,538945410,538945640,538945806,538946023,538947972,538948119,538948841,538948985,538949170,538949278,538949607,538951811,538952044,538952289,539260208,539271130,539272340,539272652,539272848,539273004,538758680,537145971,537481975,537482138,537491741,537496345,537145971,539271582,539310838,96016332,16608956,16608956,534580619',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen18.html',
+            'title': '传统医学解读人体奥秘',
+            'qid': '',
+            'expert': '正安中医梁冬,薄化君大夫,罗炳翔大夫'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen17.html',
+            'title': '我们有文化，遇见“流氓”也不怕！',
+            'qid': '',
+            'expert': '打假第一人王海'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/topic\/zhichangtiaocao\/index.html',
+            'title': '跳槽前必读8大问题',
+            'qid': '530550652,530550695,530550746,530550777,530550821,530550859,530550898,530550937',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/topic\/zhichangmianshi\/index.html',
+            'title': 'HR不懂爱，他的提问你答不来！',
+            'qid': '529252350,529252523,529252831,529253040,529253301,529253429,529256645,529256979,529257198,529257285',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen16.html',
+            'title': '孙云晓解答青春叛逆期教育',
+            'qid': '',
+            'expert': '青研中心孙云晓'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen16.html',
+            'title': '孙宏艳解答青春叛逆期教育',
+            'qid': '',
+            'expert': '青研中心孙宏艳'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen15.html?fr=qbzt',
+            'title': '雷明解答职场中的跳槽疑惑',
+            'qid': '',
+            'expert': '心理咨询雷明'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen15.html?fr=qbzt',
+            'title': '唐宁解答女性职场疑惑',
+            'qid': '',
+            'expert': '职场唐宁'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen14.html?fr=qbzt',
+            'title': '北大售票帝裴济洋教你买票回家！',
+            'qid': '',
+            'expert': 'peijiyang_pku'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/jiaogui.html?fr=qbzt',
+            'title': '权威解读2013驾考新规',
+            'qid': '496005611,105728210',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/topic\/shi\/index.html?fr=qbzt',
+            'title': '被误读最深的名言锦句',
+            'qid': '510380393,510380025,510380524,510380639,510380685,510380918,510381072,510380301',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen13.html?fr=qbzt',
+            'title': '交管局李晓东处长解答驾考新规',
+            'qid': '',
+            'expert': '交管局李晓东'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen13.html?fr=qbzt',
+            'title': '交管局李勤处长解读新交规',
+            'qid': '',
+            'expert': '交管局李勤'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen12.html?fr=qbzt',
+            'title': '胡柳解答保险理财',
+            'qid': '',
+            'expert': '保险理财胡柳'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen12.html?fr=qbzt',
+            'title': '魏德善解答证券投资',
+            'qid': '',
+            'expert': '证券专家魏德善'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen06.html?fr=qbzt',
+            'title': '金韵蓉老师教你精油护肤',
+            'qid': '',
+            'expert': 'lafasojyr'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/topic\/kuaidu\/suhuaji\/index.html?fr=qbzt',
+            'title': '你的食物含塑化剂吗',
+            'qid': '499771676,274675532,273938276,275181078,274282140,499772730,275226786,274536152,282757232,274210910,275395808,499772593,275355018,274093929',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/topic\/kuaidu\/youjia\/index.html?fr=qbzt',
+            'title': '油价是升还是降',
+            'qid': '7701062,7720360,23590745,239386624,302573038,218721231,337321559',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/topic\/kuaidu\/2012usa\/index.html?fr=qbzt',
+            'title': '美国总统是如何选出来的',
+            'qid': '494863184,494863014,494869926,494869853,494868987',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/topic\/Chicken\/index.html?fr=qbzt',
+            'title': '45天鸡能不能吃',
+            'qid': '503005578,503006139,503006460,503006854,503007374,503007374',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/topic\/1942\/index.html?fr=qbzt',
+            'title': '你知道1942吗？',
+            'qid': '502766042,502766042,502647814,502647814,502777253,502776800,502650170,502650170',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/topic\/jiehuo\/jiankangyaoyan\/index.html?fr=qbzt',
+            'title': '健康流言知真假',
+            'qid': '178807906,334055366,498402753,291937633,209426382,414548424,7540625,222613405,498406267,498408474,109760622,388525641',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/www.baidu.com\/search\/zhidao\/jingshenbing\/index.html?fr=qbzt',
+            'title': '大家都有病',
+            'qid': '492345830,491605430,492350128,492350240,492350299,281444990,492440880,489745109,492443590,492443722',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/www.baidu.com\/search\/zhidao\/gangnamstyle\/index.html?fr=qbzt',
+            'title': '江南Style红的很科学',
+            'qid': '478958350,487057430,483904315,485109741,487057528,485109517,487057485,487057395,487057395,487057363,480719567',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/www.baidu.com\/search\/zhidao\/bing\/index.html?fr=qbzt',
+            'title': '其实这都不是病',
+            'qid': '480816980,480792024,481137959,480812943,480813792',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/www.baidu.com\/search\/zhidao\/aizheng\/index.html?fr=qbzt',
+            'title': '吃也会得癌症！',
+            'qid': '328576004,480213867,480213973,480218158,480232828',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/www.baidu.com\/search\/zhidao\/2012gongfu\/index.html?fr=qbzt',
+            'title': '江湖神功知多少',
+            'qid': '475780308,473798866,475780429,473806239,475780510,473800706,475780712,475782468,475780619,473801366',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen11.html?fr=qbzt',
+            'title': '姚海峰医生解答宠物健康',
+            'qid': '',
+            'expert': '姚海峰博士'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen11.html?fr=qbzt',
+            'title': '王天明专业解答宠物营养',
+            'qid': '',
+            'expert': '宠物营养'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen10.html?fr=qbzt',
+            'title': '苏芩谈远离爱留下的伤',
+            'qid': '',
+            'expert': '知名作家苏芩'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen08.html?fr=qbzt',
+            'title': '张国庆分析中日关系',
+            'qid': '',
+            'expert': '社科院张国庆'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen06.html?fr=qbzt',
+            'title': '小P老师教你彩妆造型',
+            'qid': '',
+            'expert': 'yoka小P老师'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen06.html?fr=qbzt',
+            'title': '梅琳老师教你美肌护肤',
+            'qid': '',
+            'expert': 'lafasoml'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen06.html?fr=qbzt',
+            'title': '美丽主持人李静的美容问答',
+            'qid': '',
+            'expert': 'lafasolj'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen05.html?fr=qbzt',
+            'title': '伊能静解答如何演电影',
+            'qid': '',
+            'expert': 'yinengjing2013'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen05.html?fr=qbzt',
+            'title': '导演赵林山揭秘电影',
+            'qid': '',
+            'expert': 'daoyanzls'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen05.html?fr=qbzt',
+            'title': '五岳散人谈美食',
+            'qid': '',
+            'expert': 'wysr2012'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen04.html?fr=qbzt',
+            'title': '早教专家李跃儿谈早教',
+            'qid': '',
+            'expert': 'lyer2013bd'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen04.html?fr=qbzt',
+            'title': '产科主任余梅教孕产',
+            'qid': '',
+            'expert': 'ym2013bd'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/topic\/muru\/index.html?fr=qbzt',
+            'title': '妈妈最关心的8个问题',
+            'qid': '526309070,526865300,526865300,526308815,526865218,526865157,526865101,526865101,526309710,526865031',
+            'expert': ''
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen03.html?fr=qbzt',
+            'title': '健身专家王友松教健身',
+            'qid': '',
+            'expert': 'wangyousong7'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen03.html?fr=qbzt',
+            'title': '顾中一教你健康营养',
+            'qid': '',
+            'expert': 'guzhongyi'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen03.html?fr=qbzt',
+            'title': '李湘教你减肥秘诀',
+            'qid': '',
+            'expert': 'lixiangzslx'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/zhishilingxiu02.html?fr=qbzt',
+            'title': '心血管病专家贾玉和谈病痛',
+            'qid': '',
+            'expert': 'jiayuhe7'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/zhishilingxiu02.html?fr=qbzt',
+            'title': '糖尿病专家向红丁谈病痛',
+            'qid': '',
+            'expert': 'xianghongd3'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/zhishilingxiu01.html?fr=qbzt',
+            'title': '金领小V谈职场生存学',
+            'qid': '',
+            'expert': '小V2013'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/zhishilingxiu01.html?fr=qbzt',
+            'title': '杜子建说创业',
+            'qid': '',
+            'expert': '杜子建2012'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen08.html?fr=qbzt',
+            'title': '张召忠谈钓鱼岛争端',
+            'qid': '',
+            'expert': 'zshaozhong2012'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen07.html?fr=qbgl',
+            'title': '崔玉涛谈婴幼儿护理',
+            'qid': '',
+            'expert': '儿科医生崔玉涛'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/zhishilingxiu02.html?fr=qbzt',
+            'title': '急诊女超人于莺谈病痛',
+            'qid': '',
+            'expert': 'yuyingjzk'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/zhishilingxiu01.html?fr=qbzt',
+            'title': '薛蛮子谈天使投资',
+            'qid': '',
+            'expert': '薛蛮子2012'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/wowen09.html?fr=qbgl',
+            'title': '郑渊洁让童年如童话',
+            'qid': '',
+            'expert': '作家郑渊洁'
+        },
+                                {
+            'url': 'http:\/\/zhidao.baidu.com\/s\/maya.html?fr=qbgl',
+            'title': '2012世界末日真相',
+            'qid': '384640140,193245477,62563072,306563588,158114723,409478947,12992979,129335529,84523086,13774477,161887534',
+            'expert': ''
+        }
+                    ]);
+            
+    
+</script>
+
+        <!--[if lte IE 8]>
+            <script>
+                (function(){
+                    var e="abbr,article,aside,audio,canvas,datalist,details,dialog,eventsource,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video".split(","),
+                    i=e.length;
+                    while(i--){document.createElement(e[i])}
+                 })();
+            </script>
+        <![endif]-->
+	<link rel="stylesheet" type="text/css" href="http://cdn.iknow.bdimg.com/static/common/pkg/common_830ba59.css" /><link rel="stylesheet" type="text/css" href="http://cdn.iknow.bdimg.com/static/question/pkg/aio_1209ccc.css" /></head>
+    
+    
+<script> alog('speed.set', 'ht',new Date);</script>
+
+
+	<body class="layout-center has-menu">
+		
+			
+			        		
+<div class="line">
+<div id="userbar" class="userbar userbar-new" data="">
+            <ul class="main-list">
+            <li>
+                <span class="userbar-avatar"><img src="http://himg.bdimg.com/sys/portrait/item/b6a85869616f5f71696e675f4c699b39.jpg"/></span>
+                            <a href="http://www.baidu.com/p/Xiao_qing_Li?from=zhidao" class="user-name" target="_blank" id="user-name">Xiao_qing_Li<i class="i-arrow-down"></i></a></li>
+                <li>
+                <span id="user-grade" class="user-grade">LV1</span>
+                </li>
+                        </li>
+
+            <li class="line">|</li>
+            <li><a alog-alias="my-home" href="/ihome" id="my-iknow" class="my-iknow" target="_blank">我的知道<i class="i-arrow-down"></i></a></li>
+            <li class="line">|</li>
+            <li alog-alias="userbar-msg" id="userbar-msg"><span class="i-msg" style="display:none;"></span><a href="/ihome/notice/all" target="_blank" target="_self">消息<span class="orange-num"><i></i></span></a></li>
+            <li class="line">|</li>
+            <li alog-alias="baidu-msg" id="baidu-msg"><a href="#">私信</a></li>
+            <li class="line">|</li>
+            <li><a href="/shop"><i class="i-house"></i>知道商城</a></li>
+        </ul>
+        <div class="sublist-container username-sublist" style="display:none" id="username-sublist">
+            <div class="sublist-arrow-up"></div>
+            <ul class="sub-list">
+                                <li><a id="userbar-myinfo" href="http://www.baidu.com/p/Xiao_qing_Li?from=zhidao" target="_blank"><i class="i-homepage"></i>我的主页</a></li>
+                                <li><a id="userbar-account" href="http://passport.baidu.com/center" target="_blank"><i class="i-setting"></i>帐号设置</a></li>
+                <li class="last"><a href="http://passport.baidu.com/?logout&amp;aid=7&amp;u=http%3A//zhidao.baidu.com" id="userbar-logout"><i class="i-quit"></i>退出</a></li>
+            </ul>
+        </div>
+        <div class="sublist-container my-iknow-list" style="display:none" id="my-home-list">
+            <div class="sublist-arrow-up"></div>
+            <ul class="sub-list">
+                <li><a alog-alias="#" href="/ihome/ask" target="_blank" id="status-my-ask"><i class="i-ask"></i>我的提问</a></li>
+                <li class="last"><a alog-alias="#" href="/ihome/answer" target="_blank" id="status-my-answer"><i class="i-answer"></i>我的回答</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+        	        	
+		
+        
+		
+                    	<header id="header" class="container">
+                        <a href="http://img.iknow.bdimg.com/zuoyebang/platform/index.html" title="" target="_blank" class="adTopImg" style="background:url(http://img.baidu.com/img/iknow/sula03/zuoyebangshouyetoutu.jpg);"></a>
+                		
+    			    <div id="search-box" class="search-box line pt-20">
+  <a class="logo" href="/" title="百度知道"></a>
+  <ul class="channel grid">
+    <li><a log="sc_pos:c_news" rel="nofollow" href="http://news.baidu.com/ns?cl=2&rn=20&tn=news&word=tomcat+8005&t=1">新闻</a></li> 
+    <li><a log="sc_pos:c_baidu" rel="nofollow" href="http://www.baidu.com/s?cl=3&wd=tomcat+8005">网页</a></li> 
+    <li><a log="sc_pos:c_tieba" rel="nofollow" href="http://tieba.baidu.com/f?kw=tomcat+8005&t=4">贴吧</a></li> 
+    <li><strong>知道</strong></li> 
+    <li><a log="sc_pos:c_mp3" rel="nofollow" href="http://music.baidu.com/search?fr=zhdao&key=tomcat+8005">音乐</a></li> 
+    <li><a log="sc_pos:c_pic" rel="nofollow" href="http://image.baidu.com/i?tn=baiduimage&ct=201326592&lm=-1&cl=2&word=tomcat+8005&t=3">图片</a></li> 
+    <li><a log="sc_pos:c_video" rel="nofollow" href="http://v.baidu.com/v?ct=301989888&rn=20&pn=0&db=0&s=22&word=tomcat+8005">视频</a></li> 
+    <li><a log="sc_pos:c_map" rel="nofollow" href="http://map.baidu.com/m?word=tomcat+8005&fr=map007">地图</a></li> 
+    <li><a log="sc_pos:c_baike" rel="nofollow" href="http://baike.baidu.com/searchword/?word=tomcat+8005&pic=1">百科</a></li> 
+    <li><a log="sc_pos:c_doc" rel="nofollow" href="http://wenku.baidu.com/search?word=tomcat+8005&lm=0&od=0">文库</a></li>
+    <li><a log="sc_pos:c_jingyan" href="http://jingyan.baidu.com/search?word=tomcat%208005&fr=zhidao">经验</a></li>
+  </ul>
+
+  <form action="/search" name="search-form" method="get" id="search-form" class="search-form"> 
+    <div class="box">
+      <span class="search-box-bg sb-bg-low"></span><span class="search-box-bg"></span>
+      <input class="hdi" id="kw" maxlength="256" tabindex="1" size="46" name="word" value="tomcat 8005" autocomplete="off" />
+      <span class="btn-wrap"><input alog-action="g-search-anwser" type="submit" id="search-btn" hidefocus="true" onmouseover="this.className='btn-global btn-hover';" onmouseout="this.className='btn-global';" onmousedown="this.className='btn-global btn-active'" tabindex="2" value="搜索答案" class="btn-global" /></span>
+      <a href="#" alog-action="g-i-ask" class="f-14" id="ask-btn">我要提问</a>
+    </div>
+  </form>
+</div>
+
+    		
+    	</header>
+        	<div id="body" class="container">
+        		
+<div id="menu" class="menu">
+		<ul>
+			<li >
+				<a log="action:menuclick,index:1" href="http://zhidao.baidu.com/">首页</a>
+			</li>
+			<li >
+				<a log="action:menuclick,index:3" href="http://zhidao.baidu.com/browse/">分类</a>
+			</li>
+			<li >
+				<a log="action:menuclick,index:2" rel="nofollow" href="http://zhidao.baidu.com/shop">公社</a>
+                <div class="sub-menu">
+                	<div class="sub-item">
+                		<a rel="nofollow" href="http://zhidao.baidu.com/shop">财富商城</a>
+                		<a rel="nofollow" href="http://zhidao.baidu.com/team">知道团队</a>
+                		<a rel="nofollow" class="spacing" href="http://zhidao.baidu.com/user/admin">管 理 员</a>
+                        <a rel="nofollow" href="http://zhidao.baidu.com/s/star/index.html">知道之星</a>
+                        <a rel="nofollow" href="http://zhidao.baidu.com/s/activity/index.html">知道活动</a>
+                	</div>
+                </div>
+			</li>
+			<li>
+				<a log="action:menuclick,index:12" target="_blank" href="http://zhidao.baidu.com/hangjia">知道行家</a>
+			</li>
+			<li >
+                <a log="action:menuclick,index:6" rel="nofollow" href="http://zhidao.baidu.com/doctor">问医生</a>
+            </li>
+            <li >
+                <a log="action:menuclick,index:5" rel="nofollow" href="http://zhidao.baidu.com/lvshi">问律师</a>
+            </li>
+			<li class="menu-new ">
+				<a log="action:menuclick,index:4" rel="nofollow" href="http://zhidao.baidu.com/prof/education">问作业</a>
+			</li>
+			<li>
+				<a log="action:menuclick,index:9" target="_blank" href="http://jingyan.baidu.com">经验</a>
+			</li>
+		</ul>
+		<a  log="action:menuclick,index:10" rel="nofollow" href="/uhome" target="_blank" class="ucenter"><i class="ik-icon-uhome mr-5"></i>个人中心</a>
+		<span class="double-line"></span>
+		<a  log="action:menuclick,index:11" rel="nofollow" href="http://zhidao.baidu.com/zt/ikapp/index.html?fr=home" target="_blank" class="ucenter"><i class="ik-icon-phone mr-5"></i>手机知道</a>
+		<span class="double-line"></span>
+		<a log="action:menuclick,index:13" rel="nofollow" href="http://zhidao.baidu.com/opendev?fr=home" target="_blank" class="ucenter"><i class="ik-icon-open mr-5"></i>开放平台</a>
+</div>
+<div id="union-qbbanner" class="union-qbbanner line wgt-ads"></div>
+<div style="display:none">
+
+<nav class="wgt-nav f-12 f-simsun" alog-group="qb-cate-nav">
+<a href="/">百度知道</a>
+&gt;<a href="/browse/74">电脑/网络</a>
+&gt;<a href="/browse/1073">编程语言</a>
+&gt;<a href="/browse/870">JAVA相关</a>
+</nav>
+
+</div>
+<section class="line qb-section">
+<article class="grid qb-content" id="qb-content">
+<div class="wgt-ask accuse-response line mb-5" id="wgt-ask">
+<h1 class="mb-5" accuse="qTitle">
+<i class="i-status-being grid mr-10"></i>
+<span class="ask-title  ">tomcat中&lt;server.xml&gt;用到了很多端口,他们各自有什么功能？</span>
+</h1>
+<div class="line f-aid mb-10" id="ask-info">
+<span class="grid-r ask-time"><ins class="accuse-area"></ins>2011-07-14 17:25</span>
+
+<a class="user-name" alog-action="qb-ask-uname" rel="nofollow" href="http://www.baidu.com/p/haizei4924?from=zhidao" target="_blank">haizei4924</a>
+
+<span class="f-pipe">|</span>
+<span class="classinfo f-simsun" alog-group="qb-cate-nav">
+分类：<a class="f-aid" alog-alias="qb-class-info" href="/browse/870">JAVA相关</a>
+</span>
+<span id="v-times" class="f-pipe" style="display: none"></span>
+</div>
+<div class="line mt-10 app-and-share">
+
+<div class="wgt-share" id="wgt-share">
+<div class="line f-aid mt-5">
+<span class="share-to grid">分享到：</span>
+<div alog-group="qb-share-btn" id="bdshare" class="bdshare_t bds_tools get-codes-bdshare"><a class="bds_tsina" log="pos:tsina"></a>
+<a class="bds_tqq" log="pos:tqq"></a>
+<a class="bds_qzone" log="pos:qzone"></a>
+<a class="bds_renren" log="pos:renren"></a>
+<a class="bds_tieba" log="pos:tieba"></a>
+<span class="bds_more"></span>
+</div></div>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=281447" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+
+</div>
+</div>
+
+
+<script type="text/javascript">
+        F.context('answers')['754503865'] = {uid:"161786262",imId:"96a9d2b6e8afb9abd6f7a409",isBest:"1",id:"754503865",userName:"叶璇公主",userNameEnc:"%D2%B6%E8%AF%B9%AB%D6%F7",user:{sex:"2",iconType:"6",gradeIndex:"3",grAnswerNum:"8",carefield: [{cid:"1072",cname:"系统软件"},{cid:"1069",cname:"常见软件"},{cid:"870",cname:"JAVA相关"},{cid:"1288",cname:"数据库DB"},{cid:"163",cname:"生活常识"}],isAuth:"0",authTitle:"",isUserAdmin:"0",userAdminLevel:"",userAdminTitle:"",isFamous:"0",isMaster:"0",goodRate:"14",applyExcType:"4"},isAnonymous:"0",isCurrentUser:"0",mapUrl:"",refer:"",replyAskNum:"",threadId:"3018015461",hasComment:"1",qid:"292305520",raid:"",recommendCanceled:"0"};
+                        	F.context('relateWords')['best-content-'+'754503865'] = ["class\u6587\u4ef6","HTTP\u8bf7\u6c42","\u865a\u62df\u4e3b\u673a","\u57df\u540d\u89e3\u6790","8080\u7aef\u53e3","\u4e3b\u673a\u540d","80\u7aef\u53e3","\u5927\u5ba2\u6237","\u7aef\u53e3\u53f7","\u961f\u5217"];
+            </script>
+<div  class="wgt-best " id="best-answer-754503865">
+<div class="hd line mb-10">
+<span class="grid-r f-aid pos-time mt-20">
+<ins class="accuse-area" alog-alias="qb-accuse-link-best"></ins>
+2011-07-15 15:07
+</span>
+<div id="act-link-banner-wp" class="grid-r"></div>
+<span class="answer-type answer-best grid"></span>
+<span class="answer-title h2 grid">提问者采纳</span>
+</div>
+<div class="bd answer" id="answer-754503865">
+<div class="line info f-aid">
+</div>
+<div class="line content">
+<pre id="best-content-754503865" accuse="aContent" class="best-text mb-10">&lt;Server&gt;元素<br /><br />它代表整个容器,是Tomcat实例的顶层元素.由org.apache.catalina.Server接口来定义.它包含一个<br />&lt;Service&gt;元素.并且它不能做为任何元素的子元素.<br /><br /> &lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot; debug=&quot;0&quot;&gt;<br /><br />1&gt;className指定实现org.apache.catalina.Server接口的类.默认值为<br />org.apache.catalina.core.StandardServer<br />2&gt;port指定Tomcat监听shutdown命令端口.终止服务器运行时,必须在Tomcat服务器所在的机器上发出<br />shutdown命令.该属性是必须的.<br />3&gt;shutdown指定终止Tomcat服务器运行时,发给Tomcat服务器的shutdown监听端口的字符串.该属性必须设<br />置<br />&lt;Service&gt;元素<br /><br />该元素由org.apache.catalina.Service接口定义,它包含一个&lt;Engine&gt;元素,以及一个或多个<br />&lt;Connector&gt;,这些Connector元素共享用同一个Engine元素<br />   <br />  &lt;Service name=&quot;Catalina&quot;&gt;<br />    &lt;Service name=&quot;Apache&quot;&gt;<br /><br />   第一个&lt;Service&gt;处理所有直接由Tomcat服务器接收的web客户请求.<br />   第二个&lt;Service&gt;处理所有由Apahce服务器转发过来的Web客户请求<br />1&gt;className 指定实现org.apahce.catalina.Service接口的类.默认为<br />org.apahce.catalina.core.StandardService<br />2&gt;name定义Service的名字<br />&lt;Engine&gt;元素<br /><br />每个Service元素只能有一个Engine元素.元素处理在同一个&lt;Service&gt;中所有&lt;Connector&gt;元素接收到的客<br />户请求.由org.apahce.catalina.Engine接口定义.<br /> &lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; debug=&quot;0&quot;&gt;<br />1&gt;className指定实现Engine接口的类,默认值为StandardEngine<br />2&gt;defaultHost指定处理客户的默认主机名,在&lt;Engine&gt;中的&lt;Host&gt;子元素中必须定义这一主机<br />3&gt;name定义Engine的名字<br />在&lt;Engine&gt;可以包含如下元素&lt;Logger&gt;, &lt;Realm&gt;, &lt;Value&gt;, &lt;Host&gt;<br />&lt;Host&gt;元素<br /><br />它由Host接口定义.一个Engine元素可以包含多个&lt;Host&gt;元素.每个&lt;Host&gt;的元素定义了一个虚拟主机.它<br />包含了一个或多个Web应用.<br />  &lt;Host name=&quot;localhost&quot; debug=&quot;0&quot; appBase=&quot;webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;<br />1&gt;className指定实现Host接口的类.默认值为StandardHost<br />2&gt;appBase指定虚拟主机的目录,可以指定绝对目录,也可以指定相对于&lt;CATALINA_HOME&gt;的相对目录.如果<br />没有此项,默认为&lt;CATALINA_HOME&gt;/webapps<br />3&gt;autoDeploy如果此项设为true,表示Tomcat服务处于运行状态时,能够监测appBase下的文件,如果有新有<br />web应用加入进来,会自运发布这个WEB应用<br />4&gt;unpackWARs如果此项设置为true,表示把WEB应用的WAR文件先展开为开放目录结构后再运行.如果设为<br />false将直接运行为WAR文件<br />5&gt;alias指定主机别名,可以指定多个别名<br />6&gt;deployOnStartup如果此项设为true,表示Tomcat服务器启动时会自动发布appBase目录下所有的Web应用<br />.如果Web应用中的server.xml没有相应的&lt;Context&gt;元素,将采用Tomcat默认的Context<br />7&gt;name定义虚拟主机的名字<br />在&lt;Host&gt;元素中可以包含如下子元素<br />&lt;Logger&gt;, &lt;Realm&gt;, &lt;Value&gt;, &lt;Context&gt;<br />&lt;Context&gt;元素<br /><br />它由Context接口定义.是使用最频繁的元素.每个&lt;Context元素代表了运行在虚拟主机上的单个Web应用.<br />一个&lt;Host&gt;可以包含多个&lt;Context&gt;元素.每个web应用有唯一<br />的一个相对应的Context代表web应用自身.servlet容器为第一个web应用创建一个<br />ServletContext对象.<br /> &lt;Context path=&quot;/sample&quot; docBase=&quot;sample&quot; debug=&quot;0&quot; reloadbale=&quot;true&quot;&gt;<br />1&gt;className指定实现Context的类,默认为StandardContext类<br />2&gt;path指定访问Web应用的URL入口,注意/myweb,而不是myweb了事<br />3&gt;reloadable如果这个属性设为true, Tomcat服务器在运行状态下会监视在WEB-INF/classes和Web-<br />INF/lib目录CLASS文件的改运.如果监视到有class文件被更新,服务器自重新加载Web应用<br />3&gt;cookies指定是否通过Cookies来支持Session,默认值为true<br />4&gt;useNaming指定是否支持JNDI,默认值为了true<br />在&lt;Context&gt;元素中可以包含如下元素<br />&lt;Logger&gt;, &lt;Realm&gt;, &lt;Resource&gt;, &lt;ResourceParams&gt;<br />&lt;Connector&gt;元素<br /><br />由Connector接口定义.&lt;Connector&gt;元素代表与客户程序实际交互的给件,它负责接收客户请求,以及向客<br />户返回响应结果.<br /> &lt;Connector port=&quot;8080&quot; maxThread=&quot;50&quot; minSpareThreads=&quot;25&quot; maxSpareThread=&quot;75&quot; <br /> enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; acceptCount=&quot;100&quot; debug=&quot;0&quot; <br /> connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; /&gt;<br /> &lt;Connection port=&quot;8009&quot; enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; debug=&quot;0&quot; <br /> protocol=&quot;AJP/1.3&quot; /&gt;<br />第一个Connector元素定义了一个HTTP Connector,它通过8080端口接收HTTP请求;第二个Connector元素定<br />义了一个JD Connector,它通过8009端口接收由其它服务器转发过来的请求.<br />Connector元素共用属性<br />1&gt;className指定实现Connector接口的类<br />2&gt;enableLookups如果设为true,表示支持域名解析,可以把IP地址解析为主机名.WEB应用中调用<br />request.getRemoteHost方法返回客户机主机名.默认值为true<br />3&gt;redirectPort指定转发端口.如果当前端口只支持non-SSL请求,在需要安全通信的场命,将把客户请求转<br />发至SSL的redirectPort端口<br />HttpConnector元素的属性<br />1&gt;className实现Connector的类<br />2&gt;port设定Tcp/IP端口,默认值为8080,如果把8080改成80,则只要输入<a href="http://localhost" target="_blank">http://localhost</a>即可<br />因为TCP/IP的默认端口是80<br />3&gt;address如果服务器有二个以上ip地址,此属性可以设定端口监听的ip地址.默认情况下,端口会监听服务<br />器上所有的ip地址<br />4&gt;bufferSize设定由端口创建的输入流的缓存大小.默认值为2048byte<br />5&gt;protocol设定Http协议,默认值为HTTP/1.1<br />6&gt;maxThreads设定在监听端口的线程的最大数目,这个值也决定了服务器可以同时响应客户请求的最大数<br />目.默认值为200<br />7&gt;acceptCount设定在监听端口队列的最大客户请求数量,默认值为10.如果队列已满,客户必须等待.<br />8&gt;connectionTimeout定义建立客户连接超时的时间.如果为-1,表示不限制建立客户连接的时间<br />JkConnector的属性<br />1&gt;className实现Connector的类<br />2&gt;port设定AJP端口号<br />3&gt;protocol必须设定为AJP/1.3<br /> <br />========================================================================================<br /><br />&lt;Server&gt;元素<br />它代表整个容器,是Tomcat实例的顶层元素.由org.apache.catalina.Server接口来定义.它包含一个&lt;Service&gt;元素.并且它不能做为任何元素的子元素.<br />&lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot; debug=&quot;0&quot;&gt;<br />1&gt;className指定实现org.apache.catalina.Server接口的类.默认值为org.apache.catalina.core.StandardServer<br />2&gt;port指定Tomcat监听shutdown命令端口.终止服务器运行时,必须在Tomcat服务器所在的机器上发出shutdown命令.该属性是必须的.<br />3&gt;shutdown指定终止Tomcat服务器运行时,发给Tomcat服务器的shutdown监听端口的字符串.该属性必须设置<br /> <br />&lt;Service&gt;元素<br />该元素由org.apache.catalina.Service接口定义,它包含一个&lt;Engine&gt;元素,以及一个或多个&lt;Connector&gt;,这些Connector元素共享用同一个Engine元素<br />   <br />    &lt;Service name=&quot;Catalina&quot;&gt;<br />    &lt;Service name=&quot;Apache&quot;&gt;<br />    第一个&lt;Service&gt;处理所有直接由Tomcat服务器接收的web客户请求.<br />    第二个&lt;Service&gt;处理所有由Apahce服务器转发过来的Web客户请求<br />1&gt;className 指定实现org.apahce.catalina.Service接口的类.默认为org.apahce.catalina.core.StandardService<br />2&gt;name定义Service的名字<br /> <br />&lt;Engine&gt;元素<br />每个Service元素只能有一个Engine元素.元素处理在同一个&lt;Service&gt;中所有&lt;Connector&gt;元素接收到的客户请求.由org.apahce.catalina.Engine接口定义.<br />&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; debug=&quot;0&quot;&gt;<br />1&gt;className指定实现Engine接口的类,默认值为StandardEngine<br />2&gt;defaultHost指定处理客户的默认主机名,在&lt;Engine&gt;中的&lt;Host&gt;子元素中必须定义这一主机<br />3&gt;name定义Engine的名字<br />在&lt;Engine&gt;可以包含如下元素&lt;Logger&gt;, &lt;Realm&gt;, &lt;Value&gt;, &lt;Host&gt;<br /> <br />&lt;Host&gt;元素<br />它由Host接口定义.一个Engine元素可以包含多个&lt;Host&gt;元素.每个&lt;Host&gt;的元素定义了一个虚拟主机.它包含了一个或多个Web应用.<br />   &lt;Host name=&quot;localhost&quot; debug=&quot;0&quot; appBase=&quot;webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;<br />1&gt;className指定实现Host接口的类.默认值为StandardHost<br />2&gt;appBase指定虚拟主机的目录,可以指定绝对目录,也可以指定相对于&lt;CATALINA_HOME&gt;的相对目录.如果没有此项,默认为&lt;CATALINA_HOME&gt;/webapps<br />3&gt;autoDeploy如果此项设为true,表示Tomcat服务处于运行状态时,能够监测appBase下的文件,如果有新有web应用加入进来,会自运发布这个WEB应用<br />4&gt;unpackWARs如果此项设置为true,表示把WEB应用的WAR文件先展开为开放目录结构后再运行.如果设为false将直接运行为WAR文件<br />5&gt;alias指定主机别名,可以指定多个别名<br />6&gt;deployOnStartup如果此项设为true,表示Tomcat服务器启动时会自动发布appBase目录下所有的Web应用.如果Web应用中的server.xml没有相应的&lt;Context&gt;元素,将采用Tomcat默认的Context<br />7&gt;name定义虚拟主机的名字<br />在&lt;Host&gt;元素中可以包含如下子元素<br />&lt;Logger&gt;, &lt;Realm&gt;, &lt;Value&gt;, &lt;Context&gt;<br /><br />&lt;Context&gt;元素<br />它由Context接口定义.是使用最频繁的元素.每个&lt;Context元素代表了运行在虚拟主机上的单个Web应用.一个&lt;Host&gt;可以包含多个&lt;Context&gt;元素.每个web应用有唯一<br />的一个相对应的Context代表web应用自身.servlet容器为第一个web应用创建一个<br />ServletContext对象.<br />&lt;Context path=&quot;/sample&quot; docBase=&quot;sample&quot; debug=&quot;0&quot; reloadbale=&quot;true&quot;&gt;<br />1&gt;className指定实现Context的类,默认为StandardContext类<br />2&gt;path指定访问Web应用的URL入口,注意/myweb,而不是myweb了事<br />3&gt;reloadable如果这个属性设为true, Tomcat服务器在运行状态下会监视在WEB-INF/classes和Web-INF/lib目录CLASS文件的改运.如果监视到有class文件被更新,服务器自重新加载Web应用<br />3&gt;cookies指定是否通过Cookies来支持Session,默认值为true<br />4&gt;useNaming指定是否支持JNDI,默认值为了true<br /><br />在&lt;Context&gt;元素中可以包含如下元素<br />&lt;Logger&gt;, &lt;Realm&gt;, &lt;Resource&gt;, &lt;ResourceParams&gt;<br /> <br />Connector元素<br />由Connector接口定义.&lt;Connector&gt;元素代表与客户程序实际交互的给件,它负责接收客户请求,以及向客户返回响应结果.<br />&lt;Connector port=&quot;8080&quot; maxThread=&quot;50&quot; minSpareThreads=&quot;25&quot; maxSpareThread=&quot;75&quot; enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; acceptCount=&quot;100&quot; debug=&quot;0&quot; connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; /&gt;<br />&lt;Connection port=&quot;8009&quot; enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; debug=&quot;0&quot; protocol=&quot;AJP/1.3&quot; /&gt;<br />第一个Connector元素定义了一个HTTP Connector,它通过8080端口接收HTTP请求;第二个Connector元素定义了一个JD Connector,它通过8009端口接收由其它服务器转发过来的请求.<br />Connector元素共用属性<br />1&gt;className指定实现Connector接口的类<br />2&gt;enableLookups如果设为true,表示支持域名解析,可以把IP地址解析为主机名.WEB应用中调用request.getRemoteHost方法返回客户机主机名.默认值为true<br />3&gt;redirectPort指定转发端口.如果当前端口只支持non-SSL请求,在需要安全通信的场命,将把客户请求转发至SSL的redirectPort端口<br /><br />HttpConnector元素的属性<br />1&gt;className实现Connector的类<br />2&gt;port设定Tcp/IP端口,默认值为8080,如果把8080改成80,则只要输入<a href="http://localhost" target="_blank">http://localhost</a>即可<br />因为TCP/IP的默认端口是80<br />3&gt;address如果服务器有二个以上ip地址,此属性可以设定端口监听的ip地址.默认情况下,端口会监听服务器上所有的ip地址<br />4&gt;bufferSize设定由端口创建的输入流的缓存大小.默认值为2048byte<br />5&gt;protocol设定Http协议,默认值为HTTP/1.1<br />6&gt;maxThreads设定在监听端口的线程的最大数目,这个值也决定了服务器可以同时响应客户请求的最大数目.默认值为200<br />7&gt;acceptCount设定在监听端口队列的最大客户请求数量,默认值为10.如果队列已满,客户必须等待.<br />8&gt;connectionTimeout定义建立客户连接超时的时间.如果为-1,表示不限制建立客户连接的时间<br /><br />JkConnector的属性<br />1&gt;className实现Connector的类<br />2&gt;port设定AJP端口号<br />3&gt;protocol必须设定为AJP/1.3</pre>
+<dl class="thank line pt-5 pb-5">
+<dt class="thank-title grid f-12">提问者评价</dt>
+<dd class="grid ml-10">
+<pre accuse="qThanks">thank you</pre>
+</dd>
+</dl>
+<div class="grid-r f-aid ">
+
+<span alog-action="qb-comment-btnbestbox" class="comment f-blue" id="comment-754503865">评论</span>
+<span class="f-pipe">|</span>
+<span alog-action="qb-zan-btnbestbox" class="evaluate evaluate-32" id="evaluate-754503865" data-evaluate="23" ></span>
+<span alog-action="qb-evaluate-outer" class="evaluate evaluate-bad evaluate-32" id="evaluate-bad-754503865" data-evaluate="2" ></span>
+
+</div>
+
+
+</div>
+
+<div class="line wgt-replyer-best mt-10 pt-20"><div class="grid mr-15">
+<p class="avatar-48 avatar-static">
+<a alog-action="qb-username" log="pms:newqb,pos:bestreplyer" class="avatar-normal-a" rel="nofollow" href="http://www.baidu.com/p/叶璇公主?from=zhidao" target="_blank" data-img="http://img.iknow.bdimg.com/avatar/48/r6s2g3.gif">
+</a>
+</p>
+</div>
+<div class="grid f-aid">
+<p>
+<a alog-action="qb-username" log="pms:newqb,pos:bestreplyer" class="user-name" rel="nofollow" href="http://www.baidu.com/p/叶璇公主?from=zhidao" target="_blank">叶璇公主</a>
+<span class="f-pipe">|</span>
+<a class="f-aid" href="http://www.baidu.com/search/zhidao_help.html#如何选择头衔" target="_blank">三级</a>
+<span class="ml-10">采纳率14%</span>
+</p>
+<p class="carefield">
+<span>擅长：</span>
+<a class="mr-5 f-aid" href="/browse/1072" target="_blank">系统软件</a>
+<a class="mr-5 f-aid" href="/browse/1069" target="_blank">常见软件</a>
+<a class="mr-5 f-aid" href="/browse/870" target="_blank">JAVA相关</a>
+<a class="mr-5 f-aid" href="/browse/1288" target="_blank">数据库DB</a>
+<a class="mr-5 f-aid" href="/browse/163" target="_blank">生活常识</a>
+</p>
+</div>
+</div>
+
+</div>
+
+<div class="wgt-related mt-5 involved " id="wgt-related">
+<h2>其他类似问题</h2>
+<div class="related-list line">
+<ul class="list-34 related-ul" alog-group="qb-relative-que">
+<li >
+<span class="grid-r f-aid">2013-06-21</span>
+<a href="/question/560905889.html?qbl=relate_question_0&word=tomcat%208005" target="_blank" 
+                    log="fr:qrl,pms:newqb,page:qb-new,pos:relative_title,index:1,cid:870,fr2:query" class="related-link" data-qid="560905889">tomcat 中<em>server.xml</em>主要作用是什么？如果解决...</a>
+<em class="praise-num" title="所有回答获得3个赞同">
+<i class="i-evaluate"></i><span class="ml-5 f-red">3</span>
+</em>
+</li>
+<li >
+<span class="grid-r f-aid">2010-12-30</span>
+<a href="/question/208797832.html?qbl=relate_question_1&word=tomcat%208005" target="_blank" 
+                    log="fr:qrl,pms:newqb,page:qb-new,pos:relative_title,index:2,cid:870,fr2:query" class="related-link" data-qid="208797832">tomcat怎么<em>配置server.xml</em>中的数据源和访问<em>端口</em>...</a>
+</li>
+<li >
+<span class="grid-r f-aid">2012-09-01</span>
+<a href="/question/468791580.html?qbl=relate_question_2&word=tomcat%208005" target="_blank" 
+                    log="fr:qrl,pms:newqb,page:qb-new,pos:relative_title,index:3,cid:870,fr2:query" class="related-link" data-qid="468791580">Tomcat 中<em>server.xml</em>起到什么作用吗？*</a>
+<em class="praise-num" title="所有回答获得3个赞同">
+<i class="i-evaluate"></i><span class="ml-5 f-red">3</span>
+</em>
+</li>
+<li >
+<span class="grid-r f-aid">2012-03-29</span>
+<a href="/question/21510868.html?qbl=relate_question_3&word=tomcat%208005" target="_blank" 
+                    log="fr:qrl,pms:newqb,page:qb-new,pos:relative_title,index:4,cid:870,fr2:query" class="related-link" data-qid="21510868">我的在 tomcat&#92;conf&#92;<em>server.xml</em>  里想...</a>
+</li>
+<li >
+<span class="grid-r f-aid">2012-09-03</span>
+<a href="/question/472620675.html?qbl=relate_question_4&word=tomcat%208005" target="_blank" 
+                    log="fr:qrl,pms:newqb,page:qb-new,pos:relative_title,index:5,cid:870,fr2:query" class="related-link" data-qid="472620675">tomcat5.5中的conf文件夹中的<em>server.xml</em>...</a>
+<em class="praise-num" title="所有回答获得1个赞同">
+<i class="i-evaluate"></i><span class="ml-5 f-red">1</span>
+</em>
+</li>
+</ul>
+</div>
+<div class="related-more mt-10 f-simsun">
+<a log="fr:qrl,pms:newqb,pos:relative_more" alog-action="qb-relative-more" target="_blank" rel="nofollow" href="/search?word=tomcat%208005&ie=gbk&fr=qrl&cid=870&qbl=relate_question_more">
+更多关于<em class="f-stress">tomcat 8005</em>的问题&gt;&gt;</a>
+</div></div>
+
+</div>
+<script type="text/html" id="t:act-link-banner">
+<div id="act-link-banner" class="act-link-banner">
+    <a href="<#=url#>" target="_blank"><b></b><#=text#></a>
+</div>
+</script>
+
+<script>
+            void function(f,b){var g=b.getElementsByTagName("img"),a=+new Date,e=[];var d=function(){if(this.removeEventListener){this.removeEventListener("load",d,false)}e.push({img:this,time:+new Date})};for(var c=0;c<g.length;c++){(function(){var h=g[c];if(h.addEventListener){!h.complete&&h.addEventListener("load",d,false)}else{if(h.attachEvent){h.attachEvent("onreadystatechange",function(){if(h.readyState=="complete"){d.call(h,d)}})}}})()}alog("speed.set",{fsItems:e,fs:a})}(window,document);
+            </script>
+
+<div class="wgt-relate-search mt-5 mb-5 line">
+<h2>网友都在找：</h2>
+<a href="/search?word=redirectport&qbl=related_search_0&fr=qb_relate_search_exp&ie=gbk" target="_blank" rel="nofollow" log="page:qb-new,pos:related_search,action:click">redirectport</a>
+</div>
+
+<div class="wgt-topic mt-5" id="wgt-topic">
+<h2><em class="f-stress">tomcat</em>的相关知识</h2>
+<ul class="topic-list list-34 mt-10" alog-group="qb-relative-title">
+<li>
+<span class="grid-r f-aid">2009-10-15</span>
+<a href="/question/121429803.html?fr=qrl&index=0&qbl=topic_question_0&word=tomcat%208005" log="pos:exttitle,topic:1,index:1" target="_blank">
+怎么改tomcat的端口号？
+</a>
+<i class="i-evaluate"></i><span class="ml-5 f-red" title="回答获得126个赞同">126</span>
+</li>
+<li>
+<span class="grid-r f-aid">2009-03-09</span>
+<a href="/question/87525487.html?fr=qrl&index=1&qbl=topic_question_1&word=tomcat%208005" log="pos:exttitle,topic:1,index:2" target="_blank">
+tomcat的server.xml的这些参数都是做什么用的？
+</a>
+<i class="i-evaluate"></i><span class="ml-5 f-red" title="回答获得8个赞同">8</span>
+</li>
+<li>
+<span class="grid-r f-aid">2011-11-23</span>
+<a href="/question/321019917.html?fr=qrl&index=2&qbl=topic_question_2&word=tomcat%208005" log="pos:exttitle,topic:1,index:3" target="_blank">
+Tomcat的功能是什么
+</a>
+<i class="i-evaluate"></i><span class="ml-5 f-red" title="回答获得38个赞同">38</span>
+</li>
+<li>
+<span class="grid-r f-aid">2011-10-28</span>
+<a href="/question/333458157.html?fr=qrl&index=3&qbl=topic_question_3&word=tomcat%208005" log="pos:exttitle,topic:1,index:4" target="_blank">
+Tomcat配置SQLserver2005数据库连接池问题
+</a>
+<i class="i-evaluate"></i><span class="ml-5 f-red" title="回答获得16个赞同">16</span>
+</li>
+<li>
+<span class="grid-r f-aid">2009-10-26</span>
+<a href="/question/122973997.html?fr=qrl&index=4&qbl=topic_question_4&word=tomcat%208005" log="pos:exttitle,topic:1,index:5" target="_blank">
+如何修改tomcat的端口
+</a>
+<i class="i-evaluate"></i><span class="ml-5 f-red" title="回答获得73个赞同">73</span>
+</li>
+</ul>
+<div class="topic-more mt-10 f-simsun">
+<a log="pos:extmore,topic:1" alog-alias="qb-relgrup-more" target="_blank" rel="nofollow" href="/search?word=tomcat&ie=gbk&fr=qrl&cid=870&qbl=topic_question_more">
+更多关于<em class="f-stress">tomcat</em>的问题&gt;&gt;</a>
+</div>
+</div>
+
+
+<table id="qbleftdown-container"><tr><td>
+
+</td></tr></table>
+
+
+<div class="wgt-push mt-5">
+<h2 class="hd line">
+等待您来回答</h2>
+<ul alog-group="qb-push-que" class="bd list-34 line push-ul">
+<li>
+<span class="grid-r f-aid">0回答</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/1755359609166491788.html?push=ql&group=0&qbl=push_question_0&rpRecommand=c&entry=qb_qb_view" target="_blank">jdbc驱动加载不了</a>
+</li>
+<li>
+<span class="grid-r f-aid">0回答</span>
+<i class="i-wealth-big"></i>
+<span class="f-red mr-5">5</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/1447400939804314380.html?push=ql&group=0&qbl=push_question_1&rpRecommand=c&entry=qb_qb_view" target="_blank">java osgi开发，报错，详见图片，在线等</a>
+</li>
+<li>
+<span class="grid-r f-aid">0回答</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/1447400939739761180.html?push=ql&group=0&qbl=push_question_2&rpRecommand=c&entry=qb_qb_view" target="_blank">请教java6用Endpoint来发布webservice</a>
+</li>
+<li>
+<span class="grid-r f-aid">0回答</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/241183816759876244.html?push=ql&group=0&qbl=push_question_3&rpRecommand=c&entry=qb_qb_view" target="_blank">win8中文版能不能安装siteserver cms</a>
+</li>
+<li>
+<span class="grid-r f-aid">0回答</span>
+<i class="i-wealth-big"></i>
+<span class="f-red mr-5">20</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/241183816372905764.html?push=ql&group=0&qbl=push_question_4&rpRecommand=c&entry=qb_qb_view" target="_blank">java 关于节点 链表</a>
+</li>
+<li>
+<span class="grid-r f-aid">0回答</span>
+<i class="i-wealth-big"></i>
+<span class="f-red mr-5">5</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/1605423698947043467.html?push=ql&group=0&qbl=push_question_5&rpRecommand=c&entry=qb_qb_view" target="_blank">那位大神能帮我解释一下这段日历代码，不太懂！</a>
+</li>
+<li>
+<span class="grid-r f-aid">0回答</span>
+<i class="i-wealth-big"></i>
+<span class="f-red mr-5">20</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/1447400619776481660.html?push=ql&group=0&qbl=push_question_6&rpRecommand=c&entry=qb_qb_view" target="_blank">freemarker的自定义标签，实现了TemplateDirectiveModel接口问题？</a>
+</li>
+<li>
+<span class="grid-r f-aid">0回答</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/200195217551714405.html?push=ql&group=0&qbl=push_question_7&rpRecommand=c&entry=qb_qb_view" target="_blank">apt是什么音响中文意思是什么</a>
+<a class="i-from-wap ml-5" title="来自手机知道" href="/s/2011wapadv/index.html?fr=qbview&tab=1" target="_blank"></a>
+</li>
+<li>
+<span class="grid-r f-aid">1回答</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/200195089733740645.html?push=ql&group=0&qbl=push_question_8&rpRecommand=c&entry=qb_qb_view" target="_blank">麦子学院的JAVA培训怎么样，有没有学习过的朋友来说下！</a>
+</li>
+<li>
+<span class="grid-r f-aid">1回答</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/241119752700278444.html?push=ql&group=0&qbl=push_question_9&rpRecommand=c&entry=qb_qb_view" target="_blank">Could not load JDBC driver class 怎么回事</a>
+</li>
+<li>
+<span class="grid-r f-aid">1回答</span>
+<i class="i-wealth-big"></i>
+<span class="f-red mr-5">130</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/1604975374342853067.html?push=ql&group=0&qbl=push_question_10&rpRecommand=c&entry=qb_qb_view" target="_blank">JAVA 线程重启问题，求助。</a>
+</li>
+<li>
+<span class="grid-r f-aid">0回答</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/983578804876154939.html?push=ql&group=0&qbl=push_question_11&rpRecommand=c&entry=qb_qb_view" target="_blank">Quartz Composer 是最适合制作高保真可交互原型的工具吗</a>
+</li>
+<li>
+<span class="grid-r f-aid">0回答</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/1755295160560939588.html?push=ql&group=0&qbl=push_question_12&rpRecommand=c&entry=qb_qb_view" target="_blank">myeclipse出现问题Class+invariant+violation怎样办</a>
+</li>
+<li>
+<span class="grid-r f-aid">1回答</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/1755295160496242308.html?push=ql&group=0&qbl=push_question_13&rpRecommand=c&entry=qb_qb_view" target="_blank">有大侠知道这种异常吗</a>
+</li>
+<li>
+<span class="grid-r f-aid">0回答</span>
+<a log="pms:newqb,pos:pushlist,page:qb-new" href="/question/1447336427062262020.html?push=ql&group=0&qbl=push_question_14&rpRecommand=c&entry=qb_qb_view" target="_blank">JAVA窗口程序设计。用JAVA管理数据库记录的操作</a>
+</li>
+</ul>
+<div class="ft line mt-10">
+<a class="f-simsun" alog-action="qb-push-more" log="pms:newqb,pos:pushlist,page:question" target="_blank" href="/browse/?lm=8&push=ql&qbl=push_question_more">更多等待您来回答的问题&gt;&gt;</a>
+</div>
+</div>
+
+</article>
+<aside class="grid qb-side" id="qb-side">
+
+
+<div class="wgt-user" id="wgt-user" style="position:relative;height:284px;">
+<div class="line user-info">
+<div id="user-avarta" class="avarta grid mr-10">
+<a alog-action="qb-enter-uc" href="/uhome/" target="_blank"><img class="user-head-img" width="66" height="66" src="http://img.baidu.com/img/iknow/avarta/66/r6s1g1.gif" /></a>
+</div>
+<div class="info grid f-12">
+<p class="line mt-5">
+<strong class="user-name">Xiao_qing_Li</strong>
+<a class="ml-5 f-aid" title="采纳率：0%" target="_blank" href="http://www.baidu.com/search/zhidao_help.html#如何选择头衔">一级</a>
+</p>
+<p class="line mt-5 sign-in-area">
+<a href="#" class="grid-r go-sign-in">去签到</a>
+<span>活跃天数:<em class="sign-in-day-num">0</em>天</span>
+</p>
+</div>
+</div>
+
+
+<div class="wgt-daily ">
+<div class="daily-line mb-5">
+<h3 class="grid">知道日报</h3>
+<span class="grid"></span>
+<a href="http://zhidao.baidu.com/daily/" target="_blank" alog-action="qb-daily-review" class="grid-r f-aid">往期回顾</a>
+</div>
+<div id="daily-carousel"></div>
+<div class="wgt-daily-wall"><em></em><s></s></div>
+</div>
+
+</div>
+
+
+<div style="display:none">
+1
+2
+3
+</div>
+
+
+<div id="union-qbrightdown" class="union-qbrightdown line wgt-ads"></div>
+
+<div class="cms-slide cms-slide-lazy">
+<script type="text/javascript">
+		F.context('cmsRight', [
+															
+							{
+					'url':'http://tieba.baidu.com/p/3455318152',
+					'src':'http://img.baidu.com/img/iknow/270-170-quanfenlei.jpg?t=1418006767'
+				},																		
+							{
+					'url':'http://img.iknow.bdimg.com/zuoyebang/platform/index.html',
+					'src':'http://img.baidu.com/img/iknow/sula03/zuoyebangqbBANNER.jpg?t=1418006767'
+				},																		
+							{
+					'url':'http://zhidao.baidu.com/s/book/index.html',
+					'src':'http://img.baidu.com/img/iknow/sula03/naxienianwomenxinguodeyaoyanshoumai.jpg?t=1418006767'
+				}							]);
+	</script>
+<div class="cms-scroll" id="cms-scroll">
+<div class="cms-mask" id="cms-mask"></div>
+</div>
+<p class="mt-15" id="cms-company">
+<a rel="nofollow" href="http://zhidao.baidu.com/s/continue-sign/index.html?fr=QBFL" target="_blank" data-img="http://img.baidu.com/img/iknow/sula03/zhidaoshouyequanfenleiye.jpg?t=1418006767">
+</a>
+</p>
+</div>
+<div class="cms-slide">
+<div class="cms-inner">
+<p class="cms-link-title">精彩知识在知道</p>
+<ul class="pb-5" id="cms-link">
+<li><i class="i-list-dot mr-5"></i><a alog-action="qb-inner-link" href="http://weibo.com/3655163777" target="_blank">关注知道日报微博，时时拿好礼！</a></li>
+<li><i class="i-list-dot mr-5"></i><a alog-action="qb-inner-link" href="http://zhidao.baidu.com/liuyan" target="_blank">真相问答机，我们一起粉碎流言！</a></li>
+<li><i class="i-list-dot mr-5"></i><a alog-action="qb-inner-link" href="http://zhidao.baidu.com/zt/qlg2014/index.html" target="_blank">关于H7N9的常识与误区</a></li>
+<li><i class="i-list-dot mr-5"></i><a alog-action="qb-inner-link" href="http://zhidao.baidu.com/topic/UN/index.html" target="_blank">爱知道，解答你的青春期困惑</a></li>
+</ul>
+</div>
+</div>
+
+</aside>
+</section>
+<div style="position:absolute;left:10px;top:44px;z-index: 0">
+<script type="text/javascript" src="http://cbjs.baidu.com/js/m.js"></script>
+<script type="text/javascript">
+    BAIDU_CLB_addOrientation('zdquery', "tomcat 8005");
+    BAIDU_CLB_addOrientation("zdclassid", "870");
+    BAIDU_CLB_addOrientation("zhidaoqid", "292305520");
+    BAIDU_CLB_fillSlot("639890");
+</script>
+</div>
+	</div>
+
+
+		
+            <footer id="footer" class="wgt-footer">
+    <p>
+        <a target="_blank" rel="nofollow" href="http://www.baidu.com/search/zhidao_help.html">帮助</a>
+        &nbsp;|&nbsp;
+        <a target="_blank" rel="nofollow" href="http://zhidao.baidu.com/feedback">意见反馈</a>
+        &nbsp;|&nbsp;
+        <a target="_blank" rel="nofollow" href="http://tousu.baidu.com/zhidao">投诉举报</a>
+        &nbsp;|&nbsp;
+        <a rel="nofollow" href="http://www.baidu.com/search/zhidao_help.html#知道协议" target="_blank">知道协议</a>
+        &nbsp;|&nbsp;
+        <a target="_blank" rel="nofollow" href="http://zhidao.baidu.com/misc/more/joinus">加入我们</a>
+    </p>
+    <p>
+     &copy;2014 Baidu&nbsp;&nbsp; <a rel="nofollow" href="http://www.baidu.com/duty/" target="_blank">使用百度前必读</a>&nbsp;|&nbsp;<a rel="nofollow" href="http://zhidao.baidu.com/opendev" target="_blank">百度知道开放平台</a>
+    </p>
+</footer>
+		
+
+	    
+
+<div id="anttongji"></div>
+
+
+        
+        
+  <div class="wgt-bottom-ask" style="display:none;">
+	<div class="bottom-ask-shadow"></div>
+	<div class="bottom-ask-close cur-pointer"></div>
+	<div class="bottom-ask-con line pt-20">
+		<div class="grid">
+			<div class="bottom-ask-title mb-10 line">
+				<div class="bottom-ask-title-1 grid"></div>
+				<div class="bottom-ask-num grid"></div>
+				<div class="bottom-ask-title-2 grid"></div>
+			</div>
+			<form action="/new" name="bottom-ask-form" method="get" class="bottom-ask-form line">
+				<input class="bottom-ask-input grid" maxlength="256" size="46" name="word" value="tomcat 8005" autocomplete="off" />
+				<input type="hidden" name="ie" value="gbk" />
+				<input type="hidden" name="fr" value="bottom_ask" />
+				<input type="submit" hidefocus="true" value="提问" class="bottom-ask-btn grid" />
+			</form>
+		</div>
+		<div class="grid-r line bottom-ask-app">
+			<div class="app-code grid"></div>
+			<div class="app-word grid ml-15 mr-10">
+				<p>下载知道APP</p>
+				<p>随时随地咨询</p>
+				<p>出门在外也不愁</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+        
+                    
+    <div style="display:none">
+        <script type="text/javascript">
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F6859ce5aaf00fb00387e6434e4fcc925' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+
+	</body><script type="text/javascript" src="http://cdn.iknow.bdimg.com/static/common/lib/mod_96dd55b.js"></script><script type="text/javascript">require.resourceMap({"res":{"common:widget\/lib\/swfupload\/swfupload.js":{"url":"http:\/\/cdn.iknow.bdimg.com\/static\/common\/widget\/lib\/swfupload\/swfupload_f2dd275.js"},"common:widget\/js\/ui\/clipboard\/clipboard.js":{"url":"http:\/\/cdn.iknow.bdimg.com\/static\/common\/widget\/js\/ui\/clipboard\/clipboard_581e531.js"},"question:widget\/js\/accuse\/accuse.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/log\/log.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/logic\/login\/login.js","common:widget\/js\/ui\/dialog\/dialog.js"]},"question:widget\/js\/admin\/officialAdmin\/officialAdmin.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/ui\/dialog\/dialog.js","common:widget\/js\/logic\/category\/category.js","common:widget\/js\/util\/event\/event.js"]},"question:widget\/js\/audio\/jplayer\/jplayer.js":{"pkg":"question:p17","deps":["common:widget\/lib\/jquery\/jquery.js"]},"question:widget\/js\/card\/card.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/ui\/tip\/tip.js","common:widget\/js\/util\/log\/log.js","common:widget\/js\/util\/event\/event.js"]},"question:widget\/js\/ed2k\/ed2k.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/log\/log.js","common:widget\/js\/logic\/login\/login.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/util\/uri\/uri.js","common:widget\/js\/ui\/dialog\/dialog.js"]},"question:widget\/js\/egg\/egg.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/ui\/dialog\/dialog.js"]},"question:widget\/js\/file\/file.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/log\/log.js","common:widget\/js\/util\/suffix-str\/suffix-str.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/logic\/submit\/submit.js","common:widget\/js\/ui\/dialog\/dialog.js"]},"question:widget\/js\/inner-link\/inner-link.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/log\/log.js","common:widget\/js\/util\/event\/event.js"]},"question:widget\/js\/left-promotion\/left-promotion.js":{"pkg":"question:p17","deps":["common:widget\/lib\/jquery\/jquery.js","common:widget\/js\/ui\/base\/base.js","common:widget\/js\/util\/event\/event.js"]},"question:widget\/js\/mavin-msg\/mavin-msg.js":{"pkg":"question:p17","deps":["common:widget\/lib\/jquery\/jquery.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/ui\/base\/base.js","common:widget\/js\/logic\/msg\/msg.js"]},"question:widget\/js\/psask-bindsms\/psask-bindsms.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/log\/log.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/ui\/dialog\/dialog.js","common:widget\/js\/logic\/phone-bind\/phone-bind.js"]},"question:widget\/js\/select-search\/select-search.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/log\/log.js"]},"question:widget\/js\/set-tag\/set-tag.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/ui\/base\/base.js","common:widget\/js\/util\/template\/template.js","common:widget\/js\/ui\/dialog\/dialog.js","common:widget\/js\/ui\/scrollbar\/scrollbar.js"]},"question:widget\/js\/submitjump\/submitjump.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/logic\/submit\/submit.js","common:widget\/js\/util\/log\/log.js","common:widget\/js\/ui\/dialog\/dialog.js"]},"question:widget\/js\/thunder\/thunder.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/log\/log.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/util\/uri\/uri.js","common:widget\/js\/ui\/dialog\/dialog.js"]},"question:widget\/js\/unloginask-bindsms\/unloginask-bindsms.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/log\/log.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/ui\/dialog\/dialog.js"]},"question:widget\/js\/video\/video.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/suffix-str\/suffix-str.js","common:widget\/js\/util\/log\/log.js"]},"question:widget\/js\/weather\/weather.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/log\/log.js","common:widget\/lib\/jquery.placeholder\/jquery.placeholder.js"]},"question:widget\/js\/xiaozhi\/xiaozhi.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/ui\/base\/base.js","common:widget\/js\/util\/store\/store.js","common:widget\/js\/util\/log\/log.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/ui\/tip\/tip.js","common:widget\/js\/ui\/dialog\/dialog.js"]},"question:widget\/js\/zhishi-torch\/zhishi-torch.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/ui\/dialog\/dialog.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/logic\/submit\/submit.js","common:widget\/js\/ui\/tip\/tip.js","common:widget\/js\/logic\/login\/login.js","common:widget\/lib\/jquery.placeholder\/jquery.placeholder.js"]},"question:widget\/js\/admin\/userAdmin\/userAdmin.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/event\/event.js","common:widget\/js\/ui\/dialog\/dialog.js","common:widget\/js\/logic\/category\/category.js","question:widget\/js\/set-tag\/set-tag.js","common:widget\/lib\/jquery.placeholder\/jquery.placeholder.js"]},"question:widget\/js\/audio\/audio.js":{"pkg":"question:p17","deps":["common:widget\/js\/util\/tangram\/tangram.js","common:widget\/js\/util\/log\/log.js","question:widget\/js\/audio\/jplayer\/jplayer.js"]}},"pkg":{"question:p17":{"url":"http:\/\/cdn.iknow.bdimg.com\/static\/question\/pkg\/question_async_js_0_8b58b38.js","has":["question:widget\/js\/accuse\/accuse.js","question:widget\/js\/admin\/officialAdmin\/officialAdmin.js","question:widget\/js\/audio\/jplayer\/jplayer.js","question:widget\/js\/card\/card.js","question:widget\/js\/ed2k\/ed2k.js","question:widget\/js\/egg\/egg.js","question:widget\/js\/file\/file.js","question:widget\/js\/inner-link\/inner-link.js","question:widget\/js\/left-promotion\/left-promotion.js","question:widget\/js\/mavin-msg\/mavin-msg.js","question:widget\/js\/psask-bindsms\/psask-bindsms.js","question:widget\/js\/select-search\/select-search.js","question:widget\/js\/set-tag\/set-tag.js","question:widget\/js\/submitjump\/submitjump.js","question:widget\/js\/thunder\/thunder.js","question:widget\/js\/unloginask-bindsms\/unloginask-bindsms.js","question:widget\/js\/video\/video.js","question:widget\/js\/weather\/weather.js","question:widget\/js\/xiaozhi\/xiaozhi.js","question:widget\/js\/zhishi-torch\/zhishi-torch.js","question:widget\/js\/admin\/userAdmin\/userAdmin.js","question:widget\/js\/audio\/audio.js"]}}});</script><script type="text/javascript" src="http://cdn.iknow.bdimg.com/static/common/pkg/framework_f6ebe71.js"></script><script type="text/javascript" src="http://cdn.iknow.bdimg.com/static/common/pkg/more_b08e605.js"></script><script type="text/javascript" src="http://cdn.iknow.bdimg.com/static/common/pkg/module_cb236f6.js"></script><script type="text/javascript" src="http://cdn.iknow.bdimg.com/static/question/pkg/question_sync_js_0_4e5536a.js"></script><script type="text/javascript">
+!function(){    require.async('common:widget/userbar-new/userbar-new.js');
+}();
+!function(){  require.async('common:widget/js/logic/search-box/search-box.js');
+}();
+!function(){require.async('common:widget/menu/menu.js', function(menu){
+	menu.init();
+});
+}();
+!function(){    require.async('question:widget/share/share.js');
+}();
+!function(){    require.async('question:widget/ask/ask.js');
+}();
+!function(){    require.async('question:widget/value-comment/value-comment.js',function(vc){
+        vc.init('754503865');
+    });
+}();
+!function(){    require.async('question:widget/related/related.js', function(rel){
+        rel({
+            cmsRelq: "",
+            cmsRelqrl: "",
+            isLog: false                                });
+    });
+}();
+!function(){	require.async(['common:widget/lib/jquery/jquery.js', 'common:widget/js/util/log/log.js'], function($, log) {        
+        $(".wgt-best .best-text").on('click', ".answer-expand", function(e) {
+        	$(this).hide();
+        	$(".wgt-best .best-text .answer-expand-content").hide();
+        	$(".wgt-best .best-text .answer-collapse-content").show();
+        	$(".wgt-best .best-text .answer-collapse").show();
+        	log.send({page:'question',pos:'qb-detail-expand-btn-click'});
+        });
+        $(".wgt-best .best-text").on('click', ".answer-collapse", function(e) {
+        	$(this).hide();
+        	$(".wgt-best .best-text .answer-collapse-content").hide();
+        	$(".wgt-best .best-text .answer-expand-content").show();
+        	$(".wgt-best .best-text .answer-expand").show();        	
+        });
+    });
+}();
+!function(){    require.async('question:widget/best/best.js');
+}();
+!function(){    require.async('common:widget/js/util/log/log.js', function(log) {        
+        // 展现相关问题的PV
+        log.addKey({related_search_show: '1'});
+    });
+}();
+!function(){    require.async('common:widget/js/util/log/log.js', function(log) {        
+        // 展现相关问题的PV
+        log.addKey({topic_show: '1'});
+
+        // 实验
+            });
+}();
+!function(){        require.async('common:widget/js/util/log/log.js', function(log){
+            //展现推送问题的PV
+            log.addKey({push: '1'});
+        });
+    }();
+!function(){    require.async('question:widget/user/info/basic/basic.js');
+
+            require.async(['common:widget/js/util/tangram/tangram.js', 'common:widget/js/logic/sign-in/sign-in.js', 'common:widget/js/util/log/log.js'], function($, SignIn, Log){
+            Log.send({
+                'type': 2014,
+                'action': 'pv',
+                'fr': 'qb',
+                'pos': 'signin-entrance'
+            });
+
+            $('.go-sign-in').click(function(e){
+                e.preventDefault();
+
+                Log.send({
+                    'type': 2014,
+                    'action': 'click',
+                    'fr': 'qb',
+                    'pos': 'signin-entrance'
+                });
+
+                new SignIn({
+                    year: '2014',
+                    month: '12',
+                    day: '08'
+                });
+            });        
+        });
+    }();
+!function(){require.async('question:widget/user/info/daily/daily.js', function(Daily){
+	Daily.init({"date":"2014.12.08","term":"467","list":[{"id":"3286","title":"\u5584\u826f\u7684\u4eba\u66f4\u7f8e\uff1f\u8fd9\u4e0d\u662f\u5fc3\u7075\u9e21\u6c64","mt_img_src":"http:\/\/mt1.baidu.com\/timg?wh_rate=0&wapiknow&quality=100&size=w250&sec=0&di=47c3f98c603d9c1aeb199e4d403151bb&src=http%3A%2F%2Fimg.iknow.bdimg.com%2Fjctuijian%2F1208%2F2.jpg"},{"id":"3289","title":"\u706b\u661f\u4e0a\u8fd9\u4e9b\u795e\u5947\u7167\u7247\uff0c\u90fd\u4ee3\u8868\u4ec0\u4e48\uff1f","mt_img_src":"http:\/\/mt1.baidu.com\/timg?wh_rate=0&wapiknow&quality=100&size=w250&sec=0&di=fcdd9e715559f0e804224b323ecb3894&src=http%3A%2F%2Fimg.iknow.bdimg.com%2Fjctuijian%2F1208%2F5.jpg"},{"id":"3287","title":"\u65b0\u5965\u5c14\u826f\u6839\u672c\u6ca1\u6709\u70e4\u7fc5\uff1f","mt_img_src":"http:\/\/mt1.baidu.com\/timg?wh_rate=0&wapiknow&quality=100&size=w250&sec=0&di=7621b49610e059773b6404ec1e878ef8&src=http%3A%2F%2Fimg.iknow.bdimg.com%2Fjctuijian%2F1208%2F3.jpg"},{"id":"3288","title":"\u80ce\u513f\u4f53\u5916\u53d1\u80b2\u5373\u5c06\u5b9e\u73b0\uff1f","mt_img_src":"http:\/\/mt1.baidu.com\/timg?wh_rate=0&wapiknow&quality=100&size=w250&sec=0&di=1a23f2468a004077b1d2aa79c7336573&src=http%3A%2F%2Fimg.iknow.bdimg.com%2Fjctuijian%2F1208%2F4.jpg"},{"id":"3285","title":"\u6212\u70df\u96be\uff0c\u602a\u5927\u8111\uff1f","mt_img_src":"http:\/\/mt1.baidu.com\/timg?wh_rate=0&wapiknow&quality=100&size=w250&sec=0&di=ab49a2370591847d6c76a754eb4849bd&src=http%3A%2F%2Fimg.iknow.bdimg.com%2Fjctuijian%2F1208%2F1.jpg"},{"id":"3291","title":"\u54bd\u708e\uff1a\u4e0d\u6b62\u56e0\u4e3a\u611f\u5192\uff1f","mt_img_src":"http:\/\/mt1.baidu.com\/timg?wh_rate=0&wapiknow&quality=100&size=w250&sec=0&di=4f3ff85da823ab29695cde433b23d148&src=http%3A%2F%2Fimg.iknow.bdimg.com%2Fjctuijian%2F1208%2F7.jpg"},{"id":"3290","title":"\u5982\u4f55\u5408\u7406\u5b89\u6392\u751f\u7406\u671f\u51cf\u80a5\uff1f","mt_img_src":"http:\/\/mt1.baidu.com\/timg?wh_rate=0&wapiknow&quality=100&size=w250&sec=0&di=505cf12b72f18fcb257acf70247b3e1e&src=http%3A%2F%2Fimg.iknow.bdimg.com%2Fjctuijian%2F1208%2F6.jpg"}]}, '0');
+});
+}();
+!function(){require.async('common:widget/js/logic/union/union.js', function(union){
+// args[2, 3]自定义定向使用, common:union中有限制只能调用一次;
+union('639889', 'union-qbrightdown', {
+'zdquery'       : 'tomcat 8005',
+'zdclassid' : '870',
+'zhidaoqid'         : '292305520'
+});
+});
+}();
+!function(){    require.async('question:widget/ad-right/ad-right.js');
+}();
+!function(){    
+require.async(['common:widget/js/util/tangram/tangram.js', 'common:widget/js/util/log/log.js', 'common:widget/js/util/event/event.js', 'common:widget/js/logic/submit/submit.js', 'common:widget/js/ui/dialog/dialog.js', 'question:widget/js/file/file.js', 'question:widget/js/inner-link/inner-link.js', 'question:widget/js/xiaozhi/xiaozhi.js', 'question:widget/js/left-promotion/left-promotion.js', 'question:widget/js/video/video.js'], function($, log, ec, Submit, Dialog, File, innerLink, XiaoZhi, LeftPromotion, Video){
+
+    $(function(){ 
+                    require.async('question:widget/js/submitjump/submitjump.js',function(submitjump){
+                submitjump.init();
+            });
+    		                        if($.cookie.get('IK_USERVIEW') != '1'){
+                $.sio("http://tongji.zhidao.baidu.com/common/js/base_widget.js?t="+(new Date).getTime()).callByBrowser();
+                $.cookie.set("IK_USERVIEW", "1",{path:'/', expires:28800000});
+            }
+                            require.async('question:widget/js/accuse/accuse.js', function(accuse){
+                    accuse.init({ response: 'wgt-ask', target: '#wgt-ask .accuse-area' });
+                    if (!$.isEmptyObject(F.context('answers'))){
+
+                        accuse.init({ target: '.wgt-best .accuse-area',	response: 'wgt-best' });
+
+                        accuse.init({ target: '.wgt-recommend .accuse-area', response: 'wgt-recommend' });
+
+                        accuse.init({ target: '.wgt-special .accuse-area', response: 'wgt-special' });
+
+                        accuse.init({ response: 'answer', target: '#wgt-answers .accuse-area' });
+                    }
+                });
+                if(F.context('page')['isCluster']!='1'){
+                    if (F.context('user')['internalAdmin']) {
+                        require.async('question:widget/js/admin/officialAdmin/officialAdmin.js', function(A){
+                            A.init();
+                       }); 
+                    }
+                    if (F.context('user')['isUserAdmin']=='1') {
+                        require.async('question:widget/js/admin/userAdmin/userAdmin.js', function(A){
+                            A.init();
+                       }); 
+                    }
+                } 
+                require.async('common:widget/js/logic/complain/complain.js', function(complain){
+                    $('.complain-deleted').click(function(ev){
+                        ev.preventDefault();
+                        complain(F.context('page')['qid'], $(this).attr('data'));
+                    });
+                });
+
+            
+                
+            log.addKey({
+                qbleftdown: $('.qbleftdown').find('li').size(),
+                qbrightdown:$('.qbrightdown').find('.r').size()
+            });
+            if ( $( '.qbleftdown a' ).size() ) {
+                log.addKey({
+                    ec_ads: '2',
+                    ec_ads_count: $('.qbleftdown').find('a.ec_ad_title, span.ec_qad_title, a.EC_ad_title').size()
+                }); 
+                $('.qbleftdown a').click(function(){
+                    var $parent = $( this ).parent();
+                    if ( this.id || this.className == 'EC_ad_title'
+                        || $parent.hasClass( 'EC_ads_answer' )
+                        || this.className == 'EC_ads_listurl'
+                        || this.className == 'ec_ad_title'
+                        || $parent.hasClass('ec_qad_title')
+                        || $parent.hasClass('ec_qad_answerer') ) {
+                        log.send({
+                            type: 2014,
+                            evtType: 'click',
+                            pos: 'ec_ads'
+                        });
+                    }
+                });
+            }
+            require.async('question:widget/js/card/card.js', function(card){
+                $('.avatar-normal-a').add('.user-name').each(function(index, item){
+                    new card({ target: item, type: 'normal' });
+                });
+                $('.avatar-mavin-a').add('.mavin-name').each(function(index, item){
+                    new card({target: item, type: 'mavin' });
+                });
+                $('.avatar-expert-a').add('.expert-name').each(function(index, item){
+                    new card({target: item, type: 'expert' });
+                });
+                $('.avatar-open-a').add('.open-name').each(function(index, item){
+                    new card({target: item, type: 'open' });
+                });
+                $('.open-level').each(function(index, item){
+                    new card({target: item, type: 'openLevel' });
+                });
+            });
+            $('.fixed-ask-e').click(function(e){
+                e.preventDefault();
+                var username = $(this).attr('username');
+                require.async('common:widget/js/logic/iask/iask.js', function(fixedAsk){
+                    fixedAsk(username);
+                });
+            });
+            $('.replyask-shrink a').click(function(e){
+                e.preventDefault();
+                var flag = this.innerHTML.indexOf('展开') != -1;
+
+                var dl = $(this).text( flag ? '收起' : '展开全部对话' ).parent().prevAll('.replyask');
+                $($.makeArray(dl).reverse().slice(flag ? 0 : 14, dl.length)).css('display', flag ? 'block' : 'none');
+            });
+            if($('.thunder-wrap').size()){
+                require.async('question:widget/js/thunder/thunder.js', function(thunder){
+                    $(function(){
+                        thunder.init();
+                    });
+                });
+            }
+            $.each(F.context('answers'), function(index, item){
+                if(item.user){
+                    var eSid = item.user.openSiteId;
+                    if(eSid&&(eSid>=100000&&eSid<=999999)){
+                        $('#answer-'+index).on('click', '.content a,p[accuse="aRefer"] a', function(e){
+                             $.post('/c/oi_cv/cv', $.url.jsonToQuery({
+                                tp:205,
+                                rf:encodeURIComponent(document.referrer),
+                                ai:this.href,
+                                si:eSid
+                             }), function(res, status, ajx){});
+                        });
+                    }
+                }
+            });
+            $(document).on('click', '.ikqb_img', function(){
+                log.send({
+                    type: 2014,
+                    bigimg: 'click'
+                });
+            });
+            $('a.optimus').on('click', function() {
+                log.send({
+                    type: 2014,
+                    area: 'ad-right-optimus',
+                    action: 'click',
+                    cid: F.context('page')['cid'],
+                    cidTop: F.context('page')['cidTop'],
+                    cidMid: F.context('page')['cidMid']
+                });
+            });
+
+            $('#wgt-nologin-daily').click(function(e){
+                e.stopPropagation();
+
+                if($(e.target).closest('#daily-carousel').size() && !$(e.target).closest('.carousel-control').size()){
+                    log.send({
+                        type: 2014,
+                        page: 'question',
+                        pos: 'no-login-daily',
+                        action: 'click'
+                    });
+                }
+            });
+
+            $('.wgt-daily').on('click', 'a', function(){
+                log.send({
+                    type: 2014,
+                    page: 'question',
+                    pos: 'login-daily',
+                    action: 'click'
+                });
+            });
+            $('.qbrightdown a').click(function(){
+                log.send({
+                    type: 2014,
+                    qid: F.context('page')['qid'],
+                    area: 'medical-right-txt-ads',
+                    action: 'click'
+                });
+            });
+            if($('ikaudio').size()){
+                log.addKey({
+                    'audio' : 1
+                });
+
+                require.async('question:widget/js/audio/audio.js', function(audio){
+                    audio.init();
+                });
+            }
+            renderInitInnerLink();
+            function renderInitInnerLink() {
+                function initInnerLink(){
+                    F.context('qb_youyisi','');
+                    innerLink.init(2);
+                }
+                $('.best-text, .recommend-text, .answer-text').each(function(){
+                    var aid = /\d*$/g.exec( this.id )[0];
+                
+                    if ( F.context('answers')[ aid ] ) {
+                        if ( $(this).find('.ed2k-wrap').size() ) {
+                            F.context('answers')[ aid ].insertLinkType = 1;
+                        } else if ( $(this).find('file').size()  ) {
+                            F.context('answers')[ aid ].insertLinkType = 2;
+                        } else if ( $(this).find('pre[t="code"]').size() ) {
+                            F.context('answers')[ aid ].insertLinkType = 3;
+                        }
+                    }
+                });
+                if ((F.context('page').cidTop == 74 || F.context('page').cidTop == 95 || F.context('page').cidTop == 77)
+                    && ($('.wgt-best').size() || $('.wgt-recommend').size())) {
+
+                } else {
+                    initInnerLink();
+                }
+            };
+            require.async('question:widget/js/comment/comment.js', function(comm){
+                comm.getCount();
+            });
+            $('.recommend-text, .best-text, .answer-text, .replyask-content').each(function(i, answerText){
+                $(answerText).find('pre[t="code"]').each(function(i, pre){
+                    var loadSyntax = function(){
+                        SyntaxHighlighter(pre);
+                    };
+                    
+                    $(pre).text($(pre).html($(pre).html().replace(/<br\s*\/?>/ig, '##IK_LINEBREAK##')).text().split('##IK_LINEBREAK##').join('\n'));
+
+                    $(pre).addClass('brush:'+$(pre).attr('l')+';toolbar:false;');
+                    if (window.SyntaxHighlighter) {
+                        SyntaxHighlighter.highlight(pre);
+                        $(answerText).find('.syntaxhighlighter .code .line').each(function(index, line){
+                            $(answerText).find('.syntaxhighlighter .gutter .line').eq(index).height($(line).height());
+                        });
+                    } else {
+                        $.sio('http://img.iknow.bdimg.com/libs/SyntaxHighlighter/shCore.min.js').callByBrowser(function(){
+                            SyntaxHighlighter.defaults['quick-code'] = false;
+                            SyntaxHighlighter.config.stripBrs = true;
+                            SyntaxHighlighter.highlight(pre);
+                            $(answerText).find('.syntaxhighlighter .code .line').each(function(index, line){
+                                $(answerText).find('.syntaxhighlighter .gutter .line').eq(index).height($(line).height());
+                            });
+                        });
+                    }
+                });
+
+                $(answerText).find('ikvideo').each(function(i, video){
+                    var id = 'VIDEO_' + $.id(),
+                        src = $(video).attr('src'),
+                        sid;
+
+                    var container = $('<div/>').attr('id', id).insertBefore($(video));
+                    if (src.indexOf('youku') > -1 && (sid = src.match(/sid\/(.*?)[\?\/]/))) {
+                        if (sid[1]) {
+                            src = 'http://player.youku.com/player.php/sid/'+sid[1]+'/v.swf';
+                        }
+                    }
+
+                    container.html('<embed src="'+src+'" allowFullScreen="true" quality="high" width="'+$(video).attr('width')+'" height="'+$(video).attr('height')+'" align="'+$(video).attr('align')+'" allowScriptAccess="never" type="application/x-shockwave-flash"></embed>');
+                });
+            });
+
+                            log.send({
+                'type'  : 2014,
+                'page'  : 'question',
+                'action': 'have_best_and_have_no_adopt'
+            });
+                require.async('common:widget/js/ui/lazyload/lazyload.js', function(lazyload){
+            $('.wgt-replyer-best .avatar-48 a, .wgt-replyer-best .avatar-66 a, .wgt-replyer-special .avatar-66 a, #cms-company a').lazyload();
+        });
+        $('.ikqb-map').each(function(index, item) {
+            var ifreamObj = $("<iframe/>").attr({
+                frameborder: '0'
+                ,width:"430" 
+                ,height:"310"
+                ,style: 'display:none;'
+                ,className: 'answer-map'
+            }),
+            tmpsrc = $(item).attr("map") || $(item).attr("src");
+            ifreamObj.attr('src', "http://zhidao.baidu.com/html/map" + tmpsrc.replace(/^iknow/i, ''));
+
+            $(item).before(ifreamObj).remove();
+            ifreamObj.after(
+                $("<p/>").addClass('f-aid').html("本数据来源于百度地图，最终结果以百度地图最新数据为准。")
+            ).show();
+        });
+                var mavinUidAry = [];
+        $.object.each(F.context('answers'), function(item, key){
+            if(item.user && item.user.mavinName){
+                mavinUidAry.push(item.uid);
+            }
+        });
+
+        if(mavinUidAry.length){
+            var options = {
+                uids: mavinUidAry.join(',')
+            };
+
+            $.post('/mavin/api/getmavinpv', options);
+        }
+        
+            
+
+                                        if ($('video.edui-faked-video').size() > 0) {
+            Video.init();
+        }
+                   
+                        require.async('common:widget/js/logic/ut/ut.js', function(UT){
+            UT.start(['userbar','header','wgt-ask','answer-editor','wgt-answers']);
+        });
+
+        if ( $('file').size() == 0 ) {
+            logPV();
+        } else {
+            File.init(logPV);
+        }
+        
+        if (F.context('user')['isUserAdmin'] != '1'){
+            require.async('question:widget/js/select-search/select-search.js', function(A){
+                A.init();
+            }); 
+        }
+                
+        log.init({key:2014, query: 'body',action:'click'});
+        function logPV(){
+            var logOptions = {
+                type: 2014,
+                page: 'question', 
+                action: 'entrance',
+                screen: parseInt($('body').height()/$(window).height()),
+                qid: F.context('page')['qid'],
+                cid: F.context('page')['cid'],
+                view: F.context('page').isView,
+                cidTop: F.context('page')['cidTop'],
+                cidMid: F.context('page')['cidMid'],
+                refer: document.referrer
+            };
+
+            log.addKey({
+                 qid: F.context('page')['qid']
+            });
+
+            if (F.context('page').relateQids) {
+                logOptions.relateQids = F.context('page').relateQids;
+            }
+            if($('a.optimus').length) {
+                log.addKey({'optimus': 1});
+            }
+
+            setTimeout(function(){
+                log.send(logOptions, true);
+            }, 100);
+        }
+        var loc_ans = $.url.getQueryValue(location.href, 'loc_ans');
+        if(!loc_ans) {
+            var myAnswerList = $('.wgt-best .answer-mine, .wgt-recommend .answer-mine, .wgt-special .answer-mine'),
+                myAnswer = null; 
+            if(myAnswerList.size()){        
+                myAnswer = myAnswerList.first();        
+                setTimeout(function(){
+                    $(document).scrollTop(myAnswer.offset().top - 10);
+                }, 200);       
+            }
+        }else {
+            var locAnswerList = $('.wgt-best .answer, .wgt-recommend .answer, .wgt-special .answer'),
+                locAnswer = null;
+            locAnswerList.each(function(index, item) {
+                if($(item).attr("id").indexOf(loc_ans) != -1) {
+                    locAnswer = $(item);
+                }
+            });
+            if(locAnswer) {
+                setTimeout(function(){
+                    $(document).scrollTop(locAnswer.parent().offset().top - 10);
+                }, 200);  
+            }
+        }
+        if (F.context('egg')) {
+            require.async('question:widget/js/egg/egg.js', function(egg){
+                $(function(){
+                    egg.init(F.context('egg'));
+                });
+            });
+        }
+        var grid68  = $('.qb-content'), 
+            qid = F.context('page')['qid'];
+        $.each({
+            'qb-content'            : '.q-content a@',                      
+            'qb-supply-content'     : '.q-supply-content a@',               
+            'qb-best-text'          : '.wgt-best .best-text a@',            
+            'qb-special-bast-text'  : '.wgt-special .best-text a@',         
+            'qb-recommend-text'     : '.wgt-recommend .recommend-text a@',  
+            'qb-answer-text'        : '.answer-text a@',                    
+            'qb-replyask-ask'       : '.ask+dd a',                          
+            'qb-replyask-reply'     : '.reply+dd a',                        
+            'qb-best-thank'         : '.thank pre a',                       
+            'qb-answer-refer'       : '.answer-refer a'                     
+        }, function(key, val){
+            var aLink = grid68.find( val.replace(/\@$/, '[title!="点击查看大图"]') )
+                        .not('.app-keyword,.inner-link')
+                        .filter(function(){ 
+                            return this.getAttribute('href').match(/^http/i) && this.innerHTML != '' && !$(this).closest('.ed2k-wrap').size() && !$(this).closest('.thunder-wrap').size() 
+                        });
+            if(aLink.length > 0){
+                $(aLink).each(function(i,item){
+                    log.send({
+                        'type'  : 2014,
+                        'page'  : 'question',
+                        'qid'   : qid,
+                        'area'  : key,
+                        'action': 'linkPv',
+                        'text'  : item.getAttribute('href'),
+                        'host'  : item.getAttribute('href').split('/')[2]
+                    });
+                });
+            }
+            aLink.click(function(){
+                log.send({
+                    'type'  : 2014,
+                    'page'  : 'question',
+                    'qid'   : qid,
+                    'area'  : key,
+                    'action': 'linkClick',
+                    'text'  : this.getAttribute('href'),
+                    'host'  : this.getAttribute('href').split('/')[2]
+                });
+            });
+            grid68.find( val.replace(/\@$/, '') ).attr('rel', 'nofollow');
+        });
+        $(document).keydown(function(e){
+            if(e.ctrlKey && e.keyCode == 67){
+                var isStandard = Boolean(window.getSelection),
+                    selection = isStandard ? window.getSelection() : document.selection.createRange(),
+                    text = (isStandard ? selection + '' : selection.text).replace(/\n+/g,''),
+                    textLen = text.length;
+                log.send({
+                    type: 2014,
+                    page: 'question',
+                    qid: F.context('page')['qid'],
+                    uid: F.context('user')['id'],
+                    action: 'ctrl+c',
+                    text: (textLen > 0 && textLen < 50) ? text : ''
+                });
+            }
+        });
+        var BAIDUID = $.cookie.get('BAIDUID') ? $.cookie.get('BAIDUID') : '0',
+            recordkey = 'IK_' + BAIDUID.split(':')[0],
+            recordCookie = $.cookie.get(recordkey) || 0,
+            recordCidKey = 'IK_CID_'+F.context('page').cidTop,
+            recordCidCookie = $.cookie.get(recordCidKey) || 0,
+            cookieOpt = {
+                expires : 1000*60*60*24*365,
+                path : '/'
+            };
+        $.cookie.set(recordkey, parseInt(recordCookie) + 1, cookieOpt);
+        $.cookie.set(recordCidKey, parseInt(recordCidCookie) + 1, cookieOpt);
+        $.cookie.remove(recordkey,{
+            path : '/question'
+        });
+        var cookieArr = document.cookie && document.cookie.split('; ');
+        if(cookieArr.length){
+            $.each(cookieArr, function(i, item){
+                var cookieKey = item.split('=')[0];
+                if(cookieKey != recordkey && cookieKey.match(/IK_[0-9A-Z]{32}/)){
+                    $.cookie.remove(cookieKey, {path: '/'});
+                }
+            });
+        }
+        if ($.cookie.get('IK_REFER_QID')) {
+            $.cookie.remove('IK_REFER_QID', {path: '/'});
+        }
+        $(document).on('click', 'a[href*="/question/"]', function(){
+            $.cookie.set('IK_REFER_QID', F.context('page').qid, {
+                expires: 20000,
+                path: '/'
+            });
+        });
+                            new LeftPromotion({
+                imgSrc: 'http:\/\/img.baidu.com\/img\/iknow\/%E5%B0%8F%E7%9F%A5.gif?t=' + (new Date()).getTime(),
+                url: 'http:\/\/zhidao.baidu.com\/s\/continue-sign\/index.html?fr=xz'
+            });
+                                
+        ;
+        ;
+                            $.ajax({
+                url: '/question/api/replynum?t=' + (new Date()).getTime(),
+                dataType: 'json',
+                type: 'post',
+                data: {
+                    qid: '292305520',
+                    replyT: '591efc1e02e73a00768ce6decc84135a',
+                    logid: '0763839940'
+                },
+                success: function(result) {
+                    //nothing
+                }
+            });
+            });
+
+});
+    window.Hunter = window.Hunter || {};
+    Hunter.userConfig = Hunter.userConfig || [];
+    var _hid = null;
+	                        
+	    
+    if(_hid){
+        Hunter.userConfig.push({ hid: _hid });
+    }
+}();
+!function(){	require.async('common:widget/bottom-ask/bottom-ask.js');
+}();
+!function(){																require.async('common:widget/js/logic/dom-ready/dom-ready.js', function(D){ D.init([]) });
+            }();
+</script>
+    
+<script type="text/javascript">
+(function (){
+	(function(e){e=e||{};var a="http://img.baidu.com/hunter/alog/",t="http://nsclick.baidu.com/u.gif",p="http://static.tieba.baidu.com/tb/pms/img/st.gif";alog("set","alias",{monkey:a+"monkey.min.js",element:a+"element.min.js",speed:"http://static.tieba.baidu.com/tb/pms/wpo_alog_speed.js",feature:a+"feature.min.js"}),e.page&&(alog("require",["monkey","element"],function(a){var p={page:e.page,pid:"241",p:"102",hid:"2680",postUrl:t,pageflag:e.pageflag||"",reports:{refer:1,staytime:1}};if(e.params)for(var i in e.params)p[i]=e.params[i];a.create(p)}),alog("monkey.send","pageview",{now:+new Date}),e.err&&parseFloat(e.err.sample)>=Math.random()&&alog("exception.create",{postUrl:t,page:e.page,pid:"170",p:"102"}),e.feature&&parseFloat(e.feature.sample)>=Math.random()&&alog("require","feature",function(a){a.create({dv:4,postUrl:p,page:e.page,p:"102"}),a.fire("commit")})),e.wpd&&alog("speed.set","options",{is_login:F.context("user").isLogin?1:0,sample:parseFloat(e.wpd.sample),product_id:"102",page_id:e.wpd.pageid})}).apply(window,"undefined"!=typeof arguments&&arguments);;
+})({"page":"zhidao-ques","pageflag":"5","wpd":{"sample":"0.02","pageid":"3"},"params":{"ik_qid":"292305520"},"err":{"sample":"0.005"},"feature":{"sample":"0.005"}});
+
+void function(g,a){function i(m,n,l){l=l||15;var o=new Date();o.setTime(new Date().getTime()+l*1000);a.cookie=m+"="+escape(n)+";path=/;expires="+o.toGMTString()}function h(m){var l=a.cookie.match(new RegExp("(^| )"+m+"=([^;]*)(;|$)"));if(l!=null){return unescape(l[2])}return null}function c(l){if(g.attachEvent){g.attachEvent("onload",l,false)}else{if(g.addEventListener){g.addEventListener("load",l)}}}function e(){var m=alog.tracker&&alog.tracker("speed").get("options")||{};var q=m.random=Math.random();var p=m.special_pages||[];var l=[];for(var n=0;n < p.length;n++){var o=p[n];if(q < o.sample){l.push(o.id)}}if(l.length){alog("speed.set","special_id","["+l+"]")}if(q<=m.sample||l.length){alog("speed.set","send",true);if(m.product_id&&m.page_id){alog("require","speed")}}}function b(){var l=h("PMS_JT");if(l){i("PMS_JT","",-1);try{l=eval(l);}catch(e){l={};}if(!l.r||a.referrer.replace(/#.*/,"")==l.r){alog("speed.set","wt",l.s)}}}b();var f=false;
+function d(){alog.on&&alog.on("mark",function(p){var n=alog.tracker&&alog.tracker("speed").get("options")||{};f=true;if(n&&n.custom_metrics&&n.custom_metrics.constructor==Array){var m=n.custom_metrics;var l=alog.tracker("speed").fields;for(var o=0;o < m.length;o++){if(!l||!l.hasOwnProperty(m[o])){f=false;break}}}f&&e()})}c(function(){d();alog("speed.set","lt",+new Date);alog.fire&&alog.fire("mark")});function k(n,m){var l=0;if((m.nodeName||m.tagName).toLowerCase()===n.toLowerCase()){return m}while(m=m.parentNode){l++;if((m.nodeName||m.tagName).toLowerCase()===n.toLowerCase()){return m}if(l>=4){return null}}return null}function j(l){if(a.attachEvent){a.attachEvent("onclick",l)}else{a.addEventListener("click",l,false)}}j(function(n){var n=n||window.event;var m=n.target||n.srcElement;var o=k("a",m);if(o){var l=o.getAttribute("href");if(!/^#|javascript:/.test(l)){i("PMS_JT",'({"s":'+(+new Date)+',"r":"'+document.URL.replace(/#.*/,"")+'"})')}}})}(window,document);
+//
+with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://img.baidu.com/hunter/zhidao.js?cdnversion='+~(new Date()/864e5)];
+require.async('common:widget/lib/jquery/jquery.js', function($){ 
+	$(function(){
+		alog && alog('speed.set', 'drt', new Date);
+					$('body').attr('alog-page-type', '5');
+			});
+});
+</script>
+
+</html>

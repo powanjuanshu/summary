@@ -1,0 +1,16 @@
+aa.txt如下:
+goodbytoyoumytrustfriend
+youaremyfastcity
+allchilderenneverywhere
+------------------------------
+输入命令：grep 'trust\|child' aa.txt
+还可以输入：grep -E 'fast|child' aa.txt
+还可以输入：grep -e fast -e child aa.txt
+------------------------------
+输出结果：
+goodbytoyoumytrustfriend
+allchilderenneverywhere
+------------------------------
+
+
+

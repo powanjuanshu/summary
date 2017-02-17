@@ -1,0 +1,10 @@
+安装Tomcat
+1)下载apache-tomcat-6.0.10.tar.gz
+2)#tar -zxvf apache-tomcat-6.0.10.tar.gz ；//解压
+3)#cp -R apache-tomcat-6.0.10 /usr/local/tomcat ；//拷贝apache-tomcat-6.0.10到/usr/local/下并重命名为tomcat
+4)/usr/local/tomcat/bin/startup.sh； //启动tomcat
+    显示 Using CATALINA_BASE: /usr/local/tomcat
+         Using CATALINA_HOME: /usr/local/tomcat
+         Using CATALINA_TEMDIR: /usr/local/tomcat/temp
+         Using JAVA_HOME: /usr/java/jdk1.6.0_01
+到此tomcat已经安装完成，现在使用浏览器访问 http://localhost:8080，出现tomcat默认页面，说明已经安装成功。

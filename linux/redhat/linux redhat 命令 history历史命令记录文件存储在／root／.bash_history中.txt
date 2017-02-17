@@ -1,0 +1,5 @@
+history历史命令记录文件存储在／root／.bash_history中
+
+.bash_history是隐藏文件
+
+用ls -al 命令查看

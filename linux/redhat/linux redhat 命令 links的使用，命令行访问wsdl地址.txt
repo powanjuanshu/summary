@@ -1,0 +1,2 @@
+links  http://172.16.56.38/OAASWSDP/services/RiskManagementOAAS?wsdl
+用curl访问不行

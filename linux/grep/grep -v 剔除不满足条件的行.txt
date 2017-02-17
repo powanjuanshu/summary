@@ -1,0 +1,33 @@
+http.log文件如下：
+2014-08-03 debug 天道你是我的小宝贝，哈哈
+2014-08-01 info FastPayService
+2014-08-02 error CmbFastPay
+2014-08-04 info CebDFService
+--------------------------
+输入命令：
+grep -v 'Cmb' http.log
+--------------------------
+输出结果：
+2014-08-03 debug 天道你是我的小宝贝，哈哈
+2014-08-01 info FastPayService
+2014-08-04 info CebDFService
+--------------------------
+今天在统计报警机器的相关情况，然后发现了这个grep -v作用的重要性，拿来和大家分享！
+grep -v "==0"/home/oracle/zy/summary.log  >   /home/oracle/zy/physical.log
+-v的作用是为了剔除不符合条件的，如下例子
+
+cat /home/oracle/zy/physical.log 
+。。。。。。。。。
+172.16.30.21 Sun Aug 21 23:55:10 CST 2011 Unable to get a physical connection====3
+172.16.30.22 Sun Aug 21 23:55:10 CST 2011 Unable to get a physical connection====0
+172.16.30.23 Sun Aug 21 23:55:10 CST 2011 Unable to get a physical connection====0
+cat /home/oracle/zy/summary.log
+172.16.30.21 Sun Aug 21 23:55:10 CST 2011 Unable to get a physical connection====3
+ 
+发现：
+。。。。。。。。。
+172.16.30.22 Sun Aug 21 23:55:10 CST 2011 Unable to get a physical connection====0
+172.16.30.23 Sun Aug 21 23:55:10 CST 2011 Unable to get a physical connection====0没有了！
+--------------------------
+ps -ef | grep -v grep | grep perl | awk '{print $2}'|xargs kill -9
+在统计行数时忽略GREP命令本身这一行

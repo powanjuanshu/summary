@@ -1,0 +1,22 @@
+上传文件只需在shell终端仿真器中输入命令“rz”，即可从弹出的对话框中选择本地磁盘上的文件，利用Zmodem上传到服务器，例如(上传一个rsyncd.conf文件到服务器)：
+[root@localhost ~]# rz
+rz waiting to receive.
+正在开始 zmodem 传输。 按 Ctrl+C 取消。
+正在传输 rsyncd.conf...
+100% 715 bytes 715 bytes/s 00:00:01 0 错误
+-----------------------------------------------------
+这程序我在红帽子9测试可以上传文件，但是在最新的linuxAS5中却不能上传文件，RZ命令无效，这是什么问题你试过吗 
+
+- - 由于rz ，sz ，是需要安装的，所以请大家先安装 rzsz-0.12.20-853.2.i586.rpm
+具体安装方法为：
+rpm -ivh rzsz-0.12.20-853.2.i586.rpm 
+------------------------------------------------------下面的很重要
+rz上传大容量文件失败解决
+
+昨下午郁闷了，为何超过1M文件就rz不上，带着很不爽的问号，上午过来才发现，rz有这个不声不响的癖好？
+
+方法一 使用ftp工具
+
+方法二 使用带参数的命令rz -e 
+原因 先看看rz的manual： -e, --escape Force sender to escape all control characters; normally XON, XOFF, DLE, CR-@-CR, and Ctrl-X are escaped. 
+如果用不带参数的rz命令上传大文件时，常常上传一半就断掉了，很可能是rz以为上传的流中包含某些特殊控制字符，造成rz提前退出。

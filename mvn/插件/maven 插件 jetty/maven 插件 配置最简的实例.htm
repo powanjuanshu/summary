@@ -1,0 +1,425 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>maven实例-简单web应用 -  - ITeye技术网站</title>
+    <meta name="description" content="1.介绍  创建一个简单的web应用，然后再叫jetty的serlvet容器中运行这个web应用程序     2.创建web应用框架     mvn archetype:generate-DgroupId=org.sonatype.mavenbook.ch05 -DartifactId=simple-webapp -DpackageName=org.sonatype.mavenbook -Darch ..." />
+    <meta name="keywords" content="Web, maven, Servlet, Apache, junit maven实例-简单web应用" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1393920955" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">liliang1222</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://liliang1222.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://liliang1222.iteye.com" class="p-author" target="_blank">liliang1222</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/747223">maven实例-简单web应用</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/120280">maven</a></li> </ul>
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/Web">Web</a><a href="http://www.iteye.com/blogs/tag/maven">maven</a><a href="http://www.iteye.com/blogs/tag/Servlet">Servlet</a><a href="http://www.iteye.com/blogs/tag/Apache">Apache</a><a href="http://www.iteye.com/blogs/tag/junit">junit</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <p>1.介绍</p>
+<p>创建一个简单的web应用，然后再叫jetty的serlvet容器中运行这个web应用程序</p>
+<p> </p>
+<p>2.创建web应用框架</p>
+<p> </p>
+<pre name="code" class="java">mvn archetype:generate-DgroupId=org.sonatype.mavenbook.ch05 -DartifactId=simple-webapp -DpackageName=org.sonatype.mavenbook -DarchetypeArtifactId=maven-archetype-webapp</pre>
+<p> </p>
+<p> 这种打包类型让maven以war形式生成一个web应用，其中war文件的默认名称是${artifactId}-${version}.war，但是如果配置了finalName则生成的war文件就是用finalName命名</p>
+<p> </p>
+<p>3.配置jetty插件</p>
+<p>利用该插件，我们就不用下载jetty或者tomcat，然后复制war文件到webapps目录下面。利用jetty插件就不用这么复杂了</p>
+<p> </p>
+<pre name="code" class="xml">&lt;plugins&gt;
+    	&lt;plugin&gt;
+    		&lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;
+    		&lt;artifactId&gt;maven-jetty-plugin&lt;/artifactId&gt;
+    	&lt;/plugin&gt;
+    &lt;/plugins&gt;</pre>
+<p> </p>
+<p> 配置好了之后我们就可以启动web应用，在工程目录下面运行：mvn jetty:run。一定要在工程目录下面运行，即和pom.xml同一目录，不然就会出错：The plugin
+'org.apache.maven.plugins:maven-jetty-plugin' does not exist or no valid version could be found</p>
+<p>jetty启动界面如下：</p>
+<p><br><img alt="" src="http://dl.iteye.com/upload/attachment/298680/a3654639-4393-39a4-ac8b-e54c8b668cfe.jpg"></p>
+<p> </p>
+<p>这个时候在浏览器输入http://localhost:8080/simple-webapp就能看到默认生成的index.jsp</p>
+<p> </p>
+<p>4.添加一个简单的servlet，配置web.xml</p>
+<p> </p>
+<p>5.pom.xml中添加对servlet依赖等</p>
+<p> </p>
+<pre name="code" class="xml">  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;3.8.1&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+    	&lt;groupId&gt;org.apache.geronimo.specs&lt;/groupId&gt;
+    	&lt;artifactId&gt;geronimo-servlet_2.4_spec&lt;/artifactId&gt;
+    	&lt;version&gt;1.1.1&lt;/version&gt;
+    	&lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+    	&lt;groupId&gt;org.apache.geronimo.specs&lt;/groupId&gt;
+    	&lt;artifactId&gt;geronimo-jsp_2.0_spec&lt;/artifactId&gt;
+    	&lt;version&gt;1.1&lt;/version&gt;
+    	&lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;</pre>
+ 
+<p> </p>
+<p>所有的apache geronimo规格说明的实现的groupId都是org.apache.geronimo.specs</p>
+<p>artifactId包含大家熟悉的规格说明的版本号，如，如果要引入servlet2.3规格说明，artifactId是geronimo-servlet-2.3_spec。我们可以到http://repo2.maven.org/maven2/上查看有哪些规格</p>
+<p> </p>
+<p>6.mvn clean install，然后运行mvn jetty:run就能看到servlet输出</p>
+<p> </p>
+  </div>
+
+  
+  <div class="attachments">
+    
+      
+        <ul style="display:none;">
+          <li><a href="http://dl2.iteye.com/upload/attachment/0029/8680/a3654639-4393-39a4-ac8b-e54c8b668cfe.jpg" target="_blank"><img src='http://dl2.iteye.com/upload/attachment/0029/8680/a3654639-4393-39a4-ac8b-e54c8b668cfe-thumb.jpg' class='magplus' title='点击查看原始大小图片' /></a></li>
+          
+          <li>大小: 131.9 KB</li>
+        </ul>
+      
+    
+    
+      <ul>
+        <li><a href="#" onclick="$$('div.attachments ul').invoke('show');$(this).up(1).hide();return false;">查看图片附件</a></li>
+      </ul>
+    
+  </div>
+
+
+
+  <IFRAME SRC="/iframe_ggbd/794" SCROLLING=no WIDTH=468 HEIGHT=60 FRAMEBORDER=0></IFRAME>
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/761894" class="next" title="apache代理weblogic请求">apache代理weblogic请求</a>
+      |
+      <a href="/blog/745106" class="pre" title="maven实例">maven实例</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2010-08-25 21:43</li>
+      <li>浏览 2135</li>
+      <li><a href="#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/747223" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 747223;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'maven实例-简单web应用');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'maven实例-简单web应用');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://liliang1222.iteye.com'><img alt="liliang1222的博客" class="logo" src="http://www.iteye.com/upload/logo/user/163559/89599e6e-2bb1-31f9-8742-afc33dd3a398.jpg?1257176385" title="liliang1222的博客: " /></a></div>
+  <div id="blog_owner_name">liliang1222</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 47425 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1324994303" title="男" /></li>
+              <li>来自: 北京</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://2291222052-qq-com.iteye.com' target='_blank'><img alt="蒜苗白菜的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="蒜苗白菜的博客: " /></a></div>
+                <div class="left"><a href='http://2291222052-qq-com.iteye.com' target='_blank' title='蒜苗白菜'>蒜苗白菜</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://houqf.iteye.com' target='_blank'><img alt="houqf的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="houqf的博客: " /></a></div>
+                <div class="left"><a href='http://houqf.iteye.com' target='_blank' title='houqf'>houqf</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://jjhappyforever.iteye.com' target='_blank'><img alt="jj120522的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="jj120522的博客: " /></a></div>
+                <div class="left"><a href='http://jjhappyforever.iteye.com' target='_blank' title='jj120522'>jj120522</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://dylinshi126.iteye.com' target='_blank'><img alt="dylinshi126的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="dylinshi126的博客: " /></a></div>
+                <div class="left"><a href='http://dylinshi126.iteye.com' target='_blank' title='dylinshi126'>dylinshi126</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (28)</a></li>
+                
+                  <li><a href="/category/84730">lucene (4)</a></li>
+                
+                  <li><a href="/category/85142">设计模式 (2)</a></li>
+                
+                  <li><a href="/category/119289">EJB (2)</a></li>
+                
+                  <li><a href="/category/120280">maven (4)</a></li>
+                
+                  <li><a href="/category/125113">loadrunner (0)</a></li>
+                
+                  <li><a href="/category/125114">weblogic (0)</a></li>
+                
+                  <li><a href="/category/147268">hibernate (0)</a></li>
+                
+                  <li><a href="/category/149943">android (11)</a></li>
+                
+                  <li><a href="/category/171291">cocos2d (2)</a></li>
+                
+                  <li><a href="/category/199342">media (2)</a></li>
+                
+                  <li><a href="/category/199343">other (5)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (2)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2011-12">2011-12</a> (3)</li>
+                
+                  <li><a href="/blog/monthblog/2011-11">2011-11</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2011-09">2011-09</a> (2)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://lmy-java.iteye.com' target='_blank' title='lmy_java'>lmy_java</a>： 
+                  求源码 1017236613@qq.com  谢谢<br />
+                  <a href="/blog/1264003#bc2331952">android实现充电时电量变化</a>
+                </li>
+                
+                <li>
+                  <a href='http://fancychendong.iteye.com' target='_blank' title='fancychendong'>fancychendong</a>： 
+                  求具体实现代码，按你的方法有点学不来<br />
+                  <a href="/blog/1264003#bc2286005">android实现充电时电量变化</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2014 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+    
+  </body>
+</html>

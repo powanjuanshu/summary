@@ -1,0 +1,3 @@
+输入命令：chkconfig iptables off
+---------------
+如果你想永久关闭防火墙，打开终端，在root权限下输入chkconfig iptables off即可永久关闭防火墙，当然需要我们重启才能生效。

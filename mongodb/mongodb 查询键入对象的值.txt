@@ -1,0 +1,2 @@
+12)  查询嵌入对象的值
+db.postings.find( { "author.name" : "joe" } );

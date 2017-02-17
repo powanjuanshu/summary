@@ -1,0 +1,2 @@
+10.列出所有被安装的rpm package 
+# rpm -qa

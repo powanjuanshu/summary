@@ -1,0 +1,1616 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script>
+var ua = navigator.userAgent.toLowerCase();
+if(ua.match(/MicroMessenger/i)=="micromessenger") {
+    location.href='http://blog.chinaunix.net/article.php?url='+ window.location.href;
+}
+</script>
+        <style>
+    .Blog_nav1_2 a em { display:inline-block; width:16px; height:13px; background:url(/image/v.jpg) no-repeat; overflow:hidden;}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/default/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/qqface/qqFace.css" />
+<link rel="stylesheet" type="text/css" href="/css/asyncbox/skins/Chrome/asyncbox.css" />
+<link rel="stylesheet" type="text/css" href="/assets/6d60aeb8/pager.css" />
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookies.min.js"></script>
+<script type="text/javascript" src="/js/AsyncBox.v1.4.5.js"></script>
+<title>vi 快捷键-yuhui962-ChinaUnix博客</title>
+<meta name="description" content='
+		
+
+
+Vi提供了三个关于光标在全屏幕上移动并且文件本身不发生滚动的命令。它们分别是H、M和L命令。
+　　(1)H命令
+　　该命令将光标移至屏幕首行的行首（即左上角），也就是当前屏幕的第一行，而不是整个文件的第一行。利用此命'/>
+<script type='text/javascript' src='http://168.it168.com/a/h600.js'></script>
+
+<script type="text/javascript">
+if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){
+	try{
+		if(!/iPad/i.test(navigator.userAgent)){
+			var oldurl=window.location.href;
+			var wapUrl= oldurl.replace('blog.chinaunix.net', "m.blog.chinaunix.net") ;
+			window.location.href = wapUrl;
+		}
+	}catch(e){}
+}
+</script>
+
+
+<script language="javascript">
+//用户是否在线
+var isOnLine = '';
+$(document).ready(function(){
+	var blog = {'name': '', 'name_url': '', 'brief': ''};
+	//消息通知显示和隐藏控制
+	$('#show_message_slide_button').hover(
+		function(){
+			$('#message_slide_div').slideDown(100);											   
+		},
+		function(){
+			
+		}
+	);
+
+	$('#message_slide_div').hover(
+		function(){
+			
+		},
+		function(){
+			$('#message_slide_div').slideUp(100);
+		}
+	);
+	
+	//编辑博客名
+	$('#editbna').click(function(){
+		blog.name = $('#bnaspan a').text();
+		var val = '<input id="bnainput" type="text" style="float:left" value="" rel="' +$(this).attr('rel') + '" /><input id="bnasub" type="button" style="float:left" class="btn1"><input id="bnacanl" type="button" style="float:left" class="btn2"><div class="clear"></div>';
+		$('#bnaspan').html(val);
+		$('#bnainput').val(blog.name);
+		$(this).parent().hide();
+	});
+	
+	$('#bnasub').live('click', function(){
+	    var rel = eval('({' + $('#bnainput').attr('rel') + '})');
+		var name = $('#bnainput').val();
+		if(name != blog.name){
+	        $.ajax({
+			    type: "POST",
+			    url: rel.url,	
+			    data: {
+				    'name' : name
+			    },
+			    success:function(data){
+				    if(data == 0){
+						$('#bnaspan').html(blog.name);
+						$('#bnaspan').html('<a href="' + rel.href + '">' + $('#bnaspan').html() + '</a>');
+				    }else{
+						$('#bnaspan').html(data);
+						$('#bnaspan').html('<a href="' + rel.href + '">' + $('#bnaspan').html() + '</a>');
+				    }
+					$('#editbna').parent().show();
+				}
+			});
+		}else{
+		    $('#bnaspan').text(blog.name).html();
+			$('#bnaspan').html('<a href="' + rel.href + '">' + $('#bnaspan').html() + '</a>');
+			$('#editbna').parent().show();
+		}
+	});
+	
+	$('#bnacanl').live('click', function(){
+		var rel = eval('({' + $('#bnainput').attr('rel') + '})');
+		$('#bnaspan').html('<a href="' + rel.href + '">' + blog.name + '</a>');
+		$('#editbna').parent().show();
+	});
+	
+	//编辑签名
+	$('#editbrief').click(function(){
+	    blog.brief = $('#briefem').text();
+		var val = '<input id="brfinput" type="text" style="float:left" value="" rel="' + $(this).attr('rel') + '" /><input id="brfsub" style="float:left"  type="button" class="btn1"><input style="float:left"  id="brfcanl" type="button" class="btn2"><div class="clear"></div>';
+		$('#briefem').html(val);
+		$('#brfinput').val(blog.brief);
+		$(this).parent().hide();
+	});
+	
+	$('#brfsub').live('click', function(){
+	    var url = $('#brfinput').attr('rel');
+		var brief = $('#brfinput').val();
+		if(brief != blog.brief){
+	        $.ajax({
+			    type: "POST",
+			    url: url,	
+			    data: {
+				    'brief' : brief
+			    },
+			    success:function(data){
+				    if(data == 0){
+				        $('#briefem').html(blog.brief);
+				    }else{
+						$('#briefem').html(data);
+				    }
+					$('#editbrief').parent().show();
+				}
+			});
+		}else{
+		    $('#briefem').text(blog.brief).html();
+			$('#editbrief').parent().show();
+		}
+	});
+	
+	$('#brfcanl').live('click', function(){
+		$('#briefem').html(blog.brief);
+		$('#editbrief').parent().show();
+	});
+
+});
+</script>
+</head>
+<body>
+<div class="box">
+  <!-- 一级导航 -->
+  <div class="Blog_nav1">
+    <div class="Blog_nav1_2"><a href="/"><img src="/image/default/1.png"></a><a href="http://www.chinaunix.net" class="Blog_a1">Chinaunix首页</a>　| 　<a href="http://bbs.chinaunix.net" target="_blank">论坛</a>　| 　<a href="http://u.it168.com/vip/"><font color="red">认证专区</font></a>　| 　<a href="http://blog.chinaunix.net" target="_blank">博客</a><span class="Blog_span1"></span>
+            <a href="/site/login.html" class="Blog_a1">登录</a> | <a href="http://u.it168.com/Register?webid=5&returnUrl=http%3A%2F%2Fblog.chinaunix.net%2Fuid-2633067-id-2138293.html" class="Blog_a1">注册</a>
+          </div>
+	<!--自动提示层-->
+	<style>
+	.bor13221{border:1px #bbb solid;width:206px;position:absolute;top:34px;left:0;background:#fff; z-index:9999;display:none}
+	.bor13221 li{height:26px;line-height:26px;padding-left:6px;color:#555;font-size:14px;cursor:pointer;}
+	.here{background:#f3f3f3;}
+    </style>
+
+	<!--自动提示层-->
+    <div class="Blog_nav1_3" style="position:relative; z-index:9999;">
+	 <div class="bor13221">
+      <ul>
+      </ul>
+    </div>
+	  <form action='/site/search.html' method='post'>
+		<input type="text"  autocomplete="off"  class="Blog_txt1" id='search_input_id' name='keywords'>
+		<select class="Bolg_sel1" name='type' id='search_type_blog'>
+		  <option value='blog'>博文</option>
+		  <option value='author'>博主</option>
+		</select>
+		<input type="submit" value='' name='submit' class="Blog_btn1">
+	 </form>
+    </div>
+    <div class="clear"></div>
+    <div class="Blog_nav1_layer1" id="message_slide_div" style="display:none;">
+	    <ul>
+	    	<li><a href="/message/private.html">私人消息()</a></li>
+	    	<li><a href="/message/system.html">系统消息()</a></li>
+	    	<li><a href="/member/request.html">好友请求()</a></li>
+	    	<li><a href="/member/notification.html">通知管理()</a></li>
+	    </ul>
+    </div>
+  </div>
+   <script type="text/javascript">
+  	$(function(){
+		//点击添加进文本框
+		$(".bor13221 li").live( 'click' , function(e){
+			if ( e && e.stopPropagation )
+			{
+				//因此它支持W3C的stopPropagation()方法
+				e.stopPropagation();
+			}
+			else
+			{
+				//否则，我们需要使用IE的方式来取消事件冒泡
+				window.event.cancelBubble = true; 
+			}
+			$('#search_input_id').val($(this).text());
+			$(".bor13221 ul").html('');
+			$(".bor13221").hide();
+		});
+		$(".bor13221 ul li").live({
+			mouseenter:
+			function()
+			{
+				$(".bor13221 ul li").removeClass("here");
+				$(this).addClass('here');
+			},
+			mouseleave:
+			function()
+			{
+				$(".bor13221 ul li").removeClass("here");
+				$(this).removeClass('here');
+			}
+		});
+		//自动提示
+		$('#search_input_id').keyup(function(event){
+			//取消博主的提示
+			var search_type_blog = $('#search_type_blog').val();
+			if(search_type_blog == 'author') return false;
+
+			var key = $(this).val();
+			//获取键值
+			var keycode = event.which; //38 上 40 下
+			var count = $('.bor13221 ul li').length;
+			if(key != '' && keycode != 38 && keycode != 40)
+			{
+				$.getJSON("http://api.sou.it168.com/autoWenKuCloud?jsoncallback=?",{"ty":"json","offset":"0","limit":"10","q":key}, function(result)
+					{
+						var arr = result.data;
+
+						var html ='';
+						for (i=0;i<arr.length ;i++ )   
+						{   
+							html += '<li>'+arr[i]+'</li>';
+						} 
+						
+						$('.bor13221 ul').html(html);
+						(arr.length > 1) ?  $(".bor13221").show() : $(".bor13221").hide();
+					}
+				);
+			}
+			else if(keycode == 38)
+			{
+				if(count > 0)
+				{
+					//遍历li
+					var curr_li_num;
+					$('.bor13221 ul li').each(function(index , dom){
+						if($(dom).attr('class') == 'here')
+						{
+							curr_li_num = index;
+							return false;
+						}
+					}); 
+					var next_li_num;
+					if(typeof(curr_li_num) == 'undefined')
+					{
+						next_li_num = count - 1;
+					}
+					else
+					{
+						if(curr_li_num == 0)
+						{
+							next_li_num = count - 1;
+						}
+						else
+						{
+							next_li_num = curr_li_num - 1;
+						}
+					}
+					$(".bor13221 ul li").removeClass("here");
+					$(".bor13221 ul li:eq(" + next_li_num + ")").addClass("here");
+					$('#search_input_id').val($(".bor13221 ul li:eq(" + next_li_num + ")").text());
+				}
+			}
+			else if(keycode == 40)
+			{
+				if(count > 0)
+				{
+					//遍历li
+					var curr_li_num;
+					$('.bor13221 ul li').each(function(index , dom){
+						if($(dom).attr('class') == 'here')
+						{
+							curr_li_num = index;
+							return false;
+						}
+					}); 
+					var next_li_num;
+					if(typeof(curr_li_num) == 'undefined')
+					{
+						next_li_num = 0;
+					}
+					else
+					{
+						if(curr_li_num == count - 1)
+						{
+							next_li_num = 0;
+						}
+						else
+						{
+							next_li_num = curr_li_num + 1;
+						}
+					}
+					$(".bor13221 ul li").removeClass("here");
+					$(".bor13221 ul li:eq(" + next_li_num + ")").addClass("here");
+					$('#search_input_id').val($(".bor13221 ul li:eq(" + next_li_num + ")").text());
+				}
+			}
+		});
+		$(document).click(function(e){
+			$(".bor13221").hide();
+		});
+
+	});
+  </script>
+  <!-- 头 -->
+  <!-- 推荐博客-->
+  <div class="Blog_header1">
+	    <div class="Blog_header1_1">
+      <p class="Blog_p1" ><em><a href="/uid/2633067.html">浮风掠影</a></em>      <p class="Blog_p2" style="color:#125A94">规划人生，脚踏实地！</p>
+    </div>
+        <div class="Blog_header1_2" id="hide_div1">
+    	<span class="Blog_span3"></span>
+    	<div class="float_div1" style="white-space:nowrap;" onmouseover="javascript:isMove=false" onmouseout="javascript:isMove=true">
+	    <ul id="noticev2">  
+		    		    <li><a href="http://blog.chinaunix.net/uid-24789255-id-198226.html" target="_blank">ChinaUnix博客技术文章推荐标准和规范 </a></li>
+		    		    <li><a href="http://blog.chinaunix.net/uid-24789255-id-4288187.html" target="_blank">有奖征集：文集--博客系列博文管理</a></li>
+		    		    <li><a href="http://blog.chinaunix.net/uid-24789255-id-4289076.html" target="_blank">CU博客频道6月技术图书有奖试读活动 </a></li>
+		    	    </ul>
+	    </div>
+    </div>
+            <div class="Blog_header1_3"><a href="/uid/2633067.html">首页</a>　| 　<a href="/uid/2633067/abstract/1.html">博文目录</a>　| 　<a href="/member/profile/uid/2633067.html">关于我</a></div>
+  </div>
+    
+  <!-- 内容部分 -->
+  	<script type="text/javascript" src="/highlight/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+<script type="text/javascript" src="/highlight/scripts/shCore.js"></script>
+<script type="text/javascript" src="/highlight/scripts/shAutoloader.js"></script>
+<link type="text/css" rel="stylesheet" href="/highlight/styles/shCore.css"/>
+<link type="text/css" rel="Stylesheet" href="/highlight/styles/shThemeDefault.css" />
+<link href="/code/css/fck_editorarea.css" rel="stylesheet" type="text/css" />
+<style>
+.Blog_p5 em{ display:inline-block; width:16px; height:13px; background:url(/image/v.jpg) no-repeat; overflow:hidden;}
+</style>
+  <div class="Blog_contain"> 
+    <!-- 左 -->
+	<style>
+    .Blog_left1_1 p a em { display:inline-block; width:16px; height:13px; background:url(/image/v.jpg) no-repeat; overflow:hidden;}
+</style>
+
+<script language="javascript">
+$(document).ready(function(){
+	$('#ConcernBtn').bind('click',function(){
+			var cuid = '2633067';
+			var url =  '/member/concern.html';
+			var type = $(this).attr('rel');
+		
+			if(type == 'addConcern'){
+				$.ajax({
+					type : 'get',
+					url  : url,
+					data : {'op' : 'ajaxadd' , 'cuid' : cuid, 'random' : Math.random()},
+					success : function(msg){	
+					   if(msg == -1){
+						   showErrorMsg('参数错误！');
+					   } else if (msg == 0){
+						   showErrorMsg('关注失败，没有该用户！');
+					   } else if (msg == 1){
+						   showErrorMsg('关注失败，您已经关注了该用户！');
+					   } else if (msg == 2){
+						   $('#ConcernBtn').val('已关注');
+						   $('#ConcernBtn').attr('rel','delConcern');
+						   showSucceedMsg('关注成功!');
+					   } else if (msg == 3){
+						   showErrorMsg('未知错误');
+					   }
+					}
+				});	
+			} else if ( type == 'delConcern'){
+				$.ajax({
+					type : 'get',
+					url  : url,
+					data : {'op' : 'ajaxdel' , 'cuid' : cuid, 'random' : Math.random()},
+					success : function(msg){
+					   if(msg == 0){
+						   showErrorMsg('参数错误！','消息提示');
+					   } else if (msg == 1){
+						   showErrorMsg('操作失败，请尝试刷新页面重试！','消息提示');
+					   } else if (msg == 2){
+						   $('#ConcernBtn').val('加关注');
+						   $('#ConcernBtn').attr('rel','addConcern');
+						   showSucceedMsg('成功取消关注！','消息提示');
+					   } else if (msg == 3){
+						   showErrorMsg('未知错误！','消息提示'); 
+					   }
+					}
+				});	
+			}
+	});					   
+});
+
+//加好友
+function addFriend(fuid, url){
+	if(fuid == '' || fuid.length == 0){
+		showErrorMsg('缺少参数！','信息提示');
+		return false;
+	}
+	$.ajax({
+		   type : 'get',
+		   url : url,
+		   data : {'op' : 'add', 'fuid' : fuid , 'random' : Math.random()},
+		   success : function(msg){
+				if(msg == -1){
+					showErrorMsg('参数错误！','消息提示');
+				} else if (msg == -2){
+					showErrorMsg('添加好友失败,没有该用户的信息！','消息提示');
+				} else if (msg == -3){
+					showErrorMsg('添加好友失败,你不能添加自己为好友！','消息提示');
+				} else if (msg == -4){
+					showErrorMsg('添加好友未知错误,该错误已被记录！','消息提示');
+				} else if (msg == -5){
+					showErrorMsg('添加好友失败,你之前已经发送过好友请求,请耐心等待对方同意申请！','消息提示');
+				} else if (msg == -6){
+					showErrorMsg('添加好友失败,你们已经是好友了！','消息提示');
+				} else {
+					$.cover(true);
+					asyncbox.open({
+						id : 'addFriend',
+						title : '添加好友',
+						url : url,
+						data : {'op' : 'add', 'fuid' : fuid , 'random' : Math.random()},
+						width : 490,
+						height : 180,
+						scroll : 'no',
+						callback : function(action) {
+							if (action == 'close'){
+								$.cover(false);
+							}	
+						}
+					});	
+				}
+		   }
+	});	
+	
+}
+
+//发送短消息
+function postMessage(msguid, url){
+	if(msguid == '' || msguid.length == 0){
+		showErrorMsg('缺少参数！','信息提示');
+		return false;
+	}
+	
+	$.ajax({
+		   type : 'post',
+		   url : url,
+		   data : {'op' : 'ajaxpost', 'msguid' : msguid , 'random' : Math.random()},
+		   success : function(msg){
+				if(msg == -1){
+					showErrorMsg('发送失败，缺少收件人对象！','消息提示');
+				} else if(msg == -2){
+					showErrorMsg('发送失败，自己不能给自己发送短消息！','消息提示');
+				} else {
+					$.cover(true);
+					asyncbox.open({
+						id : 'postMessage',
+						title : '发送短消息',
+						url : url,
+						data : {'op' : 'ajaxpost', 'msguid' : msguid , 'random' : Math.random()},
+						width : 510,
+						height : 255,
+						scroll : 'no',
+						callback : function(action) {
+							if (action == 'close'){
+								$.cover(false);
+							}	
+						}
+					});	
+				}
+		   }
+	});	
+}
+
+</script>
+<div class="Blog_left">
+      <div class="Blog_left1 Blog_bg1">
+        <div class="Blog_left1_1">
+			<!-- 专家博客-->
+			<a href="/uid/2633067.html"><img src="http://passport.ixpub.net/data/avatar/002/63/30/67_avatar_middle.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_middle.gif'" /></a>
+                        <p><a href="/uid/2633067.html">yuhui962</a></p>
+                     </div>
+        <ul class="Blog_ul1 Blog_noline1">
+          <li>博客访问： 44544 </li>
+          <li>博文数量： 14 </li>
+          <li>博客积分： 1420 </li>
+          <!--<li>专家积分： 180</li>-->
+          <li>博客等级： 上尉 </li>
+		  <li>技术积分： 145 </li>
+          <li>用  户  组：  普通用户</li>
+          <li>注册时间： 2008-04-15 16:55 </li>
+                            </ul>  
+
+
+        
+                <div class="HT_line3 HT_line3_1"></div>
+        <ul class="Blog_ul2">
+          <li><input type="button" value="加关注" id="ConcernBtn" onclick="showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html')"></li>
+          <li><input type="button" value="短消息" id="postMessageBtn" onclick="showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html')"></li>
+          <li><input type="button" value="论坛" onclick="location.href='http://bbs.chinaunix.net'"></li>
+          <li><input type="button" value="加好友" id="addFriendBtn" onclick="showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html')"></li>
+        </ul>
+              </div>
+        
+         
+      <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">文章分类</div>
+        <div class="Blog_left2_1">
+          <p class="Blog_p4"><a href="/uid/2633067/list/1.html">全部博文</a>（14）</p>
+          <ul id="blogCla">
+                            <li><a href="/uid/2633067/cid-41395-list-1.html" title="vim相关">vim相关</a>（2）
+                                </li>
+                            <li><a href="/uid/2633067/cid-41391-list-1.html" title="日志随笔">日志随笔</a>（2）
+                                </li>
+                            <li><a href="/uid/2633067/cid-41394-list-1.html" title="IT随笔">IT随笔</a>（1）
+                                </li>
+                            <li><a href="/uid/2633067/cid-41393-list-1.html" title="linux相关－转载">linux相关－转载</a>（7）
+                                </li>
+                            <li><a href="/uid/2633067/cid-41392-list-1.html" title="励志成长">励志成长</a>（1）
+                                </li>
+                            <li><a href="/uid/2633067/cid-41384-list-1.html" title="C++">C++</a>（1）
+                                </li>
+                            <li><span class="Blog_jia1"></span><a href="/uid/2633067/cid-41385-list-1.html" title="读书笔记">读书笔记</a>（0）
+                                    <div style="display:none;" class="zk">
+					                        <p><a href="/uid/2633067/sid-41387-list-1.html" title="Effective C++">Effective C++</a>（0）</p>
+                                            <p><a href="/uid/2633067/sid-41386-list-1.html" title="python核心编程">python核心编程</a>（0）</p>
+                                        </div>
+                                </li>
+                            <li><span class="Blog_jia1"></span><a href="/uid/2633067/cid-41388-list-1.html" title="操作系统">操作系统</a>（0）
+                                    <div style="display:none;" class="zk">
+					                        <p><a href="/uid/2633067/sid-41390-list-1.html" title="linux">linux</a>（0）</p>
+                                            <p><a href="/uid/2633067/sid-41389-list-1.html" title="windows">windows</a>（0）</p>
+                                        </div>
+                                </li>
+                            <li><a href="/uid/2633067/cid--1-list-1.html" title="未分配的博文">未分配的博文</a>（0）
+                                </li>
+                      </ul>
+        </div>
+      </div>
+      	              <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">文章存档</div>
+        <div class="Blog_left2_1" id="blogdtr">
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="/uid/2633067/year-2010-list-1.html">2010年</a>（3）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="/uid/2633067/year-201005-list-1.html">2010年05月</a>（1）</li>
+                        <li><a href="/uid/2633067/year-201004-list-1.html">2010年04月</a>（1）</li>
+                        <li><a href="/uid/2633067/year-201003-list-1.html">2010年03月</a>（1）</li>
+                      </ul>
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="/uid/2633067/year-2009-list-1.html">2009年</a>（11）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="/uid/2633067/year-200909-list-1.html">2009年09月</a>（3）</li>
+                        <li><a href="/uid/2633067/year-200908-list-1.html">2009年08月</a>（6）</li>
+                        <li><a href="/uid/2633067/year-200903-list-1.html">2009年03月</a>（2）</li>
+                      </ul>
+                  </div>
+      </div>
+      	  	        <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">我的朋友</div>
+        <ul class="Blog_ul4">
+                  </ul>
+      </div>
+	  	        <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">最近访客</div>
+        <ul class="Blog_ul4">
+                    <li><a href="/uid/22361751.html"><img src="http://passport.ixpub.net/data/avatar/022/36/17/51_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/uid/22361751.html" title="hxh88888888">hxh88888</a></p>
+          </li>
+                    <li><a href="/uid/13726712.html"><img src="http://passport.ixpub.net/data/avatar/013/72/67/12_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/uid/13726712.html" title="dengxm">dengxm</a></p>
+          </li>
+                    <li><a href="/uid/24989466.html"><img src="http://passport.ixpub.net/data/avatar/024/98/94/66_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/uid/24989466.html" title="General_715">General_</a></p>
+          </li>
+                    <li><a href="/uid/29985905.html"><img src="http://passport.ixpub.net/data/avatar/029/98/59/05_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/uid/29985905.html" title="wu__xing">wu__xing</a></p>
+          </li>
+                    <li><a href="/uid/29430743.html"><img src="http://passport.ixpub.net/data/avatar/029/43/07/43_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/uid/29430743.html" title="huangxiebo">huangxie</a></p>
+          </li>
+                    <li><a href="/uid/8324830.html"><img src="http://passport.ixpub.net/data/avatar/008/32/48/30_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/uid/8324830.html" title="zjpixyniannian">zjpixyni</a></p>
+          </li>
+                    <li><a href="/uid/1797566.html"><img src="http://passport.ixpub.net/data/avatar/001/79/75/66_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/uid/1797566.html" title="紫冰">紫冰</a></p>
+          </li>
+                    <li><a href="/uid/29628755.html"><img src="http://passport.ixpub.net/data/avatar/029/62/87/55_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/uid/29628755.html" title="wenyuchi">wenyuchi</a></p>
+          </li>
+                    <li><a href="/uid/29830425.html"><img src="http://passport.ixpub.net/data/avatar/029/83/04/25_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/uid/29830425.html" title="林莹莹">林莹莹</a></p>
+          </li>
+                  </ul>
+      </div>
+	           <div  class="Blog_left2 Blog_left3 Blog_bg1">
+        <div class="Blog_tit1">微信关注</div>
+        <div class="">
+                <div class="" style="float:left; margin-right:5px;">
+                 <img width="90" height="90" alt="" src="/image/IT168.jpg"/>
+                 </div><br>
+                <div class="" style="margin-top:10px;">
+                 <p class="">
+                         IT168企业级官微
+                </p>
+                 <p class="">
+
+                 <br></br>
+                 微信号：IT168qiye
+                </p>
+                </div>
+        </div>
+<hr size="1" style="clear:both;">
+        <div class="" style="clear:both;">
+                <div class="" style="float:left; margin-right:5px;">
+                 <img width="90" height="90" alt="" src="/image/itpub.jpg"/>
+                 </div><br>
+                <div class="" style="margin-top:10px;">
+                 <p class="">
+                         系统架构师大会
+                </p>
+                 <p class="">
+
+                 <br></br>
+                 微信号：SACC2013
+                </p>
+                </div>
+        </div>
+
+</div>
+      <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">订阅</div>
+        <ul class="Blog_ul5">
+          <li><a href="/blog/rss/uid/2633067.html" class="Blog_a4"></a></li>
+          <li><a href="http://www.google.com/ig/add?feedurl=http%3A%2F%2Fblog.chinaunix.net%2Fuid%2F2633067.html" class="Blog_a5"></a></li>
+        </ul>
+      </div>
+      <div class="Blog_left2 Blog_left3 Blog_bg1">
+        <div class="Blog_tit1">推荐博文</div>
+        <ul class="Blog_ul6">
+				  			<li>·<a href="/uid-30047365-id-4669831.html" title="UNIX环境高级编程之进程的用户ID和组ID">UNIX环境高级编程之进程的用...</a></li>
+		  			<li>·<a href="/uid-30047365-id-4669806.html" title="跟我一行一行写Makefile">跟我一行一行写Makefile...</a></li>
+		  			<li>·<a href="/uid-26212859-id-4687158.html" title="Linux网络流量控制工具—Netem">Linux网络流量控制工具—Nete...</a></li>
+		  			<li>·<a href="/uid-28764633-id-4686486.html" title="小结一下本人今年应届生找工作经历">小结一下本人今年应届生找工...</a></li>
+		  			<li>·<a href="/uid-20662820-id-4686566.html" title="SuSE下实时文件同步">SuSE下实时文件同步</a></li>
+		  						  			<li>·<a href="http://blog.itpub.net/29900383/viewspace-1363485" title="一个菜鸟在代码重构中的感想">一个菜鸟在代码重构中的感想...</a></li>
+		  			<li>·<a href="http://blog.itpub.net/23718752/viewspace-1362477" title="关于生产系统锁问题的排查">关于生产系统锁问题的排查...</a></li>
+		  			<li>·<a href="http://blog.itpub.net/28602568/viewspace-1362044" title="Oracle 以月为单位检查索引的使用情况(邮件反馈)">Oracle 以月为单位检查索引的...</a></li>
+		  			<li>·<a href="http://blog.itpub.net/12679300/viewspace-1361211" title="enq：Library cache lock/pin等待事件">enq：Library cache lock/pin...</a></li>
+		  			<li>·<a href="http://blog.itpub.net/23718752/viewspace-1361048" title="使用awr来分析session leak问题">使用awr来分析session leak问...</a></li>
+		  				
+        </ul>
+      </div>
+      <div class="Blog_left2 Blog_left3 Blog_bg1">
+        <div class="Blog_tit1">热词专题</div>
+        <ul class="Blog_ul6">
+                        <li >·<a href="/zt/1016/flexkangdian_1016070.shtml" target='blank' title='基于Flex4.X+BlazeDS+Spring3+JPA+Hibernate+MySQL实战开发在线书店'>基于Flex4.X+BlazeDS+Spring3...</a></li>
+                        <li >·<a href="/zt/1016/tcphujuan_1016385.shtml" target='blank' title='TCP三次握手/四次挥手'>TCP三次握手/四次挥手...</a></li>
+                        <li >·<a href="/zt/1016/tcpwaittime_1016338.shtml" target='blank' title='TCP time_wait 清晰解释 '>TCP time_wait 清晰解释 </a></li>
+                        <li >·<a href="/zt/1016/androidguihuihajieju_1016953.shtml" target='blank' title='android图片异步加载学习笔记'>android图片异步加载学习笔记...</a></li>
+                        <li class="no_line1">·<a href="/zt/1016/androidservices_1016899.shtml" target='blank' title='Manage Services'>Manage Services</a></li>
+                  </ul>
+      </div>
+	  
+
+	</div>
+<script language="javascript">
+$(document).ready(function(){
+    /*目录树JS效果*/
+	$('#blogCla li > span').click(function(){
+		var cla = $(this).attr('class');
+		if(cla == 'Blog_jia1'){
+			//$('#blogCla li > span').removeClass('Blog_jian1').addClass('Blog_jia1');
+			//$('#blogCla li > .zk').css('display', 'none');
+				
+			$(this).removeClass('Blog_jia1').addClass('Blog_jian1');
+            $(this).parent().children('.zk').css('display', 'block');
+		}else{
+			$(this).removeClass('Blog_jian1').addClass('Blog_jia1');
+            $(this).parent().children('.zk').css('display', 'none');
+		}
+	});
+		
+	$('#blogdtr > p > span').click(function(){
+		var cla = $(this).attr('class');
+		if(cla == 'Blog_jia1'){
+			//$('#blogdtr > .Blog_p4 > span').removeClass('Blog_jian1').addClass('Blog_jia1');
+			//$('#blogdtr ul').css('display', 'none');
+				
+			$(this).removeClass('Blog_jia1').addClass('Blog_jian1');
+            $(this).parent().next().css('display', 'block');
+		}else{
+			$(this).removeClass('Blog_jian1').addClass('Blog_jia1');
+            $(this).parent().next().css('display', 'none');
+		}
+	});
+});
+</script>    <!-- 右 -->
+    <div class="Blog_right1">
+      <div class="Blog_right1_1 Blog_right1_11">
+        <div class="Blog_right1_2 ">
+			<!--推荐博文-->
+          <div class="Blog_tit4 Blog_tit5">
+                        <b class="Blog_b2"></b>
+            <a href="/uid-2633067-id-2138293.html">vi 快捷键</a>
+            <em>2009-08-09 12:54:30</em>
+          </div>
+          <div class="Blog_con2">
+            <div class="Blog_con3">
+              <p>分类： <span>LINUX</span></p>
+			                </p>
+            </div>
+           <div class="Blog_wz1" style='word-wrap: break-word;'>
+			
+		<div class="g_blog_list">
+<div class="g_t_center g_c_pdin g_p_center c07 content" id="blogtext_fks_082065082082089065084095086095085087086075085094084064083">
+<div class="ns_content">
+<p>Vi提供了三个关于光标在全屏幕上移动并且文件本身不发生滚动的命令。它们分别是H、M和L命令。</p>
+<p>　　(1)H命令</p>
+<p>　　该命令将光标移至屏幕首行的行首（即左上角），也就是当前屏幕的第一行，而不是整个文件的第一行。利用此命令可以快速将光标移至屏幕顶部。若在 H命令之前加上数字n，则将光标移至第n行的行首。值得一提的是，使用命令dH将会删除从光标当前所在行至所显示屏幕首行的全部内容。</p>
+<p>　　(2)M命令</p>
+<p>　　该命令将光标移至屏幕显示文件的中间行的行首。即如果当前屏幕已经充满,则移动到整个屏幕的中间行；如果并未充满，则移动到文本的那些行的中间行。利用此命令可以快速地将光标从屏幕的任意位置移至屏幕显示文件的中间行的行首。例如，在上面屏幕显示的情况下（不论光标在屏幕的何处），在命令模式下，输入命令M之后，光标都将移到add这一行的字母a上。同样值得一提的是，使用命令dM将会删除从光标当前所在行至屏幕显示文件的中间行的全部内容。</p>
+<p>　　(3)L命令</p>
+<p>　　当文件显示内容超过一屏时，该命令将光标移至屏幕上的最底行的行首；当文件显示内容不足一屏时，该命令将光标移至文件的最后一行的行首。可见，利用此命令可以快速准确地将光标移至屏幕底部或文件的最后一行。若在L命令之前加上数字n，则将光标移至从屏幕底部算起第n行的行首。同样值得一提的是，使用命令dL将会删除从光标当前行至屏幕底行的全部内容。</p>
+<p>&nbsp;</p>
+<p>让我们看看最简单也是最常用的编辑过程：没有人不犯错误。所以迟早你会碰到修改你输入的文本的时候。实际上花在字处理上的大多数时间是修改而不是输入新的东西。因此，你要知道如何方便地修改就很重要。</p>
+<p>　　(1)x–删除一个字符</p>
+<p>　　删除文字的最简单的方式是用x。这个命令的结果是光标所处的字符的消失，后面的文字左移动。如果你删除的字符是一行最后的一个字符，那么光标将向左移动一个，这样光标就不会停留在不存在的字符的下面了。假如没有任何文字了，喇叭就叫。</p>
+<p>　　(2)d–删除对象</p>
+<p>　　这个命令的右边还要有一定的文字对象。文字对象就是一块文字。他右边接的就是在控制光标移动的那些字符。例如 w 表示向前一个单词，那么 dw 将删除下一个单词。5w 表示前进5个单词，那么 d5w 将删除他们。</p>
+<p>　　(3)dd–删除一行</p>
+<p>　　最常用的 d 系列命令之一。和前面一样， 5dd 将删除 5 行</p>
+<p>　　(4)D–整个删除</p>
+<p>　　大写形式的 D 用来删除从光标到行尾。和 d$ 一样效果。</p>
+<p>　　(5)u–恢复</p>
+<p>　　要后悔吗？他不仅仅撤消删除，还撤消你所有的编辑工作。</p>
+<p>　　(6).–重复</p>
+<p>　　重复编辑工作。</p>
+<p>&nbsp;</p>
+<p>###################################################################################</p>
+<p><strong>进入vi的命令</strong><br>vi filename :打开或新建文件，并将光标置于第一行首<br>vi +n filename ：打开文件，并将光标置于第n行首<br>vi + filename ：打开文件，并将光标置于最后一行首<br>vi +/pattern filename：打开文件，并将光标置于第一个与pattern匹配的串处<br>vi -r filename ：在上次正用vi编辑时发生系统崩溃，恢复filename<br>vi filename….filename ：打开多个文件，依次进行编辑</p>
+<p><strong>移动光标类命令</strong><br>h ：光标左移一个字符<br>l ：光标右移一个字符<br>space：光标右移一个字符<br>Backspace：光标左移一个字符<br>k或Ctrl+p：光标上移一行<br>j或Ctrl+n ：光标下移一行<br>Enter ：光标下移一行<br>w或W ：光标右移一个字至字首<br>b或B ：光标左移一个字至字首<br>e或E ：光标右移一个字至字尾<br>) ：光标移至句尾<br>( ：光标移至句首<br>}：光标移至段落开头<br>{：光标移至段落结尾<br>nG：光标移至第n行首<br>n+：光标下移n行<br>n-：光标上移n行<br>n$：光标移至第n行尾<br>H ：光标移至屏幕顶行<br>M ：光标移至屏幕中间行<br>L ：光标移至屏幕最后行<br>0：（注意是数字零）光标移至当前行首<br>$：光标移至当前行尾</p>
+<p><strong>屏幕翻滚类命令<br></strong>Ctrl+u：向文件首翻半屏<br>Ctrl+d：向文件尾翻半屏<br>Ctrl+f：向文件尾翻一屏<br>Ctrl＋b；向文件首翻一屏<br>nz：将第n行滚至屏幕顶部，不指定n时将当前行滚至屏幕顶部。</p>
+<p><strong>插入文本类命令</strong><br>i ：在光标前<br>I ：在当前行首<br>a：光标后<br>A：在当前行尾<br>o：在当前行之下新开一行<br>O：在当前行之上新开一行<br>r：替换当前字符<br>R：替换当前字符及其后的字符，直至按ESC键<br>s：从当前光标位置处开始，以输入的文本替代指定数目的字符<br>S：删除指定数目的行，并以所输入文本代替之<br>ncw或nCW：修改指定数目的字<br>nCC：修改指定数目的行</p>
+<p><strong>删除命令<br></strong>ndw或ndW：删除光标处开始及其后的n-1个字<br>do：删至行首<br>d$：删至行尾<br>ndd：删除当前行及其后n-1行<br>x或X：删除一个字符，x删除光标后的，而X删除光标前的<br>Ctrl+u：删除输入方式下所输入的文本</p>
+<p><strong>搜索及替换命令</strong><br>/pattern：从光标开始处向文件尾搜索pattern<br>?pattern：从光标开始处向文件首搜索pattern<br>n：在同一方向重复上一次搜索命令<br>N：在反方向上重复上一次搜索命令<br>：s/p1/p2/g：将当前行中所有p1均用p2替代<br>：n1,n2s/p1/p2/g：将第n1至n2行中所有p1均用p2替代<br>：g/p1/s//p2/g：将文件中所有p1均用p2替换</p>
+<p><strong>选项设置</strong><br>all：列出所有选项设置情况<br>term：设置终端类型<br>ignorance：在搜索中忽略大小写<br>list：显示制表位(Ctrl+I)和行尾标志（$)<br>number：显示行号<br>report：显示由面向行的命令修改过的数目<br>terse：显示简短的警告信息<br>warn：在转到别的文件时若没保存当前文件则显示NO write信息<br>nomagic：允许在搜索模式中，使用前面不带“\”的特殊字符<br>nowrapscan：禁止vi在搜索到达文件两端时，又从另一端开始<br>mesg：允许vi显示其他用户用write写到自己终端上的信息</p>
+<p><strong>最后行方式命令</strong><br>：n1,n2 co n3：将n1行到n2行之间的内容拷贝到第n3行下<br>：n1,n2 m n3：将n1行到n2行之间的内容移至到第n3行下<br>：n1,n2 d ：将n1行到n2行之间的内容删除<br>：w ：保存当前文件<br>：e filename：打开文件filename进行编辑<br>：x：保存当前文件并退出<br>：q：退出vi<br>：q!：不保存文件并退出vi<br>：!command：执行shell命令command<br>：n1,n2 w!command：将文件中n1行至n2行的内容作为command的输入并执行之，若不指定n1，n2，则表示将整个文件内容作为command的输入<br>：r!command：将命令command的输出结果放到当前行</p>
+<p><strong>寄存器操作</strong><br>“?nyy：将当前行及其下n行的内容保存到寄存器？中，其中?为一个字母，n为一个数字<br>“?nyw：将当前行及其下n个字保存到寄存器？中，其中?为一个字母，n为一个数字<br>“?nyl：将当前行及其下n个字符保存到寄存器？中，其中?为一个字母，n为一个数字<br>“?p：取出寄存器？中的内容并将其放到光标位置处。这里？可以是一个字母，也可以是一个数字<br>ndd：将当前行及其下共n行文本删除，并将所删内容放到1号删除寄存器中。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>VI常用技巧</strong></p>
+<p>VI命令可以说是Unix/Linux世界里最常用的编辑文件的命令了，但是因为它的命令集众多，很多人都不习惯使用它，其实您只需要掌握基本命令，然后加以灵活运用，就会发现它的优势，并会逐渐喜欢使用这种方法。本文旨在介绍VI的一些最常用命令和高级应用技巧。</p>
+<p><strong>一、基本命令介绍</strong></p>
+<p>—- 1．光标命令</p>
+<p>k、j、h、l——上、下、左、右光标移动命令。虽然您可以在Linux中使用键盘右边的4个光标键，但是记住这4个命令还是非常有用的。这4个键正是右手在键盘上放置的基本位置。<br>nG——跳转命令。n为行数，该命令立即使光标跳到指定行。<br>Ctrl+G——光标所在位置的行数和列数报告。<br>w、b——使光标向前或向后跳过一个单词。<br>—- 2．编辑命令<br>i、a、r——在光标的前、后以及所在处插入字符命令(i=insert、a=append、r=replace)。<br>cw、dw——改变(置换)/删除光标所在处的单词的命令 (c=change、d=delete)。<br>x、d$、dd——删除一个字符、删除光标所在处到行尾的所有字符以及删除整行的命令。<br>—- 3．查找命令<br>—- /string、?string——从光标所在处向后或向前查找相应的字符串的命令。<br>—- 4．拷贝复制命令<br>—- yy、p——拷贝一行到剪贴板或取出剪贴板中内容的命令。</p>
+<p><strong>二、常见问题及应用技巧</strong></p>
+<p>—- 1．在一个新文件中读/etc/passwd中的内容，取出用户名部分。<br>—- vi file<br>—- :r /etc/passwd 在打开的文件file中光标所在处读入/etc/passwd<br>—- :%s/:.*//g 删除/etc/passwd中用户名后面的从冒号开始直到行尾的所有部分。<br>—- 您也可以在指定的行号后读入文件内容，例如使用命令“:3r /etc/passwd”从新文件的第3行开始读入 /etc/passwd的所有内容。<br>—- 我们还可以使用以下方法删掉文件中所有的空行及以#开始的注释行。<br>—- #cat squid.conf.default | grep -v ^$ | grep -v ^#</p>
+<p>—- 2．在打开一个文件编辑后才知道登录的用户对该文件没有写的权限，不能存盘，需要将所做修改存入临时文件。<br>—- vi file<br>—- :w /tmp/1 保存所做的所有修改，也可以将其中的某一部分修改保存到临时文件，例如仅仅把第20～59行之间的内容存盘成文件/tmp/1，我们可以键入如下命令。<br>—- vi file<br>—- :20,59w /tmp/1</p>
+<p>—- 3．用VI编辑一个文件，但需要删除大段的内容。<br>—- 首先利用编辑命令“vi file”打开文件，然后将光标移到需要删除的行处按Ctrl+G显示行号，再到结尾处再按Ctrl+G，显示文件结尾的行号。<br>—- :23,1045d 假定2次得到的行号为23和1045，则把这期间的内容全删除，也可以在要删除的开始行和结束行中用ma、mb命令标记，然后利用“:a,bd”命令删除。</p>
+<p>—- 4．在整个文件的各行或某几行的行首或行尾加一些字符串。<br>—- vi file<br>—- :3,$s/^/some string / 在文件的第一行至最后一行的行首插入“some string”。<br>—- :%s/$/some string/g 在整个文件每一行的行尾添加“some string”。<br>—- :%s/string1/string2/g 在整个文件中替换“string1”成“string2”。<br>—- :3,7s/string1/string2/ 仅替换文件中的第3行到第7行中的“string1”成“string2”。<br>—- 注意: 其中s为substitute，%表示所有行，g表示global。</p>
+<p>—- 5．同时编辑2个文件，拷贝一个文件中的文本并粘贴到另一个文件中。<br>—- vi file1 file2<br>—- yy 在文件1的光标处拷贝所在行<br>—- :n 切换到文件2 (n=next)<br>—- p 在文件2的光标所在处粘贴所拷贝的行<br>—- :n 切换回文件1</p>
+<p>—- 6．替换文件中的路径。<br>—- 使用命令“:%s#/usr/bin#/bin#g”可以把文件中所有路径/usr/bin换成/bin。也可以使用命令“:%s//usr/bin//bin/g”实现，其中“”是转义字符，表明其后的“/”字符是具有实际意义的字符，不是分隔符。</p>
+<p>##################################################################################</p>
+<p>相关的命令</p>
+<p>　　ls 列出文件，文件名</p>
+<p>　　CP 文件的复制</p>
+<p>　　RM 删除文件</p>
+<p>　　RM -R 删除有文件的文件夹</p>
+<p>　　MV 移动文件</p>
+<p>　　MKDIR 创建目录</p>
+<p>　　RMDIR 删除目录</p>
+<p>　　PS 查看进程</p>
+<p>　　PWD 查看当前目录</p>
+<p>　　DU 查看磁盘情况</p>
+<p>　　CD 改变目录</p>
+<p>　　FIND 搜索文件系统</p>
+<p>　　LOCATE 定位文件</p>
+<p>　　chown 改变档案所属者</p>
+<p>　　upset 设置系统</p>
+<p>　　chnod 改变文件或目录的访问权限</p>
+<p>　　eg. chmod +o test.c</p>
+<p>　　常用的操作</p>
+<p>　　1、挂接网络</p>
+<p>　　mount -t smbfs -o username=dgy,password=123456 //192.168.0.87/share /mnt/up</p>
+<p>　　2、查看磁盘的状态</p>
+<p>　　fdisk -l</p>
+<p>　　3、挂接U盘</p>
+<p>　　mount -t vfat /dev/sda1 /mnt/up</p>
+<p>　　4、更新安装包</p>
+<p>　　apt -get install gcc-2.95</p>
+<p>　　5、压缩文件夹</p>
+<p>　　压缩：tar csf test.tgz test</p>
+<p>　　解压缩: tar {xzf|zxvf} test.tgz</p>
+<p><strong>二、命令行编辑快捷键</strong></p>
+<p>　　history 显示命令历史列表</p>
+<p>　　↑(Ctrl+p) 显示上一条命令</p>
+<p>　　↓(Ctrl+n) 显示下一条命令</p>
+<p>　　!num 执行命令历史列表的第num条命令</p>
+<p>　　!! 执行上一条命令</p>
+<p>　　!?string? 执行含有string字符串的最新命令</p>
+<p>　　Ctrl+r 然后输入若干字符，开始向上搜索包含该字符的命令，继续按Ctrl+r，搜索上一条匹配的命令</p>
+<p>　　Ctrl+s 与Ctrl+r类似,只是正向检索</p>
+<p>　　Alt+&lt; 历史列表第一项</p>
+<p>　　Alt+&gt; 历史列表最后一项</p>
+<p>　　Ctrl+f 光标向前移动一个字符,相当与-&gt;</p>
+<p>　　Ctrl+b 光标向后移动一个字符,相当与&lt;-</p>
+<p>　　Alt+f 光标向前移动一个单词</p>
+<p>　　Alt+b 光标向后移动一个单词</p>
+<p>　　ls !$ 执行命令ls，并以上一条命令的参数为其参数</p>
+<p>　　Ctrl+a 移动到当前行的开头</p>
+<p>　　Ctrl+e 移动到当前行的结尾</p>
+<p>　　Esc+b 移动到当前单词的开头</p>
+<p>　　Esc+f 移动到当前单词的结尾</p>
+<p>　　Ctrl+l 清屏</p>
+<p>　　Ctrl+u 剪切命令行中光标所在处之前的所有字符(不包括自身)</p>
+<p>　　Ctrl+k 剪切命令行中光标所在处之后的所有字符(包括自身)</p>
+<p>　　Ctrl+d 删除光标所在处字符</p>
+<p>　　Ctrl+h 删除光标所在处前一个字符</p>
+<p>　　Ctrl+y 粘贴刚才所删除的字符</p>
+<p>　　Ctrl+w 剪切光标所在处之前的一个词(以空格、标点等为分隔符)</p>
+<p>　　Alt+d 剪切光标之后的词</p>
+<p>　　Esc+w 删除光标所在处之前的字符至其单词尾(以空格、标点等为分隔符)</p>
+<p>　　Ctrl+t 颠倒光标所在处及其之前的字符位置，并将光标移动到下一个字符</p>
+<p>　　Alt+t 交换当前与以前单词的位置</p>
+<p>　　Alt+u 把当前词转化为大写</p>
+<p>　　Alt+l 把当前词转化为小写</p>
+<p>　　Alt+c 把当前词汇变成首字符大写</p>
+<p>　　Ctrl+v 插入特殊字符,如Ctrl+v+Tab加入Tab字符键</p>
+<p>　　Esc+t 颠倒光标所在处及其相邻单词的位置</p>
+<p>　　Ctrl+c 删除整行</p>
+<p>　　Ctrl+(x u) 按住Ctrl的同时再先后按x和u，撤销刚才的操作</p>
+<p>　　Ctrl+s 挂起当前shell</p>
+<p>　　Ctrl+q 重新启用挂起的shell</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>03) 如何复制粘贴？<br><br>复制<br>方法一：先ma标记当前位置为a，移动到新的位置，再y`a或者y'a复制从标记位置a到<br>当前位置的内容。`和'的区别：`以字符为单位，'以行为单位。这个方法应该是所有vi<br>都适用的。（如果不对请指正。）<br>方法二：按v或V或Ctrl+V进入visual模式，移动光标<b style="color: black; background-color: rgb(160, 255, 255);">选择</b>一段内容，按y(若要使用系统黏贴<br>板，按"+y)。三者的区别：<br>v以字符为单位，V以行为单位，Ctrl+V是块<b style="color: black; background-color: rgb(160, 255, 255);">选择</b>。这个方法只在<b style="color: black; background-color: rgb(255, 255, 102);">VIM</b>下适用。<br><br>粘贴<br>p或P。区别：前者粘贴到光标后面，后者粘贴到光标前面。(04) 如何在多个文件中进行替换？<br><br>一般可以用sed或者<b style="color: black; background-color: rgb(255, 255, 102);">vim</b>来做。比如要对当前目录下的*.c文件进行替换：<br>方法一：<br>for i in *.c; do<br>&nbsp; sed -i -e 's/oldvalue/newvalue/g' $i<br>done<br>方法二：<br><b style="color: black; background-color: rgb(255, 255, 102);">vim</b> *.c<br>:argdo %s/oldvalue/newvalue/ge | update</p>
+<p>(06) 如何<b style="color: black; background-color: rgb(160, 255, 255);">选择</b>、复制或者查找光标所在的<b style="color: black; background-color: rgb(153, 255, 153);">单词</b>？<br><br>在<b style="color: black; background-color: rgb(255, 255, 102);">VIM</b>中用iw或者aw表示一个<b style="color: black; background-color: rgb(153, 255, 153);">单词</b>，两者稍有区别。<br><b style="color: black; background-color: rgb(160, 255, 255);">选择</b>光标所在的<b style="color: black; background-color: rgb(153, 255, 153);">单词</b>：viw （v进入visual模式，然后iw）<br>复制光标所在的<b style="color: black; background-color: rgb(153, 255, 153);">单词</b>：yiw<br><br>查找的话就是两个很常用的明令：# 和 *<br><br>(07) 如何计数搜索的字符串？<br><br>如果需要统计缓冲中一个模式（pattern）出现的频率。<b style="color: black; background-color: rgb(255, 255, 102);">Vim</b> 会报告已匹配的数目就是模式<br>出现的次数。例：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :%s/./&amp;/gn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; characters<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :%s/\i\+/&amp;/gn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; words<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :%s/^//n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lines<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :%s/the/&amp;/gn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "the" anywhere<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :%s/\&lt;the\&gt;/&amp;/gn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "the" as a word<br><br>你可能希望复位 'hlsearch' 或者使用 ":nohlsearch"。(13) 如何去掉或者插入^M这样的字符？<br><br>在<b style="color: black; background-color: rgb(255, 255, 102);">VIM</b>的插入模式或者命令行中用&lt;C-V&gt;输入^M这样的特殊字符，例如输入<br>:%s/&lt;C-V&gt;&lt;C-M&gt;//g<br>实际显示是<br>:%s/^M//g<br>就可以去掉文件中所有的^M。同理，要在文件中输入^M只要按&lt;C-V&gt;&lt;C-M&gt;即可。<br><br>这个问题往往发生在WINDOWS/DOS系统和UNIX系统之间交换文件时，因为这两类系统<br>对于文本的“换行”概念解释不同。所以，还有一个解决方法就是对这类文本进行<br>转换。<b style="color: black; background-color: rgb(255, 255, 102);">vim</b>内部就可以做这件事情。首先打开文本，然后<br>set fileformat=unix<br>再从新保存该文件覆盖原文件就可以去除:^M了<br></p>
+<ol>
+<li>在<span class="t_tag" onclick="tagshow(event)" href="tag.php?name=linux">linux</span>下使用VIM进行编程是一件很自然的事情<br>刚开始时我也对VI超多的指令和完全的放弃鼠标感到不适！<br>但经过了初期的适应性阶段，我终于放发现，原来放弃了鼠标却也提高了效率！<br>废话少说，进入正题：<br>``(TAB上边的点)：回到光标跳转前的位置。<br>dd:删除一行。<br>5dd:删除光标处以下的五行。<br>按V键进入可视模式，选择要拷贝的内容，按yy拷贝选中的内容，在需要的地方按p拷贝内容到新光标处或新<span class="t_tag" onclick="tagshow(event)" href="tag.php?name=%CE%C4%BC%FE">文件</span>中。<br>i:进入插入模式。<br>v:进入可视模式。<br>Esc:回到基本模式<br>h,j,k,l：上下左右移动光标<br>vsp:左右分割窗口。<br>sp:上下分割窗口。<br>ctrl+w:在窗口中选择。<br>:q!:不保存退出。<br>x:保存退出。<br>w:只保存不退出。<br>x:删除一个<span class="t_tag" onclick="tagshow(event)" href="tag.php?name=%D7%D6%B7%FB">字符</span>。<br>u:撤消<br>CTRL+O:回跳。<br>CTRL+R:撤消刚才的撤消。<br>:help:帮助。<br>zz:退出帮助窗口。<br>3w :向前移动三个单词。<br>3b:向后移动三个单词。<br>CTRL+［：跳到光标单词处。<br>CTRL+T：跳回。<br>9k:上移九行。<br>:e 打开新文件（在多窗口操作中很有用）。<br>yaw：拷贝一个单词。<br>CTRL+B:把光标移到当前行的左边首部。<br>CTRL+E：把光标移到当前行的右边首部。<br>vim -r doc.txt：恢复文件到修改前。<br>：／查找单词<br>H：跳到第一行。<br>M：跳到中间。<br>L：跳到最后一行。<br>CTRL+d,u,f,b：下移半屏，上移半屏，下移一屏，上移一屏。<br>gg:到文件开始处<br>G:到文件尾部。<br>--:找到文件上次修改点。<br>CTRL+p,n:向上<span class="t_tag" onclick="tagshow(event)" href="tag.php?name=%B2%E9%D1%AF">查询</span>一个单词，向下查询一个单词。<br>zo:打开折叠。l键也可以。<br>zc:关闭折叠。<br>zr:全部打开折叠。<br>zm:全部关闭折叠。<br>zf:创建折叠。<br>zR:打开所有折叠（包括嵌套）<br>zM:关闭所有折叠（包括嵌套）<br>:!ls,查看目录表。<br>:`o,找到最后修改的文件。<br>wq,保存退出。<br>vim txt1 txt2 txt3 txt4,同时打开多个文件，<br>以下是同时打开多个文件时（建议用多窗口）<br>n,下一个文件，<br>n3,往下第三个文件。<br>first,第一个文件。<br>last,最后一个文件 。<br>:/s#kkk#ccc#g,把文件中的kkk替换为ccc<br></li></ol>
+<p><br></p></div></div></div>
+<div></div>
+		
+		           </div>
+            <!-- <div class="Blog_con3_1">管理员在2009年8月13日编辑了该文章文章。</div> -->
+            <div class="Blog_con2_1 Blog_con3_2">
+              <div>
+			  <!--<img src="/image/default/tu_8.png">-->
+			  <!-- JiaThis Button BEGIN -->
+				<div class="bdsharebuttonbox"><A class=bds_more href="#" data-cmd="more"></A><A class=bds_qzone title=分享到QQ空间 href="#" data-cmd="qzone"></A><A class=bds_tsina title=分享到新浪微博 href="#" data-cmd="tsina"></A><A class=bds_tqq title=分享到腾讯微博 href="#" data-cmd="tqq"></A><A class=bds_renren title=分享到人人网 href="#" data-cmd="renren"></A><A class=bds_weixin title=分享到微信 href="#" data-cmd="weixin"></A></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+				<!-- JiaThis Button END -->
+			  </div>
+              阅读(2304) | 评论(0) | 转发(0) |
+			                <div class="HT_line3"></div>
+            </div>
+            <div class="Blog_con3_3">
+              <div><span id='digg_num'>0</span><a href="javascript:void(0)" id='digg' bid='2138293' url='/blog/digg.html' ></a></div>
+              <p>上一篇：<a href="/uid-2633067-id-2138292.html">在Linux里设置环境变量的方法</a></p>
+              <p>下一篇：<a href="/uid-2633067-id-2138294.html">HastTable</a></p>
+            </div>
+          </div>
+          <div class="Blog_con3_4">
+            <div class="Blog_tit2 Blog_tit6">相关热门文章</div>
+			            <ul class="Blog_ul7">
+						  <li><span class="Blog_span6"></span><a href="http://blog.chinaunix.net/uid-30059672-id-4687519.html" title='欢迎alvin567在ChinaUnix博客安家!' target='blank' >欢迎alvin567在ChinaUnix博客...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://blog.chinaunix.net/uid-30059174-id-4686939.html" title='欢迎gavinhold在ChinaUnix博客安家!' target='blank' >欢迎gavinhold在ChinaUnix博客...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://blog.chinaunix.net/uid-29932909-id-4686859.html" title='Burberry Crossbody Bag acquire near' target='blank' >Burberry Crossbody Bag acqui...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://blog.chinaunix.net/uid-29820294-id-4686843.html" title='http://www.familynest.it/images/new.asp: Abbassare il fuoco' target='blank' >http://www.familynest.it/ima...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://blog.chinaunix.net/uid-24709751-id-4686833.html" title='vim set keymap=dvorak' target='blank' >vim set keymap=dvorak</a></li>
+			            </ul>
+			            <ul class="Blog_ul7">
+						  <li><span class="Blog_span7"></span><a href="/uid-10900999-id-2920737.html" title='linux 常见服务端口' target='blank' >linux 常见服务端口</a></li>
+						  <li><span class="Blog_span7"></span><a href="/uid-21025382-id-168762.html" title='【ROOTFS搭建】busybox的httpd使用CGI脚本(BusyBox httpd CGI scripts)' target='blank' >【ROOTFS搭建】busybox的httpd...</a></li>
+						  <li><span class="Blog_span7"></span><a href="/uid-20457694-id-1944680.html" title='xmanager 2.0 for linux配置' target='blank' >xmanager 2.0 for linux配置</a></li>
+						  <li><span class="Blog_span7"></span><a href="/uid-20378509-id-1956694.html" title='什么是shell' target='blank' >什么是shell</a></li>
+						  <li><span class="Blog_span7"></span><a href="/uid-233938-id-162618.html" title='linux socket的bug??' target='blank' >linux socket的bug??</a></li>
+			            </ul>
+            <ul class="Blog_ul7">
+						  <li><span class="Blog_span6"></span><a href="http://ask.chinaunix.net/question/785702" title='谁能够帮我解决LINUX  2.6  10版本驱动' target='blank'  >谁能够帮我解决LINUX  2.6  10...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://ask.chinaunix.net/question/785701" title='现在的博客积分不会更新了吗？' target='blank'  >现在的博客积分不会更新了吗？...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://ask.chinaunix.net/question/785686" title='shell怎么读取网页内容' target='blank'  >shell怎么读取网页内容...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://ask.chinaunix.net/question/785684" title='ssh等待连接的超时问题' target='blank'  >ssh等待连接的超时问题...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://ask.chinaunix.net/question/785661" title='curl: (56) Recv failure: Connection reset by peer' target='blank'  >curl: (56) Recv failure: Con...</a></li>
+			            </ul>
+            <div class="clear"></div>
+          </div>
+		  <!--
+          <div class="Blog_con3_4 Blog_con3_5">
+            <div class="Blog_tit2 Blog_tit7">热门推荐</div>
+            <ul>
+			              <li><a href="" title="" target='blank' ></a></li>
+			            </ul>
+          </div>
+		  -->
+        </div>
+      </div>
+      <div class="Blog_right1_7" id='replyList'>
+		<div class="Blog_tit3">给主人留下些什么吧！~~</div>
+				<!--暂无内容-->
+				<!-- 评论分页-->
+		<div class="Blog_right1_6 Blog_right1_12">
+        		</div>
+		<!-- 评论分页-->
+        <div class="Blog_right1_10">
+          <div class="Blog_tit3">评论热议</div>
+		  		 <!--未登录 -->
+        <div class="Blog_right1_8">
+          <div class="nologin_con1"> 请登录后评论。
+            <p><a href="/site/login.html">登录</a> <a href="http://sso.chinaunix.net/Register?return_url=http%3A%2F%2Ft.cublog.com%2F">注册</a></p>
+          </div>
+        </div>
+        <br>
+        <div>
+            <div style="float:left;margin-left:70px;margin-right:10px;">
+             <script type="text/javascript">
+            var cpro_id = "u1625692";
+            </script>
+            <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+            </div>
+            <div style="margin-left:10px;">
+            <script type="text/javascript">
+            var cpro_id = "u1625694";
+            </script>
+            <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+            </div>
+        </div>
+		
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type='hidden' id='report_url' value='/blog/ViewReport.html' />
+
+<script type="text/javascript">
+  	//测试字符串的长度 一个汉字算2个字节
+	function mb_strlen(str)
+	{
+		var len=str.length;
+		var totalCount=0;
+		for(var i=0;i<len;i++)
+		{
+			var c = str.charCodeAt(i);
+			if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+				totalCount++;
+			}else{
+				totalCount+=2;
+			}
+		}
+		return totalCount;
+	}
+	/*
+	var Util = {};
+	Util.calWbText = function (text, max){
+		if(max === undefined)
+			max = 500;
+		var cLen=0;
+		var matcher = text.match(/[^\x00-\xff]/g),
+			wlen  = (matcher && matcher.length) || 0;
+		//匹配url链接正则 http://***
+		var pattern = /http:\/\/([\w-]+\.)+[\w-]+(\/*[\w-\.\/\?%&=][^\s^\u4e00-\u9fa5]*)?/gi;
+		//匹配的数据存入数组
+		var arrPt = new Array();
+		var i = 0;
+		while((result = pattern.exec(text)) != null){
+			arrPt[i] = result[0];
+			i++;
+		}
+		//替换掉原文本中的链接
+		for(var j = 0;j<arrPt.length;j++){
+			text = text.replace(arrPt[j],"");
+		}
+		//减掉链接所占的长度
+		return Math.floor((max*2 - text.length - wlen)/2 - 12*i);
+	};
+	*/
+	var allowComment = '0';
+	
+	//举报弹出层
+	function showJuBao(url, cid){
+		
+			$.cover(false);
+			asyncbox.open({
+				id  : 'report_thickbox',
+				url : url,
+				title : '举报违规',
+				width : 378,
+				height : 240,
+				scroll : 'no',
+				data : {
+					'cid'	 : cid,
+					'idtype' : 2 
+				},
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+	}
+
+	$(function(){
+
+		//创建管理员删除的弹出层
+		$('#admin_article_del').click(function(){
+			$.cover(false);
+			asyncbox.open({
+				id : 'class_thickbox',
+				html : '<div class="HT_layer3_1"><ul><li class="HT_li1">操作原因：<select class="HT_sel7" id="del_type" name="del_type"><option value="广告文章">广告文章</option><option value="违规内容">违规内容</option><option value="标题不明">标题不明</option><option value="文不对题">文不对题</option></select></li><li class="HT_li1" ><input class="HT_btn4" id="admin_delete"  type="button" /></li></ul></div>',
+				title : '选择类型',
+				width : 300,
+				height : 150,
+				scroll : 'no',
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+		});
+		$('#admin_delete').live('click' , function(){
+			///blog/logicdel/id/3480184/url/%252Fblog%252Findex.html.html
+			var type = $('#del_type').val();
+			var url = '/blog/logicdel/id/2138293/url/%252Fuid%252F2633067.html.html';
+			window.location.href= url + '?type=' + type;
+		});
+
+
+		//顶  js中暂未添加&过滤 
+		$('#digg').live('click' , function(){
+
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+
+			var bid = $('#digg').attr('bid');
+			var url = $('#digg').attr('url');
+
+			var digg_str = $.cookie('digg_id');
+			if(digg_str != null)
+			{
+				var arr= new Array(); //定义一数组
+
+				arr = digg_str.split(","); //字符分割     
+				for( i=0 ; i < arr.length ; i++ )   
+				{   
+					if(bid == arr[i])
+					{
+						showErrorMsg('已经赞过该文章', '消息提示'); 
+						return false;
+					}
+				} 
+			}
+			$.ajax({
+				type:"POST",
+				url:url,	
+				data: {
+					'bid' : bid 
+				},
+				dataType: 'json',
+				success:function(msg){
+					if(msg.error == 0)
+					{
+						var num = parseInt($('#digg_num').html(),10);
+						num += 1;
+						$('#digg_num').html(num);
+						$('#digg').die();
+
+						if(digg_str == null)
+						{
+							$.cookie('digg_id', bid, {expires: 30 , path: '/'});
+						}
+						else
+						{
+							$.cookie('digg_id', digg_str + ',' + bid, {expires: 30 , path: '/'});
+						}
+						showSucceedMsg('谢谢' , '消息提示');
+					}
+					else if(msg.error == 1)
+					{
+						//showErrorMsg(msg.error_content , '消息提示'); 
+						showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+					}
+					else if(msg.error == 2)
+					{
+						showErrorMsg(msg.error_content , '消息提示'); 
+					}
+				}
+			});
+		});
+		//举报弹出层
+		/*$('.box_report').live('click' , function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+			var url = $('#report_url').val();
+			var cid = $(this).attr('cid');
+			$.cover(false);
+			asyncbox.open({
+				id  : 'report_thickbox',
+				url : url,
+				title : '举报违规',
+				width : 378,
+				height : 240,
+				scroll : 'no',
+				data : {
+					'cid'	 : cid,
+					'idtype' : 2 
+				},
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+		});*/
+
+
+		//评论相关代码
+		
+		//点击回复显示评论框
+		$('.Blog_a10').live('click' , function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+
+			if(allowComment == 1)
+			{
+				showErrorMsg('该博文不允许评论' , '消息提示'); 
+				return false;
+			}
+			var tid = $(this).attr('toid');//留言作者id
+			var bid = $(this).attr('bid');//blogid
+			var cid = $(this).attr('cid');//留言id
+			var tname = $(this).attr('tname');
+			var tpl  = '<div class="Blog_right1_9">';
+				tpl +=	 '<div class="div2">';
+				tpl +=     '<textarea name="" cols="" rows="" class="Blog_ar1_1" id="rmsg">文明上网，理性发言...</textarea>';
+				tpl +=	 '</div>';
+				tpl +=   '<div class="div3">';
+				tpl +=		'<div class="div3_2"><a href="javascript:void(0);" class="Blog_a11" id="quota_sbumit" url="/Comment/PostComment.html" tid="'+tid+'" bid="'+bid+'" cid="'+cid+'" tname="'+tname+'" ></a><a href="javascript:void(0)" id="qx_comment" class="Blog_a12"></a></div>';
+				tpl +=		'<div class="div3_1"><a href="javascript:void(0);" id="mface"><span></span>表情</a></div>';
+				tpl +=		'<div class="clear"></div>';
+				tpl +=	 '</div>';
+				tpl +=  '</div>';
+			$('.z_move_comment').html('');
+			$(this).parents('.Blog_right1_8').find('.z_move_comment').html(tpl).show();
+		});
+		//引用的评论提交
+		$('#quota_sbumit').live('click' , function(){
+
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+
+			var bid   = $(this).attr('bid');
+			var tid   = $(this).attr('tid');//被引用人的id
+			var qid   = $(this).attr('cid');//引用的id
+			var url = $(this).attr('url');
+			var text = $('#rmsg').val();
+			var tname = $(this).attr('tname');
+			if(text == '' || text=='文明上网，理性发言...')
+			{
+				showErrorMsg('评论内容不能为空！' , '消息提示'); 
+				return false;
+			}
+			else
+			{
+				if(mb_strlen(text) > 1000){
+					showErrorMsg('评论内容不能超过500个汉字' , '消息提示'); 
+					return false;
+				}
+			}
+		    $.ajax({
+		        type: "post",
+			    url: url ,
+			    data: {'bid': bid , 'to' : tid , 'qid' : qid , 'text': text , 'tname' : tname },
+				dataType: 'json',
+			    success: function(data){
+				    if(data.code == 1){
+						var tpl =  '<div class="Blog_right1_8">';
+							tpl+=     '<div class="Blog_right_img1"><a href="' +data.info.url+ '" >' + data.info.header + '</a></div>';
+							tpl+=     '<div class="Blog_right_font1">';
+							tpl+=         '<p class="Blog_p5"><span><a href="' +data.info.url+ '" >' + data.info.username + '</a></span>' + data.info.dateline + '</p>';
+							tpl+=         '<p class="Blog_p7"><a href="' + data.info.quota.url + '">' + data.info.quota.username + '</a>：'+ data.info.quota.content + '</p>';
+							tpl+=         '<p class="Blog_p8">' + data.info.content + '</p><span class="span_text1"><a href="javascript:void(0);" class="Blog_a10" toid=' + data.info.fuid + ' bid=' + data.info.bid + ' cid=' + data.info.cid + '  tname = ' + data.info.username + ' >回复</a> | 　<a class="comment_del_mark" style="cursor:pointer" url="' + data.info.delurl + '" >删除</a>　| 　<a href="javascript:showJuBao(\'/blog/ViewReport.html\','+data.info.cid+')" class="box_report" cid="' + data.info.cid + '" >举报</a></span></div>';
+							tpl+=         '<div class="z_move_comment" style="display:none"></div>';
+							tpl+=	      '<div class="Blog_line1"></div></div>';
+							$('#replyList .Blog_right1_8:first').before(tpl);
+							$('.z_move_comment').html('').hide();
+				    }
+					else if(data.code == -1){
+						//showErrorMsg(data.info , '消息提示'); 
+						showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+			        }
+                },
+			    error: function(){//请求出错处理
+                        
+                }
+			});
+		});
+		//底部发表评论
+		$('#submitmsg').click(function(){
+			if(allowComment == 1)
+			{
+				showErrorMsg('该博文不允许评论' , '消息提示'); 
+				return false;
+			}
+			var bid   = $(this).attr('bid');
+			var toid  = $(this).attr('toid');
+			var text = $('#reply').val();
+			var url = $(this).attr('url');
+			if(text == '' || text=='文明上网，理性发言...')
+			{
+				showErrorMsg('评论内容不能为空！' , '消息提示'); 
+				return false;
+			}
+			else
+			{
+				if(mb_strlen(text) > 1000){
+					showErrorMsg('评论内容不能超过500个汉字' , '消息提示'); 
+					return false;
+				}
+			}
+		    $.ajax({
+		        type: "post",
+			    url: url ,
+			    data: {'bid': bid , 'to' : toid ,'text': text},
+				dataType: 'json',
+			    success: function(data){
+				    if(data.code == 1)
+					{
+						var tpl   = '<div class="Blog_right1_8">';
+							tpl  +=   '<div class="Blog_right_img1"><a href="' +data.info.url+ '" >' + data.info.header + '</a></div>';
+							tpl  +=	  '<div class="Blog_right_font1">';
+							tpl  +=       '<p class="Blog_p5"><span><a href="' +data.info.url+ '" >' + data.info.username + '</a></span>' + data.info.dateline + '</p>';
+							tpl  +=       '<p class="Blog_p6">' + data.info.content + '</p>';
+							tpl  +=		  '<div class="div1"><a href="javascript:void(0);" class="Blog_a10"  toid=' + data.info.fuid + ' bid=' + data.info.bid + ' cid=' + data.info.cid + '>回复</a> | 　<a class="comment_del_mark" style="cursor:pointer" url="' + data.info.delurl + '">删除</a>　| 　<a href="javascript:showJuBao(\'/blog/ViewReport.html\','+data.info.cid+')" class="box_report" cid="' + data.info.cid + '">举报</a></div>';
+							tpl  +=		  '<div class="z_move_comment" style="display:none"></div>';
+							tpl  +=    '</div><div class="Blog_line1"></div></div>';
+							$('.Blog_tit3:first').after(tpl);
+							$('#reply').val('文明上网，理性发言...');
+					}
+					else if(data.code == -1)
+					{
+						showErrorMsg(data.info , '消息提示'); 
+			        }
+                },
+			    error: function(){//请求出错处理
+                        
+                }
+		    });
+			
+		});
+		//底部评论重置
+		$('#reset_comment').click(function(){
+			$('#reply').val('文明上网，理性发言...');
+		});
+		//取消回复
+		$('#qx_comment').live('click' , function(){
+			$('.z_move_comment').html('').hide();
+		});
+
+
+		$('#rmsg, #reply').live({
+		    focus:function(){
+			    if($(this).val() == '文明上网，理性发言...'){
+			        $(this).val('');
+			    }
+			},
+			blur:function(){
+		        if($(this).val() == ''){
+			        $(this).val('文明上网，理性发言...');
+			    }
+			}
+		});
+		//删除留言确认
+		$('.comment_del_mark').live('click' , function(){
+			var url = $(this).attr('url');
+			asyncbox.confirm('删除留言','确认', function(action){
+				if(action == 'ok')
+				{
+					location.href = url;
+				}
+			});
+		});
+		//删除时间确认
+		$('.del_article_id').click(function(){
+			var delurl = $(this).attr('delurl');
+			asyncbox.confirm('删除文章','确认', function(action){
+				if(action == 'ok')
+				{
+					location.href = delurl;
+				}
+			});
+		});
+		/*
+		//字数限制
+		$('#rmsg, #reply').live('keyup', function(){
+			var id = $(this).attr('id');
+			var left = Util.calWbText($(this).val(), 500);
+			var eid = '#errmsg';
+			
+			if(id == 'reply') eid =  '#rerrmsg';
+			if (left >= 0)
+		        $(eid).html('您还可以输入<span>' + left + '</span>字');
+		    else
+		        $(eid).html('<font color="red">您已超出<span>' + Math.abs(left) + '</span>字 </font>');
+		});
+		*/
+		//加载表情
+	    $('#face').qqFace({id : 'facebox1', assign : 'reply', path : '/image/qqface/'});
+	    $('#mface').qqFace({id : 'facebox', assign : 'rmsg', path:'/image/qqface/'});
+	    
+		/*
+		$('#class_one_id').change(function(){
+			alert(123213);
+			var id = parseInt($(this).val() , 10);
+			if(id == 0) return false;
+			$('.hidden_son_class span').each(function( index , dom ){
+				if( dom.attr('cid')  == id )
+				{
+				}
+			});
+		});
+		*/
+		//转载文章
+		var turn_url = "/blog/viewClassPart.html";
+		$('#repost_bar').click(function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+			var id = $(this).attr('bid');
+			asyncbox.open({
+				id  : 'turn_class_thickbox',
+				url : turn_url,
+				title : '转载文章',
+				width : 330,
+				height : 131,
+				scroll : 'no',
+				data : {
+					'id'	 : id
+				},
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+		});
+		/*
+	    //转发文章
+	    $('#repost_bar').live('click' , function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+	    	var bid  = $(this).attr('bid');
+	    	var url  = $(this).attr('url');
+	    	asyncbox.confirm('转载文章','确认', function(action){
+	    	  if(action == 'ok'){
+	    	    $.ajax({
+				type:"POST",
+				url:url,	
+				data: {
+					'bid' : bid 
+				},
+				dataType: 'json',
+				success:function(msg){
+				  if(msg.error == 0){
+				    showSucceedMsg('转发成功！', '消息提示');
+				  }else if(msg.error == 1){
+				    //location.href = '/index.php?r=site/login';
+					showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				  }else{
+				    showErrorMsg(msg.error_content, '消息提示');
+			      }
+				}
+			  });
+	    	  }
+	    	});
+
+		});
+		*/
+
+	});
+</script>
+<!--该部分应该放在输出代码块的后面才起作用 -->
+<script type="text/javascript">
+
+SyntaxHighlighter.autoloader(
+	'applescript			/highlight/scripts/shBrushAppleScript.js',
+	'actionscript3 as3		/highlight/scripts/shBrushAS3.js',
+	'bash shell				/highlight/scripts/shBrushBash.js',
+	'coldfusion cf			/highlight/scripts/shBrushColdFusion.js',
+	'cpp c					/highlight/scripts/shBrushCpp.js',
+	'c# c-sharp csharp		/highlight/scripts/shBrushCSharp.js',
+	'css					/highlight/scripts/shBrushCss.js',
+	'delphi pascal			/highlight/scripts/shBrushDelphi.js',
+	'diff patch pas			/highlight/scripts/shBrushDiff.js',
+	'erl erlang				/highlight/scripts/shBrushErlang.js',
+	'groovy					/highlight/scripts/shBrushGroovy.js',
+	'java					/highlight/scripts/shBrushJava.js',
+	'jfx javafx				/highlight/scripts/shBrushJavaFX.js',
+	'js jscript javascript	/highlight/scripts/shBrushJScript.js',
+	'perl pl				/highlight/scripts/shBrushPerl.js',
+	'php					/highlight/scripts/shBrushPhp.js',
+	'text plain				/highlight/scripts/shBrushPlain.js',
+	'py python				/highlight/scripts/shBrushPython.js',
+	'ruby rails ror rb		/highlight/scripts/shBrushRuby.js',
+	'scala					/highlight/scripts/shBrushScala.js',
+	'sql					/highlight/scripts/shBrushSql.js',
+	'vb vbnet				/highlight/scripts/shBrushVb.js',
+	'xml xhtml xslt html	/highlight/scripts/shBrushXml.js'
+);
+SyntaxHighlighter.all();
+
+
+function code_hide(id){
+	var code = document.getElementById(id).style.display;
+	if(code == 'none'){
+		document.getElementById(id).style.display = 'block';
+	}else{
+		document.getElementById(id).style.display = 'none';
+	}
+}
+</script>
+  <!-- footer -->
+  <div class="Blog_footer" style='clear:both'>
+    <div><a href="http://www.chinaunix.net/about/index.shtml" target="_blank" rel="nofollow">关于我们</a> | <a href="http://www.it168.com/bottomfile/it168.shtml" target="_blank" rel="nofollow">关于IT168</a> | <a href="http://www.chinaunix.net/about/connect.html" target="_blank" rel="nofollow">联系方式</a> | <a href="http://www.chinaunix.net/about/service.html" target="_blank" rel="nofollow">广告合作</a> | <a href="http://www.it168.com//bottomfile/flgw/fl.htm" target="_blank" rel="nofollow">法律声明</a> | <a href="http://sso.chinaunix.net/Register?return_url=http%3A%2F%2Fblog.chinaunix.net%2F
+" target="_blank" rel="nofollow">免费注册</a>
+      <p>Copyright  2001-2010 ChinaUnix.net All Rights Reserved 北京皓辰网域网络信息技术有限公司. 版权所有 </p>
+      <div>感谢所有关心和支持过ChinaUnix的朋友们
+        <p>京ICP证041476号 京ICP证060528号</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script language="javascript">
+
+//全局错误提示弹出框
+function showErrorMsg(content, title, url){
+	var url = url || '';
+	var title = title || '消息提示';
+	var html = '';
+	html += '<div class="HT_layer3_1 HT_layer3_2"><ul><li><p><span class="login_span1"></span>' + content + '</p></li>';
+	if(url == '' || url.length == 0){
+		html += '<li class="HT_li1"><input type="button" class="HT_btn2"  onclick=\'close_windows("error_msg")\'></li>';	
+	} else {
+		html += '<li class="HT_li1"><input type="button" class="login_btn1" onclick="location.href=\'' + url + '\'"></li>';
+	}
+	html += '</ul></div>';
+	$.cover(true);
+	   asyncbox.open({
+		 id: 'error_msg',
+		 title : title,
+		 html : html,
+		 'callback' : function(action){
+			 if(action == 'close'){
+				 $.cover(false);
+			 }
+		 }
+	});
+}
+
+//全局正确提示
+function showSucceedMsg(content, title , url ){
+	var url = url || '';
+	var title = title || '消息提示';
+	var html = '';
+	html += '<div class="HT_layer3_1 HT_layer3_2"><ul><li><p><span class="login_span2"></span>' + content + '</p></li>';
+	if(url == '' || url.length == 0){
+		html += '<li class="HT_li1"><input type="button" class="HT_btn2"  onclick=\'close_windows("error_msg")\'></li>';	
+	} else {
+		html += '<li class="HT_li1"><input type="button" class="HT_btn2" onclick="location.href=\'' + url + '\'"></li>';
+	}
+	html += '</ul></div>';
+	$.cover(true);
+	asyncbox.open({
+		 id: 'error_msg',
+		 title : title,
+		 html : html,
+		 'callback' : function(action){
+			 if(action == 'close'){
+				 $.cover(false);
+			 }
+		 }
+	});
+}
+
+//关闭指定id的窗口
+function close_windows(id){
+	$.cover(false);
+	$.close(id);
+}
+
+
+//公告
+var tID;
+var tn;                        // 高度
+var nStopTime = 5000;        // 不同行间滚动时间隔的时间，值越小，移动越快
+var nSpeed = 50;            // 滚动时，向上移动一像素间隔的时间，值越小，移动越快
+var isMove = true;
+var nHeight = 25;
+var nS = 0;
+var nNewsCount = 3;
+
+/**
+ * n 用于表示是否为第一次运行
+ **/
+function moveT(n)
+{
+    clearTimeout(tID)
+    var noticev2 = document.getElementById("noticev2")
+    nS = nSpeed;
+    
+    // 只在第一次调用时运行，初始化环境（有没有参数）
+    if (n)
+    {
+        // 设置行高
+        noticev2.style.lineHeight = nHeight + "px";
+        // 初始化显示位置
+        tn = 0;
+        // 刚进入时在第一行停止时间
+        nS = nStopTime;
+    }
+    
+    // 判断鼠标是否指向层
+    if (isMove)
+    {
+        // 向上移动一像素
+        tn--;
+        // 如果移动到最下面一行了，则移到顶行
+        if (Math.abs(tn) == nNewsCount * nHeight)
+        {
+            tn = 0;
+        }
+        // 设置位置
+        noticev2.style.marginTop = tn + "px";
+        // 完整显示一行时，停止一段时间
+        if (tn % nHeight == 0)
+        {
+            nS = nStopTime;
+        }
+    }
+
+    tID = setTimeout("moveT()", nS);
+}
+moveT(1);    // 此处可以传入任何参数
+</script>
+<script language="javascript" src="http://stat.it168.com/pv.js"></script>
+<script>
+function sendPV(){
+    var pvTrack = new PvTrack();
+    pvTrack.type = 35; // 频道类别ID
+    pvTrack.channel = 189; // 频道ID
+    pvTrack.pageType = 0;
+    pvTrack.track();
+}
+window.setTimeout("sendPV()", 1000);
+</script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20237423-2']);
+  _gaq.push(['_setDomainName', '.chinaunix.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0ee5e8cdc4d43389b3d1bfd76e83216b' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript" src="/js/jquery.qqFace.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+1./etc/passwd我们查看一下这个文件:
+我们首先看第一行root这一行，一共有七项，每一项使用：分开，他们代表的意思如下：
+
+帐号名称：帐号名称由于对应用户ID，这个是系统默认用户root超级管理员，在同一个系统帐号名称是唯一的，长度根据不同的linux系统而定，一般是8位。
+密码：由于系统中还有一个/etc/shadow文件用于存放加密后的口令，所以在这里这一项是“x”来表示，如果用户没有设置口令，则该项为空。
+用户ID：这个是系统内部用于来识别不同的用户的，不同的用户识别码不同，其中用户ID有以下几种：
+    	0代表系统管理员，如果你想建立一个系统管理员的话，可以建立一个普通帐户，然后将该账户的用户ID改为0即可。
+    	1-500系统预留的ID，500以上是普通用户使用。
+组ID：其实这个和用户ID差不多，用来规范群组，他与/etc/group有关。
+描述信息：这个字段几乎没有什么作用，只是用来解释这个帐号的意义。
+用户根目录：就是用户登录系统的起始目录，用户登录系统后将首先进入该目录。root用户默认的是/root，普通用户的是/home/用户名。
+用户登录shell：就是用户登录系统时使用的shell，关于shell我们会在以后专门的研究一下。
+
+passwd 几个比较重要的参数；
+passwd --help
+Usage: passwd [OPTION...] <accountName>
+-k, --keep-tokens       keep non-expired authentication tokens 注：保留即将过期的用户在期满后能仍能使用；
+-d, --delete            delete the password for the named account (root only) 注：删除用户密码，仅能以root权限操作；
+-l, --lock              lock the named account (root only) 注：锁住用户无权更改其密码，仅能通过root权限操作；
+-u, --unlock            unlock the named account (root only) 注：解除锁定；
+-f, --force             force operation 注：强制操作；仅root权限才能操作；
+-x, --maximum=DAYS      maximum password lifetime (root only) 注：两次密码修正的最大天数，后面接数字；仅能root权限操作；
+-n, --minimum=DAYS      minimum password lifetime (root only) 注：两次密码修改的最小天数，后面接数字，仅能root权限操作；
+-w, --warning=DAYS      number of days warning users receives before 注：在距多少天提醒用户修改密码；仅能root权限操作；
+password expiration (root only)
+-i, --inactive=DAYS     number of days after password expiration when an 注：在密码过期后多少天，用户被禁掉，仅能以root操作；
+account becomes disabled (root only)
+-S, --status            report password status on the named account (root   注：查询用户的密码状态，仅能root用户操作；
+only)
+--stdin                 read new tokens from stdin (root only)
+
+passwd 作为普通用户和超级权限用户都可以运行，但作为普通用户只能更改自己的用户密码，但前提是没有被root用户锁定；如果root用户运行passwd ，可以设置或修改任何用户的密码；
+passwd 命令后面不接任何参数或用户名，则表示修改当前用户的密码；请看下面的例子；
+passwd 注：没有加任何用户，我是用root用户来执行的passwd 表示修改root用户的密码；下面也有提示；
+Changing password for user root.
+New UNIX password: 注：请输入新密码；
+Retype new UNIX password: 注：验证新密码；
+passwd: all authentication tokens updated successfully. 注：修改root密码成功；
+如果是普通用户执行passwd 只能修改自己的密码；
+
+如果新建用户后，要为新用户创建密码，则用 passwd 用户名 ，注意要以root用户的权限来创建；
+passwd beinan 注：更改或创建beinan用户的密码；
+Changing password for user beinan.
+New UNIX password: 注：请输入新密码；
+Retype new UNIX password: 注：再输入一次；
+passwd: all authentication tokens updated successfully. 注：成功；
+
+普通用户如果想更改自己的密码，直接运行passwd即可；比如当前操作的用户是beinan；
+[beinan@localhost ~]$ passwd
+Changing password for user beinan. 注：更改beinan用户的密码；
+(current) UNIX password: 注：请输入当前密码；
+New UNIX password: 注：请输入新密码；
+Retype new UNIX password: 注：确认新密码；
+passwd: all authentication tokens updated successfully. 注：更改成功
+
+2、
+比如我们让某个用户不能修改密码，可以用-l参数来锁定(root用户)：
+passwd -l beinan 注：锁定用户beinan不能更改密码；
+Locking password for user beinan.
+passwd: Success           注：锁定成功；
+su beinan 注：通过su切换到beinan用户；
+passwd 注：beinan来更改密码；
+Changing password for user beinan.
+Changing password for beinan
+(current) UNIX password: 注：输入beinan的当前密码；
+passwd: Authentication token manipulation error 注：失败，不能更改密码；
+
+passwd -d beinan 注：清除beinan用户密码；(root用户)
+Removing password for user beinan.
+passwd: Success                        注：清除成功；
+passwd -S beinan 注：查询beinan用户密码状态；(root用户)
+Empty password.                     注：空密码，也就是没有密码；
+注意： 当我们清除一个用户的密码时，登录时就无需密码；这一点要加以注意；
+
+3、
+chage 修改用户密码有效期限的命令；
+chage 用语法格式：
+chage [-l] [-m 最小天数] [-M 最大天数] [-W 警告] [-I 失效日] [-E 过期日] [-d 最后日] 用户
+前面已经说的好多了，这个只是一笔带过吧，知道有这个命令就行，自己实践实践再说，大体和psswd有些参数的用法差不多；
+密码时效命令-----chage
+
+格式为：chage [<选项>] <用户名>
+下面列出了chage命令的选项说明：
+-m days： 密码可更改的最小天数。为零时代表任何时候都可以更改密码。
+-M days： 指定口令有效的最多天数。当该选项指定的天数加上-d选项指定的天数小于当前的日期时，用户在使用该帐号前就必须改变口令。
+-d days： 指定从1970年1月1日起，口令被改变的天数。
+-I days： 指定口令过期后，帐号被锁前不活跃的天数。如果值为0，帐号在口令过期后就不会被锁。
+-E date： 指定帐号被锁的日期。日期格式YYYY-MM-DD。若不用日期，也可以使用自1970年1月1日后经过的天数。
+-W days： 指定口令过期前要警告用户的天数。
+-l： 列出指定用户当前的口令时效信息，以确定帐号何时过期。
+例如下面的命令要求用户user1两天内不能更改口令，并且口令最长的存活期为30天，并且口令过期前5天通知用户
+chage -m 2 -M 30 -W 5 user1
+可以使用如下命令查看用户user1当前的口令时效信息：chage -l user1
+提示：1）可以使用chage <用户名>进入交互模式修改用户的口令时效。
+2）修改口令实质上就是修改影子口令文件/etc/shadow中与口令时效相关的字段值。
+
+实例:
+passwd peter -l 临时关闭一个用户
+临时关闭：在/etc/shadow文件中属于该用户的行的第二个字段（密码）前面加上*就可以了。想恢复该用户，去掉*即可。
+或者使用如下命令关闭用户账号：
+passwd peter -l
+重新释放：
+passwd peter -u
+
+passwd peter -u 临时关闭后再开启一个用户
+临时关闭：在/etc/shadow文件中属于该用户的行的第二个字段（密码）前面加上*就可以了。想恢复该用户，去掉*即可。
+或者使用如下命令关闭用户账号：
+passwd peter -l
+重新释放：
+passwd peter -u
+
+useradd youyou 创建一个用户youyou，如果没指定组，那么默认会创建一个youyou组，是youyou组的用户
+passwd youyou 设置用户youyou的密码
+然后输入两遍密码就OK了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

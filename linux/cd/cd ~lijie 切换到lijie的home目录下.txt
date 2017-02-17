@@ -1,0 +1,3 @@
+[root@localhost root]# cd ~lijie
+[root@localhost lijie]# pwd
+/home/lijie

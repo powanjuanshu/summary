@@ -1,0 +1,181 @@
+Maven强大的一个重要的原因是它有一个十分完善的生命周期模型(lifecycle),这个生命周期可以从两方面来理解:
+第一,顾名思义,运行Maven的每个步骤都由它来定义的,这种预定义的默认行为使得我们使用Maven变得简单,相比而言,Ant的每个步骤都要你手工去定义.
+第二,这个模型是一种标准,在不同的项目中,使用Maven的接口是一样的,这样就不用去仔细理解每个项目的构建了,一般情况下,mvn clean install这样的命令是通用的.
+
+Maven有三套相互独立的生命周期,请注意这里说的是"三套",而且"相互独立".这三套生命周期分别是:
+* Clean Lifecycle    在进行真正的构建之前进行一些清理工作.
+* Default Lifecycle  构建的核心部分,编译,测试,打包,部署等等.
+* Site Lifecycle     生成项目报告,站点,发布站点.
+
+我再次强调一下它们是相互独立的,你可以仅仅调用clean来清理工作目录,仅仅调用site来生成站点.当然你也可以直接运行mvn clean install site运行所有这三套生命周期.
+
+知道了每套生命周期的大概用途和相互关系以后,来逐个详细看一下每套生命周期,Clean和Site相对比较简单,先解释一下.
+
+每套生命周期都由一组阶段(Phase)组成,我们平时在命令行输入的命令总会对应于一个特定的阶段.比如,运行mvn clean,这个的clean是Clean生命周期的一个阶段.有点绕?
+要知道有Clean生命周期,也有clean阶段.Clean生命周期一共包含了三个阶段:
+
+pre-clean  执行一些需要在clean之前完成的工作
+clean  移除所有上一次构建生成的文件
+post-clean  执行一些需要在clean之后立刻完成的工作
+
+mvn clean中的clean就是上面的clean,在一个生命周期中,运行某个阶段的时候,它之前的所有阶段都会被运行,也就是说,mvn clean等同于mvn pre-clean clean,
+如果我们运行 mvn post-clean,那么 pre-clean,clean 都会被运行.这是Maven很重要的一个规则,可以大大简化命令行的输入.
+
+下面看一下Site生命周期的各个阶段:
+* pre-site     执行一些需要在生成站点文档之前完成的工作
+* site         生成项目的站点文档
+* post-site    执行一些需要在生成站点文档之后完成的工作,并且为部署做准备
+* site-deploy  将生成的站点文档部署到特定的服务器上
+
+最后,来看一下Maven的最重要的Default生命周期,绝大部分工作都发生在这个生命周期中,这里,只解释一些比较重要和常用的阶段:
+validate
+generate-sources
+process-sources
+generate-resources
+process-resources                复制并处理资源文件,至目标目录,准备打包.
+compile                          编译项目的源代码.
+process-classes
+generate-test-sources 
+process-test-sources 
+generate-test-resources
+process-test-resources           复制并处理资源文件,至目标测试目录.
+test-compile                     编译测试源代码.
+process-test-classes
+test                             运行测试.
+prepare-package
+package                          打包成可发布的格式,如JAR .
+pre-integration-test
+integration-test
+post-integration-test
+verify
+install                          将包安装至本地仓库,以让其它项目依赖.
+deploy                           将最终的包复制到远程的仓库.
+
+基本上,根据名称我们就能猜出每个阶段的用途,关于其它阶段的解释,请参考 http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+运行任何一个阶段的时候,它前面的所有阶段都会被运行,这也就是为什么我们运行mvn install 的时候,代码会被编译,测试,打包.
+
+Maven2的阶段(生命周期)说明:
+Maven2拥有三套独立的生命周期,Maven的命令也是基于这些生命周期来说的.
+1.clean:清理先前构建的构件,又分为下面三个下阶段:
+　　a.pre-clean 执行一些清理前需要完成的工作.
+　　b.clean 清理上一次构建生成的文件
+　　c.post-clean 执行一些清理后需要完成的工作
+2.default:定义了真正构建时所需要的所有步骤,它是这三个中最核心的部分,包含的阶段如下:
+　　a.validate 验证项目是正确的并且所有必需的信息都是可用的
+　　b.initialize 初始化构建状态
+　　c.generate-sources 产生所有的用来编译的源代码
+　　d.process-sources 处理源代码
+　　e.generate-resources 产生包含在package中的资源
+　　f.process-resources 复制和处理资源到目标目录,为打包做好准备
+　　g.compile 编译项目的主源代码
+　　h.process-classes 对编译器产生的文件进行后期处理
+　　i.generate-test-sources 产生所有用来编译的测试源代码
+　　j.process-test-sources 处理测试源代码
+　　k.generate-test-resources 创建测试所需要的资源
+　　l.process-test-resources 复制和处理资源到测试目标目录
+　　m.compile 编译测试源代码到目标目录
+　　n.process-test-classes 对编译测试源代码产生的文件进行后期处理
+　　o.test 使用适当的单元测试框架运行测试,这些测试代码不应该被打包或者部署
+　　p.prepare-package 执行所有需要执行的操作为打包做准备,这往往会产生一个还未打包的处理过的包版本
+　　q.package 使用设置的方式对编译过的文件进行打包
+　　r.pre-integration-test 执行一些集成测试执行前必须的操作
+　　s.integration-test 处理和部署包到集成测试环境中,进行测试
+　　t.post-integration-test 对集成测试进行后期处理
+　　u.verify 执行所有检查确保包是正确的和符合质量要求的
+　　v.install 安装包到本地仓库,为其他本地的项目提供依赖i
+　　w.deploy 发布包,拷贝最后的包到远程仓库中,为其他的开发任何项目提供使用d
+3.site:建立和发布项目站点
+　　a.pre-site 前期准备
+　　b.site 产生项目的站点文档
+　　c.post-site 后期处理
+　　d.site-deploy 部署站点到服务器
+
+
+一.Maven的执行方式
+maven对构建(build)的过程进行了抽象和定义,这个过程被称为构建的生命周期(lifecycle).生命周期(lifecycle)由多个阶段(phase)组成,每个阶段(phase)会挂接一到多个goal.
+goal是maven里定义任务的最小单元,goal分为两类,一类是绑定phase的,就是执行到某个phase,那么这个goal就会触发,另外一类不绑定,就是单独任务,这就相当于ant里的target.
+
+1.以phase来构建
+例如:
+mvn clean
+mvn compile
+mvn test
+mvn package
+表明maven会执行到某个生命周期(lifecycle)的某个阶段(phase)
+这个phase以及它前面所有phase绑定的目标(goal)都会执行,每个phase都会邦定maven默认的goal或者没有goal, 或者自定义的goal.
+也可以通过传入参数跳过(skip)某些phase,例如:
+mvn install -Dmaven.test.skip=true
+
+
+以phase为目标进行构建是最常见的,如我们平时经常执行的mvn compile,mvn test,mvn package...等等,compile,test,package都是maven生命周期(lifecycle)里的phase,通过mvn命令,
+你可以指定一次构建执行到那一个阶段,在执行过程中,所有经历的执行阶段(phase)上绑定的goal都将得到执行.例如,对于一个jar包应用,当执行mvn package命令时,
+maven从validate阶段一个阶段一个阶段的执行,在执行到compile阶段时,compiler插件的compile goal会被执行,因为这个goal是绑定在compile阶段(phase)上的.
+这一点可从其对应的mojo类上得知:
+@goal compile
+@phase compile
+public class CompilerMojo extends AbstractCompilerMojo {
+  ...
+}
+再比如经常使用的打包插件shade,它的goal是绑定到package阶段的,这样,使用mvn package进行打包时都会执行shade的.
+@goal shade
+@phase package
+public class ShadeMojo extends AbstractCompilerMojo {
+  ...
+}
+
+2.以goal来构建
+这类就是没有绑定phase的goal,但是这类goal却通常会有个执行前提,就是project必须执行到某个phase,
+那么执行这个goal,其实也会触发maven执行到前提要求的phase.
+例如jetty:run是个非绑定phase的goal,它的前提是test-compile,这个前提是由plugin的代码逻辑制定的
+
+/**
+ * @goal run
+ * @requiresDependencyResolution runtime
+ * @execute phase="test-compile"
+ * @description Runs jetty6 directly from a maven project
+ */
+public class Jetty6RunMojo extends AbstractJettyRunMojo {
+   ...
+}
+
+虽然以phase为目标的构建最常见,但是有时候我们会发现,一些插件的goal并不适合绑定到任何阶段(phase)上,或者是,这些goal往往是单独执行,不需要同某个阶段(phase)绑定在一起,
+比如hibernate插件的导入\导出goal多数情况下是根据需要要手动执行的(当然,也可以绑定到某个阶段上,比如进行单元测试时,可考虑将其绑定到test阶段上).
+再比如jetty(6.1.26)插件,它的goal都是将打包或未打包的工程部署到jetty里然后启动jetty容器的,多数情况下,人们都是独立运行这些goal的,
+比如:人们希望当键入mvn jetty:run后,工程就能完成编译后启动jetty,而jetty插件也确实是这样做的,它的run goal的mojo是这样声明的:
+/**
+ * @goal run
+ * @requiresDependencyResolution runtime
+ * @execute phase="test-compile"
+ * @description Runs jetty6 directly from a maven project
+ */
+public class Jetty6RunMojo extends AbstractJettyRunMojo {
+   ...
+}
+其中@execute phase="test-compile"指明jetty:run这一goal会促使maven先build到test-compile阶段,再执行这个goal.
+同样,对于jetty:run-war这个goal则要求先build到package阶段再执行该goal.
+public class Jetty6RunWar extends AbstractJetty6Mojo {
+   ...
+}
+而另外一个例子是exec插件的exec:java.
+@goal java
+@excute phase="validate"
+public class ExecJavaMojo extends AbstractExecMojo {
+   ...
+}
+这个goal也声明了execute的phase,但却是validate,这样,如果代码没有编译,执行这个goal就会出错,所以多数情况下,人们总是使用下面的方式执行的:
+mvn clean compile exec:java
+
+每个LifeCycle phase实质上都会绑定到某个plugin:goal上.例如命令
+mvn compile
+实际上等价于mvn compiler:compile
+即执行compile phase命令＝执行compiler plugin的compile goal
+
+
+
+
+
+
+
+
+
+

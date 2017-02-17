@@ -1,0 +1,15 @@
+[root@localhost root]# ls -lh /home/tar_package/
+总用量 620M
+-rw-r--r--    1 root     root         997K  1月  5 22:49 apr-1.5.1.tar.gz
+-rw-r--r--    1 root     root         854K  1月  5 22:49 apr-util-1.5.4.tar.gz
+-rw-r--r--    1 root     root          63K 12月 10 18:45 echo-nginx-module-0.57.tar.gz
+-rw-r--r--    1 root     root         7.2M  1月  7 21:28 httpd-2.2.29.tar.gz
+
+参数 -h 表示使用Human-readable的输出,也就是在档案系统大小使用KB,GB,MB等易读的格式。
+
+注意:
+ls -ldh:显示的是目录本身作为一个文件所占据的磁盘空间大小
+
+du -sh:则递归累积了目录里面所包含的所有文件所占据的总的磁盘空间的大小
+
+所以后者具有实际意义,前者一般没啥用

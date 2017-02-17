@@ -1,0 +1,11 @@
+测试
+mvn test
+
+Maven会自动查找测试文件,寻找的模式为:
+默认包括的测试文件有:
+**/*Test.java
+**/Test*.java
+**/*TestCase.java
+默认排除的测试文件有:
+**/Abstract*Test.java
+**/Abstract*TestCase.java

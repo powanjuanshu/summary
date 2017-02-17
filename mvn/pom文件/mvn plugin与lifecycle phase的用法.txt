@@ -1,0 +1,162 @@
+<plugin>element可以给lifecycle phase添加要执行的goal,<plugin>设置的goal将会被添加到goal list goals which already bound to the lifecycle from the packaging selected.
+这时某个phase被绑定了1个以上的goal,那么在执行该phase的mvn命令时,会先执行<packaging>本身所绑定的goal,然后再执行<plugin>绑定的goals.
+你更可以使用<plugin>的child element<executions>来控制goal的执行顺序.
+
+例:有一个Modello plugin,它总是绑定modello:java到generate-sources phase(注意:设置绑定不是在你的pom.xml里,而是plugin本身已经设置好了的)
+
+如果你的project想使用Modello plugin来generate sources from a model,那么就需要在pom.xml里的<build>里的<plugins>里添加下列代码:
+<plugin>
+  <groupId>org.codehaus.modello</groupId>
+  <artifactId>modello-maven-plugin</artifactId>
+  <executions>
+    <execution>
+      <configuration>
+        <model>maven.mdo</model>
+        <modelVersion>4.0.0</modelVersion>
+      </configuration>
+      <goals>
+        <goal>java</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+为什么要使用<executions>?这是因为使用它可以对同一个goal根据不同的<configuration>来执行多次.
+ 
+如果有多个匹配某个phase的<execution>,那么他们将会被依次按顺序执行(当然,被继承的execution会先被执行)
+ 
+我们再来考虑这样一种情况:上面提到Modello plugin的goal(modello:java)被绑定到generate-sources phase(注意:设置绑定不是在你的pom.xml里,而是plugin本身已经设置好了的),
+如果我还希望该goal能够同时也绑定到另外的,非内在绑定的phase上,怎么办呢?很简单,只需要在<execution>里使用<phase>来设置.例如,你有一个goal touch:timestamp,
+它是用来输出某个file的timestamp,该goal内在绑定到test phase,你希望能把它也绑定到process-test-resources上,则使用下列代码:
+ <plugin>
+   <groupId>com.mycompany.example</groupId>
+   <artifactId>touch-maven-plugin</artifactId>
+   <executions>
+     <execution>
+       <phase>process-test-resources</phase>
+       <configuration>
+         <file>${project.output.directory}/timestamp.txt</file>
+       </configuration>
+       <goals>
+         <goal>timestamp</goal>
+       </goals>
+     </execution>
+   </executions>
+ </plugin>
+
+lifecycle phases的完整列表(按执行的先后顺序):
+validate validate the project is correct and all necessary information is available.
+generate-sources generate any source code for inclusion in compilation.
+process-sources process the source code, for example to filter any values.
+generate-resources generate resources for inclusion in the package.
+process-resources copy and process the resources into the destination directory, ready for packaging.
+compile compile the source code of the project.
+process-classes post-process the generated files from compilation, for example to do bytecode enhancement on Java classes.
+generate-test-sources generate any test source code for inclusion in compilation.
+process-test-sources process the test source code, for example to filter any values.
+generate-test-resources create resources for testing.
+process-test-resources copy and process the resources into the test destination directory.
+test-compile compile the test source code into the test destination directory
+test run tests using a suitable unit testing framework. These tests should not require the code be packaged or deployed.
+prepare-package perform any operations necessary to prepare a package before the actual packaging. This often results in an unpacked, processed version of the package. (Maven 2.1 and above)
+package take the compiled code and package it in its distributable format, such as a JAR.
+pre-integration-test perform actions required before integration tests are executed. This may involve things such as setting up the required environment.
+integration-test process and deploy the package if necessary into an environment where integration tests can be run.
+post-integration-test perform actions required after integration tests have been executed. This may including cleaning up the environment.
+verify run any checks to verify the package is valid and meets quality criteria.
+install install the package into the local repository, for use as a dependency in other projects locally.
+deploy done in an integration or release environment, copies the final package to the remote repository for sharing with other developers and projects.
+
+* maven-compiler-plugin的用法:
+  maven的编译插件默认是JDK 1.4的编译级别,为了让Maven的编译插件使用JDK 5.0的编译级别,需要对编译插件作如下配置:
+  <build>
+    <finalName>Test-Module</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+	  <encoding>UTF-8</encoding> //设置编译字符
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  额外的<build>标记是必要的,用来覆盖源代码,以达到Java代码的水平.默认情况下,采用的是jdk1.4,但您的代码使用了泛型,因而需要jdk 5.0及以上编译.
+
+* maven-resources-plugin的用法
+* maven-jar-plugin的用法
+* maven-shade-plugin的用法,将java工程打成可执行的jar包:
+  用maven-shade-plugin打包,而不用maven-assembly-plugin打包的原因
+  现在基本上都是采用maven来进行开发管理,我有一个需求是需要把通过maven管理的java工程打成可执行的jar包,这样也就是说必需把工程依赖的jar包也一起打包.
+  而使用maven默认的package命令构建的jar包中只包括了工程自身的class文件,并没有包括依赖的jar包.我们可以通过配置插件来对工程进行打包,pom具体配置如下:
+  maven-assembly-plugin(使用此插件会有一些问题)
+  <plugin>
+    <artifactId>maven-assembly-plugin</artifactId>  
+    <configuration>  
+      <appendAssemblyId>false</appendAssemblyId>  
+      <descriptorRefs>  
+        <descriptorRef>jar-with-dependencies</descriptorRef>  
+      </descriptorRefs>  
+      <archive>  
+        <manifest>  
+          <mainClass>com.chenzhou.examples.Main</mainClass>  
+        </manifest>  
+      </archive>  
+    </configuration>  
+    <executions>  
+      <execution>  
+        <id>make-assembly</id>  
+        <phase>package</phase>  
+        <goals>  
+          <goal>assembly</goal>  
+        </goals>  
+      </execution>  
+    </executions>  
+  </plugin>
+  其中<mainClass></mainClass>的值表示此工程的入口类,也就是包含main方法的类,在我的例子中就是com.chenzhou.examples.Main.
+  配置完pom后可以通过执行mvn assembly:assembly命令来启动插件进行构建.构建成功后会生成jar包,这样我们就可以在命令行中通过java -jar XXX.jar来运行jar件了.
+  不过使用此插件会有一些问题:我在工程中依赖了spring框架的jar包,我打包成功后使用命令来调用jar包时报错如下（内网环境）:org.xml.sax.SAXParseException: schema_reference.4: Failed to read schema document 'http://www.springframework.org/schema/beans/spring-beans-3.0.xsd', because 1) could not find the document; 2) the document could not be read; 3) the root element of the document is not <xsd:schema>.  
+  关于此问题报错的原因,我在网上找到一篇文章对此有比较详细的解释:http://blog.csdn.net/bluishglc/article/details/7596118 
+  简单来说就是spring在启动时会加载xsd文件,它首先会到本地查找xsd文件(一般都会包含在spring的jar包中),如果找不到则会到xml头部定义的url指定路径下中去寻找xsd,如果找不到则会报错.
+  附:在spring jar包下的META-INF文件夹中都会包含一个spring.schemas文件,其中就包含了对xsd文件的路径定义,具体如下图所示:
+  由于我的工程是在内网,所以通过url路径去寻找肯定是找不到的,但是比较奇怪的是既然spring的jar包中都会包含,那为什么还是找不到呢？
+  原来这是assembly插件的一个bug,具体情况参见:http://jira.codehaus.org/browse/MASSEMBLY-360
+  该bug产生的原因如下:工程一般依赖了很多的jar包,而被依赖的jar又会依赖其他的jar包,这样,当工程中依赖到不同的版本的spring时,在使用assembly进行打包时,只能将某一个版本jar包下的spring.schemas文件放入最终打出的jar包里,这就有可能遗漏了一些版本的xsd的本地映射,所以会报错.
+  所以一般推荐使用另外的一个插件来进行打包,插件名称为:maven-shade-plugin,shade插件打包时在对spring.schemas文件处理上,它能够将所有jar里的spring.schemas文件进行合并,在最终生成的单一jar包里,spring.schemas包含了所有出现过的版本的集合,要使用shade插件,必须在pom进行如下配置:
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>1.4</version>
+    <executions>
+      <execution>
+        <phase>package</phase>
+        <goals>
+          <goal>shade</goal>
+        </goals>
+        <configuration>
+          <transformers>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+              <resource>META-INF/spring.handlers</resource>
+            </transformer>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+              <mainClass>com.chenzhou.examples.Main</mainClass>
+            </transformer>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+              <resource>META-INF/spring.schemas</resource>
+            </transformer>
+          </transformers>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+  上面配置文件中有一段定义:
+  <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+    <resource>META-INF/spring.handlers</resource>
+  </transformer>
+  <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+    <resource>META-INF/spring.schemas</resource>
+  </transformer>
+  上面这段配置意思是把spring.handlers和spring.schemas文件以append方式加入到构建的jar包中,这样就不会出现xsd找不到的情况.
+  配置完pom后,调用mvn clean install命令进行构建,构建成功后打开工程target目录,发现生成了2个jar包,一个为:original-XXX-0.0.1-SNAPSHOT.jar,另一个为:XXX-0.0.1-SNAPSHOT.jar,其中original...jar里只包含了工程自己的class文件,而另外的一个jar包则包含了工程本身以及所有依赖的jar包的class文件.我们只需要使用第二个jar包就可以了.
+
+* 

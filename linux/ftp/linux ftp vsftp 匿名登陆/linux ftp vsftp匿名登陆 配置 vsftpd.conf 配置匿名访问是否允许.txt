@@ -1,0 +1,6 @@
+vi /etc/vsftpd/vsftpd.conf
+----------------------------
+第7行:控制匿名登录
+anonymous_enable=YES改成NO
+
+

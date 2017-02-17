@@ -1,0 +1,28 @@
+文件c如下：
+hello world; I want to go swimming tomorrow;hiahia
+-------------------
+输入命令：
+awk 'BEGIN{RS=";"}{print}' c
+-------------------
+输出结果：
+hello world
+ I want to go swimming tomorrow
+hiahia
+
+-------------------
+RS：输入记录分隔符，缺省为"\n"
+缺省情况下，awk把一行看作一个记录；如果设置了RS，那么awk按照RS来分割记录
+例如，如果文件c，cat c为
+hello world; I want to go swimming tomorrow;hiahia
+运行 awk 'BEGIN{ RS = ";" } {print}' c 的结果为
+hello world
+I want to go swimming tomorrow
+hiahia
+
+
+
+
+
+
+
+

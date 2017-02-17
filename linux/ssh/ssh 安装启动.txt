@@ -1,0 +1,27 @@
+1.登陆linux系统,打开终端命令.输入rpm -qa|grep ssh查找当前系统是否已经安装
+  输出如下:
+  openssh-3.5p1-6(表示已经安装成功)
+  openssh-server-3.5p1-6
+  openssh-askpass-3.5p1-6
+  openssh-clients-3.5p1-6
+  openssh-askpass-gnome-3.5p1-6
+2.如果没有安装SSH软件包,可以通过yum或rpm安装包进行安装
+  输入命令:yum install ssh
+3.开启ssh服务,ssh服务一般叫做SSHD命令行
+  输入命令:service sshd start可以启动
+  或者使用/etc/init.d/sshd start
+4.查看或编辑SSH服务配置文件:vi /etc/ssh/sshd.config
+  如果要修改端口,把port后面默认的22端口改成别的端口即可(注意前面的#号要去掉)
+5.如果需要远程连接SSH,需要把22端口在防火墙上开放.
+  关闭防火墙,或者设置22端口例外,输入命令:/etc/init.d/iptables stop(临时关闭)
+  如果你想永久关闭防火墙,打开终端,在root权限下输入chkconfig iptables off即可永久关闭防火墙,当然需要我们重启才能生效.
+
+
+
+
+
+
+
+
+
+

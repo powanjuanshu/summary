@@ -1,0 +1,23 @@
+[1] maven远程中央仓库:
+* maven默认的远程仓库地址,http://repo.maven.apache.org/maven2,此地址是maven默认的远程中央仓库.
+  E:/apache-maven-3.1.0/lib/maven-model-builder-3.1.0.jar中的pom-4.0.0.xml文件:<url>http://repo.maven.apache.org/maven2</url>
+* https://nexus.sourcesense.com/nexus/content/repositories/public/,此地址是sonatype公司的中央仓库.
+
+maven设置maven远程中央仓库为nexus仓库，不是apache的仓库 https://nexus.sourcesense.com/nexus/content/repositories/public/ 此地址是sonatype公司的远程中央仓库
+
+[2] maven本地库:
+设置 E:\apache-maven-3.1.0\conf -> settings.xml -> <localRepository>E:/maven/repo</localRepository>
+默认 C:\Documents and Settings\Administrator\.m2\repository
+
+
+
+
+
+
+
+
+
+
+
+
+

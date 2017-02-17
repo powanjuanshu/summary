@@ -1,0 +1,36 @@
+1.chmod +x jdk-6u20-linux-i586.bin
+2.出现一行字：Do you aggree to the above license terms? [yes or no]
+  安装程序在问您是否愿意遵守刚才看过的许可协议。当然要同意了,输入"y"或"yes"回车。
+  会安装在当前目录下jdk1.6.0_20/
+3.增加JAVA_HOME环境变量
+  [root@test src]# vi /etc/profile
+  在最后面增加：
+  #set java environment
+  export JAVA_HOME=/root/jdk1.6.0_20
+  export PATH=$JAVA_HOME/bin
+  export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+  export JAVA_HOME PATH CLASSPATH
+  让/etc/profile文件修改后立即生效 ,可以使用如下命令:
+  # . /etc/profile
+  注意: . 和 /etc/profile 有空格.
+
+
+------------
+linux下安装jdk1.6版本显示1.4，修改默认jdk版本 (转载)
+当成功把jdk1.6安装到 /usr/java，并且配置好了系统环境变量
+执行 # java -version 时显示的不是你安装的jdk版本，而是其它版本如jdk1.4.2，是因为linux系统有默认的jdk，版本为1.4.2;
+1 [root@ip-10-0-0-54 lib]# java -version
+2 java version "1.4.2"
+3 gij (GNU libgcj) version 4.1.2 20080704 (Red Hat 4.1.2-44)
+ Copyright (C) 2006 Free Software Foundation, Inc.
+6 This is free software; see the source for copying conditions.  There is NO
+ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  切换默认jdk版本执行
+# cd /usr/bin
+2 # ln -s -f /usr/java/jdk1.6.0_24/jre/bin/java
+3 # ln -s -f /usr/java/jdk1.6.0_24/bin/javac 
+2.Remove the old empty java environment  
+去除旧的JDK 1.4.2
+# rm -f /usr/bin/java
+# rm -f /usr/bin/javac
+# rm -f /etc/alternatives/java
+. /etc/profile

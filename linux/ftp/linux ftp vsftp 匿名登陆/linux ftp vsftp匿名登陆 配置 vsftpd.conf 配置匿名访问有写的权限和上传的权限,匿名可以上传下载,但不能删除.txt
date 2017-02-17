@@ -1,0 +1,13 @@
+第一步：
+vi /etc/vsftpd/vsftpd.conf
+第7行:控制匿名登录
+anonymous_enable=YES改成NO(这一步好像反了)
+第二步：
+打开匿名上传和写权限：
+#vi /etc/vsftpd/vsftp.conf
+激活第22行:anon_upload_enable=YES
+激活第26行:anon_mkdir_write_enable=YES
+第三步：
+打开默认共享目录的权限
+#chmod 777 /var/ftp/pub
+备注：匿名可以上传下载，但不能删除；

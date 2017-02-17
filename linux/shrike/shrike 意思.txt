@@ -1,0 +1,5 @@
+shrike-i386-disc1.iso
+shrike不是测试版的标志,和eclipse的helios太阳神一样的,是发行版的名字
+redhat9是shrike,伯来鸟的意思
+redhat8是psyche,灵魂的意思
+

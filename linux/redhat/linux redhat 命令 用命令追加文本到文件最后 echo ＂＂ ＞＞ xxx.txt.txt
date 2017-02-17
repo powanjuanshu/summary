@@ -1,0 +1,1 @@
+echo "HISTFILESIZE=2000" >> /etc/bashrc && echo "HISTSIZE=2000" >> /etc/bashrc && echo 'HISTTIMEFORMAT="%Y%m%d %T "'>> /etc/bashrc && export HISTTIMEFORMAT

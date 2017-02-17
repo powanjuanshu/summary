@@ -1,0 +1,7 @@
+chmod +w aaa.txt
+-------------------
+增加本人的可写权限
+-------------------
+-r-xr-xr-x 1 root root 0 11 17 08:00 aaa.txt
+-------------------运行后
+-rwxr-xr-x 1 root root 0 11 17 08:00 aaa.txt

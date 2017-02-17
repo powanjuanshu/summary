@@ -1,0 +1,43 @@
+linux中df命令参数功能：检查文件系统的磁盘空间占用情况。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。
+
+-h更具目前磁盘空间和使用情况 以更易读的方式显示
+
+[root@rac1 ~]# df -h
+
+Filesystem Size Used Avail Use% Mounted on
+
+/dev/sda1 2.9G 2.3G 521M 82% /
+
+none 209M 0 209M 0% /dev/shm
+
+/dev/sda2 4.5G 1.8G 2.5G 42% /u01
+
+/dev/sde1 512M 80M 433M 16% /ocfs
+
+-H根上面的-h参数相同,不过在根式化的时候,采用1000而不是1024进行容量转换
+
+[root@rac1 ~]# df -H
+
+Filesystem Size Used Avail Use% Mounted on
+
+/dev/sda1 3.1G 2.4G 546M 82% /
+
+none 219M 0 219M 0% /dev/shm
+
+/dev/sda2 4.8G 1.9G 2.7G 42% /u01
+
+/dev/sde1 537M 84M 454M 16% /ocfs
+
+-k以单位显示磁盘的使用情况
+
+[root@rac1 ~]# df -k
+
+Filesystem 1K-blocks Used Available Use% Mounted on
+
+/dev/sda1 3020140 2333952 532772 82% /
+
+none 213320 0 213320 0% /dev/shm
+
+/dev/sda2 4633108 1818152 2579604 42% /u01
+
+/dev/sde1 524272 81104 443168 16% /ocfs

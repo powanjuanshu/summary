@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-app</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory><!--上述配置表示要对src/main/resources下的资源进行过滤,因为该目录下没有二进制文件,所以没有excluding-->
+	<filtering>true</filtering>
+	</resource>
+      </resources>
+      <filters>
+	<filter>src/main/filter/filter-${env}.properties</filter><!--过滤时采用的过滤文件为src/main/filter/filter-${env}.properties文件,其中${env}是一个变量,表示当前使用的环境,这是通过在pom文件中通过profile定义的-->
+      </filters>
+  </build>
+  <profiles><!--如果没有指定profile,那么默认是不会选择一个的,不会替换的,按原始字符串显示-->
+    <profile>
+      <id>dev</id>
+      <properties>
+	<env>dev</env>
+      </properties>
+    </profile>
+    <profile>
+      <id>test</id>
+      <properties>
+        <env>test</env>
+      </properties>
+    </profile>
+    <profile>
+      <id>product</id>
+      <properties>
+        <env>product</env>
+      </properties>
+    </profile>
+  </profiles>
+</project>
+
+src/main/filter/filter-dev.properties:
+xiangmu.jdbc.url=jdbc:mysql://localhost:3306/xiangmu?autoReconnect=true&useUnicode=true&characterEncoding=UTF8
+xiangmu.jdbc.username=root
+xiangmu.jdbc.password=abcdefg
+
+src/main/filter/filter-test.properties:
+xiangmu.jdbc.url=jdbc:mysql://localhost:3306/xiangmu3?autoReconnect=true&useUnicode=true&characterEncoding=UTF8
+xiangmu.jdbc.username=root3
+xiangmu.jdbc.password=abcdefg3
+
+src/main/filter/filter-product.properties:
+xiangmu.jdbc.url=jdbc:mysql://localhost:3306/xiangmu2?autoReconnect=true&useUnicode=true&characterEncoding=UTF8
+xiangmu.jdbc.username=root2
+xiangmu.jdbc.password=abcdefg2
+
+src/main/resources/jdbc.properties:
+jdbc.connection.url=${xiangmu.jdbc.url}
+jdbc.connection.username=${xiangmu.jdbc.username}
+jdbc.connection.password=${xiangmu.jdbc.password}
+
+mvn clean package -P dev
+mvn clean package -P test
+mvn clean package -P product

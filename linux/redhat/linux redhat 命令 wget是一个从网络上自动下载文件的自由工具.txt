@@ -1,0 +1,2 @@
+wget www.baidu.com
+会自动将网页保存到当前目录，会生成一个index.html文件

@@ -1,0 +1,1 @@
+为项目生成eclipse描述符 mvn eclipse：eclipse

@@ -1,0 +1,1 @@
+在命令行输入：shutdown -h now 立刻关机

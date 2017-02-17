@@ -1,0 +1,4 @@
+从组中删除用户
+编辑/etc/group 找到GROUP1那一行，删除 A
+或者用命令
+gpasswd -d A GROUP

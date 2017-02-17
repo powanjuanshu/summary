@@ -1,0 +1,2 @@
+chown root.itlab myfile
+改变myfile的所属用户为root用户，用户组为itlab组

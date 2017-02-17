@@ -1,0 +1,4 @@
+在awk中调用系统变量必须用单引号，如果是双引号，则表示字符串 
+Flag=abcd 
+awk '{print '$Flag'}'   结果为abcd 
+awk '{print  "$Flag"}'   结果为$Flag

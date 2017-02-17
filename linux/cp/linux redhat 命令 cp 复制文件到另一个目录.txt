@@ -1,0 +1,6 @@
+将当前目录的Fuck.java文件复制到/home/lijie的目录下
+cp Fuck.java /home/lijie/
+-----------------
+
+
+

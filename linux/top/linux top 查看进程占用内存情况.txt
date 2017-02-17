@@ -1,0 +1,50 @@
+top
+
+Êä³ö:
+ 22:44:07  up  2:22,  1 user,  load average: 0.00, 0.00, 0.00
+47 processes: 44 sleeping, 2 running, 0 zombie, 1 stopped
+CPU states:   0.0% user   0.0% system   0.0% nice   0.0% iowait 100.0% idle
+Mem:   255264k av,  250488k used,    4776k free,       0k shrd,   63060k buff
+                    105564k actv,       0k in_d,    8808k in_c
+Swap:  522104k av,     380k used,  521724k free                   58772k cached
+
+  PID USER     PRI  NI  SIZE  RSS SHARE STAT %CPU %MEM   TIME CPU COMMAND
+    1 root      15   0   472  444   420 S     0.0  0.1   0:03   0 init
+    2 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 keventd
+    3 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 kapmd
+    4 root      34  19     0    0     0 SWN   0.0  0.0   0:00   0 ksoftirqd_CPU0
+    9 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 bdflush
+    5 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 kswapd
+    6 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 kscand/DMA
+    7 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 kscand/Normal
+    8 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 kscand/HighMem
+   10 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 kupdated
+   11 root      25   0     0    0     0 SW    0.0  0.0   0:00   0 mdrecoveryd
+   19 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 kjournald
+   77 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 khubd
+ 1701 root      15   0     0    0     0 SW    0.0  0.0   0:00   0 kjournald
+ 3086 root      15   0   544  508   468 S     0.0  0.1   0:00   0 syslogd
+ 3090 root      16   0   428  380   376 S     0.0  0.1   0:00   0 klogd
+ 3100 rpc       23   0   544  472   472 S     0.0  0.1   0:00   0 portmap
+ 3119 rpcuser   25   0   680  604   604 S     0.0  0.2   0:00   0 rpc.statd
+ 3186 root      25   0   488  444   440 S     0.0  0.1   0:00   0 apmd
+ 3224 root      16   0  1500 1496  1256 S     0.0  0.5   0:00   0 sshd
+ 3238 root      24   0   844  844   728 S     0.0  0.3   0:00   0 xinetd
+ 3258 root      15   0  2492 2492  1848 S     0.0  0.9   0:00   0 sendmail
+ 3267 smmsp     15   0  2264 2256  1732 S     0.0  0.8   0:00   0 sendmail
+ 3277 root      25   0   436  436   392 S     0.0  0.1   0:00   0 gpm
+ 3286 root      15   0   564  564   504 S     0.0  0.2   0:00   0 crond
+ 3297 root      15   0  1872 1872  1396 S     0.0  0.7   0:00   0 cupsd
+ 3361 xfs       15   0  3088 3088   796 S     0.0  1.2   0:00   0 xfs
+ 3370 root      24   0  2536 2536  1740 S     0.0  0.9   0:00   0 smbd
+ 3374 root      15   0  1932 1932  1480 S     0.0  0.7   0:00   0 nmbd
+ 3392 daemon    15   0   528  528   472 S     0.0  0.2   0:00   0 atd
+ 3400 root      22   0   400  400   348 S     0.0  0.1   0:00   0 mingetty
+ 3401 root      22   0   400  400   348 S     0.0  0.1   0:00   0 mingetty
+ 3402 root      22   0   400  400   348 S     0.0  0.1   0:00   0 mingetty
+ 3403 root      22   0   400  400   348 S     0.0  0.1   0:00   0 mingetty
+ 3404 root      22   0   400  400   348 S     0.0  0.1   0:00   0 mingetty
+ 3405 root      22   0   400  400   348 S     0.0  0.1   0:00   0 mingetty
+ 3408 root      15   0  1504 1504  1116 S     0.0  0.5   0:00   0 bash
+[2]+  Stopped                 top  1204 S     0.0  0.6   0:00   0 httpd
+[root@localhost bin]#   1664 1664  1260 S     0.0  0.6   0:00   0 httpd

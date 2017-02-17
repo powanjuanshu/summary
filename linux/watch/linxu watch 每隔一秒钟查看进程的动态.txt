@@ -1,0 +1,15 @@
+watch -n 1 'ps -aux |grep httpd'
+
+Êä³ö:
+
+Every 1s: ps -aux |grep httpd                                                                                                                  Sat Jan 10 22:30:42 2015
+
+root      3502  0.0  0.6  3144 1568 ?        S    20:54   0:00 /usr/local/apache/bin/httpd -k start
+daemon    3503  0.0  0.6  3208 1664 ?        S    20:54   0:00 [httpd]
+daemon    3504  0.0  0.6  3184 1624 ?        S    20:54   0:00 [httpd]
+daemon    3505  0.0  0.6  3168 1596 ?        S    20:54   0:00 [httpd]
+daemon    3506  0.0  0.6  3168 1596 ?        S    20:54   0:00 [httpd]
+daemon    3507  0.0  0.6  3168 1596 ?        S    20:54   0:00 [httpd]
+daemon    3512  0.0  0.6  3168 1596 ?        S    21:10   0:00 [httpd]
+root      3747  0.9  0.3  1764  820 pts/0    R    22:30   0:00 watch -n 1 ps -aux |grep httpd
+root      3805  0.0  0.3  5348  984 pts/0    R    22:30   0:00 sh -c ps -aux |grep httpd

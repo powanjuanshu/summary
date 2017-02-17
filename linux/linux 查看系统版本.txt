@@ -1,0 +1,4 @@
+cat /etc/issue
+Êä³ö£º
+CentOS release 6.5 (Final)
+Kervel \r on an \m

@@ -1,0 +1,49 @@
+* du -sh:只显示当前目录的总大小,不分别显示遍历递归目录的大小
+* du -h:只显示目录的总大小,不显示文件的大小,会遍历递归目录
+* du -ah:既显示目录的总大小,又显示文件的大小,会遍历递归目录
+
+我常使用的命令(必要时,sudo使用root权限),
+* 查看某个目录的大小:du -hs /home/master/documents
+* 查看目录下所有目录的大小并按大小降序排列:sudo du -sm /etc/* | sort -nr | less
+
+* du的英文为:disk usage
+* du的命令各个选项含义如下:
+  a : 显示全部目录和其次目录下的每个档案所占的磁盘空间
+  s : 只显示各档案大小的总合
+  b : 大小用bytes来表示
+  k : 大小用K来表示
+  m : 大小用M来表示
+  x : 跳过在不同文件系统上的目录不予统计
+
+1)查看当前目录包含子目录的大小
+root@tech163:/home/htmlfile# du -sm .
+1       .
+其中的du -sm . 的.是代表当前目录.
+
+2)查看当前目录以及子目录的大小
+root@tech163:/home/htmlfile# du -h
+16K     ./test
+60K     ./bbb
+84K     .
+其中 -h 表示使用K,M,G的人性化形式显示.
+
+3)看到当前目录下的bbb目录大小,但不想查看其他目录以及子目录
+root@tech163:/home/htmlfile# du -ch bbb | tail -n 1
+60K     total
+使用了管道包含了du和tail两个命令,-c表示最后计算出所列目录的大小之和.
+
+4)列出当前目录下所有目录和文件的大小
+root@tech163:/home/htmlfile# du -ah bbb
+4.0K    bbb/mysql.php
+4.0K    bbb/index.htm
+4.0K    bbb/p.php
+28K     bbb/memcache.php
+12K     bbb/.session.php.swp
+4.0K    bbb/hello.html
+60K     bbb
+其中-a表示包含目录和文件
+
+5)不换行列出目录以及子目录大小的信息
+root@tech163:/home/htmlfile# du -0h
+16K     ./test60K       ./bbb84K
+其中-0表示不换行

@@ -1,0 +1,5 @@
+输入alias命令会显示:
+alias ll='ls -l --color=tty'
+说明:ll是'ls -l --color=tty'的缩写
+
+

@@ -1,0 +1,4 @@
+1.安装一个包 
+# rpm -ivh
+－ivh：安装显示安装进度--install--verbose--hash
+

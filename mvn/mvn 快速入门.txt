@@ -1,0 +1,85 @@
+Maven快速入门
+
+
+
+
+创建项目网站
+mvn site
+清理
+mvn clean
+为项目生成IntelliJ IDEA描述符，可以在一个已经存在的IDEA项目上进行，会更新设置而不是从零开始。
+mvn idea:idea
+如何使用插件
+示例如下：
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <configuration>
+        <source>1.5</source>
+        <target>1.5</target>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+
+如何在Jar中包含资源
+把资源放置在${basedir}/src/main/resources目录中即可。测试用例所需资源的路径是${basedir}/src/test/resources。
+如何过滤资源文件
+有时候资源文件需要构建时刻才能提供的值，为了达到这个目的，在资源文件中添加${<property name>}这样的引用。这些属性可以来自pom.xml，settings.xml，其它的属性文件或是系统属性。
+按照如下方式修改pom.xml：
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+按如下使用pom.xml中的值：
+
+# application.properties
+application.name=${pom.name}
+application.version=${pom.version}
+如果是使用其它的属性文件：
+<build>
+    <filters>
+      <filter>src/main/filters/filter.properties</filter>
+    </filters>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+也可以把这些属性写在pom.xml中：
+<properties>
+    <my.filter.value>hello</my.filter.value>
+  </properties>
+同样可以是Java的系统属性，或是通过-D传入命令行参数。
+如何使用外部依赖
+在pom.xml中的dependencies一节中列出了所需的全部外部依赖。为了定义外部依赖，需要定义至少4个内容：groupId, artifactId, version, 和 scope。Scope可以是test，compile或runtime。Maven会自动从一个远程的Repository下载所需的依赖。
+如何部署jar到自己的远程repository
+在pom.xml中添加如下内容：
+<distributionManagement>
+    <repository>
+      <id>mycompany-repository</id>
+      <name>MyCompany Repository</name>
+      <url>scp://repository.mycompany.com/repository/maven2</url>
+    </repository>
+  </distributionManagement>
+
+同样在用户的settings.xml中也要定义服务器：
+<settings>
+  <servers>
+    <server>
+      <id>mycompany-repository</id>
+      <username>jvanzyl</username>
+      <!– Default value is ~/.ssh/id_dsa –>
+      <privateKey>/path/to/identity</privateKey> (default is ~/.ssh/id_dsa)
+      <passphrase>my_key_passphrase</passphrase>
+    </server>
+  </servers>
+</settings>

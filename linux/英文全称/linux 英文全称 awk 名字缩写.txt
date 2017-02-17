@@ -1,0 +1,1 @@
+事实上，awk是三个人名的缩写，他们是：Aho、(Peter) Weinberg和(Brain)Kernighan。正是这三个人创造了awk---一个优秀的样式扫描与处理工具。

@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Language" content="zh-CN" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>Linux防火墙该如何设置_LINUX_操作系统_脚本之家</title>
+<meta name="keywords" content="防火墙,Linux" />
+<meta name="description" content="由于科研要求，我们系里多数都没有用Windows系统，而用的是Linux，很不习惯，一开机就是黑乎乎的界面，像传说中的DOS一样。" />
+<link href="http://img.jb51.net/skin/blue2/css/main.css" rel="stylesheet" type="text/css" />
+<link href="http://img.jb51.net/skin/blue2/css/article.css" rel="stylesheet" type="text/css" />
+<script src="http://img.jb51.net/js/main.js" type="text/javascript"></script>
+</head>
+<body>
+<div id=topnav>
+<div class="pcbody">
+<div id=toptext>脚 本 之 家 www.jb51.net</div>
+<UL id=topnavlist><script type="text/javascript" charset="gb2312">dy("top");</script></UL>
+</div>
+</div>
+
+<!--头部开始-->
+<div class="pcbody">
+
+<div id="dxy_logo">
+<div id="logo_l"><a href="http://www.jb51.net" title="脚本之家" target="_blank"><img src="http://www.jb51.net/images/logo.gif" alt="脚本之家" /></a></div>
+<div id="logo_m"></div>
+<div id="logo_r"></div>
+</div>
+<!--导航栏-->
+<div id="nav_top">
+<ul>
+<li class="current"><a href="http://www.jb51.net">首页</a></li>
+<li><a href="http://www.jb51.net/web/">网页制作</a></li>
+<li><a href="http://www.jb51.net/list/index_96.htm">脚本专栏</a></li>
+<li><a href="http://www.jb51.net/jiaoben/">脚本下载</a></li>
+<li><a href="http://www.jb51.net/list/index_1.htm">网络编程</a></li>
+<li><a href="http://www.jb51.net/list/index_104.htm">数据库</a></li>
+<li><a href="http://www.jb51.net/cms/">CMS教程</a></li>
+<li><a href="http://www.jb51.net/books/">电子书籍</a></li>
+<li><a href="http://www.jb51.net/pingmian/">平面设计</a></li>
+<li><a href="http://www.jb51.net/media/">媒体动画</a></li>
+<li><a href="http://www.jb51.net/os/">操作系统</a></li>
+<li><a href="http://www.jb51.net/yunying/">网站运营</a></li>
+<li class="last"><a href="http://www.jb51.net/hack/">网络安全</a></li>
+</ul>
+</div> 
+<div class="main cbody margintop">
+<div class="search">
+<UL><LI class=search-hot><SPAN>特色栏目：</SPAN>
+<A href="http://www.jb51.net/list/list_114_1.htm" target='_blank'>vbscript</A> 
+<A href="http://www.jb51.net/list/list_6_1.htm" target='_blank'>正则表达式</A> 
+<A href="http://www.jb51.net/list/list_3_1.htm" target='_blank'>javascript</A>
+<A href="http://www.jb51.net/list/list_106_1.htm" target='_blank'>批处理</A>
+<A href="http://s.jb51.net">服务器软件</A> 
+<A href="http://sc.jb51.net/?txt" target="_blank" style="color:red">素材下载</A> 
+</LI><LI class=search-box>
+<div class="sall"><form action="http://so.jb51.net/cse/search" target="_blank">
+    <input type="hidden" name="s" value="10520733385329581432">
+    <input type="hidden" name="ie" value="gbk">
+    <input type="text" name="q" class="keyword_input">
+    <input type="submit" value="搜索" class="s_btn">
+</form></div></LI></UL>
+</div>
+</div>
+<div class="tonglanad">
+<script type="text/javascript">var tougao="10";var downlm="art"; var cpro_id = 'u336546';</script><script src="http://cpro.baidu.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>  
+<div class="main cbody margintop" id="tonglan960"></div>
+<div class="main cbody margintop">
+	<!--左侧-->
+	<div class="pleft">
+		<!--位置导航-->
+		<div class="thisplace">
+			<div class="placenav">
+				<span>当前位置 :</span> 
+				<a href='http://www.jb51.net/'>主页</a> > <a href='/os/'>操作系统</a> > <a href='/LINUXjishu/'>LINUX</a> > 
+			</div>
+		</div>
+		<!--资讯内容-->
+		<div class="newsview">
+			<!--资讯标题-->
+			<div class="title">
+				<h1>Linux防火墙该如何设置</h1>
+			</div>
+            <div class="info" id="title_ad1"></div>
+			<!--相关信息-->
+			<div class="info">
+				<span>来源：互联网</span>
+				<span>作者：佚名</span>
+				<span>时间：12-08 17:18:11</span>
+				<span>【<a href="javascript:setfont(15)">大</a> <a href="javascript:setfont(13)">中</a> <a href="javascript:setfont(12)">小</a>】</span>                
+			</div>
+	    <!--资讯正文-->
+			<div id="content">
+            <div id="art_desc">由于科研要求，我们系里多数都没有用Windows系统，而用的是Linux，很不习惯，一开机就是黑乎乎的界面，像传说中的DOS一样。</div>
+<div id="con_all">
+<div id="con_ad1"><script type="text/javascript">dy("gg_l");</script></div>
+<div id="con_ad8"><script type="text/javascript">dy("gg_r");</script></div>
+</div>
+疑问：由于科研要求，我们系里多数都没有用Windows系统，而用的是Linux，很不习惯，一开机就是黑乎乎的界面，像传说中的DOS一样。还好做科研的那些软件有说明书，但是关于Linux的防火墙却没有提到，我很担心蠕虫或者后门入侵，该怎么启动呢？<br />回答：因为你没有说明是哪个Linux分发版，但是Linux的底层的东西基本都是一样的，所以小编给你的方法，对于绝大多数分发版是有效的。Linux自身的防火墙名为&ldquo;iptables&rdquo;。你说的那个黑乎乎的，就是终端。在终端中输入如下命令打开防火墙：<br />chkconfig iptables on<br />如闭防火墙则输入：<br />chkconfig iptables off<br />上述两条命令均要重启系统才能生效。<br />如果不想通过重启系统而即时生效的话，可以用&ldquo;service&rdquo;命令。缺点是重启系统后设置会丢失。<br />开启了防火墙：<br />service iptables start<br />关闭防火墙：<br />service iptables stop<br />要在防火墙中设置某些端口的开关，可修改编辑/etc/sysconfig/iptables文件，比如开启SSH 端口22，可以加上如下内容：<br />-A RH-Firewall-1-INPUT -m state ――state NEW -m tcp -p tcp ――dport 22 -j ACCEPT<br />总之，&ldquo;ptables&rdquo;功能很强大，在这里不能一一说清楚，具体还请参考&ldquo;ptables&rdquo;的资料。
+</div>
+
+<div class="articlead" id="art580"><script type="text/javascript">dy("art580");</script></div>
+<div class="tag">
+Tag：<b><a href='/do/tag/%B7%C0%BB%F0%C7%BD/'>防火墙</a></b> &nbsp; <b><a href='/do/tag/Linux/'>Linux</a></b> &nbsp; 
+</div>
+<!-- Baidu Button BEGIN -->
+    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+        <a class="bds_qzone">QQ空间</a>
+        <a class="bds_tsina">新浪微博</a>
+        <a class="bds_tqq">腾讯微博</a>
+        <a class="bds_tsohu">搜狐微博</a>
+        <a class="bds_renren">人人网</a>
+        <a class="bds_kaixin001">开心网</a>
+        <a class="bds_baidu">百度搜藏</a>
+        <span class="bds_more">更多</span>
+    </div>
+<!-- Baidu Button END -->
+			<div class="actbar">
+				<span>[<a href="javascript:addBookmark(document.title,document.location.href)" class=button_link>收藏</a>]</span>
+			<span>[<A title=复制本文链接发给你QQ/MSN上的好友 href="javascript: copyUserHomeToClipBoard()" rel=nofollow class=button_link>复制链接发给好友</A>]</span>
+				<span>[<a href="#" onclick="window.print();">打印</a>]</span>
+				<span>[<a href="javascript:closeWindow()" class="button_link">关闭</a>]</span>
+			</div>
+            <!--上下文-->
+            <div class="context">
+                    上一篇：<a href='/LINUXjishu/40213.html' target='_blank'>linux服务器出现严重故障后的原因以及解决方法</a> 
+                    <br />
+                    下一篇：<a href='/LINUXjishu/40820.html' target='_blank'>Linux下的两个聊天命令的使用方法</a> 
+           </div>
+           <div class="floatclear"><!--清除浮动--></div>
+		</div>
+<div id=relatedarticle>
+<H2>相关文章</H2>
+<ul>
+<li><span>2012-11-14</span><a href="/LINUXjishu/65707.html" target="_blank">Linux防火墙iptables简明教程</a></li><li><span>2011-08-26</span><a href="/LINUXjishu/38285.html" target="_blank">从五方面解析Linux防火墙框架问题</a></li><li><span>2010-12-19</span><a href="/LINUXjishu/33558.html" target="_blank">LINUX防火墙的打开与关闭方法</a></li><li><span>2009-03-10</span><a href="/LINUXjishu/10907.html" target="_blank">构筑Linux防火墙之IPtables的概念与用法(2)</a></li><li><span>2009-03-10</span><a href="/LINUXjishu/10906.html" target="_blank">构筑Linux防火墙之IPtables的概念与用法(1)</a></li><li><span>2008-09-08</span><a href="/os/RedHat/1335.html" target="_blank">linux防火墙iptables详细教程</a></li><li><span>2008-09-08</span><a href="/os/RedHat/1176.html" target="_blank">完全免费自建Linux防火墙的方法</a></li><li><span>2013-04-17</span><a href="/os/windows/78768.html" target="_blank">Linux防火墙伪装机制抵抗恶意黑客的详细介绍</a></li>
+</ul>
+<div class=clear></div></div>
+<DIV class="art_bot_ad">
+<script type="text/javascript">dy("bdtxt");</script>
+</DIV>
+<div id="baidutj">
+<H2>猜你喜欢</H2>
+<div id="hm_t_11473"></div>
+</div>
+<div class="comment">
+<div class="pltitle"><strong>网友评论</strong></div>
+<div class="ds-thread" data-category="" data-thread-key="40548" data-title="Linux防火墙该如何设置" data-author-key="" data-url="http://www.jb51.net/LINUXjishu/40548.html"></div>
+		</div>
+	</div>
+	<!--右侧-->
+	<div class="pright">
+<div class="rlist2"><div class="rbox2"><script type="text/javascript">dy("vod250");</script></div></div>
+<div class="classbox margintop">
+			<dl>
+				<dt>相关栏目</dt>
+				<dd>
+					<ul>
+              
+              <li><a href="/os/list682_1.html" target="_blank">bios</a></li>
+              
+              <li><a href="/os/list490_1.html" target="_blank">系统安装</a></li>
+              
+              <li><a href="/os/list685_1.html" target="_blank">系统进程</a></li>
+              
+              <li><a href="/os/windows/" target="_blank">Windows系列</a></li>
+              
+              <li><a href="/LINUXjishu/" target="_blank">LINUX</a></li>
+              
+              <li><a href="/os/RedHat/" target="_blank">RedHat/Centos</a></li>
+              
+              <li><a href="/os/Ubuntu/" target="_blank">Ubuntu/Debian</a></li>
+              
+              <li><a href="/os/Fedora/" target="_blank">Fedora</a></li>
+              
+              <li><a href="/os/Solaris/" target="_blank">Solaris</a></li>
+              
+              <li><a href="/os/qilin/" target="_blank">麒麟系统</a></li>
+              
+              <li><a href="/os/hongqi/" target="_blank">红旗Linux</a></li>
+              
+              <li><a href="/os/Unix/" target="_blank">Unix/BSD</a></li>
+              
+              <li><a href="/os/MAC/" target="_blank">苹果MAC</a></li>
+              
+              <li><a href="/os/list381_1.html" target="_blank">注册表</a></li>
+              
+              <li><a href="/os/other/" target="_blank">其它系统</a></li>
+              
+					</ul>
+				</dd>
+			</dl>
+	  </div>
+<div class="rlist" id="r_1"><script type="text/javascript">dy("r_1");</script></div>
+<div class="rlist margintop">
+			<div class="title">最近更新</div>
+			<div class="rbox">
+				<ul>
+            <li><a href="/LINUXjishu/197322.html" target="_blank">Linux的系统的安全如何保障?保护Linux系统安全的九个</a></li><li><a href="/LINUXjishu/196934.html" target="_blank">linux下的删除重复行命令uniq详细介绍和实例</a></li><li><a href="/LINUXjishu/196663.html" target="_blank">linux中Shell日期转为时间戳的方法</a></li><li><a href="/LINUXjishu/194311.html" target="_blank">Linux crontab报错：BAD FILE MODE的解决方法</a></li><li><a href="/LINUXjishu/194296.html" target="_blank">让gzip压缩速度加快的解决方案：使用支持多核CPU多线</a></li><li><a href="/LINUXjishu/194271.html" target="_blank">XFS文件系统简介 Linux中使用XFS文件系统的配置方法</a></li><li><a href="/LINUXjishu/194256.html" target="_blank">xfs文件系统提示没有磁盘空间错误的解决方法</a></li><li><a href="/LINUXjishu/193853.html" target="_blank">Linux交换空间的管理与技巧详解</a></li><li><a href="/LINUXjishu/192907.html" target="_blank">linux su命令的真正含义</a></li><li><a href="/LINUXjishu/192576.html" target="_blank">Linux下查看SELinux状态和关闭SELinux的方法</a></li><li><a href="/LINUXjishu/192525.html" target="_blank">linux tar命令使用范例</a></li><li><a href="/LINUXjishu/192220.html" target="_blank">OpenWRT 路由配置技巧(PPTP VPN + 断线自动重连+chnro</a></li>
+				</ul>
+			</div>
+		</div>
+        <div class="rlist margintop">      
+        <div class="rbox" style="padding:0px;border-top:#b1daef 1px solid;" id="bd200"><script type="text/javascript">dy("bd200");</script></div>
+        </div>
+        <div class="rlist margintop">
+			<div class="title">热点关注</div>
+			<div class="rbox">
+				<ul>
+            <li><a href="/LINUXjishu/34604.html" target="_blank">Linux Top 命令解析 比较详细</a></li><li><a href="/LINUXjishu/43356.html" target="_blank">linux下tar.gz、tar、bz2、zip等解压缩、压缩命令小结</a></li><li><a href="/LINUXjishu/10981.html" target="_blank">ERROR 1045 (28000): Access denied for user root@lo</a></li><li><a href="/LINUXjishu/12713.html" target="_blank">linux su和sudo命令的区别</a></li><li><a href="/LINUXjishu/32192.html" target="_blank">linux下提示bash:command not found </a></li><li><a href="/LINUXjishu/10958.html" target="_blank">linux如何修改主机名</a></li><li><a href="/LINUXjishu/11002.html" target="_blank">linux查看目录大小及硬盘大小</a></li><li><a href="/LINUXjishu/57192.html" target="_blank">linux下磁盘分区详解 图文</a></li><li><a href="/LINUXjishu/10984.html" target="_blank">rpm 命令|rpm 安装|rpm 卸载|rpm 使用|rpm 删除</a></li><li><a href="/LINUXjishu/11041.html" target="_blank">gzip和gunzip 解压参数</a></li><li><a href="/LINUXjishu/64000.html" target="_blank">linux下配置ip地址四种方法(图文方法)</a></li><li><a href="/LINUXjishu/11039.html" target="_blank">linux 如何结束进程</a></li>
+				</ul>
+			</div>
+		</div>
+<div class="rlist margintop"><script type="text/javascript">dy("r_2");</script></div>
+	</div>
+<div class="floatclear"></div>
+</div></div>
+<div class="blank3"></div>
+<div id="footer">
+  <div id="footerinfo">
+   <div id="footercontent"><a href="http://www.jb51.net/about.htm" target="_blank">关于我们</a> - <a href="http://www.jb51.net/support.htm" target="_blank">广告合作</a> - <a href="http://www.jb51.net/linkus.htm" target="_blank">联系我们</a> -  <a href="http://www.jb51.net/sm.htm" target="_blank">免责声明</a> -  <a href="http://www.jb51.net/sitemap.htm" target="_blank">网站地图</a> - <a href="tencent://message/?uin=461478385&Site=http://www.jb51.net" target="_blank">投诉建议</a> - <a href="http://www.jb51.net/up.htm" target="_blank">在线投稿</a></div>
+    <div id="footercopyrights">CopyRight &copy; 2006-2014 <a href="http://www.jb51.net">脚本之家</a> JB51.Net , All Rights Reserved</div>
+  </div>
+  <DIV class=ewm><IMG alt="脚本之家官方微信" src="http://img.jb51.net/images/weixin_jb51.gif"></DIV>
+</div>
+<div id="logo_m_tp"><script type="text/javascript">dy("logo_m");</script></div>
+<div id="logo_r_tp"><script type="text/javascript">dy("logo_r");</script></div>
+<div id="title_ad1_tp"><script type="text/javascript">dy("bc_txt_1");</script></div>
+<div id="tonglan960_tp"><script type="text/javascript">dy("tonglan");</script></div>
+<script type="text/javascript" src="http://img.jb51.net/js/control_ad.js"></script>
+<div class="tongji">
+<script type="text/javascript" src="http://img.jb51.net/inc/tongji2.js"></script>
+<script src="/do/plus/count.php?aid=40548&mid=" language="javascript" type="text/javascript"></script>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=50347" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script>
+<!-- Duoshuo Comment BEGIN -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"jb51"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END -->
+</body>
+</html>

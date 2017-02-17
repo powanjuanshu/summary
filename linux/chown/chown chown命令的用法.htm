@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>每天一个linux命令（30）: chown命令 - peida - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=my4FYfT2lmqb3sakS-rxSQYr2TpdJ4R7fpviWLuq5wg1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/LessIsMore/bundle-LessIsMore.css?v=0F7NKnmmVYJDCp-KQ2sA7Dn1GREfDmWWyNjiJP9YrzE1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/peida/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/peida/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/peida/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'peida', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=TUYuDnHaLBHaZFATU-2ZEv0YIqcxJGTZ6ROYwfnVQH81" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/peida/">竹子-博客(.NET/Java/Linux/架构/管理/敏捷)</a></div>
+<div class="subtitle">思索、感悟、践行！走向高效，快乐，平衡！</div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/peida/">首页</a></li>
+<li id="nav_q"><a class="menu" href="http://q.cnblogs.com/">博问</a></li>
+<li id="nav_ing"><a class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+<li id="nav_newpost"><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/peida">联系</a></li>
+<li id="nav_rss"><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/peida/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/peida/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔-197&nbsp;
+文章-0&nbsp;
+评论-305&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/peida/archive/2012/12/04/2800684.html">每天一个linux命令（30）: chown命令</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p class="p0">　　chown将指定文件的拥有者改为指定的用户或组，用户可以是用户名或者用户ID；组可以是组名或者组ID；文件是以空格分开的要改变权限的文件列表，支持通配符。系统管理员经常使用chown命令，在将文件拷贝到另一个用户的名录下之后，让用户拥有使用该文件的权限。&nbsp;</p>
+<p class="p0">　　<strong>1．命令格式：</strong></p>
+<p class="p0">　　　　chown&nbsp;[选项]...&nbsp;[所有者][:[组]]&nbsp;文件...</p>
+<p class="p0">　　<strong>2．命令功能：</strong></p>
+<p class="p0">　　　　通过chown改变文件的拥有者和群组。在更改文件的所有者或所属群组时，可以使用用户名称和用户识别码设置。普通用户不能将自己的文件改变成其他的拥有者。其操作权限一般为管理员。</p>
+<p class="p0">　<strong>　3．命令参数：</strong></p>
+<p class="p0">　<strong>　必要参数:</strong></p>
+<p class="p0">　　　　-c&nbsp;显示更改的部分的信息</p>
+<p class="p0">　　　　-f&nbsp;忽略错误信息</p>
+<p class="p0">　　　　-h&nbsp;修复符号链接</p>
+<p class="p0">　　　　-R&nbsp;处理指定目录以及其子目录下的所有文件</p>
+<p class="p0">　　　　-v&nbsp;显示详细的处理信息</p>
+<p class="p0">　　　　-deference&nbsp;作用于符号链接的指向，而不是链接文件本身</p>
+<p class="p0">　　<strong>选择参数:</strong></p>
+<p class="p0">　　　　--reference=&lt;目录或文件&gt;&nbsp;把指定的目录/文件作为参考，把操作的文件/目录设置成参考文件/目录相同拥有者和群组</p>
+<p class="p0">　　　　--from=&lt;当前用户：当前群组&gt;&nbsp;只有当前用户和群组跟指定的用户和群组相同时才进行改变</p>
+<p class="p0">　　　　--help&nbsp;显示帮助信息</p>
+<p class="p0">　　　　--version&nbsp;显示版本信息</p>
+<p class="p0">　　<strong>4．使用实例：</strong></p>
+<p class="p0">　　<strong>实例1：改变拥有者和群组</strong></p>
+<p class="p0"><strong>　　命令：</strong></p>
+<p class="p0">　　　　chown&nbsp;mail:mail&nbsp;log2012.log</p>
+<p class="p0">　　<strong>输出：　</strong>　</p>
+<div class="cnblogs_code">
+<pre>[root@localhost test6]# ll
+---xr--r-- 1 root users 302108 11-30 08:39 linklog.log
+---xr--r-- 1 root users 302108 11-30 08:39 log2012.log
+-rw-r--r-- 1 root users     61 11-30 08:39 log2013.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2014.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2015.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2016.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2017.log
+[root@localhost test6]# chown mail:mail log2012.log 
+[root@localhost test6]# ll
+---xr--r-- 1 root users 302108 11-30 08:39 linklog.log
+---xr--r-- 1 mail mail  302108 11-30 08:39 log2012.log
+-rw-r--r-- 1 root users     61 11-30 08:39 log2013.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2014.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2015.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2016.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2017.log
+[root@localhost test6]#</pre>
+</div>
+<p class="p0"><strong>　　说明：</strong></p>
+<p class="p0">　　<strong>实例2：改变文件拥有者和群组</strong></p>
+<p class="p0"><strong>　　命令：</strong></p>
+<p class="p0">　　　　chown&nbsp;root:&nbsp;log2012.log</p>
+<p class="p0">　　<strong>输出：</strong><strong>　　　　</strong></p>
+<div class="cnblogs_code">
+<pre>[root@localhost test6]# ll
+总计 604
+---xr--r-- 1 root users 302108 11-30 08:39 linklog.log
+---xr--r-- 1 mail mail  302108 11-30 08:39 log2012.log
+-rw-r--r-- 1 root users     61 11-30 08:39 log2013.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2014.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2015.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2016.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2017.log
+[root@localhost test6]# chown root: log2012.log 
+[root@localhost test6]# ll
+总计 604
+---xr--r-- 1 root users 302108 11-30 08:39 linklog.log
+---xr--r-- 1 root root  302108 11-30 08:39 log2012.log
+-rw-r--r-- 1 root users     61 11-30 08:39 log2013.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2014.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2015.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2016.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2017.log
+[root@localhost test6]#</pre>
+</div>
+<p class="p0">　　<strong>说明：</strong></p>
+<p class="p0">　　<strong>实例3：改变文件群组</strong></p>
+<p class="p0"><strong>　　命令：</strong></p>
+<p class="p0">　　　　chown&nbsp;:mail&nbsp;log2012.log</p>
+<p class="p0">　　<strong>输出：</strong><strong>　　</strong></p>
+<div class="cnblogs_code">
+<pre>[root@localhost test6]# ll
+总计 604
+---xr--r-- 1 root users 302108 11-30 08:39 linklog.log
+---xr--r-- 1 root root  302108 11-30 08:39 log2012.log
+-rw-r--r-- 1 root users     61 11-30 08:39 log2013.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2014.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2015.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2016.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2017.log
+[root@localhost test6]# chown :mail log2012.log 
+[root@localhost test6]# ll
+总计 604
+---xr--r-- 1 root users 302108 11-30 08:39 linklog.log
+---xr--r-- 1 root mail  302108 11-30 08:39 log2012.log
+-rw-r--r-- 1 root users     61 11-30 08:39 log2013.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2014.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2015.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2016.log
+-rw-r--r-- 1 root users      0 11-30 08:39 log2017.log</pre>
+</div>
+<p class="p0">　　<strong>说明：</strong></p>
+<p class="p0">　　<strong>实例4：改变指定目录以及其子目录下的所有文件的拥有者和群组&nbsp;</strong></p>
+<p class="p0"><strong>　　命令：</strong></p>
+<p class="p0">　　　　chown&nbsp;-R&nbsp;-v&nbsp;root:mail&nbsp;test6</p>
+<p class="p0">　　<strong>输出：</strong>　　</p>
+<div class="cnblogs_code">
+<pre>[root@localhost test]# ll
+drwxr-xr-x 2 root users   4096 11-30 08:39 test6
+[root@localhost test]# chown -R -v root:mail test6
+&ldquo;test6/log2014.log&rdquo; 的所有者已更改为 root:mail
+&ldquo;test6/linklog.log&rdquo; 的所有者已更改为 root:mail
+&ldquo;test6/log2015.log&rdquo; 的所有者已更改为 root:mail
+&ldquo;test6/log2013.log&rdquo; 的所有者已更改为 root:mail
+&ldquo;test6/log2012.log&rdquo; 的所有者已保留为 root:mail
+&ldquo;test6/log2017.log&rdquo; 的所有者已更改为 root:mail
+&ldquo;test6/log2016.log&rdquo; 的所有者已更改为 root:mail
+&ldquo;test6&rdquo; 的所有者已更改为 root:mail
+[root@localhost test]# ll
+drwxr-xr-x 2 root mail   4096 11-30 08:39 test6
+[root@localhost test]# cd test6
+[root@localhost test6]# ll
+总计 604
+---xr--r-- 1 root mail 302108 11-30 08:39 linklog.log
+---xr--r-- 1 root mail 302108 11-30 08:39 log2012.log
+-rw-r--r-- 1 root mail     61 11-30 08:39 log2013.log
+-rw-r--r-- 1 root mail      0 11-30 08:39 log2014.log
+-rw-r--r-- 1 root mail      0 11-30 08:39 log2015.log
+-rw-r--r-- 1 root mail      0 11-30 08:39 log2016.log
+-rw-r--r-- 1 root mail      0 11-30 08:39 log2017.log</pre>
+</div>
+<p class="p0">　　<strong>说明：</strong></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2012-12-04 08:58</span> <a href='http://www.cnblogs.com/peida/'>peida</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=2800684" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2800684);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=38044,cb_entryId=2800684,cb_blogApp=currentBlogApp,cb_blogUserGuid='0f3e420b-63cf-dd11-9e4d-001cf0cd104b',cb_entryCreatedDate='2012/12/4 8:58:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+<a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="开发者的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    var enableGoogleAd = canShowAdsense(); var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</script>
+<div id="ad_under_post_holder">
+<script type='text/javascript'>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        if (enableGoogleAd) {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        }
+    })();
+</script>
+<script type='text/javascript'>
+    try {
+        if (enableGoogleAd) {
+            googletag.cmd.push(function () {
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C2', [468, 60], 'div-gpt-ad-1410860226396-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        };
+    } catch (e) { }
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+    <div id='div-gpt-ad-1346480159711-0' style='width:300px; height:250px;'>
+    <script type='text/javascript'>
+        try {
+            if (enableGoogleAd) {
+                googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });            
+            } else {
+                $('#div-gpt-ad-1346480159711-0').hide();
+            }
+    } catch (e) { }
+    </script>
+    </div>
+</div>
+</div>
+<div id="under_post_news"></div>
+<div id="google_ad_c2" class="c_ad_block">
+<div id='div-gpt-ad-1410860226396-0' style='width:468px; height:60px;'>
+<script type='text/javascript'>
+try {
+    if (enableGoogleAd) {
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1410860226396-0'); });
+    } else {
+        $('#div-gpt-ad-1346480159711-0').hide();
+    }
+} catch (e) { }
+</script>
+</div>
+</div>
+<div id="under_post_kb"></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2014 peida
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+<!--PageEndHtml Block Begin-->
+<script language="javascript" type="text/javascript" src="http://js.users.51.la/1910329.js"></script>
+<noscript><a href="http://www.51.la/?1910329" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/1910329.asp" style="border:none" />统计代码</a></noscript>
+
+<script src="http://s137.cnzz.com/stat.php?id=1121896&web_id=1121896" language="JavaScript" charset="gb2312"></script>
+
+<script src="http://s14.cnzz.com/stat.php?id=943648&web_id=943648&online=1&show=line" language="JavaScript"></script>
+<!--PageEndHtml Block End-->
+</body>
+</html>

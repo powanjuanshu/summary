@@ -1,0 +1,3 @@
+* maven2中,在pom.xml中插件和依赖的定义非常相像,但是在插件定义(或者配置)中,<groupId>和<version>标签在大多数情况下可以省略.
+* 如果你没有指定<groupId>,maven将默认通过org.apache.maven.plugins或者org.codehaus.mojo的<groupId>标签查找插件.
+* 你可以在POM文件中指定一个查找的<groupId>也可以在settings.xml等地方指定；如果你没有指定<version>,maven将尝试使用插件的最新发布版本.

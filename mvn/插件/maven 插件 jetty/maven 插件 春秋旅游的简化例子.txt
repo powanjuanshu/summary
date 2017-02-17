@@ -1,0 +1,72 @@
+-----------------------------------
+pom.xml:
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.springtour.air</groupId>
+	<artifactId>order-web-app</artifactId>
+	<packaging>war</packaging>
+	<version>V1.13.2-SNAPSHOT</version>
+	<dependencies>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>order</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.9.v20130131</version>
+				<configuration>
+					<scanIntervalSecondes>10</scanIntervalSecondes>
+					<webAppConfig>
+						<contextPath>/order1</contextPath>
+						<jettyEnvXml>src/test/resources/jetty.xml</jettyEnvXml>
+					</webAppConfig>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+-----------------------------------
+src\test\resources\jetty.xml:
+<?xml version="1.0"?> 
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<Configure id="wac" class="org.eclipse.jetty.webapp.WebAppContext">
+	<New id="ds" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg></Arg>
+		<Arg>com/chunqiu/order/ds/oracle</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+				<Set name="driverClassName">oracle.jdbc.driver.OracleDriver</Set>
+				<Set name="url">jdbc:oracle:thin:@192.168.1.32:1521:orcl</Set>
+				<Set name="username">orderdb</Set>
+				<Set name="password">orderdb</Set>
+			</New>
+		</Arg>
+		<Call name="bindToENC">
+			<Arg>jcom/chunqiu/order/ds/oracle</Arg>  <!-- binds jdbc/myds to java:comp/env/jdbc/myfoo for this webapp -->
+		</Call>
+	</New>
+
+	<New id="chunqiu3ds" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg></Arg>
+		<Arg>com.chunqiu.chunqiu3ds</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+				<Set name="driverClassName">oracle.jdbc.driver.OracleDriver</Set>
+				<Set name="url">jdbc:oracle:thin:@192.168.1.14:1521:spring</Set>
+				-
+				<Set name="username">chunqiu3</Set>
+				<Set name="password">chunqiu3</Set>
+			</New>
+		</Arg>
+		<Call name="bindToENC">
+			<Arg>jcom.chunqiu.chunqiu3ds</Arg>  <!-- binds jdbc/myds to java:comp/env/jdbc/myfoo for this webapp -->
+		</Call>
+	</New>
+</Configure>
+-----------------------------------

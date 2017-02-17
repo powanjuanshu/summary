@@ -1,0 +1,39 @@
+命令:netstat -apn 
+* 查看程序端口占用情况
+* 参数含义:
+  netstat -[atunlp]
+   -a : 将目前系统上所有的联机、监听、Socket 数据都列出来 
+   -t : 列出tcp网绚封包的数据 
+   -u : 列出udp网绚封包的数据 
+   -n : 列出程序的服务名称,以端号(port number)显示
+   -l : 列出目前正在网绚监听(listen)的服务
+   -p : 列出该网绚服务的程序PID
+
+查找mysql的端口号 : netstat -atulnp|grep mysql
+
+netstat -apn输出:
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name   
+tcp        0      0 0.0.0.0:32768           0.0.0.0:*               LISTEN      3099/               
+tcp        0      0 127.0.0.1:32769         0.0.0.0:*               LISTEN      3217/xinetd         
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      3080/               
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      3203/sshd           
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      3276/cupsd          
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      3237/               
+tcp        0    148 172.16.42.2:22          172.16.42.1:56452       ESTABLISHED 4126/sshd           
+udp        0      0 0.0.0.0:32769           0.0.0.0:*                           3099/               
+udp        0      0 0.0.0.0:731             0.0.0.0:*                           3099/               
+udp        0      0 0.0.0.0:111             0.0.0.0:*                           3080/               
+udp        0      0 0.0.0.0:631             0.0.0.0:*                           3276/cupsd          
+Active UNIX domain sockets (servers and established)
+Proto RefCnt Flags       Type       State         I-Node PID/Program name    Path
+unix  2      [ ACC ]     STREAM     LISTENING     3343   3256/gpm            /dev/gpmctl
+unix  10     [ ]         DGRAM                    2799   3066/syslogd        /dev/log
+unix  2      [ ]         DGRAM                    3434   3317/anacron        
+unix  2      [ ]         DGRAM                    3341   3265/crond          
+unix  2      [ ]         DGRAM                    3308   3246/               
+unix  2      [ ]         DGRAM                    3294   3237/               
+unix  2      [ ]         DGRAM                    3236   3217/xinetd         
+unix  2      [ ]         DGRAM                    2991   3166/apmd           
+unix  2      [ ]         DGRAM                    2849   3099/               
+unix  2      [ ]         DGRAM                    2807   3070/klogd    

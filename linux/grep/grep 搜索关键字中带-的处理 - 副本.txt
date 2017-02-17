@@ -1,0 +1,256 @@
+2、grep和正则表达式结合使用的一组例子
+ 
+将带元字符的正则表达式用于grep命令能够更灵活地匹配信息，使用时需要使用单引号将正则表达式引起来，以免发生一些不可预知的错误。
+ 
+1、匹配行首
+ 
+元字符“^”表示行首，“^$”符号表示空白行范围，而要匹配文件中非空白行时则使用“^[^$]”符号表达式，“^^$”表达式是错误的。
+ 
+ 
+ 
+2、设置大小写
+ 
+利用-i符号可以使grep命令不区分大小写，当然也可利用[]符号来实现这一功能。
+ 
+例：用[]符号设置大小写
+ 
+output文件的内容：
+ 
+/O=Grid/OU=GlobusTest/OU=simpleCA-seugrid1.seu.edu.cn/OU=seu.edu.cn/CN=globus
+ 
+/home/globus/.globus/usercert.pem
+ 
+执行：grep -n [Gg]lobusoutput
+ 
+结果：1:/O=Grid/OU=GlobusTest/OU=simpleCA-seugrid1.seu.edu.cn/OU=seu.edu.cn/CN=globus
+ 
+      2:/home/globus/.globus/usercert.pem
+ 
+ 
+ 
+3、匹配重复字符
+ 
+匹配重复字符通常可以利用“ . ”符号和“ * ”符号来实现。
+ 
+例：grep和 . 符号
+ 
+#匹配以W字符开始、中间3个任意字符、第5个字符未d的行
+ 
+执行：grep ^W...d world.txt
+ 
+结果：World
+ 
+      World Cup
+ 
+ 
+ 
+例：grep和*符号
+ 
+#匹配以“0”开头，重复“0”符号任意次，然后是W字符的行
+ 
+执行：grep ^0*W world.txt
+
+结果：World                              #表示“0”符号重复0次，仍然符合“*”符号的语法
+ 
+      World Cup
+ 
+ 
+ 
+4、转义符
+ 
+如果匹配的目标字符串中包含元字符，则需要利用转义字符“\”屏蔽其意义。
+ 
+例：grep和转义符
+ 
+执行：grep seu\.edu\.cnoutput
+ 
+结果：  /O=Grid/OU=GlobusTest/OU=simpleCA-seugrid1.seu.edu.cn/OU=seu.edu.cn/CN=globus
+ 
+如果将命令写成 grep'seu.edu.cn' output 则是匹配seu和edu、edu和cn之间存在任意单个字符的行，如seuxeduxcn能够满足条件。
+ 
+ 
+ 
+横杠（-）字符较为特别，它虽然不属于正则表达式元字符，但是，由于“-”字符是引出grep命令选项的特殊字符，所以，模式以“-”符号开头时，需要用转义字符将其转义。
+ 
+例：-字符在grep命令中的特殊性
+ 
+test1.txt文件的内容：
+
+-----BEGIN CERTIFICATE REQUEST-----
+ 
+-----END CERTIFICATE REQUEST-----
+ 
+BAIwADANBgkqhkiG9
+ 
+执行：grep -\{5\} test1.txt                                      #模式以-符号开头
+ 
+结果：grep：无效选项 -- {                                        #提示错误，grep将模式解析为选项
+ 
+      用法: grep [选项]... PATTERN[FILE]...
+ 
+      试用‘grep --help’来获得更多信息。
+ 
+执行：grep '-\{5\}'test1.txt                                    #将模式用引号括起来也解决不了问题
+ 
+结果：grep：无效选项 -- \
+ 
+      用法: grep [选项]... PATTERN[FILE]...
+ 
+      试用‘grep --help’来获得更多信息。
+ 
+执行：grep '\-\{5\}'test1.txt
+
+结果：-----BEGINCERTIFICATE REQUEST-----
+ 
+      -----END CERTIFICATE REQUEST-----
+ 
+执行：grep \-\{5\}test1.txt                                      #模式不用引号括起来
+ 
+结果：grep：无效选项 -- {
+ 
+      用法: grep [选项]... PATTERN[FILE]...
+ 
+      试用‘grep –help’来获得更多信息。
+ 
+注意，这里模式上的引号十分重要，如果不加引号，仍然提示无效选项错误。
+ 
+ 
+ 
+5、POSIX字符类
+ 
+为了保持不同国家的字符编码的一致性，POSIX（Portable Operating System Interface）增加了特殊的字符类，以[:classname]的格式给出，grep命令支持POSIX字符类。
+ 
+POSIX字符类：
+ 
+[:upper:]                              #表示大写字母[A~Z]
+ 
+[:lower:]                              #表示小写字母[a~z]
+ 
+[:digit:]                                          #表示阿拉伯数字[0~9]
+ 
+[:alnum:]                              #表示大小写字母和阿拉伯数字[0~9 a~z A~Z]
+ 
+[:space:]                              #表示空格或Tab键
+ 
+[:alpha:]                              #表示大小写字母[a~z A~Z]
+ 
+[:cntrl:]                                          #表示Ctrl键
+ 
+[:graph:]或[:print:]          #表示ASCII码33～126之间的字符
+ 
+[:xdigit:]                              #表示16进制数字[0~9 A~F a~f]
+ 
+ 
+ 
+例：搜索以空格开头的文本行
+ 
+执行：grep ^[[:space:]]output
+ 
+结果：  /O=Grid/OU=GlobusTest/OU=simpleCA-seugrid1.seu.edu.cn/OU=seu.edu.cn/CN=globus
+ 
+ 
+ 
+POSIX字符类作为模式的用法都类似，使用时只要注意用方括号将POSIX字符类括起来即可。
+ 
+ 
+ 
+6、精确匹配
+ 
+例：精确匹配
+ 
+re01文件的内容：
+ 
+Line1:there are four lines in this file
+ 
+Line2:this the line 2
+ 
+Line3:this is another line
+ 
+Line4:this is line4
+ 
+执行：grep the re01                                  #列出所有包含the字符串的行
+ 
+结果：Line1:there are fourlines in this file          #there中包含了the
+ 
+      Line2:this the line 2
+ 
+      Line3:this is another line
+ 
+执行：grep"\<the\>" re01                              #精确匹配the这个单词
+ 
+结果：Line2:this the line 2
+ 
+执行：grep -w the re01                                #利用-w选项实现精确匹配
+ 
+结果：Line2:this the line 2
+ 
+注意，\<the\>上的引号必不可少。
+ 
+ 
+ 
+7、或字符
+ 
+或字符“|”是扩展的正则表达式中定义的，grep需要加上-E选项才能支持它。
+ 
+例：grep命令与 | 字符
+ 
+执行：grep -E"four|another" re01                          #带-E选项的grep执行成功
+ 
+结果：Line1:there are fourlines in this file
+ 
+            Line3:this is another line
+ 
+执行：grep"four|another" re01
+ 
+结果：
+ 
+grep没有带-E选项时，返回结果为空，这是因为grep命令将“|”字符解析为字面意义。注意，four|another上的引号必不可少。
+ 
+ 
+ 
+3、grep命令族简介
+ 
+Linux系统支持三种形式的grep命令，通常将这三种形式的grep命令称为grep命令族，这三种形式具体为：
+ 
+        grep：标准grep命令，支持基本正则表达式。
+ 
+        egrep：扩展grep命令，支持基本和扩展正则表达式。
+ 
+        fgrep：快速grep命令，不支持正则表达式，按照字符串的字面意思进行匹配。
+ 
+egrep命令与grep -E等价，fgrep命令与grep -F等价，在某些Linux发行版中，egrep和fgrep都是grep命令的别名，分别将其符号链接到grep -E和grep -F命令。
+ 
+ 
+ 
+例：egrep命令的用法
+ 
+执行：egrep"four|another" re01
+ 
+结果：Line1:there are fourlines in this file
+ 
+            Line3:this is another line
+ 
+执行：egrep ^-*B test1.txt
+
+结果：-----BEGINCERTIFICATE REQUEST-----
+ 
+            BAIwADANBgkqhkiG9
+ 
+执行：egrep ^-+B test1.txt
+
+结果：-----BEGINCERTIFICATE REQUEST-----
+ 
+注意“^-*B”和“^-+B”的区别，“+”符号表示“-”符号至少重复一次，不匹配以B字符开头的行。
+ 
+ 
+ 
+例：fgrep命令的用法
+ 
+执行：fgrep ^-*B test1.txt                    #fgrep命令不支持正则表达式
+ 
+结果：
+ 
+执行：fgrep BEGIN test1.txt                  #fgrep命令支持普通字符串
+ 
+结果：-----BEGINCERTIFICATE REQUEST-----
+linux

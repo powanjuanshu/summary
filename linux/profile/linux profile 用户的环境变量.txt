@@ -1,0 +1,8 @@
+~/是当前用户的家目录，在linux下 “~”是/home/yourid/目录的简称，.bash_profile是一个隐藏文件（点开头的都是隐藏文件），这个文件里定义的是该用户的自定义的环境变量
+linux用户环境变量
+~/.bash_profile  用于设置用户专属的环境信息，login方式进去bash运行，每次用户登录的时候执行一次，通常会调用bash_profile
+~/.bashrc 用于设置当前shell 的环境信息，no login方式进入bash运行，shell新起的时候执行
+对于用户专属的环境变量只需在~/.bash_profile中设置
+若添加后没重新登录，只需source ~/.bash_profile
+
+

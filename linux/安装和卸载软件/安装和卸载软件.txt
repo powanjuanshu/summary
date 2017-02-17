@@ -1,0 +1,76 @@
+【redhat5.5】软件安装卸载方法
+【1】 rpm包的的安装卸载
+
+            1】第一次安装此软件
+
+                  rpm  -ivh  XXX.rpm
+
+                           --force  强制安装并覆盖旧有文件
+
+            2】强制安装升级
+
+                  rpm  -Uvh   XXX.rpm
+
+            3】更新软件包
+
+                  rpm  -fvh    XXX.pm
+
+            4】软件包的卸载
+
+                  rpm  -e
+
+                           --nodeps  忽略彼此的依赖关系
+
+【2】  源码包的安装与卸载
+
+            1】源码包的解压缩
+
+                  tar  -zxvf  xxx.tar.gz  -C  /usr/local/ruanjian
+
+                  或
+
+                  tar  -jxvf  xxx .tar.bz2   -C  /usr/local/ruanjian
+
+            2】配置
+
+                  进入解压目录
+
+                  ./configure  --prefix=/usr/local/ruanjian2
+
+            3】编译
+
+                  make
+
+            4】安装
+
+                  make  install
+
+            5】卸载  
+
+                  make uninstall
+
+                  或 直接移除安装目录
+
+                 rm -rf  /usr/local/ruanjian2
+
+【3】rpm源码包的安装
+
+          1】 执行
+
+                  rpm -ivh  xxx.src.rpm
+
+          2】 进入特定目录
+
+                  cd /usr/src/redhat/SPECS
+
+                  会生成一个与xxx同名的specs文件
+
+         3】 执行
+
+                 rpmbulid -bb  xxx.specs
+
+                会在 /usr/src/redhat/RPM/i386 等目录下生成一个新的rpm包  bbb.rpm
+
+          4】安装软件包
+
+                rpm -ivh  bbb.rpm

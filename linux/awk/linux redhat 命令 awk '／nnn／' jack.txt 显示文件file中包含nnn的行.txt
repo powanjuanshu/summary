@@ -1,0 +1,2 @@
+awk '/匹配字符串/' 文件名
+awk '/nnn/' jack.txt 显示文件中包含nnn的行

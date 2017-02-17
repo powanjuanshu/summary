@@ -1,0 +1,3 @@
+要在防火墙中设置某些端口的开关,可修改编辑/etc/sysconfig/iptables文件,比如开启SSH端口22,可以加上如下内容：
+-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+总之,iptables功能很强大，在这里不能一一说清楚，具体还请参考iptables的资料。

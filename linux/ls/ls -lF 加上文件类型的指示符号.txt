@@ -1,0 +1,4 @@
+-F,--classify 加上文件类型的指示符号(*/=@|其中一个)
+* ls -F
+* anaconda-ks.cfg  install.log  install.log.syslog  jdk1.6.0_20/  my_01.sh  pax_global_header  test.sh*
+* 文件夹后带/,可执行文件后带*

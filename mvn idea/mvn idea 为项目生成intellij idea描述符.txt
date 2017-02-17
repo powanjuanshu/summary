@@ -1,0 +1,2 @@
+为项目生成IntelliJ IDEA描述符,可以在一个已经存在的IDEA项目上进行,会更新设置而不是从零开始
+mvn idea:idea

@@ -1,0 +1,7 @@
+option batch on
+option confirm off
+option transfer binary
+open ftp://bestpay:bestpay@180.166.69.55:2100
+rm /bestpayserver/project/paycenter-notify.jar
+put C:\alljar\paycenter-notify.jar /bestpayserver/project/
+exit

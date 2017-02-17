@@ -1,0 +1,2 @@
+rpm -qf /user/share/doc/zip-2.3/README
+·µ»Ø£ºzip-2.3-16

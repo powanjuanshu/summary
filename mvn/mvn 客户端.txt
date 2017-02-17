@@ -1,0 +1,76 @@
+[1] 创建javaSE项目:
+创建快速启动项目
+mvn archetype:create -DgroupId=com.mycompany.app -DartifactId=my-app
+
+建立项目的命令为  
+mvn archetype:generate -DarchetypeArtifactId=[项目类型] -DgroupId=[组识别] -DartifactId=[项目名称] -Dversion=[版本] -Dpackage=[包]
+
+项目类型(archetypeArtifactId)可以是下列选项
+* maven-archetype-j2ee-simple (J2EE 项目)
+* maven-archetype-portlet (门户)
+* maven-archetype-quickstart (一般Java project)
+* maven-archetype-site (复杂站点)
+* maven-archetype-site-simple (简单站点)
+* maven-archetype-webapp (Java Web 站点)
+
+groupId    用于项目的分组  
+artifactId 项目的名称,也就是包名称 
+version    版本  
+package    主要设定目录的层次 
+
+下面是一个例子  
+mvn archetype:generate -DarchetypeArtifactId=maven-archetype-quickstart -DgroupId=com.velcro7.framework -DartifactId=velcro7-base -Dversion=0.1-PROTOTYPE -Dpackage=com.velcro7.base
+
+接下来会建立如下目录结构 
+velcro7-base
+  + src 
+  | + main 
+  | | + java 
+  | |   + com  
+  | |     + velcro7 
+  | |       + base  
+  | |         + App.java 
+  | + test 
+  |   + java 
+  |     + com  
+  |        + velcro7 
+  |         + base  
+  |           + AppTest.java 
+  + pom.xml  
+
+[2] 创建java web项目:
+mvn archetype:create -DgroupId=cn.edu.sdau.neat -DartifactId=project -DarchetypeArtifactId=maven-archetype-webapp
+
+[3] 打包文件的命令:
+mvn package 生成的包文件在target目录下  
+
+
+[4] 在执行单元测试:
+mvn test
+在执行单元测试前,首先会执行编译动作
+测试报告放在target\site\surefire-reports下
+
+[5] 安装到本地Repository:
+mvn install
+
+[6] package时跳过test步骤:
+mvn install -Dmaven.test.skip=true
+
+[7] 编译:
+mvn compile
+
+[8] 生成项目站点:
+mvn site:site  
+生成站点放在\target\site下
+
+[9] 生成文档:
+mvn javadoc:javadoc  
+生成的文档会在target\site\apidocs下 
+
+
+
+
+
+
+
+

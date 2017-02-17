@@ -1,0 +1,2 @@
+db.user.find().count();
+db.getCollection('user').count();

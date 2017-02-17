@@ -1,0 +1,4 @@
+命令行输入：find /root/ -name fuck.txt
+命令行输入：find /root/ -name 'fuck*' ，正则必须加引号
+---------------------------
+表示在/root/目录下查找fuck.txt这个文件，会迭代的找

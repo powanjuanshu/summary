@@ -1,0 +1,2 @@
+debug<info<warn<error<fatal
+级别高于配置的级别才会输出

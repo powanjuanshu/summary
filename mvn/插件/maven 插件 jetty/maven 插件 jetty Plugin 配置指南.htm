@@ -1,0 +1,614 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Maven Jetty Plugin 配置指南 - 技术分享 - 豆豆技术网</title>
+<link href="/2013/css/header.css" type="text/css" rel="stylesheet" />
+<link href="/2013/css/content.css" type="text/css" rel="stylesheet" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+<script src="/2013/js/common.js" type="text/javascript" charset="UTF-8"></script>
+<!-- 语法高亮模块 -->
+<link href="/2011/06/js/syntaxhighlighter_3.0.83/styles/shCoreDefault.css" rel="stylesheet" type="text/css" />
+<link href="/2011/06/js/syntaxhighlighter_3.0.83/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+<script src="/2011/06/js/syntaxhighlighter_3.0.83/scripts/shCore.js" type="text/javascript"></script> 
+<script src="/2011/06/js/syntaxhighlighter_3.0.83/scripts/shAutoloader.js" type="text/javascript"></script> 
+
+<script type="text/javascript">
+$(function(){
+	function path() {
+		var args = arguments,
+		result = [];
+	  for(var i = 0; i < args.length; i++)
+			result.push(args[i].replace('@', '/2011/06/js/syntaxhighlighter_3.0.83/scripts/'));
+	  return result
+	};
+
+
+	SyntaxHighlighter.defaults.toolbar = false;
+	SyntaxHighlighter.config.stripBrs = false;
+	SyntaxHighlighter.defaults['title'] = '双击代码全选';
+
+	SyntaxHighlighter.config.strings = {
+			help : '双击全选',
+			// this is populated by the build script
+			aboutDialog : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>About SyntaxHighlighter</title></head><body style="font-family:Geneva,Arial,Helvetica,sans-serif;background-color:#fff;color:#000;font-size:1em;text-align:center;"><div style="text-align:center;margin-top:3em;"><div style="font-size:xx-large;">SyntaxHighlighter</div><div style="font-size:.75em;margin-bottom:4em;"><div>version 2.0.320 (May 03 2009)</div><div><a href="http://alexgorbatchev.com" target="_blank" style="color:#0099FF;text-decoration:none;">http://alexgorbatchev.com</a></div></div><div>JavaScript code syntax highlighter.</div><div>Copyright 2004-2009 Alex Gorbatchev.</div></div></body></html>'
+		};
+
+
+
+	SyntaxHighlighter.autoloader.apply(null, path(
+	  'applescript            @shBrushAppleScript.js',
+	  'actionscript3 as3      @shBrushAS3.js',
+	  'bash shell             @shBrushBash.js',
+	  'coldfusion cf          @shBrushColdFusion.js',
+	  'cpp c                  @shBrushCpp.js',
+	  'c# c-sharp csharp      @shBrushCSharp.js',
+	  'css                    @shBrushCss.js',
+	  'delphi pascal          @shBrushDelphi.js',
+	  'diff patch pas         @shBrushDiff.js',
+	  'erl erlang             @shBrushErlang.js',
+	  'groovy                 @shBrushGroovy.js',
+	  'java                   @shBrushJava.js',
+	  'jfx javafx             @shBrushJavaFX.js',
+	  'js jscript javascript  @shBrushJScript.js',
+	  'perl pl                @shBrushPerl.js',
+	  'php                    @shBrushPhp.js',
+	  'text plain             @shBrushPlain.js',
+	  'py python              @shBrushPython.js',
+	  'ruby rails ror rb      @shBrushRuby.js',
+	  'sass scss              @shBrushSass.js',
+	  'scala                  @shBrushScala.js',
+	  'sql                    @shBrushSql.js',
+	  'vb vbnet               @shBrushVb.js',
+	  'xml xhtml xslt html    @shBrushXml.js'
+	));
+	SyntaxHighlighter.all();
+});
+</script>
+<script type="text/javascript">
+var cid = 167900;
+var type = 1;
+var member_url = 'http://my.ddvip.com';
+var digg_url = 'http://digg.ddvip.com';
+var comment_url = 'http://comment.ddvip.com';
+var session_id = 'jgolppk6b7h05ot3jmc81tv1a3';
+</script>
+<script src="/2013/js/content.js" type="text/javascript"></script>
+</head>
+<body>
+<!--通用头部-->
+<!--顶部条状-->
+<div class="ddvip_nav">
+      <div class="ddvipnavbox">
+            <span class="ddvipnav_l f_left">
+                   <ul class="menu_info">
+                              <li class="indexpage"><a href="http://www.ddvip.com/" target="_blank">首页</a>  |</li>
+                              <li><a href="http://news.ddvip.com/" target="_blank">资讯</a>  |</li>
+                              <li> <a href="http://tech.ddvip.com/" target="_blank">技术</a>  |</li>
+							  <li> <a href="http://www.ddxia.com/" target="_blank">下载</a>  |</li>
+                              <li> <a href="http://man.ddvip.com/" target="_blank">手册</a></li>
+                   </ul>
+                   <p class="clearer"></p>
+            </span>
+            <span class="ddvipnav_r f_right set_clorf00">
+            		<span id="header_logined_panel" style="display:none">
+                    <font color="#3D3D3D"><span>欢迎你：<span id="header_logined_username" style="color:red"></span></span></font>
+                     <a href="http://my.ddvip.com/" target="_blank" class="user_center">进入用户中心</a>
+                     </span>
+                     <span id="header_login_panel">
+                     <a href="http://my.ddvip.com/entry/login" target="_blank">登录</a> | <a href="http://my.ddvip.com/entry/register" target="_blank">注册</a>             
+           			 </span>
+            </span>
+            <p class="clearer"></p>
+      </div>
+</div>
+<!---->
+<script type="text/javascript">
+$(function(){
+	
+	$.dajax({
+			'success': function(data, textStatus){
+					if (data.status == 'login') {
+						$('#header_login_panel').hide();
+						$('#header_logined_username').text(data.member.username);
+						$('#header_logined_panel').show();
+					} else {
+	
+					}
+//					alert(data);
+			},
+			args: {
+				'ddvip_url_request': 'http://my.ddvip.com/entry/checkajax/'
+			},
+			'dataType': 'json',
+			'type': 'post'			
+		}
+	);
+});
+</script>
+<div class="header">
+       <div class="header_top">
+             <div class="logo"><h2><a href="http://tech.ddvip.com/" target="_blank"><img src="/2011/06/images/tc_logo.jpg" alt="豆豆技术网" height="51" width="258"/></a>豆豆技术网</h2></div>
+         <div class="search">
+		  <form action="http://tech.ddvip.com/search.php" method="get" name="form1" target="_self" id="form1"> 
+                  <dl>
+                      <dt><input type="text" name="key" value="请输入关键词" onfocus="javascript:if(this.value=='请输入关键词'){this.value='';this.style.color='#000'}" onblur="javascript:if(this.value==''){this.value='请输入关键词';this.style.color='#7B7C7D'}"  /></dt>
+                      <dd><input type="submit" value="" /></dd>
+                  </dl>
+		</form>
+                  <p class="clearer"></p>
+         </div>
+             <p class="clearer"></p>
+       </div>
+       <div class="nav set_c_fff">
+             <div class="nav_l"></div>
+             <div class="nav_r"></div>
+             <ul>
+                     <li class="this"><span><a href="http://tech.ddvip.com/" target="_blank">首页</a></span></li>
+                     <li ><a href="http://tech.ddvip.com/os/"> 系统 </a></li>
+                     <li ><a href="http://tech.ddvip.com/program/"> 编程 </a></li>
+                     <li ><a href="http://tech.ddvip.com/design/"> 设计 </a></li>
+                     <li ><a href="http://tech.ddvip.com/machine/"> 电子 </a></li>
+                     <li ><a href="http://tech.ddvip.com/soft/"> 软件 </a></li>
+                     <li ><a href="http://tech.ddvip.com/network/"> 网络 </a></li>
+                     <li ><a href="http://tech.ddvip.com/cert/"> 认证 </a></li>
+                     <li ><a href="http://tech.ddvip.com/safe/"> 安全 </a></li>
+                     <li ><a href="http://tech.ddvip.com/office/"> 办公 </a></li>
+                     <li ><a href="http://tech.ddvip.com/server/"> 服务器 </a></li>
+                     <li ><a href="http://tech.ddvip.com/ent/"> 企业 </a></li>
+                     <li ><a href="http://tech.ddvip.com/comm/"> 通信 </a></li>
+                     <li ><a href="http://tech.ddvip.com/db/"> 数据库 </a></li>
+             </ul>
+             <p class="clearer"></p>
+       </div>
+	   <script src="/2011/ads/tech_index_banner_01.js"></script>
+</div>
+<!--通用头部-->
+<p class="clearer"></p>
+
+<!--面包屑导航-->
+<div class="position">
+<span class="pl">你的位置：<a href="http://tech.ddvip.com/" target="_blank">首页</a> &gt;&nbsp; <a href="http://tech.ddvip.com/program/" target="_blank">编程</a> &gt;&nbsp;   </span><span class="pr">Maven Jetty Plugin 配置指南</span>
+</div>
+<p class="clearer"></p>
+<!---->
+
+<!--主体-->
+<div class="wrapper">
+    <div class="techcontent_l01">
+    <div class="techcontent_l">
+          <h1>Maven Jetty Plugin 配置指南</h1>
+          <div style=" display:inline-block; margin:0px auto; height:90px; overflow:hidden;"><script src="/2011/ads/tech_content_title_bottom_468x60.js"></script></div>          <p class="content_py">2012-11-04 22:29:40   &nbsp;&nbsp;&nbsp;&nbsp;<a href="#comment_content">发表评论</a></p>
+          <div class="techcontent">
+                <p> <span class="ad362x279"><div style="float:left; padding-right:15px;"><script src="/2011/ads/tech_content_300x250.js"></script></div></span>
+   <p><pre class="brush:html;">&lt;plugin&gt;
+　　　　&lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;
+　　　　&lt;artifactId&gt;maven-jetty-plugin&lt;/artifactId&gt;
+　　　　&lt;version&gt;6.1.10&lt;/version&gt;
+　　　　&lt;configuration&gt;
+　　　　　&lt;stopPort&gt;9966&lt;/stopPort&gt;
+　　　　　&lt;stopKey&gt;foo&lt;/stopKey&gt;
+　　　 &lt;/configuration&gt;
+&lt;/plugin&gt;</pre></p><p>　　开始：</p><p>　　mvn jetty:start</p><p>　　关闭：</p><p>　　mvn jetty:stop</p><p>　　如何配置插件</p><p>　　配置公共的run, run-war 和 run-exploded 目标</p><p>　　不管你执行哪一个Jetty目标，下述的配置参数都是可用的。一般来说它们分为应用于Web容器的配置和应用于具体web应用的配置：</p><p>　　容器级配置</p><p>　　Connectors 可选.一组org.mortbay.jetty.Connector对象，包含jetty的端口监听。如果你不指定任何一个NIO的org.mortbay.jetty.nio.SelectChannelConnector，将默认配置一个8080端口。当然，你可以在命令行使用系统参数jetty.port 改变默认端口。例如&quot;mvn -Djetty.port=9999 jetty:run&quot;。另外，您也可以指定许多您想要的连接。　</p><p>　　jettyConfig 可选。除插件配置参数外，你也可以指定一个jetty.xml文件的路径。当你有其他的web应用和操作需要部署时，或者一些你无法在插件中配置的jetty对象,你就可以使用到它,。</p><p>　　scanIntervalSeconds 可选[秒]。在很短的时间间隔内在扫描web应用检查是否有改变，如果发觉有任何改变则自动热部署。默认为0，表示禁用热部署检查。任何一个大于0的数字都将表示启用。</p><p>　　systemPropertie 可选。它们允许你在设置一个插件的执行操作时配置系统属性.更多的信息请查阅Setting System Properties.</p><p>　　userRealms 可选。一组org.mortbay.jetty.security.UserRealm实现。请注意，它没有一个默认的Realm。如果你在你的web.xml应用了一个Realm,你需要在这里指定一个对应的Rleam。</p><p>　　requestLog 可选。一个org.mortbay.jetty.RequestLog请求日志接口的实现。比如org.mortbay.jetty.NCSARequestLog就是一个作为NCSA格式的实现。</p><p>　　[译注：（美国）国家超级计算技术应用中心 (NCSA) 公用格式是常用的标准日志格式]</p><p>　　&ldquo;手动重载&rdquo;</p><p>　　从Jetty 6.2.0pre0版本起，添加了一个新的可用组件，用于控制web应用的重新部署。</p><p>　　配置参数：&lt;reload&gt;[manual|automatic]&lt;/reload&gt;</p><p>　　当你设置成手动模式后，web应用不会自动的扫描和重部署。相反，用户可以控制的Web应用时，通过键入&rdquo;回车换行键&rdquo;重载。当设置成自动模式时，将根据scanIntervalSeconds参数的设置不定时的扫描和自动重部署。你也能通过在命令行使用系统参数</p><p>　　-Djetty.reload 配置选择重载的模式。</p><p>　　比如：&quot;mvn -Djetty.reload=manual jetty:run&quot; 将强制手动重载，不管pom.xml文件里如何配置。同理: &quot;mvn -Djetty.reload=automatic -Djetty.scanIntervalSeconds=10 jetty:run&quot; 每隔十秒中后台将重载一次，而不管pom.xml文件里如何配置。</p><p>　　Web应用级配置</p><p>　　contextPath 可选。这个contex地址指向你的webapp.默认情况下，它被设置成该项目的pom.xml的&lt;artifactId&gt;。当然你也可以设置一个你喜欢的从而覆盖它。</p><p>　　tmpDir 可选。它作为web应用的临时目录。它默认设置在{${basedir}/target}下，但是你也可在这里改变它的路径。</p><p>　　overrideWebXml 可选. 它是一个应用于web应用的web.xml的备用web.xml文件.这个文件可以存放在任何地方.你可以根据不同的环境中(如测试、开发等等)利用它增加或修改一个web.xml配置.</p><p>　　webDefaultXml 可选. webdefault.xml文件用来代替webapp默认提供给jetty的文件.</p><p>　　从6.1.6rc0发行版开始，一个替代的更灵活的方式是配置web应用时使用webAppConfig元素代替上面列出的那些单独的参数。使用webAppConfig元素，你能有效的调用org.mortbay.jetty.webapp.WebAppContext类中任何setter方法。下面显示的列子将展示这个元素跟它上面的例子比较是如何配置同样的特性的(当然它们还有更多的特性能让你设置)：</p><p><pre class="brush:html;">&lt;project&gt;
+...
+&lt;plugins&gt;
+　　...
+　　　&lt;plugin&gt;
+　　　　&lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;
+　　　　&lt;artifactId&gt;maven-jetty-plugin&lt;/artifactId&gt;
+　　　　&lt;configuration&gt;
+　　　　　&lt;scanIntervalSeconds&gt;10&lt;/scanIntervalSeconds&gt;
+　　　　　&lt;!&mdash;web应用的配置 --&gt;
+　　　　　&lt;contextPath&gt;/biggerstrongerbetterfaster&lt;/contextPath&gt;
+　　　　　&lt;tmpDir&gt;target/not/necessary&lt;/tmpDir&gt;
+　　　　　&lt;webDefaultXml&gt;src/main/resources/webdefault.xml&lt;/webDefaultXml&gt;
+　　　　　&lt;overrideWebXml&gt;src/main/resources/override-web.xml&lt;/overrideWebXml&gt;
+　　　　　&lt;!&mdash;从jetty6.1.6rc0起, 你能用webAppConfig 元素代替
+　　　　　&lt;webAppConfig&gt;
+　　　　　　&lt;contextPath&gt;/test&lt;/contextPath&gt;
+　　　　　　&lt;tempDirectory&gt;${project.build.directory}/work&lt;/tempDirectory&gt;
+　　　　　　&lt;defaultsDescriptor&gt;src/main/resources/webdefault.xml&lt;/defaultsDescriptor&gt;
+　　　　　　&lt;overrideDescriptor&gt;src/main/resources/override-web.xml&lt;/overrideDescriptor&gt;
+　　　　　&lt;/webAppConfig&gt;
+　　　　　--&gt;
+　　　　　&lt;!&mdash;容器的配置--&gt;
+　　　　　&lt;jettyConfig&gt;/my/special/jetty.xml&lt;/jettyConfig&gt;
+　　　　 &lt;connectors&gt;
+　　　　　　&lt;connector implementation=&quot;org.mortbay.jetty.nio.SelectChannelConnector&quot;&gt;
+　　　　　　　&lt;port&gt;9090&lt;/port&gt;
+　　　　　　　&lt;maxIdleTime&gt;60000&lt;/maxIdleTime&gt;
+　　　　　　&lt;/connector&gt;
+　　　　　&lt;/connectors&gt;
+　　　　　&lt;userRealms&gt;
+　　　　　　&lt;userRealm implementation=&quot;org.mortbay.jetty.security.HashUserRealm&quot;&gt;
+　　　　　　　&lt;name&gt;Test Realm&lt;/name&gt;
+　　　　　　　&lt;config&gt;etc/realm.properties&lt;/config&gt;
+　　　　　　&lt;/userRealm&gt;
+　　　　　&lt;/userRealms&gt;
+　　　　　&lt;requestLog implementation=&quot;org.mortbay.jetty.NCSARequestLog&quot;&gt;
+　　　　　　&lt;filename&gt;target/yyyy_mm_dd.request.log&lt;/filename&gt;
+　　　　　　&lt;retainDays&gt;90&lt;/retainDays&gt;
+　　　　　　&lt;append&gt;true&lt;/append&gt;
+　　　　　　&lt;extended&gt;false&lt;/extended&gt;
+　　　　　　&lt;logTimeZone&gt;GMT&lt;/logTimeZone&gt;
+　　　　　&lt;/requestLog&gt;
+　　　　&lt;/configuration&gt;
+　　　&lt;/plugin&gt;
+&lt;/plugins&gt;
+&lt;/project&gt;</pre></p>		
+   
+  <div style=" display:block; width:100%; padding-top:15px; margin:0px auto; height:90px; overflow:hidden; text-align:center;"><script src="/2011/ads/tech_content_end_468x60.js"></script></div>				</p>
+
+<div class="ly">
+				
+                				<font>来源：</font> 
+								yeeyan								&nbsp;&nbsp;<font>作者：</font>jdonee <font>&nbsp;&nbsp;				        </div>
+
+        <div class="pages">
+		        <div class="quotes"><span class="disabled">第一页</span> <a href="http://tech.ddvip.com/2008-12/122905090599428.html">上一页</a> <a href="http://tech.ddvip.com/2008-12/122905090599428.html">1</a> <span class="currentpage">2</span> <a href="http://tech.ddvip.com/2008-12/122905090599428_3.html">3</a> <a href="http://tech.ddvip.com/2008-12/122905090599428_4.html">4</a>  <a href="http://tech.ddvip.com/2008-12/122905090599428_3.html">下一页</a> <span class="disabled">最后一页</span> </div>		        </div>
+        <!--翻页end-->
+
+                <p class="clearer"></p>
+          </div>
+         <!--分享-->
+<p style="float:left;height:41px;line-height:41px;font-size:16px;font-weight:bold">分享到</p>  
+         <div class="shareddvip">
+              <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=0" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+         </div>
+         <p class="clearer"></p>
+         <!---->
+         <!--工具按钮-->
+         <div class="toolbar">
+                 <ul>
+                        <li style="padding-left:23px;"><a href="javascript:;" onclick="window.print()">打印</a></li>
+                        <li  style="padding-left:45px;"><a href="http://my.ddvip.com/" target="_blank">投稿</a></li>
+                        <li  style="padding-left:47px;"><a href="http://tech.ddvip.com/feed.php" target="_blank">RSS订阅</a></li>
+                        <li  style="padding-left:47px;">下载：
+						<a href="/pdf.php?id=167900" target="_blank"><img src="/2013/images/s01_icon.png" width="17" height="7"/></a> 
+						<a href="/word.php?id=167900" target="_blank"><img src="/2013/images/s02_icon.png" width="17" height="7"/></a> 
+						<a href="/text.php?id=167900" target="_blank"><img src="/2013/images/s03_icon.png" width="17" height="7"/></a></li>
+                 </ul>
+                 <p class="clearer"></p>
+         </div>
+         <!---->
+        <!--顶踩-->
+        <div class="dingcai fix">
+		
+           <div class="left fix" >
+             <dl class="dc fix" onclick="digg_support()" style="cursor:pointer; margin-left:0px;">
+              <dd >(<span id="digg_snum" style="color:green">0</span>)<span id="digg_sbar_percent">50%</span></dd>
+              <dt>顶一下</dt>
+             </dl>
+             <dl class="dc fix" onclick="digg_against()" style="cursor:pointer; margin-left:45px;">
+              <dd>(<span id="digg_anum" style="color:red">0</span>)<span id="digg_abar_percent">50%</span></dd>
+              <dt>踩一下</dt>
+             </dl>
+           </div>
+       
+           <div class="left fix" style="float:left; padding-left:40px;">
+             <dl>
+               <dd ><a href="javascript:void(0)" onclick="window.location.href='http://comment.ddvip.com/?id=167900&amp;type=1'" id="ckplbtn"></a><a href="#comment_content" id="fbplbtn"></a></dd>
+             </dl>
+           </div>
+              <p class="clearer"></p>
+        </div>			
+        <!--顶踩end-->
+        <p class="clearer"></p>
+        <!--tag-->
+        <div class="contenttag" >
+              <ul>
+			
+                    				               <li><a href="/tag-2/java.html" target="_blank">java</a></li>
+		  		                </ul>
+              <p class="clearer"></p>
+        </div>
+        <!---->
+        <!--关键字-->
+        <div class="contentkey" >
+              <ul>
+		                </ul>
+              <p class="clearer"></p>
+        </div>
+        <!---->
+								
+		    </div>
+         <!--评论-->
+         <div class="cjrj_box margintop_10 content_cmt" style="_height:420px;">
+           <h3 class="titgrey"><p class="yuanbg">评论</p><p class="clearer"></p></h3>
+           <div class="xgrj_box news_list" style="padding:10px">
+<div id="comment-panel">
+  <div id="comment-read" class="fix"> <span><b style="font-size:14px;">最新评论</b>(共<span style="color:red">0</span>条评论)</span> <span class="comment-all-link"><a href="http://comment.ddvip.com/?id=167900&amp;type=1">查看全部评论</a></span> </div>
+  <div id="comments">
+    <div class="comment-item" id="comment_list">
+    </div>
+  </div>
+  <h3 id="comment-pub-title">发表评论</h3>
+  <div id="comment-form-panel" class="comment-form-panel">
+    <form>
+      <p>
+        <label for="comment_type_1"><img src="/images/LedIcon_194.png" width="16" height="16">&nbsp;好评</label>
+        <input type="radio" name="comment_type" id="comment_type_1" checked="checked" value="1">
+        <label for="comment_type_2"><img src="/images/LedIcon_283.png" width="16" height="16">&nbsp;中评</label>
+        <input type="radio" name="comment_type" id="comment_type_2" value="2">
+        <label for="comment_type_3"><img src="/images/LedIcon_197.png" width="16" height="16">&nbsp;差评</label>
+        <input type="radio" name="comment_type" id="comment_type_3" value="3">
+      </p>
+      <p style="padding-bottom:10px">
+        <label for="comment_nickname">用户名：</label>
+        <input type="text" value="" class="name" id="comment_nickname" name="comment_nickname" onfocus="if(value=='豆豆网友'){value=''}" onblur="if (value ==''){value='豆豆网友'}" disabled="disabled"/>
+        <span id="comment_login" style="display:inline">
+        <label class="padding_left_15px" for="comment_password">密  码：</label>
+        <input type="password" value="" class="password" id="comment_password" name="comment_password" disabled="disabled"/>
+        <input type="button"  class="login_btn" value="登陆" onclick="loginajax()"/>
+        </span>
+        <input type="checkbox" class="check_box" id="anonymity" checked="checked"/>
+        <label class="padding_left_5px">匿名</label>
+        <a href="javascript:void(0)" onclick="comment_reply_logoutajax()" id="comment_reply_logout" style="display:none">登出</a>
+        <label><a href="http://my.ddvip.com/entry/register" target="_blank">新用户注册</a></label>
+      </p>
+      <p style="border-top:1px solid #eee;padding-top:10px">
+        <textarea class="textarea" onfocus="if(value=='说点什么吧..'){value=''}" onblur="if (value ==''){value='说点什么吧..'}"  value="说点什么吧.." id="comment_content"  rows="8" style="width:99%" placeholder="说点什么吧..">说点什么吧..</textarea>
+      </p>
+      <p style="padding-top:10px;" id="comment_verification">
+
+      </p>
+      <p style="text-align:right">
+      	<input type="button" class="comment-submit" value="发表评论" id="comment_publish_btn"/>
+      </p>
+    </form>
+  </div>
+</div>
+
+
+
+  <div  id="comment_reply_panel" style="display:none" class="comment-form-panel">
+    <form>
+      <p style="padding-bottom:10px">
+        <label for="comment_nickname">用户名：</label>
+        <input type="text" value="" class="name" id="comment_reply_username" name="comment_reply_username" onfocus="if(value=='豆豆网友'){value=''}" onblur="if (value ==''){value='豆豆网友'}" disabled="disabled"/>
+        <span id="comment_login" style="display:inline">
+        <label class="padding_left_15px" for="comment_reply_password">密  码：</label>
+        <input type="password" value="" class="password" id="comment_reply_password" name="comment_reply_password" disabled="disabled"/>
+        <input type="button"  class="login_btn" value="" onclick="comment_reply_loginajax()"/>
+        </span>
+        <input type="checkbox" class="check_box" id="comment_reply_anonymity" checked="checked" onchange="comment_reply_anonymity_checkbox()"/>
+        <label class="padding_left_5px">匿名</label>
+        <a href="javascript:void(0)" onclick="comment_reply_logoutajax()" id="comment_reply_logout" style="display:none">登出</a>
+        <label><a href="http://my.ddvip.com/entry/register" target="_blank">新用户注册</a></label>
+      </p>
+      <p style="border-top:1px solid #eee;padding-top:10px">
+        <textarea class="textarea" onfocus="if(value=='说点什么吧..'){value=''}" onblur="if (value ==''){value='说点什么吧..'}"  value="说点什么吧.." id="comment_reply_content" rows="8" style="width:99%" placeholder="说点什么吧..">说点什么吧..</textarea>
+      </p>
+      <p style="padding-top:10px;" id="comment_reply_verification">
+      
+      	<div id="verification_panel">
+	        <label>验证码：</label>
+	        <input type="text" value="" size="5" class="yzm" id="verification">
+	        <img src="http://comment.ddvip.com/universal/verification/sid/jgolppk6b7h05ot3jmc81tv1a3" width="60" height="23" id="verify_img" onclick="verify_img_rand()" id="imgcode" style=""/> <a href="javascript:void(0)" onclick="verify_img_rand();">看不清楚？换一张</a>
+	       
+        </div>
+      </p>
+      <p style="text-align:right">
+       <input type="button" class="comment-submit" value="发表回复"  id="comment_reply_btn" onclick="return comment_reply()"/>
+       <input type="hidden" id="comment_reply_cid"/>
+       <a href="javascript:void(0)" style="color:blue" onclick="comment_reply_close()">关闭窗口</a>
+      </p>
+    </form>
+  </div>
+
+<!-- 加载评论 -->
+
+
+
+
+        
+                 <p class="clearer"></p>
+           </div>
+         </div>
+         <!---->   
+    </div>
+    <div class="tech_r ">
+           <!--ad广告-->
+           <div>
+          <script src="/2011/ads/tech_content_right_300x250.js"></script>           </div>
+           <!---->
+           <!--排行-->
+           <div class="paihang">
+                <div class="phul">
+<script type="text/javascript">
+function nTabs01(thisObj,Num){
+if(thisObj.className == "this")return;
+var tabObj = thisObj.parentNode.id;
+var tabList = document.getElementById(tabObj).getElementsByTagName("li");
+for(i=0; i <tabList.length; i++)
+{
+  if (i == Num)
+  {
+   thisObj.className = "this"; 
+      document.getElementById(tabObj+"_Content"+i).style.display = "block";
+  }else{
+   tabList[i].className = "normal"; 
+   document.getElementById(tabObj+"_Content"+i).style.display = "none";
+  }
+} 
+}
+</script>
+                      <ul id="myTab1">
+                           <li class="this" onmouseover="nTabs01(this,0);">今日排行</li>
+                           <li onmouseover="nTabs01(this,1);">一周排行</li>
+                           <li onmouseover="nTabs01(this,2);">总排行</li>
+                      </ul>
+                      <p class="clearer"></p>
+                </div>
+                <div class="ph_bang set_c_blue">
+                    <!---->
+                    <ul id="myTab1_Content0">
+ 										    <li><a href="http://tech.ddvip.com/2008-01/120060777640649.html">MySQL数据库中的Date,DateTime和TimeStamp</a></li>
+							    <li><a href="http://tech.ddvip.com/2008-06/121419069845979.html">SOA和BPM组合 业务更灵活</a></li>
+							    <li><a href="http://tech.ddvip.com/2008-08/121789990651182.html">具有宽占空因子范围的隔离式 MOSFET 驱动器</a></li>
+							    <li><a href="http://tech.ddvip.com/2008-10/122516311385380.html">Win32.Vking.cd.291840</a></li>
+							    <li><a href="http://tech.ddvip.com/2012-10/1349796674183117.html">Windows Server 2012上的Windows Azure云计</a></li>
+							    <li><a href="http://tech.ddvip.com/2008/08/121878165954710.html">后CIO人如何规划职业生涯</a></li>
+							    <li><a href="http://tech.ddvip.com/2012/06/1339473010176918.html">关注移动应用开发成就高瞻远瞩的CIO</a></li>
+							    <li><a href="http://tech.ddvip.com/2008-10/122484012582783.html">Win32.Hack.PCShare.c 透视眼</a></li>
+							    <li><a href="http://tech.ddvip.com/2012-09/1346946584181510.html">bada 2D游戏编程之二——图像绘制(2)</a></li>
+							    <li><a href="http://tech.ddvip.com/2012-09/1347638656182000.html">XAML实例教程系列 - 事件</a></li>
+			  
+                       
+                    </ul>
+                    <!---->
+                    <!---->
+                    <ul id="myTab1_Content1" style="display:none;">
+ 										    <li><a href="http://tech.ddvip.com/2008-09/122259278572594.html">安装Office2007出错:windows installer 服</a></li>
+							    <li><a href="http://tech.ddvip.com/2007-11/119500723337403.html">TP-LINK 无线路由器设置详细图解</a></li>
+							    <li><a href="http://tech.ddvip.com/2007-02/117064140519281.html">使用 Excel 数据透视表查看数据</a></li>
+							    <li><a href="http://tech.ddvip.com/2008-02/120341279541925.html">Excel函数 Lookup与Vlookup函数的区别及应</a></li>
+							    <li><a href="http://tech.ddvip.com/2012-04/1334211631174563.html">如何恢复QQ聊天记录</a></li>
+							    <li><a href="http://tech.ddvip.com/2006-10/11616280969846.html">Flash AS 入门到精通教程</a></li>
+							    <li><a href="http://tech.ddvip.com/2008-01/120060777640649.html">MySQL数据库中的Date,DateTime和TimeStamp</a></li>
+							    <li><a href="http://tech.ddvip.com/2012-09/1347099086181570.html">QQ 2012正式版更新，能建立30个好友分组</a></li>
+							    <li><a href="http://tech.ddvip.com/2012-04/1334137933174536.html">英语翻译软件哪个好？</a></li>
+							    <li><a href="http://tech.ddvip.com/2008-08/121795652251524.html">Photoshop婚纱照片处理：爱情天长地久</a></li>
+			                           
+                    </ul>
+                    <!---->
+                     <!---->
+                    <ul id="myTab1_Content2" style="display:none;">
+ 										    <li><a href="http://tech.ddvip.com/2007-11/119500723337403.html">TP-LINK 无线路由器设置详细图解</a></li>
+							    <li><a href="http://tech.ddvip.com/2007-02/117064140519281.html">使用 Excel 数据透视表查看数据</a></li>
+							    <li><a href="http://tech.ddvip.com/2006-10/11616280969846.html">Flash AS 入门到精通教程</a></li>
+							    <li><a href="http://tech.ddvip.com/2007-11/119502103737420.html">如何设置路由器自动拨号</a></li>
+							    <li><a href="http://tech.ddvip.com/2008-02/120341279541925.html">Excel函数 Lookup与Vlookup函数的区别及应</a></li>
+							    <li><a href="http://tech.ddvip.com/2012-03/1330929039172983.html">免费qsv转rmvb、MP4软件推荐</a></li>
+							    <li><a href="http://tech.ddvip.com/2008-09/122259278572594.html">安装Office2007出错:windows installer 服</a></li>
+							    <li><a href="http://tech.ddvip.com/2011-12/1323841592170197.html">免费rmvb转MP4视频转换工具推荐</a></li>
+							    <li><a href="http://tech.ddvip.com/2006-11/116248912610168.html">AutoCAD 2007 入门教程</a></li>
+							    <li><a href="http://tech.ddvip.com/2008-08/121795652251524.html">Photoshop婚纱照片处理：爱情天长地久</a></li>
+			                         
+                    </ul>
+                    <!---->
+                    <p class="clearer"></p>
+            </div>
+           </div>
+           <!---->
+           <!--最新热门tagg-->
+           <div class="paihang">
+                <span class="tit"><p>最新热门tag</p></span>
+                <div class="ph_bang">
+                    <ul class="list5">
+ 			    <li><a href="/tag-2/html.html" target="_blank">html</a>(5470)</li>
+	    	    <li><a href="/tag-2/asp.html" target="_blank">asp</a>(4001)</li>
+	    	    <li><a href="/tag-2/windows xp.html" target="_blank">windows xp</a>(3514)</li>
+	    	    <li><a href="/tag-2/php.html" target="_blank">php</a>(2971)</li>
+	    	    <li><a href="/tag-2/vb.html" target="_blank">vb</a>(2962)</li>
+	    	    <li><a href="/tag-2/综合布线.html" target="_blank">综合布线</a>(2870)</li>
+	    	    <li><a href="/tag-2/c语言.html" target="_blank">c语言</a>(2839)</li>
+	    	    <li><a href="/tag-2/python.html" target="_blank">python</a>(2828)</li>
+	    	    <li><a href="/tag-2/photoshop.html" target="_blank">photoshop</a>(2677)</li>
+	    	    <li><a href="/tag-2/无线网络.html" target="_blank">无线网络</a>(2518)</li>
+	    	    <li><a href="/tag-2/java.html" target="_blank">java</a>(1997)</li>
+	    	    <li><a href="/tag-2/cam.html" target="_blank">cam</a>(1901)</li>
+	    	    <li><a href="/tag-2/windows 7.html" target="_blank">windows 7</a>(1615)</li>
+	    	    <li><a href="/tag-2/电路图.html" target="_blank">电路图</a>(1389)</li>
+	    	    <li><a href="/tag-2/flash.html" target="_blank">flash</a>(1337)</li>
+	    	    <li><a href="/tag-2/javascript.html" target="_blank">javascript</a>(1326)</li>
+	    	    <li><a href="/tag-2/路由器.html" target="_blank">路由器</a>(1306)</li>
+	    	    <li><a href="/tag-2/linux.html" target="_blank">linux</a>(1259)</li>
+	                        </ul>
+                    <!---->
+                    <p class="clearer"></p>
+            </div>
+           </div>
+           <!---->
+           <!--评论排行榜-->
+           <div class="paihang">
+                <span class="tit"><p>digg排榜</p></span>
+                <div class="ph_bang">
+                    <!---->
+                    <ul id="myTab1_Content0">
+		        <li><a href="http://tech.ddvip.com/2010-11/1289356966162426.html" title="美图秀秀打造温暖美妙的海底美女照片">美图秀秀打造温暖美妙的海底美女照片</a></li>
+		        <li><a href="http://tech.ddvip.com/2008-05/121215188844900.html" title="中国象棋初学者理论培训之开局篇">中国象棋初学者理论培训之开局篇</a></li>
+		        <li><a href="http://tech.ddvip.com/2007-11/119639009538184.html" title="Photoshop 去掉图片上的文字的几个方法">Photoshop 去掉图片上的文字的几个方法</a></li>
+		        <li><a href="http://tech.ddvip.com/2006-10/11616280969846.html" title="Flash AS 入门到精通教程">Flash AS 入门到精通教程</a></li>
+		        <li><a href="http://tech.ddvip.com/2007-09/119071800435495.html" title="Photoshop抠图详细教程：明天你就是抠图高手">Photoshop抠图详细教程：明天你就是抠图高</a></li>
+		        <li><a href="http://tech.ddvip.com/2009-10/1255429773135448.html" title="extjs学习笔记（二） Ext.Element类">extjs学习笔记（二） Ext.Element类</a></li>
+		        <li><a href="http://tech.ddvip.com/2008-01/120084382340780.html" title="轻松把土豆网的视频下载保存到手机上">轻松把土豆网的视频下载保存到手机上</a></li>
+		        <li><a href="http://tech.ddvip.com/2008-08/121795652251524.html" title="Photoshop婚纱照片处理：爱情天长地久">Photoshop婚纱照片处理：爱情天长地久</a></li>
+		        <li><a href="http://tech.ddvip.com/2006-09/11578213129342.html" title="Photoshop通道抠图技巧">Photoshop通道抠图技巧</a></li>
+		        <li><a href="http://tech.ddvip.com/2007-07/118402150229049.html" title="解决Windows与Internet时间同步">解决Windows与Internet时间同步</a></li>
+		                       
+                    </ul>
+                    <!---->
+                    <p class="clearer"></p>
+            </div>
+           </div>
+           <!---->
+    </div>
+<p class="clearer"></p>
+
+</div>
+<!---->
+<script src="/2011/js/count.js" type="text/javascript"></script>
+<!--通用尾部--> 
+<div class="footer"> 
+      <div class="Copyright"> 
+          <ul> 
+              <li><a href="http://www.ddvip.com/about.html" target="_blank" rel="nofollow">关于我们</a> | <a href="http://www.ddvip.com/contactus.html" target="_blank" rel="nofollow">联系我们</a> | <a href="http://www.ddvip.com/corp.html" target="_blank" rel="nofollow">版权申明</a> | <a href="http://www.ddvip.com/ad.html" target="_blank" rel="nofollow">广告服务</a> | <a href="#" target="_blank" rel="nofollow">网站律师</a> | <a href="http://corp.ddvip.com/" target="_blank" rel="nofollow">提交软件</a> | <a href="http://www.ddvip.com/bug/" target="_blank" rel="nofollow">报告错误</a>  </li> 
+              <li>Copyright 2002-2012 ddvip All Rights Reserved</li> 
+              <li><a href="http://www.ddvip.com/" target="_blank" style="color:#0E7597;">豆豆网</a>版权所有</li> 
+          </ul>
+      </div> 
+</div> 
+<!----> 
+<script type="text/javascript">
+$(function(){
+	$.dajax({
+			'success': function(data, textStatus){
+				if (data.length > 5)
+				{
+					if ($('h1'))
+					{
+						data = data.replace($('h1').text(), '');
+					}
+					
+					$('#spider_relation_content').html(data);
+					$('#spider_relation').show();
+				}
+
+			},
+			args: {
+				'url': document.referrer,
+				'ddvip_url_request': 'http://my.ddvip.com/universal/spiderrelation2/'
+			},
+			'dataType': 'html',
+			'type': 'post'			
+		}
+	);
+});
+</script>
+<div id="spider_relation" style="display:none">
+<div class="rdtj_tit"><em>猜你需要</em><span title="点击关闭" onclick="$('#spider_relation').hide()"></span></div>
+<div class="alert_cnt news_list02">
+<ul class="news_list" id="spider_relation_content">
+
+</ul>
+</div>
+</div>
+</body>
+</html>

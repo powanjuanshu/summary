@@ -1,0 +1,2 @@
+FS 输入字段分隔符（缺省为:space:），相当于-F选项
+awk -F ':' '{print}' a    和   awk 'BEGIN{FS=":"}{print}' a 是一样的

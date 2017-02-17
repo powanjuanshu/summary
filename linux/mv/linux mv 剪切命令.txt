@@ -1,0 +1,2 @@
+mv aaa.txt ./sorce/
+将当前目录下的aaa.txt文件剪切到当前目录的sorce目录下

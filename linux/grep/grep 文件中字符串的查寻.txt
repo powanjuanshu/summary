@@ -1,0 +1,8 @@
+语法：grep string file
+grep abc file1   寻找文件file1中包含字符串abc所在行的文本内容。
+这里可以带双引号，也可以不带，也可以带单引号
+即可以：grep "abc" file1 或者 grep 'abc' file1
+-------------------------
+ps -ef | grep java
+查询进程中带有java字符串的进程
+

@@ -1,0 +1,856 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+
+<title>Samba安装配置 - 技术文档 - 网络技术 Linux时代 - 开源、自由、共享 - 中国最大的Linux技术社区</title>
+<meta name="keywords" content="Samba安装配置 - 技术文档 - 网络技术 Linux时代 - 开源、自由、共享 - 中国最大的Linux技术社区">
+<meta name="description" content="Samba安装配置 - 技术文档 - 网络技术  网络技术 Linux 技术文档">
+
+<link href="/css/all.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+
+<!--
+
+.STYLE1 {color: #FF0000}
+
+.STYLE2 {font-size: 14px}
+
+-->
+
+</style>
+
+</head>
+
+
+
+<body>
+
+<table width="950" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td height="27">	<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse" width="100%">
+	<tr><FORM name="login" action="http://linux.chinaunix.net/bbs/logging.php?action=login"  method=post>
+	<td><script language="javascript" src="http://linux.chinaunix.net/bbs/loginbox.php"></script></td>
+	</form>
+	<td align="right">
+	·<a href="http://www.chinaunix.net" class="list1">ChinaUnix首页</a>
+
+	·<a href="http://bbs.chinaunix.net" class="list1">论坛</a>
+	·<a href="http://blog.chinaunix.net" class="list1">博客</a>&nbsp;
+	</td>
+	</tr>
+	</table></td>
+
+  </tr>
+
+  <tr>
+
+    <td height="1" bgcolor="#CCCCCC"></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+      <tr>
+
+        <td height="84"><img src="/images/logo.jpg" /></td>
+
+        <td align="right" ><IFRAME SRC="http://count.chinaunix.net/iframe.php?id=54" width="750" height="80" frameborder="0"  scrolling="no"></IFRAME>
+</td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="3"><img src="/images/bgtop1.jpg" width="3" height="26" /></td>
+
+        <td width="944" background="/images/bgtop2.gif" class="whitetop">
+<a href="http://linux.chinaunix.net/" target="_blank">Linux首页</a> |
+<a href="http://linux.chinaunix.net/news/">Linux新闻</a> |
+<a target="_blank" href="http://linux.chinaunix.net/bbs" style=color:red><b>Linux论坛</b></a> |
+<a href="http://linux.chinaunix.net/techdoc/">Linux文档</a> |
+<a target="_blank" href="http://download.chinaunix.net/disc/linux/">Linux下载</a> |
+<a target="_blank" href="http://blog.chinaunix.net/techart.php?frmid=6">Linux博客</a> |
+<a target="_blank" href="http://search.chinaunix.net/">Linux搜索</a> |
+<a target="_blank" href="http://linux.chinaunix.net/bbs/index.php?gid=68">开源项目孵化平台</a>
+ |
+<a target="_blank" href="http://linux.chinaunix.net/ebook/"  style=color:red>《开源时代》</a></td>
+
+        <td width="3" align="right"><img src="/images/bgtop3.jpg" width="3" height="26" /></td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+</table>
+
+<table width="950" border="0" align="center" cellpadding="0" cellspacing="0">
+
+<tr>
+
+    <td valign="bottom" class="BlkLightblue">
+<a target="_blank" href="http://linux.chinaunix.net/techdoc/beginner/">
+		新手入门</a> | <span lang="zh-cn">
+		<a target="_blank" href="http://linux.chinaunix.net/techdoc/install/">
+		安装启动</a> | </span>
+		<a target="_blank" href="http://linux.chinaunix.net/techdoc/system/">
+		管理员指南</a> | <a target="_blank" href="http://man.chinaunix.net/">开发手册</a> 
+		| <a target="_blank" href="http://linux.chinaunix.net/techdoc/desktop/">
+		桌面应用</a> |
+		<a target="_blank" href="http://linux.chinaunix.net/techdoc/develop/">
+		程序开发</a> |
+		<a target="_blank" href="http://linux.chinaunix.net/techdoc/database/">
+		数据库</a> | <span lang="zh-cn">
+		<a target="_blank" href="http://linux.chinaunix.net/techdoc/net/">网络技术</a>|
+<a target="_blank" href="http://linux.chinaunix.net/topics/2007-01-25/15/index.shtml">
+CentOS</a></span> |
+<a target="_blank" href="http://linux.chinaunix.net/search2.php?key=fedora&id=0">
+Fedora</a> <span lang="zh-cn">| </span>
+<a target="_blank" href="http://linux.chinaunix.net/search2.php?key=mysql&id=0">
+MySQL</a>
+
+<span lang="zh-cn">| </span>
+<a target="_blank" href="http://linux.chinaunix.net/search2.php?key=apache&id=0">
+Apache</a>
+
+<span lang="zh-cn">| </span>
+<a target="_blank" href="http://linux.chinaunix.net/search2.php?key=ubuntu&id=0">
+<font color="#FF0000">Ubuntu</font></a>
+
+<span lang="zh-cn">| </span>
+<a target="_blank" href="http://linux.chinaunix.net/topics/2008-07-10/18/index.shtml">
+<font color="#FF0000">Gentoo</font></a>| </span>
+<b>
+<a target="_blank" href="http://linux.chinaunix.net/topics/2008-07-30/19/index.shtml">
+<font color="#FF0000">OSCON08</font></a></b>
+</td>
+
+</tr>
+<tr><td>
+
+</td></tr>
+  <tr>
+
+    <td height="30" valign="bottom">&nbsp;&nbsp;<a href="http://linux.chinaunix.net">Linux时代</a> &gt;&gt;  <a href="http://linux.chinaunix.net/techdoc/" class='list1'>技术文档</a> >> <a href="http://linux.chinaunix.net/techdoc/net/" class='list1'>网络技术</a></td>
+
+  </tr>
+
+  <tr>
+
+    <td height="1" bgcolor="#CCCCCC"></td>
+
+  </tr>
+
+  <tr>
+
+    <td height="8"></td>
+
+  </tr>
+
+</table><table width="950" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td valign="top" class="BLKtext"><table width="660" border="0" align="center" cellpadding="0" cellspacing="0">
+
+      <tr>
+
+        <td height="8">&nbsp;</td>
+
+      </tr>
+
+      <tr>
+
+        <td height="30" class="Ftext1">Samba安装配置</td>
+
+      </tr>
+
+      <tr>
+
+        <td><table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td height="1" bgcolor="#CCCCCC"></td>
+
+          </tr>
+
+        </table></td>
+
+      </tr>
+
+      <tr>
+
+        <td height="40" align="center">来源: 
+ ChinaUnix博客 　日期：
+2006.05.30 10:12　(共有<span class="STYLE1" id ="postcount"></span>条评论)  <a href="http://linux.chinaunix.net/bbs/thread-933350-1-1.html" target="_blank">我要评论</a></td>
+
+      </tr>
+
+      <tr>
+
+        <td>&nbsp;</td>
+
+      </tr>
+
+      <tr>
+
+        <td class="F14">
+<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 全文转自LinuxSir，作者为北南南北。<br />
+<b><br />
+++++++++++++++++++++++++++++++++++++++++++++++++<br />
+正文<br />
+++++++++++++++++++++++++++++++++++++++++++++++++<br />
+</b><br />
+<b>0、架设Samba 服务器的前提；</b><br />
+Linux是一个多用户的操作系统，对任何服务器的架设与都用户、用户组及权限相关，这是操作的基础。Samba服务器也不例外，对这些知识的掌握<br />
+也是极为重要的。在Windows系统上虽然也能架共享文件服务器，但它的权限控制实在令人不敢恭维。如果我们用Windows系统来架网络共享文件系<br />
+统，就是点鼠标也能把我们点迷糊了。但在Linux中，我们可以轻松的改一改配置文件，不到几分钟就能建好自己的Samba服务器。哪个更容易，只有你知<br />
+道；<br />
+对于Samba服务器的架设，有的弟兄简单的认为，只要把改一下配置文件，创建好相应的目录就行了。其实并不是这样的，还要深入的工作，比如目录的权限和归属，也就是说能让哪个用户和用户组有读写权。只有把配置文件和共享目录的权限结合起来，才能架好Samba服务器；<br />
+<b>下面是常用的基础知识，我们在本文中所涉及的内容都可以在下面的列表中找到相应的解释；</b><br />
+<b><br />
+0.1&nbsp;&nbsp;查看文件内容和编辑文件的工具；<br />
+</b><br />
+<a href="http://www.linuxsir.org/main/?q=node/198" target="_blank">《Linux 文件内容查看工具介绍》</a><br />
+<a href="http://www.linuxsir.org/main/?q=node/206" target="_blank">《文件编辑器 vi》</a><br />
+<b><br />
+0.2 关于文件和目录相关；<br />
+</b><br />
+<a href="http://www.linuxsir.org/main/?q=node/191" target="_blank">《Linux 文件类型 及文件的扩展名》</a><br />
+<a href="http://www.linuxsir.org/main/?q=node/192" target="_blank">《Linux 文件和目录管理之列出、删除、复制、移动及改名》</a><br />
+<a href="http://www.linuxsir.org/main/?q=node/196" target="_blank">《Linux 文件和目录的属性》</a><br />
+<a href="http://www.linuxsir.org/main/?q=node/208" target="_blank">《简述Linux文件搜索》</a><br />
+<b><br />
+03 用户和用户组相关；<br />
+</b><br />
+<a href="http://www.linuxsir.org/main/?q=node/91" target="_blank">《Linux 用户（user）和用户组（group）管理概述》</a><br />
+<a href="http://www.linuxsir.org/main/?q=node/98" target="_blank">《用户（User）和用户组（Group）配置文件详解》</a><br />
+<a href="http://www.linuxsir.org/main/?q=node/106" target="_blank">《Linux 用户管理工具介绍》</a><br />
+<a href="http://www.linuxsir.org/main/?q=node/105" target="_blank">《Linux 用户（User）查询篇》</a><br />
+<b><br />
+04 进程管理；<br />
+</b><br />
+<a href="http://www.linuxsir.org/main/?q=node/210" target="_blank">《Linux 进程管理》</a><br />
+<b>1 Samba 简介</b><br />
+Samba（SMB是其缩写） 是一个网络服务器，用于Linux和Windows共享文件之用；Samba<br />
+即可以用于Windows和Linux之间的共享文件，也一样用于Linux和Linux之间的共享文件；不过对于Linux和Linux之间共享文件有<br />
+更好的网络文件系统NFS，NFS也是需要架设服务器的；<br />
+大家知道在Windows 网络中的每台机器即可以是文件共享的服务器，也可以同是客户机；Samba<br />
+也一样能行，比如一台Linux的机器，如果架了Samba Server<br />
+后，它能充当共享服务器，同时也能做为客户机来访问其它网络中的Windows共享文件系统，或其它Linux的Sabmba 服务器；<br />
+我们在Windows网络中，看到共享文件功能知道，我们直接就可以把共享文件夹当做本地硬盘来使用。在Linux的中，就是通过Samba的向网络中的机器提供共享文件系统，也可以把网络中其它机器的共享挂载在本地机上使用；这在一定意义上说和FTP是不一样的。<br />
+Samba 用的netbios协议，如果您用Samba 不成功，<br />
+Linux与Windows 、Linux 和 Linux <br />
+<b>2 Samba 功能和应用范围</b><br />
+Samba 应该范围主要是Windows和Linux 系统共存的网络中使用；如果一个网络环境都是Linux或Unix类的系统，没有必要用Samba，应该用NFS更好一点；<br />
+那Samba 能为我们提供点什么服务呢？主要是共享文件和共享打印机；<br />
+<b>3 Samba 两个服务器相关启动程序、客户端及服务器配置文件等；</b><br />
+<b>3.1 Samba 有两个服务器，一个是smb，另一个是nmb；</b><br />
+smb 是Samba 的主要启动服务器，让其它机器能知道此机器共享了什么；如果不打开nmb服务器的话，只能通过IP来访问，比如在Windows的IE浏览器上打入下面的一条来访问；<br />
+\\192.168.1.5\共享目录<br />
+\\192.168.1.5\opt<br />
+而nmb是解析用的，解析了什么呢？就是把这台Linux机器所共享的<b>工作组</b>及在此工作组下的<b>netbios name</b>解析出来；<br />
+一般的情况下，在RPM包的系统，如果是用RPM包安装的Samba ，一般可以通过如下的方式来启动Samba服务器；<br />
+[root@localhost ~]# /etc/init.d/smb start<br />
+启动 SMB 服务：&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;确定&nbsp;&nbsp;]<br />
+启动 NMB 服务：&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;确定&nbsp;&nbsp;]<br />
+如果停止呢？就在smb后面加stop ；重启就是restart<br />
+[root@localhost ~]# /etc/init.d/smb stop<br />
+[root@localhost ~]# /etc/init.d/smb restart<br />
+对于所有系统来说，通用的办法就是直接运行smb 和nmb；当然您要知道smb和nmb所在的目录才行；如果是自己编译的Samba ，您应该知道您把Samba放在哪里了；<br />
+[root@localhost ~]# /usr/sbin/smbd<br />
+[root@localhost ~]# /usr/sbin/nmbd<br />
+查看服务器是否运行起来了，则用下面的命令；<br />
+[root@localhost ~]# pgrep smbd<br />
+[root@localhost ~]# pgrep nmbd<br />
+关掉Samba服务器，也可以用下面的办法，大多是通用的；要root权限来执行；<br />
+[root@localhost ~]# pkill smbd<br />
+[root@localhost ~]# pkill nmbd<br />
+<b>3.2 查看Samba 服务器的端口及防火墙；</b><br />
+查看这个有何用呢？有时你的防火墙可能会把smbd服务器的端口封掉，所以我们应该smbd服务器所占用的端口；下面查看中，我们知道smbd所占用的端口是139和445 ；<br />
+[root@localhost ~]# netstat -tlnp |grep smb<br />
+tcp&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;0&nbsp; &nbsp;&nbsp; &nbsp;0 0.0.0.0:139&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;0.0.0.0:*&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; LISTEN&nbsp; &nbsp;&nbsp; &nbsp;10639/smbd<br />
+tcp&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;0&nbsp; &nbsp;&nbsp; &nbsp;0 0.0.0.0:445&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;0.0.0.0:*&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; LISTEN&nbsp; &nbsp;&nbsp; &nbsp;10639/smbd<br />
+如果您有防火墙，一定要把这两个端口打开。如果不知道怎么打开。可能你和我一样是新手，还是把防火墙规则清掉也行；<br />
+[root@localhost ~]# iptables -F<br />
+或<br />
+[root@localhost ~]# /sbin/iptables -F<br />
+<b>3.3、查看Samba 服务器的配置文件；</b><br />
+如果我们是用Linux发行版自带的Samba软件包，一般情况下Samba服务器的配置文件都位于/etc/samba目录中，服务器的主配置文<br />
+件是smb.conf；也有有户配置文件<br />
+smbpasswd、smbusers和lmhosts等（最好您查看一下这些文件的内容）；还有一个文件是secrets.tdb，这个文件是<br />
+Samba 服务器启动手自动生成的；我们慢慢根据教程的进度来适当地增加这些文件的说明吧；一下子都说出来，感觉内容太多；所以只能一点一点的来了；<br />
+<b>3.4、Samba 在Linux 中的一些工具（服务器端和客户端）；</b><br />
+smbcacls&nbsp; &nbsp; smbcontrol&nbsp;&nbsp;smbencrypt&nbsp;&nbsp;smbmount&nbsp; &nbsp; smbprint&nbsp; &nbsp; smbstatus&nbsp; &nbsp;smbtree<br />
+smbclient&nbsp; &nbsp;smbcquotas&nbsp;&nbsp;smbmnt&nbsp; &nbsp;&nbsp; &nbsp;smbpasswd&nbsp; &nbsp;smbspool&nbsp; &nbsp; smbtar&nbsp; &nbsp;&nbsp; &nbsp;smbumount<br />
+smbd nmbd&nbsp; &nbsp; mount<br />
+其中服务器端的是smbd、nmbd、smbpasswd ；其它的大多是客户端；这些并不是都需要一定要精通的，但至少得会用几个；比如smbmount（也就是mount 加参数的用法），还用smbclient等；<br />
+<b>3.5 在Linux 中的常用工具mount（smbmount）和smbclient；Windows查看Linux共享的方法 ；</b><br />
+<b>3.5.1&nbsp;&nbsp;在Linux系统中查看网络中Windows共享文件及Linux中的Samba共享文件；</b><br />
+一般的情况下，我们要用到smbclient；常用的用法也无非是下面的；<br />
+[root@localhost ~]# smbclient&nbsp;&nbsp;-L&nbsp;&nbsp;//ip地址或计算机名<br />
+smbclient 是Samba 的Linux 客户端，在Linux机器上用来查看服务器上的共享资源，也可以象FTP一样，用户可以登录Samba服务器，也可以上传put和下载get文件，遗憾的是对中文支持并不友好；<br />
+<b>查看服务器上的资源；</b><br />
+smbclient -L //IP&nbsp;&nbsp;[-U 用户名]<br />
+如果您的Samba服务器配置为user模式，就要加&nbsp;&nbsp;“-U 用户名“，如果是share模式，省略也可；<br />
+比如：<br />
+[root@localhost ~]# smbclient -L&nbsp; &nbsp;//192.168.1.3&nbsp;&nbsp;-U sir01<br />
+Password: 请输入用户sir01的密码<br />
+如果您是用share模式，就可以不必理会用户和密码，直接用；<br />
+[root@localhost ~]# smbclient -L&nbsp;&nbsp;//192.168.1.3<br />
+Password: 直接按回车<br />
+<b>登录用户身份Samba服务器共享</b><br />
+以用户身份登录共享后，能象FTP用户一样，下传和下载文件；用put表示上传，用get表示下载；<br />
+smbclient&nbsp;&nbsp;//IP地址/共享文件夹&nbsp; &nbsp; -U 用户<br />
+说明：IP地址大家都知道，你不知道自己的IP地址，可以用/sbin/ifconfig 来查看；&nbsp;&nbsp;共享文件夹是我们在smb.conf中定义的[共享文件夹]，比如[sir01]。-U 用户名表示Samba 的用户；<br />
+比如：<br />
+[root@localhost ~]# smbclient //192.168.1.3/sir01 -U sir01<br />
+Password:<br />
+Domain=[LINUXSIR] OS=[Unix] Server=[Samba 3.0.21b-2]<br />
+smb: \&gt; ls<br />
+<b>说明：</b>登录到Samba服务器上，就可以用smbclient的一些指令，可以象用FTP指令一样上传和下载文件；<br />
+<b>smbclient 命令说明</b><br />
+命令&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 说明<br />
+?或help [command]&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 提供关于帮助或某个命令的帮助<br />
+![shell command]&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 执行所用的SHELL命令，或让用户进入 SHELL提示符<br />
+cd [目录]&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 切换到服务器端的指定目录，如未指定，则 smbclient 返回当前本地目录<br />
+lcd [目录]&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 切换到客户端指定的目录；<br />
+dir 或ls&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 列出当前目录下的文件；<br />
+exit 或quit &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 退出smbclient&nbsp; &nbsp; &nbsp; &nbsp; <br />
+get file1&nbsp;&nbsp;file2&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 从服务器上下载file1，并以文件名file2存在本地机上；如果不想改名，可以把file2省略<br />
+mget file1 file2 file3&nbsp;&nbsp;filen &nbsp; &nbsp; &nbsp; &nbsp; 从服务器上下载多个文件；<br />
+md或mkdir 目录&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 在服务器上创建目录<br />
+rd或rmdir&nbsp; &nbsp; &nbsp; &nbsp; 目录&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 删除服务器上的目录<br />
+put file1 [file2]&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 向服务器上传一个文件file1,传到服务器上改名为file2；<br />
+mput file1 file2 filen&nbsp;&nbsp;向服务器上传多个文件<br />
+<b>3.5.2 在Windows中访问Linux Samba服务器共享文件的办法；</b><br />
+这个简单吧，在网上领居，查看工作组就能看得到，或者在浏览器上输入如下的<br />
+\\ip地址或计算机名<br />
+这样就能看到这个机器上有什么共享的了，点鼠标操作完成；如果访问不了，不要忘记把Linux的防火墙规划清掉，或让相应的端口通过；<br />
+<b>3.5.3&nbsp;&nbsp;在Linux中smbfs文件系统的挂载；</b><br />
+mount 的用法，加载网络中的共享文件夹到本地机；mount就是用于挂载文件系统的，SMB做为网络文件系统的一种，也能用mount挂载；smbmount说到底也是用mount的一个变种；<br />
+<b>mount 挂载smbfs的用法；</b><br />
+mount -t smbfs -o codepage=cp936,username=用户名,password=密码 , -l&nbsp; &nbsp;//ip地址/共享文件夹名&nbsp; &nbsp;挂载点<br />
+或<br />
+mount -t smbfs -o codepage=cp936,username=用户名,password=密码 , -l&nbsp; &nbsp;//计算机名/共享文件夹名&nbsp; &nbsp;挂载点<br />
+或<br />
+mount -t smbfs&nbsp;&nbsp;-o codepage=cp936&nbsp;&nbsp;//ip地址或计算机名/共享文件夹名&nbsp; &nbsp;挂载点<br />
+<b>smbmount的用法：</b><br />
+smbmount -o username=用户名,password=密码 , -l&nbsp; &nbsp;//ip地址或计算机名/共享文件夹名&nbsp; &nbsp;挂载点<br />
+smbmount&nbsp;&nbsp;//ip地址或计算机名/共享文件夹名&nbsp; &nbsp; 挂载点<br />
+<b>说明：</b><br />
+如果您的服务器是以share共享的，则无需用户名和密码就能挂载，如果出现要密码的提示，直接回车就行；您也可以用smbmount 来挂载，这样就无需用mount -t smbfs来指定文件系统的类型了；<br />
+对于挂载点，我们要自己建立一个文件夹，比如我们可以建在/opt/smbhd，这由您说的算吧；<br />
+在mount的命令中，我们发现有这样的一个参数codepage=cp936，这是服务器端文件系统的编码的指定，cp936 就是简体中文，当然您可以用utf8等，尝试一下吧。<br />
+如果您挂载了远程的smbfs文件系统出现的是简体中文乱码，就要考虑挂载时要指定编码了；<br />
+<b>4、由最简单的一个例子说起，匿名用户可读可写的实现；</b> <br />
+<b>第一步： 更改smb.conf</b><br />
+我们来实现一个最简单的功能，让所有用户可以读写一个Samba 服务器共享的一个文件夹；我们要改动一下smb.conf ；首先您要备份一下smb.conf文件；<br />
+[root@localhost ~]# cd /etc/samba<br />
+[root@localhost samba]# mv smb.conf smb.confBAK<br />
+然后我们来重新创建一个smb.conf文件；<br />
+[root@localhost samba]#touch smb.conf<br />
+然后我们把下面这段写入smb.conf中；<br />
+[global]<br />
+workgroup = LinuxSir<br />
+netbios name = LinuxSir05<br />
+server string = Linux Samba Server TestServer<br />
+security = share<br />
+[linuxsir]<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;path = /opt/linuxsir<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;writeable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;browseable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;guest ok = yes<br />
+<b>注解：</b><br />
+[global]这段是全局配置，是必段写的。其中有如下的几行；<br />
+workgroup 就是Windows中显示的工作组；在这里我设置的是LINUXSIR （用大写）；<br />
+netbios name 就是在Windows中显示出来的计算机名；<br />
+server string 就是Samba服务器说明，可以自己来定义；这个不是什么重要的；<br />
+security&nbsp;&nbsp;这是验证和登录方式，这里我们用了share ；验证方式有好多种，这是其中一种；另外一种常用的是user的验证方式；如果用share呢，就是不用设置用户和密码了；<br />
+[linuxsir] 这个在Windows中显示出来是共享的目录；<br />
+path = 可以设置要共享的目录放在哪里；<br />
+writeable 是否可写，这里我设置为可写；<br />
+browseable 是否可以浏览，可以；可以浏览意味着，我们在工作组下能看到共享文件夹。如果您不想显示出来，那就设置为 browseable=no <br />
+guest ok 匿名用户以guest身份是登录；<br />
+第二步：建立相应目录并授权；<br />
+[root@localhost ~]# mkdir -p /opt/linuxsir<br />
+[root@localhost ~]# id nobody<br />
+uid=99(nobody) gid=99(nobody) groups=99(nobody)<br />
+[root@localhost ~]# chown -R nobody:nobody /opt/linuxsir<br />
+<b>注释：</b>关于授权nobody，我们先用id命令查看了nobody用户的信息，发现他的用户组也是nobody，我们要以这个为准。有些系统nobody用户组并非是nobody ；<br />
+<b>第三步：启动smbd和nmbd服务器；</b><br />
+[root@localhost ~]# smbd<br />
+[root@localhost ~]# nmbd<br />
+<b>第四步：查看smbd进程，确认Samba 服务器是否运行起来了；</b><br />
+[root@localhost ~]# pgrep smbd<br />
+13564<br />
+13568<br />
+<b>第五步：访问Samba 服务器的共享；</b><br />
+<b>在Linux 中您可以用下面的命令来访问；</b><br />
+[root@localhost ~]# smbclient -L //LinuxSir05<br />
+Password: 注：直接按回车<br />
+<b>在Windows中，您可以用下面的办法来访问；</b><br />
+\\LinuxSir05\<br />
+<b><br />
+5、复杂一点的用户共享模型（适合10人左右的小型企业）；<br />
+</b><br />
+比如一个公司有五个部门，分别是linuxsir，sir01，sir02,sir03，sir04。我们想为这家公司设计一个比较安全的共享文件<br />
+模型。每个用户都有自己的网络磁盘，sir01到sir04还有共用的网络硬盘；所有用户（包括匿名用户）有一个共享资料库，此库为了安全是只读的；所有<br />
+的用户（包括匿名用户）要有一个临时文件终转的文件夹... .... <br />
+<b><br />
+5.1&nbsp;&nbsp;共享权限设计实现的功能；<br />
+</b><br />
+1)linuxsir部门具有管理所有SMB空间的权限；<br />
+2)sir01到sir04拥有自己的空间，并且除了自身及linuxsir有权限以外，对其它用户具有绝对隐私性；<br />
+3)linuxsir01到linuxsir04拥有一个共同的读写权限的空间；<br />
+4) 所有用户（包括匿名用户）有一个有读权限的空间，用于资料库，所以不要求写入数据。<br />
+5)sir01到sir04还有一个共同的空间，对sir01到sir04的用户来说是隐私的，不能让其它用户来访问。<br />
+6) 还要有一个空间，让所有用户可以写入，能删除等功能，在权限上无限制 ，用于公司所有用户的临时文档终转等；<br />
+<b><br />
+5.2&nbsp;&nbsp;在服务器上创建相应的目录；<br />
+</b><br />
+[root@localhost ~]# mkdir -p /opt/linuxsir<br />
+[root@localhost ~]# cd /opt/linuxsir<br />
+[root@localhost linuxsir]# mkdir sir01 sir02 sir03 sir04 sirshare sir0104rw sirallrw<br />
+[root@localhost linuxsir]# ls<br />
+sir01&nbsp;&nbsp;sir0104rw&nbsp;&nbsp;sir02&nbsp;&nbsp;sir03&nbsp;&nbsp;sir04&nbsp;&nbsp;sirallrw&nbsp;&nbsp;sirshare<br />
+注：功用如下：<br />
+/opt/linuxsir&nbsp;&nbsp;这是管理员目录，负责管理其下所有目录；<br />
+/opt/linuxsir/sir01&nbsp;&nbsp;是sir01的家目录，用于私用，除了用户本身和linuxsir以外其它用户都是不可读不可写；<br />
+/opt/linuxsir/sir02&nbsp;&nbsp;是sir02的家目录，用于私用，除了用户本身和linuxsir以外其它用户都是不可读不可写；<br />
+/opt/linuxsir/sir03&nbsp;&nbsp;是sir03的家目录，用于私用，除了用户本身和linuxsir以外其它用户都是不可读不可写；<br />
+/opt/linuxsir/sir04&nbsp;&nbsp;是sir04的家目录，用于私用，除了用户本身和linuxsir以外其它用户都是不可读不可写；<br />
+/opt/linuxsir/sirshare 所用用户（除了linuxsir有权限写入外）只读目录<br />
+/opt/linuxsir/sir0104rw 是用于sir01到sir04用户可读可写共用目录，但匿名用户不能读写；<br />
+/opt/linuxsir/sirallrw 用于所有用户（包括匿名用户）的可读可写；<br />
+<b><br />
+5.3&nbsp;&nbsp;添加用户用户组，设置相应目录家目录的权限；<br />
+</b><br />
+<b><br />
+5.3.1 添加用户组；<br />
+</b><br />
+[root@localhost ~]# /usr/sbin/groupadd linuxsir<br />
+[root@localhost ~]# /usr/sbin/groupadd sir01<br />
+[root@localhost ~]# /usr/sbin/groupadd sir02<br />
+[root@localhost ~]# /usr/sbin/groupadd sir03<br />
+[root@localhost ~]# /usr/sbin/groupadd sir04<br />
+[root@localhost ~]# /usr/sbin/groupadd sir0104<br />
+<b><br />
+5.3.2 添加用户；<br />
+</b><br />
+[root@cuc03 ~]# adduser -g sir01 -G sir0104&nbsp;&nbsp;-d /opt/linuxsir/sir01 -s&nbsp;&nbsp;/sbin/nologin sir01<br />
+[root@cuc03 ~]# adduser -g sir02 -G sir0104&nbsp;&nbsp;-d /opt/linuxsir/sir02 -s&nbsp;&nbsp;/sbin/nologin sir02<br />
+[root@cuc03 ~]# adduser -g sir03 -G sir0104&nbsp;&nbsp;-d /opt/linuxsir/sir03 -s&nbsp;&nbsp;/sbin/nologin sir03<br />
+[root@cuc03 ~]# adduser -g sir04 -G sir0104&nbsp;&nbsp;-d /opt/linuxsir/sir04 -s&nbsp;&nbsp;/sbin/nologin sir04<br />
+[root@cuc03 ~]# adduser -g linuxsir -d /opt/linuxsir -G<br />
+linuxsir,sir01,sir02,sir03,sir04,sir0104 -d /opt/linuxsir -s<br />
+/sbin/nologin linuxsir<br />
+为什么这样添加用户？请参考：<br />
+<a href="http://www.linuxsir.org/main/?q=node/196" target="_blank"><b>《Linux 文件和目录的属性》</b></a><br />
+<a href="http://www.linuxsir.org/main/?q=node/106" target="_blank">《Linux 用户管理工具介绍》</a><br />
+当然我们还得学会查看用户信息的工具用法，比如 用finger和id来查看用户信息，主要是看用户是否添加正确；比如；<b>请参考</b><br />
+<a href="http://www.linuxsir.org/main/?q=node/105" target="_blank"><b>《Linux 用户（User）查询篇》</b></a><br />
+[root@localhost ~]# id linuxsir<br />
+[root@localhost ~]# finger linuxsir<br />
+<b><br />
+5.3.3 添加samba用户，并设置密码；<br />
+</b><br />
+我们用的方法是先添加用户，但添加的这些用户都是虚拟用户，因为这些用户是不能通过SHELL登录系统的；另外值得注意的是系统用户密码和<br />
+Samba用户的密码是不同的。如果您设置了系统用户能登入SHELL，可以设置用户的Samba密码和系统用户通过SHELL登录的密码不同。<br />
+我们通过smbpasswd 来添加Samba用户，并设置密码。原理是通过读取/etc/passwd文件中存在的用户名。<br />
+[root@localhost sir01]# smbpasswd -a linuxsir<br />
+New SMB password: 注：在这里添加Samba用户linuxsir的密码；<br />
+Retype new SMB password: 注：再输入一次；<br />
+用同样的方法来添加 sir01、sir02、sir03、sir04的密码；<br />
+<b><br />
+5.3.4&nbsp;&nbsp;配置相关目录的权限和归属；<br />
+</b><br />
+[root@cuc03 ~]# chmod 755 /opt/linux<br />
+[root@cuc03 ~]# chown&nbsp;&nbsp;linuxsir:linuxsir /opt/linuxsir<br />
+[root@cuc03 ~]# cd /opt/linuxsir<br />
+[root@cuc03 ~]# chmod 2770 sir0＊<br />
+[root@cuc03 ~]# chown sir01.linuxsir sir01<br />
+[root@cuc03 ~]# chown sir02.linuxsir sir02<br />
+[root@cuc03 ~]# chown sir03.linuxsir sir03<br />
+[root@cuc03 ~]# chown sir04.linuxsir sir04<br />
+[root@cuc03 ~]# chown linuxsir.sir0104 sir0104rw<br />
+[root@cuc03 ~]# chown linuxsir.linuxsir sirshare<br />
+[root@cuc03 ~]# chmod 755 sirshare<br />
+[root@cuc03 ~]# chown linuxsir:linuxsir sirallrw<br />
+[root@cuc03 ~]# chmod 3777 sirallrw<br />
+<b><br />
+5.4&nbsp; &nbsp;修改Samba配置文件 smb.conf；<br />
+</b><br />
+配置文件如下，修改/etc/samba/smb.conf后，不要忘记重启smbd和nmbd服务器；<br />
+[global]<br />
+workgroup = LINUXSIR<br />
+netbios name = LinuxSir<br />
+server string = Linux Samba&nbsp; &nbsp;TestServer<br />
+security = share<br />
+[linuxsir]<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;comment = linuxsiradmin<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;path = /opt/linuxsir/<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;create mask = 775<br />
+#create mask是用户创建文件时的权限掩码；<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;directory mask = 0775<br />
+#directory mask 是用来设置用户创建目录时的权限掩码，意思是对于用户和用户组可读可写，对其它用户可读可执行;<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;writeable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;valid users = linuxsir<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;browseable = yes<br />
+[sirshare]<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;path = /opt/linuxsir/sirshare<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;writeable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;browseable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;guest ok = yes<br />
+[sirallrw]<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;path = /opt/linuxsir/sirallrw<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;writeable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;browseable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;guest ok = yes<br />
+[sir0104rw]<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;comment = sir0104rw<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;path = /opt/linuxsir/sir0104rw<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;create mask = 775<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;directory mask = 0775<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;writeable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;valid users = linuxsir,@sir0104<br />
+#@sir0104是用户组；<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;browseable = yes<br />
+[sir01]<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;comment = sir01<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;path = /opt/linuxsir/sir01<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;create mask = 775<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;directory mask = 0775<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;writeable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;valid users = sir01,@linuxsir<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;browseable = yes<br />
+[sir02]<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;comment = sir02<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;path = /opt/linuxsir/sir02<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;create mask = 775<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;directory mask = 0775<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;writeable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;valid users = sir02,@linuxsir<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;browseable = yes<br />
+[sir03]<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;comment = sir03<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;path = /opt/linuxsir/sir03<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;create mask = 775<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;directory mask = 0775<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;writeable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;valid users = sir03,@linuxsir<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;browseable = yes<br />
+[sir04]<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;comment = sir04<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;path = /opt/linuxsir/sir04<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;create mask = 775<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;directory mask = 0775<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;writeable = yes<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;valid users = sir04,@linuxsir<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;browseable = yes<br />
+<b><br />
+5.5&nbsp; &nbsp;关于客户端访问；<br />
+</b><br />
+<b><br />
+5.5.1&nbsp; &nbsp;&nbsp; &nbsp; Windows 访问；<br />
+</b><br />
+我们打开Windows的IE浏览器，用IP地址的访问方式就能访问了，格式为 \\192.168.1.3 类似的。<br />
+附另一SAMBA配置中文文档：<br />
+http://linux.vbird.org/linux_server/0370samba.php<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+<br />
+<b>本文来自ChinaUnix博客，如果查看原文请点：</b><a href="http://blog.chinaunix.net/u/18755/showart_120139.html" target="_blank">http://blog.chinaunix.net/u/18755/showart_120139.html</a> 
+</td>
+
+      </tr>
+
+
+      <tr>
+
+        <td height="20" align="right"> 　 <a href="http://linux.chinaunix.net/bbs/thread-933350-1-1.html"  target="_blank">发表评论</a>
+
+  <a href="http://linux.chinaunix.net/bbs/thread-933350-1-1.html"  target="_blank">查看评论</a>(共有<span class="STYLE1" id ="postcount2"></span>条评论)
+<a href="http://linux.chinaunix.net/bbs/forum-4-1.html" target="_blank">我要提问</a>
+</td>
+
+      </tr>
+      <tr>
+
+        <td>&nbsp;</td>
+
+      </tr>
+
+      
+
+    </table>
+
+
+</td>
+
+    <td width="8">&nbsp;</td>
+
+    <td width="245" valign="top" bgcolor="#FFF9EB">
+<center><br>
+<form action="/search2.php" method="GET">
+<input type="text" name="key" size="15"><input type=hidden name="id" value=0 ><input type="submit" value="搜索">
+</form>
+<br>
+</center>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td height="27" background="/images/bg245.jpg" class="F13"><table width="100%"><tr><td class="F13">最新资讯</td><td align="right"><a href="/news" target="_blank">更多>></a>&nbsp;</td></tr></table></td>
+
+      </tr>
+
+      <tr>
+
+        <td valign="top" bgcolor="#FFFFFF" class="BLKtext" ><table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td height="5"></td>
+
+          </tr>
+
+          <tr>
+
+            <td>· <a href='/news/2010/12/10/1175491.shtml' title='谷歌劝说诺基亚采用Android操作系统' target='_blank'>谷歌劝说诺基亚采用Android操作..</a><br />
+· <a href='/news/2010/12/10/1175493.shtml' title='Apache 基金会确认退出 JCP 执行委员会' target='_blank'>Apache 基金会确认退出 JCP 执..</a><br />
+· <a href='/news/2010/12/07/1175306.shtml' title='Chrome 10 新功能探秘：新增GPU混合加速功能' target='_blank'>Chrome 10 新功能探秘：新增GP..</a><br />
+· <a href='/news/2010/12/07/1175307.shtml' title='金山宣布开源其安全软件' target='_blank'>金山宣布开源其安全软件</a><br />
+· <a href='/news/2010/12/07/1175309.shtml' title='女黑客在开源会议上抱受骚扰' target='_blank'>女黑客在开源会议上抱受骚扰</a><br />
+· <a href='/news/2010/12/07/1175310.shtml' title='21款值得关注的Linux游戏' target='_blank'>21款值得关注的Linux游戏</a><br />
+· <a href='/news/2010/12/07/1175311.shtml' title='马化腾：腾讯半年后彻底转型，开放和分享' target='_blank'>马化腾：腾讯半年后彻底转型，..</a><br />
+· <a href='/news/2010/12/07/1175305.shtml' title='[多图] Chrome OS 预发布版本多图赏析' target='_blank'>[多图] Chrome OS 预发布版本多..</a><br />
+· <a href='/news/2010/12/01/1175001.shtml' title='Lubuntu 11.04 默认应用抢先一览' target='_blank'>Lubuntu 11.04 默认应用抢先一览</a><br />
+· <a href='/news/2010/12/01/1175002.shtml' title='Red Hat宣布收购云计算软件提供商Makara' target='_blank'>Red Hat宣布收购云计算软件提供..</a><br />
+</td>
+
+          </tr>
+
+          <tr>
+
+            <td height="5"></td>
+
+          </tr>
+
+        </table></td>
+
+      </tr>
+
+      <tr>
+
+        <td height="10" bgcolor="#FFFFFF"></td>
+
+      </tr>
+
+      <tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td height="27" background="/images/bg245.jpg" class="F13"><table width="100%"><tr><td class="F13">论坛热点</td><td align="right"><a href="/bbs" target="_blank">更多>></a>&nbsp;</td></tr></table></td>
+
+      </tr>
+
+      <tr>
+
+        <td valign="top" bgcolor="#FFFFFF" class="BLKtext" ><table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td height="5"></td>
+
+          </tr>
+
+          <tr>
+
+            <td>· <a href='http://bbs.chinaunix.net/thread-3687970-1-1.html' title='do_execve时候用户栈中参数的位置问题' target='_blank'>do_execve时候用户栈中参数的..</a><br />
+· <a href='http://bbs.chinaunix.net/thread-3687969-1-1.html' title='swapinfo -atm 问题' target='_blank'>swapinfo -atm 问题</a><br />
+· <a href='http://bbs.chinaunix.net/thread-3687968-1-1.html' title='Linux 的优点简述' target='_blank'>Linux 的优点简述</a><br />
+· <a href='http://bbs.chinaunix.net/thread-3687967-1-1.html' title='VM虚拟机上得Red Hat Linux上搭建的ftp服务器，windows登陆不进去，但一个局域网其他' target='_blank'>VM虚拟机上得Red Hat Linux上..</a><br />
+· <a href='http://bbs.chinaunix.net/thread-3687965-1-1.html' title='我看成了上海男人喜欢女人毛多还是毛少' target='_blank'>我看成了上海男人喜欢女人毛..</a><br />
+· <a href='http://bbs.chinaunix.net/thread-3687964-1-1.html' title='校车展览，看了你就知道' target='_blank'>校车展览，看了你就知道</a><br />
+· <a href='http://bbs.chinaunix.net/thread-3687963-1-1.html' title='在遇到他之前，唯一需要做的，就是让自己足够优秀。在遇到他之前，请把最好的年华留给' target='_blank'>在遇到他之前，唯一需要做的..</a><br />
+· <a href='http://bbs.chinaunix.net/thread-3687962-1-1.html' title='GRUB的疑问' target='_blank'>GRUB的疑问</a><br />
+· <a href='http://bbs.chinaunix.net/thread-3687961-1-1.html' title='从来没有人真正付足书价——所付的只是印刷费' target='_blank'>从来没有人真正付足书价——..</a><br />
+· <a href='http://bbs.chinaunix.net/thread-3687960-1-1.html' title='云存储 vs 网盘' target='_blank'>云存储 vs 网盘</a><br />
+</td>
+
+          </tr>
+
+          <tr>
+
+            <td height="5"></td>
+
+          </tr>
+
+        </table></td>
+
+      </tr>
+
+      <tr>
+
+        <td height="10" bgcolor="#FFFFFF"></td>
+
+      </tr>
+
+      <tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td height="27" background="/images/bg245.jpg" class="F13"><table width="100%"><tr><td class="F13">文档更新</td><td align="right"><a href="/techdoc" target="_blank">更多>></a>&nbsp;</td></tr></table></td>
+
+      </tr>
+
+      <tr>
+
+        <td valign="top" bgcolor="#FFFFFF" class="BLKtext" ><table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td height="5"></td>
+
+          </tr>
+
+          <tr>
+
+            <td>· <a href='/techdoc/develop/2012/03/16/3686893.shtml' title='orcale queue' target='_blank'>orcale queue</a><br />
+· <a href='/techdoc/develop/2012/03/16/3686868.shtml' title='谁可以推荐几本经典的操作系统的书（英文版）' target='_blank'>谁可以推荐几本经典的操作系统的..</a><br />
+· <a href='/techdoc/develop/2012/03/16/3686867.shtml' title='【北京】某物联网公司招云计算应用高级开发工程师' target='_blank'>【北京】某物联网公司招云计算应..</a><br />
+· <a href='/techdoc/develop/2012/03/16/3686866.shtml' title='【北京】某物联网公司招云计算应用高级开发工程师' target='_blank'>【北京】某物联网公司招云计算应..</a><br />
+· <a href='/techdoc/develop/2012/03/16/3686865.shtml' title='谁能推荐几本关于操作系统的书' target='_blank'>谁能推荐几本关于操作系统的书</a><br />
+· <a href='/techdoc/develop/2012/03/16/3686864.shtml' title='如何添加网络接口eth1' target='_blank'>如何添加网络接口eth1</a><br />
+· <a href='/techdoc/develop/2012/03/16/3686863.shtml' title='葡萄牙语入门教材的选取与经验分享' target='_blank'>葡萄牙语入门教材的选取与经验分享</a><br />
+· <a href='/techdoc/develop/2012/03/16/3686862.shtml' title='葡萄牙语就业前景分析' target='_blank'>葡萄牙语就业前景分析</a><br />
+· <a href='/techdoc/develop/2012/03/16/3686861.shtml' title='葡萄牙语学习经验交流' target='_blank'>葡萄牙语学习经验交流</a><br />
+· <a href='/techdoc/develop/2012/03/16/3686860.shtml' title='Щ' target='_blank'>Щ</a><br />
+</td>
+
+          </tr>
+
+   
+        </table></td>
+
+      </tr>
+
+
+      <tr></table>
+</td>
+
+  </tr>
+
+</table>
+<script src="/js/threadcount.php?tid=933350"></script>
+<table width="950" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td>&nbsp;</td>
+
+  </tr>
+
+</table>
+
+<table width="950" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td height="2" bgcolor="#308CF6"></td>
+
+  </tr>
+
+  <tr>
+
+    <td height="30" align="center"><a href="http://www.chinaunix.net/about/index.shtml" target="_blank">关于我们</a> | <a href="http://www.chinaunix.net/about/connect.html" target="_blank">联系方式</a> | <a href="http://www.chinaunix.net/about/service.html" target="_blank">广告合作</a> | <a href="http://www.wintalent.cn:8031/wt5/sequelmedia/web/index" target="_blank">诚聘英才</a> | <a href="http://www.chinaunix.net/about/channel.html" target="_blank">网站地图</a> | <a href="http://www.chinaunix.net/about/friend.html" target="_blank">友情链接</a> | <a href="http://linux.chinaunix.net/bbs/register.php" target="_blank">免费注册</a></td>
+
+  </tr>
+
+  <tr>
+
+    <td height="2" bgcolor="#308CF6"></td>
+
+  </tr>
+
+  <tr>
+
+    <td align="center"><p>Copyright &copy; 2001-2009 ChinaUnix.net All Rights Reserved</p>
+
+        <p>感谢所有关心和支持过ChinaUnix的朋友们<br />
+	<p>
+ <a href="http://www.it168.com/images/icp.jpg" target="_blank">京ICP证:060528号</a></p></td>
+
+  </tr>
+
+</table>
+
+<!-- 统计 START -->
+<script src="http://stat.it168.com/pv.js" type="text/javascript"></script>
+<script>
+function sendPV(){
+    var pvTrack = new PvTrack();
+    pvTrack.type = 10; // 频道类别ID
+    pvTrack.channel = 22; // 频道ID
+   
+    pvTrack.pageType = 0;
+    pvTrack.track();
+}
+window.setTimeout("sendPV()", 0);
+</script>
+<script language="javascript" src="http://bbs.chinaunix.net/googlepv/pv.js" type="text/javascript"></script>
+<!-- 统计 .END -->
+<div style='display:none'>
+<script type="text/javascript"> 
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0ee5e8cdc4d43389b3d1bfd76e83216b' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-11982772-4");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+<script type='text/javascript' src='http://168.it168.com/js/601.js'></script>
+
+
+
+</body>
+
+</html>

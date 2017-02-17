@@ -1,0 +1,3 @@
+输入命令：chkconfig iptables on
+---------------
+如果你想永久开启防火墙，打开终端，在root权限下输入chkconfig iptables on即可永久开启防火墙，当然需要我们重启才能生效。

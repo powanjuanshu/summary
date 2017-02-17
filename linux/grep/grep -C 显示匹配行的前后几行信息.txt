@@ -1,0 +1,5 @@
+grep --color=auto -nC 50 '快捷2' /bestpayserver/devsystemproject/logs/http-2014-04-09.log 
+
+-------------------------------------
+-n 显示行数
+-C 50 显示匹配行和前后50行

@@ -1,0 +1,11 @@
+usermod -G youyou lijie
+将用户lijie添加进youyou组
+如果原来lijie在chenwei组,那么用户lijie将会在chenwei组里被移除(redhat好像是这样的,那么下面这个命令没这个问题了)
+-----------------------------
+4、给已有的用户增加工作组
+usermod -G groupname username(这个不好用,上面的问题)
+或者：gpasswd -a user group(这个好用,redhat好用)
+-----------------------------
+查看cat /etc/group
+
+

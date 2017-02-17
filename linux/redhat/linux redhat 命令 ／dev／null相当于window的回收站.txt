@@ -1,0 +1,3 @@
+nohup java -jar /bestpayserver/project/paycenter-persistence/paycenter-persistence.jar >/dev/null 2>&1 &
+
+--------------------

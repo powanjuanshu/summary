@@ -1,0 +1,8 @@
+先将iso文件装到系统中
+然后运行命令：mount /mnt/cdrom/
+然后文件就存在/mnt/cdrom文件夹下了
+然后拷贝到home目录安装
+
+--------------------
+运行命令：mount /mnt/cdrom/
+/mnt/cdrom文件夹就没文件了

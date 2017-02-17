@@ -1,0 +1,393 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Linux VSFTP服务器详细配置 - 草原和大树 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=q30CyB4PfsbdgEweXDsZ3CMih9P1crbpoDmTwGcl5MI1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/sea/bundle-sea.css?v=PPe3jt1rcXPno6kucw0iQU2MWF3DbrvubQHRM0FEMas1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/JemBai/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/JemBai/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/JemBai/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'JemBai', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=_F6vMpUraZDFoT85Xf9mf4IazxZUUUCHJBFoubR7iR01" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="header">
+	
+<!--done-->
+<div class="header">
+	<div class="headerText">
+		<a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/JemBai/">草原和大树</a><br>
+		没落的帝王向往草原大树的生活
+	</div>
+</div>
+
+</div>
+
+<div id="mytopmenu" >
+	
+		<div id="mylinks">
+<!--done-->
+<a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a> &nbsp;
+<a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/JemBai/">首页</a> &nbsp;
+<a href="http://q.cnblogs.com" class="menu">博问</a> &nbsp;
+<a href="http://home.cnblogs.com/ing/" class="menu">闪存</a> &nbsp;
+<a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a> &nbsp;
+<a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/%e8%8d%89%e5%8e%9f%e5%92%8c%e5%a4%a7%e6%a0%91">联系</a> &nbsp;
+<a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/JemBai/rss">订阅</a><a id="MyLinks1_XMLLink" href="http://www.cnblogs.com/JemBai/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>&nbsp;
+<a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a>
+</div>
+		<DIV id="mystats">
+<!--done-->
+随笔-682&nbsp;
+评论-223&nbsp;
+文章-3&nbsp;
+trackbacks-5
+</DIV>
+	
+</div>
+<div id="centercontent" >
+	
+
+<div class = "post">
+	<h1 class = "postTitle"><a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/JemBai/archive/2009/02/05/1384413.html">Linux VSFTP服务器详细配置</a></h1>
+	<div id="cnblogs_post_body"><p align="center"><strong><span style="font-size: 16pt">Linux VSFTP服务器</span></strong></p>
+<p><span style="font-size: 14pt">一、Linux FTP服务器分类：</span></p>
+<p><span style="font-size: 14pt">&lt;1&gt;wu-ftp</span></p>
+<p><span style="font-size: 14pt">&lt;2&gt;proftp=profession ftp</span></p>
+<p><span style="font-size: 14pt">&lt;3&gt;vsftp=very security ftp</span></p>
+<br />
+<p><span style="font-size: 14pt">配置文件：</span></p>
+<p><span style="font-size: 14pt">/etc/vsftpd/vsftpd.conf&nbsp;&nbsp; //</span><span style="font-size: 14pt">主配置文件</span></p>
+<p><span style="font-size: 14pt">/etc/vsftpd.ftpusers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //</span><span style="font-size: 14pt">被禁止登录FTP的用户文件</span></p>
+<p><span style="font-size: 14pt">/etc/vsftpd.user_list&nbsp;&nbsp;&nbsp;&nbsp; //</span><span style="font-size: 14pt">允许登录FTP的用户文件</span></p>
+<p><span style="font-size: 14pt">二、访问方式</span></p>
+<p><span style="font-size: 14pt">&lt;1&gt;</span><span style="font-size: 14pt">匿名登录</span></p>
+<p><span style="font-size: 14pt">&lt;2&gt;</span><span style="font-size: 14pt">帐号登录</span></p>
+<p><span style="font-size: 14pt">启动FTP服务器：</span></p>
+<p><span style="font-size: 14pt">#service vsftpd restart</span></p>
+<p><span style="font-size: 14pt"><br />
+三、配置vsftp服务器</span></p>
+<p><span style="font-size: 14pt; color: red">1.vsftpd.conf</span><span style="font-size: 14pt; color: red">各项参数说明</span><span style="font-size: 14pt">：</span></p>
+<p><span style="font-size: 14pt">#vi /etc/vsftpd/vsftpd.conf</span></p>
+<p><span style="font-size: 14pt">&lt;1&gt;</span><span style="font-size: 14pt">第7行： 控制匿名登录</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; anonymous_enable=YES </span><span style="font-size: 14pt">改成NO</span></p>
+<p><span style="font-size: 14pt">&lt;2&gt;</span><span style="font-size: 14pt">第10行：允许本地帐号登录</span></p>
+<p><span style="font-size: 14pt">&lt;3&gt;</span><span style="font-size: 14pt">第13行：控制可写权限</span></p>
+<p><span style="font-size: 14pt">&lt;4&gt;</span><span style="font-size: 14pt">第17行：控制本地文件的权限掩码</span></p>
+<p><span style="font-size: 14pt">&lt;5&gt;</span><span style="font-size: 14pt">第22行：控制是否允许匿名上传(与26行同时开启或关闭)</span></p>
+<p><span style="font-size: 14pt">&lt;6&gt;</span><span style="font-size: 14pt">第26行：控制是否允许匿名写及创建目录的权限</span></p>
+<p><span style="font-size: 14pt">&lt;7&gt;</span><span style="font-size: 14pt">第33行：控制上传或下载的日志记录</span></p>
+<p><span style="font-size: 14pt">&lt;8&gt;</span><span style="font-size: 14pt">第46行：控制日志的保存路径</span></p>
+<p><span style="font-size: 14pt">&lt;9&gt;</span><span style="font-size: 14pt">第52行：设置指令超时的时间，默认为600秒</span></p>
+<p><span style="font-size: 14pt">&lt;10&gt;</span><span style="font-size: 14pt">第55行：设置数据连接的超时时间，默认为120秒</span></p>
+<p><span style="font-size: 14pt">&lt;11&gt;</span><span style="font-size: 14pt">第91行：控制登录FTP的用户是否被限制在家目录下;(必须与93行同时开启或关闭)</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chroot_list_enable=YES</span></p>
+<p><span style="font-size: 14pt">&lt;12&gt;</span><span style="font-size: 14pt">第93行：登录FTP后被限制在家目录下的用户列表文件</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chroot_list_file=/etc/vsftpd.chroot_list</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">在/etc目录下新建一个vsftpd.chroot_list文件，内容加入要限制用户的用户名</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">没加入限制用户可以访问其目录 </span></p>
+<p><span style="font-size: 14pt">&lt;13&gt;</span><span style="font-size: 14pt">第99行：控制登录FTP后是否允许ls命令</span></p>
+<p><span style="font-size: 14pt">&lt;14&gt;</span><span style="font-size: 14pt">第102行:启用/etc/vsftpd.user_list文件</span></p>
+<p><span style="font-size: 14pt"><span style="color: red">2.</span></span><span style="font-size: 14pt; color: red">配置匿名登录</span></p>
+<p><span style="font-size: 14pt">#vi /etc/vsftpd/vsftpd.conf</span></p>
+<p><span style="font-size: 14pt">第7行，设置为： (默认值)</span></p>
+<p><span style="font-size: 14pt">anonymous_enable=YES</span></p>
+<p><span style="font-size: 14pt">启动vsftpd服务器：</span></p>
+<p><span style="font-size: 14pt">#service vsftpd restart</span></p>
+<p><span style="font-size: 14pt">#service iptables stop</span></p>
+<p><span style="font-size: 14pt">匿名登录的默认目录：</span></p>
+<p><span style="font-size: 14pt">/var/ftp/pub</span></p>
+<p><span style="font-size: 14pt">打开匿名上传和写权限：</span></p>
+<p><span style="font-size: 14pt">#vi /etc/vsftpd/vsftp.conf</span></p>
+<p><span style="font-size: 14pt">激活第22行</span></p>
+<p><span style="font-size: 14pt">激活第26行</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt">打开默认共享目录的权限</span></p>
+<p><span style="font-size: 14pt">#chmod 777 /var/ftp/pub</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt">备注：匿名可以上传下载，但不能删除；</span></p>
+<p><span style="font-size: 14pt; color: red">3.</span><span style="font-size: 14pt; color: red">本地帐号登录</span></p>
+<p><span style="font-size: 14pt">&lt;1&gt;</span><span style="font-size: 14pt">禁用匿名登入</span></p>
+<p><span style="font-size: 14pt">修改配置文件</span></p>
+<p><span style="font-size: 14pt">#vi /etc/vsftpd/vsftpd.conf</span></p>
+<p><span style="font-size: 14pt">禁用所有匿名控制行,如：</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp; </span><span style="font-size: 14pt">禁用第7行，第22行，第26行；</span></p>
+<p><span style="font-size: 14pt">&lt;2&gt;</span><span style="font-size: 14pt">开放那些用户可以登入和那些用户拒绝登入</span></p>
+<p><span style="font-size: 14pt">#vi /etc/vsftpd/vsftpd.conf</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">在102行后，插入如下：</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp; userlist_deny=NO</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (</span><span style="font-size: 14pt">备注：设置/etc/vsftpd.user_list文件中的用户可登录FTP)</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">保存退出</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp; </span><span style="font-size: 14pt">如果是#userlist_deny=NO 注释掉，则默认全部用户可以登入FTP,当要限某用户不能登入：</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">把用户名加入这个文件当中/etc/vsftpd.ftpusers，则这个用户名拒绝登入FTP</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">创建用户并加入到相应的控制文件中</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #useradd us1</span></p>
+<p style="text-indent: 42pt"><span style="font-size: 14pt">#useradd us2</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #passwd us1</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #passwd us2</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">允许登录到FTP的用户：</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">#echo us1&gt;&gt;/etc/vsftpd.user_list</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #echo us2&gt;&gt;/etc/vsftpd.user_list</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 14pt">启动</span><span style="font-size: 14pt">FTP</span><span style="font-size: 14pt">服务器</span><span style="font-size: 14pt">：</span></p>
+<p><span style="font-size: 14pt">#service vsftpd restart</span></p>
+<p><span style="font-size: 14pt">备注</span><span style="font-size: 14pt">：</span><span style="font-size: 14pt">帐号登录</span><span style="font-size: 14pt">FTP</span><span style="font-size: 14pt">，</span><span style="font-size: 14pt">默认是登录在家目录下</span><span style="font-size: 14pt">；</span></p>
+<p><span style="font-size: 14pt">禁止登录到</span><span style="font-size: 14pt">FTP</span><span style="font-size: 14pt">的用户</span><span style="font-size: 14pt">：</span></p>
+<p><span style="font-size: 14pt">#echo us3&gt;&gt;/etc/vsftpd.ftpusers</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt; color: red">&lt;3&gt;</span><span style="font-size: 14pt; color: red">将登录后的用户限制在本地家目录下</span><span style="font-size: 14pt">：</span></p>
+<p><span style="font-size: 14pt">#vi /etc/vsftpd/vsftpd.conf</span></p>
+<p><span style="font-size: 14pt">激活第91行及第93行</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp; chroot_list_enable=YES</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp; chroot_list_file=/etc/vsftpd.chroot_list</span></p>
+<p><span style="font-size: 14pt"><br />
+</span><span style="font-size: 14pt">新建受限用户的列表文件并加入受限用户名</span></p>
+<p><span style="font-size: 14pt">#vi /etc/vsftpd.chroot_list</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;us2</span></p>
+<p><span style="font-size: 14pt">保存退出</span></p>
+<p><span style="font-size: 14pt">#service vsftpd restart</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 14pt"><span style="color: red">&lt;4&gt;</span></span><span style="font-size: 14pt; color: red">限制匿名上传的速度</span><span style="font-size: 14pt">：</span></p>
+<p><span style="font-size: 14pt">#vi /etc/vsftpd/vsftpd.conf</span></p>
+<p><span style="font-size: 14pt">:$</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp; anon_max_rate=5000 //</span><span style="font-size: 14pt">默认以字节为单位 5000表示5K速度</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt"><span style="color: red">&lt;5&gt; </span></span><span style="font-size: 14pt; color: red">限制本地帐号的上传速度：</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; local_max_rate=5000 //</span><span style="font-size: 14pt">以(字节/秒)为单位</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt"><span style="color: red">&lt;6&gt; </span></span><span style="font-size: 14pt; color: red">针对不同的使用者限制不同的速度</span><span style="font-size: 14pt">(</span><span style="font-size: 14pt">这个速度优先限制所有用户的速度）:</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #vi /etc/vsftpd/vsftpd.conf&nbsp;&nbsp; </span><span style="font-size: 14pt">增加下面一行</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">user_config_dir=/etc/vsftpd/userconf</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #mkdir /etc/vsftpd/userconf&nbsp;&nbsp; </span><span style="font-size: 14pt">创建一个目录</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #vi /etc/vsftpd/userconf/user1&nbsp;&nbsp; </span><span style="font-size: 14pt">（user1</span><span style="font-size: 14pt">是要限制速度的用户名</span><span style="font-size: 14pt">)</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">local_max_rate=25000</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt; color: red">&lt;7&gt;</span><span style="font-size: 14pt; color: red">定制欢迎信息：</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp; #vi /etc/vsftpd/vsftpd.conf</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">激活80行</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp; ftpd_banner=Welcome to Huayu FTP service.</span></p>
+<p><span style="font-size: 14pt">&lt;8&gt;</span><span style="font-size: 14pt; color: red">限制服务器连接数和同IP连接数</span></p>
+<p style="margin-left: 35.05pt; text-indent: -7pt"><span style="font-size: 14pt">1</span><span style="font-size: 14pt">、max_clients <br />
+可使用这个参数定义最大的总联机数。超过这个数目将会拒绝联机，0 表示不限。默认值为0。 </span></p>
+<p style="margin-left: 35.05pt; text-indent: -7pt"><span style="font-size: 14pt">2</span><span style="font-size: 14pt">、max_per_ip <br />
+使用这个参数定义每个ip address 所可以联机的数目。超过这个数目将会拒绝联机，0 表示不限。默认值为0。</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p><span style="font-size: 14pt; color: red">&lt;9&gt;</span><span style="font-size: 14pt; color: red">虚拟FTP用户设置</span></p>
+<p style="margin-left: 27pt; text-indent: -18pt" align="left"><span style="font-size: 14pt">1、&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">建立虚拟用户口令库文件</span></p>
+<p style="margin-left: 46.5pt" align="left"><span style="font-size: 14pt">#vi /etc/vsftpd/logins.txt</span></p>
+<p style="margin-left: 40.9pt" align="left"><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp; v</span><span style="font-size: 14pt">user1</span></p>
+<p style="margin-left: 40.95pt; text-indent: 35pt" align="left"><span style="font-size: 14pt">123</span></p>
+<p style="margin-left: 40.95pt; text-indent: 35pt" align="left"><span style="font-size: 14pt">vuser2</span></p>
+<p style="margin-left: 40.95pt; text-indent: 35pt" align="left"><span style="font-size: 14pt">321</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :wq</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">口令库文件中奇数行设置用户名，偶数行设置口令</span></p>
+<p style="margin-left: 27pt; text-indent: -18pt"><span style="font-size: 14pt">2、&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">生成</span><span style="font-size: 14pt">vsftpd</span><span style="font-size: 14pt">的认证文件</span></p>
+<p style="margin-left: 45pt" align="left"><span style="font-size: 12pt">#</span><span style="font-size: 12pt">db_load -T -t hash -f /etc/vsftpd/logins.txt /etc/vsftpd/vsftpd_login.db</span><span style="font-size: 14pt"> ##</span><span style="font-size: 14pt">生成认证文件</span></p>
+<p align="left"><span style="font-size: 12pt">3</span><span style="font-size: 12pt">、</span><span style="font-size: 14pt">设置认证文件只对root用户可读可写</span> </p>
+<p style="text-indent: 21pt" align="left"><span style="font-size: 14pt"># chmod 600 /etc/vsftpd/vsftpd_login.db<strong> </strong></span></p>
+<p style="text-indent: 5.15pt" align="left"><span style="font-size: 14pt">4</span><span style="font-size: 14pt">、</span><span style="font-size: 14pt">建立虚拟用户所需的</span><span style="font-size: 14pt">PAM</span><span style="font-size: 14pt">配置文件</span><span style="font-size: 14pt">，</span><span style="font-size: 14pt">手工建立</span><span style="font-size: 14pt">vsftpd.vu</span><span style="font-size: 14pt">文件</span></p>
+<p style="text-indent: 21pt" align="left"><span style="font-size: 14pt"># cat /etc/pam.d/vsftpd.vu</span></p>
+<p style="text-indent: 21pt" align="left">auth required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login</p>
+<p style="text-indent: 21pt">account required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login</p>
+<p align="left"><span style="font-size: 14pt">5</span><span style="font-size: 14pt">、</span><span style="font-size: 14pt">建立所有</span><span style="font-size: 14pt">FTP</span><span style="font-size: 14pt">虚拟用户帐号使用的系统用户帐号，并设置该帐号宿主目录的权限</span></p>
+<p style="text-indent: 15.75pt" align="left"><span style="font-size: 14pt"># useradd -d /home </span><span style="font-size: 14pt">-s /sbin/nologin </span><span style="font-size: 14pt">/ftpsite virtual</span></p>
+<p style="text-indent: 15.75pt" align="left"><span style="font-size: 14pt"># chmod 700 /home/ftpsite</span></p>
+<p align="left"><span style="font-size: 14pt">6</span><span style="font-size: 14pt">、</span><span style="font-size: 14pt">设置</span><span style="font-size: 14pt">vsftpd.conf</span><span style="font-size: 14pt">配置文件</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt">#vi /etc/vsftpd/vsftpd.conf</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt">在配置文件中添加虚拟用户的配置内容</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt">guest_enable=YES</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt">guest_username=virtual</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt">pam_service_name=vsftpd.vu</span>（要和刚才建的PAM文件对应）</p>
+<p style="margin-left: 10.5pt" align="left"><span style="font-size: 14pt">user_config_dir=/etc/vsftpd/user_config_dir </span>（指定每个虚拟用户账号配置目录，）<span style="font-size: 14pt"><br />
+local_root=/www </span><span style="font-size: 14pt">（这行没有，虚拟用户登入到/ftpsite）</span></p>
+<p align="left"><span style="font-size: 14pt">7</span><span style="font-size: 14pt">、</span><span style="font-size: 14pt">配置虚拟用户名的设置</span></p>
+<p align="left"><span style="font-size: 14pt">#mkdir -p /etc/vsftpd/user_config_dir </span><span style="font-size: 14pt">（主配置文件对应）<br />
+#mkdir -p /www/vuser1&nbsp;&nbsp;&nbsp; （创建虚拟用主目录）<br />
+#chmod -R 777 /www/vuser1 （设定权限）</span></p>
+<p align="left"><span style="font-size: 14pt">#touch /etc/vsftpd/user_config_dir/vuser1 (</span><span style="font-size: 14pt">为vuser1权限配置文件)<br />
+#echo "anon_world_readable_only=NO<br />
+write_enable=YES<br />
+anon_upload_enable=YES<br />
+anon_other_write_enable=YES<br />
+local_root=/www/feixiang<br />
+anon_mkdir_write_enable=YES" &gt;/etc/vsftpd/user_config_dir/vuser1</span></p>
+<p align="left"><span style="font-size: 14pt">8</span><span style="font-size: 14pt">、</span><span style="font-size: 14pt">重新启动</span><span style="font-size: 14pt">vsftpd</span><span style="font-size: 14pt">服务程序</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt"># service vsftpd restart </span></p>
+<p><span style="font-size: 14pt">现在就应该可以用虚拟帐号登陆了.</span></p>
+<p><span style="font-size: 14pt; color: red">&lt;9&gt;</span><span style="font-size: 14pt; color: red">虚拟FTP用户设置</span></p>
+<p style="margin-left: 27pt; text-indent: -18pt" align="left"><span style="font-size: 14pt">1、&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">建立虚拟用户口令库文件</span></p>
+<p style="margin-left: 46.5pt" align="left"><span style="font-size: 14pt">#vi /etc/vsftpd/logins.txt</span></p>
+<p style="margin-left: 40.9pt" align="left"><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp; v</span><span style="font-size: 14pt">user1</span></p>
+<p style="margin-left: 40.95pt; text-indent: 35pt" align="left"><span style="font-size: 14pt">123</span></p>
+<p style="margin-left: 40.95pt; text-indent: 35pt" align="left"><span style="font-size: 14pt">vuser2</span></p>
+<p style="margin-left: 40.95pt; text-indent: 35pt" align="left"><span style="font-size: 14pt">321</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :wq</span></p>
+<p><span style="font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">口令库文件中奇数行设置用户名，偶数行设置口令</span></p>
+<p style="margin-left: 27pt; text-indent: -18pt"><span style="font-size: 14pt">2、&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 14pt">生成</span><span style="font-size: 14pt">vsftpd</span><span style="font-size: 14pt">的认证文件</span></p>
+<p style="margin-left: 45pt" align="left"><span style="font-size: 12pt">#</span><span style="font-size: 12pt">db_load -T -t hash -f /etc/vsftpd/logins.txt /etc/vsftpd/vsftpd_login.db</span><span style="font-size: 14pt"> ##</span><span style="font-size: 14pt">生成认证文件</span></p>
+<p align="left"><span style="font-size: 12pt">3</span><span style="font-size: 12pt">、</span><span style="font-size: 14pt">设置认证文件只对root用户可读可写</span> </p>
+<p style="text-indent: 21pt" align="left"><span style="font-size: 14pt"># chmod 600 /etc/vsftpd/vsftpd_login.db<strong> </strong></span></p>
+<p style="text-indent: 5.15pt" align="left"><span style="font-size: 14pt">4</span><span style="font-size: 14pt">、</span><span style="font-size: 14pt">建立虚拟用户所需的</span><span style="font-size: 14pt">PAM</span><span style="font-size: 14pt">配置文件</span><span style="font-size: 14pt">，</span><span style="font-size: 14pt">手工建立</span><span style="font-size: 14pt">vsftpd.vu</span><span style="font-size: 14pt">文件</span></p>
+<p style="text-indent: 21pt" align="left"><span style="font-size: 14pt"># cat /etc/pam.d/vsftpd.vu</span></p>
+<p style="text-indent: 21pt" align="left">auth required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login</p>
+<p style="text-indent: 21pt">account required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login</p>
+<p align="left"><span style="font-size: 14pt">5</span><span style="font-size: 14pt">、</span><span style="font-size: 14pt">建立所有</span><span style="font-size: 14pt">FTP</span><span style="font-size: 14pt">虚拟用户帐号使用的系统用户帐号，并设置该帐号宿主目录的权限</span></p>
+<p style="text-indent: 15.75pt" align="left"><span style="font-size: 14pt"># useradd -d /home </span><span style="font-size: 14pt">-s /sbin/nologin </span><span style="font-size: 14pt">/ftpsite virtual</span></p>
+<p style="text-indent: 15.75pt" align="left"><span style="font-size: 14pt"># chmod 700 /home/ftpsite</span></p>
+<p align="left"><span style="font-size: 14pt">6</span><span style="font-size: 14pt">、</span><span style="font-size: 14pt">设置</span><span style="font-size: 14pt">vsftpd.conf</span><span style="font-size: 14pt">配置文件</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt">#vi /etc/vsftpd/vsftpd.conf</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt">在配置文件中添加虚拟用户的配置内容</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt">guest_enable=YES</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt">guest_username=virtual</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt">pam_service_name=vsftpd.vu</span>（要和刚才建的PAM文件对应）</p>
+<p style="margin-left: 10.5pt" align="left"><span style="font-size: 14pt">user_config_dir=/etc/vsftpd/user_config_dir </span>（指定每个虚拟用户账号配置目录，）<span style="font-size: 14pt"><br />
+local_root=/www </span><span style="font-size: 14pt">（这行没有，虚拟用户登入到/ftpsite）</span></p>
+<p align="left"><span style="font-size: 14pt">7</span><span style="font-size: 14pt">、</span><span style="font-size: 14pt">配置虚拟用户名的设置</span></p>
+<p align="left"><span style="font-size: 14pt">#mkdir -p /etc/vsftpd/user_config_dir </span><span style="font-size: 14pt">（主配置文件对应）<br />
+#mkdir -p /www/vuser1&nbsp;&nbsp;&nbsp; （创建虚拟用主目录）<br />
+#chmod -R 777 /www/vuser1 （设定权限）</span></p>
+<p align="left"><span style="font-size: 14pt">#touch /etc/vsftpd/user_config_dir/vuser1 (</span><span style="font-size: 14pt">为vuser1权限配置文件)<br />
+#echo "anon_world_readable_only=NO<br />
+write_enable=YES<br />
+anon_upload_enable=YES<br />
+anon_other_write_enable=YES<br />
+local_root=/www/feixiang<br />
+anon_mkdir_write_enable=YES" &gt;/etc/vsftpd/user_config_dir/vuser1</span></p>
+<p align="left"><span style="font-size: 14pt">8</span><span style="font-size: 14pt">、</span><span style="font-size: 14pt">重新启动</span><span style="font-size: 14pt">vsftpd</span><span style="font-size: 14pt">服务程序</span></p>
+<p style="text-indent: 10.5pt" align="left"><span style="font-size: 14pt"># service vsftpd restart </span></p>
+<p><span style="font-size: 14pt">现在就应该可以用虚拟帐号登陆了.</span></p>
+</div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+	<div class = "postDesc">posted on <span id="post-date">2009-02-05 11:26</span> <a href='http://www.cnblogs.com/JemBai/'>草原和大树</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=1384413" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(1384413);return false;">收藏</a></div>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=39982,cb_entryId=1384413,cb_blogApp=currentBlogApp,cb_blogUserGuid='8945420b-63cf-dd11-9e4d-001cf0cd104b',cb_entryCreatedDate='2009/2/5 11:26:00';loadViewCount(cb_entryId);</script>
+
+<a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="开发者的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    var enableGoogleAd = canShowAdsense(); var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</script>
+<div id="ad_under_post_holder">
+<script type='text/javascript'>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        if (enableGoogleAd) {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        }
+    })();
+</script>
+<script type='text/javascript'>
+    try {
+        if (enableGoogleAd) {
+            googletag.cmd.push(function () {
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C2', [468, 60], 'div-gpt-ad-1410860226396-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        };
+    } catch (e) { }
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+    <div id='div-gpt-ad-1346480159711-0' style='width:300px; height:250px;'>
+    <script type='text/javascript'>
+        try {
+            if (enableGoogleAd) {
+                googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });            
+            } else {
+                $('#div-gpt-ad-1346480159711-0').hide();
+            }
+    } catch (e) { }
+    </script>
+    </div>
+</div>
+</div>
+<div id="under_post_news"></div>
+<div id="google_ad_c2" class="c_ad_block">
+<div id='div-gpt-ad-1410860226396-0' style='width:468px; height:60px;'>
+<script type='text/javascript'>
+try {
+    if (enableGoogleAd) {
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1410860226396-0'); });
+    } else {
+        $('#div-gpt-ad-1346480159711-0').hide();
+    }
+} catch (e) { }
+</script>
+</div>
+</div>
+<div id="under_post_kb"></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</script>
+</div>
+
+</div>
+<div id="leftcontent">
+	
+		<DIV id="leftcontentcontainer">
+			
+<!--done-->
+<div class="newsItem">
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script><br>
+			<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script></DIV>
+	
+</div>
+
+<!--done-->
+<div class="footer">
+	Powered by: <a href="http://www.cnblogs.com">博客园</a>	模板提供：<a href="http://blog.hjenglish.com">沪江博客</a>
+	Copyright &copy;2014 草原和大树
+</div>
+
+
+
+</body>
+</html>

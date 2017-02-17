@@ -1,0 +1,26 @@
+输入命令：setup->Network configuration->Yes->Configure TCP/IP->打空格切换为*号是否为自动分配ip->切换为手动指定ip：
+IP address：   		192.168.242.22
+Netmask：      		255.255.255.0
+Default gateway(ip)：   192.168.242.254
+Primary nameserver:	192.168.242.1
+
+->OK->输入命令：/etc/rc.d/init.d/network restart（如果出现绿色的OK表示成功）必须输入这个命令，不然配置的ip不会生效
+->ifconfig
+
+eth0：表示第一块网卡
+lo：表示回路
+
+
+第二种方法：
+ifconfig eth0 x.x.x.x 对网卡设置ip （这种方法重启机器的时候会恢复到原来的ip）
+ifconfig eth0 network x.x.x.x 对子网掩码设置
+这样设置会立即生效
+
+第三种方法：
+修改/etc/sysconfig/network-scripts/ifcfg-eth0这个文件里的属性，包括ip，子网掩码，广播地址，默认网关。
+运行/etc/rc.d/init.d/network restart 命令才能生效。
+
+
+
+
+

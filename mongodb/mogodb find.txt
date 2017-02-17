@@ -1,0 +1,137 @@
+db.getCollection('resources.files').find({ 
+"general.productid" : {"$in": ["rrt_linyi"]},
+"general.source" : {"$in": ["UGC","iFly", "iflytek","IFLY-AI"]},
+"lifecycle.curstatus":"1",
+"lifecycle.auditstatus":{"$in": ["0","1"]},
+"properties.rrtlevel1":["08"],
+"date.createtime":{"$type":9},
+"general.creator" : "lijie_test"
+})
+-------------------
+{
+    "_id" : ObjectId("57ba58f66ef5db3d6b7d4ede"),
+    "files" : {
+        "file" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987.docx",
+        "thumbnail_THUMBNAIL_SIZE_png" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx_size_THUMBNAIL_SIZE.png",
+        "preview" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx.swf",
+        "thumbnail_64_64_png" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx_size_64_64.png",
+        "thumbnail_106_80_png" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx_size_106_80.png",
+        "thumbnail_100_140_png" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx_size_100_140.png",
+        "thumbnail_120_160_png" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx_size_120_160.png",
+        "thumbnail_120_90_png" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx_size_120_90.png",
+        "thumbnail_164_123_png" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx_size_164_123.png",
+        "thumbnail_128_96_png" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx_size_128_96.png",
+        "thumbnail_180_255_png" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx_size_180_255.png"
+    },
+    "properties" : {
+        "city" : [ 
+            "1607"
+        ],
+        "school" : [ 
+            "4637130095000000153"
+        ],
+        "rrtlevel1" : [ 
+            "08"
+        ],
+        "district" : [ 
+            "3561"
+        ],
+        "edition" : [ 
+            ""
+        ],
+        "course" : [ 
+            ""
+        ],
+        "book" : [ 
+            "01010101-001"
+        ],
+        "phase" : [ 
+            "03"
+        ],
+        "unit3" : [ 
+            ""
+        ],
+        "unit2" : [ 
+            ""
+        ],
+        "unit1" : [ 
+            "03"
+        ],
+        "stage" : [ 
+            "010001"
+        ],
+        "type" : [ 
+            "1902"
+        ],
+        "unit" : [ 
+            "03"
+        ],
+        "subject" : [ 
+            "01"
+        ]
+    },
+    "statistics" : {
+        "viewcount" : 1,
+        "commentcount" : 0,
+        "reputablerate" : 0,
+        "favtimes" : 0,
+        "recommendcounts" : 0,
+        "up" : 0,
+        "down" : 0,
+        "editorate" : 0,
+        "recommended" : false,
+        "score" : 0,
+        "scorecount" : 0,
+        "downloadcount" : 0
+    },
+    "tags" : [],
+    "general" : {
+        "pinyintitle" : "zhongguoxiaoxueyuwentangshisongciwubaishou28",
+        "resourcedescriptor" : {},
+        "language" : "zh-CN",
+        "creator" : "lijie_test",
+        "description" : "",
+        "title" : "中国小学语文唐诗宋词五百首28",
+        "filename" : "中国小学语文唐诗宋词五百首28.docx",
+        "extension" : "docx",
+        "length" : "10942",
+        "source" : "UGC",
+        "uploader" : "lijie_test",
+        "md5" : "8b6cb3f15c40b5917df61b3224aea987",
+        "quality" : "0",
+        "id" : "21c3fc9e236b4904b9a87bc88c85e934",
+        "productid" : "rrt_linyi"
+    },
+    "typemeta" : {},
+    "date" : {
+        "lastmodify" : ISODate("2016-08-22T09:44:22.045Z"),
+        "uploadtime" : ISODate("2016-08-22T09:44:22.045Z"),
+        "createtime" : ISODate("2016-08-22T09:44:22.045Z")
+    },
+    "security" : {
+        "share" : true
+    },
+    "custom" : {},
+    "segment" : {
+        "content" : "",
+        "senword" : []
+    },
+    "lifecycle" : {
+        "curversion" : 0,
+        "auditstatus" : "0",
+        "contribute" : [],
+        "curstatus" : "1"
+    },
+    "content" : {
+        "text" : {
+            "1" : "鹅鹅鹅\n曲项向天歌"
+        },
+        "screenshot" : {
+            "1" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx/thumbails/1.png"
+        },
+        "thumbnail_106_80" : {
+            "1" : "anonymous_2016_8/docx/22/9/44/8b6cb3f15c40b5917df61b3224aea987_docx/thumbails/106_80/1.png"
+        }
+    }
+}
+
