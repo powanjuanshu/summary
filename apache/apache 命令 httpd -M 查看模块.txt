@@ -1,0 +1,41 @@
+/usr/local/apache/bin/httpd -M
+输出一个已经启用的模块列表，包括静态编译在服务器中的模块和作为DSO动态加载的模块
+-----------------------------
+/usr/local/apache/bin/httpd -M
+下面是输出:
+Loaded Modules:
+ core_module (static)
+ authn_file_module (static)
+ authn_default_module (static)
+ authz_host_module (static)
+ authz_groupfile_module (static)
+ authz_user_module (static)
+ authz_default_module (static)
+ auth_basic_module (static)
+ include_module (static)
+ filter_module (static)
+ log_config_module (static)
+ env_module (static)
+ setenvif_module (static)
+ version_module (static)
+ mpm_prefork_module (static)
+ http_module (static)
+ mime_module (static)
+ status_module (static)
+ autoindex_module (static)
+ asis_module (static)
+ cgi_module (static)
+ negotiation_module (static)
+ dir_module (static)
+ actions_module (static)
+ userdir_module (static)
+ alias_module (static)
+ so_module (static)
+ rewrite_module (shared)
+Syntax OK
+
+
+
+
+
+

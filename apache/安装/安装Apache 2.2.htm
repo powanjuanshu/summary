@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Linux下安装Apache 2.4 - Rainisic - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=d_Et_wtKX7bJcow-mLRlKv4wqGQ2rjNrWTPvZmUqF8Y1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/coffee/bundle-coffee.css?v=H7P3zU3_M529NtLVh9kKULJaZLDGv9Qz_L_VdgyN1P41"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/rainisic/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/rainisic/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/rainisic/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'rainisic', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=TUYuDnHaLBHaZFATU-2ZEv0YIqcxJGTZ6ROYwfnVQH81" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/rainisic/"><img id="blogLogo" src="/Skins/custom/images/logo.gif" alt="返回主页" /></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/rainisic/">Rainisic's Home</a></h1>
+<h2>I'm coding my life.</h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="navigator">
+			
+<!--done-->
+			<ul id="navList">
+				<li><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+				<li><a id="MyLinks1_IngLink" class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+				<li><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/rainisic/">首页</a></li>
+				<li><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+				<li><a id="MyLinks1_ContactLink" accesskey="9" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/Rainisic">联系</a></li>
+				<li><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+				<li><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/rainisic/rss">订阅</a>
+				<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/rainisic/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a></li>
+			</ul>
+
+
+			<div class="blogStats">
+				
+				
+<!--done-->
+随笔- 23&nbsp;
+文章- 0&nbsp;
+评论- 8&nbsp;
+
+				
+			</div><!--end: blogStats -->
+		</div><!--end: navigator 博客导航栏 -->
+		
+
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/rainisic/archive/2012/05/23/Linux_Apache2_4_Install.html">Linux下安装Apache 2.4</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>本文原创，欢迎转载。转载请在文章明显可见处张贴如下内容：（注意：请保留超链接格式）</p>
+<div style="border: 1px silver solid; padding: 20px; background-color: #eeeeff;">
+<p>本文为<a href="http://www.rainisic.com">Rainisic</a>原创，欢迎转载，转载请在文章明显可见处张贴原帖信息：</p>
+<p><a href="http://www.cnblogs.com/rainisic/archive/2012/05/23/Linux_Apache2_4_Install.html">http://www.cnblogs.com/rainisic/archive/2012/05/23/Linux_Apache2_4_Install.html</a></p>
+</div>
+<h1>下载Apache 2.4及依赖包</h1>
+<p>Apache官网下载：<a href="http://httpd.apache.org/download.cgi">http://httpd.apache.org/download.cgi</a></p>
+<p>由于Apache依赖于APR、APR-Util和PCRE，所以需要下载：</p>
+<p>APR + APR-Util：<a href="http://apr.apache.org/download.cgi">http://apr.apache.org/download.cgi</a></p>
+<p>PCRE：<a href="http://sourceforge.net/projects/pcre/files/pcre/">http://sourceforge.net/projects/pcre/files/pcre/</a></p>
+<p>在此，笔者使用均为目前最新版本，Apache 1.4.6，APR 1.4.1，APR-Util 2.4.1，Perl 5.14.2，PCRE 8.30</p>
+<h1>安装依赖</h1>
+<h2>APR及APR-Util安装</h2>
+<p>解压缩APR及APR-Util</p>
+<div class="cnblogs_code">
+<pre>shell&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">tar</span> zxvf apr-<span style="color: #800080;">1.4</span>.<span style="color: #800080;">6</span>.<span style="color: #0000ff;">tar</span>.gz -C /opt/<span style="color: #000000;">sources
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">tar</span> zxvf apr-util-<span style="color: #800080;">1.4</span>.<span style="color: #800080;">1</span>.<span style="color: #0000ff;">tar</span>.gz -C /opt/sources</pre>
+</div>
+<p>创建安装目录并创建软链接</p>
+<div class="cnblogs_code">
+<pre>shell&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">mkdir</span> /opt/software/develop/apr-<span style="color: #800080;">1.4</span>.<span style="color: #800080;">6</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">mkdir</span> /opt/software/develop/apr-util-<span style="color: #800080;">1.4</span>.<span style="color: #800080;">1</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">ln</span> -s /opt/software/develop/apr-<span style="color: #800080;">1.4</span>.<span style="color: #800080;">6</span> /usr/local/<span style="color: #000000;">apr
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">ln</span> -s /opt/software/develop/apr-util-<span style="color: #800080;">1.4</span>.<span style="color: #800080;">1</span> /usr/local/apr-util</pre>
+</div>
+<p>安装APR及APR-Util</p>
+<div class="cnblogs_code">
+<pre>shell&gt; cd /opt/sources/apr-<span style="color: #800080;">1.4</span>.<span style="color: #800080;">6</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> ./configure --prefix=/usr/local/<span style="color: #000000;">apr
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">make</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">make</span> <span style="color: #0000ff;">install</span><span style="color: #000000;">
+
+shell</span>&gt; cd /opt/sources/apr-util-<span style="color: #800080;">1.4</span>.<span style="color: #800080;">1</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> ./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/<span style="color: #000000;">apr
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">make</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">make</span> <span style="color: #0000ff;">install</span></pre>
+</div>
+<h2>安装PCRE</h2>
+<p>首先请确定系统安装了Perl，Perl在此不再赘述，如有需要请去官网查看安装细则：<a href="http://www.cpan.org/src/README.html">http://www.cpan.org/src/README.html</a></p>
+<p>解压缩PCRE</p>
+<div class="cnblogs_code">
+<pre>shell&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">tar</span> zxvf pcre-<span style="color: #800080;">8.30</span>.<span style="color: #0000ff;">tar</span>.gz -C /opt/sources</pre>
+</div>
+<p>创建PCRE安装目录及软链接</p>
+<div class="cnblogs_code">
+<pre>shell&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">mkdir</span> /opt/software/develop/pcre-<span style="color: #800080;">8.30</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">ln</span> -s /opt/software/develop/pcre-<span style="color: #800080;">8.30</span> /usr/local/pcre</pre>
+</div>
+<p>安装PCRE</p>
+<div class="cnblogs_code">
+<pre>shell&gt; cd /opt/sources/pcre-<span style="color: #800080;">8.30</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> ./configure --prefix=/usr/local/<span style="color: #000000;">pcre
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">make</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">make</span> <span style="color: #0000ff;">install</span></pre>
+</div>
+<h1>安装Apache 2.4</h1>
+<p>解压缩Apache 2.4</p>
+<div class="cnblogs_code">
+<pre>shell&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">tar</span> zxvf httpd-<span style="color: #800080;">2.4</span>.<span style="color: #800080;">2</span>.<span style="color: #0000ff;">tar</span>.gz -C /opt/sources</pre>
+</div>
+<p>创建Apache安装目录及软链接</p>
+<div class="cnblogs_code">
+<pre>shell&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">mkdir</span> /opt/software/develop/httpd-<span style="color: #800080;">2.4</span>.<span style="color: #800080;">2</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">ln</span> -s /opt/software/develop/httpd-<span style="color: #800080;">2.4</span>.<span style="color: #800080;">2</span> /usr/local/apache2</pre>
+</div>
+<p>安装Apache</p>
+<div class="cnblogs_code">
+<pre>shell&gt; cd /opt/sources/httpd-<span style="color: #800080;">2.4</span>.<span style="color: #800080;">2</span><span style="color: #000000;">
+
+# 此处请根据自己要搭建的环境进行配置，我这里是为了配置PHP环境
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> ./configure --prefix=/usr/local/apache2 --enable-so --enable-rewrite=shared --with-mpm=prefork --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr-util --with-pcre=/usr/local/<span style="color: #000000;">pcre
+
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">make</span><span style="color: #000000;">
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">make</span> <span style="color: #0000ff;">install</span></pre>
+</div>
+<h1>启动Apache</h1>
+<p>通过apachectl启动Apach</p>
+<div class="cnblogs_code">
+<pre>shell&gt; <span style="color: #0000ff;">sudo</span> /usr/local/apache2/bin/apachectl start</pre>
+</div>
+<p>检查是否有Apache进程</p>
+<div class="cnblogs_code">
+<pre>shell&gt; <span style="color: #0000ff;">ps</span> aux | <span style="color: #0000ff;">grep</span> httpd</pre>
+</div>
+<p>如果有Apache的进程，则证明启动成功，浏览器地址栏输入 <a href="http://localhost">http://localhost</a> 试试吧～</p>
+<p>启动成功之后，可以将apachectl拷贝到/etc/init.d下，作为service启动。</p>
+<div class="cnblogs_code">
+<pre>shell&gt; <span style="color: #0000ff;">sudo</span> <span style="color: #0000ff;">cp</span> /usr/local/apache2/bin/apachectl /etc/init.d/<span style="color: #000000;">httpd
+shell</span>&gt; <span style="color: #0000ff;">sudo</span> service httpd start</pre>
+</div>
+<h1>扩展阅读</h1>
+<ul>
+<li>Apache官方安装文档：<a href="http://httpd.apache.org/docs/2.4/install.html">http://httpd.apache.org/docs/2.4/install.html</a></li>
+<li>Apache 2.4下 PHP 5.4.3 的安装：尚未写完～稍等下</li>
+</ul></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2012-05-23 17:05</span> <a href='http://www.cnblogs.com/rainisic/'>Rainisic</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=2513835" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2513835);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=86974,cb_entryId=2513835,cb_blogApp=currentBlogApp,cb_blogUserGuid='df4af88c-d561-e011-a53f-842b2b196315',cb_entryCreatedDate='2012/5/23 17:05:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+<a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="开发者的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    var enableGoogleAd = canShowAdsense(); var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</script>
+<div id="ad_under_post_holder">
+<script type='text/javascript'>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        if (enableGoogleAd) {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        }
+    })();
+</script>
+<script type='text/javascript'>
+    try {
+        if (enableGoogleAd) {
+            googletag.cmd.push(function () {
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C2', [468, 60], 'div-gpt-ad-1410860226396-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        };
+    } catch (e) { }
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+    <div id='div-gpt-ad-1346480159711-0' style='width:300px; height:250px;'>
+    <script type='text/javascript'>
+        try {
+            if (enableGoogleAd) {
+                googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });            
+            } else {
+                $('#div-gpt-ad-1346480159711-0').hide();
+            }
+    } catch (e) { }
+    </script>
+    </div>
+</div>
+</div>
+<div id="under_post_news"></div>
+<div id="google_ad_c2" class="c_ad_block">
+<div id='div-gpt-ad-1410860226396-0' style='width:468px; height:60px;'>
+<script type='text/javascript'>
+try {
+    if (enableGoogleAd) {
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1410860226396-0'); });
+    } else {
+        $('#div-gpt-ad-1346480159711-0').hide();
+    }
+} catch (e) { }
+</script>
+</div>
+</div>
+<div id="under_post_kb"></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<DIV id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</DIV>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2015 Rainisic
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+</body>
+</html>

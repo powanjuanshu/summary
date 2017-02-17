@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>javascript jQuery $.post $.ajax用法_jquery_脚本之家</title>
+<meta http-equiv="Content-Language" content="zh-CN" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta name="keywords" content="javascript,jQuery,$.post,$.ajax" />
+<meta name="description" content="这是一个简单的 POST 请求功能以取代复杂 $.ajax 。请求成功时可调用回调函数。如果需要在出错时执行函数，请使用 $.ajax。" />
+<script type="text/javascript" src="http://img.jb51.net/inc/content.js"></script>
+<link rel="stylesheet" href="http://img.jb51.net/skin/newblue/main.css" type="text/css" media="all" />
+<link rel="stylesheet" href="http://img.jb51.net/skin/newblue/content.css" type="text/css" media="all" />
+</head>
+<body>
+<div class="dxy_main"><div class="dxy_main_l"><div id="art_con">
+  <h1>javascript jQuery $.post $.ajax用法</h1>
+<div id="title_ad1"></div>
+<!--end art_info-->
+<div class=blank3></div>
+<div id="art_demo">这是一个简单的 POST 请求功能以取代复杂 $.ajax 。请求成功时可调用回调函数。如果需要在出错时执行函数，请使用 $.ajax。</div>
+<div class=blank3></div>
+<div id="con_all">
+<div id="con_da1"><script type="text/javascript" src="http://img.jb51.net/imgby/bc_l.js"></script></div>
+<div id="con_da8"><script type="text/javascript" src="http://img.jb51.net/imgby/bc_r.js"></script></div>
+</div>
+<div id="art_content">
+<!--NEWSZW_HZH_BEGIN-->
+jQuery.post( url, [data], [callback], [type] ) ：使用POST方式来进行异步请求 <br><br><BR>参数：  <br><br>url (String) : 发送请求的URL地址.  <br><br>data (Map) : (可选) 要发送给服务器的数据，以 Key/value 的键值对形式表示。  <br><br>callback (Function) : (可选) 载入成功时回调函数(只有当Response的返回状态是success才是调用该方法)。 <br><br>type (String) : (可选)官方的说明是：Type of data to be sent。其实应该为客户端请求的类型(JSON,XML,等等) <br><br>这是一个简单的 POST 请求功能以取代复杂 $.ajax 。请求成功时可调用回调函数。如果需要在出错时执行函数，请使用 $.ajax。示例代码： <br><br>Ajax.aspx： <br><br>Response.ContentType = "application/json";Response.Write("{result: '" + Request["Name"] + ",你好！(这消息来自服务器)'}");jQuery 代码：  <BR>$.post("Ajax.aspx", { Action: "post", Name: "lulu" },        function (data, textStatus){            // data 可以是 xmlDoc, jsonObj, html, text, 等等.            //this; // 这个Ajax请求的选项配置信息，请参考jQuery.get()说到的this            alert(data.result);        }, "json");点击提交：  <br><br>这里设置了请求的格式为"json"： <br><br><BR>$.ajax()这个是jQuery 的底层 AJAX 实现。简单易用的高层实现见 $.get, $.post 等。 <br><br>这里有几个Ajax事件参数：beforeSend ，success ，complete ，error 。我们可以定义这些事件来很好的处理我们的每一次的Ajax请求。 <br><br>$.ajax({url: 'stat.php', <br><br>type: 'POST', <br><br>data:{Name:"keyun"}, <br><br>dataType: 'html', <br><br>timeout: 1000, <br><br>error: function(){alert('Error loading PHP document');}, <br><br>success: function(result){alert(result);} <br><br>}); <br><br>
+<!--NEWSZW_HZH_END-->
+<div id="art_xg">
+
+<div id="con_da2">
+<script type="text/javascript" src="http://img.jb51.net/imgby/baidu580.js"></script>
+</div>
+</div>
+<div id="numstyle"></div>
+<div id="con_bo"></div>
+</div>
+<div class=blank3></div>
+<div id="shoucang">
+<!-- Baidu Button BEGIN -->
+    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+        <a class="bds_qzone"></a></div>
+</div>
+</div>
+</div><div class="dxy_main_r"><div class="rightContent"></div>
+</DIV>
+</div>
+</body>
+</html>
+<!-- published at 2013-1-30 10:56:40By dxycms qq:461478385  -->

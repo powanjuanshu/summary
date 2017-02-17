@@ -1,0 +1,7 @@
+7．设置服务器进程数
+<IfModule prefork.c>
+	MinSpareServers 5 # 提供浏览服务的httpd进程的数目需要随连接数目的多少而变化,因此需要随时保持几个闲置的httpd进程等候新的连接请求.若闲置的进程数少于5个(默认值),
+	MaxSpareServers 20 # 则表示闲置进程太少,需要将其增加到5个,若多于20个(默认值)则表示闲置进程太多,需将其减少到20个
+	StartServers 8 # 当apache服务器启动时，httpd进程的数目，默认值为8
+	MaxClients 150 # 同事接入的数目太多时会降低系统访问性能，设置此参数可限制同时连接的最大数值，默认值为150
+<IfModule prefork.c>

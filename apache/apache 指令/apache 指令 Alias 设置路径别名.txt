@@ -1,0 +1,4 @@
+13．设置目录别名 Alias
+Alias用于设置路径别名
+Alias /doc/ /usr/share/doc/
+给“/usr/share/doc/” 设置路径别名为“/doc/” 

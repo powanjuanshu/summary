@@ -1,0 +1,806 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD>
+<title>Apache 的 httpd.conf 详解（很实用）</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<META http-equiv=Content-Language content=zh-CN>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta name="keywords" content="实用,详解,使用,目录,文件,">
+<meta name="description" content="ServerRoot /usr/local ServerRoot用于指定守护进程httpd的运行目录，httpd在启动之后将自动将进程的当前目录改变为这个目录，因此如果设置文件中指定的文件或目录是相对路径，那么真实路径就位于这个ServerR oot定义的路径之下。 ScoreBoardFile /var/run/ht">
+<LINK href="http://www.php100.com//statics/style/headfloor_950_081205.css" type=text/css rel=stylesheet><LINK href="http://www.php100.com//statics/style/headfloor.css" type=text/css rel=stylesheet><LINK href="http://www.php100.com//statics/style/article_081106.css" type=text/css rel=stylesheet><script type="text/javascript" src="http://www.php100.com/statics/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://www.php100.com/statics/js/jquery.sgallery.js"></script>
+<script>
+<!--
+function imgFix() { 
+  //定义要限制的图片宽高,这个宽高要同style里面定义的相同，小于限定高宽的图片不操作 
+  var widthRestriction = 650; 
+  var allElements = document.getElementsByTagName('*')   
+  for (var i = 0; i < allElements.length; i++) 
+  { 
+    if (allElements[i].className.indexOf('articleBody') >= 0) 
+        { 
+      var imgElements = allElements[i].getElementsByTagName('img'); 
+
+      for (var j=0; j < imgElements.length; j++) 
+
+          { 
+        if ( imgElements[j].width > widthRestriction ) 
+                { 
+          if ( imgElements[j].width > imgElements[j].height) 
+                  { 
+            imgElements[j].height = imgElements[j].height*(widthRestriction/imgElements[j].width); 
+            imgElements[j].width = widthRestriction; 
+          } else 
+                  { 
+            imgElements[j].width = imgElements[j].width*(heightRestriction/imgElements[j].height); 
+            imgElements[j].height = heightRestriction; 
+          } 
+        }             
+      } /*for j*/ 
+    } 
+  }/*for i*/ 
+} 
+window.onload = imgFix; 
+-->
+</script>
+<script language="javascript" type="text/javascript" src="http://www.php100.com/statics/scripts/checklogin.js"></script>
+</HEAD>
+<BODY>
+<!-- TOP START -->
+<DIV id=__CBTOP>
+<DIV id=CBTOP>
+<DIV id=LOGIN_SITE>
+<DIV class=t_login>
+<DIV class=t_fl id=denglu><!-- <script type="text/javascript" src="scripts/ajaxcls.js"></script> -->
+<div id='loglogin'  style="line-height:35px; padding-left:10px;">
+</div>
+</DIV></DIV>
+<DIV class=t_site>
+<DIV class="t_sel_site t_m1" id=t_sel_site>
+<span id="t_site_btn" class="t_t"><a href="http://bbs.php100.com/read-htm-tid-693.html">PHP100三不条约</a></span> <SPAN id=t_site_btn><a href="/cms/com/intome.php?tg">投稿</a></SPAN> 
+</DIV>
+<DIV class=t_m1>
+<A title=rss href="data/rssmap.html"><IMG height=13 alt=rss src="http://www.php100.com//statics/images/rss.gif" width=13 
+border=0></A></DIV></DIV></DIV>
+<DIV id=LOGO_NAV_SEARCH>
+<DIV class=t_logo><A href="http://www.php100.com/"><IMG height=69 alt='PHP100中文网-中国第一档PHP资源分享门户' src="http://www.php100.com//statics/images/logo.png" width=139></A></DIV>
+<DIV class=t_vline></DIV>
+<DIV class=t_nav_search>
+<DIV class=t_nav><a href="/">网站首页</a> | 
+<a href="/html/itnews/">业界资讯</a> | 
+<a href="/html/webkaifa/">相关开发资料</a> | 
+<a href="/html/open-php/">IT开源报道</a> | 
+<a href="/html/download/">相关下载</a> | 
+<a href='/html/shipinjiaocheng/' style="color:#FFFF00">视频教程</a> | 
+<A href="http://www.php100.com/job.php">PHP求职招聘</A> | 
+<A href="http://www.php100.com/waibao.php">项目供求</A> | 
+<A href="http://www.php100.com/share.php">资源共享</A> | 
+<A href="http://bbs.php100.com/" style="color:#FFFF00">PHP100中文论坛</A>
+</DIV>
+<DIV class=t_recommend_search>
+<DIV class=t_recommend>
+<DIV class="t_fl t_l33"><b>
+						<a href="http://www.php100.com/html/webkaifa/apache/"><span>Apache&Nginx</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/DIV_CSS/"><span>DIVCSS</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/PHP/"><span>PHP</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/database/"><span>DB</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/javascript/"><span>JS&JQuery</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/HTML5/"><span>HTML5</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/Android/"><span>Android</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/python/"><span>python</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/ajax/"><span>Ajax</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/xml/"><span>XML&JSON</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/Linux/"><span>Linux</span></a> | 
+						<a href="http://www.php100.com/html/webkaifa/zhengzebiaodashi/"><span>正则</span></a> | 
+			</b></DIV></DIV>
+</DIV></DIV></DIV></DIV>
+</DIV>
+<!-- TOP END -->
+<div style="clear:both; height:10px;"></div>
+<div style="width: 950px; margin: 0px auto;">
+<a href="http://www.chuangen.com/php_training.php" target="_blank"><img src="http://www.php100.com/statics/images/pic13.jpg" width="950"></a>
+</div>
+<div style="clear:both; height:10px;"></div><script type="text/javascript" src="http://cbjs.baidu.com/js/m.js"></script>
+<script type="text/javascript">
+BAIDU_CLB_preloadSlots("273181","168252","168229");
+</script>
+<!-- content start -->
+<DIV class=box></DIV>
+<DIV class=content>
+<DIV class=cont_left>
+  <DIV class=titleNav>
+    <DIV class=navigator>
+      <DIV id=lo_links><a href="http://www.php100.com">首页</a><span> &gt; </span><a href="http://www.php100.com/html/webkaifa/">开发资料</a> > <a href="http://www.php100.com/html/webkaifa/apache/">Apache&Nginx</a> >  正文</DIV>
+    </DIV>
+  </DIV>
+  <DIV class=contMain>
+    <H1 id=artibodyTitle>Apache 的 httpd.conf 详解（很实用）</H1>
+    <DIV class=artInfo><span>发布时间：2009-04-18 01:57:55&nbsp;&nbsp;&nbsp;来源：PHP100&nbsp;&nbsp;&nbsp;评论：<a href="#comment_iframe" id="comment">0</a> 点击：</span><span id="hits"></span> 次 【字号：<A href="javascript:doZoom(16)" target=_self>大</A> <A href="javascript:doZoom(14)" target=_self>中</A> <A href="javascript:doZoom(12)" target=_self>小</A>】</DIV>
+<!-- Baidu Button BEGIN -->
+    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+        <a class="bds_qzone">QQ空间</a>
+        <a class="bds_tsina">新浪微博</a>
+        <a class="bds_tqq">腾讯微博</a>
+        <a class="bds_renren">人人网</a>
+        <a class="bds_douban">豆瓣网</a>
+        <a class="bds_hi">百度空间</a>
+        <a class="bds_baidu">百度搜藏</a>
+        <a class="bds_kaixin001">开心网</a>
+        <a class="bds_copy">复制</a>
+        <span class="bds_more">更多</span>
+		<a class="shareCount"></a>
+    </div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=541572" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script>
+<!-- Baidu Button END -->
+    <div class="digest">ServerRoot /usr/local ServerRoot用于指定守护进程httpd的运行目录，httpd在启动之后将自动将进程的当前目录改变为这个目录，因此如果设置文件中指定的文件或目录是相对路径，那么真实路径就位于这个ServerR oot定义的路径之下。 ScoreBoardFile /var/run/ht</div>
+    <!-- articleBody start -->
+    <DIV class=articleBody id=artibody>
+      <DIV class=guanggao><SPAN id=contentAdv></SPAN></DIV>
+      &#160;&#160;&#160;
+      <script type="text/javascript" src="/ad/mid.js"></script><div style="float:left;width:230px;display:none">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-8371924687350116";
+/* 200x200, 创建于 09-10-11 */
+google_ad_slot = "3344578513";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+      </div>
+      <SPAN class=top11>       <p>ServerRoot &ldquo;/usr/local&ldquo;<br />
+　　<br />
+　　　　ServerRoot用于指定守护进程httpd的运行目录，httpd在启动之后将自动将进程的当前目录改变为这个目录，因此如果设置文件中指定的文件或目录是相对路径，那么真实路径就位于这个ServerR oot定义的路径之下。<br />
+　　<br />
+　　ScoreBoardFile /var/run/httpd.scoreboard<br />
+　　<br />
+　　　　httpd使用ScoreBoardFile来维护进程的内部数据，因此通常不需要改变这个参数，除非管理员想在一台计算机上运行几个Apache服务器，这时每个Apache服务器都需要独立的设置文件htt pd.conf，并使用不同的ScoreBoardFile。<br />
+　　<br />
+　　#ResourceConfig conf/srm.conf<br />
+　　#AccessConfig conf/access.conf<br />
+　　<br />
+　　　　这两个参数ResourceConfig和AccessConfig，就用于和使用srm.conf和access.conf设置文件的老版本Apache兼容。如果没有兼容的需要，可以将对应的设置文件指定为/dev/null，这将表示不存在其他设置文件，而仅使用httpd.conf一个文件来保存所有的设置选项。<br />
+　　<br />
+　　PidFile /var/run/httpd.pid<br />
+　　<br />
+　　　　PidFile指定的文件将记录httpd守护进程的进程号，由于httpd能自动复制其自身，因此系统中有多个httpd进程，但只有一个进程为最初启动的进程，它为其他进程的父进程，对这个进程发送信号将影响所有的httpd进程。PidFILE定义的文件中就记录httpd父进程的进程号。<br />
+　　<br />
+　　Timeout 300<br />
+　　<br />
+　　　　Timeout定义客户程序和服务器连接的超时间隔，超过这个时间间隔（秒）后服务器将断开与客户机的连接。<br />
+　　<br />
+　　KeepAlive On<br />
+　　<br />
+　　　　在HTTP 1.0中，一次连接只能作传输一次HTTP请求，而KeepAlive参数用于支持HTTP 1.1版本的一次连接、多次传输功能，这样就可以在一次连接中传递多个HTTP请求。虽然只有较新的浏览器才支持这个功能，但还是打开使用这个选项。<br />
+　　<br />
+　　MaxKeepAliveRequests 100<br />
+　　<br />
+　　　　MaxKeepAliveRequests为一次连接可以进行的HTTP请求的最大请求次数。将其值设为0将支持在一次连接内进行无限次的传输请求。事实上没有客户程序在一次连接中请求太多的页面，通常达不到这个上限就完成连接了。<br />
+　　<br />
+　　KeepAliveTimeout 15<br />
+　　<br />
+　　　　KeepAliveTimeout测试一次连接中的多次请求传输之间的时间，如果服务器已经完成了一次请求，但一直没有接收到客户程序的下一次请求，在间隔超过了这个参数设置的值之后，服务器就断开连接。<br />
+　　<br />
+　　ThreadsPerChild 50 <br />
+　　设置服务器使用进程的数目。 <br />
+　　# 这是以服务器的响应速度为准的, 数目太大则会变慢 <br />
+　　<br />
+　　MaxRequestsPerChild 30<br />
+　　<br />
+　　　　使用子进程的方式提供服务的Web服务，常用的方式是一个子进程为一次连接服务，这样造成的问题就是每次连接都需要生成、退出子进程的系统操作，使得这些额外的处理过程占据了计算机的大量处理能力。因此最好的方式是一个子进程可以为多次连接请求服务，这样就不需要这些生成、退出进程的系统消耗，Apache就采用了这样的方式，一次连接结束后，子进程并不退出，而是停留在系统中等待下一次服务请求，这样就极大的提高了性能。<br />
+　　<br />
+　　　　但由于在处理过程中子进程要不断的申请和释放内存，次数多了就会造成一些内存垃圾，就会影响系统的稳定性，并且影响系统资源的有效利用。因此在一个副本处理过一定次数的请求之后，就可以让这个子进程副本退出，再从原始的htt pd进程中重新复制一个干净的副本，这样就能提高系统的稳定性。这样，每个子进程处理服务请求次数由MaxRe questPerChild定义。 缺省的设置值为30，这个值对于具备高稳定性特点的FreeBSD系统来讲是过于保守的设置，可以设置为1000甚至更高，设置为0支持每个副本进行无限次的服务处理。<br />
+　　为了安全,设置为零 <br />
+　　<br />
+　　#Listen 3000<br />
+　　#Listen 12.34.56.78:80<br />
+　　#BindAddress *<br />
+　　<br />
+　　　　Listen参数可以指定服务器除了监视标准的80端口之外，还监视其他端口的HTTP请求。由于FreeBSD系统可以同时拥有多个IP地址，因此也可以指定服务器只听取对某个BindAddress&lt; /B&gt;的IP地址的HTTP请求。如果没有配置这一项，则服务器会回应对所有IP的请求。<br />
+　　<br />
+　　　　即使使用了BindAddress参数，使得服务器只回应对一个IP地址的请求，但是通过使用扩展的Listen参数，仍然可以让HTTP守护进程回应对其他IP地址的请求。此时Listen参数的用法与上面的第二个例子相同。这种比较复杂的用法主要用于设置虚拟主机。此后可以用VirtualHost参数定义对不同IP的虚拟主机，然而这种用法是较早的HTTP 1.0标准中设置虚拟主机的方法，每针对一个虚拟主机就需要一个IP地址，实际上用处并不大。在HTTP 1.1中，增加了对单IP地址多域名的虚拟主机的支持，使得虚拟主机的设置具备更大的意义。<br />
+　　<br />
+　　#ExtendedStatus On<br />
+　　<br />
+　　　　Apache服务器可以通过特殊的HTTP请求，来报告自身的运行状态，打开这个ExtendedStatus 参数可以让服务器报告更全面的运行状态信息<br />
+　　<br />
+　　<br />
+　　<br />
+　　---------------------------------------------------------------------------------<br />
+　　<br />
+　　ServerAdmin you@your.address<br />
+　　<br />
+　　　　配置文件中应该改变的也许只有ServerAdmin， 这一项用于配置WWW服务器的管理员的email地址，这将在HTTP服务出现错误的条件下返回给浏览器，以便让Web使用者和管理员联系，报告错误。习惯上使用服务器上的webmaster作为WWW服务器的管理员，通过邮件服务器的别名机制，将发送到webmaster 的电子邮件发送给真正的Web管理员。<br />
+　　<br />
+　　ServerName localhost<br />
+　　<br />
+　　　　缺省情况下，并不需要指定这个ServerName参数，服务器将自动通过名字解析过程来获得自己的名字，但如果服务器的名字解析有问题（通常为反向解析不正确），或者没有正式的DNS名字，也可以在这里指定I P地址。当ServerName设置不正确的时候，服务器不能正常启动。<br />
+　　<br />
+　　　　通常一个Web服务器可以具有多个名字，客户浏览器可以使用所有这些名字或IP地址来访问这台服务器，但在没有定义虚拟主机的情况下，服务器总是以自己的正式名字回应浏览器。ServerName就定义了Web服务器自己承认的正式名字，例如一台服务器名字（在DNS中定义了A类型）为freebsd.exmaple.org.cn，同时为了方便记忆还定义了一个别名（CNAME记录）为www.exmaple.org.cn，那么Apache自动解析得到的名字就为freebsd.example.org.cn，这样不管客户浏览器使用哪个名字发送请求，服务器总是告诉客户程序自己为freebsd.example.org.cn。虽然这一般并不会造成什么问题，但是考虑到某一天服务器可能迁移到其他计算机上，而只想通过更改DNS中的www别名配置就完成迁移任务，所以不想让客户在其书签中使用 freebsd记录下这个服务器的地址，就必须使用ServerName来重新指定服务器的正式名字。<br />
+　　<br />
+　　DocumentRoot &ldquo;/usr/local/www/data&ldquo;<br />
+　　<br />
+　　　　DocumentRoot定义这个服务器对外发布的超文本文档存放的路径，客户程序请求的UR L就被映射为这个目录下的网页文件。这个目录下的子目录，以及使用符号连接指出的文件和目录都能被浏览器访问，只是要在URL上使用同样的相对目录名。<br />
+　　<br />
+　　　　注意，符号连接虽然逻辑上位于根文档目录之下，但实际上可以位于计算机上的任意目录中，因此可以使客户程序能访问那些根文档目录之外的目录，这在增加了灵活性的同时但减少了安全性。Apache在目录的访问控制中提供了FollowSymLinks选项来打开或关闭支持符号连接的特性。<br />
+　　<br />
+　　&lt;Directory /&gt;<br />
+　　 Options FollowSymLinks<br />
+　　 AllowOverride None<br />
+　　&lt;/Directory&gt;<br />
+　　<br />
+　　　　Apache服务器可以针对目录进行文档的访问控制，然而访问控制可以通过两种方式来实现，一个是在设置文件 httpd.conf（或access.conf）中针对每个目录进行设置，另一个方法是在每个目录下设置访问控制文件，通常访问控制文件名字为.htaccess。虽然使用这两个方式都能用于控制浏览器的访问，然而使用配置文件的方法要求每次改动后重新启动httpd守护进程，比较不灵活，因此主要用于配置服务器系统的整体安全控制策略，而使用每个目录下的.htaccess文件设置具体目录的访问控制更为灵活方便。<br />
+　　<br />
+　　<br />
+　　&lt;Directory &ldquo;H:/web001&ldquo;&gt;<br />
+　　Directory语句就是用来定义目录的访问限制的，这里可以看出它的标准语法，为一个目录定义访问限制。上例的这个设置是针对系统的根目录进行的，设置了允许符号连接的选项FollowSymLinks ，以及使用AllowOverride None表示不允许这个目录下的访问控制文件来改变这里进行的配置，这也意味着不用查看这个目录下的相应访问控制文件。<br />
+　　<br />
+　　　　由于Apache对一个目录的访问控制设置是能够被下一级目录继承的，因此对根目录的设置将影响到它的下级目录。注意由于AllowOverride None的设置，使得Apache服务器不需要查看根目录下的访问控制文件，也不需要查看以下各级目录下的访问控制文件，直至httpd.conf（或access.conf ）中为某个目录指定了允许Alloworride，即允许查看访问控制文件。由于Apache对目录访问控制是采用的继承方式，如果从根目录就允许查看访问控制文件，那么Apache就必须一级一级的查看访问控制文件，对系统性能会造成影响。而缺省关闭了根目录的这个特性，就使得Apache从httpd.conf中具体指定的目录向下搜寻，减少了搜寻的级数，增加了系统性能。因此对于系统根目录设置AllowOverride None不但对于系统安全有帮助，也有益于系统性能。<br />
+　　<br />
+　　Options Indexes FollowSymLinks<br />
+　　 AllowOverride None<br />
+　　 Order allow,deny<br />
+　　 Allow from all<br />
+　　&lt;/Directory&gt;<br />
+　　<br />
+　　 　　这里定义的是系统对外发布文档的目录的访问设置，设置不同的AllowOverride选项，以定义配置文件中的目录设置和用户目录下的安全控制文件的关系，而Options选项用于定义该目录的特性。<br />
+　　<br />
+　　　　配置文件和每个目录下的访问控制文件都可以设置访问限制，设置文件是由管理员设置的，而每个目录下的访问控制文件是由目录的属主设置的，因此管理员可以规定目录的属主是否能覆盖系统在设置文件中的设置，这就需要使用 AllowOverride参数进行设置，通常可以设置的值为：<br />
+　　<br />
+　　AllowOverride的设置 对每个目录访问控制文件作用的影响 <br />
+　　All 缺省值，使访问控制文件可以覆盖系统配置 <br />
+　　None 服务器忽略访问控制文件的设置 <br />
+　　Options 允许访问控制文件中可以使用Options参数定义目录的选项 <br />
+　　FileInfo 允许访问控制文件中可以使用AddType等参数设置 <br />
+　　AuthConfig 允许访问控制文件使用AuthName，AuthType等针对每个用户的认证机制，这使目录属主能用口令和用户名来保护目录 <br />
+　　Limit 允许对访问目录的客户机的IP地址和名字进行限制 <br />
+　　<br />
+　　<br />
+　　每个目录具备一定属性，可以使用Options来控制这个目录下的一些访问特性设置，以下为常用的特性选项：<br />
+　　<br />
+　　Options设置 服务器特性设置 <br />
+　　All 所有的目录特性都有效，这是缺省状态 <br />
+　　None 所有的目录特性都无效 <br />
+　　FollowSymLinks 允许使用符号连接，这将使浏览器有可能访问文档根目录（DocumentRoot）之外的文档 <br />
+　　SymLinksIfOwnerMatch 只有符号连接的目的与符号连接本身为同一用户所拥有时，才允许访问，这个设置将增加一些安全性 <br />
+　　ExecCGI 允许这个目录下可以执行CGI程序 <br />
+　　Indexes 允许浏览器可以生成这个目录下所有文件的索引，使得在这个目录下没有index.html（或其他索引文件）时，能向浏览器发送这个目录下的文件列表 <br />
+　　<br />
+　　　　此外，上例中还使用了Order、Allow、Deny等参数，这是Limit语句中用来根据浏览器的域名和 IP地址来控制访问的一种方式。其中Order定义处理Allow和Deny的顺序，而Allow、Deny则针对名字或IP进行访问控制设置，上例使用allow from all，表示允许所有的客户机访问这个目录，而不进行任何限制。<br />
+　　<br />
+　　<br />
+　　UserDir public_html (Win32=&ldquo;My Documents/My Website&ldquo;)<br />
+　　<br />
+　　　　当在一台FreeBSD上运行Apache服务器时，这台计算机上的所有用户都可以有自己的网页路径，形如 http://freebsd.example.org.cn/~user，使用波浪符号加上用户名就可以映射到用户自己的网页目录上。映射目录为用户个人主目录下的一个子目录，其名字就用UseDir这个参数进行定义，缺省为public_html。如果不想为正式的用户提供网页服务，使用DISABLED作UserDir的参数即可。<br />
+　　<br />
+　　#<br />
+　　# AllowOverride FileInfo AuthConfig Limit<br />
+　　# Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec<br />
+　　# <br />
+　　# Order allow,deny<br />
+　　# Allow from all<br />
+　　# <br />
+　　# <br />
+　　# Order deny,allow<br />
+　　# Deny from all<br />
+　　# <br />
+　　#<br />
+　　 <br />
+　　　　这里可以看到Directory的另一个用法，即可以通过简单的模式匹配方法，针对分布在不同目录下的子目录定义访问控制权限。这样设置就需要Apache服务器对每个路径进行额外的处理，因此就会降低服务器的性能，所以缺省情况并没有打开这种访问限制。<br />
+　　<br />
+　　　　这里可以看到另外一个语句Limit，Limit语句就是用来针对具体的请求方法来设定访问控制的，其中可以使用GET、POST等各种服务器支持的请求方法做Limit的参数，来设定对不同请求方法的访问限制。一般可以打开对GET、POST、HEAD三种请求方法，而屏蔽其他的请求方法，以增加安全性。Limit语句中，可以使用Order 、Allow、Deny，Allow和Deny中可以使用匹配的方法针对域名和IP进行限制，只是对于域名是从后向前匹配，对于IP地址则从前向后匹配。<br />
+　　<br />
+　　DirectoryIndex index.html<br />
+　　<br />
+　　　　很多情况下，URL中并没有指定文档的名字，而只是给出了一个目录名。那么Apache服务器就自动返回这个目录下由DirectoryIndex定义的文件，当然可以指定多个文件名字，系统会这个目录下顺序搜索。当所有由DirectoryIndex指定的文件都不存在时，Apache服务器可以根据系统设置，生成这个目录下的所有文件列表，提供用户选择。此时该目录的访问控制选项中的Indexes选项（Options Indexes ）必须打开，以使得服务器能够生成目录列表，否则Apache将拒绝访问。<br />
+　　<br />
+　　AccessFileName .htaccess<br />
+　　<br />
+　　　　AccessFileName定义每个目录下的访问控制文件的文件名，缺省为.htaccess ，可以通过更改这个文件，来改变不同目录的访问控制限制。<br />
+　　<br />
+　　 Order allow,deny<br />
+　　 Deny from all <br />
+　　<br />
+　　　　除了可以针对目录进行访问控制之外，还可以根据文件来设置访问控制，这就是File语句的任务。使用File 语句，不管文件处于哪个目录，只要名字匹配，就必须接受相应的访问控制。这个语句对于系统安全比较重要，例如上例将屏蔽所有的使用者不能访问.htaccess文件，这样就避免.htaccess中的关键安全信息不至于被客户获取。<br />
+　　<br />
+　　TypesConfig /usr/local/etc/apache/mime.types<br />
+　　<br />
+　　　　TypeConfig用于设置保存有不同的MIME类型数据的文件名，在FreeBSD下缺省设置为/usr/local/etc/apache/mime.types。<br />
+　　<br />
+　　DefaultType text/plain<br />
+　　<br />
+　　　　如果Web服务器不能决定一个文档的缺省类型，这通常表示文档使用了非标准的后缀，那么服务器就使用 DefaultType定义的MIME类型将文档发送给客户浏览器。这里的设置为text/plain，这样设置的问题是，如果服务器不能判断出文档的MIME，那么大部分情况下这个文档为一个二进制文档，但使用 text/plain格式发送回去，浏览器将在内部打开它而不会提示保存。因此建议将这个设置更改为 application/octet-stream，这样浏览器将提示用户进行保存。<br />
+　　<br />
+　　MIMEMagicFile /usr/local/etc/apache/magic<br />
+　　 <br />
+　　　　除了从文件的后缀出发来判断文件的MIME类型之外，Apache还可以进一步分析文件的一些特征，来判断文件的真实MIME类型。这个功能是由mod_mime_magic模块实现的，它需要一个记录各种MIME类型特征的文件，以进行分析判断。上面的设置是一个条件语句，如果载入了这个模块，就必须指定相应的标志文件magic的位置。 <br />
+　　<br />
+　　HostnameLookups Off<br />
+　　<br />
+　　　　通常连接时，服务器仅仅可以得到客户机的IP地址，如果要想获得客户机的主机名，以进行日志记录和提供给 CGI程序使用，就需要使用这个HostnameLookups选项，将其设置为On打开DNS反查功能。但是这将使服务器对每次客户请求都进行DNS查询，增加了系统开销，使得反应变慢，因此缺省设置为使用Off关闭此选项。关闭选项之后，服务器就不会获得客户机的主机名，而只能使用IP地址来记录客户。<br />
+　　<br />
+　　<br />
+　　<br />
+　　ErrorLog /var/log/httpd-error.log<br />
+　　LogLevel warn<br />
+　　LogFormat &ldquo;%h %l %u %t \&ldquo;%r\&ldquo; %&gt;s %b \&ldquo;%{Referer}i\&ldquo; \&ldquo;%{User-Agent}i\&ldquo;&ldquo; combined<br />
+　　LogFormat &ldquo;%h %l %u %t \&ldquo;%r\&ldquo; %&gt;s %b&ldquo; common<br />
+　　LogFormat &ldquo;%{Referer}i -&gt; %U&ldquo; referer<br />
+　　LogFormat &ldquo;%{User-agent}i&ldquo; agent<br />
+　　#CustomLog /var/log/httpd-access.log common<br />
+　　#CustomLog /var/log/httpd-referer.log referer<br />
+　　#CustomLog /var/log/httpd-agent.log agent<br />
+　　CustomLog /var/log/httpd-access.log combined <br />
+　　<br />
+　　　　这里定义了系统日志的形式，对于服务器错误记录， 由ErrorLog、LogLevel 来定义不同的错误日志文件及其记录内容。 <br />
+　　<br />
+　　　　对于系统的访问日志，缺省使用CustomLog参数定义日志的位置，缺省使用combined 参数指定将所有的访问日志放在一个文件中，然而也可以将不同种类的访问日志放在不同的日志记录文件中，这是通过在 CustomLog中指定不同的记录类型来完成的。common表示普通的对单页面请求访问记录，referer表示每个页面的引用记录，可以看出一个页面中包含的请求数，agent表示对客户机的类型记录，显然可以将现有的combined 定义的设置行注释掉，并使用common、referer和agent作为CustomLog的参数，来为不同种类的日志分别指定日志记录文件。<br />
+　　<br />
+　　显然，LogFormat是用于定义不同类型的日志进行记录时使用的格式， 这里使用了以%开头的宏定义，以记录不同的内容。<br />
+　　<br />
+　　　　如果这些参数指定的文件使用的是相对路径，那么就是相对于ServerRoot的路径。<br />
+　　<br />
+　　ServerSignature On<br />
+　　<br />
+　　　　一些情况下，例如当客户请求的网页并不存在时，服务器将产生错误文档，缺省情况下由于打开了 ServerSignature选项，错误文档的最后一行将包含服务器的名字、Apache的版本等信息。有的管理员更倾向于不对外显示这些信息，就可以将这个参数设置为Off，或者设置为Email，最后一行将替换为对ServerAdmin 的Email提示。<br />
+　　<br />
+　　<br />
+　　Alias /icons/ &ldquo;/usr/local/www/icons/&ldquo;<br />
+　　<br />
+　　 Options Indexes MultiViews<br />
+　　 AllowOverride None<br />
+　　 Order allow,deny<br />
+　　 Allow from all<br />
+　　<br />
+　　　　Alias参数用于将URL与服务器文件系统中的真实位置进行直接映射，一般的文档将在DocumentRoot 中进行查询，然而使用Alias定义的路径将直接映射到相应目录下，而不再到DocumentRoot 下面进行查询。因此Alias可以用来映射一些公用文件的路径，例如保存了各种常用图标的icons路径。这样使得除了使用符号连接之外，文档根目录（DocumentRoot）外的目录也可以通过使用了Alias映射，提供给浏览器访问。<br />
+　　<br />
+　　定义好映射的路径之后，应该需要使用Directory语句设置访问限制。<br />
+　　<br />
+　　ScriptAlias /cgi-bin/ &ldquo;/usr/local/www/cgi-bin/&ldquo;<br />
+　　<br />
+　　 AllowOverride None<br />
+　　 Options None<br />
+　　 Order allow,deny<br />
+　　 Allow from all <br />
+　　<br />
+　　　　ScriptAlias也是用于URL路径的映射，但与Alias的不同在于，ScriptAlias是用于映射CGI程序的路径，这个路径下的文件都被定义为CGI程序，通过执行它们来获得结果，而非由服务器直接返回其内容。缺省情况下CGI程序使用cgi-bin目录作为虚拟路径。<br />
+　　<br />
+　　# Redirect old-URI new-URL<br />
+　　<br />
+　　　　Redirect参数是用来重写URL的，当浏览器访问服务器上的一个已经不存在的资源的时候，服务器返回给浏览器新的URL，告诉浏览器从该URL中获取资源。这主要用于原来存在于服务器上的文档，改变了位置之后，而又希望能使用老URL能访问到，以保持与以前的URL兼容。 <br />
+　　<br />
+　　IndexOptions FancyIndexing<br />
+　　AddIconByEncoding (CMP,/icons/compressed.gif) x-compress x-gzip<br />
+　　AddIconByType (TXT,/icons/text.gif) text/*<br />
+　　AddIconByType (IMG,/icons/image2.gif) image/*<br />
+　　AddIconByType (SND,/icons/sound2.gif) audio/*<br />
+　　AddIconByType (VID,/icons/movie.gif) video/*<br />
+　　AddIcon /icons/binary.gif .bin .exe<br />
+　　AddIcon /icons/binhex.gif .hqx<br />
+　　AddIcon /icons/tar.gif .tar<br />
+　　AddIcon /icons/world2.gif .wrl .wrl.gz .vrml .vrm .iv<br />
+　　AddIcon /icons/compressed.gif .Z .z .tgz .gz .zip<br />
+　　AddIcon /icons/a.gif .ps .ai .eps<br />
+　　AddIcon /icons/layout.gif .html .shtml .htm .pdf<br />
+　　AddIcon /icons/text.gif .txt<br />
+　　AddIcon /icons/c.gif .c<br />
+　　AddIcon /icons/p.gif .pl .py<br />
+　　AddIcon /icons/f.gif .for<br />
+　　AddIcon /icons/dvi.gif .dvi<br />
+　　AddIcon /icons/uuencoded.gif .uu<br />
+　　AddIcon /icons/script.gif .conf .sh .shar .csh .ksh .tcl<br />
+　　AddIcon /icons/tex.gif .tex<br />
+　　AddIcon /icons/bomb.gif core<br />
+　　AddIcon /icons/back.gif ..<br />
+　　AddIcon /icons/hand.right.gif README<br />
+　　AddIcon /icons/folder.gif ^^DIRECTORY^^<br />
+　　AddIcon /icons/blank.gif ^^BLANKICON^^<br />
+　　DefaultIcon /icons/unknown.gif<br />
+　　#AddDescription &ldquo;GZIP compressed document&ldquo; .gz<br />
+　　#AddDescription &ldquo;tar archive&ldquo; .tar<br />
+　　#AddDescription &ldquo;GZIP compressed tar archive&ldquo; .tgz<br />
+　　ReadmeName README<br />
+　　HeaderName HEADER<br />
+　　IndexIgnore .??* *~ *# HEADER* README* RCS CVS *,v *,t <br />
+　　<br />
+　　　　当一个HTTP请求的URL为一个目录的时候，服务器返回这个目录中的索引文件。但如果一个目录中不存在缺省的索引文件，并且该服务器又许可显示目录文件列表的时候，就会显示出这个目录中的文件列表，为了使得这个文件列表能具有可理解性，而不仅仅是一个简单的列表，就需要前面的这些设置参数。<br />
+　　<br />
+　　如果使用了IndexOptions FancyIndexing选项，可以让服务器产生的目录列表中针对各种不同类型的文档引用各种图标。而哪种文件使用哪种图标，则使用下面的 AddIconByEncoding、AddIconByType以及AddIcon来定义，分别依据MIME的编码、类型以及文件的后缀来判断使用何种图标。如果不能确定文档使用的图标，就使用 DefaultIcon定义的缺省图标。<br />
+　　<br />
+　　　　同样，使用AddDescription可以为不同类型的文档加入不同的描述。并且，服务器还在目录下，查询使用ReadmeName和HeaderName定义的文件（自动加上. html后缀，如果没有发现，再使用.txt后缀进行搜索），如果发现了这些文件，就在文件列表之前首先显示这些文件的内容，以使得普通目录列表具备更大的可理解性。<br />
+　　<br />
+　　<br />
+　　<br />
+　　IndexIgnore让服务器在列出文件列表时忽略相应的文件， 这里使用模式配置的方式定义文件名。<br />
+　　<br />
+　　<br />
+　　<br />
+　　AddEncoding x-compress Z<br />
+　　AddEncoding x-gzip gz<br />
+　　 <br />
+　　AddEncoding用于告诉一些使用压缩的MIME类型，这样可以让浏览器进行解压缩操作。<br />
+　　<br />
+　　AddLanguage en .en<br />
+　　AddLanguage fr .fr<br />
+　　AddLanguage de .de<br />
+　　AddLanguage da .da<br />
+　　AddLanguage el .el<br />
+　　AddLanguage it .it<br />
+　　LanguagePriority en fr de<br />
+　　 <br />
+　　<br />
+　　一个HTML文档可以同时具备多个语言的版本，如对于file1.html文档可以具备file1.html.en、file1.html.fr 等不同的版本，每个语言后缀必须使用AddLanguage进行定义。这样服务器可以针对不同国家的客户，通过与浏览器进行协商，发送不同的语言版本。而LanguagePriority 定义不同语言的优先级，以便在浏览器没有特殊要求时，按照顺序使用不同的语言版本回应对file1.html 的请求。这个国际化的能力实际的应用并不多。<br />
+　　<br />
+　　<br />
+　　AddDefaultCharset ISO-8859-1<br />
+　　<br />
+　　浏览器选择的标准编码<br />
+　　<br />
+　　简体中文网站改为：GB2312<br />
+　　<br />
+　　<br />
+　　#AddType application/x-httpd-php3 .phtml<br />
+　　#AddType application/x-httpd-php3-source .phps<br />
+　　 <br />
+　　 <br />
+　　<br />
+　　　　AddType参数可以为特定后缀的文件指定MIME类型，这里的设置将覆盖mime.types中的设置。<br />
+　　<br />
+　　#AddHandler cgi-script .cgi<br />
+　　<br />
+　　　　AddHandler是用于指定非静态的处理类型，用于定义文档为一个非静态的文档类型，需要进行处理，再向浏览器返回处理结果。例如上面注释中的设置是将以.cgi结尾的文件设置为cgi-script类型，那么服务器将启动这个CGI程序以进行处理。如果需要在前面AliasScript定义的路径之外执行CGI程序，就需要使用这个参数进行设置，此后以.cgi结尾的文件将被当作CGI程序执行。<br />
+　　<br />
+　　　　在配置文件、这个目录中的.htaccess以及其上级目录的.htaccess中必须允许执行CGI程序，这需要通过Options ExecCGI参数设定。<br />
+　　<br />
+　　#AddType text/html .shtml<br />
+　　#AddHandler server-parsed .shtml<br />
+　　 <br />
+　　　　另外一种动态进行处理的类型为server-parsed，由服务器自身预先分析网页内的标记，将标记更改为正确的HTML标识。由于server-parsed需要对text/html类型的文档进行处理，因此首先定义了对应的.shtml为text/html类型。<br />
+　　<br />
+　　　　然而要支持SSI，还要首先要在配置文件（或.htaccess）中使用Options Includes允许该目录下的文档可以为SSI类型，或使用Options IncludesNOExec让执行普通的SSI标志，但不执行其中引用的外部程序。<br />
+　　<br />
+　　　　另一种指定server-parsed类型的方式为使用XBitBack设置选项，如果将XBitHack设置为On，服务器将检查所有text/html类型的文档（包括.html后缀的文档），如果发现文件属性具备执行位 &ldquo;x&ldquo;，则服务器就认为它是服务器分析文档，需要服务器进行处理。推荐使用AddHandler进行设置，而将XBitBack 设置为Off，因为使用XBitBack将对所有的HTML文档都执行额外的检查，降低了效率。<br />
+　　<br />
+　　#AddHandler send-as-is asis<br />
+　　#AddHandler imap-file map<br />
+　　#AddHandler type-map var<br />
+　　 <br />
+　　 　　上面被注释的AddHandler用于支持Apache服务器的asis、map和var处理能力。<br />
+　　<br />
+　　# Action media/type /cgi-script/location<br />
+　　# Action handler-name /cgi-script/location<br />
+　　 <br />
+　　　　因为Apache内部提供的处理功能有限，因此可以使用Action为服务器定义外部程序作为可处理的动态文档类型，这些外部程序与标准CGI程序相同，都是对输入的数据处理之后，再输出不同MIME类型的结果。例如要定义一个对特殊后缀wri都先执行wri2txt进行处理操作，再返回结果的操作，可以使用：<br />
+　　<br />
+　　 Action windows-writer /bin/wri2txt<br />
+　　 AddHandler windows-writer wri <br />
+　　<br />
+　　　　更进一步，可以直接使用Action定义对某个MIME类型预先进行处理操作，这需要例子中第一种格式的Action 参数设置方式。这样设置方式就不再需要额外的AddHandler用来将处理操作与文件后缀联系起来，而是使用Action直接处理MIME类型的文件。但如果文档后缀没有正式的MIME类型，还需要先定义一个MIME类型。<br />
+　　<br />
+　　#ErrorDocument 500 &ldquo;The server made a boo boo.<br />
+　　#ErrorDocument 404 /missing.html<br />
+　　#ErrorDocument 404 /cgi-bin/missing_handler.pl<br />
+　　#ErrorDocument 402 http://some.other_server.com/subscription_info.html <br />
+　　<br />
+　　　　如果客户请求的网页不存在，或者没有访问权限等情况发生时，服务器将产生一个错误代码，同时也将回应客户浏览器一个标识错误的网页。ErrorDocument就用于设置当出现哪个错误时应该回应客户浏览器那些内容，ErrorDocument的第一个参数为错误的序号，第二个参数为回应的数据，可以为简单的文本，本地网页，本地CGI程序，以及远程主机上的网页。<br />
+　　<br />
+　　BrowserMatch &ldquo;Mozilla/2&ldquo; nokeepalive<br />
+　　BrowserMatch &ldquo;MSIE 4\.0b2;&ldquo; nokeepalive downgrade-1.0 force-response-1.0<br />
+　　BrowserMatch &ldquo;RealPlayer 4\.0&ldquo; force-response-1.0<br />
+　　BrowserMatch &ldquo;Java/1\.0&ldquo; force-response-1.0<br />
+　　BrowserMatch &ldquo;JDK/1\.0&ldquo; force-response-1.0<br />
+　　<br />
+　　BrowserMatch命令为特定的客户程序，设置特殊的参数，以保证对老版本浏览器的兼容性，并支持新浏览器的新特性。<br />
+　　<br />
+　　<br />
+　　#<br />
+　　#ProxyRequests On<br />
+　　#<br />
+　　#<br />
+　　# Order deny,allow<br />
+　　# Deny from all<br />
+　　# Allow from .your_domain.com<br />
+　　#<br />
+　　#ProxyVia On<br />
+　　#CacheRoot &ldquo;/usr/local/www/proxy&ldquo;<br />
+　　#CacheSize 5<br />
+　　#CacheGcInterval 4<br />
+　　#CacheMaxExpire 24<br />
+　　#CacheLastModifiedFactor 0.1<br />
+　　#CacheDefaultExpire 1<br />
+　　#NoCache a_domain.com another_domain.edu joes.garage_sale.com<br />
+　　 <br />
+　　#<br />
+　　 <br />
+　　　　Apache服务器本身就具备代理的功能，然而这要求加载入mod_proxy模块。这能使用IfModule语句进行判断，如果存在mod_proxy模块，就使用ProxyRequests打开代理支持。此后的Directory用于设置对Proxy功能的访问权限设置，以及用于设置缓冲的各个参数设置。<br />
+　　<br />
+　　<br />
+　　<br />
+　　<br />
+　　-------------------------------------------------------------------------------------<br />
+　　<br />
+　　#NameVirtualHost 12.34.56.78:80<br />
+　　#NameVirtualHost 12.34.56.78<br />
+　　#<br />
+　　# ServerAdmin webmaster@host.some_domain.com<br />
+　　# DocumentRoot /www/docs/host.some_domain.com<br />
+　　# ServerName host.some_domain.com<br />
+　　# ErrorLog logs/host.some_domain.com-error_log<br />
+　　# CustomLog logs/host.some_domain.com-access_log common<br />
+　　#<br />
+　　 <br />
+　　#<br />
+　　#<br />
+　　 <br />
+　　 <br />
+　　<br />
+　　　　缺省设置文件中的这些内容是用于设置命名基础的虚拟主机服务器时使用。其中NameVirtualHost 来指定虚拟主机使用的IP地址，这个IP地址将对应多个DNS名字，如果Apache使用了Listen 参数控制了多个端口，那么就可以在这里加上端口号以进一步进行区分对不同端口的不同连接请求。此后，使用 VirtualHost语句，使用NameVirtualHost指定的IP地址作参数，对每个名字都定义对应的虚拟主机设置。<br />
+　　<br />
+　　　　虚拟主机是在一台Web服务器上，可以为多个单独域名提供Web服务，并且每个域名都完全独立，包括具有完全独立的文档目录结构及设置，这样域名之间完全独立，不但使用每个域名访问到的内容完全独立，并且使用另一个域名无法访问其他域名提供的网页内容。<br />
+　　<br />
+　　　　虚拟主机的概念对于ISP来讲非常有用，因为虽然一个组织可以将自己的网页挂在具备其他域名的服务器上的下级往址上，但使用独立的域名和根网址更为正式，易为众人接受。传统上，必须自己设立一台服务器才能达到单独域名的目的，然而这需要维护一个单独的服务器，很多小单位缺乏足够的维护能力，更为合适的方式是租用别人维护的服务器。ISP也没有必要为一个机构提供一个单独的服务器，完全可以使用虚拟主机能力，使服务器为多个域名提供Web服务，而且不同的服务互不干扰，对外就表现为多个不同的服务器。<br />
+　　<br />
+　　　　有两种设定虚拟主机的方式，一种是基于HTTP 1.0标准，需要一个具备多IP地址的服务器，再配置DNS 服务器，给每个IP地址以不同的域名，最后才能配置Apache的配置文件，使服务器对不同域名返回不同的Web文档。由于这需要使用额外的IP地址，对每个要提供服务的域名都要使用单独的IP地址，因此这种方式实现起来问题较多。<br />
+　　<br />
+　　　　可以在一个网络界面上绑定多个IP地址，FreeBSD下需要使用ifconfig的alias参数来进行这个配置，但此时会影响网络性能。<br />
+　　<br />
+　　　　HTTP 1.1标准在协议中规定了对浏览器和服务器通信时，服务器能够跟踪浏览器请求的是哪个主机名字。因此可以利用这个新特性，使用更轻松的方式设定虚拟主机。这种方式不需要额外的IP地址，但需要新版本的浏览器支持。这种方式已经成为建立虚拟主机的标准方式。<br />
+　　<br />
+　　　　要建立非IP基础的虚拟主机，多个域名是不可少的配置，因为每个域名就对应一个要服务的虚拟主机。因此需要更改DNS服务器的配置，为服务器增加多个CNAME选项，如：<br />
+　　<br />
+　　freebsd IN A 192.168.1.64<br />
+　　vhost1 IN CNAME freebsd<br />
+　　vhost2 IN CNAME freebsd<br />
+　　 <br />
+　　 <br />
+　　<br />
+　　　　基本的设置选项都是为了freebsd主机设定的，如果要为vhost1和vhost2设定虚拟主机，就要使用VirtualHost语句定义不同的选项，在语句中可以使用配置文件前面中的大部分选项，而可以重新定义几乎所有的针对服务器的设置。<br />
+　　<br />
+　　NameVirtualHost 192.168.1.64<br />
+　　<br />
+　　DocumentRoot /usr/local/www/data<br />
+　　ServerName freebsd.example.org.cn<br />
+　　<br />
+　　<br />
+　　DocumentRoot /vhost1<br />
+　　ServerName vhost1.example.org.cn<br />
+　　<br />
+　　<br />
+　　DocumentRoot /vhost2<br />
+　　ServerName vhost2.example.org.cn<br />
+　　<br />
+　　 <br />
+　　<br />
+　　　　这里需要注意的是，VirtualHost的参数地址一定要和NameVirtualHost定义的地址相一致，必须保证所有的值严格一致，Apache服务器才承认这些定义是为这个IP地址定义的虚拟主机。<br />
+　　<br />
+　　　　此外，定义过NameVirtualHost之后，那么对这个IP地址的访问都被区分不同的虚拟主机进行处理，而对其他IP地址的访问，例如127.0.0.1，才应用前面定义的缺省选项。<br />
+　　<br />
+　　<br />
+　　----------------------------------------------------------------------------------------<br />
+　　<br />
+　　<br />
+　　NameVirtualHost www.xxx.org<br />
+　　（对于动态IP的另类方法：指定虚拟主机的IP，由于要将域名映射为IP，不能使用localhost,127.0.0.1,计算机名，等这样的地址，所以，可以再一次通过域名转换，将域名转换为IP，这样就不必每次更改IP了。）<br />
+　　<br />
+　　#<br />
+　　# VirtualHost example:<br />
+　　# Almost any Apache directive may go into a VirtualHost container.<br />
+　　# The first VirtualHost section is used for requests without a known<br />
+　　# server name.<br />
+　　#<br />
+　　&lt;VirtualHost 192.168.0.1&gt;（虚拟主机IP）<br />
+　　 ServerAdmin 111@xxx.com（第一个虚拟主机Email）<br />
+　　 DocumentRoot H:/web001（第一个虚拟主机目录）<br />
+　　 ServerName www.xxx.org（第一个虚拟主机域名）<br />
+　　 ErrorLog logs/www.xxx.org-error.log（第一个虚拟主机错误日志）<br />
+　　 CustomLog logs/www.xxx.org-access.log common（第一个虚拟主机数据）<br />
+　　&lt;/VirtualHost&gt;<br />
+　　<br />
+　　&lt;VirtualHost 192.168.0.2&gt;（虚拟主机IP）<br />
+　　 ServerAdmin 111@xxx.com（第二个虚拟主机Email）<br />
+　　 DocumentRoot H:/web002（第二个虚拟主机目录）<br />
+　　 ServerName www.xxx2.org（第二个虚拟主机域名）<br />
+　　 ErrorLog logs/www.xxx2.org-error.log（第二个虚拟主机错误日志）<br />
+　　 CustomLog logs/www.xxx2.org-access.log common（第二个虚拟主机数据）<br />
+　　&lt;/VirtualHost&gt;<br />
+　　<br />
+　　以此类推，可以增加更多虚拟主机。</p>      <!--内容关联投票-->
+            </DIV>
+    <!-- articleBody end -->
+    <!-- numpage start -->
+    <DIV class=pages>
+      <div id="numpage"> </div>
+    </DIV>
+    <!-- numpage end -->
+    <DIV class=clear>
+     <script type="text/javascript">BAIDU_CLB_fillSlot("168229");</script>
+      <br>
+    </DIV>
+    <DIV class=zrbj>（责任编辑：PHP100）</DIV>
+    <DIV class=keywords>本文关键字：
+      <LI><a href="http://www.php100.com/index.php?m=content&c=tag&catid=10&tag=%CA%B5%D3%C3" class="blue">实用</a> <a href="http://www.php100.com/index.php?m=content&c=tag&catid=10&tag=%CF%EA%BD%E2" class="blue">详解</a> <a href="http://www.php100.com/index.php?m=content&c=tag&catid=10&tag=%CA%B9%D3%C3" class="blue">使用</a> <a href="http://www.php100.com/index.php?m=content&c=tag&catid=10&tag=%C4%BF%C2%BC" class="blue">目录</a> <a href="http://www.php100.com/index.php?m=content&c=tag&catid=10&tag=%CE%C4%BC%FE" class="blue">文件</a> <a href="http://www.php100.com/index.php?m=content&c=tag&catid=10&tag=" class="blue"></a> </LI>
+    </DIV>
+    <p style="font-size:14px; line-height:30px;"> <strong>上一篇：</strong><a href="http://www.php100.com/html/webkaifa/apache/2009/0418/1191.html">Apache 的 httpd.conf 详解（很实用）</a><br />
+      <strong>下一篇：</strong><a href="http://www.php100.com/html/webkaifa/apache/2009/0418/1193.html">Apache 2.0 中文文档[Directory, Location and Files段]</a> </p>
+        <script type="text/javascript" src="http://www.php100.com/index.php?m=mood&c=index&a=init&id=10-1192-1"></script>
+        <!-- function panel start -->
+    <DIV class=functionPanel> 分享到：
+      <!--<img src="http://v.t.qq.com/share/images/s/weiboicon16.png" align="middle" onclick="postToWb();" class="cu" title="分享到腾讯微博"/>-->
+      <script type="text/javascript">
+function postToWb(){
+var _t = encodeURI(document.title);
+var _url = encodeURIComponent(document.location);
+var _appkey = encodeURI("cba3558104094dbaa4148d8caa436a0b");
+var _pic = encodeURI('');
+var _site = '';
+var _u = 'http://v.t.qq.com/share/share.php?url='+_url+'&appkey='+_appkey+'&site='+_site+'&pic='+_pic+'&title='+_t;
+window.open( _u,'', 'width=700, height=680, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, location=yes, resizable=no, status=no' );
+}
+</script>
+      <a href="javascript:void(0);" onclick="postToWb();" style="background-image:url(http://v.t.qq.com/share/images/s/weiboicon16.png); background-position:0px 0px;" class="t1">&nbsp;</a>
+      <script type="text/javascript">document.write('<a href="http://v.t.sina.com.cn/share/share.php?url='+encodeURIComponent(location.href)+'&appkey=3172366919&title='+encodeURIComponent('Apache 的 httpd.conf 详解（很实用）')+'" title="分享到新浪微博" class="t1" target="_blank">&nbsp;</a>');</script>
+      <script type="text/javascript">document.write('<a href="http://www.douban.com/recommend/?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent('Apache 的 httpd.conf 详解（很实用）')+'" title="分享到豆瓣" class="t2" target="_blank">&nbsp;</a>');</script>
+      <script type="text/javascript">document.write('<a href="http://share.renren.com/share/buttonshare.do?link='+encodeURIComponent(location.href)+'&title='+encodeURIComponent('Apache 的 httpd.conf 详解（很实用）')+'" title="分享到人人" class="t3" target="_blank">&nbsp;</a>');</script>
+      <script type="text/javascript">document.write('<a href="http://www.kaixin001.com/repaste/share.php?rtitle='+encodeURIComponent('Apache 的 httpd.conf 详解（很实用）')+'&rurl='+encodeURIComponent(location.href)+'&rcontent=" title="分享到开心网" class="t4" target="_blank">&nbsp;</a>');</script>
+      <script type="text/javascript">document.write('<a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+encodeURIComponent(location.href)+'" title="分享到QQ空间" class="t5" target="_blank">&nbsp;</a>');</script>
+    </DIV>
+	<script type="text/javascript">document.write('<iframe width="640" height="175" frameborder="0" scrolling="no" src="http://widget.weibo.com/relationship/bulkfollow.php?language=zh_cn&uids=2348825824,2804315170,2755330197,1063335630,2067327945&wide=0&color=C2D9F2,FFFFFF,0082CB,666666&showtitle=0&showinfo=0&sense=1&verified=1&count=7&refer='+encodeURIComponent(location.href)+'&dpc=1"></iframe>')</script>
+    <!-- function panel end -->
+    <DIV class=clear></DIV>
+    <!-- comment start -->
+        <iframe src="http://www.php100.com/index.php?m=comment&c=index&a=init&commentid=content_10-1192-1&iframe=1" width="100%" height="290" id="comment_iframe" frameborder="0" scrolling="no"></iframe>
+        <DIV class=clear></DIV>
+    <!-- otherReading start -->
+    <DIV class=otherReading>
+      <DIV class="box2 fl">
+        <DIV class=inner>
+          <DIV class=t id=otherRead>最新资讯</DIV>
+        </DIV>
+        <UL class=list3 style="MARGIN-LEFT: -4px">
+          <!-- Error -->
+          <DIV>                         <li><a href="http://www.php100.com/html/itnews/it/2013/0903/13790.html" target="_blank">Facebook严重漏洞曝光：任何照片都可被删除</a></li>
+                        <li><a href="http://www.php100.com/html/itnews/it/2013/0903/13789.html" target="_blank">PHP-Beast V0.6 发布 (PHP源码加密模块)</a></li>
+                        <li><a href="http://www.php100.com/html/itnews/it/2013/0830/13787.html" target="_blank">所见即所得：四款免编程移动游戏开发引...</a></li>
+                        <li><a href="http://www.php100.com/html/itnews/it/2013/0830/13786.html" target="_blank">百度搅局 高德跟进：导航App进入免费时代</a></li>
+                        <li><a href="http://www.php100.com/html/itnews/it/2013/0830/13785.html" target="_blank">微软明年彻底结束 Win XP/Office 2003 支持</a></li>
+                        <li><a href="http://www.php100.com/html/itnews/it/2013/0829/13783.html" target="_blank">Wordpress发布新工具，整合社交元素</a></li>
+                        <li><a href="http://www.php100.com/html/itnews/it/2013/0829/13782.html" target="_blank">互联网名人薛蛮子涉嫌聚众淫乱 涉案女...</a></li>
+                        <li><a href="http://www.php100.com/html/itnews/it/2013/0829/13778.html" target="_blank">PHP100大讲堂，微信5.0 公众平台开发课...</a></li>
+                        
+             </DIV>
+        </UL>
+      </DIV>
+      <DIV class="box2 fr">
+        <DIV class=inner>
+          <DIV class=t>热门内容</DIV>
+        </DIV>
+        <UL class=list3 style="MARGIN-LEFT: -4px">
+                              <li><a href="http://www.php100.com/html/itnews/it/2013/0830/13787.html"} title="所见即所得：四款免编程移动游戏开发引擎推荐">所见即所得：四款免编程移动游戏开发引...</a></li>
+                    <li><a href="http://www.php100.com/html/itnews/it/2013/0903/13789.html"} title="PHP-Beast V0.6 发布 (PHP源码加密模块)">PHP-Beast V0.6 发布 (PHP源码加密模块)</a></li>
+                    <li><a href="http://www.php100.com/html/itnews/it/2013/0107/11895.html"} title="2013年1月编程语言排行榜">2013年1月编程语言排行榜</a></li>
+                    <li><a href="http://www.php100.com/html/itnews/PHPxinwen/2009/0408/14.html"} title="十天学会PHP和MYSQL视频教程篇">十天学会PHP和MYSQL视频教程篇</a></li>
+                    <li><a href="http://www.php100.com/html/itnews/it/2013/0903/13790.html"} title="Facebook严重漏洞曝光：任何照片都可被删除">Facebook严重漏洞曝光：任何照片都可被删除</a></li>
+                    <li><a href="http://www.php100.com/html/itnews/PHPxinwen/2009/0416/840.html"} title="WampServer 5 集成环境">WampServer 5 集成环境</a></li>
+                    <li><a href="http://www.php100.com/html/itnews/it/2013/0830/13785.html"} title="微软明年彻底结束 Win XP/Office 2003 支持">微软明年彻底结束 Win XP/Office 2003 支持</a></li>
+                    <li><a href="http://www.php100.com/html/itnews/it/2013/0813/13748.html"} title="中国互联网大会今日召开 首日看点盘点">中国互联网大会今日召开 首日看点盘点</a></li>
+                            </UL>
+      </DIV>
+    </DIV>
+    <DIV id=ad7></DIV>
+    <DIV id=ad8></DIV>
+  </DIV>
+</DIV>
+<DIV class=cont_right>
+  <div class="channel-nav w340 center clear" style="height:0"> </div>
+  <!-- /channel-nav -->
+  <DIV class=tjzt>
+    <DIV class=sTitle><STRONG>热点推荐</STRONG> <A class=m href="http://www.php100.com/html/webkaifa/apache/">更多</A> </DIV>
+  </DIV>
+  <DIV class=clear></DIV>
+  <!-- google ad_1 -->
+  <DIV id=artrank_1>
+    <UL class=list2>
+                  <li><a href="http://www.php100.com/html/webkaifa/apache/2009/0418/1192.html" target="_blank" title="Apache 的 httpd.conf 详解（很实用）">Apache 的 httpd.conf 详解（很</a></li>
+            <li><a href="http://www.php100.com/html/webkaifa/apache/2009/0418/1188.html" target="_blank" title="Apache+php+mysql在XP下搭配详解">Apache+php+mysql在XP下搭配详解</a></li>
+            <li><a href="http://www.php100.com/html/webkaifa/apache/2011/0520/8098.html" target="_blank" title="nginx 伪静态 重定向 包括域名、目录、文件等方法">nginx 伪静态 重定向 包括域名、</a></li>
+            <li><a href="http://www.php100.com/html/webkaifa/apache/2010/0228/4006.html" target="_blank" title="开启Apache mod_rewrite模块完全解答">开启Apache mod_rewrite模块完全解</a></li>
+            <li><a href="http://www.php100.com/html/webkaifa/apache/2009/0418/1195.html" target="_blank" title="Apache下伪静态html(URL Rewrite)的设置方法">Apache下伪静态html(URL Rewrite)</a></li>
+            <li><a href="http://www.php100.com/html/webkaifa/apache/2010/0315/4133.html" target="_blank" title="apache 压力测试工具ab">apache 压力测试工具ab</a></li>
+            <li><a href="http://www.php100.com/html/webkaifa/apache/2009/0418/1196.html" target="_blank" title="Apache实现图片防盗链">Apache实现图片防盗链</a></li>
+            <li><a href="http://www.php100.com/html/webkaifa/apache/2009/0418/1190.html" target="_blank" title="使apache解析域名到目录的方法">使apache解析域名到目录的方法</a></li>
+            <li><a href="http://www.php100.com/html/webkaifa/apache/2009/0418/1193.html" target="_blank" title="Apache 2.0 中文文档[Directory, Location and Files段]">Apache 2.0 中文文档[Directory,</a></li>
+            <li><a href="http://www.php100.com/html/webkaifa/apache/2009/1104/3478.html" target="_blank" title="nginx学习教程初级篇">nginx学习教程初级篇</a></li>
+                </UL>
+  </DIV>
+  <DIV class=pdzxgx>
+    <DIV class=sTitle><STRONG>广告赞助商</STRONG> <A class=m href="/cms/com/adservice.php" target=_blank>投放</A></DIV>
+    <DIV id=artrank_3>
+      <UL class=list2>
+<script type="text/javascript">BAIDU_CLB_fillSlot("168252");</script>
+      </UL>
+    </DIV>
+    <DIV id=artrank_3>
+      <UL class=list2>
+      </UL>
+    </DIV>
+  </DIV>
+  <!-- channel news start -->
+  <DIV class=pdzxgx>
+    <DIV class=sTitle><STRONG>最新视频推荐</STRONG> <A class=m href="html/jiaocheng/">更多</A> </DIV>
+    <DIV id=artrank_2>
+      <UL class=list2>
+                        <li><a href="http://www.php100.com/html/shipinjiaocheng/php100-2012/2013/0605/9130.html">［第78讲］微博开放平台 – 站内</a></li>
+                <li><a href="http://www.php100.com/html/shipinjiaocheng/php100-2012/2013/0422/9129.html">［第77讲］新浪微博开放平台 -新</a></li>
+                <li><a href="http://www.php100.com/html/shipinjiaocheng/php100-2012/2013/0415/9128.html">［第76讲］微信公共平台 - 平台</a></li>
+                <li><a href="http://www.php100.com/html/shipinjiaocheng/php100-2012/2013/0407/9127.html">［第75讲］微信公共平台 - 开放</a></li>
+                <li><a href="http://www.php100.com/html/shipinjiaocheng/php100-2012/2013/0325/9125.html">［第74讲］thinkphp 3.1.2 系列</a></li>
+                <li><a href="http://www.php100.com/html/shipinjiaocheng/php100-2012/2013/0325/9124.html">［第73讲］thinkphp 3.1.2 系列</a></li>
+                <li><a href="http://www.php100.com/html/shipinjiaocheng/php100-2012/2013/0325/9123.html">［第72讲］thinkphp 3.1.2 系列</a></li>
+                <li><a href="http://www.php100.com/html/shipinjiaocheng/php100-2012/2013/0325/9122.html">［第71讲］thinkphp 3.1.2 系列</a></li>
+                <li><a href="http://www.php100.com/html/shipinjiaocheng/php100-2012/2013/0322/9121.html">［第70讲］thinkphp 3.1.2 系列</a></li>
+                <li><a href="http://www.php100.com/html/shipinjiaocheng/php100-2012/2013/0322/9120.html">［第69讲］thinkphp 3.1.2 系列</a></li>
+                      </UL>
+    </DIV>
+	<DIV id=artrank_2>
+      <UL class=list2>
+<script type="text/javascript">BAIDU_CLB_fillSlot("273181");</script>
+      </UL>
+    </DIV>
+  </DIV>
+</DIV>
+<!-- content end -->
+<script type="text/javascript">var jiathis_config = {"data_track_clickback":true};</script>
+<script type="text/javascript" src="http://v1.jiathis.com/code/jia.js?uid=890797" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+<SCRIPT src="http://www.php100.com/templets/images/integrated_081112.js"></SCRIPT>
+<!-- 评论后载 -->
+<!--floor start -->
+<script type="text/javascript">
+
+<!--
+	function show_ajax(obj) {
+		var keywords = $(obj).text();
+		var offset = $(obj).offset();
+		var jsonitem = '';
+		$.getJSON("http://www.php100.com/index.php?m=content&c=index&a=json_list&type=keyword&modelid=11&id=1192&keywords="+encodeURIComponent(keywords),
+				function(data){
+				var j = 1;
+				var string = "<div class='point key-float'><div style='position:relative'><div class='arro'></div>";
+				string += "<a href='JavaScript:;' onclick='$(this).parent().parent().remove();' hidefocus='true' class='close'><span>关闭</span></a><div class='contents f12'>";
+				if(data!=0) {
+				  $.each(data, function(i,item){
+					j = i+1;
+					jsonitem += "<a href='"+item.url+"' target='_blank'>"+j+"、"+item.title+"</a><BR>";
+				  });
+					string += jsonitem;
+				} else {
+					string += '没有找到相关的信息！';
+				}
+string += "</div><span class='o1'></span><span class='o2'></span><span class='o3'></span><span class='o4'></span></div></div>";		
+					$(obj).after(string);
+					$('.key-float').mouseover(
+						function (){
+							$(this).siblings().css({"z-index":0})
+							$(this).css({"z-index":1001});
+						}
+					)
+					$(obj).next().css({ "left": +offset.left-100, "top": +offset.top+$(obj).height()+12});
+				});
+	}
+$(function(){
+  $('#Article .content img').LoadImage(true, 660, 660,'http://www.php100.com/statics/images/s_nopic.gif');    
+})
+//-->
+</script>
+<script language="JavaScript" src="http://www.php100.com/api.php?op=count&id=1192&modelid=11"></script>
+<DIV id=floor><LINK href="style/floor.css" type=text/css rel=stylesheet><DIV class=w950><DIV class="mgt5 bg1 h35 l38 pdlr4a white fl white w950"><A href="/cms/com/">关于我们</A> | <A href="/cms/com/buddy.php">管理团队</A> | <A href="#">网站律师</A> | <A href="/cms/com/adservice.php">广告服务</A> | <A href="/cms/com/intome.php">投稿指南</A> | <A href="http://bbs.php100.com/thread-htm-fid-14.html" target=_blank>提建议</A> | <A href="/plus/flink.php">友情链接</A> | <a href="/plus/flink_add.php">申请加入</a> | <A href="/data/sitemap.html">网站地图</A></DIV><DIV class="pdt10 fl w950"><DIV class="fl w635" style="width:950px; line-height:20px; padding:5px; margin:0px;"> Copyright (C) 2007-2011 PHP100.com, All Rights Reserved 版权所有 <a href="http://php100.com/go.php?url=http://www.php100.net/" target="_blank" style="color:black;text-decoration:none">上海创恩信息技术有限公司</a>. 沪ICP备08100465号<br />  地址:上海徐汇区零陵路585号 爱邦大厦26H座  传真(FAX):021-61190281  电话(Tel):021-61190282   <br />  PHP100 Website Powered by PHPCMS. For PHP100. 服务器维护：阿里巴巴-阿里云</a> </DIV></DIV></DIV></DIV><div style="display:none"><script src="http://s7.cnzz.com/stat.php?id=1668579&web_id=1668579" language="JavaScript" charset="gb2312"></script><script type="text/javascript">var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F327b016d332d3a7e4043796cab725707' type='text/javascript'%3E%3C/script%3E"));</script></div>
+<!-- /footer -->
+</body>
+</html>
+

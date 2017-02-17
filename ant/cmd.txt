@@ -1,0 +1,14 @@
+1.java编译时导入jar包:javac -cp D:\tomcat6.0\lib\servlet.api.jar -d . Login.java
+2.jar打包,第一步:创建文件manifest.mf(manifest-version:1.0 created-by:1.60_04 main-class:PuzzleGame),第二步:命令(jar cvfm PuzzleGame.jar manifest.mf)
+3.查询所有端口占用情况:netstat -ano
+4.退出子命令:exit
+
+
+
+
+
+
+
+
+
+

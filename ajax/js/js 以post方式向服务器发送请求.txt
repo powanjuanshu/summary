@@ -1,0 +1,75 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var b=null;
+	var a=function(){
+		if(window.ActiveXObject){
+			b=new ActiveXObject("Microsoft.XMLHTTP");
+		}else if(window.XMLHttpRequest){
+			b=new XMLHttpRequest();
+		}
+		if(null!=b){
+			var v1=document.getElementById("value1").value;
+			var v2=document.getElementById("value2").value;
+			b.open("POST","AjaxServlet",true);//准备向服务器发送请求，并没法送，也可以用小写get，但建议用大写GET，true是异步，false是同步
+			//回调函数，当响应回来了，满足了某个要求，回调函数会自动得到调用，所以必须注册回调函数，很像监听器
+			b.onreadystatechange=c;
+			//如果以post方式请求必须在请求头中设置一些信息，这样才能将数据提交过去,编码格式参数可以在html用form表单点出来
+			b.setRequestHeader("Content-Type","application/x-www-form-urlencoded");//必须这样设置，这种表单方式是表单的默认编码方式，如果文件上传则需要改成适合文件上传的编码方式
+			//如果v2后面少个=号，访问时不会报错，也不会执行服务器servlet
+			b.send("v1="+v1+"&v2="+v2);//正真地发送，如果以post请求时，需要给send指定一个参数，以名值对依次的以字符串形式放到send里，如果是get，则不填或填null
+		}
+	};
+	var c=function(){
+		if(b.readyState==4){//1状态刚把对象构造完还没法送请求，2请求发出去了还没收到响应，3响应来了还没处理完，4不管响应是正确还是错误的，只要客户端完完整整收到响应后
+			if(b.status==200){//http响应的状态，200正常
+				var res=b.responseText;
+				document.getElementById("div1").innerHTML=res;//如果getElementById("")里参数为""空，则会报为空或不是对象的错误
+			}
+		}
+	};
+</script>
+</head>
+<body>
+	<input type="button" value="get content from servlet" onclick="a();"><br>
+	<input type="text" name="value1" id="value1"><br>
+	<input type="text" name="value2" id="value2"><br>
+	<div id="div1"></div>
+</body>
+</html>
+--------------------------------
+package com;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class AjaxServlet extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException{
+		System.out.println("开始");
+		String s1=req.getParameter("v1");
+		String s2=req.getParameter("v2");
+		String v3=Integer.valueOf(s1)+Integer.valueOf(s2)+"";
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		resp.setHeader("param","no-cache");//清除响应缓存，不然你修改了jsp页面，第二次刷新的时候,ajax会认为你调用的还是第一个页面，不会重新调用这个servlet，会直接用第一次ajax传到jsp的值，所以同步和异步调试时在同一页面中刷新没效果
+		resp.setHeader("cache-control","no-cache");//清除响应缓存，不然你修改了jsp页面，第二次刷新的时候,ajax会认为你调用的还是第一个页面，不会从新调用这个servlet，会直接用第一次ajax传到jsp的值，所以同步和异步调试时在同一页面中刷新没效果
+		PrintWriter out=resp.getWriter();
+		System.out.println("doGet invoked");
+		out.print(v3);
+		out.flush();
+	}
+	protected void doPost(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException{
+		doGet(req,resp);
+	}
+}
+----------------

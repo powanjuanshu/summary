@@ -1,0 +1,31 @@
+输出一个静态编译在服务器中的模块的列表。它不会列出使用LoadModule指令动态加载的模块
+/usr/local/apache/bin./httpd -l
+下面是输出:
+Compiled in modules:
+  core.c
+  mod_authn_file.c
+  mod_authn_default.c
+  mod_authz_host.c
+  mod_authz_groupfile.c
+  mod_authz_user.c
+  mod_authz_default.c
+  mod_auth_basic.c
+  mod_include.c
+  mod_filter.c
+  mod_log_config.c
+  mod_env.c
+  mod_setenvif.c
+  mod_version.c
+  prefork.c
+  http_core.c
+  mod_mime.c
+  mod_status.c
+  mod_autoindex.c
+  mod_asis.c
+  mod_cgi.c
+  mod_negotiation.c
+  mod_dir.c
+  mod_actions.c
+  mod_userdir.c
+  mod_alias.c
+  mod_so.c

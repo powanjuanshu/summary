@@ -1,0 +1,23 @@
+使用ant,有什么办法可以从svn(TortoiseSVN)上面取得最新代码？
+目的，取下最新的代码进行编译。
+现在的做法是：首先是手动从svn取最新的代码，其次是再进行编译，
+现在想做成：自动取到新的代码再自动进行编译！
+要的事情：请问在build.xml文件里怎么写？
+-------------------------------------------------------
+<?xml version="1.0"?>
+<project name="SVN Ant Test" default="checkout" basedir=".">
+　　 <property name="remote.url" value="svn://16.157.xxx.xxx/trunk/LNPORTAL/src/P3UIPAdapter/"/>
+　　 <property name="local.dir" value="local"/>
+　　 <taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask"/>
+　　 <target name="prepare" description="Prepare the dirs for other tasks">
+　　 	<delete dir="${local.dir}"/>
+　　 	<mkdir dir="${local.dir}"/>
+　　 </target>
+　　 <target name="checkout" depends="prepare">
+　　 	<svn javahl="true" username="lihq" password="password" >
+　　 		<checkout url="${remote.url}" destPath="${local.dir}"/>
+　　 	</svn>
+　　 </target>
+</project>
+
+

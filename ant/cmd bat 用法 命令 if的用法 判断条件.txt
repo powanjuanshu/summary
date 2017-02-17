@@ -1,0 +1,10 @@
+@echo off
+if "%1"=="" goto a
+if "%1"=="b" goto b
+:a
+echo aaaa
+goto end
+:b
+echo bbbb
+goto end
+:end

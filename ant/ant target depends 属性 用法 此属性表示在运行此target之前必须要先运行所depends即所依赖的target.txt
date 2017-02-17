@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="GBK"?>
+<project name="测试脚本" default="copyfile1" basedir="." >
+	<property file="build.properties"/>
+	<target name="copyfile2">
+		<echo message="xxxx"/>
+	</target>
+	<target name="copyfile1" depends="copyfile2">
+		<echo message="zzzz"/>
+	</target>
+</project>
+--------------应该先运行默认的copyfiles1这个任务，但是他依赖copyfile2，所以先运行copyfile2，再运行copyfile1

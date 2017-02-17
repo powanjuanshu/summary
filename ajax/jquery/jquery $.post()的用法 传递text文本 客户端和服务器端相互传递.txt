@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%
+	String path = request.getContextPath();
+	System.out.println(path);
+	String bankAccount = request.getParameter("bankAccount");
+%>
+<script type="text/javascript" src="<%=path%>/res/jquery.js"></script>
+<script type="text/javascript">
+	alert(222);
+	$.post("getBoundFactors",{bankAccount:<%=bankAccount%>},function(data){
+		alert(123333);
+		alert(data);
+	});
+</script>
+</head>
+<body>
+	<h1 onclick="aa()">天翼支付手机移动支付</h1>
+	
+</body>
+</html>
+------------------------------------------------------
+package servlet;
+
+import javax.servlet.Servlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class GetBoundFactors extends HttpServlet {
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		doPost(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			response.getWriter().print("haha");
+			response.getWriter().flush();
+
+	}
+}
+

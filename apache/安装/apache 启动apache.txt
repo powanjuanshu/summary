@@ -1,0 +1,16 @@
+4.启动Apache
+  /usr/local/apache/bin/apachectl start
+  检查是否有Apache进程
+  ps aux | grep httpd
+  如果有Apache的进程，则证明启动成功，浏览器地址栏输入 http://localhost 试试吧～
+  启动成功之后，可以将apachectl拷贝到/etc/init.d下，作为service启动。
+  cp /usr/local/apache/bin/apachectl /etc/init.d/httpd
+  service httpd start
+
+
+windows命令行启动:
+
+httpd或者httpd.exe这种方式控制台会一直被占据,直到被ctrl+c中断
+
+httpd -k start或者httpd.exe -k start这种方式不会占据控制台
+

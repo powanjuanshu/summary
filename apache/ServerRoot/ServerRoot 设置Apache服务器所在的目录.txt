@@ -1,0 +1,26 @@
+ServerRoot指令 设置服务器的根目录
+语法:ServerRoot directory_path
+这个指令用来设置apache服务器所在的目录.一般包含conf/,logs/等子目录.其他配置文件的相对路径一般都是基于此目录的
+比如:ServerRoot "/usr/local/httpd" 或者 ServerRoot "/etc/httpd"
+------------------------------
+ServerRoot "/usr/local"
+ServerRoot用于指定守护进程httpd的运行目录,httpd在启动之后自动将进程的当前目录改变为这个目录,因此如果设置文件中指定的文件或目录是相对路径,
+那么真实路径就位于这个ServerR oot定义的路径之下
+
+------------------------------
+
+Apache一般跑在linux上比较多，不过有些系统是Windows的，因此需要下载微软版的；由于Apache官网直接将各个模块源码放出来，不进行打包。不过有些组织还是会将他们打包出来。
+
+下载地址：http://www.apachehaus.com/
+
+解压出来后，在dos窗口进入apache根目录输入命令：
+
+httpd -k install
+但是你会很快发现dos窗口报错：ServerRoot must be a valid directory；然后服务直接启动不了；
+
+QQ截图20150618152744
+其实我们解决的方法很简单，在conf/httpd.conf中找到Define SRVROOT，将其后面的路径改成现在Apache的解压目录。
+
+QQ截图20150618153457
+
+有个地方需要大家注意一下：从上面可以看到在Windows下的目录分割符号“/”需要变换成”/”才能被Apache识别。

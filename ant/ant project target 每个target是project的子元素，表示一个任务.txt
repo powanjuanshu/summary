@@ -1,0 +1,10 @@
+-------target是project的子元素，表示一个任务；一个project中可以定义多个target元素，表示多个任务
+<?xml version="1.0" encoding="GBK"?>
+<project name="测试脚本" default="copyfile" basedir="." >
+	<target name="copyfile">
+		<copy file="d:/a.txt" todir="e:/Temp" overwrite="true"/>
+	</target>
+	<target name="copyfile2">
+		<copy file="d:/b.txt" todir="e:/Temp" overwrite="true"/>
+	</target>
+</project>

@@ -1,0 +1,2 @@
+DocumentRoot /usr/local/apache/htdocs
+这个指令由内核实现的,用来设置网页在主文档树的根目录.

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="GBK"?>
+<project name="测试脚本" default="copyfile1" basedir="." >
+	<property file="build.properties"/>
+	<target name="copyfile1">
+		<echo message="xxxx"/>
+	</target>
+</project>

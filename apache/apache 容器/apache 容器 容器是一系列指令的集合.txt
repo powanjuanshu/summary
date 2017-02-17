@@ -1,0 +1,10 @@
+容器是一系列指令的集合,语法和标记语言很相像,使用尖括号进行归类.容器在语义上和其他指令不同,具有一个开始和结束的分割行,在分割行之间的指令为容器内部的指令.例如由内核模块
+中的<VirtualHost>容器如下所示,该容器定义了一个虚拟主机.
+<VirtualHost 10.31.2.139>
+	ServerHost 10.31.2.139
+	DocumentRoot /usr/www/example
+	ServerAdmin Webmaster@example.com
+	CustomLog /var/log/www/exmaple.log
+</VirtualHost>
+容器为里面的指令提供了上下文.在上面的例子中,指令只对访问www.example.com的请求进行响应.容器可以被嵌套使用,除非某个模块显示地声明容器不能嵌套.所有用到的指令,包括容器,都
+可能是上下文相关的,因此它们在某些具体的上下文中才有效.

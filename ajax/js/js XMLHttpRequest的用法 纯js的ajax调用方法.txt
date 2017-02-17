@@ -1,0 +1,52 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var b=null;//接收xmlHttpRequest对象
+	var a=function(){
+		if(window.ActiveXObject){//IE浏览器
+			b=new ActiveXObject("Microsoft.XMLHTTP");
+		}else if(window.XMLHttpRequest){//其他浏览器
+			b=new XMLHttpRequest();
+		}
+		if(null!=b){//其他小浏览器，则不执行
+			b.open("GET","AjaxServlet",true);//准备向服务器发送请求，并没法送，也可以用小写get，但建议用大写GET，true是异步，false是同步
+			b.onreadystatechange=c;//c是回调函数，当响应回来了，满足了某个要求，回调函数会自动得到调用，所以必须注册回调函数，很像监听器
+			b.send();//正真地发送，如果以post请求时，需要给send指定一个参数，以名值对依次的以字符串形式放到send里，如果是get，则不填或填null
+		}
+	};
+	var c=function(){
+		if(b.readyState==4){//1状态刚把对象构造完还没法送请求，2请求发出去了还没收到响应，3响应来了还没处理完，4不管响应是正确还是错误的，只要客户端完完整整收到响应后
+			if(b.status==200){//http响应的状态，200正常
+				var res=b.responseText;
+				document.getElementById("div1").innerHTML=res;//如果getElementById("")里参数为""空，则会报为空或不是对象的错误
+			}
+		}
+	};
+</script>
+</head>
+<body>
+	<input type="button" value="get content from servlet" onclick="a();">
+	<div id="div1"></div>
+</body>
+</html>
+-----------------------------------------------
+package com;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class AjaxServlet extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException{
+		PrintWriter out=resp.getWriter();
+		System.out.println("doGet invoked");
+		out.print("Hello World");
+		out.flush();
+	}
+}

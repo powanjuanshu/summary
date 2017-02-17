@@ -1,0 +1,13 @@
+label 和 vol 
+设置卷标 
+vol                     #显示卷标 
+label                   #显示卷标，同时提示输入新卷标 
+label c:system          #设置C盘的卷标为 system 
+---------------------------------------------
+@echo off
+vol c:
+label d:
+label c:system
+-------显示c盘的卷标
+-------显示d盘的卷标，并提示修改
+-------直接修改c盘的卷标为system

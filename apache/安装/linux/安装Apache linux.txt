@@ -1,0 +1,41 @@
+1.下载Apache 2.4及依赖包
+  httpd-2.2.29.tar.gz
+  apr-1.5.1.tar.gz
+  apr-util-1.5.4.tar.gz
+2.安装依赖,
+  安装APR
+  tar -zxvf /home/install_packet/apr-1.5.1.tar.gz -C /home/install_packet
+  cd /home/install_packet/apr-1.5.1
+  ./configure --prefix=/usr/local/apr
+  make
+  make install
+  安装APR-Util
+  tar -zxvf /home/install_packet/apr-util-1.5.4.tar.gz -C /home/install_packet
+  cd /home/install_packet/apr-util-1.5.4
+  ./configure --prefix=/usr/local/apr-util
+  make
+  make install
+  安装PCRE(这个其实可以不安装)
+  tar -zxvf /home/install_packet/pcre-8.30.tar.gz -C /home/install_packet
+  cd /home/install_packet/pcre-8.30
+  ./configure --prefix=/usr/local/pcre
+  make
+  make install
+3.安装Apache 2.2
+  tar -zxvf /home/install_packet/httpd-2.2.29.tar.gz -C /home/install_packet
+  cd /home/install_packet/httpd-2.2.29
+  ./configure --prefix=/usr/local/apache  --enable-rewrite=shared --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr-util 或者下面的,下面的没验证,这个验证可以
+  ./configure --prefix=/usr/local/apache --enable-so --enable-rewrite=shared --with-mpm=prefork --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr-util --with-pcre=/usr/local/pcre
+  make
+  make install
+4.启动Apache
+  /usr/local/apache/bin/apachectl start
+  检查是否有Apache进程
+  ps aux | grep httpd
+  如果有Apache的进程，则证明启动成功，浏览器地址栏输入 http://localhost 试试吧～
+  启动成功之后，可以将apachectl拷贝到/etc/init.d下，作为service启动。
+  cp /usr/local/apache/bin/apachectl /etc/init.d/httpd
+  service httpd start
+
+
+

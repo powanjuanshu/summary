@@ -1,0 +1,83 @@
+create by huili7
+edit by ynwang6 2015-11-03
+
+last edit by ynwang6 2015-11-13
+
+一、目的
+通过指导新同事对云平台产品的基础环境进行搭建，使其对整套产品有一个初步的认识，
+并让其在执行过程中对相关技术和业务进行了解和学习，使新员工能够快速掌握必要的技术知识和业务能力，
+并尽快投入到生产工作中。
+
+
+二、步骤
+1、新员工培训流程总论：基础环境搭建-服务及代码环境搭建-浏览器调试配置-指导进行练习作业（可选）
+
+*****************************************************2、基础环境搭建：**************************************************************************************
+
+    2.1    安装必要软件
+    【通用】
+        subversion+TurtoiseSvn（Tip：有其他安装进程时无法安装）
+        chrome浏览器
+    【java服务需用】
+        jdk1.7以上（Tip：有其他安装进程时无法安装）
+        tomcat7以上
+        eclipse
+    【php需用】
+        php5.4以上    
+        composer，指定php目标路径为你所安装的php的路径
+        apache httpd2.4以上或iis或其他可配套使用的web服务器至少准备一个【建议使用apache】
+        apache maven
+        phpstorm
+    2.2    配置环境变量，包括PHP_HOME,PHING_HOME,MAVEN_HOME
+    2.3    为chrome浏览器安装xdebug扩展程序
+    2.4    svn资料同步获取到本地-观看“培训课件”和“开发规范”中的文档
+
+*****************************************************3、服务及代码环境搭建：**************************************************************************************
+
+    3.1    首先svn检出代码，找到\Trunk\Development\Source（下文中提到的Source目录就是它)
+    3.2 java服务端搭建二选一操作：
+        （1）：使用带有svn插件和maven插件的eclipse
+            左侧project explorer界面下右键菜单import -> maven -> existing maven project，选择Service.epspjx目录（或其下的Src目录），勾选将其下的pom文件，然后导入项目
+            确保项目导入后生成的项目中有epsp-jx-parent，epsp-jx-api，epsp-jx-server，epsp-jx-client。
+            在epsp-jx-parent项目下找到pom.xml文件，右键run as -> maven clean，控制台最后打印BUILD SUCCESS表示执行成功。如未执行成功，请联系持续交付团队成员帮忙定位和处理问题。
+            在epsp-jx-parent项目下找到pom.xml文件，右键run as -> maven build ...指令(注意是build...而不是build)，在后续弹出的菜单中的Goals中输入install -DskipTests，然后点击run按钮执行，控制台最后打印BUILD SUCCESS表示执行成功。如未执行成功，请联系持续交付团队成员帮忙定位和处理问题。
+            前两步maven指令执行成功后，在epsp-jx-server项目中找到源代码包src/test/java，在com.iflytek.epdcloud.epspjx.service包中打开Main.java文件，右键run as -> java application使其运行,完成JAVA服务的发布
+            在epsp-jx-client项目下找到pom.xml文件，右键run as -> maven install，控制台最后打印BUILD SUCCESS表示执行成功。如未执行成功，请联系持续交付团队成员帮忙定位和处理问题。
+
+        （2）：不使用eclipse，或缺少某些插件
+            进入cmd控制台，cd到Service.epspjx目录（或其下的Src目录）的所在位置，执行mvn clean命令，如无法执行mvn命令，请检查apache maven是否正确安装，以及相关环境变量是否配置，如mvn命令可执行，控制台最后打印BUILD SUCCESS表示执行成功。如未执行成功，请联系持续交付团队成员帮忙定位和处理问题。
+            上面的命令执行完毕之后，执行mvn install -DskipTests指令。
+            上面的命令执行完毕之后，进入Service.epspjx（/Src）目录下的server/target目录，找到以.tar.gz为后缀的压缩包文件，解压后进入文件包的bin目录，执行start.bat批处理文件
+            上面的命令执行完毕之后，cmd进入Service.epspjx（/Src）目录下的client目录，执行mvn install命令
+
+    以上二选一操作执行完毕之后，畅言云平台的java服务端即准备完毕。
+Tips：如果权衡之后觉得安装java服务必要性不大，可以跳过此步骤，使用别人电脑上的java服务
+
+    3.3php端环境搭建（phpStorm+chrome版）：        
+        （1）、进入Source目录下打开env.properties，
+            1.1    找到以website开头的配置项，如果配置项最后的目录能够在Source目录中找到，则更改配置项地址为本机ip地址（该步骤的目的是使用本机的php站点）。
+            例：website_resource = http://172.16.24.52/jxsg/App.ResourceCloud/Src。在Source目录中发现App.ResourceCloud目录，于是更改为website_resource = http://本机ip/App.ResourceCloud/Src。（以下配置项不做更改：含有在Source目录中找不到的子目录的配置项、值为域名的配置项。端口号不做更改）
+            1.2更改配置项epsp_service_url的ip地址为本机ip地址（该步骤的目的是使用本机的java服务，如果跳过了上面的“本地搭建java服务”，则此处ip地址更改为你调用java服务的那个人电脑的ip地址）
+            1.3配置完毕后执行同一目录下的env.bat批处理文件。最好用命令行的方式执行，这样可以检查Admin.*目录和App.*目录是否有BUILD FINISHED提示。如执行过程中这种目录未出现BUILD FINISHED提示，请检查环境变量PHING_HOME是否正确配置
+        （2）、cmd下进入各个php代码包根目录中，即Admin.*（/Src）以及App.*（/Src）中，只要是存在composer.json文件的地方，便执行composer install命令。如未能成功执行，请检查Subversion是否已正确安装。如已安装Subversion还不能正确执行，请自行建立一个独立文件夹并cmd进入，并以已申请权限的svn资源库中任意子目录url为目标执行svn checkout指令，该过程会要求输入用户名和密码，此时输入自己的域账号和密码即可。
+        （3）、以上每个具备composer.json的php代码包均成功执行过composer命令之后，将apache中根目录下的comf/httpd.conf中的DocumentRoot和<Directory>配置项中的路径改为Source目录所在的路径
+        （4）、如apache为安装版，启动apache服务即可。如为免安装版，cmd下进入apache根目录下的bin，执行命令：chcp 65001；之后再执行命令：httpd -k install -n apache2.4；这样即可将名为apache2.4的服务安装到windows系统中。接下来通过windows系统的 运行 -> services.msc 启动apache2.4服务即可。如在执行httpd命令过程中出现错误，请根据控制台反馈检查httpd.conf配置文件以及其他相关配置文件
+        （5）、以上步骤完成之后，平台php端环境即部署完成，访问http://localhost/App.ResourceCloud/Src/cleancache.php清除php缓存，然后访问http://localhost/App.ResourceCloud/Src/index.php即可打开云平台首页。
+
+至此，畅言云平台全套基础环境搭建完成^_^
+
+*****************************************************4、浏览器调试配置：**************************************************************************************
+
+        1、为chrome浏览器安装xdebug插件-配置xdebug插件的目标，将eclipse改为phpstorm-如eclipse包含php插件，进入eclipse中的window -> preferences -> PHP -> Debug -> Installed Debuggers，将xdebug的端口改为9000以外的未使用端口
+        2、当使用chrome浏览器成功打开某一个php页面之后，浏览器的地址栏右侧会出现一个瓢虫的图标，打开phpstorm工具，启动右上角的xdebug调试模式，通过phpstorm打开某个php代码项目，将其中的某一个php源代码中设置一个断点，再点击chrome浏览器中的瓢虫图标，选择debug将其点亮，在这种状态下，当你访问被设置了断点的php页面时，phpstorm的xdebug接收端会将访问过程卡在断点处，接下来你就可以使用phpstorm进行单步调试工作。
+
+  
+*****************************************************5、可选任务：************************************************************************************************  
+
+略。
+
+
+**********************************************************END***********************************************************************************************
+    
+
+

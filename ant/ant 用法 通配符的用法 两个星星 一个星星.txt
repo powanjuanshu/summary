@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="GBK"?>
+<project name="测试脚本" default="copyfile1" basedir="." >
+	<property file="build.properties"/>
+	<target name="copyfile1">
+		<copy todir="F:/temp">
+			<fileset dir="D:/temp">
+				<include name="**"/><!--将所有的文件和文件夹复制到目的文件夹，如果是两个**表示其文件夹下的文件和文件夹也会被复制-->
+			</fileset>
+		</copy>
+	</target>
+</project>
+-----------------------------------------------
+<?xml version="1.0" encoding="GBK"?>
+<project name="测试脚本" default="copyfile1" basedir="." >
+	<property file="build.properties"/>
+	<target name="copyfile1">
+		<copy todir="F:/temp">
+			<fileset dir="D:/temp">
+				<include name="*"/><!--将所有的文件和文件夹复制到目的文件夹，如果是一个*表示其文件夹下的文件和文件夹不会被复制，即拷过去的文件夹都是空的-->
+			</fileset>
+		</copy>
+	</target>
+</project>
+--------------------------------------
+<?xml version="1.0" encoding="GBK"?>
+<project name="测试脚本" default="copyfile1" basedir="." >
+	<target name="copyfile1" description="Compile main source and copy others">
+		<copy todir="F:/temp">
+			<fileset dir="E:/temp">
+				<include name="**"/>
+				<exclude name="**/d.txt"/><!--除去了其下所有迭代所有子文件夹的d.txt文件-->
+			</fileset>
+		</copy>
+	</target>
+</project>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="testCondition" default="test" basedir=".">
+<property name="name" value="this is name"/>
+<target name="test">
+	<condition property="wwww">
+		<isset property="name"/>
+	</condition>
+	<antcall target="aaa"></antcall>
+	<antcall target="bbb"></antcall>
+</target>
+<target name="aaa" if="wwww">
+	<echo message="truexxx"/>
+</target>
+<target name="bbb" unless="wwww">
+	<echo message="falsexxx"/>
+</target>
+</project>
+------------------------------------------------------------
+4、isset 指定属性是否存在
+<project name="testCondition">
+ <!--属性也可以通过ant参数-D来设置-->
+ <property name="name" value="this is name"/>
+ <target name="test">
+ 	<condition property="scondition">
+ 		<!--如果属性name不存在则返回false-->
+ 		<isset property="name"/>
+ 	</condition>
+ 	<antcall target="isTrue"></antcall>
+ 	<antcall target="isFalse"></antcall>
+ </target>
+ <target name="isTrue" if="scondition">
+ 	<echo>is ture</echo>
+ </target>
+ <target name="isFalse" unless="scondition">
+ 	<echo>is false</echo>
+ </target>
+</project>
+
+

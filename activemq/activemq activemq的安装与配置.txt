@@ -1,0 +1,27 @@
+1、环境：
+Windows XP
+apache-activemq-5.2.0-bin.zip
+
+2、安装
+解压缩到apache-activemq-5.2.0-bin.zip到一个目录，比如E:\apache-activemq-5.2.0
+
+3、配置
+配置就在E:\apache-activemq-5.2.0\conf目录下三个文件
+activemq.xml
+credentials.properties
+log4j.properties
+
+4、启动ActiveMQ
+运行C:\apache-activemq-5.2.0\bin\activemq.bat
+
+5、测试
+ActiveMQ默认使用的TCP连接端口是8161,通过查看该端口的信息可以测试ActiveMQ是否成功启动netstat -an|find "8161" 
+C:\Documents and Settings\Administrator>netstat -an|find "8161" 
+    TCP        0.0.0.0:61616                    0.0.0.0:0                            LISTENING 
+
+6、监控
+ActiveMQ5.0版本默认启动时，启动了内置的jetty服务器，提供一个demo应用和用于监控ActiveMQ的admin应用。
+admin：http://127.0.0.1:8161/admin/
+demo：http://127.0.0.1:8161/demo/
+
+

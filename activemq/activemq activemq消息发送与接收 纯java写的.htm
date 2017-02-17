@@ -1,0 +1,514 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<head>
+<meta property="wb:webmaster" content="e62e2a25fc3a578a" />
+<meta property="qc:admins" content="354121327760511301706375" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ActiveMQ使用笔记（三）ActiveMQ消息发送与接收</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="http://www.huaishao8.com/wp-content/themes/dot-b/style.css" />
+<link rel="pingback" href="http://www.huaishao8.com/xmlrpc.php" />
+
+<!-- SEO Ultimate (http://www.seodesignsolutions.com/wordpress-seo/) -->
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="ActiveMQ使用笔记（三）ActiveMQ消息发送与接收" />
+	<meta property="og:url" content="http://www.huaishao8.com/config/activemq/143.html" />
+	<meta property="article:published_time" content="2012-04-09" />
+	<meta property="article:modified_time" content="2012-04-10" />
+	<meta property="article:author" content="http://www.huaishao8.com/author/admin" />
+	<meta property="article:tag" content="ActiveMQ" />
+	<meta property="article:tag" content="实施配置" />
+	<meta property="article:tag" content="ActiveMQ" />
+	<meta property="og:site_name" content="淮少吧" />
+	<meta name="twitter:card" content="summary" />
+<!-- /SEO Ultimate -->
+
+<link rel="alternate" type="application/rss+xml" title="淮少吧 &raquo; Feed" href="http://www.huaishao8.com/feed" />
+<link rel="alternate" type="application/rss+xml" title="淮少吧 &raquo; 评论 Feed" href="http://www.huaishao8.com/comments/feed" />
+
+            <script type="text/javascript">//<![CDATA[
+            // Google Analytics for WordPress by Yoast v4.3.3 | http://yoast.com/wordpress/google-analytics/
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-35589948-1']);
+				            _gaq.push(['_trackPageview']);
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+            //]]></script>
+			<link rel="alternate" type="application/rss+xml" title="淮少吧 &raquo; ActiveMQ使用笔记（三）ActiveMQ消息发送与接收 评论 Feed" href="http://www.huaishao8.com/config/activemq/143.html/feed" />
+<link rel='stylesheet' id='crayon-css'  href='http://www.huaishao8.com/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-classic-css'  href='http://www.huaishao8.com/wp-content/plugins/crayon-syntax-highlighter/themes/classic/classic.css?ver=2.3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-courier-new-css'  href='http://www.huaishao8.com/wp-content/plugins/crayon-syntax-highlighter/fonts/courier-new.css?ver=2.3.1' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/jquery/jquery.js?ver=1.8.3'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var quicktagsL10n = {"wordLookup":"\u8f93\u5165\u5173\u952e\u8bcd\u4ee5\u67e5\u8be2\uff1a","dictionaryLookup":"\u67e5\u5b57\u5178","lookup":"\u67e5\u9605","closeAllOpenTags":"\u5173\u95ed\u6240\u6709\u6253\u5f00\u7684\u6807\u7b7e","closeTags":"\u5173\u95ed\u6807\u7b7e","enterURL":"\u8f93\u5165 URL","enterImageURL":"\u8f93\u5165\u56fe\u50cf URL","enterImageDescription":"\u4e3a\u56fe\u50cf\u8f93\u5165\u63cf\u8ff0","fullscreen":"\u5168\u5c4f","toggleFullscreen":"\u5207\u6362\u5168\u5c4f\u6a21\u5f0f","textdirection":"\u6587\u672c\u65b9\u5411","toggleTextdirection":"\u5207\u6362\u7f16\u8f91\u5668\u6587\u672c\u4e66\u5199\u65b9\u5411"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/quicktags.min.js?ver=3.5.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.3.1","is_admin":"0","ajaxurl":"http:\/\/www.huaishao8.com\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"\u4f7f\u7528 %s \u590d\u5236\uff0c\u4f7f\u7528 %s \u7c98\u8d34\u3002","minimize":"Click To Expand Code"};
+var CrayonTagEditorSettings = {"home_url":"http:\/\/www.huaishao8.com","css":"crayon-te","css_selected":"crayon-selected","code_css":"#crayon-code","url_css":"#crayon-url","url_info_css":"#crayon-te-url-info","lang_css":"#crayon-lang","title_css":"#crayon-title","mark_css":"#crayon-mark","range_css":"#crayon-range","inline_css":"crayon-inline","inline_hide_css":"crayon-hide-inline","inline_hide_only_css":"crayon-hide-inline-only","hl_css":"#crayon-highlight","switch_html":"#content-html","switch_tmce":"#content-tmce","tinymce_button":"a.mce_crayon_tinymce","submit_css":"#crayon-te-ok","cancel_css":"#crayon-te-cancel","content_css":"#crayon-te-content","dialog_title_css":"#crayon-te-title","submit_wrapper_css":"#crayon-te-submit-wrapper","data_value":"data-value","attr_sep":":","css_sep":"_","fallback_lang":"java","dialog_title_add":"\u63d2\u5165\u4ee3\u7801\u9ad8\u4eae","dialog_title_edit":"\u7f16\u8f91\u4ee3\u7801\u9ad8\u4eae","submit_add":"\u63d2\u5165","submit_edit":"\u4fdd\u5b58","bar":"#crayon-te-bar","bar_content":"#crayon-te-bar-content","extensions":{"scpt":"applescript","applescript":"applescript","swf":"as","fla":"as","cs":"c#","h":"c++","hh":"c++","hpp":"c++","hxx":"c++","h++":"c++","cc":"c++","cpp":"c++","cxx":"c++","c++":"c++","pas":"delphi","java":"java","class":"java","jar":"java","mv":"miva","mvc":"miva","mvt":"miva","m":"objc","mm":"objc","pl":"perl","py":"python","pyw":"python","pyc":"python","pyo":"python","pyd":"python","rb":"ruby","rbx":"ruby","rhtml":"ruby","vbs":"vb"}};
+var CrayonSyntaxSettings = {"version":"2.3.1","is_admin":"0","ajaxurl":"http:\/\/www.huaishao8.com\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"\u4f7f\u7528 %s \u590d\u5236\uff0c\u4f7f\u7528 %s \u7c98\u8d34\u3002","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.te.min.js?ver=2.3.1'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/comment-reply.min.js?ver=3.5.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.huaishao8.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.huaishao8.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='ActiveMQ使用笔记（二）ActiveMQ消息持久化(3)' href='http://www.huaishao8.com/config/activemq/135.html' />
+<link rel='next' title='ActiveMQ使用笔记（四）ActiveMQ配置安全性' href='http://www.huaishao8.com/config/activemq/150.html' />
+<meta name="generator" content="WordPress 3.5.2" />
+<link rel='canonical' href='http://www.huaishao8.com/config/activemq/143.html' />
+<link rel='shortlink' href='http://www.huaishao8.com/?p=143' />
+<style type="text/css" media="screen">#wp-admin-bar-user-info .avatar-64 {width:64px}</style>
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+</head>
+<body class="single single-post postid-143 single-format-standard" id="body" >
+<div id="top-bar"></div><div id="wrapper">
+	<div id="header"></div><div id="main">
+	  <div id="content">
+			<div class="post-143 post type-post status-publish format-standard hentry category-activemq category-config tag-activemq" id="post-143">
+			<h2 class="post_title_h2"><a href="http://www.huaishao8.com/config/activemq/143.html">ActiveMQ使用笔记（三）ActiveMQ消息发送与接收</a></h2>
+			<div class="post_content">
+				<p>配置完了持久化之后，我们就可以使用代码来发送和接收ActiveMQ中的消息了，我这里配置的持久化是KahaDB。<br />
+需要导入的jar包：<br />
+<a href="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_004.gif" ><img class="alignnone size-full wp-image-144 lh_lazyimg" title="activemq_004" src="http://www.huaishao8.com/wp-content/plugins/images-lazyload-and-slideshow/blank_1x1.gif" file="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_004.gif" alt="activemq所需的jar包" width="186" height="64" /><noscript><img class="alignnone size-full wp-image-144" title="activemq_004" src="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_004.gif" alt="activemq所需的jar包" width="186" height="64" /></noscript></a><br />
+一段发送消息的代码：</p><!-- Crayon Syntax Highlighter v2.3.1 -->
+
+		<div id="crayon-520f79788a93e076090403" class="crayon-syntax crayon-theme-classic crayon-font-courier-new crayon-os-pc print-yes" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+		
+			<div class="crayon-toolbar" data-settings=" show" style=""><span class="crayon-title"></span>
+			<div class="crayon-tools" style=""><div class="crayon-button crayon-nums-button" title="切换显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div><span class="crayon-language">Java</span></div></div>
+			<div class="crayon-info" style=""></div>
+			<div class="crayon-plain-wrap"><textarea wrap="off" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; ">
+    public static void send(){
+	try {
+            // 创建一个连接工厂
+            String url = "tcp://localhost:61616";
+            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+            // 设置用户名和密码，这个用户名和密码在conf目录下的credentials.properties文件中，也可以在activemq.xml中配置
+            connectionFactory.setUserName("system");
+            connectionFactory.setPassword("manager");
+            // 创建连接
+            Connection connection = connectionFactory.createConnection();
+            connection.start();
+            // 创建Session，参数解释：
+            // 第一个参数是否使用事务:当消息发送者向消息提供者（即消息代理）发送消息时，消息发送者等待消息代理的确认，没有回应则抛出异常，消息发送程序负责处理这个错误。
+            // 第二个参数消息的确认模式：
+            // AUTO_ACKNOWLEDGE ： 指定消息提供者在每次收到消息时自动发送确认。消息只向目标发送一次，但传输过程中可能因为错误而丢失消息。
+            // CLIENT_ACKNOWLEDGE ： 由消息接收者确认收到消息，通过调用消息的acknowledge()方法（会通知消息提供者收到了消息）
+            // DUPS_OK_ACKNOWLEDGE ： 指定消息提供者在消息接收者没有确认发送时重新发送消息（这种确认模式不在乎接收者收到重复的消息）。
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            // 创建目标，就创建主题也可以创建队列
+            Destination destination = session.createQueue("test");
+            // 创建消息生产者
+            MessageProducer producer = session.createProducer(destination);
+            // 设置持久化，DeliveryMode.PERSISTENT和DeliveryMode.NON_PERSISTENT
+            producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+            // 创建消息
+            String text = "Hello ActiveMQ!";
+            TextMessage message = session.createTextMessage(text);
+            // 发送消息到ActiveMQ
+            producer.send(message);
+            System.out.println("Message is sent!");
+            // 关闭资源
+            session.close();
+            connection.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style=""><div class="crayon-num" data-line="crayon-520f79788a93e076090403-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-2">2</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-4">4</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-6">6</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-8">8</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-10">10</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-12">12</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-14">14</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-16">16</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-18">18</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-20">20</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-22">22</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-24">24</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-26">26</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-28">28</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-30">30</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-32">32</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-34">34</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-35">35</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-36">36</div><div class="crayon-num" data-line="crayon-520f79788a93e076090403-37">37</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a93e076090403-38">38</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-520f79788a93e076090403-1"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">send</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-2"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">try</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 创建一个连接工厂</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">String</span><span class="crayon-h"> </span><span class="crayon-v">url</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">"tcp://localhost:61616"</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">ActiveMQConnectionFactory </span><span class="crayon-v">connectionFactory</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">ActiveMQConnectionFactory</span><span class="crayon-sy">(</span><span class="crayon-i">url</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 设置用户名和密码，这个用户名和密码在conf目录下的credentials.properties文件中，也可以在activemq.xml中配置</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">connectionFactory</span><span class="crayon-sy">.</span><span class="crayon-e">setUserName</span><span class="crayon-sy">(</span><span class="crayon-s">"system"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">connectionFactory</span><span class="crayon-sy">.</span><span class="crayon-e">setPassword</span><span class="crayon-sy">(</span><span class="crayon-s">"manager"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 创建连接</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Connection </span><span class="crayon-v">connection</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">connectionFactory</span><span class="crayon-sy">.</span><span class="crayon-e">createConnection</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">connection</span><span class="crayon-sy">.</span><span class="crayon-e">start</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 创建Session，参数解释：</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 第一个参数是否使用事务:当消息发送者向消息提供者（即消息代理）发送消息时，消息发送者等待消息代理的确认，没有回应则抛出异常，消息发送程序负责处理这个错误。</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 第二个参数消息的确认模式：</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// AUTO_ACKNOWLEDGE ： 指定消息提供者在每次收到消息时自动发送确认。消息只向目标发送一次，但传输过程中可能因为错误而丢失消息。</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// CLIENT_ACKNOWLEDGE ： 由消息接收者确认收到消息，通过调用消息的acknowledge()方法（会通知消息提供者收到了消息）</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// DUPS_OK_ACKNOWLEDGE ： 指定消息提供者在消息接收者没有确认发送时重新发送消息（这种确认模式不在乎接收者收到重复的消息）。</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Session </span><span class="crayon-v">session</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">connection</span><span class="crayon-sy">.</span><span class="crayon-e">createSession</span><span class="crayon-sy">(</span><span class="crayon-t">false</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">Session</span><span class="crayon-sy">.</span><span class="crayon-i">AUTO_ACKNOWLEDGE</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 创建目标，就创建主题也可以创建队列</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Destination </span><span class="crayon-v">destination</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">session</span><span class="crayon-sy">.</span><span class="crayon-e">createQueue</span><span class="crayon-sy">(</span><span class="crayon-s">"test"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 创建消息生产者</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">MessageProducer </span><span class="crayon-v">producer</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">session</span><span class="crayon-sy">.</span><span class="crayon-e">createProducer</span><span class="crayon-sy">(</span><span class="crayon-i">destination</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 设置持久化，DeliveryMode.PERSISTENT和DeliveryMode.NON_PERSISTENT</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">producer</span><span class="crayon-sy">.</span><span class="crayon-e">setDeliveryMode</span><span class="crayon-sy">(</span><span class="crayon-v">DeliveryMode</span><span class="crayon-sy">.</span><span class="crayon-i">PERSISTENT</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 创建消息</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">String</span><span class="crayon-h"> </span><span class="crayon-v">text</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">"Hello ActiveMQ!"</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">TextMessage </span><span class="crayon-v">message</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">session</span><span class="crayon-sy">.</span><span class="crayon-e">createTextMessage</span><span class="crayon-sy">(</span><span class="crayon-i">text</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-28"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 发送消息到ActiveMQ</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">producer</span><span class="crayon-sy">.</span><span class="crayon-e">send</span><span class="crayon-sy">(</span><span class="crayon-i">message</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">System</span><span class="crayon-sy">.</span><span class="crayon-v">out</span><span class="crayon-sy">.</span><span class="crayon-e">println</span><span class="crayon-sy">(</span><span class="crayon-s">"Message is sent!"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-31"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 关闭资源</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">session</span><span class="crayon-sy">.</span><span class="crayon-e">close</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">connection</span><span class="crayon-sy">.</span><span class="crayon-e">close</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-34"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-35"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">catch</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-i">Exception</span><span class="crayon-h"> </span><span class="crayon-i">e</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-36"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">e</span><span class="crayon-sy">.</span><span class="crayon-e">printStackTrace</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a93e076090403-37"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a93e076090403-38"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0089 seconds] -->
+<p>执行了上面的发送方法之后，在ActiveMQ的监视控制可以看到有一个test队列，并且有一条消息，如图：<br />
+<a href="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_005.gif" ><img class="alignnone size-full wp-image-146 lh_lazyimg" title="activemq_005" src="http://www.huaishao8.com/wp-content/plugins/images-lazyload-and-slideshow/blank_1x1.gif" file="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_005.gif" alt="" width="964" height="130" /><noscript><img class="alignnone size-full wp-image-146" title="activemq_005" src="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_005.gif" alt="" width="964" height="130" /></noscript></a><br />
+点击队列名test，然后点击消息ID即可查看消息内容，如图：<br />
+<a href="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_006.gif" ><img class="alignnone size-full wp-image-147 lh_lazyimg" title="activemq_006" src="http://www.huaishao8.com/wp-content/plugins/images-lazyload-and-slideshow/blank_1x1.gif" file="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_006.gif" alt="" width="826" height="519" /><noscript><img class="alignnone size-full wp-image-147" title="activemq_006" src="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_006.gif" alt="" width="826" height="519" /></noscript></a><br />
+如果DeliveryMode没有设置或者设置为NON_PERSISTENT，那么重启MQ之后消息就会丢失。<br />
+一段接收消息的代码：</p><!-- Crayon Syntax Highlighter v2.3.1 -->
+
+		<div id="crayon-520f79788a94f175433233" class="crayon-syntax crayon-theme-classic crayon-font-courier-new crayon-os-pc print-yes" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+		
+			<div class="crayon-toolbar" data-settings=" show" style=""><span class="crayon-title"></span>
+			<div class="crayon-tools" style=""><div class="crayon-button crayon-nums-button" title="切换显示行编号"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="纯文本显示代码"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="切换自动换行"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="在新窗口中显示代码"><div class="crayon-button-icon"></div></div><span class="crayon-language">Java</span></div></div>
+			<div class="crayon-info" style=""></div>
+			<div class="crayon-plain-wrap"><textarea wrap="off" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; ">
+public static void get(){
+	try{
+	    String url = "tcp://localhost:61616";
+	    ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+	    // 设置用户名和密码，这个用户名和密码在conf目录下的credentials.properties文件中，也可以在activemq.xml中配置
+	    connectionFactory.setUserName("system");
+	    connectionFactory.setPassword("manager");
+	    // 创建连接
+	    Connection connection = connectionFactory.createConnection();
+	    connection.start();
+	    // 创建Session
+	    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+	    // 创建目标，就创建主题也可以创建队列
+	    Destination destination = session.createQueue("test");
+	    // 创建消息消费者
+	    MessageConsumer consumer = session.createConsumer(destination);
+	    // 接收消息，参数：接收消息的超时时间，为0的话则不超时，receive返回下一个消息，但是超时了或者消费者被关闭，返回null
+	    Message message = consumer.receive(1000);
+	    if (message instanceof TextMessage) {
+	        TextMessage textMessage = (TextMessage) message;
+	        String text = textMessage.getText();
+	        System.out.println("Received: " + text);
+	    } else {
+	        System.out.println("Received: " + message);
+	    }
+	    consumer.close();
+	    session.close();
+	    connection.close();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+}</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style=""><div class="crayon-num" data-line="crayon-520f79788a94f175433233-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-2">2</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-4">4</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-6">6</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-8">8</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-10">10</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-12">12</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-14">14</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-16">16</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-18">18</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-20">20</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-22">22</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-24">24</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-26">26</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-28">28</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-30">30</div><div class="crayon-num" data-line="crayon-520f79788a94f175433233-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-520f79788a94f175433233-32">32</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-520f79788a94f175433233-1"><span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">get</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-2"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">try</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">String</span><span class="crayon-h"> </span><span class="crayon-v">url</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">"tcp://localhost:61616"</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">ActiveMQConnectionFactory </span><span class="crayon-v">connectionFactory</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">ActiveMQConnectionFactory</span><span class="crayon-sy">(</span><span class="crayon-i">url</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 设置用户名和密码，这个用户名和密码在conf目录下的credentials.properties文件中，也可以在activemq.xml中配置</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">connectionFactory</span><span class="crayon-sy">.</span><span class="crayon-e">setUserName</span><span class="crayon-sy">(</span><span class="crayon-s">"system"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">connectionFactory</span><span class="crayon-sy">.</span><span class="crayon-e">setPassword</span><span class="crayon-sy">(</span><span class="crayon-s">"manager"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 创建连接</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Connection </span><span class="crayon-v">connection</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">connectionFactory</span><span class="crayon-sy">.</span><span class="crayon-e">createConnection</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">connection</span><span class="crayon-sy">.</span><span class="crayon-e">start</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 创建Session</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Session </span><span class="crayon-v">session</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">connection</span><span class="crayon-sy">.</span><span class="crayon-e">createSession</span><span class="crayon-sy">(</span><span class="crayon-t">false</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">Session</span><span class="crayon-sy">.</span><span class="crayon-i">AUTO_ACKNOWLEDGE</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 创建目标，就创建主题也可以创建队列</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Destination </span><span class="crayon-v">destination</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">session</span><span class="crayon-sy">.</span><span class="crayon-e">createQueue</span><span class="crayon-sy">(</span><span class="crayon-s">"test"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 创建消息消费者</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">MessageConsumer </span><span class="crayon-v">consumer</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">session</span><span class="crayon-sy">.</span><span class="crayon-e">createConsumer</span><span class="crayon-sy">(</span><span class="crayon-i">destination</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// 接收消息，参数：接收消息的超时时间，为0的话则不超时，receive返回下一个消息，但是超时了或者消费者被关闭，返回null</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Message </span><span class="crayon-v">message</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">consumer</span><span class="crayon-sy">.</span><span class="crayon-e">receive</span><span class="crayon-sy">(</span><span class="crayon-cn">1000</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-e">message </span><span class="crayon-r">instanceof</span><span class="crayon-h"> </span><span class="crayon-i">TextMessage</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">TextMessage </span><span class="crayon-v">textMessage</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-i">TextMessage</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-i">message</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">String</span><span class="crayon-h"> </span><span class="crayon-v">text</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">textMessage</span><span class="crayon-sy">.</span><span class="crayon-e">getText</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">System</span><span class="crayon-sy">.</span><span class="crayon-v">out</span><span class="crayon-sy">.</span><span class="crayon-e">println</span><span class="crayon-sy">(</span><span class="crayon-s">"Received: "</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-i">text</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span><span class="crayon-h"> </span><span class="crayon-st">else</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">System</span><span class="crayon-sy">.</span><span class="crayon-v">out</span><span class="crayon-sy">.</span><span class="crayon-e">println</span><span class="crayon-sy">(</span><span class="crayon-s">"Received: "</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-i">message</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">consumer</span><span class="crayon-sy">.</span><span class="crayon-e">close</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">session</span><span class="crayon-sy">.</span><span class="crayon-e">close</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-28"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">connection</span><span class="crayon-sy">.</span><span class="crayon-e">close</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span><span class="crayon-h"> </span><span class="crayon-st">catch</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-i">Exception</span><span class="crayon-h"> </span><span class="crayon-i">e</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">e</span><span class="crayon-sy">.</span><span class="crayon-e">printStackTrace</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-520f79788a94f175433233-31"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-520f79788a94f175433233-32"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0091 seconds] -->
+<p>执行了上面的接收方法之后，在ActiveMQ的监视控制可以看到test队列的消息已经被消费了，如图：<br />
+<a href="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_007.gif" ><img class="alignnone size-full wp-image-148 lh_lazyimg" title="activemq_007" src="http://www.huaishao8.com/wp-content/plugins/images-lazyload-and-slideshow/blank_1x1.gif" file="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_007.gif" alt="" width="968" height="141" /><noscript><img class="alignnone size-full wp-image-148" title="activemq_007" src="http://www.huaishao8.com/wp-content/uploads/2012/04/activemq_007.gif" alt="" width="968" height="141" /></noscript></a><br />
+这里的代码只是测试用，在正式开发中一般与Spring结合使用jmsTemplate来发送消息，现实JMS的MessageListener来监听消息。</p>
+			  </div>
+		</div>
+	  </div>
+	  <!-- #content -->
+	<div id="sidebar" class="widget-area">
+		<ul class="xoxo">
+		<li id="calendar-2" class="widget widget_calendar">
+<h3 class="widget_title">万年历</h3>
+<div id="calendar_wrap"></div></li>
+		<li id="meta-3" class="widget widget_meta">
+		  <ul>
+		    <li></li>
+	      </ul>
+		</li>
+<li id="linkcat-9" class="widget widget_links"></li>
+
+<li id="wp-connect-login-widget-2" class="widget widget_wp_connect_login">
+  <div class="connectBox2">
+    <script type='text/javascript' charset='utf-8' src='http://open.denglu.cc/connect/logincode?appid=86344denDXE3eHaU6E5o5OviwEgTwA&v=1.0.2&widget=5&styletype=1&size=auto_28'></script>
+  </div>
+</li>
+		</ul>
+	</div><!-- #sidebar --><div class="clear"></div>
+</div><!-- #main -->
+  <div id="footer">
+		<div id="copyright">
+			<div id="site-info"></div>
+	  </div><!-- #copyright -->
+	</div>
+	<!-- #footer -->
+</div><!-- #wrapper -->
+<div id="bottom-bar"></div>
+<!-- lazyload images -->
+<style type="text/css">
+.lh_lazyimg{
+opacity:0.2;filter:alpha(opacity=20);
+background:url(http://www.huaishao8.com/wp-content/plugins/images-lazyload-and-slideshow/loading.gif) no-repeat center center;
+}
+</style>
+<!-- lazyload images end -->
+
+<!-- case nojs, hidden lazyload images -->
+<noscript>
+<style type="text/css">
+.lh_lazyimg{display:none;}
+</style>
+</noscript>
+<!-- case nojs, hidden lazyload images end -->
+
+<!-- lazyload -->
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	function lazyload(){
+		$("img.lh_lazyimg").each(function(){
+			_self = $(this);
+			if (_self.attr("lazyloadpass")===undefined
+					&& _self.attr("file")
+					&& (!_self.attr("src")
+							|| (_self.attr("src") && _self.attr("file")!=_self.attr("src"))
+						)
+				) {
+				if((_self.offset().top) < ($(window).height()+$(document).scrollTop()+200)
+						&& (_self.offset().left) < ($(window).width()+$(document).scrollLeft()+200)
+					) {
+					_self.attr("src",_self.attr("file"));
+					_self.attr("lazyloadpass", "1");
+					_self.animate({opacity:1}, 400);
+				}
+			}
+		});
+	}
+	lazyload();
+
+	var itv;
+	$(window).scroll(function(){clearTimeout(itv);itv=setTimeout(lazyload,400);});
+	$(window).resize(function(){clearTimeout(itv);itv=setTimeout(lazyload,400);});
+});
+</script>
+<!-- lazyload end -->
+
+<!-- fancybox -->
+<script type="text/javascript" src="http://www.huaishao8.com/wp-content/plugins/images-lazyload-and-slideshow/fancybox/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+<script type="text/javascript" src="http://www.huaishao8.com/wp-content/plugins/images-lazyload-and-slideshow/fancybox/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="http://www.huaishao8.com/wp-content/plugins/images-lazyload-and-slideshow/fancybox/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+<script type="text/javascript">
+jQuery(function($){
+	$("#content img,.content img,.archive img,.post img,.page img").each(function(i){
+		_self = $(this);
+
+		selfWidth = _self.attr("width")?_self.attr("width"):_self.width();
+		selfHeight = _self.attr("height")?_self.attr("height"):_self.height();
+		if ((selfWidth && selfWidth<50)
+				|| (selfHeight && selfHeight<50)) {
+			return;
+		}
+
+		if (! this.parentNode.href) {
+			imgsrc = "";
+
+			if (_self.attr("src")) {
+				imgsrc = _self.attr("src");
+			}
+			if (_self.attr("file")) {
+				imgsrc = _self.attr("file");
+			} else if (_self.attr("original")) {
+				imgsrc = _self.attr("original");
+			}
+
+			if (imgsrc) {
+				_self.addClass("slideshow_imgs");
+				_self.wrap("<a href='"+imgsrc+"' rel='fancygallery2'></a>");
+			}
+		} else {
+			aHref = this.parentNode.href;
+			var b=/.+(\.jpg)|(\.jpeg)|(\.png)|(\.gif)|(\.bmp)/i;
+			if (! b.test(aHref)) {
+				return;
+			}
+
+			_self.addClass("slideshow_imgs");
+
+			_parentA = $(this.parentNode);
+			rel = _parentA.attr("rel");
+			if (! rel) {
+				rel = "";
+			}
+			if (rel.indexOf("fancygallery") != 0) {
+				_parentA.attr("rel","fancygallery1");
+			}
+		}
+	});
+
+	$("a[rel^=fancygallery]").fancybox({
+		'overlayShow'		: true,
+		'hideOnContentClick'		: false,
+		'transitionIn'		: 'elastic',
+		'transitionOut'		: 'elastic',
+		'titlePosition' 	: 'over',
+		'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+			return '<span id="fancybox-title-over">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+		}
+	});
+});
+</script>
+<!-- fancybox end -->
+<link rel='stylesheet' id='wp-jquery-ui-dialog-css'  href='http://www.huaishao8.com/wp-includes/css/jquery-ui-dialog.min.css?ver=3.5.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.huaishao8.com/wp-content/themes/dot-b/all.js'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wordCountL10n = {"type":"c"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-admin/js/word-count.min.js?ver=3.5.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var userSettings = {"url":"\/","uid":"0","time":"1376745848"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/utils.min.js?ver=3.5.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-admin/js/editor.min.js?ver=3.5.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/jquery/ui/jquery.ui.core.min.js?ver=1.9.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/jquery/ui/jquery.ui.widget.min.js?ver=1.9.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/jquery/ui/jquery.ui.mouse.min.js?ver=1.9.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/jquery/ui/jquery.ui.resizable.min.js?ver=1.9.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/jquery/ui/jquery.ui.draggable.min.js?ver=1.9.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/jquery/ui/jquery.ui.button.min.js?ver=1.9.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/jquery/ui/jquery.ui.position.min.js?ver=1.9.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/jquery/ui/jquery.ui.dialog.min.js?ver=1.9.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/tinymce/plugins/wpdialogs/js/wpdialog.min.js?ver=3.5.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wpLinkL10n = {"title":"\u63d2\u5165\u6216\u7f16\u8f91\u94fe\u63a5","update":"\u66f4\u65b0","save":"\u6dfb\u52a0\u94fe\u63a5","noTitle":"(\u65e0\u6807\u9898)","noMatchesFound":"\u627e\u4e0d\u5230\u7b26\u5408\u6761\u4ef6\u7684\u9879\u76ee\u3002"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/wplink.min.js?ver=3.5.2'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/tinymce/plugins/wpdialogs/js/popup.min.js?ver=3.5.2'></script>
+
+	<script type="text/javascript">
+		tinyMCEPreInit = {
+			base : "http://www.huaishao8.com/wp-includes/js/tinymce",
+			suffix : "",
+			query : "ver=358-24486",
+			mceInit : {'comment':{mode:"exact",width:"100%",theme:"advanced",skin:"wp_theme",language:"zh",spellchecker_languages:"+英语=en,丹麦语=da,荷兰语=nl,芬兰语=fi,法语=fr,德语=de,意大利语=it,波兰语=pl,葡萄牙语=pt,西班牙语=es,瑞典语=sv",theme_advanced_toolbar_location:"top",theme_advanced_toolbar_align:"left",theme_advanced_statusbar_location:"bottom",theme_advanced_resizing:true,theme_advanced_resize_horizontal:false,dialog_type:"modal",formats:{
+						alignleft : [
+							{selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li', styles : {textAlign : 'left'}},
+							{selector : 'img,table', classes : 'alignleft'}
+						],
+						aligncenter : [
+							{selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li', styles : {textAlign : 'center'}},
+							{selector : 'img,table', classes : 'aligncenter'}
+						],
+						alignright : [
+							{selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li', styles : {textAlign : 'right'}},
+							{selector : 'img,table', classes : 'alignright'}
+						],
+						strikethrough : {inline : 'del'}
+					},relative_urls:false,remove_script_host:false,convert_urls:false,remove_linebreaks:true,gecko_spellcheck:true,fix_list_elements:true,keep_styles:false,entities:"38,amp,60,lt,62,gt",accessibility_focus:true,media_strict:false,paste_remove_styles:true,paste_remove_spans:true,paste_strip_class_attributes:"all",paste_text_use_dialog:true,webkit_fake_resize:false,spellchecker_rpc_url:"http://www.huaishao8.com/wp-includes/js/tinymce/plugins/spellchecker/rpc.php",schema:"html5",wpeditimage_disable_captions:false,wp_fullscreen_content_css:"http://www.huaishao8.com/wp-includes/js/tinymce/plugins/wpfullscreen/css/wp-fullscreen.css",plugins:"inlinepopups,spellchecker,tabfocus,paste,media,fullscreen,wordpress,wpeditimage,wpgallery,wplink,wpdialogs,-crayon_tinymce",elements:"comment",wpautop:true,apply_source_formatting:false,theme_advanced_buttons1:"bold,italic,strikethrough,bullist,numlist,blockquote,justifyleft,justifycenter,justifyright,link,unlink,wp_more,spellchecker,fullscreen,wp_adv,separator,crayon_tinymce",theme_advanced_buttons2:"formatselect,underline,justifyfull,forecolor,pastetext,pasteword,removeformat,charmap,outdent,indent,undo,redo,wp_help",theme_advanced_buttons3:"",theme_advanced_buttons4:"",tabfocus_elements:":prev,:next",body_class:"comment post-type-post",theme_advanced_resizing_use_cookie:true,extended_valid_elements:",pre[*],code[*],iframe[*]"}},
+			qtInit : {'comment':{id:"comment",buttons:"strong,em,link,block,del,ins,img,ul,ol,li,code,more,spell,close"}},
+			ref : {plugins:"inlinepopups,spellchecker,tabfocus,paste,media,fullscreen,wordpress,wpeditimage,wpgallery,wplink,wpdialogs,-crayon_tinymce",theme:"advanced",language:"zh"},
+			load_ext : function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+		};
+	</script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/tinymce/tiny_mce.js?ver=358-24486'></script>
+<script type='text/javascript' src='http://www.huaishao8.com/wp-includes/js/tinymce/wp-tinymce-schema.js?ver=358-24486'></script>
+<script type='text/javascript'>
+tinyMCE.addI18n({zh:{"common":{"edit_confirm":"\u60a8\u5e0c\u671b\u5728\u8fd9\u4e2a\u6587\u672c\u533a\u57df\u4e2d\u4f7f\u7528\u6240\u89c1\u5373\u6240\u5f97\u7f16\u8f91\u6a21\u5f0f\u5417\uff1f","apply":"\u5e94\u7528","insert":"\u63d2\u5165","update":"\u66f4\u65b0","cancel":"\u53d6\u6d88","close":"\u5173\u95ed","browse":"\u6d4f\u89c8","class_name":"\u7c7b","not_set":"-- \u672a\u8bbe\u7f6e --","clipboard_msg":"\u590d\u5236\u3001\u526a\u5207\u548c\u7c98\u5e16\u5728 Mozilla \u548c Firefox \u4e2d\u65e0\u6548\u3002","clipboard_no_support":"\u76ee\u524d\u4e0d\u652f\u6301\u60a8\u7684\u6d4f\u89c8\u5668\uff0c\u8bf7\u6539\u7528\u952e\u76d8\u5feb\u6377\u952e\u3002","popup_blocked":"\u62b1\u6b49\uff0c\u60a8\u7684\u5f39\u51fa\u7a97\u53e3\u963b\u6b62\u5668\u963b\u6b62\u4e86\u7a0b\u5e8f\u529f\u80fd\u3002\u4e3a\u4e86\u4f7f\u7528\u8fd9\u4e2a\u5de5\u5177\u7684\u6240\u6709\u529f\u80fd\uff0c\u60a8\u9700\u8981\u5728\u8fd9\u4e2a\u7ad9\u70b9\u4e0a\u7981\u7528\u963b\u6b62\u5668\u3002","invalid_data":"\u9519\u8bef\uff1a\u60a8\u8f93\u5165\u7684\u503c\u65e0\u6548\u3002\u8bf7\u68c0\u67e5\u7ea2\u8272\u7684\u680f\u76ee\u3002","invalid_data_number":"{#field} \u4e2d\u9700\u8981\u586b\u5199\u6570\u5b57","invalid_data_min":"{#field} \u7684\u503c\u5fc5\u987b\u5927\u4e8e {#min}","invalid_data_size":"{#field} \u5fc5\u987b\u586b\u5165\u6570\u5b57\u6216\u767e\u5206\u6bd4","more_colors":"\u66f4\u591a\u989c\u8272"},"colors":{"000000":"\u9ed1\u8272","993300":"\u7126\u6a59","333300":"\u6df1\u6a44\u6984","003300":"\u58a8\u7eff","003366":"\u6df1\u84dd","000080":"\u6df1\u84dd","333399":"\u975b\u84dd","333333":"\u7279\u6df1\u7070","800000":"\u7d2b\u8910","FF6600":"\u6a59\u8272","808000":"\u6a44\u6984\u7eff","008000":"\u7eff\u8272","008080":"\u84dd\u7eff","0000FF":"\u84dd\u8272","666699":"\u7070\u84dd","808080":"\u7070\u8272","FF0000":"\u7ea2\u8272","FF9900":"\u7425\u73c0","99CC00":"\u9ec4\u7eff","339966":"\u6d77\u7eff","33CCCC":"\u9752\u7eff","3366FF":"\u54c1\u84dd","800080":"\u7d2b\u8272","999999":"\u4e2d\u5ea6\u7070","FF00FF":"\u7d2b\u7ea2","FFCC00":"\u91d1\u9ec4","FFFF00":"\u9ec4\u8272","00FF00":"\u9178\u6a59","00FFFF":"\u6e56\u7eff","00CCFF":"\u5929\u84dd","993366":"\u68d5\u8272","C0C0C0":"\u94f6\u8272","FF99CC":"\u7c89\u8272","FFCC99":"\u6843\u8272","FFFF99":"\u6d45\u9ec4","CCFFCC":"\u6de1\u7eff","CCFFFF":"\u6de1\u84dd","99CCFF":"\u6de1\u84dd","CC99FF":"\u7d2b\u7ea2","FFFFFF":"\u767d\u8272"},"contextmenu":{"align":"\u5bf9\u9f50\u65b9\u5f0f","left":"\u5de6","center":"\u4e2d","right":"\u53f3","full":"\u5360\u6ee1"},"insertdatetime":{"date_fmt":"%Y-%m-%d","time_fmt":"%H:%M:%S","insertdate_desc":"\u63d2\u5165\u65e5\u671f","inserttime_desc":"\u63d2\u5165\u65f6\u95f4","months_long":"\u4e00\u6708,\u4e8c\u6708,\u4e09\u6708,\u56db\u6708,\u4e94\u6708,\u516d\u6708,\u4e03\u6708,\u516b\u6708,\u4e5d\u6708,\u5341\u6708,\u5341\u4e00\u6708,\u5341\u4e8c\u6708","months_short":"\u4e00,\u4e8c,\u4e09,\u56db,\u4e94,\u516d,\u4e03,\u516b,\u4e5d,\u5341,\u5341\u4e00,\u5341\u4e8c","day_long":"\u661f\u671f\u65e5,\u661f\u671f\u4e00,\u661f\u671f\u4e8c,\u661f\u671f\u4e09,\u661f\u671f\u56db,\u661f\u671f\u4e94,\u661f\u671f\u516d","day_short":"\u5468\u65e5,\u5468\u4e00,\u5468\u4e8c,\u5468\u4e09,\u5468\u56db,\u5468\u4e94,\u5468\u516d"},"print":{"print_desc":"\u6253\u5370"},"preview":{"preview_desc":"\u9884\u89c8"},"directionality":{"ltr_desc":"\u4ece\u5de6\u5230\u53f3","rtl_desc":"\u4ece\u53f3\u5230\u5de6"},"layer":{"insertlayer_desc":"\u63d2\u5165\u65b0\u5c42","forward_desc":"\u5411\u524d\u79fb\u52a8","backward_desc":"\u5411\u540e\u79fb\u52a8","absolute_desc":"\u5207\u6362\u7edd\u5bf9\u5b9a\u4f4d\u72b6\u6001","content":"\u65b0\u5c42..."},"save":{"save_desc":"\u4fdd\u5b58","cancel_desc":"\u53d6\u6d88\u6240\u6709\u66f4\u6539"},"nonbreaking":{"nonbreaking_desc":"\u63d2\u5165\u4e0d\u622a\u65ad\u7a7a\u767d\u7b26"},"iespell":{"iespell_desc":"\u6267\u884c\u62fc\u5199\u68c0\u67e5","download":"\u6ca1\u6709\u68c0\u6d4b\u5230 ieSpell\u3002\u662f\u5426\u7acb\u523b\u5b89\u88c5\uff1f"},"advhr":{"advhr_desc":"\u6c34\u5e73\u6807\u5c3a"},"emotions":{"emotions_desc":"\u8868\u60c5"},"searchreplace":{"search_desc":"\u67e5\u627e","replace_desc":"\u67e5\u627e\u6216\u66ff\u6362"},"advimage":{"image_desc":"\u63d2\u5165\u6216\u7f16\u8f91\u56fe\u50cf"},"advlink":{"link_desc":"\u63d2\u5165\u6216\u7f16\u8f91\u94fe\u63a5"},"xhtmlxtras":{"cite_desc":"\u5f15\u7528","abbr_desc":"\u7f29\u5199","acronym_desc":"\u9996\u5b57\u6bcd\u7f29\u5199","del_desc":"\u5220\u9664","ins_desc":"\u63d2\u5165","attribs_desc":"\u63d2\u5165\u6216\u7f16\u8f91\u5c5e\u6027"},"style":{"desc":"\u7f16\u8f91 CSS \u6837\u5f0f"},"paste":{"paste_text_desc":"\u4ee5\u7eaf\u6587\u672c\u7c98\u8d34","paste_word_desc":"\u4ece Word \u4e2d\u7c98\u8d34","selectall_desc":"\u5168\u9009","plaintext_mode_sticky":"\u5f53\u524d\u5904\u4e8e\u7eaf\u6587\u672c\u7c98\u8d34\u6a21\u5f0f\u3002\u518d\u6b21\u70b9\u51fb\u4ee5\u5207\u6362\u56de\u5e38\u89c4\u7c98\u8d34\u6a21\u5f0f\u3002\u5728\u60a8\u7c98\u8d34\u4e00\u6b21\u6587\u672c\u4e4b\u540e\u4e5f\u5c06\u81ea\u52a8\u56de\u5230\u5e38\u89c4\u7c98\u8d34\u6a21\u5f0f\u3002","plaintext_mode":"\u5f53\u524d\u5904\u4e8e\u7eaf\u6587\u672c\u7c98\u8d34\u6a21\u5f0f\u3002\u518d\u6b21\u70b9\u51fb\u4ee5\u5207\u6362\u56de\u5e38\u89c4\u7c98\u8d34\u6a21\u5f0f\u3002"},"paste_dlg":{"text_title":"\u4f7f\u7528 Ctrl+V \u4ee5\u5c06\u6587\u672c\u7c98\u8d34\u5230\u7a97\u53e3\u4e2d\u3002","text_linebreaks":"\u4fdd\u7559\u6362\u884c\u7b26","word_title":"\u4f7f\u7528 Ctrl+V \u4ee5\u5c06\u6587\u672c\u7c98\u8d34\u5230\u7a97\u53e3\u4e2d\u3002"},"table":{"desc":"\u63d2\u5165\u65b0\u8868\u683c","row_before_desc":"\u5728\u4e0a\u65b9\u63d2\u5165\u884c","row_after_desc":"\u5728\u4e0b\u65b9\u63d2\u5165\u884c","delete_row_desc":"\u5220\u9664\u884c","col_before_desc":"\u5728\u524d\u65b9\u63d2\u5165\u5217","col_after_desc":"\u5728\u540e\u65b9\u63d2\u5165\u5217","delete_col_desc":"\u5220\u9664\u5217","split_cells_desc":"\u62c6\u5206\u5408\u5e76\u7684\u5355\u5143\u683c","merge_cells_desc":"\u5408\u5e76\u5355\u5143\u683c","row_desc":"\u8868\u683c\u884c\u5c5e\u6027","cell_desc":"\u5355\u5143\u683c\u5c5e\u6027","props_desc":"\u8868\u683c\u5c5e\u6027","paste_row_before_desc":"\u5728\u4e0a\u65b9\u7c98\u8d34\u8868\u683c\u884c","paste_row_after_desc":"\u5728\u4e0b\u65b9\u7c98\u8d34\u8868\u683c\u884c","cut_row_desc":"\u526a\u5207\u8be5\u884c","copy_row_desc":"\u590d\u5236\u8be5\u884c","del":"\u5220\u9664\u8868\u683c","row":"\u884c","col":"\u5217","cell":"\u5355\u5143\u683c"},"autosave":{"unload_msg":"\u79bb\u5f00\u8fd9\u4e2a\u9875\u9762\uff0c\u60a8\u6240\u505a\u7684\u66f4\u6539\u5c06\u4e22\u5931\u3002"},"fullscreen":{"desc":"\u5207\u6362\u5168\u5c4f\u6a21\u5f0f (Alt + Shift + G)"},"media":{"desc":"\u63d2\u5165\u6216\u7f16\u8f91\u5185\u5d4c\u5a92\u4f53","edit":"\u7f16\u8f91\u5185\u5d4c\u5a92\u4f53"},"fullpage":{"desc":"\u6587\u6863\u5c5e\u6027"},"template":{"desc":"\u63d2\u5165\u9884\u8bbe\u6a21\u677f\u5185\u5bb9"},"visualchars":{"desc":"\u53ef\u89c6\u5316\u63a7\u5236\u5b57\u7b26\u5f00\/\u5173\u3002"},"spellchecker":{"desc":"\u5207\u6362\u62fc\u5199\u68c0\u67e5\u5668\u72b6\u6001 (Alt + Shift + N)","menu":"\u62fc\u5199\u68c0\u67e5\u5668\u8bbe\u7f6e","ignore_word":"\u5ffd\u7565\u8be5\u8bcd","ignore_words":"\u5ffd\u7565\u6240\u6709\u8bcd","langs":"\u8bed\u8a00","wait":"\u8bf7\u7a0d\u7b49...","sug":"\u5efa\u8bae","no_sug":"\u65e0\u5efa\u8bae","no_mpell":"\u672a\u53d1\u73b0\u62fc\u5199\u9519\u8bef\u3002","learn_word":"\u8bb0\u4f4f\u8be5\u8bcd"},"pagebreak":{"desc":"\u63d2\u5165\u5206\u9875\u7b26"},"advlist":{"types":"\u7c7b\u578b","def":"\u9ed8\u8ba4","lower_alpha":"\u5c0f\u5199\u82f1\u6587\u5b57\u6bcd","lower_greek":"\u5c0f\u5199\u5e0c\u814a\u5b57\u6bcd","lower_roman":"\u5c0f\u5199\u7f57\u9a6c\u6570\u5b57","upper_alpha":"\u5927\u5199\u82f1\u6587\u5b57\u6bcd","upper_roman":"\u5927\u5199\u7f57\u9a6c\u6570\u5b57","circle":"\u7a7a\u5fc3\u5706","disc":"\u5706\u70b9","square":"\u5b9e\u5fc3\u65b9\u5757"},"aria":{"rich_text_area":"\u5bcc\u6587\u672c\u533a\u57df"},"wordcount":{"words":"\u8bcd\u6570\uff1a"}}});
+tinyMCE.addI18n("zh.advanced", {"style_select":"\u6837\u5f0f","font_size":"\u5b57\u4f53\u5927\u5c0f","fontdefault":"\u5b57\u4f53","block":"\u683c\u5f0f","paragraph":"\u6bb5\u843d","div":"Div","address":"\u5730\u5740","pre":"\u9884\u683c\u5f0f\u5316","h1":"\u4e00\u7ea7\u6807\u9898","h2":"\u4e8c\u7ea7\u6807\u9898","h3":"\u4e09\u7ea7\u6807\u9898","h4":"\u56db\u7ea7\u6807\u9898","h5":"\u4e94\u7ea7\u6807\u9898","h6":"\u516d\u7ea7\u6807\u9898","blockquote":"\u5757\u5f15\u7528","code":"\u4ee3\u7801","samp":"\u4ee3\u7801\u6837\u4f8b","dt":"\u672f\u8bed","dd":"\u672f\u8bed\u63cf\u8ff0","bold_desc":"\u7c97\u4f53 (Ctrl + B)","italic_desc":"\u659c\u4f53 (Ctrl + I)","underline_desc":"\u4e0b\u5212\u7ebf","striketrough_desc":"\u5220\u9664\u7ebf (Alt + Shift + D)","justifyleft_desc":"\u5de6\u5bf9\u9f50 (Alt + Shift + L)","justifycenter_desc":"\u5c45\u4e2d (Alt + Shift + C)","justifyright_desc":"\u53f3\u5bf9\u9f50 (Alt + Shift + R)","justifyfull_desc":"\u4e24\u7aef\u5bf9\u9f50 (Alt + Shift + J)","bullist_desc":"\u975e\u5e8f\u53f7\u5f0f\u5217\u8868 (Alt + Shift + U)","numlist_desc":"\u5e8f\u53f7\u5f0f\u5217\u8868 (Alt + Shift + O)","outdent_desc":"\u51cf\u5c11\u7f29\u8fdb\u91cf","indent_desc":"\u589e\u52a0\u7f29\u8fdb\u91cf","undo_desc":"\u64a4\u9500 (Ctrl + Z)","redo_desc":"\u91cd\u505a (Ctrl + Y)","link_desc":"\u63d2\u5165\u6216\u7f16\u8f91\u94fe\u63a5 (Alt + Shift + A)","unlink_desc":"\u53d6\u6d88\u94fe\u63a5 (Alt + Shift + S)","image_desc":"\u63d2\u5165\u6216\u7f16\u8f91\u56fe\u50cf (Alt + Shift + M)","cleanup_desc":"\u6e05\u7406\u65e0\u7528\u4ee3\u7801","code_desc":"\u7f16\u8f91 HTML \u6e90\u7801","sub_desc":"\u4e0b\u6807","sup_desc":"\u4e0a\u6807","hr_desc":"\u63d2\u5165\u6a2a\u5411\u5206\u9694\u7ebf","removeformat_desc":"\u53bb\u9664\u683c\u5f0f","forecolor_desc":"\u9009\u62e9\u6587\u5b57\u989c\u8272","backcolor_desc":"\u9009\u62e9\u80cc\u666f\u989c\u8272","charmap_desc":"\u63d2\u5165\u81ea\u5b9a\u4e49\u5b57\u7b26","visualaid_desc":"\u663e\u793a\/\u9690\u85cf\u6307\u5bfc\u7ebf\u548c\u4e0d\u53ef\u89c1\u5143\u7d20","anchor_desc":"\u63d2\u5165\u6216\u7f16\u8f91\u951a","cut_desc":"\u526a\u5207","copy_desc":"\u590d\u5236","paste_desc":"\u7c98\u5e16","image_props_desc":"\u56fe\u50cf\u5c5e\u6027","newdocument_desc":"\u65b0\u6587\u6863","help_desc":"\u5e2e\u52a9","blockquote_desc":"\u5f15\u7528\u6587\u6bb5 (Alt + Shift + Q)","clipboard_msg":"\u590d\u5236\u3001\u526a\u5207\u548c\u7c98\u5e16\u5728 Mozilla \u548c Firefox \u4e2d\u65e0\u6548\u3002","path":"\u6807\u7b7e\u5c42\u7ea7","newdocument":"\u60a8\u786e\u5b9a\u8981\u6e05\u9664\u6240\u6709\u5185\u5bb9\uff1f","toolbar_focus":"\u8df3\u5230\u5de5\u5177\u6309\u94ae - Alt+Q\uff1b\u8df3\u5230\u7f16\u8f91\u5668 - Alt-Z\uff1b\u8df3\u5230\u5143\u7d20\u8def\u5f84 - Alt-X","more_colors":"\u66f4\u591a\u989c\u8272","shortcuts_desc":"\u53ef\u8bbf\u95ee\u6027\u5e2e\u52a9","help_shortcut":"\u6309 Alt-F10 \u5f00\u542f\u5de5\u5177\u680f\uff1b\u6309 Alt-0 \u4ee5\u83b7\u5f97\u5e2e\u52a9\u3002","rich_text_area":"\u5bcc\u6587\u672c\u533a\u57df","toolbar":"\u5de5\u5177\u680f"});
+tinyMCE.addI18n("zh.advanced_dlg", {"about_title":"\u5173\u4e8e TinyMCE","about_general":"\u5173\u4e8e","about_help":"\u5e2e\u52a9","about_license":"\u8bb8\u53ef\u534f\u8bae","about_plugins":"\u63d2\u4ef6","about_plugin":"\u63d2\u4ef6","about_author":"\u4f5c\u8005","about_version":"\u7248\u672c","about_loaded":"\u5df2\u52a0\u8f7d\u7684\u63d2\u4ef6","anchor_title":"\u63d2\u5165\u6216\u7f16\u8f91\u951a","anchor_name":"\u951a\u540d\u79f0","code_title":"HTML \u6e90\u4ee3\u7801\u7f16\u8f91\u5668","code_wordwrap":"\u81ea\u52a8\u6362\u884c","colorpicker_title":"\u9009\u62e9\u989c\u8272","colorpicker_picker_tab":"\u62fe\u8272\u5668","colorpicker_picker_title":"\u989c\u8272\u9009\u62e9\u5668","colorpicker_palette_tab":"\u8c03\u8272\u677f","colorpicker_palette_title":"\u8c03\u8272\u677f\u989c\u8272","colorpicker_named_tab":"\u5df2\u547d\u540d","colorpicker_named_title":"\u5df2\u547d\u540d\u989c\u8272","colorpicker_color":"\u989c\u8272\uff1a","colorpicker_name":"\u540d\u79f0\uff1a","charmap_title":"\u9009\u62e9\u81ea\u5b9a\u4e49\u5b57\u7b26","charmap_usage":"\u4f7f\u7528\u5de6\u53f3\u7bad\u5934\u6765\u9009\u62e9\u3002","image_title":"\u63d2\u5165\u6216\u7f16\u8f91\u56fe\u50cf","image_src":"\u56fe\u50cf URL","image_alt":"\u56fe\u50cf\u63cf\u8ff0","image_list":"\u56fe\u50cf\u5217\u8868","image_border":"\u8fb9\u6846","image_dimensions":"\u5c3a\u5bf8","image_vspace":"\u5782\u76f4\u95f4\u9694","image_hspace":"\u6c34\u5e73\u95f4\u9694","image_align":"\u5bf9\u9f50\u65b9\u5f0f","image_align_baseline":"\u57fa\u51c6\u7ebf","image_align_top":"\u4e0a","image_align_middle":"\u4e2d","image_align_bottom":"\u4e0b","image_align_texttop":"\u6587\u672c\u9876\u90e8","image_align_textbottom":"\u6587\u672c\u5e95\u90e8","image_align_left":"\u5de6","image_align_right":"\u53f3","link_title":"\u63d2\u5165\u6216\u7f16\u8f91\u94fe\u63a5","link_url":"\u94fe\u63a5 URL","link_target":"\u6253\u5f00\u65b9\u5f0f","link_target_same":"\u5728\u540c\u4e00\u7a97\u53e3\u6253\u5f00\u94fe\u63a5","link_target_blank":"\u5728\u65b0\u7a97\u53e3\u4e2d\u6253\u5f00\u94fe\u63a5","link_titlefield":"\u6807\u9898","link_is_email":"\u60a8\u8f93\u5165\u7684\u4f3c\u4e4e\u662f\u4e2a\u90ae\u4ef6\u5730\u5740\uff0c\u60a8\u8981\u81ea\u52a8\u52a0\u4e0a mailto: \u524d\u7f00\u4e48\uff1f","link_is_external":"\u60a8\u8f93\u5165\u7684\u4f3c\u4e4e\u662f\u4e2a\u5916\u90e8\u5730\u5740\uff0c\u60a8\u8981\u81ea\u52a8\u52a0\u4e0a http:\/\/ \u524d\u7f00\u4e48\uff1f","link_list":"\u94fe\u63a5\u5217\u8868","accessibility_help":"\u53ef\u8bbf\u95ee\u6027\u5e2e\u52a9","accessibility_usage_title":"\u5e38\u89c4\u7528\u6cd5"});
+tinyMCE.addI18n("zh.media_dlg", {"title":"\u63d2\u5165\u6216\u7f16\u8f91\u5185\u5d4c\u5a92\u4f53","general":"\u5e38\u89c4","advanced":"\u9ad8\u7ea7","file":"\u6587\u4ef6\u6216 URL","list":"\u5217\u8868","size":"\u5c3a\u5bf8","preview":"\u9884\u89c8","constrain_proportions":"\u4fdd\u6301\u957f\u5bbd\u6bd4","type":"\u7c7b\u578b","id":"ID\uff08Id\uff09","name":"\u540d\u79f0","class_name":"\u7c7b","vspace":"\u7eb5\u5411\u95f4\u9694\uff08V-Space\uff09","hspace":"\u6a2a\u5411\u95f4\u9694\uff08H-Space\uff09","play":"\u81ea\u52a8\u5f00\u59cb\u64ad\u653e","loop":"\u5faa\u73af","menu":"\u663e\u793a\u83dc\u5355","quality":"\u8d28\u91cf","scale":"\u7f29\u653e","align":"\u5bf9\u9f50","salign":"\u5bf9\u9f50\u65b9\u5f0f\uff08SAlign\uff09","wmode":"\u7a97\u53e3\u6a21\u5f0f\uff08WMode\uff09","bgcolor":"\u80cc\u666f","base":"\u6839\u76ee\u5f55\uff08Base\uff09","flashvars":"\u4f20\u9012\u7ed9\u64ad\u653e\u5668\u7684\u53c2\u6570\uff08Flashvars\uff09","liveconnect":"\u9996\u6b21\u52a0\u8f7d\u65f6\u542f\u52a8 Java\uff08SWLiveConnect\uff09","autohref":"\u7acb\u5373\u52a0\u8f7d\uff08AutoHREF\uff09","cache":"\u7f13\u5b58","hidden":"\u9690\u85cf","controller":"\u63a7\u5236\u5668","kioskmode":"Kiosk \u6a21\u5f0f","playeveryframe":"\u64ad\u653e\u6bcf\u4e00\u5e27","targetcache":"\u76ee\u6807\u7f13\u5b58","correction":"\u65e0\u4fee\u6b63","enablejavascript":"\u542f\u7528 JavaScript","starttime":"\u5f00\u59cb\u65f6\u95f4","endtime":"\u7ed3\u675f\u65f6\u95f4","href":"href","qtsrcchokespeed":"\u9650\u5236\u901f\u5ea6","target":"\u6253\u5f00\u65b9\u5f0f","volume":"\u97f3\u91cf","autostart":"\u81ea\u52a8\u5f00\u59cb","enabled":"\u542f\u7528","fullscreen":"\u5168\u5c4f","invokeurls":"\u8c03\u7528 URL","mute":"\u9759\u97f3","stretchtofit":"\u62c9\u4f38\u4ee5\u9002\u5408","windowlessvideo":"\u65e0\u7a97\u53e3\u89c6\u9891","balance":"\u5e73\u8861","baseurl":"\u6839\u76ee\u5f55 URL","captioningid":"\u6807\u9898 ID","currentmarker":"\u5f53\u524d\u6807\u8bb0","currentposition":"\u5f53\u524d\u4f4d\u7f6e","defaultframe":"\u9ed8\u8ba4\u5e27","playcount":"\u64ad\u653e\u8ba1\u6570","rate":"\u8bc4\u7ea7","uimode":"\u7528\u6237\u754c\u9762\u6a21\u5f0f","flash_options":"Flash \u9009\u9879","qt_options":"QuickTime \u9009\u9879","wmp_options":"Windows media player \u9009\u9879","rmp_options":"Real media player \u9009\u9879","shockwave_options":"Shockwave \u9009\u9879","autogotourl":"\u81ea\u52a8\u8df3\u8f6c\u5230 URL","center":"\u4e2d","imagestatus":"\u56fe\u50cf\u72b6\u6001","maintainaspect":"\u4fdd\u6301\u6bd4\u4f8b","nojava":"\u65e0 java","prefetch":"\u9884\u83b7\u53d6","shuffle":"\u968f\u673a","console":"\u63a7\u5236\u53f0","numloop":"\u5faa\u73af\u6b21\u6570","controls":"\u63a7\u4ef6","scriptcallbacks":"\u811a\u672c\u56de\u8c03","swstretchstyle":"\u62c9\u4f38\u65b9\u5f0f","swstretchhalign":"\u6c34\u5e73\u62c9\u4f38\uff08H-Align\uff09","swstretchvalign":"\u5782\u76f4\u62c9\u4f38\uff08H-Align\uff09","sound":"\u58f0\u97f3","progress":"\u8fdb\u5ea6","qtsrc":"QT \u6e90","qt_stream_warn":"\u60a8\u9700\u8981\u5728\u201c\u9ad8\u7ea7\u201d\u9009\u9879\u5361\u4e2d\u7684\u201cQT \u6e90\u201d\u4e00\u680f\u6dfb\u52a0 rtsp \u6d41\u8d44\u6e90","align_top":"\u4e0a","align_right":"\u53f3","align_bottom":"\u4e0b","align_left":"\u5de6","align_center":"\u4e2d","align_top_left":"\u5de6\u4e0a","align_top_right":"\u53f3\u4e0a","align_bottom_left":"\u5de6\u4e0b","align_bottom_right":"\u53f3\u4e0b","flv_options":"Flash \u89c6\u9891\u9009\u9879","flv_scalemode":"\u7f29\u653e\u6a21\u5f0f","flv_buffer":"\u7f13\u51b2","flv_startimage":"\u8d77\u59cb\u56fe\u50cf","flv_starttime":"\u5f00\u59cb\u65f6\u95f4","flv_defaultvolume":"\u9ed8\u8ba4\u97f3\u91cf","flv_hiddengui":"\u9690\u85cf GUI","flv_autostart":"\u81ea\u52a8\u5f00\u59cb","flv_loop":"\u5faa\u73af","flv_showscalemodes":"\u663e\u793a\u7f29\u653e\u6a21\u5f0f","flv_smoothvideo":"\u5e73\u6ed1\u89c6\u9891","flv_jscallback":"JS \u56de\u8c03","html5_video_options":"HTML5 \u89c6\u9891\u9009\u9879","altsource1":"\u5907\u7528\u6e90 1","altsource2":"\u5907\u7528\u6e90 2","preload":"\u9884\u52a0\u8f7d","poster":"\u6d77\u62a5","source":"\u6e90"});
+tinyMCE.addI18n("zh.wordpress", {"wp_adv_desc":"\u663e\u793a\/\u9690\u85cf\u9ad8\u7ea7\u529f\u80fd (Alt + Shift + Z)","wp_more_desc":"\u63d2\u5165\u201c\u66f4\u591a\u201d\u5206\u9694\u6807\u7b7e (Alt + Shift + T)","wp_page_desc":"\u63d2\u5165\u5206\u9875\u7b26 (Alt + Shift + P)","wp_help_desc":"\u5e2e\u52a9 (Alt + Shift + H)","wp_more_alt":"\u66f4\u591a...","wp_page_alt":"\u4e0b\u4e00\u9875...","add_media":"\u6dfb\u52a0\u5a92\u4f53","add_image":"\u6dfb\u52a0\u56fe\u50cf","add_video":"\u6dfb\u52a0\u89c6\u9891","add_audio":"\u6dfb\u52a0\u97f3\u9891","editgallery":"\u7f16\u8f91\u76f8\u518c","delgallery":"\u5220\u9664\u76f8\u518c","wp_fullscreen_desc":"\u5207\u6362\u5168\u5c4f\u6a21\u5f0f (Alt + Shift + W)"});
+tinyMCE.addI18n("zh.wpeditimage", {"edit_img":"\u7f16\u8f91\u56fe\u50cf","del_img":"\u5220\u9664\u56fe\u50cf","adv_settings":"\u9ad8\u7ea7\u9009\u9879","none":"\u65e0","size":"\u5c3a\u5bf8","thumbnail":"\u7f29\u7565\u56fe","medium":"\u4e2d\u7b49","full_size":"\u5b8c\u6574\u5c3a\u5bf8","current_link":"\u5f53\u524d\u94fe\u63a5","link_to_img":"\u94fe\u63a5\u5230\u56fe\u50cf","link_help":"\u8f93\u5165\u4e00\u4e2a\u94fe\u63a5 URL \u6216\u8005\u70b9\u51fb\u4e0a\u9762\u9009\u62e9\u9884\u7f6e\u65b9\u6848\u3002","adv_img_settings":"\u56fe\u50cf\u9ad8\u7ea7\u9009\u9879","source":"\u6e90","width":"\u5bbd\u5ea6","height":"\u9ad8\u5ea6","orig_size":"\u539f\u59cb\u5c3a\u5bf8","css":"CSS \u7c7b","adv_link_settings":"\u94fe\u63a5\u9ad8\u7ea7\u9009\u9879","link_rel":"\u94fe\u63a5 Rel","s60":"60%","s70":"70%","s80":"80%","s90":"90%","s100":"100%","s110":"110%","s120":"120%","s130":"130%","img_title":"\u6807\u9898","caption":"\u8bf4\u660e","alt":"\u66ff\u4ee3\u6587\u672c"});
+</script>
+
+	<script type="text/javascript">
+		var wpActiveEditor;
+
+		(function(){
+			var init, ed, qt, first_init, DOM, el, i, mce = 1;
+
+			if ( typeof(tinymce) == 'object' ) {
+				DOM = tinymce.DOM;
+				// mark wp_theme/ui.css as loaded
+				DOM.files[tinymce.baseURI.getURI() + '/themes/advanced/skins/wp_theme/ui.css'] = true;
+
+				DOM.events.add( DOM.select('.wp-editor-wrap'), 'mousedown', function(e){
+					if ( this.id )
+						wpActiveEditor = this.id.slice(3, -5);
+				});
+
+				for ( ed in tinyMCEPreInit.mceInit ) {
+					if ( first_init ) {
+						init = tinyMCEPreInit.mceInit[ed] = tinymce.extend( {}, first_init, tinyMCEPreInit.mceInit[ed] );
+					} else {
+						init = first_init = tinyMCEPreInit.mceInit[ed];
+					}
+
+					if ( mce )
+						try { tinymce.init(init); } catch(e){}
+				}
+			} else {
+				if ( tinyMCEPreInit.qtInit ) {
+					for ( i in tinyMCEPreInit.qtInit ) {
+						el = tinyMCEPreInit.qtInit[i].id;
+						if ( el )
+							document.getElementById('wp-'+el+'-wrap').onmousedown = function(){ wpActiveEditor = this.id.slice(3, -5); }
+					}
+				}
+			}
+
+			if ( typeof(QTags) == 'function' ) {
+				for ( qt in tinyMCEPreInit.qtInit ) {
+					try { quicktags( tinyMCEPreInit.qtInit[qt] ); } catch(e){}
+				}
+			}
+		})();
+		tinyMCEPreInit.load_ext("http://www.huaishao8.com/wp-content/plugins/crayon-syntax-highlighter/util/tag-editor", "zh");
+tinymce.PluginManager.load("crayon_tinymce", "http://www.huaishao8.com/wp-content/plugins/crayon-syntax-highlighter/util/tag-editor/crayon_tinymce.js");
+
+			(function(){var t=tinyMCEPreInit,sl=tinymce.ScriptLoader,ln=t.ref.language,th=t.ref.theme,pl=t.ref.plugins;sl.markDone(t.base+'/langs/'+ln+'.js');sl.markDone(t.base+'/themes/'+th+'/langs/'+ln+'.js');sl.markDone(t.base+'/themes/'+th+'/langs/'+ln+'_dlg.js');sl.markDone(t.base+'/themes/advanced/skins/wp_theme/ui.css');tinymce.each(pl.split(','),function(n){if(n&&n.charAt(0)!='-'){sl.markDone(t.base+'/plugins/'+n+'/langs/'+ln+'.js');sl.markDone(t.base+'/plugins/'+n+'/langs/'+ln+'_dlg.js');}});})();
+			var ajaxurl = "/wp-admin/admin-ajax.php";		</script>
+			<div style="display:none;">
+	<form id="wp-link" tabindex="-1">
+	<input type="hidden" id="_ajax_linking_nonce" name="_ajax_linking_nonce" value="4e606f19f7" />	<div id="link-selector">
+		<div id="link-options">
+			<p class="howto">输入目标 URL</p>
+			<div>
+				<label><span>URL</span><input id="url-field" type="text" name="href" /></label>
+			</div>
+			<div>
+				<label><span>标题</span><input id="link-title-field" type="text" name="linktitle" /></label>
+			</div>
+			<div class="link-target">
+				<label><input type="checkbox" id="link-target-checkbox" /> 在新窗口或标签页打开链接</label>
+			</div>
+		</div>
+				<p class="howto toggle-arrow " id="internal-toggle">或链接到站点中的内容</p>
+		<div id="search-panel" style="display:none">
+			<div class="link-search-wrapper">
+				<label>
+					<span class="search-label">搜索</span>
+					<input type="search" id="search-field" class="link-search-field" autocomplete="off" />
+					<span class="spinner"></span>
+				</label>
+			</div>
+			<div id="search-results" class="query-results">
+				<ul></ul>
+				<div class="river-waiting">
+					<span class="spinner"></span>
+				</div>
+			</div>
+			<div id="most-recent-results" class="query-results">
+				<div class="query-notice"><em>未指定搜索条件。自动显示近期条目。</em></div>
+				<ul></ul>
+				<div class="river-waiting">
+					<span class="spinner"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="submitbox">
+		<div id="wp-link-update">
+			<input type="submit" value="添加链接" class="button-primary" id="wp-link-submit" name="wp-link-submit">
+		</div>
+		<div id="wp-link-cancel">
+			<a class="submitdelete deletion" href="#">取消</a>
+		</div>
+	</div>
+	</form>
+	</div>
+	</body>
+</html>

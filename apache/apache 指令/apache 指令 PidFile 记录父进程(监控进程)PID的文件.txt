@@ -1,0 +1,9 @@
+PidFile /usr/httpd.pid
+PidFile指令设置服务器用于记录父进程(监控进程)PID的文件。如果指定的不是绝对路径，那么将视为基于ServerRoot的相对路径。
+
+示例
+PidFile /var/run/apache.pid 
+
+这个文件通常用来便于给服务器父进程发送一个信号，用于关闭或重启服务器，以重新打开ErrorLog和TransferLog文件、重新读取配置文件。这些可以通过发送一个"SIGHUP"(kill -1)信号到PidFile记录的进程PID。
+
+PidFile和其他日志文件一样要注意放置位置和安全问题。

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="GBK"?>
+<project name="测试脚本" default="copyfile" basedir="." >
+	<target name="copyfile">
+		<copy file="d:/a.txt" todir="e:/Temp" overwrite="true"/>
+	</target>
+</project>

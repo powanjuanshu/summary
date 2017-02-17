@@ -1,0 +1,10 @@
+-------build.xml
+<?xml version="1.0" encoding="GBK"?>
+<project name="测试脚本" default="copyfile1" basedir="." >
+	<property file="build.properties"/>
+	<target name="copyfile1">
+		<echo message="${remote.svn.url}"/>
+	</target>
+</project>
+------build.properties
+remote.svn.url=svn://10.191.17.67/lifeteldata/development/sourcecode

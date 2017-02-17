@@ -1,0 +1,28 @@
+ECHO命令是DOS批处理命令的一条子命令
+-----------------
+1.作为控制批处理命令在执行时是否显示命令行自身的开关
+如果想关闭“ECHO OFF”命令行自身的显示，则需要在该命令行前加上“@”。
+echo off
+md zzz
+md zzzz
+--
+@echo off
+md zzz
+md zzzz
+-------------
+2． 显示当前ECHO设置状态
+@echo off
+md zzz
+md zzzz
+echo
+-------------ECHO处于关闭状态
+3． 输出提示信息
+@echo off
+md zzz
+md zzzz
+echo abc
+-------------这里也可以写成'abc'，但不能写成"abc",如果写成"abc"则输出的是"abc"，而不是abc
+
+
+
+

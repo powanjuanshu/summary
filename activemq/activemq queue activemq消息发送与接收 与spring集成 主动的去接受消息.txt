@@ -1,0 +1,68 @@
+package spring;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
+public class Test {
+	@org.junit.Test
+	public void testJmsTemplateSend() throws InterruptedException{
+		ApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
+		JmsTemplate template=(JmsTemplate) ctx.getBean("jsmTemplate");
+		Destination destination=(Destination) ctx.getBean("destination");
+		for(int i=0;i<1000;i++){
+			System.out.println("============="+i);
+			template.send(destination,new MessageCreator() {
+				@Override
+				public Message createMessage(Session session) throws JMSException {
+					return session.createTextMessage("发送消息：Hello ActiveMQ Text Message！");
+				}
+			});
+			Thread.sleep(2);
+		}
+		System.out.println("成功发送了一条JMS消息");
+	}
+	@org.junit.Test
+	public void testJmsTemplateReceive() throws JMSException{
+		ApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
+		JmsTemplate template=(JmsTemplate) ctx.getBean("jsmTemplate");
+		Destination destination=(Destination) ctx.getBean("destination");
+		while(true){
+			TextMessage txtmsg=(TextMessage) template.receive(destination);
+			if(null!=txtmsg){
+				System.out.println("收到消息内容为："+txtmsg.getText());
+			}else{
+				break;
+			}
+		}
+	}
+}
+-----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="true">
+	<description>Spring公共配置</description>
+	<bean id="connectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL" value="failover:(tcp://localhost:61616)?initialReconnectDelay=100&amp;maxReconnectAttempts=10"/>
+			</bean>
+		</property>
+    </bean>
+	<bean id="jsmTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory"/>
+	</bean>
+	<bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="Queue"></constructor-arg>
+	</bean>
+</beans>
+
+
+

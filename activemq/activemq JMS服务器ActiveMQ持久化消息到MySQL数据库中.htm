@@ -1,0 +1,229 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=8.0000" 
+http-equiv="X-UA-Compatible">
+
+<SCRIPT type=text/javascript src="http://common.cnblogs.com/script/gpt.js" 
+async="true"></SCRIPT>
+<TITLE>JMS服务器ActiveMQ的初体验并持久化消息到MySQL数据库中 - 老牛啊 - 博客园</TITLE>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type><LINK 
+rel=stylesheet type=text/css 
+href="http://common.cnblogs.com/blog/css/common.css?id=20130704"><LINK 
+id=MainCss rel=stylesheet type=text/css 
+href="http://common.cnblogs.com/Skins/kubrick/style.css?id=20130704"><LINK 
+rel=stylesheet type=text/css 
+href="http://common.cnblogs.com/blog/css/common2.css"><LINK rel=stylesheet 
+type=text/css href="http://common.cnblogs.com/css/shStyle.css"><LINK title=RSS 
+rel=alternate type=application/rss+xml 
+href="http://www.cnblogs.com/obullxl/rss"><LINK title=RSD rel=EditURI 
+type=application/rsd+xml href="http://www.cnblogs.com/obullxl/rsd.xml"><LINK 
+rel=wlwmanifest type=application/wlwmanifest+xml 
+href="http://www.cnblogs.com/obullxl/wlwmanifest.xml">
+<SCRIPT type=text/javascript src="http://www.google-analytics.com/ga.js" 
+async="true"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/encoder.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/jquery.js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+var currentBlogApp = 'obullxl';
+</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/blog/script/common.js?id=20130704"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/json2.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/syntaxHighlighter.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://partner.googleadservices.com/gampad/google_ads_gpt.js" 
+async="true"></SCRIPT>
+</HEAD>
+<BODY>
+<DIV id=wrapper>
+<DIV id=main>
+<DIV class=post>
+<H2><A id=cb_post_title_url 
+href="http://www.cnblogs.com/obullxl/archive/2011/07/05/jms-activemq-persist-mysql.html">JMS服务器ActiveMQ的初体验并持久化消息到MySQL数据库中</A> 
+</H2>
+<DIV class=postText>
+<DIV id=cnblogs_post_body><STRONG>一、JMS的理解</STRONG><BR>JMS（Java Message 
+Service）是jcp组织02-03年定义了jsr914规范（http://jcp.org/en/jsr/detail?id=914），它定义了消息的格式和消息传递模式；<BR>消息包括：消息头，消息扩展属性和消息体，其结构看起来与SOAP非常的相似，但一般情况下，SOAP主要关注远程服务调用，而消息则专注于信息的交换；<BR>消息分为：消息生产者，消息服务器和消息消费者。生产者与消费者之间是透明的，生产者在产生消息之后，把消息发送到消息服务器，再由消息服务器发给消费者，因此它们构成了JMS的3点结构；<BR>消息服务器再给消费者时，有2种模式：点到点（ptp: 
+point to 
+point）模式和发布/订阅（publish/subscribe）模式；<BR>ptp：即生产者把消息投递到消息服务器后，这条消息只能由某一个消费者使用；<BR>发布/订阅：顾名思义，就是共享消息了，只要愿意，消费者都可以监听消息；<BR><BR><STRONG>二、消息服务器（ActiveMQ）</STRONG><BR>消息服务器在JMS的3点结构中起着重要作用，没有它，生产者的消息不知道如何投递出去，消费者不知道从哪里取得消息，它同样是隔离生产者和消费者的关键部分…………<BR>JMS消息服务器有很多：ActiveMQ、Jboss 
+MQ、Open MQ、RabbitMQ、ZeroMQ等等。<BR>本文介绍的是开源的Java实现的Apache 
+ActiveMQ（http://activemq.apache.org），它的特性在首页就能看到，我就不再介绍了；<BR><BR>1、下载AMQ：http://activemq.apache.org/download.html，最新版本是5.5.0；<BR>2、解压apache-activemq-5.5.0-bin.zip文件到文件系统（比如D:\ActiveMQ-5.5.0）；<BR>3、执行bin/activemq.bat脚本即可启动AMQ：<BR>
+<DIV class=cnblogs_Highlighter>
+<DIV>
+<DIV id=highlighter_862805 class="syntaxhighlighter nogutter  java ie">
+<DIV class=toolbar><SPAN><A class="toolbar_item command_help help" 
+href="#">?</A></SPAN></DIV>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+  <TBODY>
+  <TR>
+    <TD class=code>
+      <DIV class=container>
+      <DIV class="line number1 index0 alt2"><CODE class="java plain">INFO | ActiveMQ </CODE><CODE class="java value">5.5</CODE><CODE class="java plain">.</CODE><CODE class="java value">0</CODE> 
+<CODE class="java plain">JMS Message Broker (localhost) is starting </CODE></DIV>
+      <DIV class="line number2 index1 alt1"><CODE class="java plain">...... </CODE></DIV>
+      <DIV class="line number3 index2 alt2"><CODE class="java plain">INFO | Listening </CODE><CODE class="java keyword">for</CODE> 
+<CODE class="java plain">connections at: tcp:</CODE><CODE class="java comments">//SHI-AP33382A:61616</CODE></DIV></DIV></TD></TR></TBODY></TABLE></DIV></DIV></DIV>当看到上面的日志输出时，表示AMQ已经启动了；<BR>4、默认情况下，AMQ使用conf/activemq.xml作为配置文件，我们可修改它，然后以 
+bin/activemq.bat 
+xbean:./conf/my.xml启动AMQ；<BR><BR><STRONG>三、持久化消息（MySQL）</STRONG><BR>因为接下来我们修改AMQ的默认配置文件，所以先备份conf/activemq.xml文件；<BR>1、建立MySQL数据库：要使用MySQL存储消息，必须告诉AMQ数据源：<BR>
+<DIV class=cnblogs_Highlighter>
+<DIV>
+<DIV id=highlighter_593300 class="syntaxhighlighter nogutter  sql ie">
+<DIV class=toolbar><SPAN><A class="toolbar_item command_help help" 
+href="#">?</A></SPAN></DIV>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+  <TBODY>
+  <TR>
+    <TD class=code>
+      <DIV class=container>
+      <DIV 
+      class="line number1 index0 alt2"><CODE class="sql plain">/** </CODE></DIV>
+      <DIV class="line number2 index1 alt1"><CODE class="sql spaces">&nbsp;</CODE><CODE class="sql plain">* 创建数据库 </CODE></DIV>
+      <DIV class="line number3 index2 alt2"><CODE class="sql spaces">&nbsp;</CODE><CODE class="sql plain">*/ </CODE></DIV>
+      <DIV class="line number4 index3 alt1"><CODE class="sql keyword">CREATE</CODE> <CODE class="sql keyword">DATABASE</CODE> <CODE class="sql plain">misc </CODE><CODE class="sql keyword">DEFAULT</CODE> 
+<CODE class="sql plain">CHARSET=UTF8; </CODE></DIV>
+      <DIV class="line number5 index4 alt2"><CODE class="sql spaces">&nbsp;</CODE>&nbsp;</DIV>
+      <DIV 
+      class="line number6 index5 alt1"><CODE class="sql plain">/** </CODE></DIV>
+      <DIV class="line number7 index6 alt2"><CODE class="sql spaces">&nbsp;</CODE><CODE class="sql plain">* 创建用户和授权 </CODE></DIV>
+      <DIV class="line number8 index7 alt1"><CODE class="sql spaces">&nbsp;</CODE><CODE class="sql plain">*/ </CODE></DIV>
+      <DIV class="line number9 index8 alt2"><CODE class="sql keyword">GRANT</CODE> <CODE class="sql color1">ALL</CODE> <CODE class="sql keyword">PRIVILEGES</CODE> <CODE class="sql keyword">ON</CODE> <CODE class="sql plain">misc.* </CODE><CODE class="sql keyword">TO</CODE> <CODE class="sql string">'misc_root'</CODE><CODE class="sql plain">@</CODE><CODE class="sql string">'%'</CODE> 
+<CODE class="sql plain">IDENTIFIED </CODE><CODE class="sql keyword">BY</CODE> 
+<CODE class="sql string">'misc_root_pwd'</CODE><CODE class="sql plain">; </CODE></DIV>
+      <DIV class="line number10 index9 alt1"><CODE class="sql keyword">GRANT</CODE> <CODE class="sql color1">ALL</CODE> <CODE class="sql keyword">PRIVILEGES</CODE> <CODE class="sql keyword">ON</CODE> <CODE class="sql plain">misc.* </CODE><CODE class="sql keyword">TO</CODE> <CODE class="sql string">'misc_root'</CODE><CODE class="sql plain">@</CODE><CODE class="sql string">'localhost'</CODE> 
+<CODE class="sql plain">IDENTIFIED </CODE><CODE class="sql keyword">BY</CODE> 
+<CODE class="sql string">'misc_root_pwd'</CODE><CODE class="sql plain">;</CODE></DIV></DIV></TD></TR></TBODY></TABLE></DIV></DIV></DIV>通过上面的SQL脚本，我们建立了名为misc的数据库，并且把所有权限都赋予了misc_root的用户；<BR>由于AMQ需要在本数据库中建立数据表，因此用户的权限必须具有建表权限；<BR>2、添加MySQL数据源：默认情况下，AMQ使用KahaDB存储（我对KahaDB不了解），注释到KahaDB的配置方式，改为MySQL的：<BR>
+<DIV class=cnblogs_code>
+<DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A title=复制代码 
+onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG alt=复制代码 
+src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV><PRE><DIV><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"><BR>&lt;persistenceAdapter&gt;<BR>    &lt;kahaDB directory="${activemq.base}/data/kahadb"/&gt;<BR>&lt;/persistenceAdapter&gt;<BR></SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR></SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">persistenceAdapter</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">jdbcPersistenceAdapter </SPAN><SPAN style="COLOR: #ff0000">dataSource</SPAN><SPAN style="COLOR: #0000ff">="#MySQL-DS"</SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR></SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">persistenceAdapter</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN></DIV></PRE>
+<DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A title=复制代码 
+onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG alt=复制代码 
+src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV></DIV>该配置表示，我们将要使用一个叫做“MySQL-DS”的JDBC数据源；<BR>3、配置MySQL数据源：在&lt;/broker&gt;节点后面，增加MySQL数据源配置：<BR>
+<DIV class=cnblogs_code>
+<DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A title=复制代码 
+onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG alt=复制代码 
+src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV><PRE><DIV><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"> MySQL DataSource </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR></SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">bean </SPAN><SPAN style="COLOR: #ff0000">id</SPAN><SPAN style="COLOR: #0000ff">="MySQL-DS"</SPAN><SPAN style="COLOR: #ff0000"> class</SPAN><SPAN style="COLOR: #0000ff">="org.apache.commons.dbcp.BasicDataSource"</SPAN><SPAN style="COLOR: #ff0000"> destroy-method</SPAN><SPAN style="COLOR: #0000ff">="close"</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="driverClassName"</SPAN><SPAN style="COLOR: #ff0000"> value</SPAN><SPAN style="COLOR: #0000ff">="com.mysql.jdbc.Driver"</SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="url"</SPAN><SPAN style="COLOR: #ff0000"> value</SPAN><SPAN style="COLOR: #0000ff">="jdbc:mysql://127.0.0.1:3306/misc?useUnicode=true&amp;amp;characterEncoding=UTF-8"</SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="username"</SPAN><SPAN style="COLOR: #ff0000"> value</SPAN><SPAN style="COLOR: #0000ff">="misc_root"</SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="password"</SPAN><SPAN style="COLOR: #ff0000"> value</SPAN><SPAN style="COLOR: #0000ff">="misc_root_pwd"</SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="poolPreparedStatements"</SPAN><SPAN style="COLOR: #ff0000"> value</SPAN><SPAN style="COLOR: #0000ff">="true"</SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR></SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">bean</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN></DIV></PRE>
+<DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A title=复制代码 
+onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG alt=复制代码 
+src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV></DIV>其实这就是一个Spring的Bean的配置，注意id与上面的保持一致；<BR><BR>整个AMQ的配置文件内容为：<BR>
+<DIV class=cnblogs_code>
+<DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A title=复制代码 
+onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG alt=复制代码 
+src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV><PRE><DIV><SPAN style="COLOR: #0000ff">&lt;?</SPAN><SPAN style="COLOR: #ff00ff">xml version="1.0" encoding="UTF-8"</SPAN><SPAN style="COLOR: #0000ff">?&gt;</SPAN><SPAN style="COLOR: #000000"><BR></SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">beans </SPAN><SPAN style="COLOR: #ff0000">xmlns</SPAN><SPAN style="COLOR: #0000ff">="http://www.springframework.org/schema/beans"</SPAN><SPAN style="COLOR: #ff0000"> xmlns:amq</SPAN><SPAN style="COLOR: #0000ff">="http://activemq.apache.org/schema/core"</SPAN><SPAN style="COLOR: #ff0000"> xmlns:xsi</SPAN><SPAN style="COLOR: #0000ff">="http://www.w3.org/2001/XMLSchema-instance"</SPAN><SPAN style="COLOR: #ff0000"><BR>    xsi:schemaLocation</SPAN><SPAN style="COLOR: #0000ff">="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd<BR>  http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd"</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR><BR>    </SPAN><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"> Allows us to use system properties as variables in this configuration file </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">bean </SPAN><SPAN style="COLOR: #ff0000">class</SPAN><SPAN style="COLOR: #0000ff">="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="locations"</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>            </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">value</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000">classpath:/META-INF/credentials.properties</SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">value</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">property</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">bean</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR><BR>    </SPAN><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"><BR>        The &lt;broker&gt; element is used to configure the ActiveMQ broker.<BR>    </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">broker </SPAN><SPAN style="COLOR: #ff0000">xmlns</SPAN><SPAN style="COLOR: #0000ff">="http://activemq.apache.org/schema/core"</SPAN><SPAN style="COLOR: #ff0000"> brokerName</SPAN><SPAN style="COLOR: #0000ff">="localhost"</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"><BR>            For better performances use VM cursor and small memory limit. For more information, see: http://activemq.apache.org/message-cursors.html Also, if your producer is "hanging", it's probably due to producer flow control. For more information, see:<BR>            http://activemq.apache.org/producer-flow-control.html<BR>        </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">destinationPolicy</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>            </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">policyMap</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>                </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">policyEntries</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>                    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">policyEntry </SPAN><SPAN style="COLOR: #ff0000">topic</SPAN><SPAN style="COLOR: #0000ff">="&gt;"</SPAN><SPAN style="COLOR: #ff0000"> producerFlowControl</SPAN><SPAN style="COLOR: #0000ff">="true"</SPAN><SPAN style="COLOR: #ff0000"> memoryLimit</SPAN><SPAN style="COLOR: #0000ff">="1mb"</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>                        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">pendingSubscriberPolicy</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>                            </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">vmCursor </SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>                        </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">pendingSubscriberPolicy</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>                    </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">policyEntry</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>                    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">policyEntry </SPAN><SPAN style="COLOR: #ff0000">queue</SPAN><SPAN style="COLOR: #0000ff">="&gt;"</SPAN><SPAN style="COLOR: #ff0000"> producerFlowControl</SPAN><SPAN style="COLOR: #0000ff">="true"</SPAN><SPAN style="COLOR: #ff0000"> memoryLimit</SPAN><SPAN style="COLOR: #0000ff">="1mb"</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>                        </SPAN><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"><BR>                            Use VM cursor for better latency For more information, see: http://activemq.apache.org/message-cursors.html &lt;pendingQueuePolicy&gt; &lt;vmQueueCursor/&gt; &lt;/pendingQueuePolicy&gt;<BR>                        </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR>                    </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">policyEntry</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>                </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">policyEntries</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>            </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">policyMap</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">destinationPolicy</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR><BR>        </SPAN><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"><BR>            The managementContext is used to configure how ActiveMQ is exposed in<BR>            JMX. By default, ActiveMQ uses the MBean server that is started by<BR>            the JVM. For more information, see:<BR>           <BR>            http://activemq.apache.org/jmx.html<BR>        </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">managementContext</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>            </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">managementContext </SPAN><SPAN style="COLOR: #ff0000">createConnector</SPAN><SPAN style="COLOR: #0000ff">="false"</SPAN><SPAN style="COLOR: #ff0000"> </SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">managementContext</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR><BR>        </SPAN><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"><BR>            Configure message persistence for the broker. The default persistence<BR>            mechanism is the KahaDB store (identified by the kahaDB tag).<BR>            For more information, see:<BR>           <BR>            http://activemq.apache.org/persistence.html<BR>        </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"><BR>        &lt;persistenceAdapter&gt;<BR>            &lt;kahaDB directory="${activemq.base}/data/kahadb"/&gt;<BR>        &lt;/persistenceAdapter&gt;<BR>        </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">persistenceAdapter</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>            </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">jdbcPersistenceAdapter </SPAN><SPAN style="COLOR: #ff0000">dataSource</SPAN><SPAN style="COLOR: #0000ff">="#MySQL-DS"</SPAN><SPAN style="COLOR: #ff0000"> </SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">persistenceAdapter</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR><BR>        </SPAN><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"><BR>            The transport connectors expose ActiveMQ over a given protocol to<BR>            clients and other brokers. For more information, see:<BR>           <BR>            http://activemq.apache.org/configuring-transports.html<BR>        </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">transportConnectors</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>            </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">transportConnector </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="openwire"</SPAN><SPAN style="COLOR: #ff0000"> uri</SPAN><SPAN style="COLOR: #0000ff">="tcp://0.0.0.0:61616"</SPAN><SPAN style="COLOR: #ff0000"> </SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">transportConnectors</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">broker</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR><BR>    </SPAN><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"> MySQL DataSource </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">bean </SPAN><SPAN style="COLOR: #ff0000">id</SPAN><SPAN style="COLOR: #0000ff">="MySQL-DS"</SPAN><SPAN style="COLOR: #ff0000"> class</SPAN><SPAN style="COLOR: #0000ff">="org.apache.commons.dbcp.BasicDataSource"</SPAN><SPAN style="COLOR: #ff0000"> destroy-method</SPAN><SPAN style="COLOR: #0000ff">="close"</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="driverClassName"</SPAN><SPAN style="COLOR: #ff0000"> value</SPAN><SPAN style="COLOR: #0000ff">="com.mysql.jdbc.Driver"</SPAN><SPAN style="COLOR: #ff0000"> </SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="url"</SPAN><SPAN style="COLOR: #ff0000"> value</SPAN><SPAN style="COLOR: #0000ff">="jdbc:mysql://127.0.0.1:3306/misc?useUnicode=true&amp;amp;characterEncoding=UTF-8"</SPAN><SPAN style="COLOR: #ff0000"> </SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="username"</SPAN><SPAN style="COLOR: #ff0000"> value</SPAN><SPAN style="COLOR: #0000ff">="misc_root"</SPAN><SPAN style="COLOR: #ff0000"> </SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="password"</SPAN><SPAN style="COLOR: #ff0000"> value</SPAN><SPAN style="COLOR: #0000ff">="misc_root_pwd"</SPAN><SPAN style="COLOR: #ff0000"> </SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>        </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">property </SPAN><SPAN style="COLOR: #ff0000">name</SPAN><SPAN style="COLOR: #0000ff">="poolPreparedStatements"</SPAN><SPAN style="COLOR: #ff0000"> value</SPAN><SPAN style="COLOR: #0000ff">="true"</SPAN><SPAN style="COLOR: #ff0000"> </SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">bean</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN><SPAN style="COLOR: #000000"><BR><BR>    </SPAN><SPAN style="COLOR: #008000">&lt;!--</SPAN><SPAN style="COLOR: #008000"><BR>        Enable web consoles, REST and Ajax APIs and demos<BR>        It also includes Camel (with its web console), see ${ACTIVEMQ_HOME}/conf/camel.xml for more info<BR>       <BR>        Take a look at ${ACTIVEMQ_HOME}/conf/jetty.xml for more details<BR>    </SPAN><SPAN style="COLOR: #008000">--&gt;</SPAN><SPAN style="COLOR: #000000"><BR>    </SPAN><SPAN style="COLOR: #0000ff">&lt;</SPAN><SPAN style="COLOR: #800000">import </SPAN><SPAN style="COLOR: #ff0000">resource</SPAN><SPAN style="COLOR: #0000ff">="jetty.xml"</SPAN><SPAN style="COLOR: #0000ff">/&gt;</SPAN><SPAN style="COLOR: #000000"><BR><BR></SPAN><SPAN style="COLOR: #0000ff">&lt;/</SPAN><SPAN style="COLOR: #800000">beans</SPAN><SPAN style="COLOR: #0000ff">&gt;</SPAN></DIV></PRE>
+<DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A title=复制代码 
+onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG alt=复制代码 
+src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV></DIV><BR><STRONG>四、查看MySQL数据表</STRONG><BR>重新启动AMQ，启动完成之后，我们发现，misc数据库多了3张数据表：<BR>
+<DIV class=cnblogs_Highlighter>
+<DIV>
+<DIV id=highlighter_846220 class="syntaxhighlighter nogutter  sql ie">
+<DIV class=toolbar><SPAN><A class="toolbar_item command_help help" 
+href="#">?</A></SPAN></DIV>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+  <TBODY>
+  <TR>
+    <TD class=code>
+      <DIV class=container>
+      <DIV class="line number1 index0 alt2"><CODE class="sql plain">mysql&gt; SHOW tables; </CODE></DIV>
+      <DIV class="line number2 index1 alt1"><CODE class="sql plain">+</CODE><CODE class="sql comments">----------------+ </CODE></DIV>
+      <DIV class="line number3 index2 alt2"><CODE class="sql plain">| Tables_in_misc | </CODE></DIV>
+      <DIV class="line number4 index3 alt1"><CODE class="sql plain">+</CODE><CODE class="sql comments">----------------+ </CODE></DIV>
+      <DIV class="line number5 index4 alt2"><CODE class="sql plain">| activemq_acks&nbsp; | </CODE></DIV>
+      <DIV class="line number6 index5 alt1"><CODE class="sql plain">| activemq_lock&nbsp; | </CODE></DIV>
+      <DIV class="line number7 index6 alt2"><CODE class="sql plain">| activemq_msgs&nbsp; | </CODE></DIV>
+      <DIV class="line number8 index7 alt1"><CODE class="sql plain">+</CODE><CODE class="sql comments">----------------+</CODE></DIV></DIV></TD></TR></TBODY></TABLE></DIV></DIV></DIV>数据表activemq_msgs即为持久化消息表；<BR><BR><STRONG>五、持久化消息</STRONG><BR>系统启动完毕之后，消息表中内容为空：<BR>
+<DIV class=cnblogs_Highlighter>
+<DIV>
+<DIV id=highlighter_902177 class="syntaxhighlighter nogutter  sql ie">
+<DIV class=toolbar><SPAN><A class="toolbar_item command_help help" 
+href="#">?</A></SPAN></DIV>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+  <TBODY>
+  <TR>
+    <TD class=code>
+      <DIV class=container>
+      <DIV class="line number1 index0 alt2"><CODE class="sql plain">mysql&gt; </CODE><CODE class="sql keyword">SELECT</CODE> 
+<CODE class="sql plain">* </CODE><CODE class="sql keyword">FROM</CODE> <CODE class="sql plain">activemq_msgs; </CODE></DIV>
+      <DIV class="line number2 index1 alt1"><CODE class="sql plain">Empty </CODE><CODE class="sql keyword">set</CODE></DIV></DIV></TD></TR></TBODY></TABLE></DIV></DIV></DIV>1、发送消息：打开http://127.0.0.1:8161/demo/页面，找到“Send 
+a 
+message”链接，打开页面（http://127.0.0.1:8161/demo/send.html），填写完表格后，点击“Send”按键，即AMQ投递了一个消息；<BR>2、查看消息：发送之后，我们可以看到数据表中多了一条消息：<BR>
+<DIV class=cnblogs_Highlighter>
+<DIV>
+<DIV id=highlighter_965236 class="syntaxhighlighter nogutter  sql ie">
+<DIV class=toolbar><SPAN><A class="toolbar_item command_help help" 
+href="#">?</A></SPAN></DIV>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+  <TBODY>
+  <TR>
+    <TD class=code>
+      <DIV class=container>
+      <DIV class="line number1 index0 alt2"><CODE class="sql plain">mysql&gt; </CODE><CODE class="sql keyword">SELECT</CODE> 
+<CODE class="sql plain">* </CODE><CODE class="sql keyword">FROM</CODE> <CODE class="sql plain">activemq_msgs; </CODE></DIV>
+      <DIV class="line number2 index1 alt1"><CODE class="sql plain">+</CODE><CODE class="sql comments">----+-----------------+--------------------------------------------+-----------+------------+-----+----------+ </CODE></DIV>
+      <DIV class="line number3 index2 alt2"><CODE class="sql plain">| ID | CONTAINER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | MSGID_PROD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | MSGID_SEQ | EXPIRATION | MSG | PRIORITY | </CODE></DIV>
+      <DIV class="line number4 index3 alt1"><CODE class="sql plain">+</CODE><CODE class="sql comments">----+-----------------+--------------------------------------------+-----------+------------+-----+----------+ </CODE></DIV>
+      <DIV class="line number5 index4 alt2"><CODE class="sql plain">|&nbsp; 1 | <A href="queue://FOO.BAR">queue://FOO.BAR</A> | ID:SHI-AP33382A-1486-1309840138441-2:2:1:1 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5 | </CODE></DIV>
+      <DIV class="line number6 index5 alt1"><CODE class="sql plain">+</CODE><CODE class="sql comments">----+-----------------+--------------------------------------------+-----------+------------+-----+----------+</CODE></DIV></DIV></TD></TR></TBODY></TABLE></DIV></DIV></DIV>3、取得消息：找到“Receive 
+a 
+message”链接，打开页面（http://127.0.0.1:8161/demo/message/FOO/BAR?readTimeout=10000&amp;type=queue），发现该页面不是一个标准HTML页面，查看其源代码，其内容是不是就是刚才的消息内容？<BR>4、查看消息：消息消费之后，我们可以看到数据表没有消息了：<BR>
+<DIV class=cnblogs_Highlighter>
+<DIV>
+<DIV id=highlighter_102305 class="syntaxhighlighter nogutter  sql ie">
+<DIV class=toolbar><SPAN><A class="toolbar_item command_help help" 
+href="#">?</A></SPAN></DIV>
+<TABLE border=0 cellSpacing=0 cellPadding=0>
+  <TBODY>
+  <TR>
+    <TD class=code>
+      <DIV class=container>
+      <DIV class="line number1 index0 alt2"><CODE class="sql plain">mysql&gt; </CODE><CODE class="sql keyword">SELECT</CODE> 
+<CODE class="sql plain">* </CODE><CODE class="sql keyword">FROM</CODE> <CODE class="sql plain">activemq_msgs; </CODE></DIV>
+      <DIV class="line number2 index1 alt1"><CODE class="sql plain">Empty </CODE><CODE class="sql keyword">set</CODE></DIV></DIV></TD></TR></TBODY></TABLE></DIV></DIV></DIV>5、我们可以生产多条消息，然后一条一条的消费，发现消息表中的消息一条一条的减少；<BR>6、在发送消息页面，“Destination 
+Type”如果选择“Topic”的话，则消息表中并没有数据，原因在于“Queue”为ptp模式消息，“Topic”为发布/订阅模式消息，当没有订阅者时，消息直接丢掉了。<BR><BR>JMS的内容先介绍到这里，下面我将结合Spring来启动AMQ（即AMQ与应用一同启动，上面介绍的都是单独的启动），通过测试代码来发送和消费消息，敬请期待！<BR><BR>
+<BR>
+</DIV>
+<DIV id=MySignature></DIV>
+</DIV>
+</DIV>
+<DIV id=comment_form class=commentform><DIV id=ad_under_post_holder><DIV id=google_ad_c2 class=c_ad_block></DIV>
+</DIV>
+<DIV id=HistoryToday class=c_ad_block></DIV></DIV></DIV>
+</DIV>
+<DIV class=clear></DIV>
+<!--PageEndHtml Block Begin-->
+<DIV style="PADDING-RIGHT: 12px; FLOAT: right">
+<SCRIPT type=text/javascript 
+src="http://js.tongji.linezing.com/2508695/tongji.js"></SCRIPT>
+<IMG border=0 
+src="http://dt.tongji.linezing.com/tongji.do?unit_id=2508695&amp;uv_id=21906269501455812570&amp;uv_new=0&amp;cna=&amp;cg=&amp;mid=&amp;mmland=&amp;ade=&amp;adtm=&amp;sttm=&amp;cpa=&amp;ss_id=2662161442&amp;ss_no=0&amp;ec=1&amp;ref=&amp;url=http%3A//www.cnblogs.com/obullxl/archive/2011/07/05/jms-activemq-persist-mysql.html&amp;title=JMS%u670D%u52A1%u5668ActiveMQ%u7684%u521D%u4F53%u9A8C%u5E76%u6301%u4E45%u5316%u6D88%u606F%u5230MySQL%u6570%u636E%u5E93%u4E2D%20-%20%u8001%u725B%u554A%20-%20%u535A%u5BA2%u56ED&amp;charset=utf-8&amp;domain=cnblogs.com&amp;hashval=1109&amp;filtered=0&amp;app=Microsoft%20Internet%20Explorer&amp;agent=Mozilla/4.0%20%28compatible%3B%20MSIE%208.0%3B%20Windows%20NT%205.1%3B%20Trident/4.0%29&amp;color=32-bit&amp;screen=1058x595&amp;lg=zh-cn&amp;je=1&amp;fv=10.0&amp;st=1376641923&amp;vc=48314fe7&amp;ut=0&amp;url_id=0&amp;cnu=0.5790691154432135" 
+width=1 height=1><A 
+href="http://tongji.linezing.com/report.html?unit_id=2508695" target=_blank><IMG 
+border=0 alt=量子统计 
+src="http://js.tongji.linezing.com/stats.gif"></A><NOSCRIPT></NOSCRIPT></DIV>
+<DIV style="PADDING-LEFT: 12px; FLOAT: left">
+<SCRIPT type=text/javascript><!--
+google_ad_client = "ca-pub-2548953017344039";
+/* CNBlogs底部横幅 */
+google_ad_slot = "5315724703";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</SCRIPT>
+</DIV>
+<!--PageEndHtml Block End-->
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/google-analytics.js"></SCRIPT>
+</BODY></HTML>

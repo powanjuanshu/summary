@@ -1,0 +1,222 @@
+package amqtopic;
+import javax.jms.Connection;
+import javax.jms.JMSException;
+import javax.jms.MapMessage;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.Topic;
+import org.apache.activemq.ActiveMQConnectionFactory;
+public class CReceive implements MessageListener {
+	private Connection connection;
+	private Session session;
+	private MessageProducer publisher;
+	private MessageConsumer consumer;
+	private Topic topic;
+	private Topic control;
+	private String url = "failover:(tcp://localhost:61616)?initialReconnectDelay=100&maxReconnectAttempts=5";
+	public void init() {
+		try {
+			ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(url);
+			connection = factory.createConnection();
+			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			// 对方的topic 用于向 对方发消息
+			topic = session.createTopic("topic.oagent.crm");
+			consumer = session.createConsumer(topic);
+			
+			//这是接受消息后发送消息，也就是说这同时也是个producer，但这里被注释了 begin
+			// 本机 topic 用于监听
+			control = session.createTopic("topic.appserver.crm");
+			publisher = session.createProducer(control);
+			// 设置持久方式
+			// publisher.setDeliveryMode(DeliveryMode.PERSISTENT);
+			// this.sendmessage();
+			//这是接受消息后发送消息，也就是说这同时也是个producer，但这里被注释了 end
+			
+			consumer.setMessageListener(this);
+			connection.start();
+			
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
+	public void onMessage(Message message) {
+		try {
+			if (message instanceof MapMessage) {
+				MapMessage receiveMessage = (MapMessage) message;
+				System.out.println("消费者接受的消息："+receiveMessage.getStringProperty("remark"));
+				System.out.println("消费者接收的消息："+receiveMessage.getStringProperty("messageType"));
+			} else {
+				System.out.println("其它类型消息！");
+			}
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
+	public void close() throws JMSException {
+		System.out.println("消费者关闭连接");
+		if (publisher != null)
+			publisher.close();
+		if (session != null)
+			session.close();
+		if (connection != null)
+			connection.close();
+	}
+	public static void main(String[] args) {
+		CReceive kao = new CReceive();
+		kao.init();
+	}
+}
+-----------------------------------------------
+package amqtopic;
+import javax.jms.Connection;
+import javax.jms.JMSException;
+import javax.jms.MapMessage;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.Topic;
+
+import org.apache.activemq.ActiveMQConnectionFactory;
+public class CReceive2 implements MessageListener {
+	private Connection connection;
+	private Session session;
+	private MessageProducer publisher;
+	private MessageConsumer consumer;
+	private Topic topic;
+	private Topic control;
+	private String url = "failover:(tcp://localhost:61616)?initialReconnectDelay=100&maxReconnectAttempts=5";
+	public void init() {
+		try {
+			ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(url);
+			connection = factory.createConnection();
+			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			// 对方的topic 用于向 对方发消息
+			topic = session.createTopic("topic.oagent.crm");
+			consumer = session.createConsumer(topic);
+			
+			//这是接受消息后发送消息，也就是说这同时也是个producer，但这里被注释了 begin
+			// 本机 topic 用于监听
+			control = session.createTopic("topic.appserver.crm");
+			publisher = session.createProducer(control);
+			// 设置持久方式
+			// publisher.setDeliveryMode(DeliveryMode.PERSISTENT);
+			// this.sendmessage();
+			//这是接受消息后发送消息，也就是说这同时也是个producer，但这里被注释了 end
+			
+			consumer.setMessageListener(this);
+			connection.start();
+			
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
+	public void onMessage(Message message) {
+		try {
+			if (message instanceof MapMessage) {
+				MapMessage receiveMessage = (MapMessage) message;
+				System.out.println("消费者接受的消息："+receiveMessage.getStringProperty("remark"));
+				System.out.println("消费者接收的消息："+receiveMessage.getStringProperty("messageType"));
+			} else {
+				System.out.println("其它类型消息！");
+			}
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
+	public void close() throws JMSException {
+		System.out.println("消费者关闭连接");
+		if (publisher != null)
+			publisher.close();
+		if (session != null)
+			session.close();
+		if (connection != null)
+			connection.close();
+	}
+	public static void main(String[] args) {
+		CReceive2 kao = new CReceive2();
+		kao.init();
+	}
+}
+-----------------------------------------------
+package amqtopic;
+import javax.jms.Connection;
+import javax.jms.JMSException;
+import javax.jms.MapMessage;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.Topic;
+import org.apache.activemq.ActiveMQConnectionFactory;
+public class KSend {
+	private Connection connection;
+	private Session session;
+	private MessageProducer publisher;
+	private Topic topic;
+	private Topic control;
+	private String url = "failover:(tcp://localhost:61616)?initialReconnectDelay=100&maxReconnectAttempts=5";
+	public void init() {
+		try {
+			ActiveMQConnectionFactory factory=new ActiveMQConnectionFactory(url);
+			connection = factory.createConnection();
+			session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
+			// 对方的topic 用于向 对方发消息
+			topic = session.createTopic("topic.oagent.crm");
+			publisher = session.createProducer(topic);
+			
+			//这是回来的时候接受消息，也就是说这同时也是个consumer，但这里被注释了 begin
+			// 本机 topic 用于监听
+			control = session.createTopic("topic.appserver.crm");
+			// 设置持久方式
+			// publisher.setDeliveryMode(DeliveryMode.PERSISTENT);
+			// session.createConsumer(control).setMessageListener(this);
+			//这是回来的时候接受消息，也就是说这同时也是个consumer，但这里被注释了 end
+			
+			connection.start();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
+	protected void sendmessage() {
+		MapMessage msg2;
+		try {
+			msg2 = session.createMapMessage();
+			// 生成MapMessage 消息对象
+			// 特定字段放入Property数据区内
+			msg2.setStringProperty("messageType", "MapMessage");// 设置消息类型
+			// 如果需要消息回复，会根据这个topiID传回消息
+			msg2.setStringProperty("topicId", "topic.appserver.crm");// 设置Topic
+			msg2.setIntProperty("billcodeID",6112);//int类型的属性
+			msg2.setStringProperty("loginName", "风中叶");//String类型的属性
+			msg2.setStringProperty("title", "蕾丝袜");//String类型的属性
+			msg2.setStringProperty("remark", "我要黑色蕾丝边的");//String类型的属性
+			msg2.setString("desc002sz", "");
+			publisher.send(msg2);
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
+	public void close() throws JMSException {
+		System.out.println("生产者关闭连接");
+		if (publisher != null)
+			publisher.close();
+		if (session != null)
+			session.close();
+		if (connection != null)
+			connection.close();
+	}
+	public static void main(String[] args) {
+		KSend kao = new KSend();
+		kao.init();
+		kao.sendmessage();
+		try {
+			kao.close();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
+}
+-----------------------------------------------

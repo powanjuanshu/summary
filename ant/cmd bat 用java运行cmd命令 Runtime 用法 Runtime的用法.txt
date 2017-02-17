@@ -1,0 +1,83 @@
+------------调用外部命令删除一个文件
+package com;
+public class DeleteFile {
+	public static void main(String[] args) {
+		try {
+			String[] cmdArray = { "cmd", "/c", "del", "D:\\zzz\\a.txt"};
+			Runtime.getRuntime().exec(cmdArray);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+--------------------------
+package com;
+public class Ti {
+	public static void main(String args[]) {
+		try {
+			// 登网站
+			Process process=Runtime.getRuntime().exec("cmd.exe /c start http://www.hao123.net/");
+			// 使用用Ping命令
+			Process ee=Runtime.getRuntime().exec("cmd.exe /c start ping 10.5.2.19");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+-----------------------我使用Process pc = Runtime.getRuntime().exec("cmd /c ping 127.0.0.1");可以成功
+Process process = Runtime.getRuntime().exec("cmd /c del f:\\aaa.doc");    
+这样的调用是没有问题~   
+真正最正确的用BAT运行JAVA不显示DOS窗口（连闪一下都不闪）    
+今天写一个独立于RCP项目之外的SWT小工具，需要用批处理启动，偶写了一个批处理没闪DOS窗口，看得同事一愣一愣的。于是赶快把自己当年一点心得和大家分享下。   
+很多朋友在WINDOWS下会用批处理去启动自己的java程序，   
+一般的写法是   
+运行class：   
+java xx   
+运行jar：   
+java -jar xxx.jar   
+但是这样运行会有一个恶心的对话框停在那直到我们关闭程序。   
+于是很多人说可以这样   
+运行class：   
+start javaw xx   
+运行jar：   
+start javaw -jar xxx.jar    
+这种方法DOS窗口还是会一闪而过，这就算解决问题了吗？！网上很多人说是的.   
+对我们这种追求完美的人来说闪一下还是不能接受滴.   
+于是终极解决方案出现了！   
+那就是在批处理第一行加上@echo off   
+这样我们的批处理就变成了   
+运行class：   
+@echo off   
+start javaw xx   
+运行jar：   
+@echo off   
+start javaw -jar xxx.jar    
+绝对不闪了。哈哈哈。   
+解释一下   
+echo off   
+表示在此语句后所有运行的命令都不显示命令行本身    
+@ 表示运行时不显示本命令行   
+--------------------------
+package com;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+public class Tr {
+	public static void main(String[] args) {
+		Runtime rn = Runtime.getRuntime();
+		Process p = null;
+		try {
+			p = rn.exec("C:\\Windows\\system32\\notepad.exe f:\\gg.txt");
+			InputStream in = p.getInputStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String str = null;
+			while ((str = br.readLine()) != null) {
+				System.out.println(str);
+			}
+			br.close();
+		} catch (Exception e) {
+			System.out.println("Error   exec   notepad ");
+		}
+	}
+}
+--------------------

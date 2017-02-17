@@ -1,0 +1,7 @@
+ActvieMQ占用端口号在\conf\activemq.xml文件中定义。起缺省的端口号为：61616.如果需要改动缺省的端口号设置，
+可以通过修改activemq.xml文件：
+<!-- The transport connectors ActiveMQ will listen to --> 
+<transportConnectors>
+	<!-- DOS protection, limit concurrent connections to 1000 and frame size to 100MB -->
+	<transportConnector name="openwire" uri="tcp://0.0.0.0:61617?maximumConnections=1000&amp;wireformat.maxFrameSize=104857600"/>
+</transportConnectors>

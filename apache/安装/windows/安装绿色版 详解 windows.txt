@@ -1,0 +1,162 @@
+1、首先解压文件到当前目录
+
+1、修改conf/httpd.conf中的对应的路径:
+   Define SRVROOT "D:\software for zj\software\Apache24"
+   路径改为该包所在的位置，切勿使用中文；
+
+2、修改监听端口:Listen 8888
+   修改端口:ServerName localhost:8888
+
+3、运行--cmd命令框定位到bin目录下:
+情况一:httpd.exe -k install则安装服务到系统
+情况二:httpd.exe -k uninstall卸载安装在系统的服务
+情况三:直接输入httpd.exe进入调试模式，此情况表示服务已经开始，能进行使用
+
+开启服务:
+net start apache2.4
+
+关闭服务:
+net stop apache2.4
+
+4、虚拟主机配置:
+<VirtualHost *:8888>
+    ServerAdmin webmaster@dummy-host.example.com
+    DocumentRoot "${SRVROOT}/docs/dummy-host.example.com"
+    ServerName localhost
+	
+	ProxyPassMatch ^/admin/EAServer/(.*)$ ajp://localhost:8008/EAServer/$1
+    ProxyPass /admin ajp://localhost:8109/admin    
+	ProxyPass /IDE ajp://localhost:8109/EAServer  
+
+    ServerAlias www.dummy-host.example.com
+    ErrorLog "logs/dummy-host.example.com-error.log"
+    CustomLog "logs/dummy-host.example.com-access.log" common
+	
+ <Directory ${SRVROOT}/docs/dummy-host.example.com>
+        Options -Indexes FollowSymLinks
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+</VirtualHost>
+
+5、说明:
+ProxyPassMatch ^/admin/EAServer/(.*)$ ajp://localhost:8008/EAServer/$1
+
+正则表达式:匹配所有以 /admin/EAServer开头的,(.*)& 表示后段所有数据 == $1  ，进行赋值携带；
+然后通过ajp 跳转到 localhost:8008/EAServer/$1 对应的地址
+
+ProxyPass /admin ajp://localhost:8109/admin    
+说明:匹配所有 admin 结尾的请求，跳转到 localhost:8109/admin 项目上；
+例如:输入:http://localhost:8888/admin 则，跳转到了 http://localhost:8109/admin ，进行了代理过程
+-----------------------------------------------
+自己动手打造Apache和Mysql绿色免安装版
+我自己用了很久了，虽然很简单，但相信许多人还不知道，就写出来和大家共享
+下载原版，第一次安装时，装到D盘或其他盘
+再次安装系统时，不需要再重新安装Apache和MySQL，只需要打几个简单的命令即可！
+
+重装完系统后
+1. 运行CMD进入命令行
+2. 进入apache所在的目录下的bin目录，如 d:\apache\bin 运行
+httpd -k install
+只要这一步apache服务就安装好了
+3. 进入mysql所在的目录下的bin目录，如 d:\mysql\bin 运行
+mysqld -install
+也只要这一步Mysql服务就安装好了
+卸载
+和上面2步一样，进入bin目录
+apache卸载命令
+httpd -k uninstall
+mysql卸载命令
+mysqld -remove
+-----------------------------------------------
+windows下作为应用程序启动apache的方法
+
+步骤一 cmd打开命令行窗口，切换到apache安装目录下
+cd C:/MAS/TRSMAS/win31/apache/bin
+
+步骤二 安装apache服务器 installed Apache services
+httpd.exe -k install
+
+步骤三 修改配置文件
+编辑文件:<安装目录>/conf/httpd.conf
+
+步骤四 测试该服务的配置文件
+httpd.exe -n "MyServiceName" –t
+
+步骤五 启动已安装的apache服务
+httpd.exe -k start
+
+步骤六 测试安装结果
+http://localhost:port
+
+1. 未安装服务，现象如下图示——解决方案:执行步骤一、步骤二
+右下角显示windows下作为应用程序启动apache的方法
+双击打开右下角图标，显示
+
+2. 配置文件错误，现象如下图示——解决方案:执行步骤三
+
+知识扩展
+1. 安装/卸载Apache服务
+  1) 安装apache服务
+     httpd.exe -k install
+  2) 指定要安装的服务的名称（适用于电脑上有几个不同的Apache服务设施）
+     httpd.exe -k install -n "MyServiceName"
+  3) 指定服务配置文件的路径和名称
+     httpd.exe -k install -n "MyServiceName" -f "c:/files/my.conf"
+     注:若不使用特殊参数（如httpd.exe -k install），服务名称为Apache2.X，配置文件为conf/httpd.conf
+  4) 移除一个Apache服务
+     httpd.exe -k uninstall
+  5) 移除特定的Apache服务
+     httpd.exe -k uninstall -n "MyServiceName"
+
+2. 管理Apache服务
+   1) 启动已安装的Apache服务
+      httpd.exe -k start
+   2) 停止已安装的Apache服务
+      httpd.exe -k stop || httpd.exe -k shutdown
+   3) 重启已安装的Apache服务(迫使服务重读配置文件，适用于修改配置文件后)
+      httpd.exe -k restart
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

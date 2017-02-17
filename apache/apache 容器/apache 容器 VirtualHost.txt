@@ -1,0 +1,41 @@
+<VirtualHost 10.31.2.139>
+	ServerHost 10.31.2.139
+	DocumentRoot /usr/www/example
+	ServerAdmin Webmaster@example.com
+	CustomLog /var/log/www/exmaple.log
+</VirtualHost>
+容器是一系列指令的集合,语法和标记语言很相像,使用尖括号进行归类.容器在语义上和其他指令不同,具有一个开始和结束的分割行,在分割行之间的指令为容器内部的指令.例如由内核模块
+中的<VirtualHost>容器如下所示,该容器定义了一个虚拟主机.
+容器为里面的指令提供了上下文.在上面的例子中,指令只对访问www.example.com的请求进行响应.容器可以被嵌套使用,除非某个模块显示地声明容器不能嵌套.所有用到的指令,包括容器,都
+可能是上下文相关的,因此它们在某些具体的上下文中才有效.
+----------------
+建立虚拟Web站点
+
+1、基于IP的虚拟主机的配置 
+实例：
+添加不同的IP地址：
+# ifconfig eth0:0 192.168.0.2
+# route add -host 192.168.0.2 eth0:0
+编辑/etc/httd/conf/httpd.conf文件添加如下内容：
+<VirtualHost 192.168.0.2>
+	ServerAdmin webmaster@server.astronomy.org
+	DocumentRoot /var/www/mailserver
+	ServerName mail.astronomy.org
+	ErrorLog logs/mailserver error_log
+	CustomLog logs/mailserver-access_log common
+</VirtualHost>
+重启服务
+# /usr/local/apache2/bin/apachectl restart 
+
+2、基于域名的虚拟主机的配置 
+实例:在DNS中添加相关的主机记录,修改httpd.conf 文件
+NameVirtualHost 192.168.0.1
+<VirtualHost 192.168.0.1>
+	ServerAdmin webmaster@server.astronomy.org
+	DocumentRoot /var/www/mailserver
+	ServerName mail.astronomy.org
+	ErrorLog logs/mailserver error_log
+	CustomLog logs/nameserver access_log common
+</VirtualHost>
+重启服务
+# /usr/local/apache2/bin/apachectl restart

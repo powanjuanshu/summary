@@ -1,0 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+var data='[{"id":"1","name":"a"},{"id":"2","name":"b"}]';
+alert(eval(data));//会弹出json对象数组，[object Object],[object Object],[object Object]
+alert(eval(data).length);//json对象数组长度，3
+</script>
+</head>
+<body>
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+var data={
+		"code":1,
+		"message":"信息",
+		"persons":[{"id":1,"name":"张三","sex":"女"},{"id":2,"name":"李四","sex":"女"},{"id":3,"name":"王五","sex":"男"}],
+		"mather":{"mathername":"刘一","matherage":"50"}
+};//如果外面加了单引号，就必须按字符串的形式必须写成一行，不然会报错。
+alert(data);//直接就是一个json对象，不需要用eval把符合json格式的字符串转换成json对象
+var persons=data.persons;
+alert(persons);//打出josn对象数组，[object Object],[object Object],[object Object],如果persons后面带了引号，则打出的是字符串，所以加了单引号则必须用eval转换成json对象
+alert(persons.length);//可以打出它的长度为3
+alert(data.length);//打不出它的长度，打出为undefined，？
+</script>
+</head>
+<body>
+</body>
+</html>
+----------------------注意：直接定义的json对象打出不长度，字符串用eval转换的json对象可以打出长度!

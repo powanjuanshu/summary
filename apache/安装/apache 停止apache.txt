@@ -1,0 +1,2 @@
+停止已安装的Apache服务
+httpd.exe -k stop || httpd.exe -k shutdown
