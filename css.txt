@@ -1,0 +1,4 @@
+1.伪元素选择器:HTML元素:伪元素{属性:值}，常用伪元素:A:active选中超链接时的状态 A:hover光标移动到超链接上的状态 A:link超链接的正常状态 A:visited访问过的超链接状态 A:first-line段落中的第一行文本 P:first-letter段落中的第一个字
+2.类选择器与伪元素一起使用:HTML元素.类名:{属性:值}
+3.引css文件:<link rel="stylesheet" href="css/table.css" type="text/css">
+4.设置行内样式:display:inline;

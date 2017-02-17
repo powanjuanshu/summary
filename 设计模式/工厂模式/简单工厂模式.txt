@@ -1,0 +1,104 @@
+* 简单工厂模式Simple Factory又叫静态工厂模式,简单工厂模式的实质是由一个工厂类根据传入的参数,动态决定应该创建哪一个产品类(这些产品类继承自一个父类或接口)的实例
+
+* 该模式中包含的角色及职责:
+  工厂(Creator)角色:它是简单工厂模式的核心,创建所需要的产品对象.
+  抽象产品角色:它负责描述所有实例所共有的公共接口.
+  具体产品角色:是简单工厂模式的创建目标,所有创建的对象都是充当这个角色的某个具体类的实例.
+
+* 缺点:在工厂类中集中了所有实例的创建逻辑,违反了高内聚责任分配原则,将全部创建逻辑集中到了一个工厂类中,对系统的维护和扩展不利;
+* 使用场景:负责创建的对象比较少;客户只知道传入工厂类的参数,对于如何创建对象的逻辑不关心;容易违反高内聚责任分配原则,所以只在很简单的情况下应用;
+
+-------------
+package main;
+public class CarFactory {
+	public static Car getCarInstance(String type) {
+		Car car = null;
+		//如果没传type,可以读取文件或数据库获取type
+        	if("Benz".equals(type)) {
+            		car = new Benz();
+        	}
+        	if("Ford".equals(type)) {
+            		car = new Ford();
+        	}
+        	return car;
+    }
+}
+-------------
+package main;
+public interface Car {
+	public void launch();
+	public void stop();
+}
+-------------
+package main;
+public class Benz implements Car{
+	public void launch(){
+        System.out.println("benz start.....");
+    }
+    public void stop(){
+        System.out.println("benz stop.....");
+    }
+}
+-------------
+package main;
+public class Ford implements Car{
+    public void launch(){
+        System.out.println("ford launch...");
+    }
+    public void stop(){
+        System.out.println("ford stop....");
+    }
+}
+-------------
+package main;
+public class Main {
+	public static void main(String[] args) {
+		Car c = CarFactory.getCarInstance("Benz");
+        	c.launch();
+        	c.stop();
+        }
+    }
+}
+
+
+实例:
+//抽象产品角色
+public interface IProduct {
+    public void saleProduct();
+}
+//具体产品角色
+public class Product_A implements IProduct {
+    @Override
+    public void saleProduct(){
+    	
+    }
+
+}
+//具体产品角色
+public class Product_B implements IProduct {
+    @Override
+    public void saleProduct(){
+    	
+    }
+
+}
+//工厂角色
+public class Creator {
+    public IProduct createProduct(int productFlag){
+        switch(productFlag){
+            case 1:
+                return new Product_A();
+            case 2:
+                return new Product_B();
+            default:
+                return null; 
+        }
+    }
+}
+
+
+
+
+
+
+

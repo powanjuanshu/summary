@@ -1,0 +1,21 @@
+使用单例模式的好处在于可以节约内存,因为他限制了实例的个数,有利于java垃圾回收
+懒汉式
+public class Singleton{
+	private static Singleton instance=null;
+	private Singleton(){}
+	public static Singleton getInstance(){
+		if(instance==null){
+			instance=new Singleton();
+		}else{
+			return instance;
+		}
+	}
+}
+饿汉式
+public class Singleton{
+	private static Singleton instance=new Singleton();
+	private Singleton(){}
+	public static Singleton getInstance(){
+		retrun instance;
+	}	
+}

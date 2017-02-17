@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>java获取取得Timestamp类型的当前系统时间 -  - ITeye技术网站</title>
+    <meta name="description" content="java获取取得Timestamp类型的当前系统时间 格式：2010-11-04 16:19:42  方法1：  Timestamp d = new Timestamp(System.currentTimeMillis());  方法2：  Date date = new Date();        Timestamp nousedate = new Timestamp(date.getTime( ..." />
+    <meta name="keywords" content="date, timestamp, java java获取取得Timestamp类型的当前系统时间" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1337830746" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1332732182" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1324994303" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a href="http://www.iteye.com/job">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">guigulang</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://guigulang.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1507779">java获取取得Timestamp类型的当前系统时间</a>
+      <em class="actions">      </em>
+    </h3>
+    
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/date">date</a><a href="http://www.iteye.com/blogs/tag/timestamp">timestamp</a><a href="http://www.iteye.com/blogs/tag/java">java</a></div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    java获取取得Timestamp类型的当前系统时间 格式：2010-11-04 16:19:42 <br /><br />方法1： <br /><br /><br />Timestamp d = new Timestamp(System.currentTimeMillis()); <br /> <br /><br />方法2： <br /><br /><br />Date date = new Date();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />Timestamp nousedate = new Timestamp(date.getTime());<br /><br />-----------------------------<br />下为相关内容整合<br /><br /><br /><br />Java中Date及Timestamp时间相关内容 博客分类： Java编程<br />JavaSQLDAO.java.util.date java.sql.date java.sql.timestamp <br /><br />整理一： <br /><br />这里的一片文章，我个人认为讲解的很详细，有对 java.sql.Date的使用还有困惑的请看。 <br /><br />java.sql.Date 只存储日期数据不存储时间数据 <br /><br />// 会丢失时间数据<br />preparedStatement.setDate(1, new java.sql.Date(date.getTime())); <br /><br />//可以这样来处理 <br /><br />preparedStatement.setTimestamp(1, new java.sql.Timestamp(new java.util.Date().getTime())); <br /><br /><br />//想要得到完整的数据，包括日期和时间，可以这样 <br /><br />java.util.Date d = resultSet.getTimestamp(1); <br /><br />//这样处理更合适一些，可以避免一些潜在Timestamp 问题 <br /><br />java.util.Date d = new java.util.Date(resultSet.getTimestamp(1).getTime()); <br /><br />自己补的话 <br /><br />这样的话： <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 往数据库存储的时候可以接收 java.util.Date类型 再用getTime()方法得到代表那个Date对象的long值，再以这个long值 构造一个Timestamp对象 存进数据库中。 <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 从存数据库里取的时候，可以先得到Timestamp用他的getTime()方法得到long值，再以这个long值构造一个 java.util.Date对象，这样就可以对这个Date对象操作了。不如说 new SimpleTimeFormat("yyyyy-MM-dd HH:mm:ss").format()等等 <br /><br /> <br /><br />整理二： <br /><br />用Timestamp来记录日期时间还是很方便的，但有时候显示的时候是不需要小数位后面的毫秒的，这样就需要在转换为String时重新定义格式。 <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Timestamp转化为String: SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//定义格式，不显示毫秒 Timestamp now = new Timestamp(System.currentTimeMillis());//获取系统当前时间 String str = df.format(now);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String转化为Timestamp: SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");<br />String time = df.format(new Date()); Timestamp ts = Timestamp.valueOf(time);&nbsp;&nbsp;&nbsp;&nbsp; 整理三：&nbsp;&nbsp; 在 ResultSet中我们经常使用的setDate或getDate的数据类型是java.sql.Date，而在平时java程序中我们一般习惯使用 java.util.Date。因此在DAO层我们经常会碰到这俩种数据类型的相互转换，经过了一个下午的折腾，鄙人对两者的转换方法做出了小小总结，希望大家不吝指教。<br />两者的关系<br />java.lang.Object<br />&nbsp;&nbsp;&nbsp; |<br />&nbsp;&nbsp;&nbsp; +---java.util.Date<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +----java.sql.Date <br />从这个图中我们可以知道java.sql.Date是从java.util.Date继承过来的。<br /><br />相互转换 <br />1. 使用getTime()函数<br />这两个类都提供了getTime()函数，用于返回对应的毫秒数（long类型）。利用这个函数可以实现转换：<br />&nbsp;&nbsp;&nbsp; java.util.Date utilDate = new java.util.Date(sqlDate.getTime());&nbsp;&nbsp; // sql -&gt; util<br />&nbsp;&nbsp;&nbsp; java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());&nbsp;&nbsp; // util -&gt; sql<br /><br />2. 使用SimpleDateFormat类实现转换<br />SimpleDateFormat 是一个以国别敏感的方式格式化和分析数据的具体类。 它允许格式化 (date -&gt; text)、语法分析 (text -&gt; date)和标准化。<br />SimpleDateFormat dateFormat = new SimpleDateFormate("yyyy-MM-dd HH:mm:ss");<br />java.util.Date utilDate = dateFormat.parse(sqlDate.toString());<br /><br />3. 直接转换<br />由于java.sql.Date是从java.util.Date中继承过来的，所以可以直接用：<br />utilDate = sqlDate;<br /><br />4. 另类获得日期的方法：<br />SimpleDateFormat sy=new SimpleDateFormat("yyyy");<br />SimpleDateFormat sm=new SimpleDateFormat("MM");<br />SimpleDateFormat sd=new SimpleDateFormat("dd");<br />String syear=sy.format(date);<br />String smon=sm.format(date);<br />String sday=sd.format(date);<br /><br />ps： java.util.Date类中的getYear()要加上1900才可得到实际值，getMonth()则要加上1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />标签： &lt;script&gt;displayTags('java date timestamp sql 时间日期')&lt;/script&gt;java date timestamp sql 时间日期 <br />
+  </div>
+
+  
+
+
+  <IFRAME SRC="/iframe_ggbd/187" SCROLLING=no WIDTH=468 HEIGHT=60 FRAMEBORDER=0></IFRAME>
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      
+      
+      <a href="/blog/1175314" class="pre" title="myeclipse6.01注册码">myeclipse6.01注册码</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2012-05-02 16:45</li>
+      <li>浏览 81</li>
+      <li><a href="#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/1507779" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1507779;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'java获取取得Timestamp类型的当前系统时间');
+  });
+  $$('#main .blog_comment > div').each(function(comment){// comment
+    var post_id = comment.id.substr(2);
+    $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+      var location = window.location;
+      source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+      source_url += "#" + comment.id;
+      pre.writeAttribute('codeable_id', post_id);
+      pre.writeAttribute('codeable_type', "BlogComment");
+      pre.writeAttribute('source_url', source_url);
+      pre.writeAttribute('pre_index', index);
+      pre.writeAttribute('title', 'java获取取得Timestamp类型的当前系统时间');
+    });
+  });
+  code_favorites_init();
+
+  fix_image_size($$('div.blog_content img'), 700);
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://guigulang.iteye.com'><img alt="guigulang的博客" class="logo" src="http://www.iteye.com/images/user-logo.gif?1324994303" title="guigulang的博客: " /></a></div>
+  <div id="blog_owner_name">guigulang</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 260 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1324994303" title="男" /></li>
+              <li>来自: 北京</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://dilly61.iteye.com' target='_blank'><img alt="dilly61的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="dilly61的博客: ericathy" /></a></div>
+                <div class="left"><a href='http://dilly61.iteye.com' target='_blank'>dilly61</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://zwtlong.iteye.com' target='_blank'><img alt="zwtlong的博客" class="logo" src="http://www.iteye.com/upload/logo/user/306528/758f7782-183d-3093-9755-ef215cea92a3-thumb.jpg?1284081452" title="zwtlong的博客: zwt" /></a></div>
+                <div class="left"><a href='http://zwtlong.iteye.com' target='_blank'>zwtlong</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://huangchunwu.iteye.com' target='_blank'><img alt="huangchunwu的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="huangchunwu的博客: " /></a></div>
+                <div class="left"><a href='http://huangchunwu.iteye.com' target='_blank'>huangchunwu</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://gooddayhello.iteye.com' target='_blank'><img alt="gooddayhello的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="gooddayhello的博客: " /></a></div>
+                <div class="left"><a href='http://gooddayhello.iteye.com' target='_blank'>gooddayhello</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (2)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (0)
+                </li>
+                <li><a href="/blog/solution">我解决的问题</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2012-05">2012-05</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2011-09">2011-09</a> (1)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2011 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+    
+  </body>
+</html>

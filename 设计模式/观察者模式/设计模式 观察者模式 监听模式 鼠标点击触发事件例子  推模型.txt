@@ -1,0 +1,59 @@
+package list;
+public class Main {
+	public static void main(String[] args) {
+		Mouse mouse = new Mouse();
+		mouse.addClickListener(new ClickListener() {
+			@Override
+			public void handleEvent(Event event) {
+				System.out.println("鼠标点击了一次");
+				System.out.println("鼠标横坐标："+event.HORIZONTAL);
+				System.out.println("鼠标纵坐标："+event.VERTICAL);
+			}
+		});
+		
+		//模鼠标点击事件
+		Event event=new Event(10, 20);
+		mouse.click(event);
+	}
+}
+---------------------------------------------------------------------
+package list;
+public class Mouse {
+	private ClickListener listener;
+	public void addClickListener(ClickListener listener) {
+		this.listener = listener;
+	}
+	public void click(Event event){
+		if (listener!=null){
+			listener.handleEvent(event);
+		}
+	}
+}
+---------------------------------------------------------------------
+package list;
+public interface ClickListener {
+	public void handleEvent(Event event);
+}
+---------------------------------------------------------------------
+package list;
+public class Event {
+	public int HORIZONTAL=0;//鼠标横坐标
+	public int VERTICAL=0;//鼠标纵坐标
+	public Event(int hORIZONTAL, int vERTICAL) {
+		HORIZONTAL = hORIZONTAL;
+		VERTICAL = vERTICAL;
+	}
+}
+---------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+

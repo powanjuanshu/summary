@@ -1,0 +1,483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>XAMPP&nbsp;和&nbsp;VMWare&nbsp;的端口443冲突的解决_MrHsia_新浪博客</title>
+<meta name="keywords" content="XAMPP&nbsp;和&nbsp;VMWare&nbsp;的端口443冲突的解决_MrHsia_新浪博客,MrHsia,杂谈" />
+<meta name="description" content="XAMPP&nbsp;和&nbsp;VMWare&nbsp;的端口443冲突的解决_MrHsia_新浪博客,MrHsia," />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="mobile-agent" content="format=html5; url=http://blog.sina.cn/dpool/blog/s/blog_53061af00101gs79.html?vt=4">
+<meta http-equiv="mobile-agent" content="format=wml; url=http://blog.sina.cn/dpool/blog/ArtRead.php?nid=53061af00101gs79&vt=1">
+<!–[if lte IE 6]>
+<script type="text/javascript">
+try{
+document.execCommand("BackgroundImageCache", false, true);
+}catch(e){}
+</script>
+<![endif]–>
+<script type="text/javascript">
+window.staticTime=new Date().getTime();
+</script>
+<link rel="pingback" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php?rsd" />
+<link href="http://blog.sina.com.cn/blog_rebuild/blog/wlwmanifest.xml" type="application/wlwmanifest+xml" rel="wlwmanifest" />
+<link rel="alternate" type="application/rss+xml" href="http://blog.sina.com.cn/rss/1392909040.xml" title="RSS" />
+<link href="http://simg.sinajs.cn/blog7style/css/conf/blog/article.css" type="text/css" rel="stylesheet" /><link href="http://simg.sinajs.cn/blog7style/css/common/common.css" type="text/css" rel="stylesheet" /><link href="http://simg.sinajs.cn/blog7style/css/blog/blog.css" type="text/css" rel="stylesheet" /><link href="http://simg.sinajs.cn/blog7style/css/module/common/blog.css" type="text/css" rel="stylesheet" /><style id="tplstyle" type="text/css">@charset "utf-8";@import url("http://simg.sinajs.cn/blog7newtpl/css/1/1_8/t.css");
+</style>
+<style id="positionstyle"  type="text/css">
+.sinabloghead .blogtoparea{ left:139px;top:40%;}
+.sinabloghead .blognav{ left:139px;top:70%;}
+</style>
+<style id="bgtyle"  type="text/css">
+</style>
+<style id="headtyle"  type="text/css">
+</style>
+<style id="navtyle"  type="text/css">
+</style>
+<script type="text/javascript" src="http://d1.sina.com.cn/litong/zhitou/sspnew.js"></script></head>
+<body>
+<!--$sinatopbar-->
+<div style="z-index:512;" class="nsinatopbar">
+  <div style="position:absolute;left:0;top:0;" id="trayFlashConnetion"></div>
+  <div class="ntopbar_main"> 
+    <a id="login_bar_logo_link_350" href="http://blog.sina.com.cn" target="_blank"><img class="ntopbar_logo" src="http://simg.sinajs.cn/blog7style/images/common/topbar/topbar_logo.gif" width="100" alt="新浪博客"></a>
+    <div class="ntopbar_floatL">
+      <div class="ntopbar_search" id="traySearchBar"></div>
+	  <div class="ntopbar_ad" id="loginBarActivity" style="display:none;"></div>
+    </div>
+    <div class="ntopbar_loading"><img src="http://simg.sinajs.cn/blog7style/images/common/loading.gif">加载中…</div>
+  </div>
+</div>
+<!--$end sinatopbar-->
+
+<div class="sinabloga" id="sinabloga">
+	<div id="sinablogb" class="sinablogb">
+
+	   
+ <div id="sinablogHead" class="sinabloghead">
+     <div style="display: none;" id="headflash" class="headflash"></div>
+	   <div id="headarea" class="headarea">
+      <div id="blogTitle" class="blogtoparea">
+      <h1 id="blogname" class="blogtitle"><a href="http://blog.sina.com.cn/xrongfu"><span id="blognamespan">加载中...</span></a></h1>
+	  		
+					<div id="bloglink" class="bloglink"><a href="http://blog.sina.com.cn/xrongfu">http://blog.sina.com.cn/xrongfu</a>  <a onclick="return false;" class="CP_a_fuc" href="#" id="SubscribeNewRss">[<cite>订阅</cite>]</a><a class="CP_a_fuc" href="javascript:void(scope.pa_add.add('1392909040'));">[<cite>手机订阅</cite>]</a></div>
+      </div>
+      <div class="blognav" id="blognav">
+      			  <div id="blognavBg" class="blognavBg"></div> <div class="blognavInfo"> 
+		<span><a   href="http://blog.sina.com.cn/xrongfu">首页</a></span>
+      <span><a class="on" href="http://blog.sina.com.cn/s/articlelist_1392909040_0_1.html">博文目录</a></span>
+      <span><a href="http://photo.blog.sina.com.cn/xrongfu">图片</a></span>
+      <span class="last"><a  href="http://blog.sina.com.cn/s/profile_1392909040.html">关于我</a></span></div>
+      </div>      		      		 	
+      
+             <div class="autoskin" id="auto_skin">
+       </div>
+
+<div class="adsarea">
+     <a href="#"><div id="template_clone_pic" class="pic"></div></a>
+     <div id="template_clone_link" class="link wdc_HInf"></div>
+     <div id="template_clone_other" class="other"></div>        
+</div>
+    </div>
+    </div>
+    
+    <!--主题内容开始 -->
+    <div class="sinablogbody" id="sinablogbody">
+		
+	<!--第一列start-->
+    <div id="column_1" class="SG_colW21 SG_colFirst"><div class="SG_conn" id="module_901">
+    <div class="SG_connHead">
+            <span class="title" comp_title="个人资料">个人资料</span>
+            <span class="edit">
+                        </span>
+    </div>
+    <div class="SG_connBody">
+        <div class="info">
+                         
+            <div class="info_img" id="comp_901_head"><img src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" real_src ="http://p1.sinaimg.cn/1392909040/180/36711349097333" id="comp_901_head_image" width="180" height="180" alt="MrHsia" title="MrHsia" /></div>
+            
+            <div class="info_txt">
+              <div class="info_nm">
+                <img id="comp_901_online_icon" style="display:none;" class="SG_icon SG_icon1" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" width="15" height="15" align="absmiddle" />
+                <span class="SG_txtb"><strong id="ownernick">MrHsia                                </strong></span>
+                
+                <div class="clearit"></div>
+              </div>
+              <div class="info_btn1">
+                <a target="_blank" href="http://weibo.com/u/1392909040?source=blog" class="SG_aBtn SG_aBtn_ico"><cite><img class="SG_icon SG_icon51" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" width="15" height="15" align="absmiddle" />微博</cite></a>
+                <div class="clearit"></div>
+              </div>
+    <div class="SG_j_linedot"></div>        <div class="info_locate" id = "info_locate_id">
+<div class="SG_j_linedot"></div>
+<div class="info_btn2">
+    <p>
+    <a href="javascript:void(0);" class="SG_aBtn " id="comp901_btn_invite"><cite >加好友</cite></a>
+    <a href="javascript:void(0);" class="SG_aBtn" id="comp901_btn_sendpaper"><cite >发纸条</cite></a>
+    </p>
+    <p>
+    <a href="http://blog.sina.com.cn/s/profile_1392909040.html#write" class="SG_aBtn"   id="comp901_btn_msninfo"><cite>写留言</cite></a>
+    <a href="#" onclick="return false;" class="SG_aBtn"  id="comp901_btn_follow"><cite onclick="Module.SeeState.add()">加关注</cite></a>
+    </p>
+    <div class="clearit"></div>
+</div>
+<div class="SG_j_linedot"></div>
+</div>
+                  <div class="info_list">     
+                                   <ul class="info_list1">
+                    <li><span class="SG_txtc">博客等级：</span><span id="comp_901_grade"><img src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" real_src="http://simg.sinajs.cn/blog7style/images/common/number/1.gif"  /><img src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" real_src="http://simg.sinajs.cn/blog7style/images/common/number/3.gif"  /></span></li>
+                    <li><span class="SG_txtc">博客积分：</span><span id="comp_901_score"><strong>0</strong></span></li>
+                    </ul>
+                    <ul class="info_list2">
+                    <li><span class="SG_txtc">博客访问：</span><span id="comp_901_pv"><strong>37,585</strong></span></li>
+                    <li><span class="SG_txtc">关注人气：</span><span id="comp_901_attention"><strong>6</strong></span></li>
+                    <li><span class="SG_txtc">获赠金笔：</span><strong id="comp_901_d_goldpen">0支</strong></li>
+                    <li><span class="SG_txtc">赠出金笔：</span><strong id="comp_901_r_goldpen">0支</strong></li>
+					<li class="lisp" id="comp_901_badge"><span class="SG_txtc">荣誉徽章：</span></li>
+                    </ul>
+                  </div>
+<div class="clearit"></div>
+    </div>
+    <div class="clearit"></div>
+</div>
+            </div>       
+            <div class="SG_connFoot"></div>
+</div>
+<div id="module_903" class="SG_conn ">
+    <div class="SG_connHead">
+    <span comp_title="相关博文" class="title">相关博文</span>
+    <span class="edit"> </span>
+    </div>
+    <div class="SG_connBody">
+    <div class="atcTitList relaList">        <ul class="">
+
+                <li class="SG_j_linedot1" style="display:none;">
+            <p id="atcTitLi_SLOT_41" class="atcTitCell_tit SG_dot" style="display:none">
+        </p>
+        </li>
+        <li class="SG_j_linedot1" style="display:none;">
+            <p id="atcTitLi_SLOT_42"  class="atcTitCell_tit SG_dot" style="display:none">
+        </p>
+        </li>
+        
+                	</ul>
+    <div class="atcTit_more"><span class="SG_more"><a href="http://blog.sina.com.cn/" target="_blank">更多&gt;&gt;</a></span></div></div>    </div>
+    <div class="SG_connFoot"></div>
+  </div>
+<div class="SG_conn " id="module_904">
+<div class="SG_connHead">
+<span class="title">推荐博文</span>
+</div>
+<div class="SG_connBody ">
+	<div class="atcTitList relaList">		<ul class="">
+			<li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" title="南航的一份内部文件" target="_blank" href="http://blog.sina.com.cn/s/blog_71ad0be10102wa7y.html?tj=2?tj=2">南航的一份内部文件</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1907166177" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" title="一个村43名留守儿童妈妈都跑了" target="_blank" href="http://blog.sina.com.cn/s/blog_62de07120102waj6.html?tj=2?tj=2">一个村43名留守儿童妈妈都跑了</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1658717970" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" title="【城记】在香港养儿育女要花多少" target="_blank" href="http://blog.sina.com.cn/s/blog_4949b3d50102w613.html?tj=2?tj=2">【城记】在香港养儿育女要花多少</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1229566933" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" title="是什么让我们失去了义气--谈谈" target="_blank" href="http://blog.sina.com.cn/s/blog_56ee7ff70102w0wg.html?tj=2?tj=2">是什么让我们失去了义气--谈谈</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1458470903" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" title="普京对付土耳其没有信息战优势" target="_blank" href="http://blog.sina.com.cn/s/blog_470071c90102w3ys.html?tj=2?tj=2">普京对付土耳其没有信息战优势</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1191211465" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" title="普京是美帝通吃中东的拦路虎" target="_blank" href="http://blog.sina.com.cn/s/blog_66ccfca60102w2j8.html?tj=2?tj=2">普京是美帝通吃中东的拦路虎</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1724710054" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" title="50万元的停车位是市场定价吗" target="_blank" href="http://blog.sina.com.cn/s/blog_49b150820102vwuf.html?tj=2?tj=2">50万元的停车位是市场定价吗</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1236357250" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" title="谁来证实书记“只有一套房”" target="_blank" href="http://blog.sina.com.cn/s/blog_77b39ffd0102wnhi.html?tj=2?tj=2">谁来证实书记“只有一套房”</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/2008260605" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" title="还有比“进京证”更奇葩的吗？" target="_blank" href="http://blog.sina.com.cn/s/blog_62ec52d70102wbdq.html?tj=2?tj=2">还有比“进京证”更奇葩的吗？</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1659654871" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" title="碧翰烽：习近平对乌镇的四字特别" target="_blank" href="http://blog.sina.com.cn/s/blog_4c870d1a0102w0bt.html?tj=2?tj=2">碧翰烽：习近平对乌镇的四字特别</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1283919130" class="SG_linkb"></a></p>
+		</li>		</ul>
+		<div id="atcPicList">
+		</div>
+	<div class="atcTit_more"><span class="SG_more"><a target="_blank" href="http://blog.sina.com.cn/">查看更多</a>&gt;&gt;</span></div></div></div>
+<div class="SG_connFoot"></div>
+</div>
+</div>
+	<!--第一列end-->
+	
+	<!--第二列start-->
+	<div id="column_2" class="SG_colW73">	
+<div id="module_920" class="SG_conn">
+	<div class="SG_connHead">
+	    <span comp_title="正文" class="title">正文</span>
+	    <span class="edit"><span id="articleFontManage" class="fontSize">字体大小：<a href="javascript:;" onclick="changeFontSize(2);return false;">大</a> <strong>中</strong> <a href="javascript:;" onclick="changeFontSize(0);return false;">小</a></span></span>
+	</div>
+    <div class="SG_connBody">
+<!--博文正文 begin -->
+	<div id="articlebody" class="artical" favMD5='{"53061af00101gs79":"f165f20d2e1393f327e0e854ea8f9b67"}'>
+		<div class="articalTitle"> 
+			
+								<h2 id="t_53061af00101gs79" class="titName SG_txta">XAMPP&nbsp;和&nbsp;VMWare&nbsp;的端口443冲突的解决</h2>
+			
+					<span class="img2">
+				<img width="15" height="15" align="absmiddle" title="此博文包含图片" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" class="SG_icon SG_icon18"/>	
+			</span>
+					<span class="time SG_txtc">(2014-05-11 19:24:28)</span><div class="turnBoxzz"><a href="javascript:;" class="SG_aBtn SG_aBtn_ico SG_turn"  action-type="reblog" action-data="{srcBlog:1, blogId:'53061af00101gs79'}"><cite><img class="SG_icon SG_icon111" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" width="15" height="15" align="absmiddle">转载<em class="arrow">▼</em></cite></a></div>		</div>
+		<div class="articalTag" id="sina_keyword_ad_area">
+			<table>
+				<tr>
+					<td class="blog_tag">
+					<script>
+					var $tag='杂谈';
+					var $tag_code='0bbc13ccf2aac5b4e78f413e012686e1';
+					var $r_quote_bligid='53061af00101gs79';
+					var $worldcup='0';
+					var $worldcupball='0';
+					</script>
+											<span class="SG_txtb">标签：</span>
+																				<h3><a href="http://search.sina.com.cn/?c=blog&q=%D4%D3%CC%B8&by=tag" target="_blank">杂谈</a></h3>
+																</td>
+					<td class="blog_class">
+											<span class="SG_txtb">分类：</span>
+						<a target="_blank" href="http://blog.sina.com.cn/s/articlelist_1392909040_2_1.html">开发杂记</a>
+										</td>
+				</tr>
+			</table>
+		</div>
+						<!-- 正文开始 -->
+		<div id="sina_keyword_ad_area2" class="articalContent   newfont_family">
+			<p ABP="356"><span STYLE="FonT-siZe: 18px">在电脑里装了VMware后，再要装xampp，十有八九就会出现这个问题：</SPAN></P>
+<p ABP="358">10:21:18&nbsp;<wbr> [Apache]
+&nbsp;<wbr>Problem detected!<br ABP="359" />
+10:21:18&nbsp;<wbr> [Apache] &nbsp;<wbr>Port 443 in
+use by ""d:\Program Files (x86)\VM\vmware-hostd.exe" -u
+"C:\ProgramData\VMware\hostd\config.xml"" with PID 2764!<br ABP="360" />
+10:21:18&nbsp;<wbr> [Apache] &nbsp;<wbr>Apache WILL
+NOT start without the configured ports free!<br ABP="361" />
+10:21:18&nbsp;<wbr> [Apache] &nbsp;<wbr>You need to
+uninstall/disable/reconfigure the blocking application<br ABP="362" />
+10:21:18&nbsp;<wbr> [Apache] &nbsp;<wbr>or
+reconfigure Apache and the Control Panel to listen on a different
+port<br ABP="363" /></P>
+<p ABP="364"><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: 宋体, simsun">这个问题是处在VMware上，VMware将443端口占用了，而apache也需要443端口。所以，想要开启apache的服务，必须要将VMware端口改变。</SPAN></P>
+<p ABP="366"><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: 宋体, simsun">操作如下：</SPAN></P>
+<p ABP="368"><span STYLE="FonT-siZe: 14px; FonT-FAMiLY: 宋体, simsun"><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: 宋体, simsun">1.打开菜单&nbsp;<wbr>编辑→参数（</SPAN><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: comic sans ms">Edit&ndash;&gt;&nbsp;<wbr>Preferences</SPAN><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: 宋体, simsun">），如下图：</SPAN></SPAN></P>
+<p ABP="373"><img STYLE="CUrsor: pointer" BORDER="0" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" real_src ="http://www.52itbc.com/upfiles/file/201402/20140209103017876.jpg" WIDTH="625" HEIGHT="351" ABP="374"  ALT="XAMPP&nbsp;<wbr>和&nbsp;<wbr>VMWare&nbsp;<wbr>的端口443冲突的解决"  TITLE="XAMPP&nbsp;<wbr>和&nbsp;<wbr>VMWare&nbsp;<wbr>的端口443冲突的解决" /></P>
+<p ABP="375"><span STYLE="FonT-siZe: 18px"><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: 宋体, simsun">2.</SPAN>选择&nbsp;<wbr>共享虚拟机（<span STYLE="FonT-siZe: 18px; FonT-FAMiLY: comic sans ms">Shared&nbsp;<wbr>VMs</SPAN>），如下图：</SPAN></P>
+<p ABP="379"><img STYLE="CUrsor: pointer" BORDER="0" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" real_src ="http://www.52itbc.com/upfiles/file/201402/20140209103056596.png" WIDTH="625" HEIGHT="492" ABP="380"  ALT="XAMPP&nbsp;<wbr>和&nbsp;<wbr>VMWare&nbsp;<wbr>的端口443冲突的解决"  TITLE="XAMPP&nbsp;<wbr>和&nbsp;<wbr>VMWare&nbsp;<wbr>的端口443冲突的解决" /></P>
+<p ABP="381"><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: 宋体, simsun">看，这里的HTTPS端口是443，正是apache需要的。更改它。</SPAN></P>
+<p ABP="383"><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: 宋体, simsun">3.<span STYLE="FonT-siZe: 18px; FonT-FAMiLY: 宋体">点击&nbsp;<wbr>改变位置（</SPAN><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: comic sans ms">Change&nbsp;<wbr>Setting），如下图：</SPAN></SPAN></P>
+<p ABP="387"><img STYLE="CUrsor: pointer" BORDER="0" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" real_src ="http://www.52itbc.com/upfiles/file/201402/20140209103136683.png" WIDTH="625" HEIGHT="495" ABP="388"  ALT="XAMPP&nbsp;<wbr>和&nbsp;<wbr>VMWare&nbsp;<wbr>的端口443冲突的解决"  TITLE="XAMPP&nbsp;<wbr>和&nbsp;<wbr>VMWare&nbsp;<wbr>的端口443冲突的解决" /></P>
+<p ABP="389"><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: 宋体, simsun">4.&nbsp;<wbr>点击&nbsp;<wbr>禁用共享（<span STYLE="FonT-siZe: 18px; FonT-FAMiLY: comic sans ms">Disable&nbsp;<wbr>Sharing），如下图：</SPAN></SPAN></P>
+<p ABP="392"><img STYLE="CUrsor: pointer" BORDER="0" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" real_src ="http://www.52itbc.com/upfiles/file/201402/20140209103211138.png" WIDTH="625" HEIGHT="494" ABP="393"  ALT="XAMPP&nbsp;<wbr>和&nbsp;<wbr>VMWare&nbsp;<wbr>的端口443冲突的解决"  TITLE="XAMPP&nbsp;<wbr>和&nbsp;<wbr>VMWare&nbsp;<wbr>的端口443冲突的解决" /></P>
+<p ABP="394"><span STYLE="FonT-siZe: 18px; FonT-FAMiLY: 宋体, simsun">5.将数字改变，如449，如下图：</SPAN></P>
+<p ABP="396"><img STYLE="CUrsor: pointer" BORDER="0" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" real_src ="http://www.52itbc.com/upfiles/file/201402/20140209103238730.png" WIDTH="625" HEIGHT="495" ABP="397"  ALT="XAMPP&nbsp;<wbr>和&nbsp;<wbr>VMWare&nbsp;<wbr>的端口443冲突的解决"  TITLE="XAMPP&nbsp;<wbr>和&nbsp;<wbr>VMWare&nbsp;<wbr>的端口443冲突的解决" /></P>
+<p ABP="398">接下来启用共享，在开启apache，是不是问题就解决了呢？</P>
+<p ABP="399">
+对了，还要注意的是，apache的80端口和Windows的IIS也冲突了。解决方法就是更改目录\xampp\apache\conf下的httpd.conf文件，用记事本打开，替换里面所有的80为8080.好了，这下xampp的apache就可以正常开启了！</P>							
+		</div>
+						<!-- 正文结束 -->
+		<div id='share' class="shareUp">
+        	<div class="share SG_txtb">
+			分享： 
+			<div class="bshare-custom" style="display:inline;margin-left:5px;"><a title="分享到新浪微博" class="bshare-sinaminiblog" href="javascript:void(0);"></a><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+			</div>
+			</div>
+            <div class="up">
+	        	<div title="喜欢后让更多人看到" id="dbox_53061af00101gs79" class="upBox upBox_click" style="cursor: pointer;">
+	            	<p ti_title="XAMPP&nbsp;和&nbsp;VMWare&nbsp;的端口443冲突的解决" id="dbox2_53061af00101gs79" class="count" ></p>
+	                <p class="link"><img width="15" height="15" align="absmiddle" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" class="SG_icon SG_icon34">喜欢</p>
+	            </div>
+<!--
+                <div class="upBox upBox_add">
+                    <p class="count">0</p>
+                    <p class="link"><img width="20" height="16" align="absmiddle" title="推荐" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" class="SG_icon SG_icon214">赠金笔</p>
+                </div>
+-->
+                                <div class="upBox upBox_add">
+                    <p class="count" id="goldPan-num">0</p>
+                    <p class="link" id="goldPan-give"><img class="SG_icon SG_icon214" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" width="20" height="16" title="赠金笔" align="absmiddle">赠金笔</p>
+                </div>
+                
+	        </div>
+            <div class="clearit"></div>
+		</div>
+		<div class="articalInfo">
+			<!-- 分享到微博 {$t_blog} -->
+			<div class="IL">
+				阅读<span id="r_53061af00101gs79" class="SG_txtb"></span><em class="SG_txtb">┊</em> 
+				<a href="#commonComment">评论</a> <span id="c_53061af00101gs79" class="SG_txtb"></span><em class="SG_txtb">┊</em>				<a href="javascript:;" onclick="$articleManage('53061af00101gs79',5);return false;">收藏</a><span id="f_53061af00101gs79"  class="SG_txtb"></span>
+				<em class="SG_txtb">┊</em><a href="#" id="quote_set_sign" onclick="return false ;">转载</a><a  href="#" id="z_53061af00101gs79" onclick="return false ;" class="zznum"></a>				<span id="fn_XAMPP&nbsp;和&nbsp;VMWare&nbsp;的端口443冲突的解决" class="SG_txtb"></span><em class="SG_txtb">┊</em>
+				<a onclick="return false;" href="javascript:;" ><cite id="d1_digg_53061af00101gs79">喜欢</cite></a><a id="d1_digg_down_53061af00101gs79" href="javascript:;" ><b>▼</b></a>
+									<em class="SG_txtb">┊</em><a href="http://blog.sina.com.cn/main_v5/ria/print.html?blog_id=blog_53061af00101gs79" target="_blank">打印</a><em class="SG_txtb">┊</em><a id="q_53061af00101gs79" onclick="report('53061af00101gs79');return false;" href="#">举报</a>
+											</div>
+			<div class="IR">
+				<table>
+					<tr>
+											<th class="SG_txtb" scope="row">已投稿到：</th>
+						<td>
+							<div class="IR_list">
+								<span><img class="SG_icon SG_icon36" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" width="15" height="15" title="排行榜" align="absmiddle" /> <a href="http://blog.sina.com.cn/lm/114/117/day.html" class="SG_linkb" target="_blank">排行榜</a></span>							</div>
+						</td>
+										</tr>
+									</table>
+			</div>
+		</div>
+		<div class="clearit"></div>
+		<div class="blogzz_zzlist borderc" id="blog_quote" style="display:none">加载中，请稍候......</div>
+		<div class="articalfrontback SG_j_linedot1 clearfix" id="new_nextprev_53061af00101gs79">
+							<div><span class="SG_txtb">前一篇：</span><a href="http://blog.sina.com.cn/s/blog_53061af00101gkle.html">Apache+Subversion+SSL搭建版本控制服务器</a></div>
+										<div><span class="SG_txtb">后一篇：</span><a href="http://blog.sina.com.cn/s/blog_53061af00101gykq.html">浅谈ALM与PLM区别</a></div>
+					</div>
+		<div class="clearit"></div>
+							
+		<div id="loginFollow"></div>
+				<div class="allComm">
+			<div  class="allCommTit" >
+				<div class="SG_floatL">
+				    <strong>评论</strong>
+				    <span id="commAd_1" style="display:none;">
+				        <span style="margin-left:15px; width:220px; display:inline-block;"><a target="_blank" href="http://blog.sina.com.cn/lm/8/2009/0325/105340.html">重要提示：警惕虚假中奖信息</a></span>
+				    </span>
+				</div>
+				<div class="SG_floatR"><a class="CP_a_fuc" href="#post">[<cite>发评论</cite>]</a></div>
+			</div>
+			<ul id="article_comment_list" class="SG_cmp_revert"><!-- 循环始 --><li>评论加载中，请稍候...</li><!-- 循环终  --></ul>
+			<div class="clearit"></div>
+			<div class="myCommPages SG_j_linedot1">
+				<div class="SG_page" id="commentPaging" style="display:none;">
+					<ul class="SG_pages">
+					</ul>
+				</div>
+				<div class="clearit"></div>
+			</div>
+			<a name="post"></a>
+			<div class="writeComm">
+				<div class="allCommTit">
+					<div class="SG_floatL">
+					    <strong>发评论</strong>
+					    <span></span>
+					</div>
+					<div class="SG_floatR"></div>
+				</div>
+				<div class="wrCommTit">
+					<div class="SG_floatL" id="commentNick" style="display:none;"></div>
+				</div>
+				<div class="formTextarea">
+					<div style="float:left;" id="commonComment">
+					<iframe id="postCommentIframe"  frameborder="0" style="border:1px solid #C7C7C7;
+		height:158px;width:448px;maring-top:1px;background-color:white;" src="http://blog.sina.com.cn/main_v5/ria/blank2.html"></iframe>
+					<textarea id="commentArea" tabindex="1" style="display:none;"></textarea>
+					</div>
+					<div id="mobileComment" style="float:left;display:none;">
+						<textarea id="mbCommentTa" style="width:438px;height:150px;border:1px solid #C7C7C7;line-height:18px;padding:5px;"></textarea>
+					</div>
+					<div class="faceblk" id="faceWrap">
+						<div id="smilesSortShow" class="faceline1">
+						</div>
+						<ul id="smilesRecommended" class="faceline01"></ul>
+					</div>
+					<div class="clearit"></div>
+				</div>
+				<div class="formLogin">
+					<div class="SG_floatL"> 
+					<p id="commentlogin" style="display:none;"><span>登录名：</span><input type="text" style="width: 115px;" id="login_name" tabindex="2"/>   <span>密码：</span><input type="password" style="width: 115px;" id="login_pass" tabindex="3"/>   <a href="http://login.sina.com.cn/getpass.html" target="_blank">找回密码</a>   <a href="http://login.sina.com.cn/signup/signup.php?entry=blog&src=blogicp&srcuid=1392909040" target="_blank">注册</a>	<input type="checkbox" id="login_remember"/><label for="login_remember" style="display:inline-block;" title="建议在网吧/公用电脑上取消该选项">记住登录状态</label></p><p id="commentloginM" style="display:none;"><span>昵&nbsp;&nbsp;&nbsp;称：</span><input type="text" style="width: 115px;" id="comment_anonyous"  value="新浪网友"/ tabindex="2" disabled></p><p id="quote_comment_p"><input type="checkbox" id="bb"> <label for="bb"><img height="18" align="absmiddle" width="18" title="" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" class="SG_icon SG_icon110">分享到微博 <img height="15" align="absmiddle" width="15" title="新" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" class="SG_icon SG_icon11"></label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="cbCommentQuote" /><label for="cbCommentQuote">评论并转载此博文</label><img class="SG_icon SG_icon11" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" width="15" height="15" title="新" align="absmiddle" /></p>
+					<p id="geetest-box" ></p>
+					</div>
+
+					<span style="display: none; color: rgb(153, 153, 153); margin-left: 10px;" id="login_remember_caution"></span>
+
+											<div class="SG_floatR" id="anonymity_cont"><input type="checkbox" id="anonymity"/><label for="anonymity">匿名评论</label></div>
+									</div>
+				<div class="formBtn">
+					<a href="javascript:;" onclick="return false;" class="SG_aBtn" tabindex="5"><cite id="postcommentid">发评论</cite></a>
+					<p class="SG_txtc">以上网友发言只代表其个人观点，不代表新浪网的观点或立场。</p>
+				</div>
+			</div>
+		</div>
+				<div class="clearit"></div>
+		
+				<div class="articalfrontback articalfrontback2 clearfix">
+						  <div class="SG_floatL"><span class="SG_txtb">&lt;&nbsp;前一篇</span><a href="http://blog.sina.com.cn/s/blog_53061af00101gkle.html">Apache+Subversion+SSL搭建版本控制服务器</a></div>
+									  <div class="SG_floatR"><span class="SG_txtb">后一篇&nbsp;&gt;</span><a href="http://blog.sina.com.cn/s/blog_53061af00101gykq.html">浅谈ALM与PLM区别</a></div>
+					</div>
+		<div class="clearit"></div>
+				
+	</div>
+	<!--博文正文 end -->
+		<script type="text/javascript">
+			var voteid="";
+		</script>
+
+            </div>       
+            <div class="SG_connFoot"></div>
+          </div>
+</div>
+	<!--第二列start-->
+	
+	<!--第三列start-->
+	<div id="column_3" class="SG_colWnone"><div style="width:0px;height:0.1px;margin:0px;">&nbsp;&nbsp;</div></div>
+	<!--第三列end-->
+
+	
+    </div>
+   <!--主题内容结束 -->
+  
+
+	<div id="diggerFla" style="position:absolute;left:0px;top:0px;width:0px"></div>
+    <div class="sinablogfooter" id="sinablogfooter"  style="position:relative;">
+      
+      <p class="SG_linka"><a href="http://control.blog.sina.com.cn/admin/advice/advice_list.php" target="_blank">新浪BLOG意见反馈留言板</a>　<a href="javascript:;" onclick="window.open ('http://control.blog.sina.com.cn/admin/advice/impeach.php?url=http%3A//blog.sina.com.cn/s/blog_4cf7b4ec0100eudp.html%3Ftj%3D1', '','height=495, width=510, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');">不良信息反馈</a>　电话：4006900000 提示音后按1键（按当地市话标准计费）　欢迎批评指正</p>
+   
+      <p class="SG_linka"><a href="http://corp.sina.com.cn/chn/" target="_blank">新浪简介</a> | <a href="http://corp.sina.com.cn/eng/" target="_blank">About Sina</a> | <a href="http://emarketing.sina.com.cn/" target="_blank">广告服务</a> | <a href="http://www.sina.com.cn/contactus.html" target="_blank">联系我们</a> | <a href="http://corp.sina.com.cn/chn/sina_job.html" target="_blank">招聘信息</a> | <a href="http://www.sina.com.cn/intro/lawfirm.shtml" target="_blank">网站律师</a> | <a href="http://english.sina.com" target="_blank">SINA English</a> | <a href="http://members.sina.com.cn/apply/" target="_blank">会员注册</a> | <a href="http://help.sina.com.cn/" target="_blank">产品答疑</a> </p>
+      <p class="copyright SG_linka"> Copyright &copy; 1996 - 2015 SINA Corporation,  All Rights Reserved</p>
+      <p class="SG_linka"> 新浪公司 <a href="http://www.sina.com.cn/intro/copyright.shtml" target="_blank">版权所有</a></p>
+	  <a href="http://www.bj.cyberpolice.cn/index.jsp"  target="_blank" class="gab_link"></a>
+    </div>
+  </div>
+</div>
+<div id="swfbox"></div>
+<script id="PVCOUNTER_FORIE" type="text/javascript"></script>
+</body>
+<script type="text/javascript">
+var scope = {
+    $newTray : 1,
+    $setDomain : true,
+    $uid : "1392909040",
+    $PRODUCT_NAME : "blog7",      //blog7photo,blog7icp
+    $pageid : "article",
+    $key :  "8ef526b7cd5c78009e630a177fa7d6a0",
+    $uhost : "xrongfu",
+    $ownerWTtype :"",
+    $private: {"pageset":2,"tj":0,"adver":0,"sms":0,"ad":0,"blogsize":0,"cms":0,"hidecms":0,"top":0,"invitationset":0,"p4p":0,"spamcms":1,"init7":1,"quote":0,"foot":1,"isprivate":0,"headpic":1,"t_sina":1392909040,"msnfeed":"110","moveMedal":0,"oauth_token":1,"oauth_token_secret":1,"uname":"xiarongfu","p_push_t":1,"p_get_t":1,"medal7":4,"articleclass":"117"},
+    $summary: "在电脑里装了VMware后，再要装xampp，十有八九就会出现这个问题： 10:21:18  [Apache]  Problem detected! 1...  (来自 @头条博客)",
+    $is_photo_vip:0,
+		 $nClass:0,
+		 $articleid:"53061af00101gs79",
+		 $sort_id:117,
+		 $cate_id:187,
+		 $isCommentAllow:0,
+		 $album_pic:"",
+		 $pn_x_rank:4,
+		 $x_quote_c:"4",
+		 $flag2008:"",
+		     component_lists:{"2":{"size":730,"list":[920]},"1":{"size":210,"list":[901,903,904]}},
+    formatInfo:1,
+    UserPic:[{"pid":"","repeat":"repeat-x","align-h":"center","align-v":"top","apply":"0"},{"pid":"","repeat":"repeat-x","align-h":"center","align-v":"top","apply":"0"},{"pid":"","repeat":"repeat-x","align-h":"center","align-v":"top","apply":"0"}],
+    UserBabyPic:{"photoX":0,"photoY":0,"photoURL":null,"angle":0,"zoom":0,"maskX":0,"maskY":0,"maskURL":null,"frameURL":null},
+    UserColor:1,
+    backgroundcolor:"#7798a3",
+    tpl:"1_8",
+    reclist:0    };
+var $encrypt_code = "2369964c8bf6213ced715bc826dfc100";
+</script>
+
+<script type="text/javascript" src="http://sjs.sinajs.cn/blog7common/js/boot.js"></script>
+<script type="text/javascript">__load_js();</script>
+<script type="text/javascript">__render_page();</script>
+
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b436f96b-ce3c-469f-93ca-9c0c406fcf10&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<script type="text/javascript" charset="utf-8">
+        bShare.addEntry({pic: "", title:"分享自MrHsia  《XAMPP 和 VMWare 的端口443冲突的解决》", summary:"在电脑里装了VMware后，再要装xampp，十有八九就会出现这个问题： 10:21:18  [Apache]  Problem detected! 1...  (来自 @头条博客)"});
+     </script>
+<script type="text/javascript" src="http://sjs.sinajs.cn/xblogtheme/js/blog680-min.js"></script>
+<script type="text/javascript">
+        var slotArr = ['atcTitLi_SLOT_41', 'atcTitLi_SLOT_42','loginBarActivity']; //广告位id
+        var sourceArr = ['SLOT_41','SLOT_42','SLOT_43,SLOT_47,SLOT_48'];  //广告资源id
+        SinaBlog680.staticBox(slotArr, sourceArr);
+</script>
+</html>

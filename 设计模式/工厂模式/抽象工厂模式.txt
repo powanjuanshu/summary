@@ -1,0 +1,301 @@
+* 工厂方法把生产产品的方式封装起来了,但是一个工厂只能生产一类对象,当一个工厂需要生产多类产品的时候,就需要使用抽象工厂了.
+  抽象工厂(AbstractFactory)类定义了一组标准的实现接口,这些接口一般都是和具体的产品类继承层次对应的.
+  如createProductA接口只能生产抽象产品类(AbstratctProductA)的子类产品,因此抽象工厂的具体实现类之间的关系就是个生产了一批不同产品族的组合.
+  这样通过抽象工厂模式可以方便的更换产品族,代码修改的代价只需要更换一个具体的工厂对象就可以了.
+  因此直观上可以把抽象工厂看作一组工厂方法,它的每一个接口都可以提取出一个单独的工厂方法.不过抽象工厂除了反映出这些含义外,
+  还隐含着多类产品之间有种内在的联系,如按钮,菜单,滚动条都是GUI组件.
+
+* 对于可以随意更换GUI组件库的需求,抽象工厂就可以完成类似的功能.抽象工厂类(AbstractFactory)封装了GUI组件库必须提供的接口,
+  如创建按钮,菜单,滚动条等.GUI组件类会根据不同的窗口系统而派生具体的组件类,实现抽象工厂的具体类具体工厂类会根据不同的窗口系统选择对应的组件进行生产.
+  这样当更换窗口系统的时候,只需要更换工厂类就能方便的实现运行时窗口系统
+
+* 抽象工厂模式需要以下角色组成:1抽象类(工厂),2抽象类的实现类(具体产品)
+
+* 抽象工厂模式是指当有多个抽象角色时,使用的一种工厂模式。抽象工厂模式可以向客户端提供一个接口,使客户端在不必指定产品的具体情况下,创建多个产品族中的产品对象
+------------
+GUIFactory.java:
+package com.mipo;
+public abstract class GUIFactory {
+	public static GUIFactory getFactory(int system) {
+		if (system == 0) {
+			return new OSFactory();
+		} else {
+			return new WinFactory();
+		}
+	}
+	public abstract Button createButton();
+	public abstract Label createLabel();
+}
+------------
+WinFactory.java:
+package com.mipo;
+public class WinFactory extends GUIFactory{
+	@Override
+	public Button createButton(){
+		return new WinButton();
+	}
+	@Override
+	public Label createLabel() {
+		return new WinLabel();
+	}
+}
+------------
+OSFactory.java:
+package com.mipo;
+package factoryAbstract;
+public class OSFactory extends GUIFactory{
+	@Override
+	public Button createButton(){
+		return new OSButton();
+	}
+	@Override
+	public Label createLabel() {
+		return new OSLabel();
+	}
+}
+------------
+Button.java:
+package com.mipo;
+public abstract class Button {
+	public abstract void click();
+}
+------------
+WinButton.java:
+package com.mipo;
+public class WinButton extends Button{
+	@Override
+	public void click() {
+		System.out.println("i'm win button");
+	}
+}
+------------
+OSButton.java:
+package com.mipo;
+public class OSButton extends Button{
+	@Override
+	public void click() {
+		System.out.println("i'm os button");
+	}
+}
+------------
+Label.java:
+package com.mipo;
+public abstract class Label {
+	public abstract void clear();
+}
+------------
+WinLabel.java:
+package com.mipo;
+public class WinLabel extends Label {
+	@Override
+	public void clear() {
+		System.out.println("WinLabel clear");
+	}
+}
+------------
+OSLabel.java:
+package com.mipo;
+public class OSLabel extends Label {
+	@Override
+	public void clear() {
+		System.out.println("OSLabel clear");
+	}
+}
+------------
+Main.java:
+public class Main {
+	public static void main(String[] args) {
+		GUIFactory factory=GUIFactory.getFactory(1);
+		factory.createButton().click();
+		factory.createLabel().clear();
+	}
+}
+------------
+
+多个数据库切换的例子:
+DaoFactory.java:
+package com.mipo2;
+public abstract class DaoFactory {
+	public static DaoFactory getInstance(String classname) throws Exception {
+		DaoFactory dao = (DaoFactory)Class.forName(classname).newInstance();
+		return dao;
+	}
+	abstract IuserDao getuserdao();
+	abstract IroleDao getroledao();
+}
+------------
+OracleFactory.java:
+package com.mipo2;
+public class OracleFactory extends DaoFactory{
+	@Override
+	IuserDao getuserdao() {
+		return new OracleuserDao();
+	}
+	@Override
+	IroleDao getroledao() {
+		return new OracleroleDao();
+	}
+}
+------------
+MysqlFactory.java:
+package com.mipo2;
+public class MysqlFactory extends DaoFactory{
+	@Override
+	IuserDao getuserdao() {
+		return new MySqluserDao();
+	}
+	@Override
+	IroleDao getroledao() {
+		return new MySqlroleDao();
+	}
+}
+------------
+IroleDao.java:
+package com.mipo2;
+public interface IroleDao {
+	void insert();
+	void update();
+}
+------------
+IuserDao.java:
+package com.mipo2;
+public interface IuserDao {
+	void find();
+	void delete();
+}
+------------
+MySqlroleDao.java:
+package com.mipo2;
+public class MySqlroleDao implements IroleDao{
+	@Override
+	public void insert() {
+		System.out.println("mysql insert ");
+	}
+	@Override
+	public void update() {
+		System.out.println("mysql update");
+	}
+}
+------------
+MySqluserDao.java:
+package com.mipo2;
+public class MySqluserDao implements IuserDao{
+	@Override
+	public void find() {
+		System.out.println("mysql find");
+	}
+	@Override
+	public void delete() {
+		System.out.println("mysql delete");
+	}
+}
+------------
+OracleroleDao.java:
+package com.mipo2;
+public class OracleroleDao implements IroleDao{
+	@Override
+	public void insert() {
+		System.out.println("oracle insert");
+	}
+	@Override
+	public void update() {
+		System.out.println("oracle update");
+	}
+}
+------------
+OracleuserDao.java:
+package com.mipo2;
+public class OracleuserDao implements IuserDao{
+	@Override
+	public void find() {
+		System.out.println("oracle find");
+	}
+	@Override
+	public void delete() {
+		System.out.println("oracle delete");
+	}
+}
+------------
+Main.java:
+package com.mipo2;
+public class Main {
+	public static void main(String[] args) throws Exception {
+		DaoFactory factory=DaoFactory.getInstance("com.mipo2.OracleFactory");
+		factory.getroledao().insert();
+		factory.getuserdao().delete();
+	}
+}
+------------
+
+实例：
+//抽象工厂角色
+public interface AbstractFactory{
+　　public ProductA createProductA();
+　　public ProductB createProductB();
+}
+
+//抽象产品类A
+public interface AbstractProductA {
+	
+}
+
+//抽象产品类B
+public interface AbstractProductB {
+	
+}
+
+//具体产品类ProdcutA1
+public class ProductA1 implements AbstractProductA {
+　　public ProductA1() {
+	
+　　}
+}
+
+//具体产品类ProdcutA2
+public class ProductA2 implements AbstractProductA {
+　　public ProductA2() {
+	　　
+    }
+}
+
+//具体产品类ProductB1
+public class ProductB1 implements AbstractProductB {
+　　public ProductB1() {
+	
+　　}
+} 
+
+//具体产品类ProductB2
+public class ProductB2 implements AbstractProductB {
+　　public ProductB2() {
+	
+　　}
+}
+
+//具体工厂类1
+public class ConcreteFactory1 implements AbstractFactory{
+　　public AbstractProductA createProductA(){
+	return new ProductA1();
+　　}
+　　public AbstractProductB createProductB(){
+　　	return new ProductB1();
+    }
+}
+
+//具体工厂类2
+public class ConcreteFactory2 implements Creator{
+　　public AbstractProductA createProductA(){
+　　	return new ProductA2();
+　　}
+　　public AbstractProductB createProductB(){
+　　	return new ProductB2();
+　　}
+} 
+
+
+
+
+
+
+
+

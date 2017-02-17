@@ -1,0 +1,64 @@
+事务中原子性（Atomicity）与一致性（Consistency）的区别
+
+数据库系统概论中解释如下：
+
+原子性：事务中包括的诸多操作那么都做，那么都不做。
+
+一致性：事务执行的结果必须使数据库从一个一致性状态变到另一个一致性的状态。
+
+Database System Concepts:
+
+Atomicity. Either all operations of the transaction are reflected properly in 
+the database, or none are.
+
+Consistency. Execution of a transaction in isolation (that is, with no other transaction executing concurrently) preserves the consistency of the database.
+
+但从上面定义上来看难以区分，而且极易混淆。以下将通过一个例子来解释事务这两个特性的区别。
+
+假设有两个银行账户A和B，现从A账户转账100到B账户：
+
+begin transaction
+
+read(A);
+
+A = A – 100;
+
+write(A);
+
+read(B);
+
+B = B + 100;
+
+write(B);
+
+end transaction
+
+如果事务T1正常执行，当然不会有任何问题。假如事务执行到read(B)发生了错误，如果事务没有原子性要求，那么，银行系统中就会凭空的消失了100. 事实上这也导致了数据库的不一致。
+
+但数据库的不一致状态不一定是由原子性的破坏而导致。例如：
+
+begin transaction
+
+read(A);
+
+A = A – 100;
+
+write(A);
+
+read(B);
+
+B = B + 50;
+
+write(B);
+
+end transaction
+
+虽然事务T2正常执行，但是任然会导致数据库的不一致状态。
+
+到此，事务的原子性与一致性的区别就已经很明朗。原子性的破坏可能导致数据库的不一致，但并非是必要条件。因此，事务的原子性与一致性缺一不可。
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+1.IE6不支持AJax XMLHttpRequest程序，IE6只支持ActiveXObject对象new ActiveXObject("Msxml2.XMLHTTP")或者new ActiveXObject(Microsoft.XMLHTTP))
+2.在多数浏览器里，XMLHttpRequest是标准的JavaScript类，Microsoft发明了此对象，但在IE7之前，只提供Active对象，更复杂的是，这个对象存在不同的版本，所以，我们创建一个工厂  函数，以支持任何浏览器的XMLHttpRequest对象。
+	function createXMLHttpRequest(){
+		try{
+			return new ActiveXObject("Msxml2.XMLHTTP");
+		}catch(e){}
+		try{
+			return new ActiveXObject("Microsoft.XMLHTTP");
+		}catch(e){}
+		try{
+			return new XMLHttpRequest();
+		}catch(e){}
+		alert("XMLHttpRequest not supported");
+		return null;
+	}
+或者
+	var xmlhttp;
+	if(window.XMLHttpRequest){
+		var xmlhttp=new XMLHttpRequest();
+		if(xmlhttp.overrideMimeType){    //针对某些特定版本的mozillar浏览器的bug进行修正
+			xmlhttp.overrideMimeType("text/xml");
+		}
+	}else if(window.ActiveXObject){}
+	if(!xmlhttp){
+		alert("XMLHttpRequest 创建失败");
+		return;
+	}
+
+3.readyState:请求状态:0=未初始化，1=open方法成功调用以后，2=服务器已经应答客户端的请求，3=交互中。http头信息已经接收，响应数据尚未接收，4=完成，数据接收完成

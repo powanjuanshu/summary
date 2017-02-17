@@ -1,0 +1,1169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Java正则表达式详解 - 碧海蓝天_C# - 博客园</title>
+<link type="text/css" rel="stylesheet" href="http://common.cnblogs.com/blog/css/common.css?id=20120519"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="http://common.cnblogs.com/Skins/summerGarden/style.css?id=20120519"/>
+<link type="text/css" rel="stylesheet" href="http://common.cnblogs.com/blog/css/common2.css"/>
+<link type="text/css" rel="stylesheet" href="http://common.cnblogs.com/css/shStyle.css"/>
+<link type="text/css" rel="stylesheet" href="http://www.cnblogs.com/bihailantian/customcss.aspx?id=76176"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/bihailantian/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/bihailantian/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/bihailantian/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">
+var currentBlogApp = 'bihailantian';
+</script>
+<script src="http://common.cnblogs.com/blog/script/common.js?id=20120519" type="text/javascript"></script> 
+<script src="http://common.cnblogs.com/script/json2.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://common.cnblogs.com/script/syntaxHighlighter.js"></script>
+</head>
+<body>
+<a name="top"></a>
+<!--PageBeginHtml Block Begin-->
+官方QQ群:127876820【C#编程技术-全国站--未满人】
+<!--PageBeginHtml Block End-->
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/bihailantian/"><img id="blogLogo" src="/Skins/custom/images/logo.gif" alt="返回主页" /></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/bihailantian/">碧海蓝天专注C# .Net silverlight技术</a></h1>
+<h2>官方QQ群:127876820【C#编程技术-全国站--未满人】http://user.qzone.qq.com/550608482/【QQ主页】   
+欢迎大家的加入，谢谢!! 
+承接C#.Net、数据库的开发设计。
+联系电话【北京】:15311786733</h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+	<li><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+	<li><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/bihailantian/">首页</a></li>
+	<li><a href="http://news.cnblogs.com/">新闻</a></li>
+	<li><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://www.cnblogs.com/bihailantian/admin/EditPosts.aspx?opt=1">新随笔</a></li>
+	<li><a id="MyLinks1_ContactLink" accesskey="9" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/%e7%a2%a7%e6%b5%b7%e8%93%9d%e5%a4%a9_C%23">联系</a></li>
+	<li><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://www.cnblogs.com/bihailantian/admin/EditPosts.aspx">管理</a></li>
+	<li><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/bihailantian/rss">订阅</a>
+	<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/bihailantian/rss"><img src="/Skins/Custom/images/rss.gif" alt="订阅" /></a></li>
+</ul>
+
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔- 182&nbsp;
+文章- 0&nbsp;
+评论- 17&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+	
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/bihailantian/archive/2010/09/20/1831948.html">Java正则表达式详解</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong><span style="font-size: 14pt;">一、正则表达式基础知识</span></strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">我们先从简单的开始。假设你要搜索一个包含字符&ldquo;cat&rdquo;的字符串，搜索用的正则表达式就是&ldquo;cat&rdquo;。如果搜索对大小写不敏感，单词&ldquo;catalog&rdquo;、&ldquo;Catherine&rdquo;、&ldquo;sophisticated&rdquo;都可以匹配。也就是说： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/j43nu4ndo6z8.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>1.1 句点符号</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">假设你在玩英文拼字游戏，想要找出三个字母的单词，而且这些单词必须以&ldquo;t&rdquo;字母开头，以&ldquo;n&rdquo;字母结束。另外，假设有一本英文字典，你可以用正则表达式搜索它的全部内容。要构造出这个正则表达式，你可以使用一个通配符&mdash;&mdash;句点符号&ldquo;.&rdquo;。这样，完整的表达式就是&ldquo;t.n&rdquo;，它匹配&ldquo;tan&rdquo;、&ldquo;ten&rdquo;、&ldquo;tin&rdquo;和&ldquo;ton&rdquo;，还匹配&ldquo;t#n&rdquo;、&ldquo;tpn&rdquo;甚至&ldquo;t n&rdquo;，还有其他许多无意义的组合。这是因为句点符号匹配所有字符，包括空格、Tab字符甚至换行符： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/9i9f280hrzkz.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>1.2 方括号符号</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">为了解决句点符号匹配范围过于广泛这一问题，你可以在方括号（&ldquo;[]&rdquo;）里面指定看来有意义的字符。此时，只有方括号里面指定的字符才参与匹配。也就是说，正则表达式&ldquo;t[aeio]n&rdquo;只匹配&ldquo;tan&rdquo;、&ldquo;Ten&rdquo;、&ldquo;tin&rdquo;和&ldquo;ton&rdquo;。但&ldquo;Toon&rdquo;不匹配，因为在方括号之内你只能匹配单个字符： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/t1e74w8itp99.jpg" border="0" alt="" /></td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>1.3 &ldquo;或&rdquo;符号</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">如果除了上面匹配的所有单词之外，你还想要匹配&ldquo;toon&rdquo;，那么，你可以使用&ldquo;|&rdquo;操作符。&ldquo;|&rdquo;操作符的基本意义就是&ldquo;或&rdquo;运算。要匹配&ldquo;toon&rdquo;，使用&ldquo;t(a|e|i|o|oo)n&rdquo;正则表达式。这里不能使用方扩号，因为方括号只允许匹配单个字符；这里必须使用圆括号&ldquo;()&rdquo;。圆括号还可以用来分组，具体请参见后面介绍。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/i1fus8ynpz96.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>1.4 表示匹配次数的符号</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">表一显示了表示匹配次数的符号，这些符号用来确定紧靠该符号左边的符号出现的次数： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/8k41sc2nzdy7.jpg" border="0" alt="" /></p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">假设我们要在文本文件中搜索美国的社会安全号码。这个号码的格式是999-99-9999。用来匹配它的正则表达式如图一所示。在正则表达式中，连字符（&ldquo;-&rdquo;）有着特殊的意义，它表示一个范围，比如从0到9。因此，匹配社会安全号码中的连字符号时，它的前面要加上一个转义字符&ldquo;\&rdquo;。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/d0461e0196rw.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图一：匹配所有123-12-1234形式的社会安全号码</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">假设进行搜索的时候，你希望连字符号可以出现，也可以不出现&mdash;&mdash;即，999-99-9999和999999999都属于正确的格式。这时，你可以在连字符号后面加上&ldquo;？&rdquo;数量限定符号，如图二所示： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="width: 500px; cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/4s8b1dwh8778.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图二：匹配所有123-12-1234和123121234形式的社会安全号码</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">下面我们再来看另外一个例子。美国汽车牌照的一种格式是四个数字加上二个字母。它的正则表达式前面是数字部分&ldquo;[0-9]{4}&rdquo;，再加上字母部分&ldquo;[A-Z]{2}&rdquo;。图三显示了完整的正则表达式。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/8uvnyokp8pix.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图三：匹配典型的美国汽车牌照号码，如8836KV</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">1.5 &ldquo;否&rdquo;符号 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">&ldquo;^&rdquo;符号称为&ldquo;否&rdquo;符号。如果用在方括号内，&ldquo;^&rdquo;表示不想要匹配的字符。例如，图四的正则表达式匹配所有单词，但以&ldquo;X&rdquo;字母开头的单词除外。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/47z03c6v2q6z.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图四：匹配所有单词，但&ldquo;X&rdquo;开头的除外</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">1.6 圆括号和空白符号 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">假设要从格式为&ldquo;June 26, 1951&rdquo;的生日日期中提取出月份部分，用来匹配该日期的正则表达式可以如图五所示： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="width: 500px; cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/2w4mut5a8vjn.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图五：匹配所有Moth DD,YYYY格式的日期</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">新出现的&ldquo;\s&rdquo;符号是空白符号，匹配所有的空白字符，包括Tab字符。如果字符串正确匹配，接下来如何提取出月份部分呢？只需在月份周围加上一个圆括号创建一个组，然后用ORO API（本文后面详细讨论）提取出它的值。修改后的正则表达式如图六所示： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="width: 500px; cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/c677z4111jo2.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图六：匹配所有Month DD,YYYY格式的日期，定义月份值为第一个组</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>1.7 其它符号</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">为简便起见，你可以使用一些为常见正则表达式创建的快捷符号。如表二所示： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">表二：常用符号 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/32xa8u62viqw.jpg" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">例如，在前面社会安全号码的例子中，所有出现&ldquo;[0-9]&rdquo;的地方我们都可以使用&ldquo;\d&rdquo;。修改后的正则表达式如图七所示： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/4k2mcvrp04b7.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图七：匹配所有123-12-1234格式的社会安全号码</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong><span style="font-size: 14pt;">二、Jakarta-ORO库</span></strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">有许多源代码开放的正则表达式库可供Java程序员使用，而且它们中的许多支持Perl 5兼容的正则表达式语法。我在这里选用的是Jakarta-ORO正则表达式库，它是最全面的正则表达式API之一，而且它与Perl 5正则表达式完全兼容。另外，它也是优化得最好的API之一。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">Jakarta-ORO库以前叫做OROMatcher，Daniel Savarese大方地把它赠送给了Jakarta Project。你可以按照本文最后参考资源的说明下载它。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">我首先将简要介绍使用Jakarta-ORO库时你必须创建和访问的对象，然后介绍如何使用Jakarta-ORO API。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>▲ PatternCompiler对象</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">首先，创建一个Perl5Compiler类的实例，并把它赋值给PatternCompiler接口对象。Perl5Compiler是PatternCompiler接口的一个实现，允许你把正则表达式编译成用来匹配的Pattern对象。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/x4z3923ca13a.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>▲ Pattern对象</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">要把正则表达式编译成Pattern对象，调用compiler对象的compile()方法，并在调用参数中指定正则表达式。例如，你可以按照下面这种方式编译正则表达式&ldquo;t[aeio]n&rdquo;： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/2fd26rskmll5.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">默认情况下，编译器创建一个大小写敏感的模式（pattern）。因此，上面代码编译得到的模式只匹配&ldquo;tin&rdquo;、&ldquo;tan&rdquo;、 &ldquo;ten&rdquo;和&ldquo;ton&rdquo;，但不匹配&ldquo;Tin&rdquo;和&ldquo;taN&rdquo;。要创建一个大小写不敏感的模式，你应该在调用编译器的时候指定一个额外的参数： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/l56lk1spu66k.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">创建好Pattern对象之后，你就可以通过PatternMatcher类用该Pattern对象进行模式匹配。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>▲ PatternMatcher对象</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">PatternMatcher对象根据Pattern对象和字符串进行匹配检查。你要实例化一个Perl5Matcher类并把结果赋值给PatternMatcher接口。Perl5Matcher类是PatternMatcher接口的一个实现，它根据Perl 5正则表达式语法进行模式匹配： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/an6co93nb236.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">使用PatternMatcher对象，你可以用多个方法进行匹配操作，这些方法的第一个参数都是需要根据正则表达式进行匹配的字符串： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">&middot; boolean matches(String input, Pattern pattern)：当输入字符串和正则表达式要精确匹配时使用。换句话说，正则表达式必须完整地描述输入字符串。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">&middot; boolean matchesPrefix(String input, Pattern pattern)：当正则表达式匹配输入字符串起始部分时使用。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">&middot; boolean contains(String input, Pattern pattern)：当正则表达式要匹配输入字符串的一部分时使用（即，它必须是一个子串）。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">另外，在上面三个方法调用中，你还可以用PatternMatcherInput对象作为参数替代String对象；这时，你可以从字符串中最后一次匹配的位置开始继续进行匹配。当字符串可能有多个子串匹配给定的正则表达式时，用PatternMatcherInput对象作为参数就很有用了。用PatternMatcherInput对象作为参数替代String时，上述三个方法的语法如下： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">&middot; boolean matches(PatternMatcherInput input, Pattern pattern) </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">&middot; boolean matchesPrefix(PatternMatcherInput input, Pattern pattern) </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">&middot; boolean contains(PatternMatcherInput input, Pattern pattern) </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong><span style="font-size: 14pt;">三、应用实例</span></strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">下面我们来看看Jakarta-ORO库的一些应用实例。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>3.1 日志文件处理</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">任务：分析一个Web服务器日志文件，确定每一个用户花在网站上的时间。在典型的BEA WebLogic日志文件中，日志记录的格式如下： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/242u5d50m3fr.jpg" border="0" alt="" /></td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">分析这个日志记录，可以发现，要从这个日志文件提取的内容有两项：IP地址和页面访问时间。你可以用分组符号（圆括号）从日志记录提取出IP地址和时间标记。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">首先我们来看看IP地址。IP地址有4个字节构成，每一个字节的值在0到255之间，各个字节通过一个句点分隔。因此，IP地址中的每一个字节有至少一个、最多三个数字。图八显示了为IP地址编写的正则表达式： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="width: 500px; cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/21g3c5o3k67u.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图八：匹配IP地址</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">IP地址中的句点字符必须进行转义处理（前面加上&ldquo;\&rdquo;），因为IP地址中的句点具有它本来的含义，而不是采用正则表达式语法中的特殊含义。句点在正则表达式中的特殊含义本文前面已经介绍。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">日志记录的时间部分由一对方括号包围。你可以按照如下思路提取出方括号里面的所有内容：首先搜索起始方括号字符（&ldquo;[&rdquo;），提取出所有不超过结束方括号字符（&ldquo;]&rdquo;）的内容，向前寻找直至找到结束方括号字符。图九显示了这部分的正则表达式。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/cg2u2j7n0mpg.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图九：匹配至少一个字符，直至找到&ldquo;]&rdquo;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">现在，把上述两个正则表达式加上分组符号（圆括号）后合并成单个表达式，这样就可以从日志记录提取出IP地址和时间。注意，为了匹配&ldquo;- -&rdquo;（但不提取它），正则表达式中间加入了&ldquo;\s-\s-\s&rdquo;。完整的正则表达式如图十所示。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="width: 500px; cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/157qqoq9ve8w.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图十：匹配IP地址和时间标记</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">现在正则表达式已经编写完毕，接下来可以编写使用正则表达式库的Java代码了。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">为使用Jakarta-ORO库，首先创建正则表达式字符串和待分析的日志记录字符串： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/759353ra1907.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">这里使用的正则表达式与图十的正则表达式差不多完全相同，但有一点例外：在Java中，你必须对每一个向前的斜杠（&ldquo;\&rdquo;）进行转义处理。图十不是Java的表示形式，所以我们要在每个&ldquo;\&rdquo;前面加上一个&ldquo;\&rdquo;以免出现编译错误。遗憾的是，转义处理过程很容易出现错误，所以应该小心谨慎。你可以首先输入未经转义处理的正则表达式，然后从左到右依次把每一个&ldquo;\&rdquo;替换成&ldquo;\\&rdquo;。如果要复检，你可以试着把它输出到屏幕上。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">初始化字符串之后，实例化PatternCompiler对象，用PatternCompiler编译正则表达式创建一个Pattern对象： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/4o3y3mdkct2x.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">现在，创建PatternMatcher对象，调用PatternMatcher接口的contain()方法检查匹配情况： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/75jn387mn42x.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">接下来，利用PatternMatcher接口返回的MatchResult对象，输出匹配的组。由于logEntry字符串包含匹配的内容，你可以看到类如下面的输出： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/vgpi8nu05ivw.jpg" border="0" alt="" /></td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>3.2 HTML处理实例一</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">下面一个任务是分析HTML页面内FONT标记的所有属性。HTML页面内典型的FONT标记如下所示： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/606h60377ssy.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">程序将按照如下形式，输出每一个FONT标记的属性： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/brf9m2df9ieo.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">在这种情况下，我建议你使用两个正则表达式。第一个如图十一所示，它从字体标记提取出&ldquo;"face="Arial, Serif" size="+2" color="red"&rdquo;。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="width: 500px; cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/ru4fdvu24otu.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图十一：匹配FONT标记的所有属性</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">第二个正则表达式如图十二所示，它把各个属性分割成名字-值对。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="width: 500px; cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/7jng3h91d45k.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图十二：匹配单个属性，并把它分割成名字-值对</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">分割结果为： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/7jjzyu7lfs84.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">现在我们来看看完成这个任务的Java代码。首先创建两个正则表达式字符串，用Perl5Compiler把它们编译成Pattern对象。编译正则表达式的时候，指定Perl5Compiler.CASE_INSENSITIVE_MASK选项，使得匹配操作不区分大小写。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">接下来，创建一个执行匹配操作的Perl5Matcher对象。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/5cf25vch72r5.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">假设有一个String类型的变量html，它代表了HTML文件中的一行内容。如果html字符串包含FONT标记，匹配器将返回true。此时，你可以用匹配器对象返回的MatchResult对象获得第一个组，它包含了FONT的所有属性： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/6z605d16f9gp.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">接下来创建一个PatternMatcherInput对象。这个对象允许你从最后一次匹配的位置开始继续进行匹配操作，因此，它很适合于提取FONT标记内属性的名字-值对。创建PatternMatcherInput对象，以参数形式传入待匹配的字符串。然后，用匹配器实例提取出每一个FONT的属性。这通过指定PatternMatcherInput对象（而不是字符串对象）为参数，反复地调用PatternMatcher对象的contains()方法完成。PatternMatcherInput对象之中的每一次迭代将把它内部的指针向前移动，下一次检测将从前一次匹配位置的后面开始。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">本例的输出结果如下： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/308i497h04uz.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>3.3 HTML处理实例二</strong> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">下面我们来看看另一个处理HTML的例子。这一次，我们假定Web服务器从widgets.acme.com移到了newserver.acme.com。现在你要修改一些页面中的链接： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/17341kb8z3di.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">执行这个搜索的正则表达式如图十三所示： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p><img style="width: 500px; cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/88277rk37770.gif" border="0" alt="" /> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">
+<p>图十三：匹配修改前的链接</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">如果能够匹配这个正则表达式，你可以用下面的内容替换图十三的链接： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><a href="http://newserver.acme.com/interface.html#$1"></a><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/s82f65t25m75.jpg" border="0" alt="" /></td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">注意#字符的后面加上了$1。Perl正则表达式语法用$1、$2等表示已经匹配且提取出来的组。图十三的表达式把所有作为一个组匹配和提取出来的内容附加到链接的后面。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">现在，返回Java。就象前面我们所做的那样，你必须创建测试字符串，创建把正则表达式编译到Pattern对象所必需的对象，以及创建一个PatternMatcher对象：<img style="width: 500px; cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/qg1rzozee4bf.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">接下来，用com.oroinc.text.regex包Util类的substitute()静态方法进行替换，输出结果字符串： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/o3m76k1jdp62.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">Util.substitute()方法的语法如下： </td>
+</tr>
+</tbody>
+</table>
+<table width="620" height="17" align="center">
+<tbody>
+<tr>
+<td class="a14" height="13"><img style="cursor: pointer;" onclick="window.open(this.src);" src="http://image.tianjimedia.com/imagelist/05/10/v9z05f24f3tc.jpg" border="0" alt="" /> </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14">这个调用的前两个参数是以前创建的PatternMatcher和Pattern对象。第三个参数是一个Substiution对象，它决定了替换操作如何进行。本例使用的是Perl5Substitution对象，它能够进行Perl5风格的替换。第四个参数是想要进行替换操作的字符串，最后一个参数允许指定是否替换模式的所有匹配子串（Util.SUBSTITUTE_ALL），或只替换指定的次数。 </td>
+</tr>
+</tbody>
+</table>
+<table width="620" align="center">
+<tbody>
+<tr>
+<td class="a14"><strong>【结束语】</strong>在这篇文章中，我为你介绍了正则表达式的强大功能。只要正确运用，正则表达式能够在字符串提取和文本修改中起到很大的作用。另外，我还介绍了如何在Java程序中通过Jakarta-ORO库利用正则表达式。至于最终采用老式的字符串处理方式（使用StringTokenizer，charAt，和substring），还是采用正则表达式，这就有待你自己决定了。</td>
+</tr>
+</tbody>
+</table></div><div id="MySignature"></div>
+<script type="text/javascript">
+var isLogined = false;
+var cb_blogId = 76176;
+var cb_entryId = 1831948;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "51a4fa11-95c4-df11-ac81-842b2b196315";
+var cb_entryCreatedDate = '2010/9/20 19:16:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</script>
+<div id="blog_post_info_block">
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+<script type="text/javascript">
+    initBottomGoogleAd();
+</script>
+<script type="text/javascript">
+    $(function () {       
+        fixPostBodyFormat();
+        loadBottomGoogleAd();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+        showEditorOpt();
+        loadNewsAndKb();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+        loadAdUnderGoogle();
+    });
+</script>
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2010-09-20 19:16</span> <a href='http://www.cnblogs.com/bihailantian/'>碧海蓝天_C#</a> 阅读(383) 评论(<span id="post-comment-count">0</span>)  <a href ="http://www.cnblogs.com/bihailantian/admin/EditPosts.aspx?postid=1831948" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(1831948);return false;">收藏</a></div>
+	</div>
+	<img src ="http://www.cnblogs.com/bihailantian/aggbug/1831948.html?type=1&amp;webview=1" width="1" height="1" alt=""/>
+	
+</div><!--end: topics 文章、评论容器-->
+<div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</script>
+<div id="comment_form" class="commentform">
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"></div>
+
+<script type="text/javascript">
+    if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</script>
+
+<div class="ad_text_commentbox"><a href="http://q.cnblogs.com/" target="_blank">程序员问答社区，解决您的IT难题</a></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="程序员的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a><div id="site_editor_opt"></div></div>
+<script type="text/javascript">
+enableGoogleAd = true;
+if ($("#cnblogs_post_body").text().length < 1000) {
+    enableGoogleAd = false;
+}
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+<div id='div-gpt-ad-1320933818841-0' style='width:300px; height:250px;'>
+<script type='text/javascript'>
+    if (enableGoogleAd) {
+        try {
+            googletag.cmd.push(function () { googletag.display('div-gpt-ad-1320933818841-0'); });
+        } catch (e) { }
+    }
+</script>
+</div>
+</div>
+<div id="blog-news-kb"></div>
+<div id="google_ad_c2" class="c_ad_block">
+<div id='div-gpt-ad-1320933818841-1' style='width:468px; height:60px;'>
+<script type='text/javascript'>
+    if (enableGoogleAd) {
+        try {
+            googletag.cmd.push(function () { googletag.display('div-gpt-ad-1320933818841-1'); });
+        } catch (e) { }
+    }
+</script>
+</div>
+</div>
+<div id="ad_under_google" class="c_ad_block" style="display:none;"></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+</div>
+
+
+
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="displya:none"></div></div>
+			
+			<DIV id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+			</DIV>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2012 碧海蓝天_C#
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+<!--PageEndHtml Block Begin-->
+官方QQ群:127876820【C#编程技术-全国站--未满人】
+<!--PageEndHtml Block End-->
+<script type="text/javascript" src="http://common.cnblogs.com/script/google-analytics.js"></script>
+</body>
+</html>
