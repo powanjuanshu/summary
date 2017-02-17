@@ -1,0 +1,27 @@
+使用having子句选择行，having子句对GROUP BY子句设置条件的方式与where子句和SELECT语句交互的方式类似。where子句搜索条件在进行分组操作之前应用；
+而having搜索条件在进行分组操作之后应用。having语法与where语法类似，但having可以包含聚合函数。having子句可以引用选择列表中出现的任意项。
+下面的查询得到本年度截止到目前的销售额超过$40,000的出版商：
+SELECT pub_id,SUM(ytd_sales) FROM titles GROUP BY pub_id having SUM(ytd_sales)>40000
+-----------
+select roleid,count(tenementid) from c_user_role where roleid>6 group by roleid having count(tenementid)>10;
+-----
+使用HAVING短语筛选最终输出结果
+只有满足HAVING短语指定条件的组才输出
+HAVING短语与WHERE子句的区别：作用对象不同
+WHERE子句作用于基表或视图，从中选择满足条件的元组。
+HAVING短语作用于组，从中选择满足条件的组。
+
+例1  查询有3门以上课程是90分以上的
+          学生的学号及（90分以上的）课程数
+        SELECT  Sno,  COUNT(*)
+        FROM   SC
+        WHERE Grade>=90
+        GROUP BY Sno
+        HAVING COUNT(*)>=3;                   
+例2  查询选修了3门以上课程的学生学号。
+     SELECT Sno
+     FROM  SC
+     GROUP BY Sno
+     HAVING  COUNT(*) >3；
+------
+

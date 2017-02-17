@@ -1,0 +1,4 @@
+Documentation of follow-up items and issues identified that need to be addressed by the business
+发现需要企业去解决的内容和问题的文档
+In Chapter 3, I shall describe some of the documentation that I gathered.
+在第三章，我会介绍我收集到的一些文献记录。

@@ -1,0 +1,9 @@
+merge into bonuss d
+using (select empno,sal,deptno from emp where deptno=10) s
+on (d.id=s.empno)
+when matched then
+	update set d.bonus=d.bonus+s.sal*0.1
+	delete where s.sal>8000
+when not matched then
+	insert values(s.empno,s.sal*0.1) where s.sal<=3000  --insert后面可以接字段名（d.id,d.bonus）
+--功能：查出10号部门员工奖金，如果10号部门员工有奖金则提高百分之十，如果员工没有奖金则在奖金表中增加工资百分之十的奖金添加到奖金表中,且工资大于8000就没奖金

@@ -1,0 +1,5 @@
+使用工具 Configuration and Migration tools-->Database Configuration Asistant(DBCA数据库配置助手)
+->Database Configuration Assistant->下一步->选中创建数据库->选中一般用途->在全局数据库名：输入数据库的名字，比如输入：orcl，下面的SID会自动生成，和数据库名一样，即orcl
+->下一步->所有账户使用同一口令->口令：输入密码，如1qaz2wsx，确认口令：输入同样的密码->下一步->选择文件系统下一步->选中使用oracle管理的文件：{ORACLE_BASE}\oradata
+->下一步->选中指定快速恢复区->下一步->下一步->内存选中典型，连接模式选中专用服务器模式->下一步->完成->确定->完成
+

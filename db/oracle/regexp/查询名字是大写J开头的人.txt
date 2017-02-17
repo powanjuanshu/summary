@@ -1,0 +1,1 @@
+select * from emp where regexp_like(ename,'^J.*$');

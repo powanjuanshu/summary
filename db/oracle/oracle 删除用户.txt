@@ -1,0 +1,3 @@
+drop user xiaoming cascade
+
+自己删自己不允许，必须是sys或system

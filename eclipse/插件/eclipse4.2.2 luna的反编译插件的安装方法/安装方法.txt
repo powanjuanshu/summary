@@ -1,0 +1,1 @@
+ Eclipse4.x以上的版本用原来的jadclipse加jad.exe方式已经不能用，该版本在Eclipse4.4下亲测可用。安装方法：将下载的压缩文件解压后，将其中的plugins和features文件夹复制到Eclipse的安装目录下的dropins文件夹下即可，无须再另外安装jad.exe。也可采用link的方式安装

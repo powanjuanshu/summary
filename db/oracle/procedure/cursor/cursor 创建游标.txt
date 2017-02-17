@@ -1,0 +1,74 @@
+create or replace procedure li_fenye(
+       tableName in varchar2,
+       pageSize in number,
+       pageNow in number,
+       sumRows out number,
+       sumPages out number,
+       cur out sys_refcursor
+)as
+v_sql varchar2(1000);
+v_begin number:=(pageNow-1)*pageSize+1;
+v_end number:=pageNow*pageSize;
+begin
+     v_sql:='select a1.*,rownum from (select * from '||tableName||') a1 where rownum>='||v_begin||' and rownum<='||v_end;
+     open cur for v_sql;
+     v_sql:='select count(*) from '||tableName;
+     execute immediate v_sql into sumRows;
+     if mod(sumRows,pageSize)=0 then
+        sumPages:=sumRows/pageSize;
+     else
+        sumPages:=sumRows/pageSize+1;
+     end if;
+     --关闭游标
+     --close cur;
+end;
+-------------------------------------------
+create or replace procedure li_d is
+cur sys_refcursor;
+v_a varchar2(2000);
+v_b number;
+v_sql varchar2(2000):='select ename from emp where deptno=:1';
+begin
+     v_b:=20;
+     open cur for v_sql using v_b;
+     fetch cur into v_a;
+     loop
+     dbms_output.put_line(v_a);
+     fetch cur into v_a;
+     exit when cur%notfound;
+     end loop;
+end;
+-------------------------------------------------
+以上打开的游标不能用for遍历，只能一条一条fetch，下面写法是错误的
+create or replace procedure li_d is  
+cur sys_refcursor;
+v_a varchar2(2000);
+v_b number;
+v_sql varchar2(2000):='select ename from emp where deptno=:1';
+begin
+     v_b:=20;
+     open cur for v_sql using v_b;  
+     for line in cur
+     loop
+     dbms_output.putline(line.ename);  
+     end loop;
+end;
+------------------------------------------------
+下面这种游标可以用for遍历
+create or replace procedure li_cursor is
+v_id number default 0;
+v_bonus number default 0;
+cursor cur_cus is
+       select b.id,b.bonus from bonuss b;
+
+begin
+for l in cur_cus
+loop
+    dbms_output.put_line(l.id||'*****'||l.bonus);  --一个游标指向一张表，在这个游标中对此表更新,但这个游标中遍历的依然是老数据
+    update bonuss b set b.bonus=444 where b.id=7521;
+    commit;
+end loop;
+select b.id into v_id from bonuss b where b.id=7521;
+select b.bonus into v_bonus from bonuss b where b.id=7521;
+dbms_output.put_line(v_id||'*****'||v_bonus);
+end;

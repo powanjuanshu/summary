@@ -1,0 +1,8 @@
+select to_date('2009-03-11', 'yyyy-mm-dd') from dual;
+输出:11-3月 -09
+
+select to_date('2011-4-15 14:15:07', 'YYYY-MM-DD hh24:mi:ss') from dual;
+
+select to_date('2011-4-15', 'YYYY-MM-DD') from dual
+
+select (sysdate - to_date('20130925160900', 'yyyymmddhh24miss')) * 24 * 60 from dual; -- 两个时间相减,得到相隔分钟数

@@ -1,0 +1,1 @@
+Tools->Export User Objects->选中要导出的存储过程->点Export->选择导出的路径和文件名->保存

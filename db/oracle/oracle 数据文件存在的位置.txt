@@ -1,0 +1,3 @@
+D:\oracle\product\10.1.0\oradata\orcl
+
+表空间USERS的数据存放在USERS01.DBF文件中

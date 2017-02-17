@@ -1,0 +1,28 @@
+rownum分页函数:
+通常在sql分页时或是查找某一范围内的记录时,我们会使用rownum.
+1、rownum
+查找2到10范围内的记录(这里包括2和10的记录)
+select *
+  from (select rownum rn, a.* from emp a) t
+where t.rn between 2 and 10;
+
+查找前三名的记录
+select * from emp a where rownum < 3；这里我们要注意,直接用rownum查找的范围必须要包含1；因为rownum是从1开始记录的,
+当然你可以把rownum查出来后放在一个虚表中作为这个虚表的字段再根据条件查询.例如：
+select *
+  from (select rownum rn, a.* from emp a) t
+where t.rn > 2;
+
+select t.client_id, rownum rn from hs_asset.gemaccinfo t ;
+输出:
+	client_id	rn
+	133087		1
+	3000515		2
+	3000573		3
+	3000575		4
+	3000608		5
+	3000775		6
+	3000848		7
+	3001055		8
+	3001057		9
+

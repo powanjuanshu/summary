@@ -1,0 +1,15 @@
+DECLARE
+v_start_time TIMESTAMP;
+v_sysdate DATE;
+BEGIN
+     v_start_time:=systimestamp;
+     v_sysdate:=SYSDATE;
+     dbms_output.put_line(v_start_time);
+     dbms_output.put_line(v_sysdate);
+END;
+运行结果：
+17-7月 -12 09.29.21.484000 下午
+17-7月 -12
+----------------------
+SELECT SYSDATE FROM dual;
+运行结果：2012-12-6 14:22:33

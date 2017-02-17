@@ -1,0 +1,2 @@
+select next_day(sysdate, '星期五') from dual; -- 下个星期五是几号 -- 或者写FRIDAY
+输出:26-2月-10

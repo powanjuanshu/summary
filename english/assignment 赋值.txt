@@ -1,0 +1,5 @@
+Functional languages allow at most one assignment per variable.
+函数性编程最多允许为每个变量赋值一次.
+
+The assignment to variable hashmap has no effect
+对于变量hashmap的赋值没有任何影响.

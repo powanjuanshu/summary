@@ -1,0 +1,2 @@
+select ltrim('xyzadams','xyz') from dual;
+Êä³ö:zadams

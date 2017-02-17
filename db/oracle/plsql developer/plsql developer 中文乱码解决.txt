@@ -1,0 +1,4 @@
+解决方法：
+我的电脑---右击---属性---高级---环境变量---系统变量---新建
+变量名：NLS_LANG
+变量值：SIMPLIFIED CHINESE_CHINA.ZHS16GBK，确定后再试试，OK。

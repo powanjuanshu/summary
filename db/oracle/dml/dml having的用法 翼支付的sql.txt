@@ -1,0 +1,20 @@
+select t.parent_org_code
+          from t_mchnt_info t
+         where t.mchnt_lvl = 1
+           and t.MCHNT_STATUS = 'B'
+           AND t.DELETE_FLAG = '0'
+         group by t.parent_org_code
+        having count(t.parent_org_code) > 0
+-----------12条记录
+选出分组后，每组条数大于0的分组
+其实，去掉having count(t.parent_org_code) > 0一样
+-----------
+select t.parent_org_code
+          from t_mchnt_info t
+         where t.mchnt_lvl = 1
+           and t.MCHNT_STATUS = 'B'
+           AND t.DELETE_FLAG = '0'
+         group by t.parent_org_code
+        having count(t.parent_org_code) = 1;
+-----------8条记录
+选出分组后，每组条数等于1的分组

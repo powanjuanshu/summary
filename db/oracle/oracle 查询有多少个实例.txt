@@ -1,0 +1,3 @@
+select instance_name from v$instance
+
+oracle数据库是由一个或多个事例构成的

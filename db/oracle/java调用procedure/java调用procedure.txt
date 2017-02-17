@@ -1,0 +1,61 @@
+create or replace procedure li_fenye(
+       tableName in varchar2,
+       pageSize in number,
+       pageNow in number,
+       sumRows out number,
+       sumPages out number,
+       cur out sys_refcursor
+)as
+v_sql varchar2(1000);
+v_begin number:=(pageNow-1)*pageSize+1;
+v_end number:=pageNow*pageSize;
+begin
+     v_sql:='select a1.*,rownum from (select * from '||tableName||') a1 where rownum>='||v_begin||' and rownum<='||v_end;
+     open cur for v_sql;
+     v_sql:='select count(*) from '||tableName;
+     execute immediate v_sql into sumRows;
+     if mod(sumRows,pageSize)=0 then
+        sumPages:=sumRows/pageSize;
+     else
+        sumPages:=sumRows/pageSize+1;
+     end if;
+     --¹Ø±ÕÓÎ±ê
+     --close cur;
+end;
+----------------------------------------
+package com.mipo.procedure;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+public class Page {
+	public static void main(String[] args) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			try {
+				Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL","scott","tiger");
+				CallableStatement cs=conn.prepareCall("{call li_fenye(?,?,?,?,?,?)}");
+				cs.setString(1,"emp");
+				cs.setInt(2,3);
+				cs.setInt(3,1);
+				cs.registerOutParameter(4,oracle.jdbc.OracleTypes.INTEGER);
+				cs.registerOutParameter(5,oracle.jdbc.OracleTypes.INTEGER);
+				cs.registerOutParameter(6,oracle.jdbc.OracleTypes.CURSOR);
+				cs.execute();
+				int sumRows=cs.getInt(4);
+				int sumPages=cs.getInt(5);
+				ResultSet rs=(ResultSet) cs.getObject(6);
+				while(rs.next()){
+					System.out.println(rs.getString(2));
+				}
+				System.out.println(sumRows);
+				System.out.println(sumPages);
+			} catch (SQLException e){
+				e.printStackTrace();
+			}
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		}
+	}
+}

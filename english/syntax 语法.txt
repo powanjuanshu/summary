@@ -1,0 +1,4 @@
+Receive and verify the syntax of the SQL statement.
+接收并验证SQL语句的语法。
+As the name implies, this syntax creates the object, or if it exists already, replaces it.
+顾名思义，这个语法创建对象，如果对象已存在的话，那么将替代对象。

@@ -1,0 +1,20 @@
+CREATE TABLE temp (
+    id  VARCHAR2(5) UNIQUE, 
+    no  NUMBER
+);
+----------------------------------------------------
+CREATE TABLE studentInfo ( 
+  stuNo       CHAR(10) NOT NULL , 
+  stuName     VARCHAR2(20) NOT NULL, 
+  stuSex      NUMBER(1), 
+  stuBirthday DATE DEFAULT SYSDATE , 
+  stuAddress VARCHAR2(20) 
+); 
+CREATE TABLE testInfo (
+  stuNo       CHAR(10) NOT NULL , 
+  classNo     CHAR(5) NOT NULL, 
+  testScore   NUMBER(3,1) 
+); 
+alter table testinfo add constraint fk_1  foreign key (stuno) references studentinfo(stuno); 
+alter table studentinfo add constraint pk_1 primary key (stuno); 
+alter table testinfo add constraint uniq_1 unique (stuno,classno);

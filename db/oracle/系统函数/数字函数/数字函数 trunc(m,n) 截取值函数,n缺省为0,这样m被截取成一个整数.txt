@@ -1,0 +1,26 @@
+trunc(m[,n]) 截取值函数,n缺省为0,这样m被截取成一个整数.如果n为负数,那么截取到小数点左边相应位置
+select trunc(100.347,2) from dual;
+输出:100.34
+select trunc(100.347,-2) from dual;
+输出:100
+
+select trunc(sysdate) from dual; 返回当前年月日,截取时分秒
+
+select trunc(sysdate,'d') from dual; 返回当前星期的第一天
+
+select trunc(sysdate,'dd') from dual; 返回当前年月日,截取时分秒,返回的是Date时间格式
+
+select trunc(sysdate,'mm') from dual; 返回当前月第一天
+
+select trunc(sysdate,'yyyy') from dual; 返回当前年第一天
+
+select trunc(sysdate-hiredate) from dual; 员工入职天数，两个date相减返回天数
+
+
+
+
+
+
+
+
+

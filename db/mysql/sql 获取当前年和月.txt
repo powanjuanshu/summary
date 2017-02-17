@@ -1,0 +1,2 @@
+select YEAR(now())
+select MONTH(now())

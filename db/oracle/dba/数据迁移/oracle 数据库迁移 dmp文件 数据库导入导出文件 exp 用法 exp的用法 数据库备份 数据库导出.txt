@@ -1,0 +1,13 @@
+exp system/manager@FIRST file=d:\daochu.dmp full=y
+----------------以上验证以成功
+可以在sqlplus.ext或者dos命令行中执行，
+DOS中可以执行时由于在oracle 8i中安装目录\ora81\BIN被设置为全局路径，该目录下有EXP.EXE与IMP.EXE文件被用来执行导入导出。
+oracle用java编写,SQLPLUS.EXE、EXP.EXE、IMP.EXE这两个文件有可能是被包装后的类文件。
+SQLPLUS.EXE调用EXP.EXE、IMP.EXE所包裹的类，完成导入导出功能。
+------------------------
+exp user/password@orcl c:\2011.dmp  
+---------------------------------------
+exp user/password@orcl c:\2011.dmp log=c:\orabackup\hkbimp.log full=y
+-------------
+@后面是sid，即配置tns的名字，
+

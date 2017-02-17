@@ -1,0 +1,1 @@
+每次做update insert delete之前要么提交要么回滚，切记不要不提交也不回滚

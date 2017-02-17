@@ -1,0 +1,2 @@
+sysman是个用户
+sysman拥有的权限是dba与mgmt_user（用户管理）

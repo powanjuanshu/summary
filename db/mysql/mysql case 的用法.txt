@@ -1,0 +1,27 @@
+-- 学生
+select case
+when t2.mon > 9 then
+	case t2.phase 
+	when '03' then t2.yea - t2.year + 1
+	when '04' then t2.yea - t2.year + 6 + 1
+	when '05' then t2.yea - t2.year + 6 + 3 + 1
+	END
+else 
+ case t2.phase 
+	when '03' then t2.yea - t2.year
+	when '04' then t2.yea - t2.year + 6
+	when '05' then t2.yea - t2.year + 6 + 3
+	END
+END grade,
+t2.mon, t2.yea, t2.phase, t2.year, t2.class_name, 
+t1.user_id from uc_user_organization t1  join (select *, MONTH(now()) mon, YEAR(now()) yea from uc_org_class where city_id = '1607') t2 on t1.class_id = t2.id
+-- 老师
+
+
+
+SELECT  
+  case gender
+ WHEN 1 THEN 'NAN'
+ WHEN 0 THEN 'NV'
+end  as gender
+FROM t_swidy_day_nutrient

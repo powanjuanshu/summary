@@ -1,0 +1,18 @@
+create user xiaoming identified by root;
+
+必须是sys或者system
+---------------------------------------
+修改 oracle 的默认表空间
+
+我们可以在创建用户的时候 指定 用户的默认表空间,临时表空间
+
+sql>create user test identified by test default tablespace test temporary tablespace testtemp profile default;
+
+如果该用户已经创建,可以进行修改 
+
+sql> alter user test  default tablespace test temporary tablespace testtemp profile default;
+-------------
+create tablespace shgt_data datafile 'E://oracle//oradata//posdb//shgt_data01.dbf' size 100m autoextend on next 10m maxsize 2048m extent management local uniform size 128k segment space management auto;
+create user shgt_pos identified by shgt_pos default tablespace shgt_data temporary tablespace temp;
+grant CREATE USER,DROP USER,ALTER USER,CREATE ANY VIEW,DROP ANY VIEW,EXP_FULL_DATABASE,IMP_FULL_DATABASE,DBA,CONNECT,RESOURCE,CREATE SESSION TO shgt_pos;
+imp shgt_pos/shgt_pos@first file=C:\Documents and Settings\Administrator\桌面\新建文件夹 FULL=y

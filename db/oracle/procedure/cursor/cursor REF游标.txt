@@ -1,0 +1,116 @@
+[1]
+REF游标用于处理运行时才能确定的动态sql查询的结果
+* REF游标和游标变量用于处理运行时动态执行的SQL查询
+* 创建游标变量需要两个步骤:
+  + 声明REF游标类型
+  + 声明REF游标类型的变量
+* 用于声明REF游标类型的语法为:
+  TYPE <ref_cursor_name> IS REF CURSOR
+  [RETURN <return_type>];
+* 打开游标变量的语法如下:
+  OPEN cursor_name FOR select_statement;
+* 声明强类型的REF游标
+  TYPE my_curtype IS REF CURSOR 
+    RETURN stud_det%ROWTYPE;
+  order_cur my_curtype;
+* 声明弱类型的REF游标
+  TYPE my_ctype IS REF CURSOR;
+  stud_cur my_ctype;
+
+[2]
+DECLARE
+  TYPE toys_curtype IS REF CURSOR RETURN toys%ROWTYPE;
+  toys_curvar toys_curtype;
+  toys_rec toys%ROWTYPE;
+BEGIN
+  OPEN toys_curvar FOR SELECT * FROM toys;
+  FETCH toys_curvar INTO toys_rec;
+  ...
+  CLOSE toys_curvar;
+END;
+
+[3]
+DECLARE
+  TYPE cursor_type IS REF CURSOR;
+  stu_cursor cursor_type;
+  v_stu student%ROWTYPE;
+BEGIN
+  OPEN stu_cursor FOR
+    SELECT * FROM student WHERE sex = 'MALE';
+  LOOP
+    FETCH stu_cursor INTO v_stu;
+    EXIT WHEN stu_cursor%NOTFOUND;
+    DMBS_OUTPUT.PUT_LINE(v_stu.studentno || v_stu.sex);
+  END LOOP;
+  CLOSE stu_cursor;
+END;
+
+[4]
+游标变量的有点和限制
+* 游标变量的功能强大,可以简化数据处理.
+* 游标变量的优点有:
+  + 可从不同的SELECT语句中提取结果集
+  + 可以作为过程的参数进行传递
+  + 可以引用游标的所有属性
+  + 可以进行赋值运算
+* 使用游标变量的限制
+  + 不能在程序包中声明游标变量
+  + FOR UPDATE子句不能与游标变量一起使用
+  + 不能使用比较运行符
+
+使用游标变量执行动态SQL
+* 可以使用游标变量执行动态构造的SQL语句
+* 打开执行动态SQL的游标变量的语句如下:
+  OPEN cursor_name FOR dynamic_sqlstring [USING bind_argument_list];
+
+[5]
+DECLARE
+  r_emp emp%ROWTYPE;
+  TYPE c_type IS REF CURSOR;
+  cur c_type;
+BEGIN
+  p_salary := 2500;
+  OPEN cur FOR 'SELECT * FROM emp WHERE sal > :1 ORDER BY sal DESC' USING p_salary;
+  DBMS_OUTPUT.PUT_LINE('工资大于' || p_salary || '的员工有:');
+  LOOP
+    FETCH cur INTO r_emp;
+    EXIT WHEN cur%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE('编号:' || r_emp.empno || '姓名:' || r_emp.ename);
+  END LOOP;
+  CLOSE cur;
+END;
+
+[6]
+DECLARE
+  TYPE emp_type IS REF CURSOR;
+  cur emp_type;
+  name VARCHAR2(20);
+  salary NUMBER(7, 2);
+BEGIN
+  OPEN cur FOR 'SELECT * FROM emp WHERE job = :1' USING 'SALESMAN';
+  LOOP
+    FETCH cur INTO name, salary;
+    EXIT WHEN cur%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(name || salary);
+  END LOOP;
+  CLOSE cur;
+END;
+
+[7]
+CURSOR与REF CURSOR区别
+从技术底层看,两者是相同的.普通plsql cursor在定义时是静态的.而REF CURSOR可以是动态打开
+* REF CURSOR根据逻辑动态打开;而游标CURSOR定义好了就无法修改了
+* REF CURSOR可以返回给客户端,CURSOR则不行
+* CURSOR可以是全局的global,REF CURSOR则必须定义在过程或函数中
+* REF CURSOR可以在子程序间传递,CURSOR则不行
+* CURSOR中定义的静态sql比REF CURSOR效率高,所以REF CURSOR通常用在:向客户端返回结果集
+
+
+
+
+
+
+
+
+ 
+

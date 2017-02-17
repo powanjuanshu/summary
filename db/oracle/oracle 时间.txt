@@ -1,0 +1,9 @@
+01-5月-05
+insert into student values('A001','张三','男','01-5月-2005',10);
+insert into student values('A001','张三','男','01-5月-05',10);
+insert into student values('A001','张三','男',to_date('2005-5-1','yyyy-MM-dd'));
+
+修改日期的默认格式：
+alter session set nls_date_format='yyyy-mm-dd';
+修改后
+insert into student values('A001','张三','男','2005-01-05',10);

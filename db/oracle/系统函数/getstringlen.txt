@@ -1,0 +1,2 @@
+SELECT getstringlen('数据库系统') FROM DUAL; -- 统计字节数的长度
+输出:10

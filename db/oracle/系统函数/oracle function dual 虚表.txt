@@ -1,0 +1,4 @@
+万能虚拟表：select 2+3 from dual；
+使得select完整
+拼接一个电话信息
+select concat('010-','88888888')||'转23' from dual；

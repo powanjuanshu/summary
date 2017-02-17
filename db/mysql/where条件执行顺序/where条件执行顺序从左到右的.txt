@@ -1,0 +1,27 @@
+数据量小的时候不用考虑，但多的时候就非常重要
+mysql是从左向右来执行的
+比如你的语句 
+select * from a where id=1 and fenlei=5
+select * from a where fenlei=5 and id=1
+如果你的数据量很大，呈千万级的数量，第一条肯定快
+一个原则，排除越多的条件放到第一个
+
+left_check_plan的数据：
+id	check_lesson_id		enable_flg
+#1	4637130095000001585	0
+#2	4637130095000001586	1
+#3	4637130095000001587	3
+#4	4637130095000001588	4
+#6	4637130095000001589	1
+查询条件：
+select * from left_check_plan where id in ('1','2','3') and check_lesson_id != '4637130095000001586' or enable_flag = '1';
+查询结果：
+id	check_lesson_id		enable_flg
+1	4637130095000001585	0
+2	4637130095000001586	1
+3	4637130095000001587	3
+6	4637130095000001589	1
+
+
+
+

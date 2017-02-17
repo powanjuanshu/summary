@@ -1,0 +1,6 @@
+执行sql脚本,可以有2种方法: 
+第一种方法: 
+在命令行下(未连接数据库),输入mysql -h localhost -u root -p 123456 < F:\hello world\niuzi.sql (注意路径不用加引号)回车即可. 
+第二种方法: 
+在命令行下(已连接数据库,此时的提示符为mysql>),输入source F:\hello world\niuzi.sql(注意路径不用加引号的) 后面不要加分号
+或者 \. F:\hello world\niuzi.sql  回车即可

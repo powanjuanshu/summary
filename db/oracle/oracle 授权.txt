@@ -1,0 +1,11 @@
+grant connect to xiaoming;
+
+connect 不是权限，是角色
+
+grant select on emp to xiaoming with grant option
+
+grant create session to xiaomng 
+
+grant select on emp to xiaoming
+
+revoke select on emp from xiaoming 

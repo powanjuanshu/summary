@@ -1,0 +1,24 @@
+CREATE OR REPLACE PROCEDURE ModeTest (p_InParam IN NUMBER, p_OutParam OUT NUMBER, p_InOutParam IN OUT NUMBER) 
+--IN表示该参数不能被赋值(只能位于等号右边);OUT表示该参数只能被赋值(只能位于等号左边);IN OUT:表示该类型既能被赋值也能传值;
+IS 
+--或者AS
+v_LocalVar NUMBER; /*声明部分*/
+BEGIN
+  v_LocalVar := p_InParam; -- 执行部分
+  p_OutParam := 7;
+  p_InOutParam := 7;
+  DBMS_OUTPUT.PUT_LINE('程序运行!');
+  DBMS_OUTPUT.PUT_LINE('数据库运行!');
+  DBMS_OUTPUT.PUT_LINE('数据库运行!');
+  DBMS_OUTPUT.PUT_LINE('数据库访问!');
+  DBMS_OUTPUT.PUT_LINE('数据库运行!');
+Exception
+  /*异常处理部分*/
+  WHEN NO_DATA_FOUND THEN
+      DBMS_OUTPUT.PUT_LINE('数据库中没有员工');
+   WHEN TOO_MANY_ROWS THEN
+      DBMS_OUTPUT.PUT_LINE('程序运行错误');
+   WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE(SQLCODE||'---'||SQLERRM);
+
+END ModeTest;

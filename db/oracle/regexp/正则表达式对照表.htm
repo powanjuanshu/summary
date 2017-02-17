@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>正则表达式对照表_飞舞的鸡毛_新浪博客</title>
+<meta name="keywords" content="正则表达式对照表_飞舞的鸡毛_新浪博客,飞舞的鸡毛,正则,杂谈" />
+<meta name="description" content="正则表达式对照表_飞舞的鸡毛_新浪博客,飞舞的鸡毛," />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<!–[if lte IE 6]>
+<script type="text/javascript">
+try{
+document.execCommand("BackgroundImageCache", false, true);
+}catch(e){}
+</script>
+<![endif]–>
+<script type="text/javascript">
+window.staticTime=new Date().getTime();
+
+var locInterval = setInterval(function(){
+var tc = document.getElementById('trayContainer');
+if(tc) {
+var isLogin = false;var sup = document.cookie.match(/sup=([^;]+);/gi);if(sup != null){ sup = decodeURIComponent(sup[0]);var uid = sup.match(/uid=([^&]+)/gi); isLogin = (uid != null); } if (isLogin){ tc.innerHTML = '<div class="topbar_loading"><img src="http://simg.sinajs.cn/blog7style/images/common/loading.gif" />加载中…</div>'; } else { tc.innerHTML = '<div class="topbar_menu"><span class="link"><a href="http://blog.sina.com.cn" target="_blank">博客首页</a></span><span class="line_s"></span></div><div class="topbar_login"><a href="#" class="login" id="linkTrayLogin" onclick="return false;">登录</a><a href="http://login.sina.com.cn/signup/signupmail.php?entry=blog&r=&srcuid=&src=blogicp" class="register" target="_blank" id="linkReg">注册</a></div><div class="topbar_ad" id="divPopularize"></div><div id="phprender" ></div>';}
+clearInterval(locInterval);
+locInterval = null;
+}
+},50);
+
+</script>
+<link rel="pingback" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php?rsd" />
+<link href="http://blog.sina.com.cn/blog_rebuild/blog/wlwmanifest.xml" type="application/wlwmanifest+xml" rel="wlwmanifest" />
+<link rel="alternate" type="application/rss+xml" href="http://blog.sina.com.cn/rss/1256141290.xml" title="RSS" />
+<link href="http://simg.sinajs.cn/blog7style/css/conf/blog/article.css" type="text/css" rel="stylesheet" /><link href="http://simg.sinajs.cn/blog7style/css/common/common.css" type="text/css" rel="stylesheet" /><link href="http://simg.sinajs.cn/blog7style/css/blog/blog.css" type="text/css" rel="stylesheet" /><link href="http://simg.sinajs.cn/blog7style/css/module/common/blog.css" type="text/css" rel="stylesheet" /><style id="tplstyle" type="text/css">@charset "utf-8";@import url("http://simg.sinajs.cn/blog7newtpl/css/3/3_30/t.css");
+</style>
+<style id="positionstyle"  type="text/css">
+.sinabloghead .blogtoparea{ left:64px;top:41%;}
+.sinabloghead .blognav{ left:44px;top:59%;}
+</style>
+<style id="bgtyle"  type="text/css">
+</style>
+<style id="headtyle"  type="text/css">
+</style>
+<style id="navtyle"  type="text/css">
+</style>
+<script type="text/javascript" src="http://d1.sina.com.cn/litong/zhitou/sspnew.js"></script></head>
+<body>
+<!--$sinatopbar-->
+<!--$end sinatopbar-->
+<div class="sinabloga" id="sinabloga">
+  <div id="sinablogb" class="sinablogb">
+    <!--主题内容开始 -->
+<div class="sinablogbody" id="sinablogbody">
+		
+	<!--第一列start-->
+	<!--第一列end-->
+    <!--第二列start-->
+<div id="column_2" class="SG_colW73">	
+<div id="module_920" class="SG_conn">
+  <div class="SG_connBody">
+<!--博文正文 begin -->
+	<div id="articlebody" class="artical" favMD5='{"4adf31ea0100kkjk":"c3cb190d4c63cd595f86fa8322e3d64d"}'>
+	  <!-- 正文开始 -->
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<table BORDER="0">
+<tbody>
+<tr>
+<th STYLE="TexT-ALiGn: center">\</TH>
+<td>
+将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，“n”匹配字符“n”。“\n”匹配一个换行符。序列“\\”匹配“\”而“\(”则匹配“(”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">^</TH>
+<td>匹配输入字符串的开始位置。如果设置了RegExp对象的Multiline属性，^也匹配“\n”或“\r”之后的位置。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">$</TH>
+<td>匹配输入字符串的结束位置。如果设置了RegExp对象的Multiline属性，$也匹配“\n”或“\r”之前的位置。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">*</TH>
+<td>匹配前面的子表达式零次或多次。例如，zo*能匹配“z”以及“zoo”。*等价于{0,}。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">+</TH>
+<td>匹配前面的子表达式一次或多次。例如，“zo+”能匹配“zo”以及“zoo”，但不能匹配“z”。+等价于{1,}。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">?</TH>
+<td>
+匹配前面的子表达式零次或一次。例如，“do(es)?”可以匹配“do”或“does”中的“do”。?等价于{0,1}。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">{<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN> }</TH>
+<td><span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+是一个非负整数。匹配确定的<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+次。例如，“o{2}”不能匹配“Bob”中的“o”，但是能匹配“food”中的两个o。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">{<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN> ,}</TH>
+<td><span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+是一个非负整数。至少匹配<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+次。例如，“o{2,}”不能匹配“Bob”中的“o”，但能匹配“foooood”中的所有o。“o{1,}”等价于“o+”。“o{0,}”则等价于“o*”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">{<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+,<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">m</SPAN> }</TH>
+<td><span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">m</SPAN>
+和<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+均为非负整数，其中<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+&lt;=<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">m</SPAN>
+。最少匹配<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+次且最多匹配<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">m</SPAN>
+次。例如，“o{1,3}”将匹配“fooooood”中的前三个o。“o{0,1}”等价于“o?”。请注意在逗号和两个数之间不能有空格。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">?</TH>
+<td>当该字符紧跟在任何一个其他限制符(*,+,?,{<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+},{<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+,},{<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+,<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">m</SPAN>
+})后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串“oooo”，“o+?”将匹配单个“o”，而“o+”将匹配所有“o”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">.</TH>
+<td>匹配除“\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+”之外的任何单个字符。要匹配包括“\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+”在内的任何字符，请使用像“[.\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+]”的模式。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">(pattern)</TH>
+<td>
+匹配pattern并获取这一匹配。所获取的匹配可以从产生的Matches集合得到，在VBScript中使用SubMatches集合，在JScript中则使用$0…$9属性。要匹配圆括号字符，请使用“\(”或“\)”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">(?:pattern)</TH>
+<td>
+匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用“或”字符(|)来组合一个模式的各个部分是很有用。例如，“industr(?:y|ies)就是一个比”industry|industries'更简略的表达式。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">(?=pattern)</TH>
+<td>
+正向预查，在任何匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，“Windows(?=95|98|NT|2000)”能匹配“Windows2000”中的“Windows”，但不能匹配
+“Windows3.1”中的“Windows”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">(?!pattern)</TH>
+<td>
+负向预查，在任何不匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如
+“Windows(?!95|98|NT|2000)”能匹配“Windows3.1”中的“Windows”，但不能匹配“Windows2000”中的“Windows”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">x|y</TH>
+<td>匹配x或y。例如，“z|food”能匹配“z”或“food”。“(z|f)ood”则匹配“zood”或“food”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">[xyz]</TH>
+<td>字符集合。匹配所包含的任意一个字符。例如，“[abc]”可以匹配“plain”中的“a”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">[^xyz]</TH>
+<td>负值字符集合。匹配未包含的任意字符。例如，“[^abc]”可以匹配“plain”中的“p”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">[a-z]</TH>
+<td>字符范围。匹配指定范围内的任意字符。例如，“[a-z]”可以匹配“a”到“z”范围内的任意小写字母字符。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">[^a-z]</TH>
+<td>
+负值字符范围。匹配任何不在指定范围内的任意字符。例如，“[^a-z]”可以匹配任何不在“a”到“z”范围内的任意字符。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\b</TH>
+<td>
+匹配一个单词边界，也就是指单词和空格间的位置。例如，“er\b”可以匹配“never”中的“er”，但不能匹配“verb”中的“er”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\B</TH>
+<td>匹配非单词边界。“er\B”能匹配“verb”中的“er”，但不能匹配“never”中的“er”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\cx</TH>
+<td>
+匹配由x指明的控制字符。例如，\cM匹配一个Control-M或回车符。x的值必须为A-Z或a-z之一。否则，将c视为一个原义的“c”字符。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\d</TH>
+<td>匹配一个数字字符。等价于[0-9]。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\D</TH>
+<td>匹配一个非数字字符。等价于[^0-9]。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\f</TH>
+<td>匹配一个换页符。等价于\x0c和\cL。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\n</TH>
+<td>匹配一个换行符。等价于\x0a和\cJ。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\r</TH>
+<td>匹配一个回车符。等价于\x0d和\cM。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\s</TH>
+<td>匹配任何空白字符，包括空格、制表符、换页符等等。等价于[\f\n\r\t\v]。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\S</TH>
+<td>匹配任何非空白字符。等价于[^\f\n\r\t\v]。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\t</TH>
+<td>匹配一个制表符。等价于\x09和\cI。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\v</TH>
+<td>匹配一个垂直制表符。等价于\x0b和\cK。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\w</TH>
+<td>匹配包括下划线的任何单词字符。等价于“[A-Za-z0-9_]”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\W</TH>
+<td>匹配任何非单词字符。等价于“[^A-Za-z0-9_]”。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\x<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN></TH>
+<td>匹配<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+，其中<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+为十六进制转义值。十六进制转义值必须为确定的两个数字长。例如，“\x41”匹配“A”。“\x041”则等价于“\x04”&amp;“1”。正则表达式中可以使用ASCII编码。.</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">num</SPAN></TH>
+<td>匹配<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">num</SPAN>
+，其中<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">num</SPAN>
+是一个正整数。对所获取的匹配的引用。例如，“(.)\1”匹配两个连续的相同字符。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN></TH>
+<td>标识一个八进制转义值或一个向后引用。如果\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+之前至少<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+个获取的子表达式，则<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+为向后引用。否则，如果<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+为八进制数字(0-7)，则<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+为一个八进制转义值。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">nm</SPAN></TH>
+<td>标识一个八进制转义值或一个向后引用。如果\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">nm</SPAN>
+之前至少有<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">nm</SPAN>
+个获得子表达式，则<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">nm</SPAN>
+为向后引用。如果\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">nm</SPAN>
+之前至少有<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+个获取，则<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+为一个后跟文字<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">m</SPAN>
+的向后引用。如果前面的条件都不满足，若<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+和<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">m</SPAN>
+均为八进制数字(0-7)，则\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">nm</SPAN>
+将匹配八进制转义值<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">nm</SPAN> 。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">nml</SPAN></TH>
+<td>如果<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+为八进制数字(0-3)，且<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">m和l</SPAN>
+均为八进制数字(0-7)，则匹配八进制转义值<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">nm</SPAN>
+l。</TD>
+</TR>
+<tr>
+<th STYLE="TexT-ALiGn: center">\u<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN></TH>
+<td>匹配<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+，其中<span STYLE="FonT-sTYLe: italic; FonT-FAMiLY: Times new roman">n</SPAN>
+是一个用四个十六进制数字表示的Unicode字符。例如，\u00A9匹配版权符号（&copy;）。</TD>
+</TR>
+</TBODY>
+</TABLE>							
+		</div>
+						<!-- 正文结束 -->
+						<div class="clearit"></div>
+		<div class="blogzz_zzlist borderc" id="blog_quote" style="display:none">加载中，请稍候......</div>
+		<div class="clearit"></div>
+					
+				<div class="clearit"></div>
+		
+				<div class="articalfrontback articalfrontback2 clearfix">
+				  <div class="SG_floatR"></div>
+			  </div>
+		<div class="clearit"></div>
+				
+	</div>
+	<!--博文正文 end -->
+		<script type="text/javascript">
+			var voteid="";
+		</script>
+
+          </div>       
+            <div class="SG_connFoot"></div>
+        </div>
+</div>
+	<!--第二列start-->
+	
+	<!--第三列start-->
+	<div id="column_3" class="SG_colWnone">
+	  <div style="width:0px;height:0.1px;margin:0px;"></div>
+	</div>
+	<!--第三列end-->
+
+	
+    </div>
+   <!--主题内容结束 -->
+  
+
+	<div id="diggerFla" style="position:absolute;left:0px;top:0px;width:0px"></div>
+    </div>
+</div>
+<script id="PVCOUNTER_FORIE" type="text/javascript"></script>
+</body>
+<script type="text/javascript">
+var scope = {
+	$setDomain : true,
+	$uid : "1256141290",
+	$PRODUCT_NAME : "blog7",		//blog7photo,blog7icp
+	$pageid : "article",
+	$key :  "060d89ddb45e7af3a5301134a36e8bbc",
+	$uhost : "tianzhi",
+	$ownerWTtype :"",
+	$private: {"cms":0,"hidecms":0,"blogsize":0,"ad":0,"sms":0,"adver":0,"tj":0,"p4p":0,"spamcms":0,"pageset":0,"invitationset":0,"top":0,"active":"4","medal":3,"headpic":1,"daRenState":"2","t_sina":"1256141290","oauth_token":1,"oauth_token_secret":1,"uname":"","p_push_t":"1","p_get_t":"1","medal7":6},
+	$is_photo_vip:0,
+		 $nClass:0,
+		 $articleid:"4adf31ea0100kkjk",
+		 $sort_id:117,
+		 $isCommentAllow:0,
+		 $album_pic:"",
+		 $pn_x_rank:0,
+		 $x_quote_c:"1",
+		 $flag2008:"",
+		 	component_lists:{"2":{"size":730,"list":[920]},"1":{"size":210,"list":[901,910,903,911,904]}},
+	formatInfo:1,
+	UserPic:[{"pid":"","repeat":"repeat-x","align-h":"center","align-v":"top","apply":"0"},{"pid":"","repeat":"repeat-x","align-h":"center","align-v":"top","apply":"0"},{"pid":"","repeat":"repeat-x","align-h":"center","align-v":"top","apply":"0"}],
+	UserBabyPic:{"photoX":0,"photoY":0,"photoURL":null,"angle":0,"zoom":0,"maskX":0,"maskY":0,"maskURL":null,"frameURL":null},
+	UserColor:1,
+	backgroundcolor:"#ecece4",
+	tpl:"3_30",
+	reclist:0	};
+var	$encrypt_code = "3f2d32e1424b0197757e75e3d87fe6ba";
+</script>
+
+<script type="text/javascript" src="http://sjs.sinajs.cn/blog7common/js/boot.js"></script>
+<script type="text/javascript">__load_js();</script>
+<script type="text/javascript">__render_page();</script>
+
+
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b436f96b-ce3c-469f-93ca-9c0c406fcf10&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<script type="text/javascript" charset="utf-8">
+        bShare.addEntry({pic: "", title:"分享自飞舞的鸡毛  《正则表达式对照表》", summary:"   \  将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，“n”匹配字符“n”。“\n”匹配...  (来自 @头条博客)"});
+     </script>
+</html>

@@ -1,0 +1,1 @@
+select avg(sal) from emp; -- 平均工资

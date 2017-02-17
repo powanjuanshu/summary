@@ -1,0 +1,2 @@
+修改普通用户的密码：
+alter user scott identified by 861002

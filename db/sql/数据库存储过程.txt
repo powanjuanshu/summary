@@ -1,0 +1,26 @@
+1.delimiter &&
+  create procedure amount_from_emp (in emp_id int,out amount int)
+	reads sql data
+	begin
+		select count(*) into  amount
+		from emp where d_id=emp_id;
+	end
+	&&
+  delimiter ;
+2.declare a int default 10;
+3.set a=30;或者select d_id into a from emp where id=2;(为变量赋值两种方式)
+4.call spname(10);调用储存过程
+5.show procedures status like '存储过程名字';(查看存储过程)
+
+
+
+
+
+
+
+
+
+
+
+
+

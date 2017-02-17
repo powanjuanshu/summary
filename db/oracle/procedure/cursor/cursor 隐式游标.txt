@@ -1,0 +1,56 @@
+在PLSQL程序中执行DML语句(增删改)语句时自动创建隐式游标
+隐式游标自动声明,打开和关闭,其名为SQL
+通过检查隐式游标的属性可以获得最近执行的DML语句的信息
+隐式游标的属性有:
+  %FOUND - SQL语句影响了一行或多行时为TRUE
+  %NOTFOUND - SQL语句没有影响任何行时为TRUE
+  %ROWCOUNT - SQL语句影响的行数
+  %ISOPEN - 游标是否打开,隐式游标不需要打开,所以始终为FALSE
+
+BEGIN
+  UPDATE toys SET toyprice = 270 WHERE toyid = 'P005';
+  IF SQL%FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('表已更新');
+  END IF;
+END;
+
+BEGIN
+  UPDATE toys SET toyprice = 270 WHERE toyid = 'P005';
+  IF SQL%NOTFOUND THEN
+    DBMS_OUTPUT.PUT_LINE('编号未找到');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('表已更新');
+  END IF;
+END;
+
+BEGIN
+  UPDATE emp SET sal = sal * 200 WHERE sal < 2000;
+  DBMS_OUTPUT.PUT_LINE('修改记录数:' || SQL%ROWCOUNT);
+END;
+
+BEGIN
+  UPDATE emp SET sal = sal * 200 WHERE sal < 2000;
+  DBMS_OUTPUT.PUT_LINE('修改记录数:' || SQL%ROWCOUNT);
+END;
+
+DECLARE
+  v_room_data room%ROWTYPE
+BEGIN
+  SELECT * INTO v_room_data FROM rooms WHERE room_id = -1;
+  IF SQL%NOTFOUND THEN -- 注意,这里不执行,以上自动引发select into预定义异常
+    INSERT INTO temp_table(char_col) VALUES('not found');
+  END IF;
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN -- 注意,这是正真执的行
+    INSERT INTO temp_data(char_col) VALUES('not found, exception handler');
+END;
+
+
+
+
+
+
+
+
+
+

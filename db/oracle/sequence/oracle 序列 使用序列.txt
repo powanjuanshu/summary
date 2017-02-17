@@ -1,0 +1,4 @@
+select emp_sequence.currval from dual;--但是在第一次NEXTVAL初始化之后才能使用CURRVAL，否则会出错
+select emp_sequence.nextval from dual;
+------------------------------
+insert into Depart(departId,Departname,Departorder)values(dept_sequence.Nextval,'12345',1);

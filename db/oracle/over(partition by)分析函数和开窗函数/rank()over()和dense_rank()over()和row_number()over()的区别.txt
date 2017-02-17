@@ -1,0 +1,55 @@
+rank()
+dense_rank()
+* 语法 rank() over([query_partition_clause] order_by_clause)
+       dense_rank() over([query_partition_clause] order_by_clause)
+* 功能 聚合函数rank和dense_rank主要的功能是计算一组数值中的排序值.
+* 参数 dense_rank与rank()用法相当,
+* 区别 dence_rank在并列关系是,相关等级不会跳过.rank则跳过
+       rank()是跳跃排序,有两个第二名时接下来就是第四名(同样是在各个分组内)
+       dense_rank()l是连续排序,有两个第二名时仍然跟着第三名.
+* 说明oracle分析函数
+
+2:统计各班成绩第一名的同学信息
+    NAME   CLASS S                         
+    ----- ----- ---------------------- 
+    fda    1      80                     
+    ffd    1      78                     
+    dss    1      95                     
+    cfe    2      74                     
+    gds    2      92                     
+    gf     3      99                     
+    ddd    3      99                     
+    adf    3      45                     
+    asdf   3      55                     
+    3dd    3      78            
+    通过:
+    select * from ( select name,class,s,rank()over(partition by class order by s desc) mm from t2 ) where mm=1
+    得到结果:
+    NAME   CLASS S                       MM                                                                                        
+    ----- ----- ---------------------- ---------------------- 
+    dss    1      95                      1                      
+    gds    2      92                      1                      
+    gf     3      99                      1                      
+    ddd    3      99                      1          
+    注意:
+    1.在求第一名成绩的时候,不能用row_number(),因为如果同班有两个并列第一,row_number()只返回一个结果         
+    2.rank()和dense_rank()的区别是:
+      --rank()是跳跃排序,有两个第二名时接下来就是第四名
+      --dense_rank()l是连续排序,有两个第二名时仍然跟着第三名
+    通过select t2.name1, t2.class1, t2.s, row_number()over(partition by t2.class1 order by t2.s desc) rn from t2
+    得到结果:
+      NAME   CLASS    S                       MM                                                                                        
+      -----  -----  ---------------------- ---------------------- 
+	dss	1	95	1
+	fda	1	80	2
+	ffd	1	78	3
+	gds	2	92	1
+	cfe	2	74	2
+	gf	3	99	1
+	ddd	3	99	2
+	3dd	3	78	3
+	asdf	3	55	4
+	adf	3	45	5
+
+
+     

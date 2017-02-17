@@ -1,0 +1,60 @@
+函数:
+* 函数是可以返回值的命名的PLSQL子程序
+* oracle的函数是一个独有的对象,它也是由PLSQL语句编写而成,但不同的地方是:函数必须返回某些值,而存储过程可以不返回任何值
+* 创建函数的语法:
+  CREATE [OR REPLACE] FUNCTION <function name>[(param1, param2)]
+  RETURN <datetype> IS|AS
+    [local declarations]
+  BEGIN
+    executable statements;
+    RETURN result;
+  EXCEPTION
+    exception handler;
+  END;
+
+定义函数的限制:
+* 函数只能接受IN参数,而不能接受IN OUT或OUT参数
+* 形参不能是PLSQL类型
+* 函数的返回类型也必须是数据库类型
+
+访问函数的两种方式:
+* 使用PLSQL块
+* 使用SQL语句
+  SELECT fun_hello FROM DUAL;
+
+CREATE OR REPLACE FUNCTION fun_hello
+  RETURN VARCHAR2
+IS
+BEGIN
+  RETURN 'companyname';
+END;
+
+CREATE OR REPLACE FUNCTION sql_fun(salary number)
+  RETURN VARCHAR2
+AS
+  max_sal NUMBER;
+  min_sal NUMBER;
+BEGIN
+  SELECT max(sal),min(sql) INTO max_sql,min_sal from emp;
+  RETURN 'companyname';
+END;
+
+过程和函数的比较:
+过程					函数
+作为pl/sql语句执行			作为表达式的一部分调用
+在规格说明中不包含return子句		必须在规格说明中包含return子句
+不返回任何值				必须返回单个值
+可以包含return语句,但是不能用于返回值	必须包含至少一条return语句
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,8 @@
+select sum(bytes) from user_segments t where tsegment_name='CUSTOMER';字节
+select sum(bytes) from user_extends where segment_name='CUSTOMER';字节
+
+
+
+
+select bytes/1024 from user_segments t where t.segment_name='task'; 多少k字节
+select bytes/1024 from dba_segments t where t.segment_name='task'; 多少k字节

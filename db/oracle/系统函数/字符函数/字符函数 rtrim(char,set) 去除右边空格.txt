@@ -1,0 +1,2 @@
+select rtrim('xyzadams','ams') from dual;
+Êä³ö:xyzad

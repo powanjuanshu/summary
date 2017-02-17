@@ -1,0 +1,40 @@
+1.先安装Oracle10g的客户端：Oracle10g_client_win32，大概470兆左右（默认会在E盘创建oracle目录，然后安装到这个目录下：E:\oracle\product\10.2.0\client_1）
+
+2.配置tnsname.ora，如果本机上没有安装oracle，可以从安装了oracle的机器上拷贝一个（tnsname.ora文件在%ORACLE_HOME%\network\admin下）放在上面的目录E:\oracle下。
+    E:\oracle\tnsname.ora 如下：
+   front =
+     (DESCRIPTION =
+       (ADDRESS = (PROTOCOL = TCP)(HOST = 116.228.55.185)(PORT = 21521))
+       (CONNECT_DATA =
+         (SERVER = DEDICATED)
+         (SERVICE_NAME = test)
+       )
+    )
+
+3.添加一个环境变量，名为TNS_ADMIN，值为tnsnames.ora文件所在路径（如：E:\oracle），这是为了能够找到上面说的tnsnames.ora。如果本机上安装了ORACLE，并且设置了ORACLE_HOME，
+并且设置了ORACLE_HOME环境变量，那么会自动在%ORACLE_HOME%/network/admin/位置查找tnsname.ora文件。
+
+4.设置ORACLE的语言，添加注册表项：NLS_LANG=SIMPLIFIED CHINESE_CHINA.ZHS16GBK，位于 HKEY_LOCAL_MACHINE\SOFTWARE\ORACLE。如果本机没有安装ORACLE，
+在H_L_M\SOFTWARE\下是没有"ORACLE"这一项的，需要手动创建，然后再在ORACLE项下创建键NLS_LANG，键值为:SIMPLIFIED CHINESE_CHINA.ZHS16GBK。
+
+5.安装PLSQL Developer 8.0.3.1510，大概23兆左右（可以不用安装，用绿色版本，我就是用的绿色版）
+	下载并安装PL.SQL.Developer配置应用
+    配置tools->preferences->connection
+找到等号左侧参数填写等号右侧对应的内容
+    Oracle Home=E:\oracle\product\10.2.0\client_1
+    OCI library=E:\oracle\product\10.2.0\client_1\oci.dll
+
+6,再次打开plsql则会在database中有front选项输入用户名密码就可以登陆。
+
+
+
+
+
+
+
+
+
+
+
+
+

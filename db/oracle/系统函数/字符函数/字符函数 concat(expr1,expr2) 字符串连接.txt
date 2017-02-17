@@ -1,0 +1,2 @@
+select concat('hello',' world') from dual;
+Êä³ö:hello world

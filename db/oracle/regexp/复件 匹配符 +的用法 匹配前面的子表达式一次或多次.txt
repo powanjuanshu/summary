@@ -1,0 +1,5 @@
+匹配前面的子表达式一次或多次。例如，“zo+”能匹配“zo”以及“zoo”，但不能匹配“z”。+等价于{1,}。
+select regexp_replace('and xxx and  ','^(and( )+)*','') from dual;
+
+
+

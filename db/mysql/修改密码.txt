@@ -1,0 +1,1 @@
+1.cmd->mysqladmin -u root -p password 123 然后再输入原来的密码回车即可改成123

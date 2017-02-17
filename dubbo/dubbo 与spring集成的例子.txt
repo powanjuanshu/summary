@@ -1,0 +1,139 @@
+项目1：provider
+-------------------
+package com;
+import java.io.IOException;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class Providor {
+	public static void main(String[] args) throws IOException {
+		ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("spring-context-providor.xml");
+		context.start();
+		System.out.println("providor启动完成"); //启动成功，监听端口为20880，一个是注册端口，一个是监听端口
+		System.in.read();
+	}
+}
+-------------------------
+package com;
+public interface ProvidorInterface {
+	public String say(Person person);
+}
+-------------------------
+package com;
+public class ProvidorInterfaceImp implements ProvidorInterface{
+	@Override
+	public String say(Person person) {
+		System.out.println("dubbo Providor");
+		System.out.println(person.getName());
+		return "fuck";
+	}
+}
+-------------------------
+package com;
+import java.io.Serializable;
+public class Person implements Serializable {//对象参数必须要序列化
+	private String name;
+	private String password;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+---------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!-- 提供方应用信息，用于计算依赖关系，不是匹配条件，不要与消费方一样 -->
+    <dubbo:application name="bss_bp_core_provider"/>
+    <!-- 使用zookeeper广播注册中心暴露服务地址 -->
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181"/>
+    <!-- 用dubbo协议在20890端口暴露服务 --><!-- port不是匹配条件，可以乱写，也可以不写，默认是20880，指定的端口不得在使用中 -->
+    <!-- expose this service through dubbo protocol, through port 20880 -->
+    <dubbo:protocol name="dubbo" port="20880" accesslog="D:/logs/test/bss_bp_core/dubbo.log" />
+    <dubbo:service interface="com.ProvidorInterface" ref="ProvidorInterface"/>
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="ProvidorInterface" class="com.ProvidorInterfaceImp"/>
+</beans>
+-----------------------------------
+项目2：consumer
+------------------
+package com;
+import java.io.IOException;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class Consumer {
+	public static void main(String[] args) throws IOException {
+		System.out.println("dubbo consume");
+		ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("spring-context-consumer.xml");
+		context.start();
+		ProvidorInterface proxy=(ProvidorInterface) context.getBean("demoService");
+		Person p=new Person();
+		p.setName("rose");
+		p.setPassword("123");
+		String s=proxy.say(p);
+		System.out.println(s);
+		System.in.read();
+	}
+}
+-----------------------------
+package com;
+import java.io.Serializable;
+public class Person implements Serializable {//对象参数必须要序列化
+	private String name;
+	private String password;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+---------------------------------
+package com;
+public interface ProvidorInterface {
+	public String say(Person person);
+}
+---------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!--消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+    <dubbo:application name="consumer-of-helloworld-app" />
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181"/>
+    <!--生成远程服务代理，可以和本地bean一样使用demoService-->
+    <dubbo:reference id="demoService" interface="com.ProvidorInterface"/>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+

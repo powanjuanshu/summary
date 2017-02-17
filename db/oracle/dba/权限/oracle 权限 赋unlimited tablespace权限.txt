@@ -1,0 +1,5 @@
+grant unlimited tablespace to sxdxsj;
+sxdxsj用户可以在其他表空间里随意创建表
+
+
+

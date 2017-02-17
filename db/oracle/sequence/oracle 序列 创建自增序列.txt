@@ -1,0 +1,15 @@
+create sequence emp_sequence
+increment by 1--每次加1
+start with 1 --从1开始
+nomaxvalue --不设置最大值
+nocycle --一直累加，不循环
+cache 10 --设置缓存10个序列，如果系统down掉了或其他情况会导致序列不连续，也可设置为nocache
+/
+------------------------------------------
+create sequence S_S_DEPART
+minvalue 1
+maxvalue 999999999999999999999999999
+start with 1
+cycle 9999999 --到9999999后从头开始，如果后面不带数字，则默认的是到10000后从头开始
+increment by 1
+nocache

@@ -1,0 +1,35 @@
+declare
+v_sql varchar2(2000);
+c varchar2(1000);
+begin
+     v_sql:='begin li_test(:v1,:v2,:v3); end;';
+     execute immediate v_sql using in 'a',in 'b',out c; //也可以省略in，即可写成execute immediate v_sql using 'a','b',out c;
+     dbms_output.put_line(c);
+end;
+-----------------------
+create or replace procedure li_test(
+       a in varchar2,
+       b in varchar2,
+       c out varchar2
+) is
+begin
+     dbms_output.put_line(a);
+     dbms_output.put_line(b);
+     c:=a||b;
+end;
+---------------------------------
+create or replace procedure li_d is
+cur sys_refcursor;
+v_a varchar2(2000);
+v_b number;
+v_sql varchar2(2000):='select ename from emp where deptno=:1';
+begin
+     v_b:=20;
+     open cur for v_sql using v_b;
+     fetch cur into v_a;
+     loop
+     dbms_output.put_line(v_a);
+     fetch cur into v_a;
+     exit when cur%notfound;
+     end loop;
+end;

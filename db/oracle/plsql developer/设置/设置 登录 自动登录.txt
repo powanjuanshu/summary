@@ -1,0 +1,2 @@
+Tools->Preferences->Loggon History->Definition->¹´ÉÏStore with password
+->¹´ÉÏAdd fixed users to the history when used

@@ -1,0 +1,26 @@
+循环控制语句包括:LOOP,EXIT和EXIT WHEN
+
+FOR - 循环固定的次数
+
+FOR counter IN [REVERSE] value1 .. value2
+LOOP
+  sequence_of_statements
+END LOOP;
+
+DECLARE
+  v_counter NUMBER := 7;
+BEGIN
+  FOR v_counter in 20 .. 30 LOOP
+    INSERT INTO temp_table(num_col) VALUES(v_counter);
+  END LOOP;
+END;
+
+DECLARE
+  v_counter NUMBER := 7;
+BEGIN
+  FOR v_counter in REVERSE 20 .. 30 LOOP
+    INSERT INTO temp_table(num_col) VALUES(v_counter);
+  END LOOP;
+END;
+
+

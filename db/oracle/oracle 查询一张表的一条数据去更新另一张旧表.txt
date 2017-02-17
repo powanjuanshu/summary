@@ -1,0 +1,1 @@
+update emp set (empno,ename,sal)=(select empno,ename,sal from emp where ename='SMITH') where ename='JONSE'

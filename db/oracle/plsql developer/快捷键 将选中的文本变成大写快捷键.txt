@@ -1,0 +1,1 @@
+tools->preferences->User Interface -> Key Configuration --> edit/selection/Uppercase 改为自己想要的快捷键

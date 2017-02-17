@@ -1,0 +1,28 @@
+select to_char(sysdate, ' YYYY ''年'' fmMM ''月'' fmDD ''日'' HH24:MI:SS ') from dual;
+输出:2010 年 2 月 24 日 22:46:56
+
+select ename,to_char(sal, 'C99999') from emp; -- 货币前面加上RMB
+输出:CNY800
+
+select to_char(hiredate, 'yyyy-mm-dd hh24;mi;ss') from emp; 可以把时分秒显示出来 不区分大小写
+
+select to_date('2012-04-25 06:00:41', 'YYYY-MM-DD HH24:mi:ss') FROM dual
+输出:2012-4-25 6:00:41
+
+select to_date('2012-04-25', 'YYYY-MM-DD HH24:mi:ss') FROM dual
+输出:2012-4-25
+
+select to_char(sql, 'L99,999.99') from emp;
+
+L代表本地货币符号
+99,999.99表示五位整数带两位小数
+9代表数字,并忽略前面的0
+0代表数字,如位数不足,用0补齐
+.表示在指定位置显示小数点
+,表示在指定位置显示逗号
+$表示前面加美元
+L表示前面加本地货币符号
+C表示前面加国际货币符号
+G在指定位置显示组分隔符
+D在指定位置显示
+

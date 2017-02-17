@@ -1,0 +1,3 @@
+1打开Eclipse 菜单栏里的window
+2右键选择Preferences：
+3选择Validation你不需要验证的去掉勾就可以了，点击ok。

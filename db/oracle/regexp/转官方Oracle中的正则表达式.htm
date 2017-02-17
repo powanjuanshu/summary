@@ -1,0 +1,998 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>转官方:Oracle中的正则表达式 - kb5706的专栏 - 博客频道 - CSDN.NET</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="Oracle 10g数据库内建了符合IEEE POSIX (Portable Operating System for Unix)标准的正则表达式。熟练使用正则表达式，可以写出简洁，强大的SQL语句。&#160;正则表达式有几个优点优于常见的LIKE操作符和INSTR、SUBSTR及REPLACE&#160;函数的。这些传统的SQL&#160;函数不便于进行模式匹配。只有LIKE&#160;操作符通过使用%和_字符匹配，但LIK" />
+<script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+<script src="http://static.blog.csdn.net/scripts/plugins.js" type="text/javascript"></script>
+<script src="http://static.blog.csdn.net/scripts/common.js?v=1.2" type="text/javascript"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+<link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/light_blue/css/style.css?v=1.1" />
+<link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/kb5706/rss/list" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+</head>
+<body>
+<script src="http://csdnimg.cn/pubnav/js/pub_topnav_2011.js"type="text/javascript"></script>
+
+<div id="container">
+  <script type="text/javascript">
+    var username = "kb5706";
+    var blog_address = "http://blog.csdn.net/kb5706";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";
+</script>
+        
+<div id="body">
+<div id="main">
+<div class="main">
+  <div id="article_details" class="details">
+  <div id="article_content" class="article_content">
+
+<p style="color:rgb(51,51,51)">Oracle 10g数据库内建了符合IEEE POSIX (Portable Operating System for Unix)标准的正则表达式。熟练使用正则表达式，可以写出简洁，强大的SQL语句。正则表达式有几个优点优于常见的LIKE操作符和INSTR、SUBSTR及REPLACE&nbsp;函数的。这些传统的SQL&nbsp;函数不便于进行模式匹配。只有LIKE&nbsp;操作符通过使用%和_字符匹配，但LIKE不支持表达式的重复、复杂的更替、字符范围、字符列表和POSIX&nbsp;字符类等等。</p>
+<p style="color:rgb(51,51,51)">元字符（Meta Character）：</p>
+<p style="color:rgb(51,51,51)">Sql代码&nbsp;<a title="复制代码" href="http://www.javaeye.com/topic/398717" target="_blank" style="color:rgb(61,129,238)"><span style="color:blue"><img id="Picture_x0020_1" border="0" alt="复制代码" src="http://g1a107.mail.163.com/js3/s?func=mbox:getMessageData&amp;sid=QCtwJIffRJLIqbrBaBffiAvzVCJKawMZ&amp;mid=364:1tbiKBgPa0qCMy6QbwAAs&#43;&amp;part=3" width="14" height="15"></span></a></p>
+<ol type="1" style="color:rgb(51,51,51)">
+<li>^&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使表达式定位至一行的开头&nbsp;&nbsp;&nbsp;</li><li>$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使表达式定位至一行的末尾&nbsp;&nbsp;&nbsp;</li><li>*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;匹配&nbsp;0&nbsp;次或更多次&nbsp;&nbsp;&nbsp;</li><li>?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;匹配&nbsp;0&nbsp;次或&nbsp;1&nbsp;次&nbsp;&nbsp;&nbsp;</li><li>&#43;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;匹配&nbsp;1&nbsp;次或更多次&nbsp;&nbsp;&nbsp;</li><li>{m}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正好匹配&nbsp;m&nbsp;次&nbsp;&nbsp;&nbsp;</li><li>{m,}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至少匹配&nbsp;m&nbsp;次&nbsp;&nbsp;&nbsp;</li><li>{m,&nbsp;n}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至少匹配&nbsp;m&nbsp;次但不超过&nbsp;n&nbsp;次&nbsp;&nbsp;&nbsp;</li><li>[:alpha:]&nbsp;&nbsp;&nbsp;&nbsp;字母字符&nbsp;&nbsp;&nbsp;</li><li>[:<span style="color:rgb(255,20,147)">lower</span>:]&nbsp;&nbsp;&nbsp;&nbsp;小写字母字符&nbsp;&nbsp;&nbsp;</li><li>[:<span style="color:rgb(255,20,147)">upper</span>:]&nbsp;&nbsp;&nbsp;&nbsp;大写字母字符&nbsp;&nbsp;&nbsp;</li><li>[:digit:]&nbsp;&nbsp;&nbsp;&nbsp;数字&nbsp;&nbsp;&nbsp;</li><li>[:alnum:]&nbsp;&nbsp;&nbsp;&nbsp;字母数字字符&nbsp;&nbsp;&nbsp;</li><li>[:<span style="color:rgb(255,20,147)">space</span>:]&nbsp;&nbsp;&nbsp;&nbsp;空白字符（禁止打印），如回车符、换行符、竖直制表符和换页符[:punct:]&nbsp;&nbsp;&nbsp;&nbsp;标点字符&nbsp;&nbsp;&nbsp;</li><li>[:cntrl:]&nbsp;&nbsp;&nbsp;&nbsp;控制字符（禁止打印）&nbsp;&nbsp;&nbsp;</li><li>[:print:]&nbsp;&nbsp;&nbsp;&nbsp;可打印字符&nbsp;|&nbsp;分隔替换选项，通常与分组操作符&nbsp;()&nbsp;一起使用&nbsp;&nbsp;&nbsp;</li><li>(&nbsp;)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将子表达式分组为一个替换单元、量词单元或后向引用单元&nbsp;&nbsp;&nbsp;</li><li>[char]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;字符列表&nbsp;&nbsp;</li></ol>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)">Oracle 10g提供了四个regexp function:&nbsp;<strong>REGEXP_LIKE</strong>&nbsp;,&nbsp;<strong>REGEXP_REPLACE</strong>&nbsp;,&nbsp;<strong>REGEXP_INSTR</strong>&nbsp;,&nbsp;<strong>REGEXP_SUBSTR</strong>&nbsp;。</p>
+<p style="color:rgb(51,51,51)">Sql代码&nbsp;<a title="复制代码" href="http://www.javaeye.com/topic/398717" target="_blank" style="color:rgb(61,129,238)"><span style="color:blue"><img id="Picture_x0020_2" border="0" alt="复制代码" src="http://g1a107.mail.163.com/js3/s?func=mbox:getMessageData&amp;sid=QCtwJIffRJLIqbrBaBffiAvzVCJKawMZ&amp;mid=364:1tbiKBgPa0qCMy6QbwAAs&#43;&amp;part=3" width="14" height="15"></span></a></p>
+<ol type="1" style="color:rgb(51,51,51)">
+<li>REGEXP_LIKE：比较一个字符串是否与正则表达式匹配&nbsp;&nbsp;&nbsp;</li><li>(srcstr,&nbsp;pattern&nbsp;[,&nbsp;match_option]) &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>REGEXP_INSTR：在字符串中查找正则表达式，并且返回匹配的位置&nbsp;&nbsp;&nbsp;</li><li>(srcstr,&nbsp;pattern&nbsp;[,&nbsp;position&nbsp;[,&nbsp;occurrence&nbsp;[,&nbsp;return_option&nbsp;[,&nbsp;match_option]]]]) &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>REGEXP_SUBSTR：返回与正则表达式匹配的子字符串&nbsp;&nbsp;&nbsp;</li><li>(srcstr,&nbsp;pattern&nbsp;[,&nbsp;position&nbsp;[,&nbsp;occurrence&nbsp;[,&nbsp;match_option]]])&nbsp; &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>REGEXP_REPLACE：搜索并且替换匹配的正则表达式&nbsp;&nbsp;&nbsp;</li><li>(srcstr,&nbsp;pattern&nbsp;[,&nbsp;replacestr&nbsp;[,&nbsp;position&nbsp;[,&nbsp;occurrence&nbsp;[,&nbsp;match_option]]]])&nbsp;&nbsp;</li></ol>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)">其中各参数的含义为:</p>
+<p style="color:rgb(51,51,51)">Sql代码&nbsp;<a title="复制代码" href="http://www.javaeye.com/topic/398717" target="_blank" style="color:rgb(61,129,238)"><span style="color:blue"><img id="Picture_x0020_3" border="0" alt="复制代码" src="http://g1a107.mail.163.com/js3/s?func=mbox:getMessageData&amp;sid=QCtwJIffRJLIqbrBaBffiAvzVCJKawMZ&amp;mid=364:1tbiKBgPa0qCMy6QbwAAs&#43;&amp;part=3" width="14" height="15"></span></a></p>
+<ol type="1" style="color:rgb(51,51,51)">
+<li>srcstr:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;被查找的字符数据。&nbsp; &nbsp;&nbsp;</li><li>pattern:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正则表达式。&nbsp;&nbsp;&nbsp;</li><li>occurrence:&nbsp;&nbsp;&nbsp;&nbsp;出现的次数。默认为1。&nbsp;&nbsp;&nbsp;</li><li>position:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开始位置&nbsp;&nbsp;&nbsp;</li><li>return_option:&nbsp;默认&#20540;为0，返回该模式的起始位置；&#20540;为1则返回符合匹配条件的下一个字符的起始位置。&nbsp;&nbsp;&nbsp;</li><li>replacestr:&nbsp;&nbsp;&nbsp;&nbsp;用来替换匹配模式的字符串。&nbsp;&nbsp;&nbsp;</li><li>match_option:&nbsp;&nbsp;匹配方式选项。缺省为c。&nbsp;&nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c：<span style="color:rgb(255,20,147)">case</span>&nbsp;sensitive &nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I：<span style="color:rgb(255,20,147)">case</span>&nbsp;insensitive&nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n：(.)匹配任何字符（包括newline) &nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m：字符串存在换行的时候被作为多行处理&nbsp;&nbsp;</li></ol>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)">下面通过一些具体的例子来说明如何使用这四个函数。首先创建一个测试数据表，</p>
+<p style="color:rgb(51,51,51)">Sql代码&nbsp;<a title="复制代码" href="http://www.javaeye.com/topic/398717" target="_blank" style="color:rgb(61,129,238)"><span style="color:blue"><img id="Picture_x0020_4" border="0" alt="复制代码" src="http://g1a107.mail.163.com/js3/s?func=mbox:getMessageData&amp;sid=QCtwJIffRJLIqbrBaBffiAvzVCJKawMZ&amp;mid=364:1tbiKBgPa0qCMy6QbwAAs&#43;&amp;part=3" width="14" height="15"></span></a></p>
+<ol type="1" style="color:rgb(51,51,51)">
+<li>SQL&gt;&nbsp;create&nbsp;table&nbsp;person&nbsp;( &nbsp;&nbsp;</li><li>&nbsp;&nbsp;2&nbsp;&nbsp;first_name&nbsp;varchar(20), &nbsp;&nbsp;</li><li>&nbsp;&nbsp;3&nbsp;&nbsp;last_name&nbsp;varchar(20), &nbsp;&nbsp;</li><li>&nbsp;&nbsp;4&nbsp;&nbsp;email&nbsp;varchar(100), &nbsp;&nbsp;</li><li>&nbsp;&nbsp;5&nbsp;&nbsp;zip&nbsp;varchar(6)); &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>Table&nbsp;created. &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;insert&nbsp;into&nbsp;person&nbsp;values&nbsp;('Steven',&nbsp;'Chen',&nbsp;'<a href="mailto:steven@hp.com" target="_blank" style="color:rgb(61,129,238)">steven@hp.com</a>',&nbsp;'123456'); &nbsp;&nbsp;</li><li>1&nbsp;row&nbsp;created. &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;insert&nbsp;into&nbsp;person&nbsp;values&nbsp;('James',&nbsp;'Li',&nbsp;'<a href="mailto:jamesli@sun.com" target="_blank" style="color:rgb(61,129,238)">jamesli@sun.com</a>'&nbsp;||&nbsp;chr(10)&nbsp;||&nbsp;'<a href="mailto:lijames@oracle.com" target="_blank" style="color:rgb(61,129,238)">lijames@oracle.com</a>',&nbsp;'1b3d5f');
+ &nbsp;&nbsp;</li><li>1&nbsp;row&nbsp;created. &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;commit; &nbsp;&nbsp;</li><li>Commit&nbsp;complete. &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;*&nbsp;from&nbsp;person; &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>FIRST_NAME&nbsp;LAST_NAME&nbsp;&nbsp;EMAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZIP &nbsp;&nbsp;</li><li>----------&nbsp;----------&nbsp;--------------------&nbsp;------ &nbsp;&nbsp;</li><li>Steven&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:steven@hp.com" target="_blank" style="color:rgb(61,129,238)">steven@hp.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;123456 &nbsp;&nbsp;</li><li>James&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Li&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:jamesli@sun.com" target="_blank" style="color:rgb(61,129,238)">jamesli@sun.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1b3d5f &nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:lijames@oracle.com" target="_blank" style="color:rgb(61,129,238)">lijames@oracle.com</a>&nbsp;&nbsp;</li></ol>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)"><strong>1。REGEXP_LIKE</strong></p>
+<p style="color:rgb(51,51,51)">Sql代码&nbsp;<a title="复制代码" href="http://www.javaeye.com/topic/398717" target="_blank" style="color:rgb(61,129,238)"><span style="color:blue"><img id="Picture_x0020_5" border="0" alt="复制代码" src="http://g1a107.mail.163.com/js3/s?func=mbox:getMessageData&amp;sid=QCtwJIffRJLIqbrBaBffiAvzVCJKawMZ&amp;mid=364:1tbiKBgPa0qCMy6QbwAAs&#43;&amp;part=3" width="14" height="15"></span></a></p>
+<ol type="1" style="color:rgb(51,51,51)">
+<li>SQL&gt;&nbsp;select&nbsp;zip&nbsp;as&nbsp;invalid_zip&nbsp;from&nbsp;person&nbsp;where&nbsp;regexp_like(zip,&nbsp;'[^[:digit:]]'); &nbsp;&nbsp;</li><li>INVALID_ZIP &nbsp;&nbsp;</li><li>-------------------- &nbsp;&nbsp;</li><li>1b3d5f &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;first_name&nbsp;from&nbsp;person&nbsp;where&nbsp;regexp_like(first_name,&nbsp;'^S.*n$'); &nbsp;&nbsp;</li><li>FIRST_NAME &nbsp;&nbsp;</li><li>---------- &nbsp;&nbsp;</li><li>Steven &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;first_name&nbsp;from&nbsp;person&nbsp;where&nbsp;regexp_like(first_name,&nbsp;'^s.*n$'); &nbsp;&nbsp;</li><li>no&nbsp;rows&nbsp;selected &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;first_name&nbsp;from&nbsp;person&nbsp;where&nbsp;regexp_like(first_name,&nbsp;'^s.*n$',&nbsp;'c'); &nbsp;&nbsp;</li><li>no&nbsp;rows&nbsp;selected &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;first_name&nbsp;from&nbsp;person&nbsp;where&nbsp;regexp_like(first_name,&nbsp;'^s.*n$',&nbsp;'i'); &nbsp;&nbsp;</li><li>FIRST_NAME &nbsp;&nbsp;</li><li>---------- &nbsp;&nbsp;</li><li>Steven &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;email&nbsp;from&nbsp;person&nbsp;where&nbsp;regexp_like(email,&nbsp;'^james.*com$'); &nbsp;&nbsp;</li><li>no&nbsp;rows&nbsp;selected &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;email&nbsp;from&nbsp;person&nbsp;where&nbsp;regexp_like(email,&nbsp;'^james.*com$',&nbsp;'n'); &nbsp;&nbsp;</li><li>EMAIL &nbsp;&nbsp;</li><li>-------------------- &nbsp;&nbsp;</li><li><a href="mailto:jamesli@sun.com" target="_blank" style="color:rgb(61,129,238)">jamesli@sun.com</a>&nbsp;&nbsp;&nbsp;</li><li><a href="mailto:lijames@oracle.com" target="_blank" style="color:rgb(61,129,238)">lijames@oracle.com</a>&nbsp;&nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;email&nbsp;from&nbsp;person&nbsp;where&nbsp;regexp_like(email,&nbsp;'^li.*com$'); &nbsp;&nbsp;</li><li>no&nbsp;rows&nbsp;selected &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;email&nbsp;from&nbsp;person&nbsp;where&nbsp;regexp_like(email,&nbsp;'^li.*com$',&nbsp;'m'); &nbsp;&nbsp;</li><li>EMAIL &nbsp;&nbsp;</li><li>-------------------- &nbsp;&nbsp;</li><li><a href="mailto:jamesli@sun.com" target="_blank" style="color:rgb(61,129,238)">jamesli@sun.com</a>&nbsp;&nbsp;&nbsp;</li><li><a href="mailto:lijames@oracle.com" target="_blank" style="color:rgb(61,129,238)">lijames@oracle.com</a>&nbsp;&nbsp;</li></ol>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)">注意上面分别测试了不同的match_option对结果的影响。</p>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)"><strong>2。REGEXP_INSTR</strong></p>
+<p style="color:rgb(51,51,51)">Sql代码&nbsp;<a title="复制代码" href="http://www.javaeye.com/topic/398717" target="_blank" style="color:rgb(61,129,238)"><span style="color:blue"><img id="Picture_x0020_6" border="0" alt="复制代码" src="http://g1a107.mail.163.com/js3/s?func=mbox:getMessageData&amp;sid=QCtwJIffRJLIqbrBaBffiAvzVCJKawMZ&amp;mid=364:1tbiKBgPa0qCMy6QbwAAs&#43;&amp;part=3" width="14" height="15"></span></a></p>
+<ol type="1" style="color:rgb(51,51,51)">
+<li>查找zip中第一个非数字字符的位置&nbsp;&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;regexp_instr(zip,&nbsp;'[^[:digit:]]')&nbsp;as&nbsp;position&nbsp;from&nbsp;person; &nbsp;&nbsp;</li><li>&nbsp;&nbsp;POSITION &nbsp;&nbsp;</li><li>---------- &nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>从第三个字符开始，查找zip中第二个非数字字符的位置&nbsp;&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;regexp_instr(zip,&nbsp;'[^[:digit:]]',&nbsp;3,&nbsp;2)&nbsp;as&nbsp;position&nbsp;from&nbsp;person; &nbsp;&nbsp;</li><li>&nbsp;&nbsp;POSITION &nbsp;&nbsp;</li><li>---------- &nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>从第三个字符开始，查找zip中第二个非数字字符的下一个字符位置&nbsp;&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;regexp_instr(zip,&nbsp;'[^[:digit:]]',&nbsp;3,&nbsp;2,&nbsp;1)&nbsp;as&nbsp;position&nbsp;from&nbsp;person; &nbsp;&nbsp;</li><li>&nbsp;&nbsp;POSITION &nbsp;&nbsp;</li><li>---------- &nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;</li></ol>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)"><strong>3。REGEXP_SUBSTR</strong></p>
+<p style="color:rgb(51,51,51)">Sql代码&nbsp;<a title="复制代码" href="http://www.javaeye.com/topic/398717" target="_blank" style="color:rgb(61,129,238)"><span style="color:blue"><img id="Picture_x0020_7" border="0" alt="复制代码" src="http://g1a107.mail.163.com/js3/s?func=mbox:getMessageData&amp;sid=QCtwJIffRJLIqbrBaBffiAvzVCJKawMZ&amp;mid=364:1tbiKBgPa0qCMy6QbwAAs&#43;&amp;part=3" width="14" height="15"></span></a></p>
+<ol type="1" style="color:rgb(51,51,51)">
+<li>SQL&gt;&nbsp;select&nbsp;regexp_substr(zip,&nbsp;'[^[:digit:]]')&nbsp;as&nbsp;zip&nbsp;from&nbsp;person; &nbsp;&nbsp;</li><li>ZIP &nbsp;&nbsp;</li><li>------------------ &nbsp;&nbsp;</li><li>b &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;regexp_substr(zip,&nbsp;'[^[:digit:]]',&nbsp;3,&nbsp;2)&nbsp;as&nbsp;zip&nbsp;from&nbsp;person; &nbsp;&nbsp;</li><li>ZIP &nbsp;&nbsp;</li><li>------------ &nbsp;&nbsp;</li><li>f&nbsp;&nbsp;</li></ol>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)"><strong>4。REGEXP_REPLACE</strong></p>
+<p style="color:rgb(51,51,51)">Sql代码&nbsp;<a title="复制代码" href="http://www.javaeye.com/topic/398717" target="_blank" style="color:rgb(61,129,238)"><span style="color:blue"><img id="Picture_x0020_8" border="0" alt="复制代码" src="http://g1a107.mail.163.com/js3/s?func=mbox:getMessageData&amp;sid=QCtwJIffRJLIqbrBaBffiAvzVCJKawMZ&amp;mid=364:1tbiKBgPa0qCMy6QbwAAs&#43;&amp;part=3" width="14" height="15"></span></a></p>
+<ol type="1" style="color:rgb(51,51,51)">
+<li>把zip中所有非数字字符替换为0 &nbsp;&nbsp;</li><li>SQL&gt;&nbsp;update&nbsp;person&nbsp;set&nbsp;zip=regexp_replace(zip,&nbsp;'[^[:digit:]]',&nbsp;'0') &nbsp;&nbsp;</li><li>&nbsp;&nbsp;2&nbsp;&nbsp;where&nbsp;regexp_like(zip,&nbsp;'[^[:digit:]]'); &nbsp;&nbsp;</li><li>1&nbsp;row&nbsp;updated. &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;select&nbsp;zip&nbsp;from&nbsp;person; &nbsp;&nbsp;</li><li>ZIP &nbsp;&nbsp;</li><li>------ &nbsp;&nbsp;</li><li>123456 &nbsp;&nbsp;</li><li>103050&nbsp;&nbsp;</li></ol>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)"><strong>后向引用（backreference）：</strong></p>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)">后向引用是&nbsp;一个很有用的特性。它能够把子表达式的匹配部分保存在临时缓冲区中，供以后重用&nbsp;。缓冲区从左至右进行编号，并利用&nbsp;\digit&nbsp;符号进行访问。子表达式用一组圆括号来显示。利用后向引用可以实现较复杂的替换功能。</p>
+<p style="color:rgb(51,51,51)">Sql代码&nbsp;<a title="复制代码" href="http://www.javaeye.com/topic/398717" target="_blank" style="color:rgb(61,129,238)"><span style="color:blue"><img id="Picture_x0020_9" border="0" alt="复制代码" src="http://g1a107.mail.163.com/js3/s?func=mbox:getMessageData&amp;sid=QCtwJIffRJLIqbrBaBffiAvzVCJKawMZ&amp;mid=364:1tbiKBgPa0qCMy6QbwAAs&#43;&amp;part=3" width="14" height="15"></span></a></p>
+<ol type="1" style="color:rgb(51,51,51)">
+<li>SQL&gt;&nbsp;select&nbsp;regexp_replace('Steven&nbsp;Chen',&nbsp;'(.*)&nbsp;(.*)',&nbsp;'\2,&nbsp;\1')&nbsp;as&nbsp;reversed_name&nbsp;from&nbsp;dual; &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>REVERSED_NAME &nbsp;&nbsp;</li><li>-------------------- &nbsp;&nbsp;</li><li>Chen,&nbsp;Steven&nbsp;&nbsp;</li></ol>
+<p style="color:rgb(51,51,51)">&nbsp;</p>
+<p style="color:rgb(51,51,51)">在DDL中也可以正则表达式，比如Constraint, index, view</p>
+<p style="color:rgb(51,51,51)">Sql代码&nbsp;<a title="复制代码" href="http://www.javaeye.com/topic/398717" target="_blank" style="color:rgb(61,129,238)"><span style="color:blue"><img id="Picture_x0020_10" border="0" alt="复制代码" src="http://g1a107.mail.163.com/js3/s?func=mbox:getMessageData&amp;sid=QCtwJIffRJLIqbrBaBffiAvzVCJKawMZ&amp;mid=364:1tbiKBgPa0qCMy6QbwAAs&#43;&amp;part=3" width="14" height="15"></span></a></p>
+<ol type="1" style="color:rgb(51,51,51)">
+<li>SQL&gt;&nbsp;alter&nbsp;table&nbsp;person&nbsp;add&nbsp;constraint&nbsp;constraint_zip&nbsp;check&nbsp;(regexp_like(zip,&nbsp;'^[[:digit:]]&#43;$')); &nbsp;&nbsp;</li><li>&nbsp;&nbsp;</li><li>SQL&gt;&nbsp;create&nbsp;index&nbsp;person_idx&nbsp;on&nbsp;person(regexp_substr(last_name,&nbsp;'^[[:upper:]]'));&nbsp;&nbsp;</li></ol>
+<p style="color:rgb(51,51,51)"><em>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oracle正则表达式(未经测试完全)</em></p>
+<p style="color:rgb(51,51,51)"><span style="color:black">5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color:black">===========================================================</span></p>
+<p style="color:rgb(51,51,51)"><span style="color:black">6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color:black">作者</span><span style="color:black">: dragonosoft(http://dragonosoft.itpub.net)<br>
+</span><span style="color:black">发表于</span><span style="color:black">: 2009.03.19 19:43<br>
+</span><span style="color:black">分类</span><span style="color:black">:&nbsp;</span><span style="color:black">收藏</span><span style="color:black">&nbsp;<br>
+</span><span style="color:black">出处</span><span style="color:black">: http://dragonosoft.itpub.net/post/38925/480626<br>
+---------------------------------------------------------------</span></p>
+<p style="color:rgb(51,51,51)"><span style="color:black">7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color:black">一</span><span style="color:black">.&nbsp;</span><span style="color:black">匹配字符</span></strong></p>
+<div align="center" style="color:rgb(51,51,51)">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top">
+<p><strong>字符类</strong></p>
+</td>
+<td valign="top">
+<p><strong>匹配的字符</strong></p>
+</td>
+<td valign="top">
+<p><strong>举&nbsp;例</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>d</p>
+</td>
+<td valign="top">
+<p>从０-９的任一数字</p>
+</td>
+<td valign="top">
+<p>dd匹配72,但不匹配aa或7a</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>D</p>
+</td>
+<td valign="top">
+<p>任一非数字字符</p>
+</td>
+<td valign="top">
+<p>DDD匹配abc,但不匹配123</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>w</p>
+</td>
+<td valign="top">
+<p>任一单词字符，包括A-Z,a-z,0-9和下划线</p>
+</td>
+<td valign="top">
+<p>wwww匹配Ab-2，但不匹配∑£$%*或Ab_@</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>W</p>
+</td>
+<td valign="top">
+<p>任一非单词字符</p>
+</td>
+<td valign="top">
+<p>W匹配＠，但不匹配a</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>s</p>
+</td>
+<td valign="top">
+<p>任一空白字符，包括制表符，换行符，回车符，换页符和垂直制表符</p>
+</td>
+<td valign="top">
+<p>匹配在HTML,XML和<a href="http://dragonosoft.itpub.net/;" target="_blank" style="color:rgb(61,129,238)"><strong><span style="color:rgb(0,0,102)">其他</span></strong></a>标准定义中的所有传统空白字符</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>S</p>
+</td>
+<td valign="top">
+<p>任一非空白字符</p>
+</td>
+<td valign="top">
+<p>空白字符以外的任意字符,如A%&amp;g3;等</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>.</p>
+</td>
+<td valign="top">
+<p>任一字符</p>
+</td>
+<td valign="top">
+<p>匹配除换行符以外的任意字符除非设置了MultiLine先项</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>[…]</p>
+</td>
+<td valign="top">
+<p>括号中的任一字符</p>
+</td>
+<td valign="top">
+<p>[abc]将匹配一个单字符,a,b或c.</p>
+<p>[a-z]将匹配从a到z的任一字符</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>[^…]</p>
+</td>
+<td valign="top">
+<p>不在括号中的任一字符</p>
+</td>
+<td valign="top">
+<p>[^abc]将匹配一个a、b、c之外的单字符,可以a,b或A、B、C</p>
+<p>[a-z]将匹配不属于a-z的任一字符,但可以匹配所有的大写字母</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="color:rgb(51,51,51)"><span style="color:black">8.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color:black">二</span><span style="color:black">.&nbsp;</span><span style="color:black">重复字符</span></strong></p>
+<div align="center" style="color:rgb(51,51,51)">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top">
+<p><strong>重复字符</strong></p>
+</td>
+<td valign="top">
+<p><strong>含&nbsp;义</strong></p>
+</td>
+<td valign="top">
+<p><strong>举&nbsp;例</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>｛n｝</p>
+</td>
+<td valign="top">
+<p>匹配前面的字符n次</p>
+</td>
+<td valign="top">
+<p>x{2}匹配xx,但不匹配x或xxx</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>｛n,｝</p>
+</td>
+<td valign="top">
+<p>匹配前面的字符至少n次</p>
+</td>
+<td valign="top">
+<p>x{2}匹配2个或更多的x,如xxx,xxx..</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>｛n,m｝</p>
+</td>
+<td valign="top">
+<p>匹配前面的字符至少n次,至多m次。如果n为0，此参数为可选参数</p>
+</td>
+<td valign="top">
+<p>x{2,4}匹配xx,xxx,xxxx,但不匹配xxxxx</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>?</p>
+</td>
+<td valign="top">
+<p>匹配前面的字符0次或1次，实质上也是可选的</p>
+</td>
+<td valign="top">
+<p>x?匹配x或零个x</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>&#43;</p>
+</td>
+<td valign="top">
+<p>匹配前面的字符0次或多次</p>
+</td>
+<td valign="top">
+<p>x&#43;匹配x或xx或大于0的任意多个x</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>*</p>
+</td>
+<td valign="top">
+<p>匹配前面的字符0次或更多次</p>
+</td>
+<td valign="top">
+<p>x*匹配0,1或更多个x</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="color:rgb(51,51,51)"><span style="color:black">9.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color:black">三</span><span style="color:black">.&nbsp;</span><span style="color:black">定位字符</span></strong></p>
+<div align="center" style="color:rgb(51,51,51)">
+<table border="1" cellspacing="0" cellpadding="0" width="567">
+<tbody>
+<tr>
+<td valign="top">
+<p><strong>定位字符</strong></p>
+</td>
+<td valign="top">
+<p><strong>描&nbsp;述</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>^</p>
+</td>
+<td valign="top">
+<p>随后的模式必须位于字符串的开始位置，如果是一个多行字符串，则必须位于行首。对于多行文本（包含回车符的一个字符串）来说，需要设置多行标志</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>$</p>
+</td>
+<td valign="top">
+<p>前面的模式必须位于字符串的未端，如果是一个多行字符串，必须位于行尾</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>A</p>
+</td>
+<td valign="top">
+<p>前面的模式必须位于字符串的开始位置，忽略多行标志</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>z</p>
+</td>
+<td valign="top">
+<p>前面的模式必须位于字符串的未端，忽略多行标志</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Z</p>
+</td>
+<td valign="top">
+<p>前面的模式必须位于字符串的未端，或者位于一个换行符前</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>b</p>
+</td>
+<td valign="top">
+<p>匹配一个单词边界，也就是一个单词字符和非单词字符中间的点。要记住一个单词字符是[a-zA-Z0-9]中的一个字符。位于一个单词的词首</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>B</p>
+</td>
+<td valign="top">
+<p>匹配一个非单词字符边界位置，不是一个单词的词首</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="color:rgb(51,51,51)"><span style="color:black">10.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color:black">注：定位字符可以应用于字符或组合，放在字符串的左端或右端</span></p>
+<p style="color:rgb(51,51,51)"><span style="color:black">11.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color:black">四</span><span style="color:black">.&nbsp;</span><span style="color:black">分组字符</span></strong></p>
+<div align="center" style="color:rgb(51,51,51)">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top">
+<p><strong>分组字符</strong></p>
+</td>
+<td valign="top">
+<p><strong>定&nbsp;义</strong></p>
+</td>
+<td valign="top">
+<p><strong>举&nbsp;例</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>（）</p>
+</td>
+<td valign="top">
+<p>此字符可以组合括号内模式所匹配的字符，它是一个捕获组，也就是说模式匹配的字符作为最终设置了ExplicitCapture选项――默认状态下字符不是匹配的一部分</p>
+</td>
+<td valign="top">
+<p>输入字符串为：ABC1DEF2XY</p>
+<p>匹配3个从A到Z的字符和1个数字的正则表达式：（[A-Z]{3}d）</p>
+<p>将产生两次匹配：Match 1=ABC1;Match 2=DEF2</p>
+<p>每次匹配对应一个组：Match1的第一个组＝ABC;Match2的第1个组＝DEF</p>
+<p>有了反向引用，就可以通过它在正则表达式中的编号以及C#和类Group,GroupCollection来访问组。如果设置了ExplicitCapture选项，就不能使用组所捕获的内容</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>（?:）</p>
+</td>
+<td valign="top">
+<p>此字符可以组合括号内模式所匹配的字符，它是一个非捕获组，这意味着模式所的字符将不作为一个组来捕获，但它构成了最终匹配结果的一部分。它基本上与上面的组类型相同，但设定了选项ExplicitCapture</p>
+</td>
+<td valign="top">
+<p>输入字符串为：1A BB SA1 C</p>
+<p>匹配一个数字或一个A到Z的字母，接着是任意单词字符的正则表达式为：（?:d|[A-Z]w）</p>
+<p>它将产生3次匹配：每1次匹配＝1A；每2次匹配＝BB;每3次匹配＝SA</p>
+<p>但是没有组被捕获</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>（?&lt;name&gt;）</p>
+</td>
+<td valign="top">
+<p>此选项组合括号内模式所匹配的字符，并用尖括号中指定的&#20540;为组命名。在正则表达式中，可以使用名称进行反向引用，而不必使用编号。即使不设置ExplicitCapture选项，它也是一个捕获组。这意味着反向引用可以利用组内匹配的字符，或者通过Group类访问</p>
+</td>
+<td valign="top">
+<p>输入字符串为：Characters in Sienfeld included Jerry Seinfeld,Elaine Benes,Cosno Kramer and George Costanza能够匹配它们的姓名，并在一个组llastName中捕获姓的正则表达式为：b[A-Z][a-z]&#43;(?&lt;lastName&gt;[A-Z][a-z]&#43;)b</p>
+<p>它产生了4次匹配：First Match=Jerry Seinfeld; Second Match=Elaine Benes; Third Match=Cosmo Kramer; Fourth Match=George Costanza</p>
+<p>每一次匹配都对应了一个lastName组：</p>
+<p>第1次匹配：lastName group=Seinfeld</p>
+<p>第2次匹配：lastName group=Benes</p>
+<p>第3次匹配：lastName group=Kramer</p>
+<p>第4次匹配：lastName group=Costanza</p>
+<p>不管是否设置了选项ExplictCapture，组都将被捕获</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>（?=）</p>
+</td>
+<td valign="top">
+<p>正声明。声明的右侧必须是括号中指定的模式。此模式不构成最终匹配的一部分</p>
+</td>
+<td valign="top">
+<p>正则表达式S&#43;(?=.NET)要匹配的输入字符串为：The languages were&nbsp;Java,C#.NET,VB.NET,C,Jscript.NET,Pascal</p>
+<p>将产生如下匹配：〕</p>
+<p>C#</p>
+<p>VB</p>
+<p>JScript.</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>（?!）</p>
+</td>
+<td valign="top">
+<p>负声明。它规定模式不能紧临着声明的右侧。此模式不构成最终匹配的一部分</p>
+</td>
+<td valign="top">
+<p>d{3}(?![A-Z])要匹配的输入字符串为：123A 456 789111C</p>
+<p>将产生如下匹配：</p>
+<p>456</p>
+<p>789</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>（?&lt;=）</p>
+</td>
+<td valign="top">
+<p>反向正声明。声明的左侧必须为括号内的指定模式。此模式不构成最终匹配的一部分</p>
+</td>
+<td valign="top">
+<p>正则表达式(?&lt;=New)([A-Z][a-z]&#43;)要匹配的输入字符串为：The following&nbsp;states,New Mexico,West Virginia,Washington,New England</p>
+<p>它将产生如下匹配：</p>
+<p>Mexico</p>
+<p>England</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>（?&lt;!）</p>
+</td>
+<td valign="top">
+<p>反向正声明。声明的左侧必须不能是括号内的指定模式。此模式不构成最终匹配的一部分</p>
+</td>
+<td valign="top">
+<p>正则表达式(?&lt;!1)d{2}([A-Z])要匹配的输入字符串如下：123A456F789C111A</p>
+<p>它将实现如下匹配：</p>
+<p>56F</p>
+<p>89C</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>（?&gt;）</p>
+</td>
+<td valign="top">
+<p>非回溯组。防止Regex引擎回溯并且防止实现一次匹配</p>
+</td>
+<td valign="top">
+<p>假设要匹配所有以“ing”结尾的单词。输入字符串如下：He was very trusing</p>
+<p>正则表达式为：.*ing</p>
+<p>它将实现一次匹配――单词trusting。“.”匹配任意字符，当然也匹配“ing”。所以，Regex引擎回溯一位并在第2个“t”停止，然后匹配指定的模式“ing”。但是，如果禁用回溯操作：(?&gt;.*)ing</p>
+<p>它将实现0次匹配。“.”能匹配所有的字符，包括“ing”――不能匹配，从而匹配失败</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="color:rgb(51,51,51)"><span style="color:black">12.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color:black">五</span><span style="color:black">.&nbsp;</span><span style="color:black">决策字符</span></strong></p>
+<table border="1" cellspacing="0" cellpadding="0" style="color:rgb(51,51,51)">
+<tbody>
+<tr>
+<td valign="top">
+<p><strong><span style="color:black">字</span><span style="color:black">&nbsp;</span><span style="color:black">符</span></strong></p>
+</td>
+<td valign="top">
+<p><strong><span style="color:black">描</span><span style="color:black">&nbsp;</span><span style="color:black">述</span></strong></p>
+</td>
+<td valign="top">
+<p><strong><span style="color:black">举</span><span style="color:black">&nbsp;</span><span style="color:black">例</span></strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p><span style="color:black">（</span><span style="color:black">?(regex)yes_regex|no_regex</span><span style="color:black">）</span></p>
+</td>
+<td valign="top">
+<p><span style="color:black">如果表达式</span><span style="color:black">regex</span><span style="color:black">匹配，那么将试图匹配表达式</span><span style="color:black">yes</span><span style="color:black">。否则匹配表达式</span><span style="color:black">no</span><span style="color:black">。正则表达式</span><span style="color:black">no</span><span style="color:black">是可先参数。注意，作出决策的模式宽度为</span><span style="color:black">0.</span><span style="color:black">这意味着表达式</span><span style="color:black">yes</span><span style="color:black">或</span><span style="color:black">no</span><span style="color:black">将从与</span><span style="color:black">rege</span><span style="color:black">x</span><span style="color:black">表达式相同的位置开始匹配</span></p>
+</td>
+<td valign="top">
+<p><span style="color:black">正则表达式</span><span style="color:black">(?(d)dA|A-Z)B)</span><span style="color:black">要匹配的输入字符串为：</span><span style="color:black">1A CB3A5C 3B</span></p>
+<p><span style="color:black">它实现的匹配是：</span></p>
+<p><span style="color:black">1A</span></p>
+<p><span style="color:black">CB</span></p>
+<p><span style="color:black">3A</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p><span style="color:black">（</span><span style="color:black">?(group name or number)yes_regex|no_regex</span><span style="color:black">）</span></p>
+</td>
+<td valign="top">
+<p><span style="color:black">如果组中的正则表达式实现了匹配，那么试图匹配</span><span style="color:black">yes</span><span style="color:black">正则表达式。否则，试图匹配正则表达式</span><span style="color:black">no</span><span style="color:black">。</span><span style="color:black">no</span><span style="color:black">是可先的参数</span></p>
+</td>
+<td valign="top">
+<p><span style="color:black">正则表达式</span></p>
+<p><span style="color:black">(d7)?-(?(1)dd[A-Z]|[A-Z][A-Z]</span><span style="color:black">要匹配的输入字符串为：</span></p>
+<p><span style="color:black">77-77A 69-AA 57-B</span></p>
+<p><span style="color:black">它实现的匹配为：</span></p>
+<p><span style="color:black">77-77A</span></p>
+<p><span style="color:black">－</span><span style="color:black">AA</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="color:rgb(51,51,51)"><span style="color:black">13.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color:black">注：上面表中列出的字符强迫处理器执行一次</span><span style="color:black">if-else</span><span style="color:black">决策</span></p>
+<p style="color:rgb(51,51,51)"><span style="color:black">14.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color:black">六</span><span style="color:black">.&nbsp;</span><span style="color:black">替换字符</span></strong></p>
+<div align="center" style="color:rgb(51,51,51)">
+<table border="1" cellspacing="0" cellpadding="0" width="567">
+<tbody>
+<tr>
+<td valign="top">
+<p><strong>字&nbsp;符</strong></p>
+</td>
+<td valign="top">
+<p><strong>描&nbsp;述</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>$group</p>
+</td>
+<td valign="top">
+<p>用group指定的组号替换</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>${name}</p>
+</td>
+<td valign="top">
+<p>替换被一个(?&lt;name&gt;)组匹配的最后子串</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>$$</p>
+</td>
+<td valign="top">
+<p>替换一个字符$</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>$&amp;</p>
+</td>
+<td valign="top">
+<p>替换整个的匹配</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>$^</p>
+</td>
+<td valign="top">
+<p>替换输入字符串匹配之前的所有文本</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>$’</p>
+</td>
+<td valign="top">
+<p>替换输入字符串匹配之后的所有文本</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>$&#43;</p>
+</td>
+<td valign="top">
+<p>替换最后捕获的组</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>$_</p>
+</td>
+<td valign="top">
+<p>替换整个的输入字符串</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="color:rgb(51,51,51)"><span style="color:black">15.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color:black">注：以上为常用替换字符，不全</span></p>
+<p style="color:rgb(51,51,51)"><span style="color:black">16.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color:black">七</span><span style="color:black">.&nbsp;</span><span style="color:black">转义序列</span></strong></p>
+<div align="center" style="color:rgb(51,51,51)">
+<table border="1" cellspacing="0" cellpadding="0" width="567">
+<tbody>
+<tr>
+<td valign="top">
+<p><strong>字&nbsp;符</strong></p>
+</td>
+<td valign="top">
+<p><strong>描&nbsp;述</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>匹配字符“”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>.</p>
+</td>
+<td valign="top">
+<p>匹配字符“.”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>*</p>
+</td>
+<td valign="top">
+<p>匹配字符“*”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>&#43;</p>
+</td>
+<td valign="top">
+<p>匹配字符“&#43;”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>?</p>
+</td>
+<td valign="top">
+<p>匹配字符“?”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>|</p>
+</td>
+<td valign="top">
+<p>匹配字符“|”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>(</p>
+</td>
+<td valign="top">
+<p>匹配字符“(”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>)</p>
+</td>
+<td valign="top">
+<p>匹配字符“)”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>{</p>
+</td>
+<td valign="top">
+<p>匹配字符“{”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>}</p>
+</td>
+<td valign="top">
+<p>匹配字符“}”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>^</p>
+</td>
+<td valign="top">
+<p>匹配字符“^”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>$</p>
+</td>
+<td valign="top">
+<p>匹配字符“$”</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>n</p>
+</td>
+<td valign="top">
+<p>匹配换行符</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>r</p>
+</td>
+<td valign="top">
+<p>匹配回车符</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>t</p>
+</td>
+<td valign="top">
+<p>匹配制表符</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>v</p>
+</td>
+<td valign="top">
+<p>匹配垂直制表符</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>f</p>
+</td>
+<td valign="top">
+<p>匹配换面符</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>nnn</p>
+</td>
+<td valign="top">
+<p>匹配一个8进数字，nnn指定的ASCII字符。如103匹配大写的C</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>xnn</p>
+</td>
+<td valign="top">
+<p>匹配一个16进数字，nn指定的ASCII字符。如x43匹配大写的C</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>unnnn</p>
+</td>
+<td valign="top">
+<p>匹配由4位16进数字（由nnnn表示）指定的Unicode字符</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>cV</p>
+</td>
+<td valign="top">
+<p>匹配一个控制字符，如cV匹配Ctrl-V</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="color:rgb(51,51,51)"><span style="color:black">17.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color:black">八</span><span style="color:black">.&nbsp;</span><span style="color:black">选项标志</span></strong></p>
+<div align="center" style="color:rgb(51,51,51)">
+<table border="1" cellspacing="0" cellpadding="0" width="567">
+<tbody>
+<tr>
+<td valign="top">
+<p><strong>选项标志</strong></p>
+</td>
+<td valign="top">
+<p><strong>名&nbsp;称</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>I</p>
+</td>
+<td valign="top">
+<p>IgnoreCase</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>M</p>
+</td>
+<td valign="top">
+<p>Multiline</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>N</p>
+</td>
+<td valign="top">
+<p>ExplicitCapture</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>S</p>
+</td>
+<td valign="top">
+<p>SingleLine</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>X</p>
+</td>
+<td valign="top">
+<p>IgnorePatternWhitespace</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="color:rgb(51,51,51)"><span style="color:black">18.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><strong><span style="color:black">注：选项本身的信作含义如下表所示：</span></strong></p>
+<div align="center" style="color:rgb(51,51,51)">
+<table border="1" cellspacing="0" cellpadding="0" width="567">
+<tbody>
+<tr>
+<td valign="top">
+<p><strong>标&nbsp;志</strong></p>
+</td>
+<td valign="top">
+<p><strong>名&nbsp;称</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>IgnoreCase</p>
+</td>
+<td valign="top">
+<p>使模式匹配不区分大小写。默认的选项是匹配区分大小写</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>RightToLeft</p>
+</td>
+<td valign="top">
+<p>从右到左搜索输入字符串。默认是从左到右以符合英语等的阅读习惯，但不符合阿拉伯语或希伯来语的阅读习惯</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>None</p>
+</td>
+<td valign="top">
+<p>不设置标志。这是默认选项</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Multiline</p>
+</td>
+<td valign="top">
+<p>指定^和$可以匹配行首和行尾，以及字符串的开始和结尾。这意味着可以匹配每个用换行符分隔的行。但是，字符“.”仍然不匹配换行符</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>SingleLine</p>
+</td>
+<td valign="top">
+<p>规定特殊字符“.”匹配任意的字符，包括换行符。默认情况下，特殊字符“.”不匹配换行符。通常与MultiLine选项一起使用</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>ECMAScript.</p>
+</td>
+<td valign="top">
+<p>ECMA(European Coputer Manufacturer’s Association,欧洲计算机生产商协会)已经定义了正则表达式应该如何实现，而且已经在ECMAScript规范中实现，这是一个基于标准的JavaScript。这个选项只能与IgnoreCase和MultiLine标志一起使用。与其它任何标志一起使用，ECMAScript都将产生异常</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>IgnorePatternWhitespace</p>
+</td>
+<td valign="top">
+<p>此选项从使用的正则表达式模式中删除所有非转义空白字符。它使表达式能跨越多行文本，但必须确保对模式中所有的空白进行转义。如果设置了此选项，还可以使用“#”字符来注释下则表达式</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Complied</p>
+</td>
+<td valign="top">
+<p>它把正则表达式编译为更接近机器代码的代码。这样速度快，但不允许对它进行任何修改</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="share_buttons" id="sharePanel"></div>
+<!--192.168.1.237-->
+  </div>
+  <script type="text/javascript">
+    new Ad(4, 'ad_cen');
+</script>
+  <div id="comment_list"></div>
+<div id="comment_bar"></div>
+<script type="text/javascript">
+    var fileName = '7549711';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js?v=1.8"></script>
+<script type="text/javascript">
+    new Ad(5, 'ad_bot');
+</script>
+<div id="report_dialog"></div>
+
+<div id="d-top"></div>
+
+
+
+<div class="clear"></div>
+</div>
+</div>
+
+<div class="clear"></div>
+</div>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/SyntaxHighlighter/shCore-src.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/article_code.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/cnick.js"></script>
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/scripts/show.js"></script>
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=1274645"></script>
+
+<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js"></script>
+
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+
+<!--ad.csdn.net-->
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+
+
+
+</div>
+</body>
+</html>

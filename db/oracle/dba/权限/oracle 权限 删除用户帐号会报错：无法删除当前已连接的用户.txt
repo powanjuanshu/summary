@@ -1,0 +1,7 @@
+drop user se cascade;
+删除用户帐号会报错:无法删除当前已连接的用户
+
+alter user XXX account lock;
+SELECT * FROM V$SESSION WHERE USERNAME='LGDB'；
+alter system kill session 'xx,xx'
+drop user xx cascade

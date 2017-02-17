@@ -1,0 +1,8 @@
+Óï·¨:
+identifier datatype [NOT NULL] [:= | DEFAULT expr];
+Àý:
+DECLARE
+v_hiredate	DATE;
+v_deptno	NUMBER(2) NOT NULL := 10;
+v_location	VARCHAR2(13) := 'Atlanta';
+c_cursor	cursor	select * from 

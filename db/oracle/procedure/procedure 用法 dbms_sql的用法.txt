@@ -1,0 +1,226 @@
+create or replace procedure proc_truncate(table_name in varchar2)
+  authid definer
+as
+  cursor_id integer;
+begin
+  cursor_id:=dbms_sql.open_cursor;
+  dbms_sql.parse(cursor_id,'truncate table '||table_name,dbms_sql.v7);
+  dbms_sql.close_cursor(cursor_id);
+exception when others then
+  dbms_sql.close_cursor(cursor_id);
+  raise;
+end proc_truncate;
+-------------------------------------------------------关于dbms_sql.v7的解释
+language_flag
+      Specifies behavior for statement. Valid values are v6, v7 and NATIVE.
+      v6 and v7 specifies behavior according to Version 6 and ORACLE7,
+      respectively. NATIVE specifies behavior according to the version
+      of the database the program is connected to.
+----------------------------------------------------------------------
+create table test(n_id   number,  v_name  varchar2(50), d_insert_date date);
+alter table test add constraint pk_id  primary key(n_id);
+declare
+   v_cursor   number;
+   v_sql      varchar2(200);
+   v_id       number;
+   v_name     varchar2(50);
+   v_date     date;
+   v_stat     number;
+BEGIN
+   v_id := 1;
+   v_name := '测试 insert';
+   v_date := sysdate;
+   v_cursor := dbms_sql.open_cursor;  --打开游标
+   v_sql := 'insert into test(n_id, v_name, d_insert_date) values(:v_id,:v_name,:v_date)';
+   dbms_sql.parse(v_cursor, v_sql, dbms_sql.native);  --解析SQL
+   dbms_sql.bind_variable(v_cursor, ':v_id', v_id);   --绑定变量
+   dbms_sql.bind_variable(v_cursor, ':v_name', v_name);
+   dbms_sql.bind_variable(v_cursor, ':v_date', v_date);
+   v_stat := dbms_sql.execute(v_cursor);  --执行
+   dbms_sql.close_cursor(v_cursor);   --关闭游标
+   commit;
+end;
+------------------------------------------------------------------------
+
+
+PL/SQL中使用动态SQL编程
+    在PL/SQL程序设计过程中，会遇到很多必须使用动态sql的地方，oracle系统所提供的DMBS_SQL包可以帮助你解决问题。
+(一)介绍 
+    DBMS_SQL系统包提供了很多函数及过程,现在简要阐述其中使用频率较高的几种:
+    function open_cursor:打开一个动态游标,并返回一个整型;
+    procedure close_cursor(c in out integer) :关闭一个动态游标,参数为open_cursor所打开的游标;
+    procedure parse(c in integer, statement in varchar2, language_flag in integer):对动态游标所提供的sql语句进行解析,参数C表示游标,statement为sql语句,language-flag为解析sql语句所用oracle版本,一般有V6,V7跟native(在不明白所连database版本时,使用native);
+    procedure define_column(c in integer, position in integer, column any datatype, [column_size in integer]):定义动态游标所能得到的对应值,其中c为动态游标,positon为对应动态sql中的位置(从1开始),column为该值所对应的变量,可以为任何类型,column_size只有在column为定义长度的类型中使用如VARCHAR2,CHAR等(该过程有很多种情况,此处只对一般使用到的类型进行表述);
+    function execute(c in integer):执行游标,并返回处理一个整型,代表处理结果(对insert,delete,update才有意义,而对select语句而言可以忽略);
+    function fetch_rows(c in integer):对游标进行循环取数据,并返回一个整数,为0时表示已经取到游标末端;
+    procedure column_value(c in integer, position in integer, value):将所取得的游标数据赋值到相应的变量,c为游标,position为位置,value则为对应的变量;
+    procedure bind_variable(c in integer, name in varchar2, value):定义动态sql语句(DML)中所对应字段的值,c为游标,name为字段名称,value为字段的值;
+    以上是在程序中经常使用到的几个函数及过程,其他函数及过程请参照oracle所提供定义语句dbmssql.sql
+(二)一般过程 
+    对于一般的select操作,如果使用动态的sql语句则需要进行以下几个步骤:
+    open cursor--->parse--->define column--->excute--->fetch rows--->close cursor;
+    而对于dml操作(insert,update)则需要进行以下几个步骤:
+    open cursor--->parse--->bind variable--->execute--->close cursor;
+    对于delete操作只需要进行以下几个步骤:
+    open cursor--->parse--->execute--->close cursor;
+(三)具体案例 
+    下面就本人所开发系统中某一程序做分析
+    该过程为一股票技术曲线计算程序,将数据从即时数据表中取出,并按照计算曲线的公式,对这些数据进行计算,并将结果保存到技术曲线表中.
+--**********************************
+--procedure name:R_Ma_Main
+--入口参数：PID股票代码,PEND时间,pinterval时间间隔,totab目标数据表
+--调用函数：R_GetSql1,R_GetSql2
+--功能：具体计算单支股票ma技术曲线
+--时间：2001-06-20
+--**********************************
+create or replace procedure R_Ma_Main
+  (
+   pid varchar2,
+   pend varchar2,
+   pinterval varchar2,
+   totab varchar2
+  ) is
+--定义数组
+type Date_type is table of varchar2(12) index by binary_integer;
+type Index_type is table of number index by binary_integer;
+TempDate Date_Type;--时间数组
+TempIndex Index_Type;--股票收盘价数组
+TempMa Index_Type;--ma技术曲线数据
+cursor1 integer;--游标
+cursor2 integer;--游标
+rows_processed integer;--执行游标返回
+TempInter integer;--参与计算数值个数
+TempVal integer;--计算时间类型
+TempSql varchar2(500);--动态sql语句
+MyTime varchar2(12);--时间
+MyIndex number;--数值
+MidIndex number;--中间变量
+i integer := 999;
+j integer;
+begin
+  TempInter := to_number(substr(pinterval,1,4));
+  TempVal := to_number(substr(pinterval,5,2));
+  TempSql := R_GetSql1(pid, pend, TempVal);--得到选择数据的sql语句
+  --得到当天的即时数据,并依次保存到数组中
+  cursor1 := dbms_sql.open_cursor;  --创建游标
+  dbms_sql.parse(cursor1, TempSql, dbms_sql.native);  --解析动态sql语句,取两个字段,时间及价格,其中时间以14位的varchar2表示
+  dbms_sql.define_column(cursor1, 1, MyTime, 12);  --分别定义sql语句中各字段所对应变量
+  dbms_sql.define_column(cursor1, 2, MyIndex);
+  rows_processed := dbms_sql.execute(cursor1);
+  loop
+    if dbms_sql.fetch_rows(cursor1) > 0 then
+      begin
+        dbms_sql.column_value(cursor1, 1, MyTime);
+        dbms_sql.column_value(cursor1, 2, MyIndex);
+        TempDate(i) := MyTime;
+        TempIndex(i) := MyIndex;
+        i := i - 1;--按倒序的方法填入数组
+      end;
+    else
+      exit;
+    end if;
+  end loop;
+  dbms_sql.close_cursor(cursor1);
+  --如果取得的数据量不够计算个数,则跳出程序
+  if i > 999-TempInter then
+    goto JumpLess;
+  end if;
+  --初始化中间变量
+  MidIndex := 0;
+  TempIndex(i) := 0;
+  for j in i..i+TempInter-1 loop
+    MidIndex := MidIndex + TempIndex(j);
+  end loop; 
+  --依次对当天数据计算ma值,并保存到ma数组中
+  for j in i+TempInter..999 loop
+    MidIndex := MidIndex - TempIndex(j-TempInter) + TempIndex(j);
+    TempMa(j) := MidIndex/TempInter;
+  end loop;   
+  if TempVal < 6 then--如果计算的是分钟跟天的ma技术曲线
+    begin
+    cursor2 := dbms_sql.open_cursor;
+    TempSql := 'insert into ' || totab || ' values(:r_no, :i_interval, :i_time, :i_index)';
+    dbms_sql.parse(cursor2, TempSql, dbms_sql.native); 
+    for j in i+TempInter..999 loop
+      dbms_sql.bind_variable(cursor2, 'r_no', pid);
+      dbms_sql.bind_variable(cursor2, 'i_interval', pinterval);
+      dbms_sql.bind_variable(cursor2, 'i_time', TempDate(j));
+      dbms_sql.bind_variable(cursor2, 'i_index', TempMa(j));
+      rows_processed := dbms_sql.execute(cursor2);--插入数据
+    end loop;
+    end;
+  end if; 
+  commit;
+  dbms_sql.close_cursor(cursor2);
+  --数据量不足跳出
+  <<JumpLess>>
+  null;  
+  --exception处理,无关本话题
+end;
+/
+(四)个人观点 
+    在使用dbms_sql系统包的过程中,其方法简单而又不失灵活,但还是需要注意一些问题:
+    1、在整个程序的设计过程中,对游标的操作切不可有省略的部分,一旦省略其中某一步骤,则会程序编译过程既告失败,如在程序结尾处未对改游标进行关闭操作,则在再次调用过程时会出现错误.
+    2、dbms_sql除了可以做一般的select,insert,update,delete等静态的sql做能在过程中所做工作外,还能执行create等DDL操作,不过在执行该类操作时应首先显式赋予执行用户相应的系统权限,比如create table等.该类操作只需open cursor--->prase--->close cursor即能完成.
+    以上为本人在工作中对dbms_sql的一点点看法,不到之处,请予指正.
+    对于想更深了解dbms_sql的朋友,请阅读dbmssql.sql文件. 
+附个Oracle自带的流程说明(强大啊)： 
+  --  The flow of procedure calls will typically look like this:
+  --
+  --                      -----------
+  --                    | open_cursor |
+  --                      -----------
+  --                           |
+  --                           |
+  --                           v
+  --                         -----
+  --          ------------>| parse |
+  --         |               -----
+  --         |                 |
+  --         |                 |---------
+  --         |                 v         |
+  --         |           --------------  |
+  --         |-------->| bind_variable | |
+  --         |     ^     -------------   |
+  --         |     |           |         |
+  --         |      -----------|         |
+  --         |                 |<--------
+  --         |                 v
+  --         |               query?---------- yes ---------
+  --         |                 |                           |
+  --         |                no                           |
+  --         |                 |                           |
+  --         |                 v                           v
+  --         |              -------                  -------------
+  --         |----------->| execute |            ->| define_column |
+  --         |              -------             |    -------------
+  --         |                 |------------    |          |
+  --         |                 |            |    ----------|
+  --         |                 v            |              v
+  --         |           --------------     |           -------
+  --         |       ->| variable_value |   |  ------>| execute |
+  --         |      |    --------------     | |         -------
+  --         |      |          |            | |            |
+  --         |       ----------|            | |            |
+  --         |                 |            | |            v
+  --         |                 |            | |        ----------
+  --         |                 |<-----------  |----->| fetch_rows |
+  --         |                 |              |        ----------
+  --         |                 |              |            |
+  --         |                 |              |            v
+  --         |                 |              |    --------------------
+  --         |                 |              |  | column_value         |
+  --         |                 |              |  | variable_value       |
+  --         |                 |              |    ---------------------
+  --         |                 |              |            |
+  --         |                 |<--------------------------
+  --         |                 |
+  --          -----------------|
+  --                           |
+  --                           v
+  --                      ------------
+  --                    | close_cursor |
+  --                      ------------ 
+  --
+  --------------- 
+-The End-

@@ -1,0 +1,2 @@
+select ename,sal,bonus,nvl2(bonus,sal+bonus,sal) -- 如果有奖金,则工资+奖金,如果没有奖金,则工资
+

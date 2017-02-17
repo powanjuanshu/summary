@@ -1,0 +1,21 @@
+CASE语句用于根据单个变量或表达式与多个值进行比较
+执行CASE语句前,先计算选择器的值
+
+BEGIN
+  CASE '&grade'
+    WHEN 'A' THEN DBMS_OUTPUT.PUT_LINE('优异');
+    WHEN 'B' THEN DBMS_OUTPUT.PUT_LINE('良好');
+    WHEN 'C' THEN DBMS_OUTPUT.PUT_LINE('一般');
+    ELSE DBMS_OUTPUT.PUT_LINE('较差');
+  END CASE
+END;
+
+case--when--then--when--then--else--end case;(或end)
+
+SELECT e.ename,
+  CASE 
+  WHEN e.sal<1500 THEN 0 
+  WHEN e.sal BETWEEN 1000 AND 2000 THEN 2 
+  ELSE 3
+END
+-----------如果满足第一个when也满足第二个when,那么优先取第一个then的值0

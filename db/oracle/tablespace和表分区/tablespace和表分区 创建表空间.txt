@@ -1,0 +1,63 @@
+1.表空间存放表,索引
+2.以normal身份进去是没有权限创建表空间的,会报权限不足,必须dba身份才能创建表空间
+
+  CREATE TABLESPACE test
+    DATAFILE 'd:\test.dbf'
+    SIZE 100M
+    AUTOEXTEND ON
+    NEXT 10m
+    MAXSIZE 1000m
+    EXTENT MANAGEMENT LOCAL
+    AUTOALLOCATE
+
+3.创建表空间的时候,会创建一个后缀名为.dbf的文件(一个是逻辑名称,一个是物理文件),表空间存放在d盘的test.dbf文件中,其实表空间就是test.dbf文件
+
+4.最简便的创建方法
+  CREATE TABLESPACE li_space01
+    DATAFILE 'd:/test/li_space01.dbf'
+    SIZE 50m
+  如果d盘下没有test这个文件夹,会报:找不到路径,所以我们预先要把这个文件夹创建好
+
+  create tablespace shgt_data
+    datafile 'E://oracle//oradata//posdb//shgt_data01.dbf'
+    size 100m
+    autoextend on
+    next 10m
+    maxsize 2048m
+    extent management local
+    uniform size 128k
+    segment space management auto;
+
+5.语法:
+  CREATE [SMALLFILE|BIGFILE] TABLESPACE tablespace_name
+    DATAFILE datefile_clause1 [,datefile_clause2] ……
+    [EXTENT MANAGEMENT LOCAL]
+    [UNIFORM SIZE nnnn{K|M}]
+    [AUTOALLOCATE]
+    [SEGMENT SPACE MANAGEMENT {AUTO|MANUAL}]
+    [BLOCKSIZE nnnn{K|M}]
+    [ONLINE|OFFLINE]
+    [LOGGING|NOLOGGING];
+  其中:
+  SMALLFILE|BIGFILE 		小文件|大文件,省略为小文件;
+  tablespace_name 		表空间名
+  Datafile_Clause 		完整语法如下:
+  path\file_nameSIZEnnnn{K|M} REUSE
+  [AUTOEXTEND {OFF|ON NEXT nnnn{K|M} {MAXSIZE nnnn{K|M}|UNLIMITED}}]
+  path\file_name — 数据文件的存储路径和文件名;
+  SIZE nnnn {K|M} -- 文件大小;
+  REUSE — 如果File 已经存在,用原文件新Size,原来无File,则忽略REUSE;
+  AUTOEXTEND — 文件空间自动增加,缺省等于AUTOEXTEND OFF;
+  ON NEXTnnnn{K|M} — 文件空间自动增加大小;
+  MAXSIXE nnnn{K|M} — 最大空间;
+  UNLIMITED — 无限制。
+  EXTENT MANAGEMENT LOCAL — 代表本地化表空间,可以缺省;
+  UNIFORM -- 区大小相同,默认为1M
+  AUTOALLOCATE — 区大小系统动态自动分配。缺省等于AUTOALLOCATE。
+  SEGMENT SPACE MANAGEMENT — 段空间分配方式;
+  BLOCKSIZE — 创建非标准块表空间。如果创建16K块标准的表空间,则需要设置参数
+  DB_16K_BLOCK_SIZE=16384。缺省时块大小按参数DB_BLOCK_SIZE创建;
+  ONLINE|OFFLINE — 表空间联机/脱机。缺省等于ONLINE;LOGGING|NOLOGGING — 创建日志/不创建日志。缺省等于LOGGING。
+
+
+

@@ -1,0 +1,23 @@
+create or replace procedure li_c(
+       o_a out varchar2
+)
+is
+
+begin
+select name into o_a from a where name='a111'; //到这行就会出错
+dbms_output.put_line(o_a); //这行就不会执行了
+exception when others then
+dbms_output.put_line('错误');
+dbms_output.put_line(sqlcode);
+dbms_output.put_line(sqlerrm);
+end;
+--------------------------控制台
+错误
+100
+ORA-01403: 未找到数据
+--------------------------
+declare
+v_a varchar2(2000);
+begin
+li_c(v_a);
+end;

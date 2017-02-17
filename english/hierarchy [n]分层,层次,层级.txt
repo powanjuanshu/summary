@@ -1,0 +1,2 @@
+This can be a hierarchy of folders. 
+这可以是一个文件夹层次结构。

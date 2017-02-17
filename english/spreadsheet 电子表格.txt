@@ -1,0 +1,9 @@
+In a spreadsheet, numbers or text are stored and displayed in cells. 
+在电子表中，数字和文本在单元格中存放和显示。
+
+You then choose a spreadsheet to view and edit or you can add a new sheet.
+然后您可以选择和编辑查看一个电子表格，或者添加一个新表格。
+
+Based on that information, I selected a team and created a spreadsheet to manage the project. 
+根据掌握的信息，我挑选了一个队伍，建立了一个表格程序以管理这个项目。
+

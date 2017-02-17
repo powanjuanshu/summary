@@ -1,0 +1,14 @@
+--启动oracle监听服务
+C:\Users\Administrator>lsnrctl start
+
+
+LSNRCTL for 32-bit Windows: Version 10.2.0.1.0 - Production on 06-5月 -2011 11:2
+0:27
+
+
+Copyright (c) 1991, 2005, Oracle.  All rights reserved.
+
+
+启动tnslsnr: 请稍候...
+
+

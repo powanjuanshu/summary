@@ -1,0 +1,137 @@
+select empno,ename,job,sal,
+       decode(job,'CLERK',sal*1.5,
+	          'SALESMAN',sal*2.0,
+		  'MANAGER',sql*3,
+		  	    sal
+	)
+from emp;
+select decode(1,1,'a','b') from dual;//1等于1输出a
+select decode(2,1,'a','b') from dual;//2不等于1输出b
+
+decode(V1,1,A,2,B，C)
+如果V1=1 那么显示A  =2显示B  其他显示C 。。。。。。。。 
+或者说返回的值 ABC
+
+--------------decode的if-then-else逻辑
+AUTHOR	BOOK
+jack	1
+rose	2
+lucy	3
+kobe	1
+
+SELECT b.author,decode(b.book,1,'科幻',2,'武侠',3,'爱情','其他种类') 类型 FROM book b;
+AUTHOR	类型
+jack	科幻
+rose	武侠
+lucy	爱情
+kobe	科幻
+---------------进行行列转换
+AUTHOR	BOOK
+jack	1
+rose	2
+lucy	3
+kobe	1
+---
+SELECT b.author,
+decode(b.book,'1','是','无') 科幻,
+decode(b.book,'2','是','无') 武侠,
+decode(b.book,'3','是','无') 爱情
+FROM book b;
+---
+AUTHOR	科幻	武侠	爱情
+jack	是	无	无
+rose	无	是	无
+lucy	无	无	是
+kobe	是	无	无
+------------------------------------------
+Oracle系统中就有许多数据字典是使用decode 思想设计的，比如记录会话信息的V$SESSION数据字典视图就是这样，
+用户所进行的命令操作在该视图中只记录命令的代码 （0—没有任何操作，2—Insert…），而不是具体的命令关键字。
+因此，我们需要了解当前各个用户的名字及他们所进行的操作时，要用下面命令才能得到
+----------------------------
+select sid,serial#,username,
+DECODE(command,
+0,'None',
+2,'Insert',
+3,'Select',
+6,'Update',
+7,'Delete',
+8,'Drop',
+'Other') cmmand
+from v$session where username is not null;
+---------------------------------------------------
+CREATE OR REPLACE VIEW bank_date_lst AS
+Select to_char(tran_date,’yyyy.mm’),
+SUM( DECODE ( bank_code,’001’, tran_val,0 )) 城西区，
+SUM( DECODE ( bank_code,’002’, tran_val,0 )) 城南区，
+SUM( DECODE ( bank_code,’003’, tran_val,0 )) 城东区
+FROM pay_lst
+GROUP BY to_char(tran_date,’yyyy.mm’);
+-------------------------------------------------------------------------------------
+Oracle DECODE函数功能很强，下面就为您详细介绍Oracle DECODE函数的用法，希望可以让您对Oracle DECODE函数有更多的了解。
+Oracle DECODE函数
+Oracle DECODE函数是Oracle公司独家提供的功能，它是一个功能很强的函数。它虽然不是SQL的标准，但对于性能非常有用。到目前，其他的数据库供应商还不能提供类似DECODE的功能，甚至有的数据库的供应商批评Oracle的SQL不标准。实际上，这种批评有些片面或不够水平。就象有些马车制造商抱怨亨利。福特的“马车”不标准一样。
+1 DECODE 中的if-then-else逻辑
+在逻辑编程中，经常用到If – Then –Else 进行逻辑判断。在DECODE的语法中，实际上就是这样的逻辑处理过程。它的语法如下：
+DECODE(value, if1, then1, if2,then2, if3,then3, . . . else )
+Value 代表某个表的任何类型的任意列或一个通过计算所得的任何结果。当每个value值被测试，如果value的值为if1，Decode 函数的结果是then1；如果value等于if2，Decode函数结果是then2；等等。事实上，可以给出多个if/then 配对。如果value结果不等于给出的任何配对时，Decode 结果就返回else 。
+需要注意的是，这里的if、then及else 都可以是函数或计算表达式。
+含义解释： 
+DECODE(条件,值1,翻译值1,值2,翻译值2,...值n,翻译值n,缺省值)
+该函数的含义如下：
+IF 条件=值1 THEN
+RETURN(翻译值1)
+ELSIF 条件=值2 THEN
+RETURN(翻译值2)
+......
+ELSIF 条件=值n THEN
+RETURN(翻译值n)
+ELSE
+RETURN(缺省值)
+END IF
+2 DECODE 的简单例子
+Oracle系统中就有许多数据字典是使用decode 思想设计的，比如记录会话信息的V$SESSION数据字典视图就是这样。我们从《Oracle8i/9i Reference》资料中了解到，当用户登录成功后在V$SESSION中就有该用户的相应记录，但用户所进行的命令操作在该视图中只记录命令的代码 （0—没有任何操作，2—Insert…），而不是具体的命令关键字。因此，我们需要了解当前各个用户的名字及他们所进行的操作时，要用下面命令才能得到 详细的结果：
+select sid,serial#,username,
+DECODE(command,
+0,’None’,
+2,’Insert’,
+3,’Select’,
+6,’Update’,
+7,’Delete’,
+8,’Drop’,
+‘Other’) cmmand
+from v$session where username is not null;
+3 DECODE实现表的转置
+数据库中的表是由列和行构成的一个二维表。一般列在任何数据库中都是有限的数量，而行的变化较大，如果表很大，行的数量可能大上千万行。同一列的不同行可能有不同的值，而且不是预先定义的。
+例:住房公积金报表置换实例：
+1.各个单位在本地经办行进行开户，开户就是将单位的基本信息和职工信息的进行登记；
+2.每月各个单位的会计到经办行交缴本单位的所有职工的住房公积金，系统记录有每个职工的交缴明细并在每条记录上记录有经办行的代码；
+3.每月、季、半年及年终都要求将经办行 变为“列”给出个月的明细报表：
+经办行：城西区 城东区 
+月份：
+2001.01 xxxx1.xx xxxxx2.xx 
+2001.02 xxxx3.xx xxxxx4.xx 
+。 。 。 。 。 。
+原来的数据顺序是：
+城西区2001.01 xxxxx1.xx
+城东区2001.01 xxxxx2.xx
+城西区2001.02 xxxxx3.xx
+城东区2001.02 xxxxx4.xx
+住房公积金系统记录职工的每月交缴名细的pay_lst表结构是：
+bank_code varchar2(6)NOT NULL, -- 经办行代码
+acc_no varchar2(15) not null, -- 单位代码(单位帐号)
+emp_acc_no varchar2(20) not null, -- 职工帐号
+tran_date date not null, -- 交缴日期
+tran_val Number(7,2) not null, -- 交缴额 
+sys_date date default sysdate, --系统日期
+oper_id varchar2(10) --操作员代码
+这样的表结构，一般按照将经办行作为行(row)进行统计是很容易的，但是如果希望将经办行变为列(column)这样的格式来输出就有困难。如果用DECODE函数来处理则变得很简单：
+我们创建一个视图来对目前的pay_lst表进行查询。将经办行代码变为一些具体的经办行名称即可：
+CREATE OR REPLACE VIEW bank_date_lst AS
+Select to_char(tran_date,’yyyy.mm’),
+SUM( DECODE (bank_code,’001’,tran_val,0)) 城西区，
+SUM( DECODE (bank_code,’002’,tran_val,0)) 城南区，
+SUM( DECODE (bank_code,’003’,tran_val,0)) 城东区
+FROM pay_lst
+GROUP BY to_char(tran_date,’yyyy.mm’);
+建立视图后，可直接对该视图进行查询就可按照列显示出结果。
+

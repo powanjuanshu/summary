@@ -1,0 +1,30 @@
+增加column
+* ALTER TABLE table_name ADD (w NUMBER(4), y NUMBER(4));
+* ALTER TABLE test ADD address VARCHAR2(40);
+* ALTER TABLE test ADD COLUMN address VARCHAR2(40);
+
+修改column的长度
+* ALTER TABLE tasks MODIFY file_path VARCHAR2(2000);
+* ALTER TABLE tasks MODIFY (file_path VARCHAR2(2000));
+
+修改column的类型或名字(不能有数据)
+* ALTER TABLE student MODIFY (xm CHAR(30));
+* ALTER TABLE tasks MODIFY file_path VARCHAR2(2000);
+* ALTER TABLE scott.test RENAME COLUMN name1 TO name2
+
+删column
+* ALTER TABLE sutdent DROP COLUMN sal;
+
+修改table name
+* RENAME student TO stu;
+
+删table
+* DROP TABLE student;
+
+修改column not null
+* ALTER TABLE t_tasks MODIFY download_times NOT NULL;
+
+
+
+
+

@@ -1,0 +1,5 @@
+ALTER SEQUENCE emp_sequence 
+INCREMENT BY 10 
+MAXvalue 10000 
+CYCLE -- 到10000后从头开始 
+NOCACHE ;

@@ -1,0 +1,2 @@
+select add_months(sysdate,12) from dual;
+select add_months(hiredate,12) from dual; 入职时间一年后的时间

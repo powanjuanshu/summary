@@ -1,0 +1,3 @@
+在命令行中输入：如果是本机：sqlplus user/pwd
+如果是连接远端服务器：sqlplus user/pwd@本地服务名
+本地服务名就是在net manager中配置的名称

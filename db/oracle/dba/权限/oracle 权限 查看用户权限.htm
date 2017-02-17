@@ -1,0 +1,484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>oracle中查看用户权限 - dbajun - ITeye技术网站</title>
+    <meta name="description" content="1.查看所有用户：  select * from dba_users;  select * from all_users;  select * from user_users;  2.查看用户或角色系统权限(直接赋值给用户或角色的系统权限)：  select * from dba_sys_privs;  select * from user_sys_privs;     3.查看角色(只能查看登陆用 ..." />
+    <meta name="keywords" content="Oracle, SQL oracle中查看用户权限" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="dbajun" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1366969027" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">dbajun</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://dbajun.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/135331">oracle中查看用户权限</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/45887">Oracle权限</a></li> </ul>
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/Oracle">Oracle</a><a href="http://www.iteye.com/blogs/tag/SQL">SQL</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <p>1.查看所有用户：<br>  select * from dba_users;<br>  select * from all_users;<br>  select * from user_users;</p>
+<p><br>2.查看用户或角色系统权限<span style="font-size: 9pt;"><span style="font-family: Times New Roman;">(</span></span><span style="">直接赋值给用户或角色的系统权限</span><span style="font-size: 9pt;"><span style="font-family: Times New Roman;">)</span></span><span style="">：</span><br>  select * from dba_sys_privs;<br>  select * from user_sys_privs;</p>
+<p> </p>
+<p>3.查看角色(只能查看登陆用户拥有的角色)所包含的权限</p>
+<p>sql&gt;select * from role_sys_privs;</p>
+<p><br>4.查看用户对象权限：<br>  select * from dba_tab_privs;<br>  select * from all_tab_privs;<br>  select * from user_tab_privs;</p>
+<p><br>5.查看所有角色：<br>  select * from dba_roles;</p>
+<p><br>6.查看用户或角色所拥有的角色：<br>  select * from dba_role_privs;<br>  select * from user_role_privs;</p>
+<p> </p>
+<p>7.查看哪些用户有sysdba或sysoper系统权限(查询时需要相应权限)</p>
+<p>select * from V$PWFILE_USERS</p>
+<p> </p>
+<p> </p>
+<p><span style="color: #ff0000;">注意：</span></p>
+<p><span style="color: #ff0000;">1、以下语句可以查看Oracle提供的系统权限</span></p>
+<p><span style="color: #ff0000;">select name from sys.system_privilege_map</span></p>
+<p> </p>
+<p><span style="color: #ff0000;">2、查看一个用户的所有系统权限(包含角色的系统权限)</span></p>
+<pre name="code" class="sql">select privilege from dba_sys_privs where grantee='DATAUSER'
+union
+select privilege from dba_sys_privs where grantee in (select granted_role from dba_role_privs where grantee='DATAUSER' ); 
+</pre>
+<p> </p>
+  </div>
+
+  
+
+
+  
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/135420" class="next" title="错误集(自己总结，不断更新中)">错误集(自己总结，不断更新中)</a>
+      |
+      <a href="/blog/135324" class="pre" title="Linux查看系统当前用户命令">Linux查看系统当前用户命令</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2007-10-25 09:14</li>
+      <li>浏览 39171</li>
+      <li><a href="#comments">评论(5)</a></li>
+      
+      
+            
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/135331" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc2282964">
+  <div class="comment_title">
+    5 楼
+    <a href='http://lord-is-layuping.iteye.com' target='_blank' title='lord_is_layuping'>lord_is_layuping</a>
+    2012-09-24&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content"><img src="/images/smiles/icon_biggrin.gif" /> 总结的好。</div>
+</div>
+
+<div id="bc2203506">
+  <div class="comment_title">
+    4 楼
+    <a href='http://mxm910821.iteye.com' target='_blank' title='mxm910821'>mxm910821</a>
+    2011-07-08&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">楼主是好样的！<img src="/images/smiles/icon_idea.gif" /> </div>
+</div>
+
+<div id="bc2203100">
+  <div class="comment_title">
+    3 楼
+    <a href='http://zhazha1984.iteye.com' target='_blank' title='zhazha1984'>zhazha1984</a>
+    2011-07-05&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">转了，好帖子！！！<br />总结的很不错！！！！</div>
+</div>
+
+<div id="bc1570525">
+  <div class="comment_title">
+    2 楼
+    <a href='http://seablog.iteye.com' target='_blank' title='sea0108'>sea0108</a>
+    2010-07-08&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">总结的好。</div>
+</div>
+
+<div id="bc1063265">
+  <div class="comment_title">
+    1 楼
+    <a href='http://zhiblin.iteye.com' target='_blank' title='zhiblin'>zhiblin</a>
+    2009-06-22&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">找了好久<img src="/images/smiles/icon_biggrin.gif" />&nbsp;<img src="/images/smiles/icon_biggrin.gif" />&nbsp; 谢谢博主了</div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 135331;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'oracle中查看用户权限');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'oracle中查看用户权限');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://dbajun.iteye.com'><img alt="junmail的博客" class="logo" src="http://www.iteye.com/images/user-logo.gif?1324994303" title="junmail的博客: dbajun" /></a></div>
+  <div id="blog_owner_name">junmail</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 597415 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1324994303" title="男" /></li>
+              <li>来自: 三亚市</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://greyby.iteye.com' target='_blank'><img alt="greyby的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="greyby的博客: greyby" /></a></div>
+                <div class="left"><a href='http://greyby.iteye.com' target='_blank' title='greyby'>greyby</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://dylinshi126.iteye.com' target='_blank'><img alt="dylinshi126的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="dylinshi126的博客: " /></a></div>
+                <div class="left"><a href='http://dylinshi126.iteye.com' target='_blank' title='dylinshi126'>dylinshi126</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://kidqhj.iteye.com' target='_blank'><img alt="kidqhj的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="kidqhj的博客: " /></a></div>
+                <div class="left"><a href='http://kidqhj.iteye.com' target='_blank' title='kidqhj'>kidqhj</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://jiyiduandian.iteye.com' target='_blank'><img alt="jiyiduandian的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="jiyiduandian的博客: " /></a></div>
+                <div class="left"><a href='http://jiyiduandian.iteye.com' target='_blank' title='jiyiduandian'>jiyiduandian</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (336)</a></li>
+                
+                  <li><a href="/category/18154">JAVA EE (4)</a></li>
+                
+                  <li><a href="/category/18155">Oracle (10)</a></li>
+                
+                  <li><a href="/category/21465">Oracle错误集 (6)</a></li>
+                
+                  <li><a href="/category/21472">Oracle安装升级 (4)</a></li>
+                
+                  <li><a href="/category/21748">Oracle日常管理 (32)</a></li>
+                
+                  <li><a href="/category/22122">Oracle字符集 (7)</a></li>
+                
+                  <li><a href="/category/22375">Oracle备份恢复 (23)</a></li>
+                
+                  <li><a href="/category/22936">Oracle优化 (3)</a></li>
+                
+                  <li><a href="/category/25232">Oracle编程 (46)</a></li>
+                
+                  <li><a href="/category/25478">Oracle导入导出 (16)</a></li>
+                
+                  <li><a href="/category/36251">Oracle体系结构 (13)</a></li>
+                
+                  <li><a href="/category/41544">Oracle网络 (2)</a></li>
+                
+                  <li><a href="/category/42722">Oracle安全 (2)</a></li>
+                
+                  <li><a href="/category/45887">Oracle权限 (3)</a></li>
+                
+                  <li><a href="/category/45889">Oracle数据字典和性能视图 (0)</a></li>
+                
+                  <li><a href="/category/255586">Oracle常用地址 (1)</a></li>
+                
+                  <li><a href="/category/18518">dorado应用 (1)</a></li>
+                
+                  <li><a href="/category/18168">设计模式 (2)</a></li>
+                
+                  <li><a href="/category/18545">SqlServer (13)</a></li>
+                
+                  <li><a href="/category/25233">SqlServer2005编程 (27)</a></li>
+                
+                  <li><a href="/category/28116">SqlServer2005管理 (15)</a></li>
+                
+                  <li><a href="/category/18670">Javascript (3)</a></li>
+                
+                  <li><a href="/category/21592">Linux (10)</a></li>
+                
+                  <li><a href="/category/24849">Unix (1)</a></li>
+                
+                  <li><a href="/category/29895">c# (24)</a></li>
+                
+                  <li><a href="/category/33798">Arcgis Server开发 (20)</a></li>
+                
+                  <li><a href="/category/33398">UML学习 (2)</a></li>
+                
+                  <li><a href="/category/35369">ArcSDE技术 (19)</a></li>
+                
+                  <li><a href="/category/36600">ASP.NET 2.0 (2)</a></li>
+                
+                  <li><a href="/category/37071">SQLPLUS专栏 (7)</a></li>
+                
+                  <li><a href="/category/39023">CSS (4)</a></li>
+                
+                  <li><a href="/category/39062">HTML (1)</a></li>
+                
+                  <li><a href="/category/250381">SHELL编程 (7)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (22)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2013-04">2013-04</a> (6)</li>
+                
+                  <li><a href="/blog/monthblog/2013-03">2013-03</a> (7)</li>
+                
+                  <li><a href="/blog/monthblog/2013-02">2013-02</a> (3)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://piaosan2009.iteye.com' target='_blank' title='piaosan2009'>piaosan2009</a>： 
+                  第三条命令少了个符号？<br />
+                  <a href="/blog/215719#bc2299835">Oracle exp命令常用用法</a>
+                </li>
+                
+                <li>
+                  <a href='http://lord-is-layuping.iteye.com' target='_blank' title='lord_is_layuping'>lord_is_layuping</a>： 
+                   总结的好。<br />
+                  <a href="/blog/135331#bc2282964">oracle中查看用户权限</a>
+                </li>
+                
+                <li>
+                  <a href='http://andy-k.iteye.com' target='_blank' title='Andy-k'>Andy-k</a>： 
+                   ...<br />
+                  <a href="/blog/127784#bc2265986">以sysdba登录 iSQLPLUS 的配置</a>
+                </li>
+                
+                <li>
+                  <a href='http://syg5434.iteye.com' target='_blank' title='syg5434'>syg5434</a>： 
+                   谢谢<br />
+                  <a href="/blog/197741#bc2263894">常用设计模式收集</a>
+                </li>
+                
+                <li>
+                  <a href='http://frank1998819.iteye.com' target='_blank' title='frank1998819'>frank1998819</a>： 
+                   ...<br />
+                  <a href="/blog/256455#bc2260219">Oracle自定义函数实例</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2012 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+    
+    
+  </body>
+</html>

@@ -1,0 +1,2 @@
+SELECT nvl(NULL, 'jack') FROM dual;
+Êä³ö:jack

@@ -1,0 +1,9 @@
+SELECT * FROM dba_tablespaces
+注意:必须以dba身份登进去才能查看到
+
+----------------------------
+select * from user_tablespaces; //查看所有表空间
+select * from user_tables;  //查看每个表对应的表空间
+select * from dba_data_files; //表空间对应的数据文件
+
+表都放在表空间里，如果创建的时候指定了表空间，那么数据文件就是这个表空间，如果没有指定表空间，表存放在默认的系统表空间里

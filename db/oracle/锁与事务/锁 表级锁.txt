@@ -1,0 +1,21 @@
+使用命令显示地锁定表,应用表级锁的语法是:
+LOCK TABLE table_name IN mode MODE;
+
+表级锁类型:
+* 行共享(ROW SHARE) - 禁止排他锁定表
+* 行排他(ROW EXCLUSIVE) - 禁止使用排他锁和共享锁
+* 共享(SHARE)
+  + 锁定表,仅允许其他用户查询表中的行
+  + 禁止其他用户插入,更新和删除行
+  + 多个用户可以同时在同一个表上应用此锁
+* 共享行排他(SHARE ROW EXCLUSIVE) - 比共享锁更多的限制,禁止使用共享锁及更高的锁
+* 排他(EXCLUSIVE) - 限制最强的表锁,仅允许其他用户查询该表的行.禁止修改和锁定表
+
+LOCK TABLE scott.emp IN SHARE MODE;
+
+
+
+
+
+
+

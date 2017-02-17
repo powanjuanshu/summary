@@ -1,0 +1,6 @@
+drop user se;
+删除用户帐号会报错：必须指定cascade以删除
+
+这说明你要删除的oracle用户"SE"下面还有数据库对象，如table,view等，这样你删除用户时必须加选项 cascade:drop user se cascade; 
+表示删除用户SE，同时删除 SE 用户下的所有数据对象。还有一个办法就是先删除 se 下的所有数据对象，使 se 变成一个啥也没有的空用户，再 drop user se; 
+一般来说要具有 dba 权限的用户才能删除其他用户

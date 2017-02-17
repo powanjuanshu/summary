@@ -1,0 +1,85 @@
+1. 在PL/SQL运行DDL语句
+begin
+execute immediate 'set role all';
+end;
+
+2. 给动态语句传值(USING 子句)
+declare
+l_depnam varchar2(20) := 'testing';
+l_loc    varchar2(10) := 'Dubai';
+begin
+execute immediate 'insert into dept values (:1, :2, :3)'
+    using 50, l_depnam, l_loc;
+commit;
+end;
+
+3. 从动态语句检索值(INTO子句)
+declare
+l_cnt    varchar2(20);
+begin
+execute immediate 'select count(1) from emp'
+    into l_cnt;
+dbms_output.put_line(l_cnt);
+end; 
+
+4. 动态调用例程.例程中用到的绑定变量参数必须指定参数类型.黓认为IN类型,其它类型必须显式指定
+declare
+l_routin   varchar2(100) := 'gen2161.get_rowcnt';
+l_tblnam   varchar2(20) := 'emp';
+l_cnt      number;
+l_status   varchar2(200);
+begin
+execute immediate 'begin ' || l_routin || '(:2, :3, :4); end;'
+    using in l_tblnam, out l_cnt, in out l_status;
+
+if l_status != 'OK' then
+     dbms_output.put_line('error');
+end if;
+end;
+
+5. 将返回值传递到PL/SQL记录类型;同样也可用%rowtype变量
+declare
+type empdtlrec is record (empno number(4),
+                           ename varchar2(20),
+                           deptno number(2));
+empdtl empdtlrec;
+begin
+execute immediate 'select empno, ename, deptno ' ||
+                   'from emp where empno = 7934'
+    into empdtl;
+end;
+
+6. 传递并检索值.INTO子句用在USING子句前
+declare
+l_dept    pls_integer := 20;
+l_nam     varchar2(20);
+l_loc     varchar2(20);
+begin
+execute immediate 'select dname, loc from dept where deptno = :1'
+    into l_nam, l_loc
+    using l_dept ;
+end;
+
+7. 多行查询选项.对此选项用insert语句填充临时表，用临时表进行进一步的处理,也可以用REF cursors纠正此缺憾.
+declare
+l_sal   pls_integer := 2000;
+begin
+execute immediate 'insert into temp(empno, ename) ' ||
+                   '          select empno, ename from emp ' ||
+                   '          where sal > :1'
+    using l_sal;
+commit;
+end;
+
+--------------------------
+1．静态SQLSQL与动态SQL
+　　Oracle编译PL/SQL程序块分为两个种：其一为前期联编（early binding），即SQL语句在程序编译期间就已经确定，大多数的编译情况属于这种类型；另外一种是后期联编（late binding），即SQL语句只有在运行阶段才能建立，例如当查询条件为用户输入时，那么Oracle的SQL引擎就无法在编译期对该程序语句进行确定，只能在用户输入一定的查询条件后才能提交给SQL引擎进行处理。通常，静态SQL采用前一种编译方式，而动态SQL采用后一种编译方式。
+　　本文主要就动态SQL的开发进行讨论，并在最后给出一些实际开发的技巧。
+2．动态SQL程序开发
+　　理解了动态SQL编译的原理，也就掌握了其基本的开发思想。动态SQL既然是一种”不确定”的SQL，那其执行就有其相应的特点。Oracle中提供了Execute immediate语句来执行动态SQL，语法如下：
+Excute immediate 动态SQL语句 using 绑定参数列表 returning into 输出参数列表;对这一语句作如下说明：
+　　1)动态SQL是指DDL和不确定的DML（即带参数的DML）
+　　2)绑定参数列表为输入参数列表，即其类型为in类型，在运行时刻与动态SQL语句中的参数（实际上占位符，可以理解为函数里面的形式参数）进行绑定。
+　　3)输出参数列表为动态SQL语句执行后返回的参数列表。
+　　4)由于动态SQL是在运行时刻进行确定的，所以相对于静态而言，其更多的会损失一些系统性能来换取其灵活性。 
+

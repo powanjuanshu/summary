@@ -1,0 +1,6 @@
+select extract(month from sysdate) from dual;
+Êä³ö:2
+select extract(year from sysdate) from dual;
+Êä³ö:2010
+select extract(day from sysdate) from dual;
+Êä³ö:24

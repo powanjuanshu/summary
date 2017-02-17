@@ -1,0 +1,2 @@
+Procedures may call themselves recursively without explicit declaration.
+函数可能不用显式的声明就可递归地调用自己。

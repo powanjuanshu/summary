@@ -1,0 +1,10 @@
+开始->程序->Oracle - OraDb10g_home1->Application Development->SQL plus
+其实是运行的D:\oracle\product\10.1.0\db_1\BIN\sqlplusw.exe，只是一个快捷方式而已
+------------------------------------------------------------------------------cmd登录sqlplus
+开始->运行->cmd->sqlplus sys/tiger as sysdba
+其实是运行D:\oracle\product\10.1.0\db_1\BIN\sqlplus.exe
+
+
+
+
+

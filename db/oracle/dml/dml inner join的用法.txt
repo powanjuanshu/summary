@@ -1,0 +1,14 @@
+t1表
+a	b
+1	2
+3	4
+5	6
+t2表
+b	c
+2	3
+3	4
+5	6
+SELECT * FROM t1 INNER JOIN t2 ON t1.b=t2.b;
+a	b	b	c
+1	2	2	3
+---------------只取两边都有的，不补空，区别与left join和right join

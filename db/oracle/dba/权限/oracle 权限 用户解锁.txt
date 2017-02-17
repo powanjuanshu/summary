@@ -1,0 +1,9 @@
+默认的scott用户是被锁定的，（其实之前还会报没有CREATE SESSION的权限，所以还要先把connect角色赋给scott用户）
+-----------------解决
+先用dba登录到plsql中去，然后打开Command Window，输入
+ALTER USER scott ACCOUNT UNLOCK;回车->解锁之后会要求你修改密码
+->输入alter user scott identified by tiger；这里可以改成原来的密码
+完成
+再用lijie这个用户登录就没问题了
+
+

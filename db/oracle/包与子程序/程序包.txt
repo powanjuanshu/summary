@@ -1,0 +1,121 @@
+[1] 程序包:
+* pl/sql为了满足程序模块化的需要,出了块(block)和子程序机构外,还引入了包的构造
+* 程序包是对相对过程,函数,变量,常量,类型,游标和异常等对象的封装
+* 程序包由规范和主体两部分组成
+
+规范+主体
+等于
+接口+实现
+
+[2] 程序包的优点:
+* 模块化
+* 更轻松的应用程序设计
+* 信息隐藏
+* 新增功能
+* 性能更佳
+
+[3] 包的定义形式如下:
+* 包说明:
+  PACKAGE 包名 IS
+  --变量说明;
+  --游标说明;
+  --例外说明;
+  --记录说明;
+  --plsql说明;
+  --过程说明;
+  --函数说明;
+  END [包名];
+
+* 包体:
+  PACKAGE BODY 包名 IS --与包说明的包名名字必须相同
+  --变量名说明;
+  --游标说明;
+  --游标申明;
+  --例外说明;
+  --记录说明;
+  --plsql说明;
+  --过程体;
+  --函数体;
+  BEGIN
+  --语句序列
+  END [包名];
+
+[5] 
+包头:
+CREATE OR REPLACE PACKAGE classPackage AS
+  PROCEDURE addStudent(p_studentId IN students.id%TYPE,
+		       p_department IN classes.department%TYPE,
+		       p_course IN classes.course%TYPE);
+  PROCEDURE removeStudent(p_studentId IN students.id%TYPE,
+		          p_department IN classes.department%TYPE,
+		          p_course IN classes.course%TYPE);
+  e_studentNotRegistered EXCEPTION;
+  TYPE t_studentIdTable IS TABLE OF student.id%TYPE INDEX BY BINARY_INTEGER;
+  CURSOR salescur RETURN emp;
+  PROCEDURE classList(p_department IN classes.department%TYPE,
+		      p_course IN classes.course%TYPE,
+		      p_ids OUT t_studentIdTable,
+		      p_numStudents IN OUT BINARY_INTEGER);
+END classPackage;
+
+包体:
+CREATE OR REPLACE PACKAGE BODY classPackage AS
+  PROCEDURE addStudent(p_studentId IN students.id%TYPE,
+		       p_department IN classes.department%TYPE,
+		       p_course IN classes.course%TYPE) 
+  IS
+  BEGIN
+    INSERT INTO registered_students(student_id,department,course) VALUES(p_studentId, p_department,p_course);
+    COMMIT;
+  END addStudent;
+  ... ...
+  ... ...
+  ... ...
+END classPackage;
+
+[6]
+CREATE OR REPLACE PACKAGE emp_data AS
+  TYPE emprectyp IS RECORE(
+	emp_id NUMBER(5),
+  	emp_name VARCHAR2(10));
+  TYPE empcurtyp IS REF CURSOR RETURN emprectyp;
+  PROCEDURE get_staff(dept_no IN NUMBER,
+		      emp_cv IN OUT empcurtyp);
+END emp_data;
+
+CREATE OR REPLACE PACKAGE BODY emp_data AS
+  PROCEDURE get_staff(dept_no IN NUMBER,
+		       emp_cv IN OUT empcurtyp) 
+  IS
+  BEGIN
+    OPEN emp_cv FOR SELECT empno,ename FROM emp,dept WHERE emp.deptno;
+  END;
+END emp_data;
+
+调用:
+show autoprint;
+set autoprint on;
+var cv refcursor;
+exec emp_data.get_staff(20, :cv);
+返回了结果集
+
+[7]
+程序包中的游标:
+* 在包规范中声明游标规范时必须使用RETURN子句指定游标的返回类型
+* RETURN子句指定的数据类型可以是:
+  + 用%ROWTYPE属性引用表定义的记录类型
+  + 程序员定义的记录类型
+
+
+
+
+
+
+
+
+
+
+
+
+
+

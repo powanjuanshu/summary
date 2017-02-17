@@ -1,0 +1,2 @@
+select regexp_replace('axxabcee','^[abc]','') from dual;
+匹配开头以a，b，c任意的字母

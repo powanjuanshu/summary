@@ -1,0 +1,1 @@
+select regexp_replace(a,'\w','kimi',1,2) from test;

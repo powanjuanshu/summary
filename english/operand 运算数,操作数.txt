@@ -1,0 +1,4 @@
+The data type of the shift amount operand must be integer.
+表示移位位数的操作数数据类型必须为整数.
+Missing operand before comma,),or operator.
+在逗号,右括号或者运算符前缺少运算数字.

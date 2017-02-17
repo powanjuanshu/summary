@@ -1,0 +1,113 @@
+select NLSSORT('李', 'NLS_SORT=SCHINESE_PINYIN_M') from dual;
+输出:75280000010001
+--------------------------------
+NLSSORT,可以用来进行语言排序,且不影响当前会话
+用法示例:
+拼音 SELECT * FROM TEAM ORDER BY NLSSORT(排序字段,'NLS_SORT = SCHINESE_PINYIN_M')
+笔划 SELECT * FROM TEAM ORDER BY NLSSORT(排序字段,'NLS_SORT = SCHINESE_STROKE_M')
+部首 SELECT * FROM TEAM ORDER BY NLSSORT(排序字段,'NLS_SORT = SCHINESE_RADICAL_M')
+--------------------------------
+nls_sort和nlssort排序功能介绍
+* ALTER SESSION SET NLS_SORT=''; 排序影响整个会话
+  Oracle9i之前,中文是按照二进制编码进行排序的。
+　在oracle9i中新增了按照拼音、部首、笔画排序功能。
+  设置NLS_SORT值:
+　　SCHINESE_RADICAL_M 按照部首（第一顺序）、笔划（第二顺序）排序
+　　SCHINESE_STROKE_M 按照笔划（第一顺序）、部首（第二顺序）排序
+　　SCHINESE_PINYIN_M 按照拼音排序
+  oracle9i中新增了按照拼音、部首、笔画排序功能
+  拼音SELECT * FROM TEAM ORDER BY NLSSORT(列名, 'NLS_SORT = SCHINESE_PINYIN_M')
+  笔划SELECT * FROM TEAM ORDER BY NLSSORT(列名, 'NLS_SORT = SCHINESE_STROKE_M')
+  部首SELECT * FROM TEAM ORDER BY NLSSORT(列名, 'NLS_SORT = SCHINESE_RADICAL_M')
+
+* 又如在视图中查询获取道路列表：
+  sSql = string.Format("select distinct({0}) from {1} order by nlssort({0},'NLS_SORT=SCHINESE_PINYIN_M')", sFieldDL, sViewDL);
+
+* 一个表中的数据AA是这样的:
+PROJECTNO
+-----------------------
+钦市PC2010-5
+钦市PC2011-6
+钦市PC2011-40
+钦南PC2011-5
+钦南GC2011-5
+钦市PC2011-5
+数据前2个字是市区名,后面的是文件名-后面的是第几号文件,需要先升序排列市区名,市区名相同再升序排列后面的文件名,文件名相同再降序排列后面的文件编号名。
+注意:
+单单用select projectno from aa order by projectno asc是不能实现的
+可使用select projectno from aa order by substr(projectno ,1,2) asc ,substr(projectno ,3,6) asc ,to_number(substr(projectno ,10,2)) desc
+--------------------------------
+函数功能:取出中文的拼音第一个字母
+CREATE OR REPLACE FUNCTION F_TRANS_PINYIN_CAPITAL(P_NAME IN VARCHAR2)
+  RETURN VARCHAR2 AS
+  V_COMPARE VARCHAR2(100);
+  V_RETURN  VARCHAR2(4000);
+  FUNCTION F_NLSSORT(P_WORD IN VARCHAR2) RETURN VARCHAR2 AS
+  BEGIN
+    RETURN NLSSORT(P_WORD, 'NLS_SORT=SCHINESE_PINYIN_M');
+  END;
+BEGIN
+  FOR I IN 1 .. LENGTH(P_NAME) LOOP
+    V_COMPARE := F_NLSSORT(SUBSTR(P_NAME, I, 1));
+    IF V_COMPARE >= F_NLSSORT(' 吖 ') AND V_COMPARE <= F_NLSSORT('驁 ') THEN
+      V_RETURN := V_RETURN || 'a';
+    ELSIF V_COMPARE >= F_NLSSORT('八 ') AND V_COMPARE <= F_NLSSORT('簿 ') THEN
+      V_RETURN := V_RETURN || 'b';
+    ELSIF V_COMPARE >= F_NLSSORT('嚓 ') AND V_COMPARE <= F_NLSSORT('錯 ') THEN
+      V_RETURN := V_RETURN || 'c';
+    ELSIF V_COMPARE >= F_NLSSORT('咑 ') AND V_COMPARE <= F_NLSSORT('鵽 ') THEN
+      V_RETURN := V_RETURN || 'd';
+    ELSIF V_COMPARE >= F_NLSSORT('妸 ') AND V_COMPARE <= F_NLSSORT('樲 ') THEN
+      V_RETURN := V_RETURN || 'e';
+    ELSIF V_COMPARE >= F_NLSSORT('发 ') AND V_COMPARE <= F_NLSSORT('猤 ') THEN
+      V_RETURN := V_RETURN || 'f';
+    ELSIF V_COMPARE >= F_NLSSORT('旮 ') AND V_COMPARE <= F_NLSSORT('腂 ') THEN
+      V_RETURN := V_RETURN || 'g';
+    ELSIF V_COMPARE >= F_NLSSORT('妎 ') AND V_COMPARE <= F_NLSSORT('夻 ') THEN
+      V_RETURN := V_RETURN || 'h';
+    ELSIF V_COMPARE >= F_NLSSORT('丌 ') AND V_COMPARE <= F_NLSSORT('攈 ') THEN
+      V_RETURN := V_RETURN || 'j';
+    ELSIF V_COMPARE >= F_NLSSORT('咔 ') AND V_COMPARE <= F_NLSSORT('穒 ') THEN
+      V_RETURN := V_RETURN || 'k';
+    ELSIF V_COMPARE >= F_NLSSORT('垃 ') AND V_COMPARE <= F_NLSSORT('擽 ') THEN
+      V_RETURN := V_RETURN || 'l';
+    ELSIF V_COMPARE >= F_NLSSORT('嘸 ') AND V_COMPARE <= F_NLSSORT('椧 ') THEN
+      V_RETURN := V_RETURN || 'm';
+    ELSIF V_COMPARE >= F_NLSSORT('拏 ') AND V_COMPARE <= F_NLSSORT('瘧 ') THEN
+      V_RETURN := V_RETURN || 'n';
+    ELSIF V_COMPARE >= F_NLSSORT('筽 ') AND V_COMPARE <= F_NLSSORT('漚 ') THEN
+      V_RETURN := V_RETURN || 'o';
+    ELSIF V_COMPARE >= F_NLSSORT('妑 ') AND V_COMPARE <= F_NLSSORT('曝 ') THEN
+      V_RETURN := V_RETURN || 'p';
+    ELSIF V_COMPARE >= F_NLSSORT('七 ') AND V_COMPARE <= F_NLSSORT('裠 ') THEN
+      V_RETURN := V_RETURN || 'q';
+    ELSIF V_COMPARE >= F_NLSSORT('亽 ') AND V_COMPARE <= F_NLSSORT('鶸 ') THEN
+      V_RETURN := V_RETURN || 'r';
+    ELSIF V_COMPARE >= F_NLSSORT('仨 ') AND V_COMPARE <= F_NLSSORT('蜶 ') THEN
+      V_RETURN := V_RETURN || 's';
+    ELSIF V_COMPARE >= F_NLSSORT('侤 ') AND V_COMPARE <= F_NLSSORT('籜 ') THEN
+      V_RETURN := V_RETURN || 't';
+    ELSIF V_COMPARE >= F_NLSSORT('屲 ') AND V_COMPARE <= F_NLSSORT('鶩 ') THEN
+      V_RETURN := V_RETURN || 'w';
+    ELSIF V_COMPARE >= F_NLSSORT('夕 ') AND V_COMPARE <= F_NLSSORT('鑂 ') THEN
+      V_RETURN := V_RETURN || 'x';
+    ELSIF V_COMPARE >= F_NLSSORT('丫 ') AND V_COMPARE <= F_NLSSORT('韻 ') THEN
+      V_RETURN := V_RETURN || 'y';
+    ELSIF V_COMPARE >= F_NLSSORT('帀 ') AND V_COMPARE <= F_NLSSORT('咗 ') THEN
+      V_RETURN := V_RETURN || 'z';
+    END IF;
+  END LOOP;
+  RETURN V_RETURN;
+END;
+
+
+
+
+
+
+
+
+
+
+
+

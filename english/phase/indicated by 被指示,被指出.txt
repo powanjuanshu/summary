@@ -1,0 +1,15 @@
+This allows the number of repeats of an element to be indicated by an integer field in the message. 
+这允许通过消息中的一个整数字段指示某个元素的重复次数。
+
+Sets the system property indicated by the specified key.
+设置被指定的键指定的系统属性。
+
+
+
+
+
+
+
+
+
+

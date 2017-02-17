@@ -1,0 +1,4 @@
+自定义快捷键   
+PLSQL Developer里预留了很多键让用户自定义，这是件很Hight的事情。不像霸道的Word，基本上所有的键都已预定义了功能，修改起来很是头疼.
+通常情况下，打开PLSQL Developer后，最经常干的事就是打开SQL Window和Command Window，就给这两个操作定义了快捷键，ALT+S和ALT+ C
+设置方法：菜单Tools --> Preferences --> Key Configuration

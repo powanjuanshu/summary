@@ -1,0 +1,714 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>
+        Oracle10g客户端安装
+        -
+        Life-long learning---JProgrammer - wpblog
+        - 和讯博客</title>
+    <meta name="description" content="Oracle10g客户端安装 - wpblog的博客 - 和讯博客">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    
+    <link rel="alternate" type="application/rss+xml" title="wpblog" href="http://wpblog.blog.hexun.com/rss2.aspx" />
+    <link href="http://home.hexun.com/css/common.css" type="text/css" rel="stylesheet">
+    <link href="http://shequ2.tool.hexun.com/5980580/my.css" type="text/css"
+        rel="stylesheet">
+    
+    <script language="JavaScript" type="text/javascript">
+<!--
+function HEXUN_SetMediaPlayState()
+{
+	var cookieName = "HEXUN_COM_MEDIA_PLAYSTATE";
+	var curCookie = cookieName + "=1;path=/;domain=hexun.com";
+	document.cookie = curCookie;
+}
+HEXUN_SetMediaPlayState();
+-->
+</script>
+
+    
+    <script src="http://img.tool.hexun.com/newhome/js/jquery-1.7.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $.noConflict();
+</script>
+<link href="http://img.tool.hexun.com/newhome/style/commonhead.css" type="text/css" rel="stylesheet"/>
+</head>
+<body id="BlogBody">
+<div id="logBox" class="log_box" style="display: none; left: 819px; top: 31px;">
+</div>
+<div style=" padding-top:40px; font-size:0;line-height:0; height:0; overflow:hidden;"></div>
+    
+    <!--  页面:开始  -->
+<div id="page">
+        <!--  头部:开始  -->
+        <script language='javascript'>
+                function bookmarkThis(myhref)
+                {
+		                t=document.title;
+		                u=myhref;
+		                e=document.selection?(document.selection.type!='None'?document.selection.createRange().text:''):(document.getSelection?document.getSelection():'');
+		                void(open('http://bookmark.hexun.com/post.aspx?title='+escape(t)+'&amp;url='+escape(u)+'&amp;excerpt='+escape(e),'HexunBookmark','scrollbars=no,width=600,height=450,left=80,top=80,status=no,resizable=yes'));	
+                }
+                function copytext(blogname,username) 
+                {		
+	                var copyText='http://hexun.com/' +  blogname + '/default.html';
+	                window.clipboardData.setData('Text',copyText);
+	                alert(username + '的个人门户地址已经拷贝到剪贴板！');
+
+                }
+                function addbookmark(myhref)
+                {
+	                t=document.title;
+	                u=myhref;
+	                e=document.selection?(document.selection.type!='None'?document.selection.createRange().text:''):(document.getSelection?document.getSelection():'');
+	                void(open('http://bookmark.hexun.com/post.aspx?title='+escape(t)+'&amp;url='+escape(u)+'&amp;excerpt='+escape(e),'HexunBookmark','scrollbars=no,width=600,height=450,left=80,top=80,status=no,resizable=yes'));	
+                		
+                }
+
+                </script>
+
+                <script type='text/javascript'>
+
+                function cnLength(Str) {
+	                var escStr = escape(Str);
+	                var numI = 0;
+	                var escStrlen = escStr.length;
+	                for (i = 0;  i < escStrlen;  i++) 
+	                if(escStr.charAt(i) == '%') 
+	                if(escStr.charAt(++i) == 'u')  numI ++;
+	                return Str.length+numI;
+                }
+                </script>
+                <!--  头部:结束  -->
+                <!--  主体:开始  -->
+<div id="content">
+                    <div id="content_inner">
+                        
+                        <div class="left_side_2" style="float: left;">
+                            
+<div id="BlogPageLeft" class="left_side_2_inner">
+<!--  主人:开始  -->
+<!--  主人:结束  -->
+<!--  自定义HTML:开始  -->
+<!--  自定义HTML:结束  -->
+<!--  快速链接:开始  -->
+<!--  快速链接:结束  -->
+<!--  分类:开始  -->
+<div id="GetCate"></div> 
+<!--  分类:结束  -->
+<!--  友情链接:开始  -->
+<div id="GetLink"></div>
+<!--  友情链接:结束  -->
+<div id="ArticleSideMore" style="display:none;"></div>
+
+</div>
+
+                        </div>
+                        
+                        <div class="right_side_2" style="float: left;">
+                            
+<script>
+    function isArticleDel(url) {
+        var x = window.confirm('是否删除？');
+        if (x) {
+            document.getElementById("ifr_delarticle").contentWindow.location = url;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function isVote() {
+        var x = window.confirm('是否投票？');
+        if (x) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function bookmarkThis() {
+        t = document.title;
+        u = location.href;
+        tag = "oracle";
+        e = document.selection ? (document.selection.type != 'None' ? document.selection.createRange().text : '') : (document.getSelection ? document.getSelection() : '');
+        void (open('http://bookmark.hexun.com/post.aspx?title=' + escape(t) + '&url=' + escape(u) + '&tag=' + escape(tag) + '&excerpt=' + escape(e), 'HexunBookmark', 'fullscreen=yes,scrollbars=yes,status=yes,resizable=yes,toolbar=yes,menubar=yes,location=yes'));
+    }
+
+    var wordpt = 14;
+
+    function changeStyle(type) {
+        if (type == 0) {
+            if (wordpt > 8) {
+                wordpt = wordpt - 2;
+            }
+        }
+        else {
+            if (wordpt < 36) {
+                wordpt = wordpt + 2;
+            }
+        }
+        var temp = eval(wordpt);
+        temp = temp + "px";
+        document.getElementById('BlogArticleDetail').style.fontSize = temp;
+    }
+
+    function changeFont(type) {
+        var detail = document.getElementById("BlogArticleDetail");
+        var btnBig = document.getElementById("btnBigFont");
+        var btnNormal = document.getElementById("btnNormalFont");
+        var btnSmall = document.getElementById("btnSmallFont");
+        if (type == 1) {
+            detail.style.fontSize = "24px";
+            btnBig.style.fontWeight = "bold";
+            btnNormal.style.fontWeight = "normal";
+            btnSmall.style.fontWeight = "normal";
+            btnBig.style.cursor = "default";
+            btnNormal.style.cursor = "pointer";
+            btnSmall.style.cursor = "pointer";
+        }
+        else if (type == 3) {
+            detail.style.fontSize = "12px";
+            btnBig.style.fontWeight = "normal";
+            btnNormal.style.fontWeight = "normal";
+            btnSmall.style.fontWeight = "bold";
+            btnBig.style.cursor = "pointer";
+            btnNormal.style.cursor = "pointer";
+            btnSmall.style.cursor = "default";
+        }
+        else {
+            detail.style.fontSize = "14px";
+            btnBig.style.fontWeight = "normal";
+            btnNormal.style.fontWeight = "bold";
+            btnSmall.style.fontWeight = "normal";
+            btnBig.style.cursor = "pointer";
+            btnNormal.style.cursor = "default";
+            btnSmall.style.cursor = "pointer";
+        }
+    }
+
+    function weibo(title, url) {
+        var title = '分享 @wpblog 的博文:《Oracle10g客户端安装》 ';
+        var url = 'http://wpblog.blog.hexun.com/20979778_d.html';
+        void ((function (s, d, e, t, z) { var f = 'http://t.hexun.com/channel/shareblog.aspx?', u = z || d.location, p = ['title=', e(t || d.title), '&url=', e(u)].join(''); function a() { if (!window.open([f, p].join(''), 'wb', ['toolbar=0,status=0,resizable=1,width=636,height=326,left=', (s.width - 636) / 2, ',top=', (s.height - 326) / 2].join(''))) u.href = [f, p].join(''); }; if (/Firefox/.test(navigator.userAgent)) setTimeout(a, 0); else a(); })(screen, document, encodeURIComponent, title, url));
+    }
+
+    function sms() {
+        window.open('http://comment.blog.hexun.com/i/sendsms.aspx?blogname=wpblog&brief=++++1%2c%cf%ee%c4%bf%ca%b9%d3%c3%b5%c4%ca%c7oracle10g%ca%fd%be%dd%bf%e2%2c%c4%c7%ce%d2%be%cd%b0%b2%d7%b0%b8%f6%bf%cd%bb%a7%b6%cb%b0%c9%2c%b7%c3%ce%ca%b9%ab%cb%be%b7%fe%ce%f1%c6%f7%be%cd%d0%d0%c1%cb%2c%ca%a1%ca%c2.%0d%0a++++%b5%bdoracle%b9%d9%b7%bd%cf%c2%d4%d8%3a%0d%0a++++http%3a%2f%2fwww.oracle.com%2ftechnology%2fsoftware%2ftech%2foci%2finsta', 'blogsms', 'toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,width=380,height=180,left=' + (screen.width - 380) / 2 + ',top=' + (screen.height - 180) / 2);
+    }
+    function RecommendArticle(aid) {
+        void (open('http://post.blog.hexun.com/inc/ArticleRecommend.aspx?articleid=' + aid + '&blogid=2501705', 'HexunRecommend', 'scrollbars=no,width=515,height=200,left=80,top=80,status=no,resizable=yes,location=no'));
+    }
+</script>
+<div id="BlogPageRight" class="right_side_2_inner">
+    <!--  文章内容:开始  -->
+    <iframe src="about:blank" id="ifr_delarticle" frameborder="0" height="0" width="0"
+        scrolling="no" style="display: none;"></iframe>
+    <div class="Article" id="ArticeTextID">
+        <div class="ArticleTitle">
+            <span class="ArticleTitleText">
+                Oracle10g客户端安装</span> [原创
+            2008-7-15 17:23:50]
+            
+            <a href='http://post.blog.hexun.com/wpblog/postarticle.aspx?articleid=20979778' title="编辑..."><img id="idIconEdit" src="http://blog.hexun.com/images/icon_edit.gif" border="0" align="absmiddle"></a>&nbsp;<img id="idIconDel" src="http://blog.hexun.com/images/icon_del.gif" border="0" align="absmiddle" title="删除..." style="cursor:pointer" onclick="isArticleDel('http://wpblog.blog.hexun.com/deletearticle.aspx?articleid=20979778')">&nbsp;
+        </div>
+        <span style="position: absolute; height: 0px; width: 0px;" id="imgnext_20979778">
+        </span>
+        <div class="ArticleBlog">
+            <div class="ArticleBlogText">
+                <div align="right" style="margin-bottom: 4px;" id="ArticleBlogButtons">
+                    <a id="link_VoteArticle_Top" href="http://cache-sidebar.blog.hexun.com/voteArticle.aspx?articleID=20979778&blogname=wpblog&blogid=2501705"
+                           title="给这篇文章投一票"><img src="http://blog.hexun.com/img/btn-newding.gif" style="border: 0;
+                               cursor: pointer; vertical-align: middle;" alt="我顶" /></a>
+                    <span id="ChangeBlogArticleFont" style="vertical-align: middle; font-size: 12px;">字号：<span
+                        onclick="javascript:changeFont(1);" style="cursor: pointer; font-weight: normal;"
+                        id="btnBigFont">大</span> <span onclick="javascript:changeFont(2);" style="cursor: default;
+                            font-weight: bold;" id="btnNormalFont">中</span> <span onclick="javascript:changeFont(3);"
+                                style="cursor: pointer; font-weight: normal;" id="btnSmallFont">小</span></span>
+                </div>
+                <div id="BlogArticleDetail" style="font-size: 14px;">
+                    <P><FONT face="Courier New">&nbsp;&nbsp;&nbsp; 1,项目使用的是oracle10g数据库,那我就安装个客户端吧,访问公司服务器就行了,省事.</FONT></P>
+<P><FONT face="Courier New">&nbsp;&nbsp;&nbsp; 到oracle官方下载:</FONT></P>
+<P><FONT face="Courier New">&nbsp;&nbsp;&nbsp; </FONT><A href="http://www.oracle.com/technology/software/tech/oci/instantclient/htdocs/winsoft.html"><FONT face="Courier New">http://www.oracle.com/technology/software/tech/oci/instantclient/htdocs/winsoft.html</FONT></A><FONT face="Courier New">下载下列几个压宿文件</FONT></P>
+<P><FONT face="Courier New"></FONT>&nbsp;</P>
+<P><FONT face="Courier New">&nbsp;&nbsp;&nbsp; instantclient-basic-win32-10.1.0.2.zip 　　&nbsp; 这是最核心的包<BR>&nbsp;&nbsp;&nbsp; instantclient-jdbc-win32-10.1.0.2.zip 　　&nbsp;&nbsp; 包含JDBC Driver的包<BR>&nbsp;&nbsp;&nbsp; instantclient-sqlplus-win32-10.1.0.2.zip 　　最简单的SQLPLUS包</FONT></P>
+<P><FONT face="Courier New"></FONT>&nbsp;</P>
+<P><FONT face="Courier New">&nbsp;&nbsp;&nbsp; 我把文件解压到了d盘,d:\oracle10gclient下面</FONT></P>
+<P><FONT face="Courier New">&nbsp;&nbsp;&nbsp; </FONT></P>
+<P><FONT face="Courier New">&nbsp;&nbsp;&nbsp; 2,配置tnsnames.ora，如果本机上没有安装oracle，可以从安装了oracle的机上拷贝一个(tnsnames.ora文件在%&nbsp;&nbsp; ORACLE_HOME%\network\admin下)放在上面的目录d:\oracle10gclient下。<BR>oracledata =<BR>&nbsp; (DESCRIPTION =<BR>&nbsp;&nbsp;&nbsp; (ADDRESS_LIST =<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.0.58)(PORT = 1521))<BR>&nbsp;&nbsp;&nbsp; )<BR>&nbsp;&nbsp;&nbsp; (CONNECT_DATA =<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (SERVICE_NAME = oracledata)<BR>&nbsp;&nbsp;&nbsp; )<BR>&nbsp; )</FONT></P>
+<P><FONT face="Courier New">&nbsp;&nbsp;&nbsp; </FONT></P>
+<P><FONT face="Courier New">&nbsp;&nbsp;&nbsp; 3,添加一个环境变量，名为TNS_ADMIN，值为tnsnames.ora文件所在路径（如：d:\oracle10gclient)，这是为了能够找到上面说的tnsnames.ora。如果本机上安装了ORACLE，并且设置了ORACLE_HOME环境变量，那么会自动在%ORACLE_HOME%/network/admin/位置查找tnsnames.ora文件。<BR><BR>&nbsp;&nbsp;&nbsp; 4,设置ORACLE的语言，添加注册表项：“NLS_LANG=SIMPLIFIED CHINESE_CHINA.ZHS16GBK”，位于 HKEY_LOCAL_MACHINE\SOFTWARE\ORACLE。如果本机没有安装ORACLE，在H_L_M\SOFTWARE\下是没有"ORACLE"这一项的，需要手动创建，然后再在ORACLE项下创建键NLS_LANG，键值为:SIMPLIFIED CHINESE_CHINA.ZHS16GBK<BR><BR>&nbsp;&nbsp;&nbsp; 5,下载并安装PL.SQL.Developer配置应用<BR>&nbsp;&nbsp;&nbsp;&nbsp;配置tools-&gt;preferences-&gt;connection</FONT></P>
+<P><FONT face="Courier New">&nbsp;&nbsp;&nbsp; 找到等号左侧参数填写等号右侧对应的内容<BR>&nbsp;&nbsp;&nbsp; Oracle Home=<FONT color=#ff0000>D:\oracle10gclient</FONT><BR>&nbsp;&nbsp;&nbsp; OCI library=<FONT color=#ff0000>D:\oracle10gclient\oci.dll</FONT><BR><BR>&nbsp;&nbsp;&nbsp; 6,再次打开plsql则会在database中有oracledata 选项输入用户名密码就可以登陆。<BR></P></FONT></div>
+            </div>
+            
+            <style>
+                /*0324 BlogMore*/
+                img
+                {
+                    border: none;
+                }
+                .moreArticles
+                {
+                    margin-top: 50px;
+                    font-size: 14px;
+                }
+                .moreArticles ul
+                {
+                    list-style: disc;
+                }
+                .moreArticles ul li
+                {
+                    height: 23px;
+                    line-height: 23px;
+                    font-size: 14px;
+                }
+                .moreArticles h2
+                {
+                    margin: 0px;
+                    padding: 0px;
+                    font-size: 14px;
+                    font-weight: normal;
+                    height: 30px;
+                }
+                .moreArticles h2 a
+                {
+                    text-decoration: underline;
+                }
+                .conBg_oth
+                {
+                    position: absolute;
+                    left: 505px;
+                    top: 505px;
+                    width: 644px;
+                    height: 390px;
+                    border: 1px solid #6d6b6a;
+                    z-index: 900;
+                    background: #fff;
+                }
+                .editMya
+                {
+                    width: 642px;
+                    height: 390px;
+                    border: 1px solid #a8bac1;
+                    font-size: 12px;
+                }
+                .editTop
+                {
+                    background: url(../images/box_top_bg.jpg) repeat-x;
+                    height: 22px;
+                    padding-top: 3px;
+                    padding-left: 12px;
+                    font-size: 14px;
+                    font-weight: normal;
+                    color: #4e7786;
+                }
+                .editTop span
+                {
+                    float: right;
+                    padding-right: 6px;
+                    padding-top: 2px;
+                }
+                .editLeft
+                {
+                    width: 396px;
+                    float: left;
+                    padding-left: 12px;
+                    padding-top: 12px;
+                    font-size: 12px;
+                }
+                .f000
+                {
+                    color: #000;
+                }
+                .selectAticle
+                {
+                    height: 25px;
+                }
+                .selectAticle .fright
+                {
+                    float: right;
+                }
+                /*0324 BlogMore*/
+            </style>
+            <div class="moreArticles">
+                <div id="moreArticleList">
+                </div>
+            </div>
+            
+            <div class="ArticleTag">
+                标签:
+                <A href='http://blog.hexun.com/group/commontag.aspx?searchTag=oracle' target='_blank'>oracle</A>&nbsp;<a href='http://t.hexun.com/k/oracle' target='_blank'><img src='http://blog.hexun.com/img/weibo.gif' alt='查看和 oracle 相关的微博' border='0' /></a>&nbsp;&nbsp;
+            </div>
+            
+            <div class="ArticleCate">
+                分类: <a href="http://wpblog.blog.hexun.com/cate.aspx?cateID=623572&cate=%ca%fd%be%dd%bf%e2%bc%bc%ca%f5">
+                    数据库技术</a>
+            </div>
+            
+            <div class="ArticleClass">
+                所属版块<a href="http://blogeditor.blog.hexun.com/13880302_d.html" target="_blank"><img
+                    src="http://blog.hexun.com/single/templete/module18/img/h01_42.gif" alt="" border="0" /></a>:
+                <a href='http://blog.hexun.com/class23.htm' target=_blank>科技<img src='http://blog.hexun.com/img/section01.gif' alt='' border=0 /></a>
+            </div>
+            
+            <style>
+                .Lwb
+                {
+                    float: left;
+                    margin: 15px 5px 0px 0px;
+                }
+                .Lwb a
+                {
+                    padding-right: 6px;
+                }
+                .ArticleClass
+                {
+                    padding-bottom: 15px;
+                }
+            </style>
+            <form action="" id="Lwbform" method="post" target="_blank">
+            <div class="Lwb">
+                <a href="javascript:void(0)" id="CreateCWB" tcode="MjA5Nzk3Nzh8d3BibG9nfDI1MDE3MDV8NTk4MDU4MA==">
+                    <img src="/images/Lwb_btn.gif" alt="生成长微博" /></a>
+            </div>
+            </form>
+            <!-- 分享 -->
+            <link href="http://bdimg.share.baidu.com/static/css/bdsstyle.css?cdnversion=20120821"
+                type="text/css" rel="stylesheet" />
+            <link href="http://img.hexun.com/share/share_blog_bd.css" type="text/css" rel="stylesheet" />
+            <div class="ArticleTag">
+                <div class="shareBox" id="share">
+                    <span class="word_desc">将本文分享至:&nbsp;</span>
+                    <script type="text/javascript">
+                        (function () {
+                            var context = document.title.replace(/%/g, '％');
+                            var url = document.location.href;
+                            url = (url.indexOf('?') != -1) ? (url + '&fromweb=share') : (url + '?fromweb=share');
+                            document.write('<span id="bdshare" class="bdshare_t bds_tools get-codes-bdshare bdshare" style="float:left;"><a class="bds_thx thx shxwb_btn" name="和讯微博"><span><b>转发到和讯微博</b></span></a><a class="bds_tsina ssina_btn"><span><b>转发到新浪微博</b></span></a><a class="bds_tsohu shwb ssohu_btn" name="转发到搜狐微博"><span><b>转发到搜狐微博</b></span></a><a class="bds_tqq sqq_btn"><span><b>转发到腾讯微博</b></span></a><a class="bds_qzone qqkj_btn"><span><b>转发到QQ空间</b></span></a><a class="bds_renren srr_btn"><span><b>转发到人人网</b></span></a><a target="_blank" class="bds_douban db sdb_btn"><span><b>转发到豆瓣网</b></span></a><a href="#" class="phone_btn" ><span><img src="http://itv.hexun.com/lbi-html/doubleclick/tm10.gif" width=25 height=25 style="position:absolute" onclick="open_phone()"/><b onclick="open_phone()">转发到手机网</b></span></a><span class="bds_more"></span></span></cite><div style="clear:both"></div>');
+
+                        })();
+                        function open_phone(e) {
+                            var context = document.title.replace(/%/g, '％');
+                            var url = document.location.href;
+                            open("http://go.10086.cn/ishare.do?m=t&u=" + encodeURIComponent(url) + "&t=" + encodeURIComponent(context) + "&sid=6295c13d16170cd3930687d8156ed4a0");
+                        }
+                    </script>
+                </div>
+            </div>
+            <!-- 分享 end-->
+            
+            <div>
+                阅读(<span id="articleClickCount"></span>)
+                | <a href='http://wpblog.blog.hexun.com/20979778_d.html#lookPoint'
+                    target='_blank'>评论(<span id="articleCommentCount"></span>)</a> | <a href="javascript:bookmarkThis()">
+                        转帖</a> |
+                <a href='http://post.blog.hexun.com/wpblog/RecommendArticle.aspx?articleid=20979778&blogid=2501705' target='_blank'>推荐</a>
+                |
+                <a href='http://hexun.com/report.aspx?userid=5980580&type=3&Url=http%3a%2f%2fwpblog.blog.hexun.com%2f20979778_d.html' target='_blank'>举报</a>
+                <span style="display: none;" id="articleRecommendCount"></span>
+            </div>
+            <div id="dinglist">
+                <dl>
+                    <dt><span id="articleVoteCount"></span><a id="link_VoteArticle_Bottom" href="http://cache-sidebar.blog.hexun.com/voteArticle.aspx?articleID=20979778&blogname=wpblog&blogid=2501705">
+                        我 顶</a></dt>
+                    <dd>
+                        <ul>
+                            <span id="articleVoteUsers"></span>
+                        </ul>
+                    </dd>
+                    <dd class="attention">
+                        <span>！</span>觉得精彩就顶一下，顶的多了，文章将出现在更重要的位置上。</dd>
+                </dl>
+            </div>
+            
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <!--  文章内容:结束  -->
+    <!--  上一篇下一篇:开始  -->
+    
+    <div class="NextBlog">
+        
+        <div>
+            下一篇: <a href="http://wpblog.blog.hexun.com/20999468_d.html">
+                JBoss修改端口</a></div>
+        
+        <div>
+            上一篇: <a href="http://wpblog.blog.hexun.com/20979523_d.html">
+                JBoss4.0.5的使用</a></div>
+        
+    </div>
+    
+    <!--  上一篇下一篇:结束  -->
+    <!--  博客链:开始  -->
+    <span id="articleLinkDisplay"></span>
+    <!--  博客链:结束  -->
+    <!--  最新读者:开始  -->
+    <span id="BlogTrackDiv"></span>
+    <!--  最新读者:结束  -->
+    
+    <!--  回复:开始  -->
+    <span id="CommentAuditDiv"></span>
+    <link href="http://wpblog.blog.hexun.com/css/lookPoint.css?vt=20130710" type="text/css"
+        rel="stylesheet" />
+    <div id="lookPoint" class="lookPoint side_block">
+        <a href="http://kd.hexun.com" target="_blank" class="lookPoint_more">和讯看点&gt;&gt;</a>
+        <div class="lookNav side_title">
+            <ul class="lookPoint-list clearfix" id="commenttab">
+                <li class="lookPoint-list-fir lookPoint-list-Now">评论</li><li class="lookPoint-list-sec">
+                    旧版评论</li></ul>
+        </div>
+        <div class="lookPoint-con" id="cont_look_1">
+            <!--看点 a-->
+            <div style="border-bottom: 0px;" class="kandian">
+                <div class="x4">
+                    <div class="zj" id="kdZjData" >
+                        <div style="height: 25px" class="zjlistlet">
+                            <div style="padding-top: 7px" class="zj_tit">
+                                暂无专家推荐本文</div>
+                        </div>
+                        <div style="padding-top: 0px" id="kd_tj_btn" class="zjlistrit">
+                            <a onclick="myGroom()" class="tj_btn"></a>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="lay" >
+                        <div>
+                            <input type="text" id="kd_form_text" class="text" value="请输入您对本文的观点" onblur="if(this.value=='')this.value = '请输入您对本文的观点';this.style.color = '#ccc'"
+                                onfocus="if(this.value=='请输入您对本文的观点')this.value = '';this.style.color = '#000'" />
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="input_fot">
+                            <div class="turn_t">
+                                <label>
+                                    <input type="checkbox" checked="checked" id="KdWb" />同时转发到我的微博</label>
+                            </div>
+                            <div id="wb_subimt">
+                                <input class="submit" type="submit" name="" value="" onclick="KdSubmit(); return false;"
+                                    id="SubmitForWb" />
+                                <div id="zh_name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--看点 b-->
+            <div class="kandian">
+                <!--登录状态-->
+                <div class="x5" id="wb_time">
+                    <div class="t">
+                        <span onclick="setTab('ktab',1,3)" class="hover" id="ktab1">全部观点(<p>0</p>)</span> <span onclick="setTab('ktab',2,3)" class="" id="ktab2">专家观点(<p>0</p>)</span> <span onclick="setTab('ktab',3,3)" class="" id="ktab3">网友观点(<p>0</p>)</span>
+                    </div>
+                    <ul id="cont_ktab_1">
+                        <li class="kd_isnonews">
+                            <div>
+                                暂无观点</div>
+                        </li>
+                    </ul>
+                    <ul id="cont_ktab_2" style="display: none;">
+                        <li class="kd_isnonews">
+                            <div>
+                                暂无观点</div>
+                        </li>
+                    </ul>
+                    <ul style="display: none" id="cont_ktab_3">
+                        <li class="kd_isnonews">
+                            <div>
+                                暂无观点</div>
+                        </li>
+                    </ul>
+                </div>
+                <!--登录状态e-->
+            </div>
+        </div>
+        <div id="cont_look_2" style="display: none;">
+            <span id="articleCommentDisplay"></span>
+            <div id="hk_page">
+            </div>
+        </div>
+    </div>
+    <!--  回复:结束  -->
+</div>
+<!--我要推荐-->
+<div class="myGroom" id="myGroom">
+    <div class="mgTop">
+    </div>
+    <div class="mgMid">
+        <div class="cont_lay">
+            您推荐的 <a href="#" target="_blank" id="myGroomTitle">标题</a> 将自动提交到和讯看点， 请输入您的观点并提交。
+            <div class="input">
+                <textarea onkeyup="this.value = this.value.substring(0, 168)" onblur="if(this.value=='')this.value = '请输入您的观点 168字以内';this.style.color = '#ccc'"
+                    onfocus="if(this.value=='请输入您的观点 168字以内')this.value = '';this.style.color = '#000'"
+                    id="KdGroomTextArea">请输入您的观点 168字以内</textarea>
+            </div>
+            <div>
+                <div class="let">
+                    <label>
+                        <input type="checkbox" id="KdGroomWb" />同时转发到我的微博</label><label style="display: none"><input
+                            type="checkbox" id="KdGroomTop" />置顶我的观点</label></div>
+                <div class="rit">
+                    <input type="button" onclick="KdGroomSubmit(); return false;" /></div>
+            </div>
+        </div>
+    </div>
+    <div class="mgFot">
+        <div class="mgClose" onclick="mgClose()" title="关闭">
+        </div>
+    </div>
+</div>
+<!--我要推荐e-->
+<script type="text/javascript" src="http://cache-sidebar.blog.hexun.com/inc/ARecommend.aspx?blogid=2501705&articleids=20979778&t=2"></script>
+<!--T21-->
+<script type="text/javascript" src="http://cwb.tool.hexun.com/Script/createimage.js"></script>
+<script type="text/javascript">
+    (function () {
+        var oBox = document.getElementById('lookPoint'),
+                oNavs = oBox.getElementsByTagName('ul')[0].getElementsByTagName('li'),
+                len = oNavs.length,
+                oCon = [],
+                oCons = oBox.childNodes,
+                i2,
+                i,
+                now = 0,
+                last = 0,
+                len2 = oCons.length;
+        for (i2 = 0; i2 < len2; i2++) {
+            if (oCons[i2].nodeName == 'DIV') {
+                oCon.push(oCons[i2]);
+            }
+            for (i = 0; i < len; i++) {
+                (function (i) {
+                    oNavs[i].onclick = function () {
+                        oNavs[now].className = removeClass(oNavs[now].className, 'lookPoint-list-Now');
+                        oNavs[i].className += ' lookPoint-list-Now';
+                        oCon[now + 1].style.display = 'none';
+                        oCon[i + 1].style.display = "block";
+                        now = i;
+                        if (oCon[i + 1].getAttribute("id") == "cont_look_2") {
+                            if (jQuery("#tbl_commentsList tr").length == 0) {
+                                showArticleComments("wpblog", "20979778", "2501705", 1);
+                            }
+                        }
+                    }
+                })(i);
+            }
+        }
+        function removeClass(s, a) {
+            var b = '^' + a + '|' + '\\s{1}' + a;
+            var reg = new RegExp(b, 'g'); ;
+            return s.replace(reg, '');
+        }
+    })();
+    
+</script>
+<script type="text/javascript">
+    var BkForKdArticleid = "20979778";
+    var BkForKdBlogid = "2501705";
+    var BkForKdName = "wpblog";
+    var blog_loginUserId = "0";
+    var blog_lookUserId = "5980580";
+    var isadmin = "False";
+    var kdIsAdminDelet = false;
+    if (blog_loginUserId == blog_lookUserId && parseInt(blog_lookUserId) > 0) {
+        kdIsAdminDelet = true;
+    }
+    jQuery(function () {
+        showArticleCommentCount("20979778", "2501705");
+    });
+</script>
+<script type="text/javascript" src="http://wpblog.blog.hexun.com/js/d_popup.js"></script>
+<script type="text/javascript" src="http://wpblog.blog.hexun.com/js/BkForKd.js"></script>
+
+                        </div>
+                        
+                    </div>
+  </div>
+                <!--  主体:结束  -->
+                <!--  底部:开始  -->
+                <!--  底部:结束  -->
+</div>
+            <!--  页面:结束  -->
+            
+    <!--  页面:结束  -->
+    <script type="text/javascript" >
+        var _UBN = "wpblog";
+    </script>
+    <script type="text/javascript" src="http://wpblog.blog.hexun.com/Comment/Comment.js"></script>
+    <script type="text/javascript">
+        jQuery(function () {       
+            
+        });
+    </script>
+    
+    <script type="text/javascript" src='http://adphoto.hexun.com/single/templete/module18/articlelinkdisplay.aspx?articleid=20979778&orderbylastupdatetime=1&userid=5980580'></script>
+    <script type="text/javascript" src='http://adphoto.hexun.com/single/templete/module18/articlenewaddisplay.aspx'></script>
+    
+    <!--我顶后面的博主列表-->
+    <script type="text/javascript" src="http://cache-sidebar.blog.hexun.com/articlestatusnew.aspx?blogid=2501705&blogname=wpblog&articleid=20979778&xfh="></script>
+    <!--我顶后面的博主列表-->
+    <script type="text/javascript" src="http://click.tool.hexun.com/click.aspx?articleid=20979778&blogid=2501705"></script>
+    <script type="text/javascript" src="http://cache-sidebar.blog.hexun.com/single/templete/module18/controls/getarticleside.aspx?articleid=20979778&state=1&orderbylastupdatetime=1&blogid=2501705&userid=5980580&blogname=wpblog&username=wpblog"></script>    
+<script src="http://hexun.com/newhome/Scripts/hexun.home.blogplugIn.js"
+        type="text/javascript"></script>
+    <script type="text/javascript">
+        jQuery(function () {
+            HxRelationGet("5980580", "0");
+        });
+    </script>
+    <script type="text/javascript" src="http://shequ3.tool.hexun.com/rest/blogtrack.aspx?userid=5980580&articleid=20979778&topcount=8"></script>
+    <script type="text/javascript" src="http://comment.blog.hexun.com/inc/emotions.aspx"></script>
+    <script type="text/javascript" src="http://comment.blog.hexun.com/inc/commentaudittip.aspx?userid=5980580"></script>
+    <script type="text/javascript" src="http://blog.hexun.com/inc/popbox.aspx"></script>
+    
+    <script type="text/javascript" src="http://comment.blog.hexun.com/inc/morearticles/getarticlemore.aspx?aid=20979778&bname=wpblog"
+        id="script_get_more_articles"></script>
+    <script language='javascript' src='http://utility.tool.hexun.com/menu.aspx?gourl=http%3a%2f%2fwpblog.blog.hexun.com%2f20979778_d.html'></script>
+<script src="http://utrack.hexun.com/track/track.js"></script>
+
+<!--分享-->
+<script language="javascript" src="http://img.hexun.com/base/version/hx_base.min1.1.js"></script>
+<link href="http://img.hexun.com/share/hxShare2011_blog_bd.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="http://img.hexun.com/share/hxShare2011_blog_bd.js"></script>
+<script type="text/javascript">
+    HX.$V.bind(window, 'load', function () {
+        hxShare2011('');
+    });</script>
+<!--分享over-->
+<script type="text/javascript" src="http://t.hexun.com/special/llz/return.js"></script>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+    _uacct = "UA-2706087-1";
+    urchinTracker();
+</script>
+<div id="SelfHtmlPrepare" style="display:none;">
+
+</div>
+<script type="text/javascript">
+var dom1;
+dom1 = document.getElementById("SelfHtmlPrepare").innerHTML;
+document.getElementById("SelfHtml").innerHTML = dom1;
+document.getElementById("SelfHtmlPrepare").innerHTML="";
+
+
+document.getElementById("SelfHtml").style.display="none";
+
+</script>
+    
+    <script type="text/javascript" src="http://img.tool.hexun.com/newhome/js/hexun.home.commonblog.js?vt=20130515"></script>
+    
+<script type="text/javascript">
+    jQuery(function () {
+        // 个人门户→固定导航条
+        hexun.home.FileUserInfo().init({ uid: "5980580", loginUid: "0", urlhost: "http://hexun.com/newHome", gourl: "aHR0cDovL3dwYmxvZy5ibG9nLmhleHVuLmNvbS8yMDk3OTc3OF9kLmh0bWw=" });
+    });
+</script>
+</body>
+</html>

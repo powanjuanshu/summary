@@ -1,0 +1,19 @@
+自己动手打造Apache和Mysql绿色免安装版
+我自己用了很久了，虽然很简单，但相信许多人还不知道，就写出来和大家共享
+下载原版，第一次安装时，装到D盘或其他盘
+再次安装系统时，不需要再重新安装Apache和MySQL，只需要打几个简单的命令即可！
+
+重装完系统后
+1. 运行CMD进入命令行
+2. 进入apache所在的目录下的bin目录，如 d:\apache\bin 运行
+httpd -k install
+只要这一步apache服务就安装好了
+3. 进入mysql所在的目录下的bin目录，如 d:\mysql\bin 运行
+mysqld -install
+也只要这一步Mysql服务就安装好了
+卸载
+和上面2步一样，进入bin目录
+apache卸载命令
+httpd -k uninstall
+mysql卸载命令
+mysqld -remove

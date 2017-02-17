@@ -1,0 +1,16 @@
+CREATE TABLE temp(
+  id VARCHAR2(5) PRIMARY KEY, 
+  no NUMBER
+)
+-------------------
+CREATE TABLE temp4(
+     t_id  VARCHAR2(5),
+     t_no  NUMBER DEFAULT 10 NOT NULL,  --not null必须在default 10后面，否则会报错
+     CONSTRAINT PK_temp3 PRIMARY KEY (t_id)
+) TABLESPACE users;
+--------------------
+CREATE TABLE temp (
+    id  VARCHAR2(5), 
+    no  NUMBER
+);
+ALTER TABLE temp ADD CONSTRAINT pk_temp PRIMARY KEY (id);

@@ -1,0 +1,10 @@
+功能：pl/sql执行本地的sql文件中的sql语句
+说明：比如：e:/zhaozhenlong下有create_table.sql文件，则按如下方法执行：
+步骤：
+1、在pl/sql的command window下，或在windows的开始/'运行'下，sqlplus /nolog; connect cs@orademo;
+2、执行：
+@@e:/zhaozhenlong/drop_table.sql
+@@e:/zhaozhenlong/create_table.sql
+说明：.sql文件名字中不能有空格
+-----------------------------------
+或直接复制文件的内容，然后粘贴到命令行

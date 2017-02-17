@@ -1,0 +1,42 @@
+预定义(Predefined)异常
+ORACLE预定义的异常情况大约有24个.对这种异常情况的处理,无需在程序中定义,无需在程序中定义,由ORACLE自动将其引发.
+
+当select into语句具有一个无行的结果集时,plsql自动引发no_data_found异常;
+当select into语句具有一个多行的结果集时,plsql自动引发too_many_rows异常;
+
+ORA-0001:DUP_VAL_ON_INDEX
+ORA-1001:INVALID_CURSOR
+
+DECLARE
+  emp_name varchar2(5);
+BEGIN
+  select ename into emp_name from emp where empno = &emp_no;
+  DBMS_OUTPUT.PUT_LINE('职员姓名:' || emp_name);
+EXCEPTION
+  WHEN VALUE_ERROR THEN
+    DBMS_OUTPUT.PUT_LINE('要存储在姓名中的值过长');
+END;
+
+
+预定义异常:
+错误号		异常错误信息名称		说明
+ORA-0001	Dup_val_on_index		试图破坏一个唯一性限制
+ORA-0051	Timeout-on-resource		在等待资源时发送超时
+ORA-0061	Transaction-backed-out		由于发生死锁事务被撤销
+ORA-1001	Invalid-CURSOR			试图使用一个无效的游标
+ORA-1012	Not-logged-on			没有连接到ORACLE
+ORA-1017	Login-denied			无效的用户名/口令
+ORA-1403	No_data_found			SELECT INTO 没有找到数据
+ORA-1422	Too_many_rows			SELECT INTO 返回多行
+ORA-1476	Zero-divide			试图被零除
+ORA-1722	Invalid-NUMBER			转换一个数字失败
+ORA-6500	Storage-error			内存不够引发的内部错误
+ORA-6501	Program-error			内部错误
+ORA-6502	Value-error			转换或截断错误
+ORA-6504	Rowtype-mismatch		宿主游标变量与plsql变量有不兼容行类型
+ORA-6511	CURSOR-already-OPEN		试图打开一个已存在的游标
+ORA-6530	Access-INTO-null		试图为null对象的属性赋值
+ORA-6531	Colletion-is-null		试图将Exists以外的集合(collection)方法应用于一个null plsql表上或varray上
+ORA-6532	Subscript-outside-limit		对嵌套或varray索引的引用超出声明范围以外
+ORA-6533	Subscript-beyond-count		对嵌套或varray索引的引用大于集合中元素的个数
+

@@ -1,0 +1,35 @@
+sqlplus连接远程数据库
+方式一:简易连接,不用进行网络配置,其实就是tnsname.ora文件,但只支持oracle10G以上。
+命令:sqlplus 用户名/密码@ip地址[:端口]/service_name [as sysdba]
+示例:sqlplus sys/pwd@ip:1521/test as sysdba 
+备注:使用默认1521端口时可省略输入
+方式二:进行网络配置 oracle9i和以前的版本
+2.1图形化操作:Net Configuration Assistant--> 本地Net服务名配置-->添加->服务名->协议(选tcp)->主机名称->端口->完成。
+2.2文本化操作：编辑$ORACLE_HOME/NETWORK/ADMIN/tnsnames.ora文件
+test =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = ip或主机名称)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = 数据库的服务名称)
+    )
+  )
+备注说明：红色为修改部分
+PROTOCOL：客户端与服务器端通讯的协议，一般为TCP，该内容一般不用改。 
+HOST：数据库侦听所在的机器的机器名或IP地址，数据库侦听一般与数据库在同一个机器上，所以当我说数据库侦听所在的机器一般也是指数据库所在的机器。在UNIX或WINDOWS下，可以通过在数据库侦听所在的机器的命令提示符下使hostname命令得到机器名，或通过ipconfig(for WINDOWS) or ifconfig（for UNIX）命令得到IP地址。需要注意的是，不管用机器名或IP地址，在客户端一定要用ping命令ping通数据库侦听所在的机器的机器名，否则需要在hosts文件中加入数据库侦听所在的机器的机器名的解析。 
+PORT：数据库侦听正在侦听的端口.可以察看服务器端的listener.ora文件或在数据库侦听所在的机器的命令提
+示符下通过lnsrctl status [listener name]命令察看。此处Port的值一定要与数据库侦听正在侦听的端口一
+样。 
+SERVICE_NAME：在服务器端，用system用户登陆后，sqlplus> show parameter service_name命令察看。 
+======================================================================
+如何保证客户端机器连接到oracle数据库呢？
+A．  客户端
+1．在客户端机器上安装ORACLE的Oracle Net通讯软件，它包含在oracle的客户端软件中。 
+2．正确配置了sqlnet.ora文件
+3．正确配置了tnsname.ora文件
+B．  服务器端
+1．保证listener已经启动 lsntctl start
+2．保证数据库已经启动。 sql>startup
+
+

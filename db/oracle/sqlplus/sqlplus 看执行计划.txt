@@ -1,0 +1,2 @@
+explain plan for select * from cust;
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);

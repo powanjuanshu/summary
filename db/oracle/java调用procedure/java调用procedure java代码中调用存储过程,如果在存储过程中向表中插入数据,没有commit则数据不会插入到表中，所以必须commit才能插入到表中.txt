@@ -1,0 +1,30 @@
+package com;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+public class Ttt {
+	public static void main(String[] args) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			try {
+				Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL","scott","tiger");
+				CallableStatement cs=conn.prepareCall("{call li_circle}");
+				System.out.println("开始");
+				cs.execute();
+				System.out.println("结束");
+			} catch (SQLException e){
+				e.printStackTrace();
+			}
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		}
+	}
+}
+-----------------------------------
+CREATE OR REPLACE PROCEDURE li_circle IS
+BEGIN
+     LOOP
+         INSERT INTO a VALUES('a','a');  --这里数据是插入不到a表中的，必须commit
+     END LOOP;
+END;

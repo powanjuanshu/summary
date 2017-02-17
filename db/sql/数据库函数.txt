@@ -1,0 +1,45 @@
+1.select abs（-1）,pi（）,sqrt（2）,mod（5,2）,ceil（2.3）,ceiling（-2.3）,floor（2.3）,rand（）,rand（2）,round（2.3）,rannd（2.55,1）,truncate（2.55,1）,pow（3,2）,exp（9）;
+1.select log（7）,log10（100）,radians（180）,degrees（180）,sin（30）,asin（0.5）,cos（30）,acos（0.5）,tan（0.5）,atan（0.5）,cot（0.5）
+1.select char_length（name）,length（name） from emp;
+1.select concat（'bei','ji','ng'）,concat_ws（'-','bei','ji','ng'）;
+1.select name,insert（name,4,4,'fang'） from emp;
+1.select upper（'mysql'）,lower（'MYSQL'）;
+1.select left（name,3）, right（name,4） from emp;
+1.select lpad（name,10,'+-'）,rpad（name,10,'+-'） from emp;
+1.ltrim（）,rtrim（）,trim（） 去空格
+1.select trim（'ab' from 'ab234234ab'）; 去除ab
+1.select repeat（'mysql',2）;
+1.select space（4）,replace（'mysql','sql','book'）; space（4）4个空格
+1.select strcmp（'a','b'）;
+1.select substring（address,4,3） from emp;
+1.select locate（'jin',address）,poisition（'jin' in address） from emp; jin在address字符串的位置
+1.reverse（）反顺序
+1.select elt（2,'me','my','sql'）; 返回第二个字符串
+1.select current_date（）,current_time（）,curdate（）,curtime（）,now（）,;
+1.select d,month（d）,monthname（d）,dayname（d）,dayofweek（d）,week（）,weekofyear（）,dayofyear（d）,dayofmonth（d）,year（d）,quarter（d）,hour（d）,minute（d）,second（d） from emp;
+1.select d,extract（year from d） from emp; （month,day,hour）
+1.select if（grad>=60,'pass','fail'） from emp;
+1.select ifnull（grade,'no grade'） from emp;
+1.select case when grade>60 then 'good' when grade=60 then 'pass' else 'fail' end from emp;
+1.select version（）,connection_id（）,database（）;
+1.select user（）,system_user（）,charset（）;
+1.select last_insert_id（）;（获取最后生成的auto_increment值）
+1.select password（'abcd'）;（加密函数）
+1.select MD5（'abcd'）;（MD5加密）
+1.insert into emp values（encode（'abcd','aa'））;（abcd字符串用aa字符串加密）（ENCODE加密，加密结果是一个二进制数，必须用blob类型的字段来保存）
+1.select decode（encode（'abcd','aa'））；（解密函数）
+1.select format(2.356,2);
+1.select ascii('abc'),bin(28),hex(28),oct(28),conv(28,10,2);（把28看做10进制数转化成2进制数）
+1.select benchmark(100000,now());（重复执行now()函数10万次，返回执行时间）
+1.select charset('ABC'),charset(convert('ABC',using utf-8));
+2.select rand（1）,rand（2）,rand（2）; （rand（2）值相等）
+3.select sign（-2）,sign（0）,sing（2）; （值分别为-1,0，1）
+
+
+
+
+
+
+
+
+

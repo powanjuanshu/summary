@@ -1,0 +1,16 @@
+sys是个用户，默认密码：change_on_install
+sys/change_on_install必须以sysdba角色或sysoper角色登录，如果在plsql中以normal身份登录会报错：connection to sys should be as sysdba or sysoper，	
+
+
+
+
+
+
+
+
+
+所有oracle的数据字典的基表和视图都存放在sys用户中，这些基表和视图对于oralce的运行是至关重要的，有数据库自己维护，任何用户都不能手动更改。sys用户
+拥有dba，sysdba，sysoper等角色，是oracle权限最高的用户
+-------------------------------------------------
+system是个用户
+system用户用户存放次一级的内部数据，如oracle的一些特性或工具的管理信息。system用户拥有普通dba角色权限。

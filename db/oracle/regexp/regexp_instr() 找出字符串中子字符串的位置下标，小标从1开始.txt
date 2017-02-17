@@ -1,0 +1,2 @@
+select regexp_instr('07103595150','1') from dual;
+--输出为3，表示1的下标在3的位置

@@ -1,0 +1,2 @@
+select bytes from dba_segments t where t.segment_name='idx_bankaccounts';  bytes
+select bytes from user_segments t where t.segment_name='idx_bankaccounts';  bytes

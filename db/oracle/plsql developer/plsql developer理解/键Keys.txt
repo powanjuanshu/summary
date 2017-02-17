@@ -1,0 +1,41 @@
+名称			类型			列			允许		参照表	参照列	级联删除	可延迟	已延迟		上次修改
+cust_id_pk		Primary			cust_id			Y						Y	Y		2015/1/29 13:54:37
+
+名称:
+alter table CUST add constraint cust_id_pk primary key (CUST_ID);
+类型:
+三种类型:primary key,unique,foreign key.
+alter table CUST add constraint cust_id_pk primary key (CUST_ID);
+alter table CUST add constraint CUST_ID_PK unique (CUST_ID)
+alter table CUST add constraint CUST_ID_PK foreign key (CUST_ID) references  ();
+列:
+选择哪些列
+允许:
+alter table CUST disable constraint CUST_ID_PK;
+参照表,参照列,级联删除:
+alter table CUST drop constraint CUST_ID_PK cascade;
+alter table CUST add constraint CUST_ID_PK primary key (CUST_ID);
+alter table CUST add constraint CUST_NAME_FK foreign key (CUST_NAME) references t_bank_class_cfg (ID) on delete cascade;
+可延迟	已延迟:
+alter table CUST drop constraint CUST_ID_PK cascade;
+alter table CUST add constraint CUST_ID_PK primary key (CUST_ID) deferrable initially deferred using index 
+
+建唯一键会自动建一个对应同名的唯一索引
+建主键会自动建一个对应同名的唯一索引
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+create database aa
+go
+use aa
+go
+create table dept(
+	deptid int primary key identity(1,1),
+	deptname nvarchar(20),
+)
+insert into dept values('研发部')
+insert into dept values('市场部')
+insert into dept values('人事部')
+insert into dept values('财务部')
+-------------------------------------------->全选执行下来可以成功
+create database aa
+use aa
+create table dept(
+	deptid int primary key identity(1,1),
+	deptname nvarchar(20),
+)
+insert into dept values('研发部')
+insert into dept values('市场部')
+insert into dept values('人事部')
+insert into dept values('财务部')
+-------------------------------------------->全选执行会报错在sysdatabases中找不到数据库'aa'所对应的条目。没有找到具有该名称的条目。请确保正确地输入了该名称。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

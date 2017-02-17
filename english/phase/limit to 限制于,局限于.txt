@@ -1,0 +1,11 @@
+The chairman limited speeches to 10 minutes each.
+主席将每次发言限定在10分钟以内。
+
+In our example, we only show a few fields, but there is no limit to what can be shown. 
+在我们的示例中，只显示几个字段，但是对于可以显示哪些字段并没有限制。
+
+There is no limit to what you can measure with this method. 
+使用此方法所能测量的内容是没有限制的。
+
+There is, however, a limit to my generosity. 
+然而，我的慷慨也是有限度的。

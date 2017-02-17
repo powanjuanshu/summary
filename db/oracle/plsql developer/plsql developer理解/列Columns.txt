@@ -1,0 +1,30 @@
+名称Name	Virtual		类型Type	可为空Nullable	Default/Expr.								存储Storage	注释Comments
+CUST_ID		N		NUMBER(2)	Y													
+CUST_NAME	N		VARCHAR2(15)	Y		123											客户名
+CUST_DESC	Y						CASE  WHEN "CUST_ID">10 THEN '1234' WHEN "CUST_ID"<10 THEN '321' END			描述
+
+
+1.名称Name
+alter table CUST rename column cust_id to CUST_ID2;
+2.虚拟列Virtual
+如果选中此列,那么类型和可为空会置灰无法选择,经测试此列可为null,且此列的类型必须一致
+不能直接插入或修改虚拟列的值
+create table CUST
+(
+  cust_id   NUMBER(2),
+  cust_desc as (CASE  WHEN "CUST_ID">10 THEN '1234' WHEN "CUST_ID"<10 THEN '321' END) -- 经测试当cust_id为10时,此列为null
+)
+alter table CUST modify cust_desc as (CASE  WHEN "CUST_ID">10 THEN '1234' WHEN "CUST_ID"<10 THEN '321' END); -- 此列的类型必须一致,这里如果改成alter table CUST modify cust_desc as (CASE  WHEN "CUST_ID">10 THEN '1234' WHEN "CUST_ID"<10 THEN 321 END)会报错:ORA-00932:inconsistent datatypes;expected CHAR got NUMBER
+3.类型Type
+alter table CUST modify cust_id varchar2(20);
+alter table CUST add cust_name varchar2(20);
+4.可为空Nullable
+alter table CUST modify cust_id not null;
+alter table CUST add cust_name number not null;
+5.Default/Expr.设置列的默认值或虚拟列的规则
+alter table CUST modify cust_id default 123;
+alter table CUST modify cust_desc as (CASE  WHEN "CUST_ID">10 THEN '1234' WHEN "CUST_ID"<10 THEN '321' END); -- 此列的类型必须一致,这里如果改成alter table CUST modify cust_desc as (CASE  WHEN "CUST_ID">10 THEN '1234' WHEN "CUST_ID"<10 THEN 321 END)会报错:ORA-00932:inconsistent datatypes;expected CHAR got NUMBER
+6.存储Storage
+不知道,好像是制定表空间
+7.注释Comments
+comment on column CUST.cust_name is '客户名';

@@ -1,0 +1,11 @@
+语句的话用
+select owner,table_name, 
+NUM_ROWS, 
+BLOCKS*aaa/1024/1024 "Size M", 
+EMPTY_BLOCKS, 
+LAST_ANALYZED 
+from dba_tables 
+where table_name='xxx'; 
+
+表名处要大写
+AAA is the value of db_block_size ;

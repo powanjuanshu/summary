@@ -1,0 +1,2 @@
+use shgt_ec;
+Ñ¡ÔñÊý¾Ý¿âshgt_ec

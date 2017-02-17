@@ -1,0 +1,35 @@
+循环控制语句包括:LOOP,EXIT和EXIT WHEN
+
+LOOP - 无条件循环
+
+LOOP
+  sequence_of_statements
+END LOOP;
+
+DECLARE
+  v_counter BINARY_INTEGER := 1;
+BEGIN
+  LOOP
+    INSERT INTO temp_table VALUES (v_counter, 'loop index');
+    v_counter := v_counter + 1;
+    IF v_counter > 50 THEN
+      EXIT;
+    END IF;
+  END LOOP;
+END;
+
+DECLARE
+  i int := 1;
+BEGIN
+  LOOP
+    INSERT INTO temp VALUES (i);
+    EXIT WHEN i = 10;
+    i := i + 1;
+  END LOOP;
+END;
+
+
+
+
+
+

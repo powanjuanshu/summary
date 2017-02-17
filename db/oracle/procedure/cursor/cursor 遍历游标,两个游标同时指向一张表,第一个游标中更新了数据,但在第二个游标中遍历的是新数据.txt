@@ -1,0 +1,25 @@
+create or replace procedure li_cursor is
+v_id number default 0;
+v_bonus number default 0;
+cursor cur_cus is
+       select b.id,b.bonus from bonuss b;
+cursor cur_cus2 is
+       select b.id,b.bonus from bonuss b;
+
+begin
+for l in cur_cus
+loop
+    dbms_output.put_line(l.id||'*****'||l.bonus);  --第一个游标中更新了数据，但在一个游标中遍历的依然是老数据
+    update bonuss b set b.bonus=512 where b.id=7499;
+    commit;
+end loop;
+dbms_output.put_line('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+select b.id into v_id from bonuss b where b.id=7499;
+select b.bonus into v_bonus from bonuss b where b.id=7499;
+dbms_output.put_line(v_id||'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'||v_bonus);
+dbms_output.put_line('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+for line in cur_cus2
+loop
+    dbms_output.put_line(line.id||'-------'||line.bonus);  --两个游标同时指向一张表，第二个游标会指向在第一个游标中更新后的表数据
+end loop;
+end;

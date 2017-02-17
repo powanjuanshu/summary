@@ -1,0 +1,14 @@
+CRATE INDEX IDX_CUST_PHONE_CBK_CUID ON CUSTOMER_PHONE_CLEANING_BAK (CUSTOMER_ID)
+   tablespace SXDXSJ_DATA
+   pctfree 10
+   initrans 2
+   maxtrans 255
+   storage
+   (
+	initial 64k
+        next 1M
+        minextents 1
+        maxextents unlimited
+   );
+
+

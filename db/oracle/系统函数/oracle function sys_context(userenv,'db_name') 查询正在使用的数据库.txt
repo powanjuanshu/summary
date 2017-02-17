@@ -1,0 +1,10 @@
+select sys_context('userenv','db_name') from dual;
+terminal:当前回话客户所对应的终端的标识符
+language:语言
+db_name:当前数据库名称
+nls_date_format:当前会话客户所对应的日期格式
+session_user:当前会话客户所对应的数据库用户名
+current_schema:当前会话客户说对应的默认方案名
+host:返回数据库所在主机的名称
+通过该函数，可以查询一些重要信息，比如你正在使用哪个数据库
+

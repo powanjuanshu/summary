@@ -1,0 +1,23 @@
+[1]
+create or replace package emp_date 
+AS
+  TYPE emprectyp IS RECORD (
+    emp_id MUBER(5),
+    emp_name VARCHAR2(10),
+    job_title VARCHAR2(9));
+  TYPE empcurtyp IS REF CURSOR RETURN emprectyp;
+[2]
+CREATE OR REPLACE PACKAGE classPackage AS
+  PROCEDURE addStudent(p_studentId IN students.id%TYPE,
+		       p_department IN classes.department%TYPE,
+		       p_course IN classes.course%TYPE);
+  PROCEDURE removeStudent(p_studentId IN students.id%TYPE,
+		          p_department IN classes.department%TYPE,
+		          p_course IN classes.course%TYPE);
+  e_studentNotRegistered EXCEPTION;
+  TYPE t_studentIdTable IS TABLE OF student.id%TYPE INDEX BY BINARY_INTEGER;
+  PROCEDURE classList(p_department IN classes.department%TYPE,
+		      p_course IN classes.course%TYPE,
+		      p_ids OUT t_studentIdTable,
+		      p_numStudents IN OUT BINARY_INTEGER);
+  END classPackage;

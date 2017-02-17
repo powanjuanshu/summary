@@ -1,0 +1,23 @@
+--删除表空间
+drop tablespace mytbs01//只能在表空间为空时，才能这样删除，不然会报：表空间非空，请使用INCLUDE CONTENT选项
+
+如果要删除该表空间,可加上including contents子句.
+如:drop tablespace mytbs01 including contents//能删除非空的表空间，但是不能删除文件
+
+如果想在删除表空间的同时也删除掉对应的数据文件,那就在上面的语句最后加上and datafiles
+drop tablespace mytbs01 including contents and datafiles//能删除非空的表空间，且能删除文件
+
+-----------------
+这种删除方式相关的数据文件仍然存在于磁盘上.
+(可以进入数据文件所在目录D:\ORACLE\ORADATA\IBM进行查看MYTBS01.DBF)
+如果表空间里面含有数据对象,那么该表空间就不能像上面那样做直接删除了.
+
+-----------------
+找到分区表，先删除分区表再这些表空间上的分区：alter table tablename drop partition partitionname;
+然后就可以执行：drop tablespace wqdb01 including contents and datafiles; 删掉空间了
+
+--------
+一个分区表分布在多个表空间中，删除时会报：删除表空间分区表包含不同表空间中的分区
+
+
+

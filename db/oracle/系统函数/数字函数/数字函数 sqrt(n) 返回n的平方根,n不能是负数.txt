@@ -1,0 +1,2 @@
+select sqrt(4) from dual;
+Êä³ö:2

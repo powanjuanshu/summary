@@ -1,0 +1,3 @@
+select months_between('22-10月-09', sysdate) from dual;
+输出:-4.0934573
+SELECT trunc(months_between(SYSDATE, to_date('2011-8-2', 'yyyy-MM-dd')) / 12) FROM dual; -- 根据出生日期求年龄

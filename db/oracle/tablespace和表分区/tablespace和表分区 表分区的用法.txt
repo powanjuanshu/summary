@@ -1,0 +1,315 @@
+﻿1.列表分区
+列表分区明确指定了根据某字段的某个具体值进行分区,而不是像范围分区那样根据字段的值范围来划分的.
+CREATE TABLE graderecord (
+  sno varchar2(10),
+  sname varchar2(20),
+  dormitory varchar2(3),
+  grade int
+)
+partition by list(dormitory) (
+  partition d229 values('228') TABLESPACE li_space01,
+  partition d228 values('229') TABLESPACE li_space02,
+  partition d240 values('230') TABLESPACE li_space03
+)
+以上根据宿舍来进行列表分区,插入与范围分区实验相同的数据,做查询如下:
+select * from graderecord partition(d228);
+select * from graderecord partition(d229);
+select * from graderecord partition(d230);
+
+2.范围分区
+建立三个表空间:d盘下test文件夹必须预先创建好,不然会报错
+CREATE TABLESPACE li_space01
+DATAFILE 'd:/test/li_space01.dbf' SIZE 50m;
+
+CREATE TABLESPACE li_space02
+DATAFILE 'd:/test/li_space02.dbf' SIZE 50m;
+
+CREATE TABLESPACE li_space03
+DATAFILE 'd:/test/li_space03.dbf' SIZE 50m;
+
+分区表的创建:(范围分区)
+范围分区就是对数据表中的某个值的范围进行分区,根据某个值的范围,决定将该数据存储在哪个分区上.如根据序号分区,根据业务记录的创建日期进行分区等.
+需求描述:有一个物料交易表,表名:material_transactions.该表将来可能有千万级的数据记录数.要求在建该表的时候使用分区表.
+这时候我们可以使用序号分区三个区,每个区中预计存储三千万的数据,也可以使用日期分区,如每五年的数据存储在一个分区上.
+根据交易记录的序号分区建表:
+create table li_test01 (
+  transaction_id number primary key,
+  item_id number(8) not null,
+  item_description varchar2(300),
+  transaction_date date not null
+)
+PARTITION BY RANGE (transaction_id) (
+  PARTITION part_01 VALUES LESS THAN(30000000) TABLESPACE li_space01,
+  PARTITION part_02 VALUES LESS THAN(60000000) TABLESPACE li_space02,
+  PARTITION part_03 VALUES LESS THAN(MAXVALUE) TABLESPACE li_space03
+);
+
+建表成功,根据交易的序号,交易ID在三千万以下的记录将存储在第一个表空间li_space01中,分区名为par_01,
+在三千万到六千万之间的记录存储在第二个表空间li_space02中,分区名为part_02,
+而交易ID在六千万以上的记录存储在第三个表空间li_space03中,分区名为par_03.
+
+3.根据交易日期分区建表:
+CREATE TABLE li_test02 (
+  transaction_id number primary key,
+  item_id number(8) not null,
+  item_description varchar2(300),
+  transaction_date date not null
+)
+PARTITION by range (transaction_date) (
+  PARTITION part_01 VALUES LESS THAN(to_date('2006-01-01','yyyy-mm-dd')) TABLESPACE li_space01,
+  PARTITION part_02 VALUES LESS THAN(to_date('2010-01-01','yyyy-mm-dd')) TABLESPACE li_space02,
+  PARTITION part_03 VALUES LESS THAN(maxvalue) TABLESPACE li_space03
+);
+
+这样我们就分别建了以交易序号和交易日期来分区的分区表.每次插入数据的时候,系统将根据指定的字段的值来自动将记录存储到制定的分区(表空间)中.
+注:当然,我们还可以根据需求,使用两个字段的范围分布来分区,如partition by range(transaction_id ,transaction_date),分区条件中的值也做相应的改变,请读者自行测试
+------------------------------------------------------------------------------------------------
+分区表_分区索引_索引分区
+　　在大量业务数据处理的项目中,可以考虑使用分区表来提高应用系统的性能并方便数据管理,本文详细介绍了分区表的使用.
+　　在大型的企业应用或企业级的数据库应用中,要处理的数据量通常可以达到几十到几百GB,有的甚至可以到TB级.虽然存储介质和数据处理技术的发展也很快,
+    但是仍然不能满足用户的需求,为了使用户的大量的数据在读写操作和查询中速度更快,Oracle提供了对表和索引进行分区的技术,以改善大型应用系统的性能.
+　　
+　　使用分区的优点:
+　　•增强可用性:如果表的某个分区出现故障,表在其他分区的数据仍然可用;
+　　•维护方便:如果表的某个分区出现故障,需要修复数据,只修复该分区即可;
+　　•均衡I/O:可以把不同的分区映射到磁盘以平衡I/O,改善整个系统性能;
+　　•改善查询性能:对分区对象的查询可以仅搜索自己关心的分区,提高检索速度.
+　　
+　　Oracle数据库提供对表或索引的分区方法有三种:
+　　•范围分区　　
+　　•Hash分区(散列分区)
+　　•复合分区
+　　
+　　下面将以实例的方式分别对这三种分区方法来说明分区表的使用.为了测试方便,我们先建三个表空间.
+　　create tablespace dinya_space01
+　　datafile '/test/demo/oracle/demodata/dinya01.dnf' size 50M
+　　
+    create tablespace dinya_space02
+　　datafile '/test/demo/oracle/demodata/dinya02.dnf' size 50M
+　　
+    create tablespace dinya_space03
+　　datafile '/test/demo/oracle/demodata/dinya03.dnf' size 50M
+　　
+　　1.1. 分区表的创建
+　　1.1.1. 范围分区
+　　范围分区就是对数据表中的某个值的范围进行分区,根据某个值的范围,决定将该数据存储在哪个分区上.如根据序号分区,根据业务记录的创建日期进行分区等.
+　　需求描述:有一个物料交易表,表名:material_transactions.该表将来可能有千万级的数据记录数.要求在建该表的时候使用分区表.这时候我们可以使用序号分区三个区,
+    每个区中预计存储三千万的数据,也可以使用日期分区,如每五年的数据存储在一个分区上.
+　　
+　　根据交易记录的序号分区建表:
+　　create table dinya_test (
+　　  transaction_id number primary key,
+　　  item_id number(8) not null,
+　　  item_description varchar2(300),
+　　  transaction_date date not null
+　　)
+　　partition by range (transaction_id) (
+　　  partition part_01 values less than(30000000) tablespace dinya_space01,
+　　  partition part_02 values less than(60000000) tablespace dinya_space02,
+　　  partition part_03 values less than(maxvalue) tablespace dinya_space03
+　　);
+　　
+　　建表成功,根据交易的序号,交易ID在三千万以下的记录将存储在第一个表空间dinya_space01中,分区名为:par_01,在三千万到六千万之间的记录存储在第二个表空间
+　　dinya_space02中,分区名为:par_02,而交易ID在六千万以上的记录存储在第三个表空间dinya_space03中,分区名为par_03.
+　　
+　　根据交易日期分区建表:
+　　create table dinya_test (
+　　  transaction_id number primary key,
+　　  item_id number(8) not null,
+　　  item_description varchar2(300),
+　　  transaction_date date not null
+　　)
+　　partition by range (transaction_date) (
+　　  partition part_01 values less than(to_date('2006-01-01','yyyy-mm-dd')) tablespace dinya_space01,
+　　  partition part_02 values less than(to_date('2010-01-01','yyyy-mm-dd')) tablespace dinya_space02,
+　　  partition part_03 values less than(maxvalue) tablespace dinya_space03
+　　);
+　　
+　　这样我们就分别建了以交易序号和交易日期来分区的分区表.每次插入数据的时候,系统将根据指定的字段的值来自动将记录存储到制定的分区(表空间)中.
+　　当然,我们还可以根据需求,使用两个字段的范围分布来分区,如partition by range ( transaction_id ,transaction_date), 分区条件中的值也做相应的改变,请读者自行测试.
+　　
+　　1.1.2. Hash分区(散列分区)
+　　散列分区为通过指定分区编号来均匀分布数据的一种分区类型,因为通过在I/O设备上进行散列分区,使得这些分区大小一致.
+    如将物料交易表的数据根据交易ID散列地存放在指定的三个表空间中:
+　　create table dinya_test (
+　　  transaction_id number primary key,
+　　  item_id number(8) not null,
+　　  item_description varchar2(300),
+　　  transaction_date date
+　　)
+　　partition by hash(transaction_id) (
+　　  partition part_01 tablespace dinya_space01,
+　　  partition part_02 tablespace dinya_space02,
+　　  partition part_03 tablespace dinya_space03
+　　);
+　　建表成功,此时插入数据,系统将按transaction_id将记录散列地插入三个分区中,这里也就是三个不同的表空间中.
+　　
+    1.1.3. 复合分区
+　　有时候我们需要根据范围分区后,每个分区内的数据再散列地分布在几个表空间中,这样我们就要使用复合分区.复合分区是先使用范围分区,
+    然后在每个分区内再使用散列分区的一种分区方法,如将物料交易的记录按时间分区,然后每个分区中的数据分三个子分区,将数据散列地存储在三个指定的表空间中:
+　　create table dinya_test (
+　　  transaction_id number primary key,
+　　  item_id number(8) not null,
+　　  item_description varchar2(300),
+　　  transaction_date date
+　　)
+　　partition by range(transaction_date) subpartition by hash(transaction_id) subpartitions store in (dinya_space01,dinya_space02,dinya_space03) (
+　　  partition part_01 values less than(to_date('2006-01-01','yyyy-mm-dd')),
+　　  partition part_02 values less than(to_date('2010-01-01','yyyy-mm-dd')),
+　　  partition part_03 values less than(maxvalue)
+　　);　　
+　　该例中,先是根据交易日期进行范围分区,然后根据交易的ID将记录散列地存储在三个表空间中.
+
+　　1.2. 分区表操作
+　　以上了解了三种分区表的建表方法,下面将使用实际的数据并针对按日期的范围分区来测试分区表的数据记录的操作.
+　　1.2.1. 插入记录:
+　　insert into dinya_test values(1, 12, 'BOOKS', sysdate);
+　　insert into dinya_test values(2, 12, 'BOOKS', sysdate + 30);
+　　insert into dinya_test values(3, 12, 'BOOKS', to_date('2006-05-30', 'yyyy-mm-dd'));
+　　insert into dinya_test values(4, 12, 'BOOKS', to_date('2007-06-23', 'yyyy-mm-dd'));
+　　insert into dinya_test values(5, 12, 'BOOKS', to_date('2011-02-26', 'yyyy-mm-dd'));
+　　insert into dinya_test values(6, 12, 'BOOKS', to_date('2011-04-30', 'yyyy-mm-dd'));
+　　按上面的建表结果,2006年前的数据将存储在第一个分区part_01上,而2006年到2010年的交易数据将存储在第二个分区part_02上,2010年以后的记录存储在第三个分区part_03上.
+　　1.2.2. 查询分区表记录:
+　　select * from dinya_test partition(part_01);
+
+　　TRANSACTION_ID ITEM_ID ITEM_DESCRIPTION TRANSACTION_DATE
+　　1 		   12      BOOKS    	    2005-1-14 14:19:
+　　2 		   12      BOOKS 	    2005-2-13 14:19:
+　　
+　　select * from dinya_test partition(part_02);
+　　TRANSACTION_ID ITEM_ID ITEM_DESCRIPTION TRANSACTION_DATE
+    3 		   12 	   BOOKS 	    2006-5-30
+　　4 		   12 	   BOOKS 	    2007-6-23
+　　
+　　select * from dinya_test partition(part_03);
+　　TRANSACTION_ID ITEM_ID ITEM_DESCRIPTION TRANSACTION_DATE
+　　5 		   12 	   BOOKS 	    2011-2-26
+　　6 		   12 	   BOOKS 	    2011-4-30
+　　
+　　从查询的结果可以看出,插入的数据已经根据交易时间范围存储在不同的分区中.这里是指定了分区的查询,当然也可以不指定分区,直接执行select * from dinya_test查询全部记录.
+　　在检索的数据量很大的时候,指定分区会大大提高检索速度.
+　　
+　　1.2.3. 更新分区表的记录:
+　　update dinya_test partition(part_01) t set t.item_description='DESK' where t.transaction_id = 1;
+
+　　这里将第一个分区中的交易ID=1的记录中的item_description字段更新为"DESK",可以看到已经成功更新了一条记录.但是当更新的时候指定了分区,
+    而根据查询的记录不在该分区中时,将不会更新数据,请看下面的例子:
+　　
+　　update dinya_test partition(part_01) t set t.item_description='DESK' where t.transaction_id = 6;
+　  
+　　指定了在第一个分区中更新记录,但是条件中限制交易ID为6,而查询全表,交易ID为6的记录在第三个分区中,这样该条语句将不会更新记录.
+　　
+　　1.2.4. 删除分区表记录:
+　　
+　　delete from dinya_test partition(part_02) t where t.transaction_id = 4;
+　　
+　　上面例子删除了第二个分区part_02中的交易记录ID为4的一条记录,和更新数据相同,如果指定了分区,而条件中的数据又不在该分区中时,将不会删除任何数据.
+　　
+　　1.3. 分区表索引的使用:
+　　分区表和一般表一样可以建立索引,分区表可以创建局部索引和全局索引.当分区中出现许多事务并且要保证所有分区中的数据记录的唯一性时采用全局索引.
+　　
+　　1.3.1. 局部索引分区的建立:
+　　create index dinya_idx_t on dinya_test(item_id) 
+    local (
+　　  partition idx_1 tablespace dinya_space01,
+　　  partition idx_2 tablespace dinya_space02,
+　　  partition idx_3 tablespace dinya_space03
+　　);
+　　
+　　看查询的执行计划,从下面的执行计划可以看出,系统已经使用了索引:
+　　
+　　select * from dinya_test partition(part_01) t where t.item_id = 12;
+　　Execution Plan
+　　----------------------------------------------------------
+　　0 SELECT STATEMENT Optimizer=CHOOSE (Cost=2 Card=1 Bytes=187)
+　　1 0 TABLE ACCESS (BY LOCAL INDEX ROWID) OF 'DINYA_TEST' (Cost=
+　　2 Card=1 Bytes=187)
+　　2 1 INDEX (RANGE SCAN) OF 'DINYA_IDX_T' (NON-UNIQUE) (Cost=1
+　　Card=1)
+　　Statistics
+　　----------------------------------------------------------
+　　0 recursive calls
+　　0 db block gets
+　　4 consistent gets
+　　0 physical reads
+　　0 redo size
+　　334 bytes sent via SQL*Net to client
+　　309 bytes received via SQL*Net from client
+　　2 SQL*Net roundtrips to/from client
+　　
+　　1 sorts (memory)
+　　0 sorts (disk)
+　　2 rows processed
+　　SQL>
+　　
+　　1.3.2. 全局索引分区的建立
+　　
+　　全局索引建立时global子句允许指定索引的范围值,这个范围值为索引字段的范围值:
+　　create index dinya_idx_t on dinya_test(item_id)
+　　global partition by range(item_id) (
+　　  partition idx_1 values less than (1000) tablespace dinya_space01,
+　　  partition idx_2 values less than (10000) tablespace dinya_space02,
+　　  partition idx_3 values less than (maxvalue) tablespace dinya_space03
+　　);
+　　
+　　本例中对表的item_id字段建立索引分区,当然也可以不指定索引分区名直接对整个表建立索引,如:
+　　create index dinya_idx_t on dinya_test(item_id);
+　　
+　　同样的,对全局索引根据执行计划可以看出索引已经可以使用:
+　　select * from dinya_test t where t.item_id=12;
+　　Execution Plan
+　　----------------------------------------------------------
+　　0 SELECT STATEMENT Optimizer=CHOOSE (Cost=2 Card=3 Bytes=561)
+　　1 0 TABLE ACCESS (BY GLOBAL INDEX ROWID) OF 'DINYA_TEST' (Cost
+　　=2 Card=3 Bytes=561)
+　　2 1 INDEX (RANGE SCAN) OF 'DINYA_IDX_T' (NON-UNIQUE) (Cost=1
+　　Card=3)
+　　Statistics
+　　----------------------------------------------------------
+　　5 recursive calls
+　　0 db block gets
+　　10 consistent gets
+　　0 physical reads
+　　
+　　0 redo size
+　　420 bytes sent via SQL*Net to client
+　　309 bytes received via SQL*Net from client
+　　2 SQL*Net roundtrips to/from client
+　　3 sorts (memory)
+　　0 sorts (disk)
+　　5 rows processed
+　　SQL>
+　　
+　　1.4. 分区表的维护:
+　　了解了分区表的建立,索引的建立,表和索引的使用后,在应用的还要经常对分区进行维护和管理.日常维护和管理的内容包括:增加一个分区,
+    合并一个分区及删除分区等等.下面以范围分区为例说明增加,合并,删除分区的一般操作:
+　　1.4.1. 增加一个分区:
+　　alter table dinya_test
+　　add partition part_04 values less than(to_date('2012-01-01','yyyy-mm-dd')) tablespace dinya_space03;
+　　
+　　增加一个分区的时候,增加的分区的条件必须大于现有分区的最大值,否则系统将提示ORA-14074 partition bound must collate higher than that of the last partition 错误.
+　　
+　　1.4.2. 合并一个分区:
+　　alter table dinya_test merge partitions part_01, part_02 into partition part_02;
+　　
+　　在本例中将原有的表的part_01分区和part_02分区进行了合并,合并后的分区为part_02,如果在合并的时候把合并后的分区定为part_01的时候,
+    系统将提示ORA-14275 cannot reuse lower-bound partition as resulting partition 错误.
+　　
+　　1.4.3. 删除分区:
+　　alter table dinya_test drop partition part_01;
+　　删除分区表的一个分区后,查询该表的数据时显示,该分区中的数据已全部丢失,所以执行删除分区动作时要慎重,确保先备份数据后再执行,或将分区合并.
+　　
+　　1.5. 总结:　　
+　　需要说明的是,本文在举例说名分区表事务操作的时候,都指定了分区,因为指定了分区,系统在执行的时候则只操作该分区的记录,提高了数据处理的速度.
+    不要指定分区直接操作数据也是可以的.在分区表上建索引及多索引的使用和非分区表一样.此外,因为在维护分区的时候可能对分区的索引会产生一定的影响,
+    可能需要在维护之后重建索引,相关内容请参考分区表索引部分的文档.
+------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+

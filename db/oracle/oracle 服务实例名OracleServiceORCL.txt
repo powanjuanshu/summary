@@ -1,0 +1,4 @@
+oracleÊµÀý(Êý¾Ý¿â)ORCL
+	sys   tiger
+	system   tiger
+	scott   tiger

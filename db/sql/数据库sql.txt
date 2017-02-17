@@ -1,0 +1,78 @@
+1.查询基本语法:select 属性列表 from 表名 [where 条件表达式1] [group by 属性名1 [having 条件表达式2]] [order by 属性名2 [asc|desc]]  (默认升序)
+2.select * from emp where id in (1001,1004);
+3.select * from emp where addr like '北京%';
+4.select * from emp where addr like '北京_';
+5.select * from emp where addr is null;（null不能用=号判断）
+6.select distinct id from emp;
+7.select * from emp order by id asc,age desc;
+8.select sex,group_concat(name) from emp group by sex;
+9.select sex,count(sex) from emp group by sex;
+10.select sex,count(sex) from emp group by sex having count(sex)>=3;
+11.select * from emp group id,sex;
+12.select sex,count(sex) from emp group by sex with rollup;
+13.select * from emp limit 2;
+14.select * from emp limit 0,2;
+15.内连接
+16.外连接
+17.exists关键字:内层查询不返回查询记录，而是返回真假值，如果内层查询到满足条件的记录，就返回真true，否则返回假false。当返回真，外层进行查询。当返回假，外层不进行查询或查询不出任何记录。
+18.select * from emp where exists (select name from dept where id=1003);(not exists)
+19.select * from emp where age>24 and exists (select name from dept where id=1003);
+20.any关键字:select * from stu where score>=any (select score from schoolarship);
+21.all关键字:select * from stu where score>=all (select score from schoolarship);
+22.合并查询结果(列数需相同):union(可去重复),union all
+23.为表和字段取别名 select d_id as department_id,d_name as department_name from department;
+24.使用正则表达式查询:	select * from info where name regexp '^L';(以L开头的记录)
+			select * from info where name regexp 'c$';(以C结尾的记录)
+			select * from info where name regexp '^L..y$';(以大写L开头,以小写y结尾,中间两个字符)
+			select * from info where name regexp '[ceo]';(查询包含ceo任意一个字符的数据)
+			select * from info where name regexp '[0-9]';(查询包含数字的数据)
+			select * from info where name regexp '[0-9a-c]';(查询包含数字或a到c的数据)
+			select * from info where name regexp '[^0-9a-c]';(查询包含数字或a到c以外字符的数据)
+			select * from info where name regexp 'ic';(查询包含ic字符串的记录)
+			select * from info where name regexp 'ic|uc|ab'(查询包含ic，uc，ab中任意一个的记录)
+			select * from info where name regexp 'a*c';(a可以出现0次或多次c一次)
+			select * from info where name regexp 'a+c';(+表示在c之前a必须出现一次或多次)
+			select * from info where name regexp 'a{3}';(表示a出现3次)
+			select * from info where name regexp 'ab(1,3)';(表示ab字符串出现1到3次)
+25.insert into products values(1001,"谢攀","男");
+26.insert into products values
+		(1002,'李杰','男'),
+		(1001,"谢攀","男"),
+		(1001,"谢攀","男");
+27.将查询结果插入表中:insert into class1(id,name) select id,name from class2;
+28.update stu set name="王五" where id=1001;
+29.delete from stu where id=1001;delete from stu;(删除所有记录)
+30.select age,age+2,age*5,age/2,age div 2,age%2,mod(age,2) from emp;(分母为0则结果为null)
+31.select age=24,age!=24,age<>24,age>24, from emp;(如果age等于24则为1，否则为0)
+32.select age between 20 and 23 from emp;
+33.select -1&&2; (or and not xor & | - ^ << >> )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

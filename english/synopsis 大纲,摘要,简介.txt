@@ -1,0 +1,6 @@
+For each title there is a brief synopsis of the book. 
+每本书都对应有一个简短的介绍。
+This is the synopsis for some new books. 
+这是一些新书的内容提要。
+He just wants the synopsis and the list of options. 
+他只想要选项的摘要和列表。

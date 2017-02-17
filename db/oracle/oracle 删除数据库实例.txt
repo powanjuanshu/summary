@@ -1,0 +1,8 @@
+开始->程序->Oracle - OraDb10g_home1->Configuration and Migration Tools->Administration Assistant for Windows->选择删除数据库->下一步->选择lijie->完成
+
+
+
+
+
+
+

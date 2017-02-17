@@ -1,0 +1,156 @@
+create or replace procedure proc_truncate(table_name in varchar2)
+  authid definer
+as
+  cursor_id integer;
+begin
+  cursor_id:=dbms_sql.open_cursor;
+  dbms_sql.parse(cursor_id,'truncate table '||table_name,dbms_sql.v7);
+  dbms_sql.close_cursor(cursor_id);
+exception when others then
+  dbms_sql.close_cursor(cursor_id);
+  raise;
+end proc_truncate;
+-----------------------------------------------------
+
+明确定义者权限与调用者权限
+正如大家所知，Oracle从8i开始引入了调用者权限体系结构，之前一直使用定义者权限体系结构。
+关于定义者权限与调用者权限之间的相通点或者是各自优势本文不做探讨，这里仅描述调用者权限与定义者权限之间的差异，在我看来，主要有三个方面：
+1、执行的schema不同，操作的对象也不同
+在定义者(definer) 权限下，执行的用户操作的schema为定义者，所操作的对象是定义者在编译时指定的对象。
+在调用者(invoker)权限下，执行的用户操作的 schema为当前用户，所操作的对象是当前模式下的对象。
+例如：
+E:ora10g>sqlplus / as sysdba;
+连接到:
+Oracle Database 10g Enterprise Edition Release 10.2.0.3.0 - Production
+With the Partitioning, OLAP and Data Mining options
+SQL>create user tmpa identified by tmpa;
+用户已创建。
+SQL>grant connect,resource to tmpa;
+授权成功。
+SQL>create user tmpb identified by tmpb;
+用户已创建。
+SQL>grant connect,resource to tmpb;
+授权成功。
+SQL>conn tmpa/tmpa
+已连接。
+SQL>set sqlprompt TMPA>
+TMPA>create table tmptbl(str varchar2(50));
+TMPA>insert into tmptbl values ('I''m ownered by user:tmpa');
+TMPA>commit;
+TMPA>create or replace procedure definer_proc as
+  2  begin
+  3    for x in (select sys_context('userenv', 'current_user') current_user,
+  4                     sys_context('userenv', 'session_user') session_user,
+  5                     sys_context('userenv', 'current_schema') current_schema,
+  6                     str
+  7                from tmptbl) loop
+  8      dbms_output.put_line('Current User:   ' || x.current_user);
+  9      dbms_output.put_line('Session User:   ' || x.session_user);
+ 10      dbms_output.put_line('Current Schema: ' || x.current_schema);
+ 11      dbms_output.put_line('Tables Value:    ' || x.str);
+ 12    end loop;
+ 13  end;
+ 14  /
+过程已创建。
+TMPA>create or replace procedure invoker_proc AUTHID CURRENT_USER as
+  2  begin
+  3    for x in (select sys_context('userenv', 'current_user') current_user,
+  4                     sys_context('userenv', 'session_user') session_user,
+  5                     sys_context('userenv', 'current_schema') current_schema,
+  6                     str
+  7                from tmptbl) loop
+  8      dbms_output.put_line('Current User:   ' || x.current_user);
+  9      dbms_output.put_line('Session User:   ' || x.session_user);
+ 10      dbms_output.put_line('Current Schema: ' || x.current_schema);
+ 11      dbms_output.put_line('Tables Value:    ' || x.str);
+ 12    end loop;
+ 13  end;
+ 14  /
+过程已创建。
+TMPA>set serveroutput on
+TMPA>grant execute on definer_proc to tmpb;
+授权成功。
+TMPA>grant execute on invoker_proc to tmpb;
+授权成功。
+TMPA>exec definer_proc;
+Current User:   TMPA
+Session User:   TMPA
+Current Schema: TMPA
+Tables Value:    I'm ownered by user:tmpa
+PL/SQL 过程已成功完成。
+TMPA>exec invoker_proc;
+Current User:   TMPA
+Session User:   TMPA
+Current Schema: TMPA
+Tables Value:    I'm ownered by user:tmpa
+PL/SQL --------------------------------------------------------------------------------
+可以看到，对于owner所拥有的对象，当前用户和session用户都是当前执行过程的用户；
+新开一个连接，以tmpb用户登陆再执行看看：
+PHP code:--------------------------------------------------------------------------------
+E:ora10g>sqlplus tmpb/tmpb
+连接到:
+Oracle Database 10g Enterprise Edition Release 10.2.0.3.0 - Production
+With the Partitioning, OLAP and Data Mining options
+SQL> set sqlprompt TMPB>
+TMPB>create table tmptbl(str varchar2(50));
+表已创建。
+TMPB>insert into tmptbl values ('I''m ownered by user:tmpb');
+TMPB>commit;
+TMPB>set serveroutput on
+TMPB>exec tmpa.definer_proc;
+Current User:   TMPA
+Session User:   TMPB
+Current Schema: TMPA
+Tables Value:    I'm ownered by user:tmpa
+PL/SQL 过程已成功完成。
+TMPB>exec tmpa.invoker_proc;
+Current User:   TMPB
+Session User:   TMPB
+Current Schema: TMPB
+Tables Value:    I'm ownered by user:tmpb
+PL/SQL --------------------------------------------------------------------------------
+调用非owner的过程，对于定义者权限的过程，虽然session是tmpb，但当前用户仍然是tmpa，访问的对象也是tmpa的表，
+而对于调用者权限的过程，当前session和用户都是当前执行过程的用户tmpb，而且访问的对象也是当前用户的对象。 
+2、执行的权限不同
+在定义者(definer)权限下，当前用户的权限为角色无效情况下所拥有的权限。
+在调用者(invoker)权限下，当前用户的权限为当前所拥有的权限(含角色)。
+例如：
+仍用前文中的用户
+PHP code:--------------------------------------------------------------------------------
+TMPA>create or replace procedure createtbl_definer as
+  2  begin
+  3    execute immediate 'create table tmptbl2 (id number)';
+  4  end;
+  5  /
+过程已创建。
+TMPA>create or replace procedure createtbl_invoker AUTHID CURRENT_USER as
+  2  begin
+  3    execute immediate 'create table tmptbl2 (id number)';
+  4  end;
+  5  /
+过程已创建。
+----------------------------------------------------------------------------------
+首先执行定义者权限过程：
+PHP code:--------------------------------------------------------------------------------
+TMPA>exec createtbl_definer;
+BEGIN createtbl_definer; END;
+*
+第 1 行出现错误:
+ORA-01031: 权限不足
+ORA-06512: 在 &quot;TMPA.CREATETBL_DEFINER&quot;, line 3
+ORA-06512: 在 line 1
+----------------------------------------------------------------------------------
+由于角色无效，相当于当前用户没有了建表权限，因此创建失败，这也正是为什么过程中执行DDL语句需要显示授权的原因。
+PHP code:--------------------------------------------------------------------------------
+TMPA>exec createtbl_invoker;
+PL/SQL 过程已成功完成。
+TMPA>desc tmptbl2
+ 名称                                      是否为空? 类型
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER
+----------------------------------------------------------------------------------
+执行调用者权限过程，能够成功创建！
+3、执行的效率不同
+在定义者(definer)权限下，过程被静态编译静态执行(相对而言)，所执行sql语句在共享区池中是可被共享使用的
+在调用者(invoker) 权限下，过程静态编译，但动态执行，虽然执行的语句相同，但不同用户执行，其sql语句在共享池中并不能共享。
+归根结底，正如tom所说，调用者权限体系结构的确拥有非常强大的功能，但只有当你使用得当时才能感受到其优势。

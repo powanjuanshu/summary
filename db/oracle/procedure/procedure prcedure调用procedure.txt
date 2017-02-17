@@ -1,0 +1,14 @@
+在plsql块或存储过程中调用存储过程前面不需要execute关键字
+
+DECLARE
+  num1 NUMBER := 100;
+  num2 NUMBER := 200;
+BEGIN
+  li_swap(num1, num2); -- 过程调用过程不能直接带常量,必须带变量,不然会报错
+END;
+
+exec li_swap(10, 20); -- 报错
+
+BEGIN
+  li_swap(10, 20); -- 报错
+END;

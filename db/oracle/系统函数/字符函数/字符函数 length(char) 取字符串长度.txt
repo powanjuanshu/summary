@@ -1,0 +1,2 @@
+select length('how are you') from dual;
+Êä³ö:11

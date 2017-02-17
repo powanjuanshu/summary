@@ -1,0 +1,22 @@
+P primary key 是否主键
+F Foreign key 是否外键
+M mandatory 是否必填
+
+CREATE TABLE temp2(
+     t_id  VARCHAR2(5),
+     t_no  NUMBER NOT NULL,
+     CONSTRAINT PK_temp2 PRIMARY KEY (t_id)
+) TABLESPACE users;
+-----------------------------------------t_no,number,mandatory
+CREATE TABLE temp3(
+     t_id  VARCHAR2(5),
+     t_no  NUMBER DEFAULT 10,
+     CONSTRAINT PK_temp23 PRIMARY KEY (t_id)
+) TABLESPACE users;
+-----------------------------------------t_no,number,optional,default=10
+CREATE TABLE temp4(
+     t_id  VARCHAR2(5),
+     t_no  NUMBER DEFAULT 10 NOT NULL,  --not null必须在default 10后面，否则会报错
+     CONSTRAINT PK_temp3 PRIMARY KEY (t_id)
+) TABLESPACE users;
+-----------------------------------------t_no,number,mandatory,default=10

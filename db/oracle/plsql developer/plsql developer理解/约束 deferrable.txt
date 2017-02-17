@@ -1,0 +1,86 @@
+CREATE TABLE CUST
+(
+    CUST_ID NUMBER(2) NOT NULL,
+    CUST_NAME VARCHAR2(15)
+);
+select * from cust;
+drop table cust;
+
+alter table cust add constraint cust_id_pk primary key(cust_id) DEFERRABLE INITIALLY IMMEDIATE; --  初始化立即执行
+insert into cust values(1,'lucker');
+insert into cust values(1,'lucker'); -- 会唯一索引冲突报错,不会自动回滚
+commit;
+truncate table cust;
+insert into cust values(1,'lucker');
+commit;
+insert into cust values(1,'lucker'); -- 会唯一索引冲突报错,这句会自动回滚
+commit;
+-------------
+alter table cust drop constraint cust_id_pk;
+-------------
+alter table cust ADD constraint cust_id_pk PRIMARY KEY(cust_id) DEFERRABLE INITIALLY DEFERRED; --  初始化延迟执行
+insert into cust values(1,'lucker');
+insert into cust values(1,'lucker'); -- 不会报错
+commit; -- 会唯一索引冲突报错,并自动回滚
+truncate table cust;
+insert into cust values(1,'lucker');
+commit;
+insert into cust values(1,'lucker'); -- 不会报错
+commit; -- 会唯一索引冲突报错,并自动回滚
+
+-- 如果不指定,默认建的表就是第一种情况
+
+DEFERRABLE INITIALLY DEFERRED = DEFERRABLE -- 初始化延迟执行
+DEFERRABLE INITIALLY IMMEDIATE; --  初始化立即执行
+
+
+ORACLE中约束-DEFERRABLE
+今天看到了oracle的约束。提到DEFERRABLE,很新鲜,至少SQL SERVER里是没这玩意儿。
+定义为可延迟(deferrable)的约束,可以指定为：
+1.INITIALLY IMMEDIATE 初始化立即执行
+2.INITIALLY DEFERRED    初始化延迟执行
+从字面意思看,猜测是让约束延迟检查,但是一个初始化立即执行,一个初始化延迟执行。这又是什么意思
+--延迟约束测试
+CREATE TABLE CUST
+(
+    CUST_ID NUMBER(2) NOT NULL,
+    CUST_NAME VARCHAR2(15)
+);
+SELECT * FROM CUST;
+--新增初始化延迟约束
+ALTER TABLE CUST
+ADD CONSTRAINT CUST_ID_PK PRIMARY KEY(CUST_ID) DEFERRABLE INITIALLY DEFERRED;
+
+--插入数据测试
+INSERT INTO CUST VALUES (1,'RAJ'); -- ROW 1
+INSERT INTO CUST VALUES (1,'SAM'); -- ROW 2
+COMMIT;
+--ORA-02091: transaction rolled back
+--ORA-00001: unique constraint (IIMAX.CUST_ID_PK) violated
+我们指定了约束DEFERRED,在执行第13、14行SQL,并不会理解报错。在COMMIT的时候验证约束,报错整个事务也被ROLLBACK了。
+
+此时呢,我们修改约束为IMMEDIATE,让它在SQL语句执行后进行验证
+
+SET CONSTRAINT CUST_ID_PK IMMEDIATE;
+INSERT INTO CUST VALUES (1,'LATA'); --ROW 3
+INSERT INTO CUST VALUES (2,'KING'); --ROW 4
+COMMIT;
+OK,两条数据提交成功。
+再来插入一条重复PK的数据试试:)
+
+SET CONSTRAINT CUST_ID_PK IMMEDIATE;
+INSERT INTO CUST VALUES (2,'IIMAX'); --ROW 5
+COMMIT;
+仍然是ORA-00001错误
+
+
+
+
+
+
+
+
+
+
+
+

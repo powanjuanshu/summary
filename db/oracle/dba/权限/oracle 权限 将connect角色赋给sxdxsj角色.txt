@@ -1,0 +1,6 @@
+grant connect to lijie
+-----------------------------
+给用户分配connect角色，这个角色里面有CREATE SESSION权限
+先用dba登录到plsql中去，然后打开Command Window，输入
+grant connect to lijie；回车->会提示：Grant succeeded->完成
+在用lijie这个用户登录就没问题了

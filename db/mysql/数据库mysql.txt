@@ -1,0 +1,112 @@
+1.第一范式:1NF(Normal Forms):表中不能有重复的字段，并且每个字段不能再拆分
+2.cmd启动mysql:mysql -h localhost -u root -p
+2.cmd启动mysql:mysql -uroot -p123
+2.cmd帮助:?
+4.修改端口:my.ini port=3306
+5.默认字符集:my.ini default-character-set=gbk
+6.修改数据文件夹:my.ini datadir="C:/Documents and Settings/All Users"
+7.默认存储引擎:my.ini default-storage-engine=INNODB
+8.cmd启动mysq服务:net start mysql
+9.查看表结构:show create table dept;
+9.查看表描述:desc dept;
+10.索引
+	create table index1(
+		id int,
+		name varchar(20),
+		sex boolean,
+		index(id)	//普通索引
+   	);
+   	create table index2(
+		id int unique,
+		name varchar(20),
+		unique index index2_id(id ASC) //创建一个名为index2_id的按升序排序的唯一索引
+  	 )
+   	create table index3(
+		id int,
+		info varchar(20),
+		fulltext index index3_info(info)//创建一个名为index3_info的全文索引
+   	)engine=MyISAM;//使用MyISAM存储引擎 只有MyISAM存储引擎才支持全文索引否则会报错
+  	create table index4(
+		id int,
+		subject varchar(30),
+		index index4_st(subject(10))//单列索引 尽量使用前缀
+   	);
+   	create table index5(
+		id int,
+		name varchar(20),
+		sex char(4),
+		index index5_ns(name,sex)//多列索引 必须在查询的时候使用索引中的第一个字段，这个索引才会被使用
+   	);
+   	create table index6(
+		id int,
+		space geometry not null,
+		SPATIAL index index6_sp(space)//创建一个名为index6_sp的空间索引
+  	)engine=MyISAM;//使用MyISAM存储引擎 只有MyISAM存储引擎才支持空间索引否则会报错
+
+11.查看查询表时所用到的索引:explain select * from index5 where name='a';
+12.在已经存在的表上创建索引
+	create index index7_id on example0(id);//普通索引
+	create unique index index8_id on index8(id);//唯一索引
+	create fulltext index index9_info on index9(info);//全文索引
+	create index index10_add on index10(add(10));//单列索引
+	create index index11_na on index11(name,add);//多列索引
+13.用alter table语句来创建索引
+	alter table exam add index index12_name(name(20));
+14.删除索引：drop index 索引名 on 表名;
+16.命令行运行sql脚本文件：\. d:\\temp\bbs.sql
+17.mysql分页：select * from article where pid=0 limit 0,3;//从0条开始一共去三条
+18.连接数据库:
+	private final static String className="com.mysql.jdbc.Driver";
+	private final static String url="jdbc:mysql://localhost:3306/shop";
+	private final static String user="root";
+	private final static String password="root";
+19.创建表
+	create database shop;
+	use database;
+	create table product(
+		id int primary key auto_increment,
+		name varchar(20),
+		price float,
+		author varchar(20)
+	)
+	insert into product(id,name,price,author) values(null,'西游记',25.5,'吴承恩');
+	insert into product(id,name,price,author) values(null,'水浒传',25.5,'施耐庵');
+	insert into product(id,name,price,author) values(null,'三国演义',25.5,'罗贯中');
+	insert into product(id,name,price,author) values(null,'红楼梦',25.5,'曹雪芹');
+20.查看视图权限:select select_priv,create_view_priv from mysql.user where user='root';
+20.查看视图删除权限:select drop_priv from mysql.user where user='root';
+21.创建视图:create view(name,addr) dept_view1 as select d_name,d_addr from dept
+21.删除视图:drop view if exists worker_views1,worder_view2;
+22.select name,sex,deptname from worder,dept where worker.d_di=dept.id with local check option;
+23.查看视图结构:desc dept_view1;
+23.查看视图或表的详细信息:show table status like 'dept';
+24.查看视图详细信息:show create view dept_view1;
+25.Mysql中所有视图都存储在information_schema数据库下的views表中，查询views表可以查看到数据库中所有视图的详细信息：select * from information_schema.views; 其中information_schema.views表示information_schema数据库下面的views表
+26.视图的本质就是一条sql语句，它的主要作用是实现多表查询。存储过程的主要作用是将外部数据按照一定的规则存储到数据库中。
+27.临时视图:create algorithm=temptable view worker_view1 as select * from worker;
+28.触发器:create trigger dept_trig1 before insert on dept for each row insert into emp value(null,'王维');
+28.多条语句触发器:
+	delimiter &&   //修改结束符为&&，因为后面需要用到;符号避免冲突
+	create trigger dept_trig2 after delete
+	on dept for each row
+	begin
+	insert into trigger_time values(time());
+	insert into trigger_time values('22:21:20');
+	end
+	&&
+29.查看触发器:show triggers;或者select * from information_schema.triggers; select * from information_schema.triggers where trigger_name='dept_trig1';
+30.删除触发器:drop trigger dept_trig2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

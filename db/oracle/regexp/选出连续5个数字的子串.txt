@@ -1,0 +1,1 @@
+select regexp_substr('The 67679 zip code 80831 is for falcon, co','[[:digit:]]{5}') from dual;

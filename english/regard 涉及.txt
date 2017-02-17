@@ -1,0 +1,6 @@
+It is also interesting to note that this technique gives you flexibility and portability with regard to naming services.
+还有一件有趣的事情要注意：这种技术给予您关于命名服务的灵活性和可移植性。
+
+
+
+

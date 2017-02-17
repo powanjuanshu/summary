@@ -1,0 +1,8 @@
+You can turn on and off access to any of these groups. 
+您可以打开或关闭对任何这些组的访问。
+
+Regardless of where we are and what we are doing, we want access to our data.
+不管我们身在何处、在做什么，我们都想要访问到我们的数据。
+
+In an eventually consistent model, not all of the system components have immediate access to the most accurate data. 
+在一个最终一致性的模型中，不是所有的系统组件都能立即访问到最精确的数据。

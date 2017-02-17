@@ -1,0 +1,2 @@
+select translate('JACK and JUE', 'J', 'BL') from dual;
+Êä³ö:BACK and BUE

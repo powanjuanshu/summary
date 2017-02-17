@@ -1,0 +1,7 @@
+1、登录后默认自动选中My Objects  
+默认情况下，PLSQL Developer登录后，Brower里会选择All objects，
+如果你登录的用户是dba，要展开tables目录，正常情况都需要Wait几秒钟，而选择My Objects后响应速率则是以毫秒计算的。  
+设置方法：
+Tools菜单-->Brower Filters，会打开Brower Folders的定单窗口，把“My Objects”设为默认即可。
+Tools菜单－－Brower Folders，中把你经常点的几个目录（比如：Tables Views Seq Functions Procedures）移得靠上一点，并加上颜色区分，
+这样你的平均寻表时间会大大缩短，试试看。

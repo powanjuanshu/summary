@@ -1,0 +1,2 @@
+The -r option tells rsync to recurse into the directories and copy the entire structure. 
+r选项让rsync递归遍历目录并复制整个目录结构

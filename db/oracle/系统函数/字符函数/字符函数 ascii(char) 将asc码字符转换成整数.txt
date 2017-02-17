@@ -1,0 +1,2 @@
+select ascii('a') from dual;
+Êä³ö:97

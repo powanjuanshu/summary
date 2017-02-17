@@ -1,0 +1,2 @@
+select to_single_byte('£á£â£ã') from dual;
+--Êä³öÎªabc

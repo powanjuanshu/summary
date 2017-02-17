@@ -1,0 +1,24 @@
+--------order by默认是升序的
+SELECT * FROM emp ORDER BY sal;
+----------------------------------指定降序
+SELECT * FROM emp ORDER BY sal DESC;
+----------------------------------指定升序
+SELECT * FROM emp ORDER BY sal ASC;
+----------------------------------
+如
+一个表中的数据AA是这样的:
+PROJECTNO
+-----------------------
+钦市PC2010-5
+钦市PC2011-6
+钦市PC2011-40
+钦南PC2011-5
+钦南GC2011-5
+钦市PC2011-5
+数据前2个字是市区名,后面的是文件名-后面的是第几号文件,需要先升序排列市区名,市区名相同再升序排列后面的文件名,文件名相同再降序排列后面的文件编号名。
+注意:
+单单用select projectno from aa order by projectno asc是不能实现的
+可使用select projectno from aa order by substr(projectno ,1,2) asc ,substr(projectno ,3,6) asc ,to_number(substr(projectno ,10,2)) desc
+
+
+

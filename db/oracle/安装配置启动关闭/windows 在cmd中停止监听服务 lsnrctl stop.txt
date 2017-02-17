@@ -1,0 +1,15 @@
+--停止oracle监听服务
+
+
+C:\Users\Administrator>lsnrctl stop
+
+
+LSNRCTL for 32-bit Windows: Version 10.2.0.1.0 - Production on 06-5月 -2011 11:1
+4:30
+
+
+Copyright (c) 1991, 2005, Oracle.  All rights reserved.
+
+
+正在连接到 (DESCRIPTION=(ADDRESS=(PROTOCOL=IPC)(KEY=EXTPROC1)))
+命令执行成功

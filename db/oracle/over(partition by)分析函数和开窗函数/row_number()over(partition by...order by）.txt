@@ -1,0 +1,33 @@
+2:统计各班成绩第一名的同学信息
+    NAME   CLASS S                         
+    ----- ----- ---------------------- 
+    fda    1      80                     
+    ffd    1      78                     
+    dss    1      95                     
+    cfe    2      74                     
+    gds    2      92                     
+    gf     3      99                     
+    ddd    3      99                     
+    adf    3      45                     
+    asdf   3      55                     
+    3dd    3      78            
+    通过:select t2.name1, t2.class1, t2.s, row_number()over(partition by t2.class1 order by t2.s desc) rn from t2
+    得到结果:
+    NAME   CLASS S                       RN                                                                                        
+    ----- ----- ---------------------- ---------------------- 
+    1	dss	1	95	1
+    2	fda	1	80	2
+    3	ffd	1	78	3
+    4	gds	2	92	1
+    5	cfe	2	74	2
+    6	gf	3	99	1
+    7	ddd	3	99	2
+    8	3dd	3	78	3
+    9	asdf	3	55	4
+    10	adf	3	45	5
+
+    注意:
+    1.在求第一名成绩的时候,不能用row_number(),因为如果同班有两个并列第一,row_number()只返回一个结果         
+    2.rank()和dense_rank()的区别是:
+      --rank()是跳跃排序,有两个第二名时接下来就是第四名
+      --dense_rank()是连续排序,有两个第二名时仍然跟着第三名

@@ -1,0 +1,7 @@
+所有者	名称		类型	列		压缩	前缀长度	反转	Local	存储
+VAYW	CUST_ID_PK	Unique	CUST_ID	N		N		N		tablespace users pctfree 10 initrans 2 maxtrans 255
+vayw	CUST_NAME_FF	Unique	cust_name	N			N		tablespace users pctfree 10 initrans 2 maxtrans 255	
+类型:
+有三种:Normal,Unique,Bitmap.
+
+create index cust_name_tt on CUST (cust_name) compress  reverse;

@@ -1,0 +1,1 @@
+Tools->preferences->User Interface->Editor->Keyword case->Uppercase

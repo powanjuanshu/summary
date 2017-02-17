@@ -1,0 +1,4 @@
+set serveroutput no;
+exec procedure_name(param);
+Лђеп
+execute procedure_name(param);

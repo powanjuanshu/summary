@@ -1,0 +1,4453 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>orakill和ALTER SYSTEM KILL SESSION详解(原创) - CzmMiao的博客生活 - ITeye技术网站</title>
+    <meta name="description" content="一个用户进程偶尔会挂起或占用过多资源而拒绝其它会话。如果DBA依然能够访问数据库，她通常可以发出以下查询：select s.username, s.osuser, s.sid, s.serial#,  p.spid      from v$session s,v$process p  where s.paddr = p.addr               and  s.username is no ..." />
+    <meta name="keywords" content=" orakill和ALTER SYSTEM KILL SESSION详解(原创)" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="CzmMiao的博客生活" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1418977807" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/red.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">CzmMiao的博客生活</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://czmmiao.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://czmmiao.iteye.com" class="p-author" target="_blank">czmmiao</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1330421">orakill和ALTER SYSTEM KILL SESSION详解(原创)</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/192591">Oracle日常管理</a></li> </ul>
+        <div class='news_tag'>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <p><span style="font-size: small;">一个用户进程偶尔会挂起或占用过多资源而拒绝其它会话。如果DBA依然能够访问数据库，她通常可以发出以下查询：<br><span style="color: #008000;">select s.username, s.osuser, s.sid, s.serial#,
+p.spid </span>
+</span>
+<span style="color: #008000; font-size: small;"> from v$session s,v$process p<br>
+where s.paddr = p.addr </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"><span style="color: #008000;"> and
+s.username is not null;<br>
+select 'alter system kill session
+',''''||trim(t2.sid)||','||trim(t2.serial#)||''';'<br>
+from v$locked_object t1,v$session t2 where t1.session_id=t2.sid
+order by t2.logon_time;</span>
+<br>
+这个查询将返回数据库用户名、操作系统用户名、会话 ID，序列号和系统进程 ID（SPID）。然后，DBA
+用户就可以发出以下命令（前面的查询返回的使用 SID 和SERIAL# 信息）：<span style="color: #008000;"><br>
+ALTER SYSTEM KILL SESSION 'sid,serial#';<br>
+ALTER SYSTEM KILL SESSION '9,203';</span>
+<br>
+使用这条语句有两个问题。<br>
+第一：分配给这个进程的任何锁或资源在会话完全超时之前不会被释放。<br>
+第二：查询和 kill 命令需要能够访问数据库。如果一个进行失去控制，那么数据库访问可能会出现问题。<br>
+在一个 UNIX 数据库中，下一步是 ps 命令输出的 UNIX 提示中定位进程（同样是查找 OSUSER 和 SPID 等
+ID）然后使用 kill -9 spid 结束失控的后台进程。然而，在 Windows 中，只有一个进程
+ORACLE.EXE，而且用户连接是在 Windows 线程中处理的，而不在进程中处理的。如果使用 Windows 任务管理器结束
+Oracle 线程，就有可能影响所有用户和后台线程，并导致数据库崩溃。<br>
+出于这些原因，Oracle 在Oracle Home/bin 目录下提供了一个 orakill.exe
+命令，这个命令的参数与ALTER SYSTEM KILL SESSION
+相同，但是不要求数据库连接。要定位一个特定的线程，需要寻找一个能够显示属于一个进程的所有线程的程序。Windows
+任务管理器只能显示线程数和进程。你需要从微软的资源工具包中寻找一个用于 Windows 2000 和 NT
+的工具程序，比如免费的QuickSlice，或者Qslice.exe（该工具是基于 Windows
+的），或者PStat（Pstat.exe 是一个命令行工具）。简单地在 orakill 命令后输入线程 ID（以十进制表示）和 SID
+即可：<br>
+orakill &lt;sid&gt;
+&lt;spid&gt;<br>
+orakill ORCL 2760</span>
+</p>
+<p><span style="font-size: small;">
+</span>
+</p>
+<p><span style="font-size: small;">"Kill of thread id 2760 in instance ORCL successfully
+signalled[sic]."<br>
+应该只有在不能访问数据库来执行ALTER SYSTEM KILL SESSION
+的情况才使用orakill。如果意外结束了一个必要的后台进程，比如
+PMON，那么很可能会导致数据库崩溃。新手永远不要这样做。<br>
+Orakill的使用方法如下：<br>
+ </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;">
+Dos提示符下:&gt;orakill sid thread<br>
+ </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;">
+说明： sid Oracle的Sid号<br>
+ </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;">
+thread </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> Oracle的线程id号<br>
+在Sql*plus工具里面可以查询到Oracle的线程号<br></span>
+<span style="font-size: small;"></span>
+<span style="color: #008000; font-size: small;">sql:&gt;Select p.spid THREADID, s.osuser,
+s.program<br></span>
+<span style="color: #008000; font-size: small;">From v$process p, v$session s<br></span>
+<span style="font-size: small;"><span style="color: #008000;">Where p.addr = s.paddr</span>
+<br>
+结果如下：<br><span style="color: #008000;">THREADID </span>
+</span>
+<span style="color: #008000; font-size: small;">
+OSUSER </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+PROGRAM<br>
+--------- -----------------------
+-----------------------------<br>
+169 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE<br>
+215 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE<br>
+280 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE<br>
+267 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE<br>
+287 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE<br>
+288 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE<br>
+271 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"><br>
+282 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"><br>
+239 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+PROD_NTdjones </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SVRMGRL.EXE<br>
+281 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SSMITH-PCssmith </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SQLPLUSW.EXE</span>
+</p>
+<p><span style="color: #008000; font-size: small;">
+</span>
+</p>
+<p><span style="color: #008000; font-size: small;">12 rows selected.</span>
+</p>
+<p><span style="font-size: small;">
+</span>
+</p>
+<p><span style="font-size: small;">需要注意的是，如果你Kill掉的是Oracle的核心后台线程(DBWR, LGWR, SMON or
+PMON),将导致Oracle实例关闭。检查Oracle的核心后台线程的方法如下：<br><span style="color: #008000;">sql:&gt;Select vb.name NOME, vp.programe PROCESSNAME,
+vp.spid THREADID, vs,sid SID<br>
+From v$session vs, v$process vp, v$bgprocess
+vb<br>
+Where vb.addr &lt;&gt;
+‘00’ and<br>
+vb.paddr = vp.addr and<br>
+vp.addr = vs.paddr</span>
+<br>
+查询结果如下：</span>
+</p>
+<p><span style="font-size: small;">
+</span>
+</p>
+<p><span style="color: #008000; font-size: small;">NOME </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+PROCESSNAME </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+THREADID </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> SID<br>
+----- ----------------------------------- --------- ------<br>
+PMON </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+169 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+1<br>
+DBW0 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+215 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+2<br>
+LGWR </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+280 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+3<br>
+CKPT </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+267 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+4<br>
+SMON </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+287 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+5<br>
+RECO </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+288 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+6<br>
+SNP0 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+271 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+7<br>
+SNP1 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+282 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+8</span>
+</p>
+<p><span style="color: #008000; font-size: small;">
+</span>
+</p>
+<p><span style="color: #008000; font-size: small;">8 rows selected.</span>
+</p>
+<p><span style="font-size: small;">
+</span>
+</p>
+<p><span style="font-size: small;"><br>
+window xp + oracle 9.2.0.1</span>
+</p>
+<p><span style="font-size: small;">
+</span>
+</p>
+<p><span style="font-size: small;">================<br>
+orakill的用法<br>
+================<br><span style="color: #008000;">SQL&gt; SELECT spid, osuser, s.program,sid<br>
+ </span>
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+FROM v$process p, v$session s<br>
+ </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+WHERE p.addr=s.paddr;</span>
+</p>
+<p><span style="color: #008000; font-size: small;">
+</span>
+</p>
+<p><span style="color: #008000; font-size: small;">
+SPID </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+OSUSER </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+PROGRAM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SID<br>
+------------------------ -------------------- ---------------
+----------<br>
+6928 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+1<br>
+5272 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+2<br>
+7008 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+3<br>
+6588 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+4<br>
+6780 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+5<br>
+6128 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+6<br>
+6740 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+7<br>
+6684 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+8<br>
+7092 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+9<br>
+6272 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SYSTEM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+ORACLE.EXE </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+10<br>
+4760 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+lifeng.fang </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+sqlplus.exe </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+12<br>
+SPID </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+OSUSER </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+PROGRAM </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+SID<br>
+------------------------ -------------------- ---------------
+----------<br>
+6484 </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+lifeng.fang </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+sqlplus.exe </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;"> </span>
+<span style="font-size: small;">
+</span>
+<span style="color: #008000; font-size: small;">
+11</span>
+</p>
+<p><span style="color: #008000; font-size: small;">
+</span>
+</p>
+<p><span style="font-size: small;"><span style="color: #008000;">4284</span>
+<br>
+语法：orakill 实例名 spid </span>
+<span style="font-size: small;">
+</span>
+<span style="font-size: small;"> （在win上是线程号）</span>
+</p>
+<p><span style="color: #008000; font-size: small;">
+</span>
+</p>
+<p><span style="color: #008000; font-size: small;">SQL&gt; host orakill charset 6484;<br>
+Kill of thread id 6484 in instance charset successfully
+signalled.</span>
+</p>
+<p><span style="font-size: small;">
+</span>
+</p>
+<p><span style="font-size: small;">spid是os进程ID<br>
+pid是Oracle process ID</span>
+</p>
+<p><span style="font-size: small;">
+</span>
+</p>
+<p><span style="font-size: small;">根据盖国强的猜测</span>
+</p>
+<p class="style28"><span style="font-size: small;">当在Oracle中kill session以后, 
+Oracle只是简单的把相关session的paddr 
+指向同一个虚拟地址.此时v$process和v$session失去关联,进程就此中断.然后Oracle就等待PMON去清除这些Session.所
+以通常等待一个被标记为Killed的Session退出需要花费很长的时间.如果此时被Kill的process，重新尝试执行任务，那么马上会收到进
+程中断的提示，process退出，此时Oracle会立即启动PMON来清除该session.这被作为一次异常中断处理.</span>
+</p>
+<p class="style28"><span style="font-size: small;">具体的实验例子读者可以参考<br>
+http://www.eygle.com/faq/Kill_Session.htm</span>
+</p>
+<p class="style28"><span style="font-size: small;">当然如果该用户已经没有使用，例如在决定删除该用户的时候，PMON很可能不回自动的去清理这些session则需要手工触发PMON执行</span>
+</p>
+<p class="style28"><span style="font-size: small;">首先确认PMON进程是who<br></span>
+<span style="color: #008000; font-size: small;">SQL&gt; select pid,spid from v$process p,v$bgprocess b<br>
+where b.paddr=p.addr<br>
+and name='PMON';<br>
+       PID SPID<br>
+---------- ------------<br>
+        2  3608<br>
+SQL&gt; oradebug wakeup 2</span>
+<span style="font-size: small;"><br></span>
+<span style="color: #008000; font-size: small;">已处理的语句</span>
+</p>
+<p class="style28"><span style="font-size: small;">关于oradebug命令可以参考笔者的另一篇文章</span>
+</p>
+<p class="style28"><span style="font-size: small;">http://czmmiao.iteye.com/admin/blogs/1330122<br></span>
+</p>
+<p><span style="font-size: small;"><br></span>
+</p>
+<p><span style="font-size: small;">
+</span>
+</p>
+<p><span style="font-size: small;">参考至:http://blog.sina.com.cn/s/blog_55eccf210100j0br.html</span>
+</p>
+<p><span style="font-size: small;">            http://space.itpub.net/16158219/viewspace-545169</span>
+</p>
+<p><span style="font-size: small;">            </span>
+<span style="font-size: small;">http://www.eygle.com/faq/Kill_Session.htm<br></span>
+</p>
+<p><span style="font-size: small;">
+</span>
+</p>
+<p><span style="font-size: small;">如有错误，欢迎指正</span>
+</p>
+<p><span style="font-size: small;">邮箱:czmcj@163.com<br></span>
+</p>
+  </div>
+
+  
+
+  
+  
+  <IFRAME SRC="/iframe_ggbd/794" SCROLLING=no WIDTH=468 HEIGHT=60 FRAMEBORDER=0></IFRAME>
+  
+  <div id="bottoms" class="clearfix">
+    <div id="digg_bottom" class="clearfix"><div class='digged'><strong>0</strong> <br/>顶</div><div class='digged'><strong>2</strong> <br/>踩</div></div>
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/1330729" class="next" title="巧用dba_hist_active_sess_history跟踪某个时间段内SQL(原创)">巧用dba_hist_active_sess_history跟踪某个 ...</a>
+      |
+      <a href="/blog/1330122" class="pre" title="ORADEBUG">ORADEBUG</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2011-12-30 13:40</li>
+      <li>浏览 16539</li>
+      <li><a href="#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/database">数据库</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/1330421" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1330421;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'orakill和ALTER SYSTEM KILL SESSION详解(原创)');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'orakill和ALTER SYSTEM KILL SESSION详解(原创)');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://czmmiao.iteye.com'><img alt="czmmiao的博客" class="logo" src="http://www.iteye.com/upload/logo/user/570797/c6897931-33fe-394d-9192-3fd18bad1dfd.jpg?1318687223" title="czmmiao的博客: CzmMiao的博客生活" width="" /></a></div>
+  <div id="blog_owner_name">czmmiao</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 784011 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1324994303" title="男" /></li>
+              <li>来自: 厦门</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://lspgdut.iteye.com' target='_blank'><img alt="lspgdut的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="lspgdut的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://lspgdut.iteye.com' target='_blank' title='lspgdut'>lspgdut</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://dylinshi126.iteye.com' target='_blank'><img alt="dylinshi126的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="dylinshi126的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://dylinshi126.iteye.com' target='_blank' title='dylinshi126'>dylinshi126</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://whysh.iteye.com' target='_blank'><img alt="whysh的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="whysh的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://whysh.iteye.com' target='_blank' title='whysh'>whysh</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://nbfslh.iteye.com' target='_blank'><img alt="NBfslh的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="NBfslh的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://nbfslh.iteye.com' target='_blank' title='NBfslh'>NBfslh</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (567)</a></li>
+                
+                  <li><a href="/category/192591">Oracle日常管理 (121)</a></li>
+                
+                  <li><a href="/category/143940">Oracle体系架构 (44)</a></li>
+                
+                  <li><a href="/category/212693">Oracle Tuning (47)</a></li>
+                
+                  <li><a href="/category/143942">Oracle故障诊断 (35)</a></li>
+                
+                  <li><a href="/category/198476">RAC/DG/OGG (63)</a></li>
+                
+                  <li><a href="/category/293960">Oracle11g New Features (48)</a></li>
+                
+                  <li><a href="/category/263856">DataWarehouse (6)</a></li>
+                
+                  <li><a href="/category/267464">PL/SQL (14)</a></li>
+                
+                  <li><a href="/category/198031">DB2日常管理 (9)</a></li>
+                
+                  <li><a href="/category/235855">Weblogic (11)</a></li>
+                
+                  <li><a href="/category/143943">Shell (19)</a></li>
+                
+                  <li><a href="/category/168842">AIX (12)</a></li>
+                
+                  <li><a href="/category/178145">Linux/Unix高可用性 (11)</a></li>
+                
+                  <li><a href="/category/143957">Linux/Unix日常管理 (64)</a></li>
+                
+                  <li><a href="/category/143941">Linux桌面应用 (32)</a></li>
+                
+                  <li><a href="/category/295220">Windows (2)</a></li>
+                
+                  <li><a href="/category/143945">生活和工作 (13)</a></li>
+                
+                  <li><a href="/category/143944">私人记事 (0)</a></li>
+                
+                  <li><a href="/category/317053">CBO (15)</a></li>
+                
+                  <li><a href="/category/330673">Cognos (2)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (2)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (56)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2015-01">2015-01</a> (2)</li>
+                
+                  <li><a href="/blog/monthblog/2014-12">2014-12</a> (4)</li>
+                
+                  <li><a href="/blog/monthblog/2014-11">2014-11</a> (11)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://lord-is-layuping.iteye.com' target='_blank' title='lord_is_layuping'>lord_is_layuping</a>： 
+                  写的挺好的，学到了。<br />
+                  <a href="/blog/1949225#bc2365808">Xargs用法详解(原创)</a>
+                </li>
+                
+                <li>
+                  <a href='http://avalonzst.iteye.com' target='_blank' title='avalonzst'>avalonzst</a>： 
+                  Mark....<br />
+                  <a href="/blog/1638833#bc2365068">AIX服务详解(原创)</a>
+                </li>
+                
+                <li>
+                  <a href='http://aliger.iteye.com' target='_blank' title='aliger'>aliger</a>： 
+                  不错，，<br />
+                  <a href="/blog/1478465#bc2364794">Oracle中Hint深入理解(原创)</a>
+                </li>
+                
+                <li>
+                  <a href='http://sugarnana.iteye.com' target='_blank' title='sugarnana'>sugarnana</a>： 
+                  大虾请问你这篇文档里写的配置stonith设备都是指的物理设备 ...<br />
+                  <a href="/blog/1174667#bc2364455">Linux高可用性方案之Heartbeat的Stonith配置(原创) </a>
+                </li>
+                
+                <li>
+                  <a href='http://hekp.iteye.com' target='_blank' title='hekp'>hekp</a>： 
+                  非常详细了~ 赞<br />
+                  <a href="/blog/1236562#bc2358908">Oracle dblink详解(原创)</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2015 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'zhimin.chen@zznode.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+      
+    
+  </body>
+</html>

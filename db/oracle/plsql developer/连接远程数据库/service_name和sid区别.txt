@@ -1,0 +1,29 @@
+service_name和sid区别
+
+1. SID是实例名,实例名指的是用于响应某个数据库操作的数据库管理系统的名称。实例名是由初始化参数文件的参数instance_name决定的。如果这个参数不被指定(即instance_name没有被指定为任何值),那么实例的名字由该用户的环境变量ORACLE_SID(注意这里是大写)决定。在windows平台下,则是注册表中oracle_sid值决定。
+
+2. SERVICE_NAME指的是listener中的全局数据库名：这个名字是由listener.ora中GLOBAL_DBNAME参数决定的。这个名字代表的是客户端连接到数据库时,tnsnames.ora中SERVICE_NAME参数所对应的值。
+
+3. 连接字符串
+    配置tnsname.ora时,可以用SID,也可以用SERVICE_NAME.  注意这两个值不一定相同,具体要看数据库服务器中的配置。
+connect_str =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = xx.xx.xx.xx)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = xxxx
+    )
+  )
+connect_str =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = xx.xx.xx.xx)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = xxx)
+      (SERVER = DEDICATED)
+    )
+  )
+
+

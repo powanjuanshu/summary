@@ -1,0 +1,2 @@
+select cosh(0) from dual;
+Êä³ö:1

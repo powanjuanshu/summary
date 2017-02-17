@@ -1,0 +1,1 @@
+select created,last_ddl_time from all_objects t where t.ower=upper('sxdxsj') and OBJECT_NAME=upper('filter_red_black');

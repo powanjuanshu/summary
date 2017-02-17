@@ -1,0 +1,2 @@
+先用dba登录到plsql中去，然后打开Command Window
+->输入alter user scott identified by tiger；这里可以改成原来的密码

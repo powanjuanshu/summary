@@ -1,0 +1,53 @@
+运行时指定列明,表达式,文本
+使用替换变量对下列内容做出补充:
+--WHERE条件
+--ORDER BY子句
+--列表达式
+--表名
+--整个SELECT语句
+
+select empno,ename,job,&column_name from emp
+where &condition
+order by &order_name;
+
+带有两个&的替换变量
+使用带有两个&的变量可以使得该变量可以重复使用,而不必在每次使用时提醒用户输入
+
+select empno,ename,job,&column_name
+from emp
+order by &column_name;
+需要输入两次替换变量
+
+select empno,ename,job,&&column_name
+from emp
+order by &column_name;
+只用输入一次替换变量
+
+如果替换整数时不需要将替换变量&amt用引号括起来
+如果替换字符串时需要将替换变量&amt用引号括起来,如'&amt',不然会报错
+
+自定义提示信息,不使用系统的提示信息
+accept dept_num prompt '请输入部门号:' hide -- hide可选,是隐藏输入信息
+select * from emp where deptno=&dept_num;
+请输入部门号:
+
+使用DEFINE命令
+define name=ename
+select &name,sal from emp;
+
+undefine name -- 取消定义替换变量,如果定义了必须取消否则一直有效
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

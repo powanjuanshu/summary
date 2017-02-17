@@ -1,0 +1,6 @@
+安装oracle
+	准备好oracle安装文件
+oracle安装会自动生成sys用户和system用户
+1.sys用户是超级用户，具有最高权限，具有sysdba角色，有create database的权限，该用户默认密码是manager
+2.system用户是管理操作员,权限也很大，具有sysoper角色，没有create database的权限，默认的密码是change_on_install
+3.一般，对数据库维护，使用system用户登录就可以了

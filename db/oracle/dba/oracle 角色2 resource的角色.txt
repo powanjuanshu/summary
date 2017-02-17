@@ -1,0 +1,27 @@
+RESOURCE角色：		--是授予开发人员的
+	
+CREATE CLUSTER		--建立聚簇
+CREATE PROCEDURE	--建立过程
+CREATE SEQUENCE		--建立序列
+CREATE TABLE		--建表
+CREATE TRIGGER		--建立触发器
+CREATE TYPE		--建立类型
+
+----------------------------查看RESOURCE角色有哪些权限的SQL语句
+SELECT * FROM ROLE_SYS_PRIVS WHERE ROLE='RESOURCE';//RESOURCE必须是大写，小写不行
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+被授予者	选择	插入	更新		删除		参照	改变	索引
+APEX_030200	Yes	Yes	Grantable	Grantable	Yes	Yes	Grantable
+
+grant select, insert, references, alter on CUST to APEX_030200;
+grant update, delete, index on CUST to APEX_030200 with grant option;
+
+有两个选项:Yes和Grantable
+Grantable:作用是权限传递,这样用户scott才能GRANT select, insert ON a.departments to other user
+
+
+grant|revoke 对象权限|all on 数据库对象 to 数据库用户 [with grant option]
+
+revoke select on emp from myuser;
+
+
+
+

@@ -1,0 +1,3 @@
+sys 最高权限  默认密码：change_on_install
+system 第二高 默认密码：manager
+scott 	      默认密码：tiger

@@ -1,0 +1,1 @@
+select convert(nvarchar(20),getdate(),112)

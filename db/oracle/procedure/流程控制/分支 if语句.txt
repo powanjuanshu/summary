@@ -1,0 +1,22 @@
+IF语句根据条件执行一系列语句,有三种形式:
+if--then--end if;
+if--then--else--end if;
+if--then--elsif--then--else--end if;
+
+DECLARE
+  icode VARCHAR2(4);
+  irate NUMBER;
+BEGIN
+  icode := 'i203';
+  SELECT itemrate INTO irate FROM itemfile
+  WHERE itemcode = icode;
+  IF irate > 200 THEN
+    UPDATE itemfile SET itemrate = itemrate - 200
+    WHERE itemcode = icode;
+  ELSE
+    UPDATE itemfile SET itemrate = itemrate - 50
+    WHERE itemcode = icode;
+  END IF;
+  DBMS_OUTPUT.PUT_LINE('itemrate='||irate);
+END;
+

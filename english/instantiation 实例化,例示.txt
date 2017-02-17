@@ -1,0 +1,8 @@
+These bounds could specify the set of available constructors that must be present in any instantiation of the parameter.
+这些界限可以指定一组可用的构造函数，它们必须出现在参数的每一个实例化中。
+
+The target instance to be created on template instantiation.
+将被创建在模板例示上的目标范例。
+
+
+

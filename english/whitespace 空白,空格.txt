@@ -1,0 +1,8 @@
+This expression also removes all null characters and excess whitespace.
+此表达式也会删除所有空字符和过量的空白
+
+In this case the % substitutes other punctuation characters and whitespace.
+在这里，%会替换其他的标点符号和空格
+
+
+

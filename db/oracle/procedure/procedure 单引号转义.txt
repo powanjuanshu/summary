@@ -1,0 +1,4 @@
+oracle字符串中，单引号用两个单引号代表一个，也就是说单引号本身是转义符
+begin
+dbms_output.putline('''abcd''');
+end;

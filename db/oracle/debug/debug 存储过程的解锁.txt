@@ -1,0 +1,9 @@
+select b.sid,b.SERIAL#
+  from SYS.V_$ACCESS a, SYS.V_$session b
+ where a.type = 'PROCEDURE'
+   and (a.OBJECT like upper('%modetest%') or
+       a.OBJECT like lower('%modetest%'))
+   and a.sid = b.sid
+   and b.status = 'ACTIVE';
+   
+alter system kill session '424,23890';

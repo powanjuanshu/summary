@@ -1,0 +1,50 @@
+-----------------------学生
+SNAME	CID
+小赵	1
+小钱	1
+小孙	2
+小李	2
+-----------------------班级
+CID	SNAME
+1	电子
+2	美术
+3	软件
+-----------------------左连接
+SELECT * FROM classs c,student s WHERE c.cid=s.cid(+);
+CID	CNAME	SNAME	CID
+1	电子	小赵	1
+1	电子	小钱	1
+2	美术	小孙	2
+2	美术	小李	2
+3	软件		
+-----------------------比较
+SELECT * FROM classs c LEFT JOIN student s ON c.cid=s.cid;
+CID	CNAME	SNAME	CID
+1	电子	小赵	1
+1	电子	小钱	1
+2	美术	小孙	2
+2	美术	小李	2
+3	软件		
+SELECT * FROM classs c,student s WHERE c.cid=s.cid;
+CID	CNAME	SNAME	CID
+1	电子	小赵	1
+1	电子	小钱	1
+2	美术	小孙	2
+2	美术	小李	2
+-----------------------------------------------------------------------------------------------
+SELECT a.cusrelationid AS cusrelationid,
+	a.wscode AS wscode,
+	a.srccode AS srccode,
+	a.srcname AS srcname,
+	a.dstcode AS dstcode,
+	a.datelastupdated AS datelastupdated,
+	a.adduser AS adduser,
+	a.creadate AS creadate,
+	a.updateuser AS updateuser,
+	a.sid AS sid,
+	b.orgid AS orgid,
+	b.orgcode AS orgcode,
+	b.orgname AS orgname 
+FROM cusrelation a,organization b
+WHERE 1=1 AND b.orgcode(+)=a.dstcode
+

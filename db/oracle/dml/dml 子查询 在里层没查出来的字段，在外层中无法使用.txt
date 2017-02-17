@@ -1,0 +1,11 @@
+select ID,NAME FROM(
+       select NAME FROM t3
+)
+------------
+会报ID：标识符无效
+
+
+
+
+
+

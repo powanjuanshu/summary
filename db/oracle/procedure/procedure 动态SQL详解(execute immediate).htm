@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Oracle中动态SQL详解(EXECUTE IMMEDIATE) - PAPALIAN的专栏 - 博客频道 - CSDN.NET</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="Oracle中动态SQL详解1．静态SQLSQL与动态SQL　　Oracle编译PL/SQL程序块分为两个种：其一为前期联编（early binding），即SQL语句在程序编译期间就已经确定，大多数的编译情况属于这种类型；另外一种是后期联编（late binding），即SQL语句只有在运行阶段才能建立，例如当查询条件为用户输入时，那么Oracle的SQL引擎就无法在编译期对该程" />
+<script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+<script src="http://static.blog.csdn.net/scripts/plugins.js" type="text/javascript"></script>
+<script src="http://static.blog.csdn.net/scripts/common.js?v=1.2" type="text/javascript"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+<link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/default/css/style.css?v=1.1" />
+<link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/PAPALIAN/rss/list" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+</head>
+<body>
+<script src="http://csdnimg.cn/pubnav/js/pub_topnav_2011.js"type="text/javascript"></script>
+
+<div id="container">
+  <script type="text/javascript">
+    var username = "PAPALIAN";
+    var blog_address = "http://blog.csdn.net/papalian";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";
+</script>
+        
+<div id="body">
+<div id="main">
+<div class="main">
+  <div id="article_details" class="details">
+  <div id="article_content" class="article_content">
+
+<h2 class="titName SG_txta" id="t_4c705ccb01000c2e" style="text-align:center">Oracle中动态SQL详解</h2>
+<p><span><strong>1．静态SQLSQL与动态SQL</strong></span><span><br>
+<br>
+</span><span>　　</span><span>Oracle</span><span>编译</span><span>PL/SQL</span><span>程序</span><span>块</span><span>分</span><span>为</span><span>两个</span><span>种</span><span>：其一</span><span>为</span><span>前期</span><span>联编</span><span>（</span><span>early binding</span><span>），即</span><span>SQL</span><span>语</span><span>句在程序</span><span>编译</span><span>期</span><span>间</span><span>就已</span><span>经</span><span>确定，大多数的</span><span>编译</span><span>情况属于</span><span>这种类</span><span>型；另外一</span><span>种</span><span>是后期</span><span>联编</span><span>（</span><span>late
+ binding</span><span>），即</span><span>SQL</span><span>语</span><span>句只有在运行</span><span>阶</span><span>段才能建立，例如当</span><span>查询</span><span>条件</span><span>为</span><span>用</span><span>户输</span><span>入</span><span>时</span><span>，那</span><span>么</span><span>Oracle</span><span>的</span><span>SQL</span><span>引擎就无法在</span><span>编译</span><span>期</span><span>对该</span><span>程序</span><span>语</span><span>句</span><span>进</span><span>行确定，只能在用</span><span>户输</span><span>入一定的</span><span>查询</span><span>条件后才能提交</span><span>给</span><span>SQL</span><span>引擎</span><span>进</span><span>行</span><span>处</span><span>理。通常，静</span><span>态</span><span>SQL</span><span>采用前一</span><span>种编译</span><span>方式，而</span><span>动态</span><span>SQL</span><span>采用后一</span><span>种编译</span><span>方式。</span><span><br>
+<br>
+</span><span>　　本文主要就</span><span>动态</span><span>SQL</span><span>的</span><span>开发进</span><span>行</span><span>讨论</span><span>，并在最后</span><span>给</span><span>出一些</span><span>实际开发</span><span>的技巧。</span></p>
+<p><strong><span>2</span><span>．</span><span>动态</span><span>SQL</span><span>程序</span><span>开发</span></strong><span><br>
+<br>
+</span><span>　　理解了</span><span>动态</span><span>SQL</span><span>编译</span><span>的原理，也就掌握了其基本的</span><span>开发</span><span>思想。</span><span>动态</span><span>SQL</span><span>既然是一</span><span>种</span><span>”</span><span>不确定</span><span>”</span><span>的</span><span>SQL</span><span>，那其</span><span>执</span><span>行就有其相</span><span>应</span><span>的特点。</span><span>Oracle</span><span>中提供了</span><span>Execute
+ immediate</span><span>语</span><span>句来</span><span>执</span><span>行</span><span>动态</span><span>SQL</span><span>，</span><span>语</span><span>法如下：</span><span><br>
+</span></p>
+<div class="cnblogs_code">
+<pre><div><span style="color:#000000">Excute immediate 动态SQL语句 using 绑定参数列表 returning </span><span style="color:#0000ff">into</span><span style="color:#000000"> 输出参数列表;</span></div></pre>
+</div>
+<span>对这</span><span>一</span><span>语</span><span>句作如下</span><span>说</span><span>明：</span><span><br>
+<br>
+</span><span>　　</span><span>1)</span><span>动态</span><span>SQL</span><span>是指</span><span>DDL</span><span>和不确定的</span><span>DML</span><span>（即</span><span>带</span><span>参数的</span><span>DML</span><span>）</span><span><br>
+<br>
+</span><span>　　</span><span>2)</span><span>绑</span><span>定参数列表</span><span>为输</span><span>入参数列表，即其</span><span>类</span><span>型</span><span>为</span><span>in</span><span>类</span><span>型，在运行</span><span>时</span><span>刻与</span><span>动态</span><span>SQL</span><span>语</span><span>句中的参数（</span><span>实际</span><span>上占位符，可以理解</span><span>为</span><span>函数里面的形式参数）</span><span>进</span><span>行</span><span>绑</span><span>定。</span><span><br>
+<br>
+</span><span>　　</span><span>3)</span><span>输</span><span>出参数列表</span><span>为动态</span><span>SQL</span><span>语</span><span>句</span><span>执</span><span>行后返</span><span>回的参数列表。</span><span><br>
+<br>
+</span><span>　　</span><span>4)</span><span>由于</span><span>动态</span><span>SQL</span><span>是在运行</span><span>时</span><span>刻</span><span>进</span><span>行确定的，所以相</span><span>对</span><span>于静</span><span>态</span><span>而言，其更多的会</span><span>损</span><span>失一些系</span><span>统</span><span>性能来</span><span>换</span><span>取其灵活性。</span>
+<p></p>
+<span>&nbsp;</span><span>为</span><span>了更好的</span><span>说</span><span>明其</span><span>开发</span><span>的</span><span>过</span><span>程，下面列</span><span>举</span><span>一个</span><span>实</span><span>例：</span><span><br>
+<br>
+</span><span>　　</span><span>设</span><span>数据</span><span>库</span><span>的</span><span>emp</span><span>表，其数据</span><span>为</span><span>如下：</span>
+<div align="center">
+<table cellspacing="0" cellpadding="0" width="43%" border="1">
+<tbody>
+<tr>
+<td>
+<p align="left"><span>ID</span></p>
+</td>
+<td>
+<p align="left"><span>NAME</span></p>
+</td>
+<td>
+<p align="left"><span>SALARY</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p align="left"><span>100</span></p>
+</td>
+<td>
+<p align="left"><span>Jacky</span></p>
+</td>
+<td>
+<p align="left"><span>5600</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p align="left"><span>101</span></p>
+</td>
+<td>
+<p align="left"><span>Rose</span></p>
+</td>
+<td>
+<p align="left"><span>3000</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p align="left"><span>102</span></p>
+</td>
+<td>
+<p align="left"><span>John</span></p>
+</td>
+<td>
+<p align="left"><span>4500</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span>要求：</span><span><br>
+<br>
+</span><span>　　</span><span>1</span><span>．</span><span>创</span><span>建</span><span>该</span><span>表并</span><span>输</span><span>入相</span><span>应</span><span>的数据。</span><span><br>
+<br>
+</span><span>　　</span><span>2</span><span>．根据特定</span><span>ID</span><span>可以</span><span>查询</span><span>到其姓名和薪水的信息。</span><span><br>
+<br>
+</span><span>　　</span><span>3</span><span>．根据大于特定的薪水的</span><span>查询</span><span>相</span><span>应</span><span>的</span><span>员</span><span>工信息。</span><span><br>
+<br>
+</span><span>　　根据前面的要求，可以分</span><span>别创</span><span>建三个</span><span>过</span><span>程（均使用</span><span>动态</span><span>SQL</span><span>）来</span><span>实现</span><span>：</span></p>
+<p><span>&nbsp;</span><span>过</span><span>程一：</span></p>
+<p></p>
+<div class="cnblogs_code">
+<pre><div><span style="color:#0000ff">create</span><span style="color:#000000"> </span><span style="color:#808080">or</span><span style="color:#000000"> </span><span style="color:#ff00ff">replace</span><span style="color:#000000"> </span><span style="color:#0000ff">procedure</span><span style="color:#000000"> create_table </span><span style="color:#0000ff">as</span><span style="color:#000000">
+</span><span style="color:#0000ff">begin</span><span style="color:#000000">
+</span><span style="color:#0000ff">execute</span><span style="color:#000000"> immediate </span><span style="color:#ff0000">'</span><span style="color:#ff0000">
+create table emp(id number,
+name varchar2(10),
+salary number )</span><span style="color:#ff0000">'</span><span style="color:#000000">; </span><span style="color:#008080">--</span><span style="color:#008080">动态SQL为DDL语句</span><span style="color:#008080">
+</span><span style="color:#0000ff">insert</span><span style="color:#000000"> </span><span style="color:#0000ff">into</span><span style="color:#000000"> emp
+</span><span style="color:#0000ff">values</span><span style="color:#000000"> (</span><span style="color:#800000; font-weight:bold">100</span><span style="color:#000000">,</span><span style="color:#ff0000">'</span><span style="color:#ff0000">jacky</span><span style="color:#ff0000">'</span><span style="color:#000000">,</span><span style="color:#800000; font-weight:bold">5600</span><span style="color:#000000">);
+</span><span style="color:#0000ff">insert</span><span style="color:#000000"> </span><span style="color:#0000ff">into</span><span style="color:#000000"> emp
+</span><span style="color:#0000ff">values</span><span style="color:#000000"> (</span><span style="color:#800000; font-weight:bold">101</span><span style="color:#000000">,</span><span style="color:#ff0000">'</span><span style="color:#ff0000">rose</span><span style="color:#ff0000">'</span><span style="color:#000000">,</span><span style="color:#800000; font-weight:bold">3000</span><span style="color:#000000">);
+</span><span style="color:#0000ff">insert</span><span style="color:#000000"> </span><span style="color:#0000ff">into</span><span style="color:#000000"> emp
+</span><span style="color:#0000ff">values</span><span style="color:#000000"> (</span><span style="color:#800000; font-weight:bold">102</span><span style="color:#000000">,</span><span style="color:#ff0000">'</span><span style="color:#ff0000">john</span><span style="color:#ff0000">'</span><span style="color:#000000">,</span><span style="color:#800000; font-weight:bold">4500</span><span style="color:#000000">);
+</span><span style="color:#0000ff">end</span><span style="color:#000000"> create_table;</span></div></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="">复制代码</a></span></div>
+</div>
+<p></p>
+<p><span>过</span><span>程二：</span></p>
+<p><span></span></p>
+<div class="cnblogs_code">
+<pre><div><span style="color:#0000ff">create</span><span style="color:#000000"> </span><span style="color:#808080">or</span><span style="color:#000000"> </span><span style="color:#ff00ff">replace</span><span style="color:#000000"> </span><span style="color:#0000ff">procedure</span><span style="color:#000000"> find_info(p_id </span><span style="color:#0000ff">number</span><span style="color:#000000">) </span><span style="color:#0000ff">as</span><span style="color:#000000">
+v_name </span><span style="color:#0000ff">varchar2</span><span style="color:#000000">(</span><span style="color:#800000; font-weight:bold">10</span><span style="color:#000000">);
+v_salary </span><span style="color:#0000ff">number</span><span style="color:#000000">;
+</span><span style="color:#0000ff">begin</span><span style="color:#000000">
+</span><span style="color:#0000ff">execute</span><span style="color:#000000"> immediate </span><span style="color:#ff0000">'</span><span style="color:#ff0000">
+select name,salary from emp
+where id=:1</span><span style="color:#ff0000">'</span><span style="color:#000000">
+using p_id
+returning </span><span style="color:#0000ff">into</span><span style="color:#000000"> v_name,v_salary; </span><span style="color:#008080">--</span><span style="color:#008080">动态SQL为查询语句</span><span style="color:#008080">
+</span><span style="color:#000000">dbms_output.put_line(v_name </span><span style="color:#808080">||</span><span style="color:#ff0000">'</span><span style="color:#ff0000">的收入为：</span><span style="color:#ff0000">'</span><span style="color:#808080">||</span><span style="color:#000000">to_char(v_salary))；
+exception
+</span><span style="color:#0000ff">when</span><span style="color:#000000"> others </span><span style="color:#0000ff">then</span><span style="color:#000000">
+dbms_output.put_line(</span><span style="color:#ff0000">'</span><span style="color:#ff0000">找不到相应数据</span><span style="color:#ff0000">'</span><span style="color:#000000">)；
+</span><span style="color:#0000ff">end</span><span style="color:#000000"> find_info;</span></div></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="">复制代码</a></span></div>
+</div>
+<span>&nbsp;</span><span>过</span><span>程三：</span>
+<p></p>
+<p><span></span></p>
+<div class="cnblogs_code">
+<pre><div><span style="color:#0000ff">create</span><span style="color:#000000"> </span><span style="color:#808080">or</span><span style="color:#000000"> </span><span style="color:#ff00ff">replace</span><span style="color:#000000"> </span><span style="color:#0000ff">procedure</span><span style="color:#000000"> find_emp(p_salary </span><span style="color:#0000ff">number</span><span style="color:#000000">) </span><span style="color:#0000ff">as</span><span style="color:#000000">
+r_emp emp</span><span style="color:#808080">%</span><span style="color:#000000">rowtype;
+type c_type </span><span style="color:#0000ff">is</span><span style="color:#000000"> ref </span><span style="color:#0000ff">cursor</span><span style="color:#000000">;
+c1 c_type;
+</span><span style="color:#0000ff">begin</span><span style="color:#000000">
+</span><span style="color:#0000ff">open</span><span style="color:#000000"> c1 </span><span style="color:#0000ff">for</span><span style="color:#000000"> </span><span style="color:#ff0000">'</span><span style="color:#ff0000">
+select * from emp
+where salary &gt;:1</span><span style="color:#ff0000">'</span><span style="color:#000000">
+using p_salary;
+loop
+</span><span style="color:#0000ff">fetch</span><span style="color:#000000"> c1 </span><span style="color:#0000ff">into</span><span style="color:#000000"> r_emp;
+</span><span style="color:#0000ff">exit</span><span style="color:#000000"> </span><span style="color:#0000ff">when</span><span style="color:#000000"> c1</span><span style="color:#808080">%</span><span style="color:#000000">notfound;
+dbms_output.put_line(</span><span style="color:#ff0000">'</span><span style="color:#ff0000">薪水大于‘||to_char(p_salary)||’的员工为：‘);
+dbms_output.put_line(</span><span style="color:#ff0000">'</span><span style="color:#000000">ID为</span><span style="color:#ff0000">'</span><span style="color:#ff0000">to_char(r_emp)||</span><span style="color:#ff0000">'</span><span style="color:#000000"> 其姓名为：</span><span style="color:#ff0000">'</span><span style="color:#ff0000">||r_emp.name);
+end loop;
+close c1;
+end create_table;</span></div></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="">复制代码</a></span></div>
+</div>
+<span>注意：在</span><span>过</span><span>程二中的</span><span>动态</span><span>SQL</span><span>语</span><span>句使用了占位符</span><span>“:1“</span><span>，其</span><span>实</span><span>它相当于函数的形式参数，使用</span><span>”</span><span>：</span><span>“</span><span>作</span><span>为</span><span>前</span><span>缀</span><span>，然后使用</span><span>using</span><span>语</span><span>句将</span><span>p_id</span><span>在运行</span><span>时</span><span>刻将</span><span>:1</span><span>给</span><span>替</span><span>换</span><span>掉，</span><span>这</span><span>里</span><span>p_id</span><span>相当于函数里的</span><span>实</span><span>参。另外</span><span>过</span><span>程三中打</span><span>开</span><span>的游</span><span>标为动态</span><span>游</span><span>标</span><span>，它也属于</span><span>动态</span><span>SQL</span><span>的范畴，其整个</span><span>编译</span><span>和</span><span>开发</span><span>的</span><span>过</span><span>程与</span><span>execute
+ immediate</span><span>执</span><span>行的</span><span>过</span><span>程很</span><span>类</span><span>&#20284;，</span><span>这</span><span>里就不在</span><span>赘</span><span>述了</span><span>。</span>
+<p></p>
+<p align="left"><strong><span>3</span><span>．</span> <span>动态</span><span>SQL</span><span>语</span><span>句</span><span>开发</span><span>技巧</span></strong><span><br>
+<br>
+</span><span>　　前面分析到了，</span><span>动态</span><span>SQL</span><span>的</span><span>执</span><span>行是以</span><span>损</span><span>失系</span><span>统</span><span>性能来</span><span>换</span><span>取其灵活性的，所以</span><span>对</span><span>它</span><span>进</span><span>行一定程度的</span><span>优</span><span>化也是必要的，笔者根据</span><span>实际开发经验给</span><span>出一些</span><span>开发</span><span>的技巧，需要指出的是，</span><span>这</span><span>里很多</span><span>经验</span><span>不</span><span>仅</span><span>局限于</span><span>动态</span><span>SQL</span><span>，有些也适用于静</span><span>态</span><span>SQL</span><span>，在描述中会</span><span>给</span><span>予</span><span>标</span><span>注。</span><span><br>
+<br>
+</span><span>　　技巧一：尽量使用</span><span>类</span><span>&#20284;的</span><span>SQL</span><span>语</span><span>句，</span><span>这样</span><span>Oracle</span><span>本身通</span><span>过</span><span>SGA</span><span>中的共享池来直接</span><span>对该</span><span>SQL</span><span>语</span><span>句</span><span>进</span><span>行</span><span>缓</span><span>存，那</span><span>么</span><span>在下一次</span><span>执</span><span>行</span><span>类</span><span>&#20284;</span><span>语</span><span>句</span><span>时</span><span>就直接</span><span>调</span><span>用</span><span>缓</span><span>存中已解析</span><span>过</span><span>的</span><span>语</span><span>句，以此来提高</span><span>执</span><span>行效率。</span><span><br>
+<br>
+</span><span>　　技巧二：当</span><span>涉</span><span>及到集合</span><span>单</span><span>元的</span><span>时</span><span>候</span><span>，尽量使用批</span><span>联编</span><span>。比如需要</span><span>对</span><span>id</span><span>为</span><span>100</span><span>和</span><span>101</span><span>的</span><span>员</span><span>工的薪水加薪</span><span>10</span><span>％，一般情况下</span><span>应该为</span><span>如下形式：</span></p>
+<p align="left"><span></span></p>
+<div class="cnblogs_code">
+<pre><div><span style="color:#0000ff">declare</span><span style="color:#000000">
+type num_list </span><span style="color:#0000ff">is</span><span style="color:#000000"> varray(</span><span style="color:#800000; font-weight:bold">20</span><span style="color:#000000">) </span><span style="color:#0000ff">of</span><span style="color:#000000"> </span><span style="color:#0000ff">number</span><span style="color:#000000">;
+v_id num_list :</span><span style="color:#808080">=</span><span style="color:#000000">num_list(</span><span style="color:#800000; font-weight:bold">100</span><span style="color:#000000">,</span><span style="color:#800000; font-weight:bold">101</span><span style="color:#000000">);
+</span><span style="color:#0000ff">begin</span><span style="color:#000000">
+...
+</span><span style="color:#0000ff">for</span><span style="color:#000000"> i </span><span style="color:#808080">in</span><span style="color:#000000"> v_id.first .. v_id.last loop
+...
+</span><span style="color:#0000ff">execute</span><span style="color:#000000"> immediate </span><span style="color:#ff0000">'</span><span style="color:#ff0000">update emp
+set =salary*1.2
+where id=:1 </span><span style="color:#ff0000">'</span><span style="color:#000000">
+using v_id(i);
+</span><span style="color:#0000ff">end</span><span style="color:#000000"> loop;
+</span><span style="color:#0000ff">end</span><span style="color:#000000">;</span></div></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="">复制代码</a></span></div>
+</div>
+<span>&nbsp;</span><span>对</span><span>于上面的</span><span>处</span><span>理，当数据量大的</span><span>时</span><span>候就会</span><span>显</span><span>得比</span><span>较</span><span>慢，那</span><span>么</span><span>如果采用批</span><span>联编</span><span>的</span><span>话</span><span>，</span><span>则</span><span>整个集合首先一次性的</span><span>传</span><span>入到</span><span>SQL</span><span>引擎中</span><span>进</span><span>行</span><span>处</span><span>理，</span><span>这样</span><span>比</span><span>单</span><span>独</span><span>处</span><span>理效率要高的多，</span><span>进</span><span>行批</span><span>联编处</span><span>理的代</span><span>码</span><span>如下：</span>
+<p></p>
+<p align="left"><span></span></p>
+<div class="cnblogs_code">
+<pre><div><span style="color:#0000ff">declare</span><span style="color:#000000">
+type num_list </span><span style="color:#0000ff">is</span><span style="color:#000000"> varray(</span><span style="color:#800000; font-weight:bold">20</span><span style="color:#000000">) </span><span style="color:#0000ff">of</span><span style="color:#000000"> </span><span style="color:#0000ff">number</span><span style="color:#000000">;
+v_id num_list :</span><span style="color:#808080">=</span><span style="color:#000000">num_list(</span><span style="color:#800000; font-weight:bold">100</span><span style="color:#000000">,</span><span style="color:#800000; font-weight:bold">101</span><span style="color:#000000">);
+</span><span style="color:#0000ff">begin</span><span style="color:#000000">
+...
+forall i </span><span style="color:#808080">in</span><span style="color:#000000"> v_id.first .. v_id.last loop
+...
+</span><span style="color:#0000ff">execute</span><span style="color:#000000"> immediate </span><span style="color:#ff0000">'</span><span style="color:#ff0000">update emp
+set =salary*1.2
+where id=:1 </span><span style="color:#ff0000">'</span><span style="color:#000000">
+using v_id(i);
+</span><span style="color:#0000ff">end</span><span style="color:#000000"> loop;
+</span><span style="color:#0000ff">end</span><span style="color:#000000">;</span></div></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="">复制代码</a></span></div>
+</div>
+<span>这</span><span>里是使用</span><span>forall</span><span>来</span><span>进</span><span>行批</span><span>联编</span><span>，</span><span>这</span><span>里将批</span><span>联编处</span><span>理的情形作一个小</span><span>结</span><span>：</span><span><br>
+<br>
+</span><span>　　</span><span>1)</span> <span>如果一个循</span><span>环</span><span>内</span><span>执</span><span>行了</span><span>insert</span><span>，</span><span>delete</span><span>，</span><span>update</span><span>等</span><span>语</span><span>句引用了集合元素，那</span><span>么</span><span>可以将其移</span><span>动</span><span>到一个</span><span>forall</span><span>语</span><span>句中。</span><span><br>
+<br>
+</span><span>　　</span><span>2)</span> <span>如果</span><span>select into</span><span>，</span><span>fetch into</span><span>或</span><span>returning into</span>
+<span>子句引用了一个集合，</span><span>应该</span><span>使用</span><span>bulk collect</span><span>子句</span><span>进</span><span>行合并。</span><span><br>
+<br>
+</span><span>　　</span><span>3)</span> <span>如有可能，</span><span>应该</span><span>使用主机数</span><span>组</span><span>来</span><span>实现</span><span>在程序和数据</span><span>库</span><span>服</span><span>务</span><span>器之</span><span>间传递</span><span>参数。</span><span><br>
+<br>
+</span><span>　　技巧三：使用</span><span>NOCOPY</span><span>编译</span><span>器来提高</span><span>PL/SQL</span><span>性能。缺省情况下，</span><span>out</span><span>类</span><span>型和</span><span>in out</span><span>类</span><span>型的参数是由</span><span>&#20540;传递</span><span>的方式</span><span>进</span><span>行的。但是</span><span>对</span><span>于大的</span><span>对</span><span>象</span><span>类</span><span>型或者集合</span><span>类</span><span>型的参数</span><span>传递</span><span>而言，其希望</span><span>损</span><span>耗将是很大的，</span><span>为</span><span>了减少</span><span>损</span><span>耗，可以采用引用</span><span>传递</span><span>的方式，即在</span><span>进</span><span>行参数声明的</span><span>时</span><span>候引用</span><span>NOCOPY</span><span>关键</span><span>字来</span><span>说</span><span>明即可到达</span><span>这样</span><span>的效果。</span><span>比如</span><span>创</span><span>建一个</span><span>过</span><span>程：</span>
+<p></p>
+<p align="left"><span></span></p>
+<div class="cnblogs_code">
+<pre><div><span style="color:#0000ff">create</span><span style="color:#000000"> </span><span style="color:#808080">or</span><span style="color:#000000"> </span><span style="color:#ff00ff">replace</span><span style="color:#000000"> </span><span style="color:#0000ff">procedure</span><span style="color:#000000"> test(p_object </span><span style="color:#808080">in</span><span style="color:#000000"> nocopy </span><span style="color:#ff00ff">square</span><span style="color:#000000">)
+...
+</span><span style="color:#0000ff">end</span><span style="color:#000000">;</span></div></pre>
+</div>
+<span>其中</span><span>square</span><span>为</span><span>一个大的</span><span>对</span><span>象</span><span>类</span><span>型。</span><span>这样</span><span>只是</span><span>传递</span><span>一个地址，而不是</span><span>传递</span><span>整个</span><span>对</span><span>象了。</span><span>显</span><span>然</span><span>这样</span><span>的</span><span>处</span><span>理也是提高了效率。</span><span><br>
+<br>
+</span><span>　　</span><strong><span>4</span><span>．</span> <span>小</span><span>结</span></strong><span><br>
+<br>
+</span><span>　　本文</span><span>对动态</span><span>SQL</span><span>的</span><span>编译</span><span>原理、</span><span>开发过</span><span>程以及</span><span>开发</span><span>技巧的</span><span>讨论</span><span>，通</span><span>过</span><span>本文的介</span><span>绍</span><span>后，相信</span><span>读</span><span>者</span><span>对动态</span><span>SQL</span><span>程序</span><span>开发</span><span>有了一个</span><span>总</span><span>体的</span><span>认识</span><span>，</span><span>为</span><span>今后深入的工作打下一个良好的基</span><span>础</span><span>。</span><span><br>
+</span>
+
+</div>
+<div class="share_buttons" id="sharePanel"></div>
+<!--192.168.1.236-->
+<div class="article_next_prev"></div>
+
+
+    
+</div>
+  <script type="text/javascript">
+    new Ad(4, 'ad_cen');
+</script>
+  <div id="comment_list"></div>
+<script type="text/javascript">
+    var fileName = '7162330';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js?v=1.8"></script>
+<script type="text/javascript">
+    new Ad(5, 'ad_bot');
+</script>
+<div id="report_dialog"></div>
+
+<div id="d-top"></div>
+
+
+
+<div class="clear"></div>
+</div>
+</div>
+
+<div class="clear"></div>
+</div>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/SyntaxHighlighter/shCore-src.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/article_code.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/cnick.js"></script>
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/scripts/show.js"></script>
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=481957"></script>
+
+<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js"></script>
+
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+
+<!--ad.csdn.net-->
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,2 @@
+select last_day(sysdate) from daul;
+select last_day('22-5月-1986') from dual; 返回1986-5-22所在月的最后一天日期

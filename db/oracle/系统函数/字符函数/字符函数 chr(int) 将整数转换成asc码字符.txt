@@ -1,0 +1,2 @@
+select chr(65) from dual;
+Êä³ö:A

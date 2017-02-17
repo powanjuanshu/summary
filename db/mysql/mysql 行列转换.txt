@@ -1,0 +1,55 @@
+-- 学生
+select t.grade, 
+case t.grade 
+	when '01' then '小学一年级' 
+	when '02' then '小学二年级' 
+	when '03' then '小学三年级' 
+	when '04' then '小学四年级' 
+	when '05' then '小学五年级' 
+	when '06' then '小学六年级' 
+	when '07' then '初中一年级' 
+	when '08' then '初中二年级' 
+	when '09' then '初中三年级' 
+	when '10' then '高中一年级' 
+	when '11' then '高中二年级' 
+	when '12' then '高中三年级'
+	else null
+	end grade_name,
+t.user_id from (
+	select case
+	when t2.mon > 9 then
+		case t2.phase 
+		when '03' then t2.yea - t2.year + 1
+		when '04' then t2.yea - t2.year + 6 + 1
+		when '05' then t2.yea - t2.year + 6 + 3 + 1
+		END
+	else 
+	 case t2.phase 
+		when '03' then t2.yea - t2.year
+		when '04' then t2.yea - t2.year + 6
+		when '05' then t2.yea - t2.year + 6 + 3
+		END
+	END grade,
+	t1.user_id from uc_user_organization t1  join (select *, MONTH(now()) mon, YEAR(now()) yea from uc_org_class where city_id = '1607') t2 on t1.class_id = t2.id where t1.role_id = '2300000001000000002'
+) t 
+union
+-- 老师
+select * from (
+	select ext_str_02 grade, 
+	case ext_str_02 
+	when '01' then '小学一年级' 
+	when '02' then '小学二年级' 
+	when '03' then '小学三年级' 
+	when '04' then '小学四年级' 
+	when '05' then '小学五年级' 
+	when '06' then '小学六年级' 
+	when '07' then '初中一年级' 
+	when '08' then '初中二年级' 
+	when '09' then '初中三年级' 
+	when '10' then '高中一年级' 
+	when '11' then '高中二年级' 
+	when '12' then '高中三年级'
+	else null
+	end grade_name,
+	user_id from uc_user_ext1 where ext_str_02 is not null and ext_str_02 != ''
+) t where grade_name is not null

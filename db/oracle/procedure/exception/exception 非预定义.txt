@@ -1,0 +1,20 @@
+非预定义(Predefined)错误
+即其他标准的ORACLE错误.对这种异常情况的处理,需要用户在程序中定义,然后由ORACLE自动将其引发.
+
+将定义好的异常情况,与标准的ORACLE错误联系起来,使用PRAGMA EXCEPTION_INIT语句:
+PRAGMA EXCEPTION_INIT(异常情况, 错误代码);
+
+DELETE FROM emp where emp_id = 100; -- 有外键约束无法删除
+报错:
+ORA-02292: 违反完整约束条件 (SCOTT.DEPT_MGR_FK) - 已找到子记录
+
+DECLARE
+  e_deleteid_excepiton EXCEPTION;
+  PRAGMA EXCEPTION_INIT(e_deleteid_exception, -2292);
+BEGIN
+  DELETE FROM emp WHERE emp_id = 100;
+EXCEPTION
+  WHEN e_deleteid_exception THEN 
+    DBMS_OUTPUT.PUT_LINE('违反完整性约束条件,故不可删除此用户');
+END;
+

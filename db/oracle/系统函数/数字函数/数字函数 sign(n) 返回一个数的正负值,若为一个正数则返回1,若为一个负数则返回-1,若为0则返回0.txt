@@ -1,0 +1,2 @@
+select sign(-10) from dual;
+Êä³ö:-1

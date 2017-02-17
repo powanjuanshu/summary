@@ -1,0 +1,3 @@
+select regexp_replace('7979terwer642','[^0-9]','') from dual;
+select regexp_replace('axxabcee','[^abc]','') from dual;
+

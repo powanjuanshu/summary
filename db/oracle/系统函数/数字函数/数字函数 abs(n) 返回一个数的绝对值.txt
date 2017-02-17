@@ -1,0 +1,2 @@
+select abs(-12) from dual;
+Êä³ö:12

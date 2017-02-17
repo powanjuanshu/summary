@@ -1,0 +1,5 @@
+select owner,table_name from dba_tables where table_name='task';
+或者：
+右击表->查看->所有者->即为属于的用户
+
+

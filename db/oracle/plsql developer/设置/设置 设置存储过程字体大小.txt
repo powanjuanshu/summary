@@ -1,0 +1,1 @@
+Tools->Preferences->Fonts->Editor->Select->大小10->确定->Apply->Ok

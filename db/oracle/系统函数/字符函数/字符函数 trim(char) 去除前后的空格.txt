@@ -1,0 +1,7 @@
+trim([leading/trailing/both][匹配字符串或数值][from][需要被处理的字符串或数值])
+select trim(0 from 7600) from dual;
+输出:76
+select trim('中' from '中秋八月中') from dual;
+输出:秋八月
+select trim(leading '中' from '中秋八月中') from dual;
+输出:秋八月中

@@ -1,0 +1,2 @@
+当前用户所拥有的全部权限
+select * from session_privs;-

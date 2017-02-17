@@ -1,0 +1,69 @@
+lag和lead分析函数
+lag和lead可以获取结果集中,按一定排序所排列的当前行的上下相邻若干offset的某个行的某个列(不用结果集的自关联);
+lag,lead分别是向前,向后;
+lag和lead有三个参数,第一个参数是列名,第二个参数是偏移的offset,第三个参数是超出记录窗口时的默认值)
+
+举例如下:                                              
+        ID NAME                                                   
+---------- --------------------                                   
+         1 1name                                                  
+         2 2name                                                  
+         3 3name                                                  
+         4 4name                                                  
+         5 5name                                    
+select id,name,lag(name,1,0) over (order by id) from kkk;
+        ID NAME                 LAG(NAME,1,0)OVER(ORDERBYID)
+---------- -------------------- ----------------------------
+         1 1name                0                                 
+         2 2name                1name                             
+         3 3name                2name                             
+         4 4name                3name                             
+         5 5name                4name                             
+                                                                  
+select id,name,lead(name,1,0) over ( order by id )  from kkk;
+        ID NAME                 LEAD(NAME,1,0)OVER(ORDERBYID)
+---------- -------------------- -----------------------------
+         1 1name                2name                             
+         2 2name                3name                             
+         3 3name                4name                             
+         4 4name                5name                             
+         5 5name                0                                 
+
+select id,name,lead(name,2,0) over ( order by id )  from kkk;
+        ID NAME                 LEAD(NAME,2,0)OVER(ORDERBYID)
+---------- -------------------- -----------------------------
+         1 1name                3name                             
+         2 2name                4name      
+         3 3name                5name                             
+         4 4name                0                                 
+         5 5name                0   
+
+select id,name,lead(name,1,'alf') over ( order by id )  from kkk;                                                             
+        ID NAME                 LEAD(NAME,1,'alf')                    
+---------- -------------------- ------------------------------                    
+         1 1name                2name   
+         2 2name                3name                                             
+         3 3name                4name                                             
+         4 4name                5name                                             
+         5 5name                alf                                  
+                                                                  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

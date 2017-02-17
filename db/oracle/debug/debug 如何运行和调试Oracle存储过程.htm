@@ -1,0 +1,187 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<title>如何运行和调试Oracle存储过程_数据库技术_Linux公社-Linux系统门户网站</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon"/>
+<meta name="description" content="1. 编写Oracle存储过程脚步如下： CREATE OR REPLACE PROCEDURE P_AUTO_CREATE_PARTITION (Result Out int, LogE"/>
+<meta name="keywords" content="Oracle教程,如何运行和调试Oracle存储过程,数据库,Oracle,Oracle教程,MySQL,NoSQL,PostgreSQL,MySQL,MongoDB,Oracle数据库"/>
+<meta name="generator" content="Linux公社"/>
+<meta name="generator" content="Linux"/>
+<link rel="stylesheet" href="../../style/systems/style.css" type="text/css"/>
+<meta name="generator" content="专业的Linux网站"/>
+<script type="text/javascript" src="../../inc/jquery.js"></script>
+<script type="text/javascript" src="../../inc/iwms.js"></script>
+<script type="text/javascript">iwms.urlPrefix="../../";</script>
+
+<script type="text/javascript" src="../../inc/show.js"></script>
+</head>
+<body>
+<div class="topBar">
+	<div class="twidth">
+	
+	<div style="float:right">
+		<script type="text/javascript" src="../../inc/language.js"></script>
+	</div>
+	
+	<div id="topUser">你好，游客 <a href="#" onclick="iwms.logPop()">登录</a>
+	<a href="../../memberreg.aspx" rel="nofollow">注册</a>
+	<a href="../../search.aspx" rel="nofollow">搜索</a>
+	</div>
+	</div>
+</div>
+<div class="twidth">
+<div id="sitehead">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<table width="100%">
+	<tr align="center"><td width="160">
+	<a href="http://www.linuxidc.com/"><img style="filter: chroma(color=#FFFFFF);" src="../../pic/logo.jpg" alt="Linux公社" width="155" height="53" border="0" /></a>
+	</td><td>
+	<div align="center"><script src="/linuxfile/linux.js" type="text/javascript" language="javaScript"></script></div>
+	</td>
+	</tr></table>
+</div>
+</div>
+<div id="navbar">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm" class="first">首页</a><a href="../../it/">Linux新闻</a><a href="../../Linuxit/">Linux教程</a><a href="../../MySql/" class="thisclass">数据库技术</a><a href="../../RedLinux/">Linux编程</a><a href="../../Apache/">服务器应用</a><a href="../../Unix/">Linux安全</a><a href="../../download/">Linux下载</a><a href="../../Linuxrz/">Linux认证</a><a href="../../theme/">Linux主题</a><a href="../../Linuxwallpaper/">Linux壁纸</a><a href="../../linuxsoft/">Linux软件</a><a href="../../digi/">数码</a><a href="../../mobile/">手机</a><a href="../../diannao/">电脑</a>
+
+</div>
+</div>
+
+<div id="navsub">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm">首页</a> → <a href="../../MySql/">数据库技术</a>
+</div>
+</div>
+<div class="linuxe1"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxe1.js"></script></div>
+<div class="linux1"><script type="text/javascript" language="javaScript" src="/linuxfile/linux1.js"></script></div>
+<div class="linuxa"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxa.js"></script></div>
+<div class="linuxa1"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxa1.js"></script></div>
+<table id="middle" width="100%" cellspacing="0" cellpadding="0" style="table-layout:fixed">
+<tr valign="top"><td>
+
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<div class="moreR">
+			背景：<script type="text/javascript">WriteBg()</script>
+		</div>
+		<span class="tt">阅读新闻</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm" id="bodyTd">
+		<div id="printBody" style="word-break:break-all;">
+			<div style="text-align:center"><h1 class="aTitle">如何运行和调试Oracle存储过程</h1></div>
+			
+			<table width="97%" align="center">
+				<tr>
+				<td width="140">[日期：2011-07-29]</td>
+				<td align="center">来源：Linux社区&nbsp;
+				作者：bruce_wang_janet</td>
+				<td width="160" align="right">[字体：<a href="javascript:ContentSize(16)">大</a> <a href="javascript:ContentSize(0)">中</a> <a href="javascript:ContentSize(12)">小</a>]
+				</td></tr>
+			</table>
+<div id="li_all">
+<div id="li_1"><script type="text/javascript" src="/linuxfile/linux201.js"></script></div>
+<div id="li_2"><script type="text/javascript" src="/linuxfile/linux2.js"></script></div>
+</div>
+			<div id="content"><div class="linux19"><script type="text/javascript" language="javaScript" src="/linuxfile/linux19.js"></script></div> <P>1. 编写<a href="http://www.linuxidc.com/topicnews.aspx?tid=12" target="_blank" title="Oracle">Oracle</a>存储过程脚步如下：</P>
+<DIV class="dp-highlighter bg_html">
+<OL class=dp-xml>
+<LI class=alt><SPAN><SPAN>CREATE&nbsp;OR&nbsp;REPLACE&nbsp;PROCEDURE&nbsp;P_AUTO_CREATE_PARTITION&nbsp;&nbsp;</SPAN></SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;(Result&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Out&nbsp;int,&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;LogErrDesc&nbsp;Out&nbsp;varchar2&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;)&nbsp;&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;is&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TypeTable&nbsp;is&nbsp;table&nbsp;of&nbsp;varchar2(20);&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;CreatePartitionErr&nbsp;exception;&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;days&nbsp;TypeTable;&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>BEGIN&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;Result&nbsp;</SPAN><SPAN class=attribute><FONT color=#ff0000>:</FONT></SPAN><SPAN>=&nbsp;</SPAN><SPAN class=attribute-value><FONT color=#0000ff>0</FONT></SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;SELECT&nbsp;DATETIME&nbsp;&nbsp;&nbsp;bulk&nbsp;collect&nbsp;into&nbsp;days&nbsp;FROM&nbsp;&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;(&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;TO_CHAR(TRUNC(SYSDATE-2,'dd'),'YYYYMMDD')&nbsp;AS&nbsp;DATETIME&nbsp;FROM&nbsp;&nbsp;&nbsp;DUAL&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;UNION&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;TO_CHAR(TRUNC(SYSDATE-1,'dd'),'YYYYMMDD')&nbsp;AS&nbsp;DATETIME&nbsp;FROM&nbsp;&nbsp;&nbsp;DUAL&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;UNION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;TO_CHAR(TRUNC(SYSDATE,'dd'),'YYYYMMDD')&nbsp;AS&nbsp;DATETIME&nbsp;FROM&nbsp;&nbsp;&nbsp;DUAL&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;UNION&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;TO_CHAR(TRUNC(SYSDATE+1,'dd'),'YYYYMMDD')&nbsp;AS&nbsp;DATETIME&nbsp;&nbsp;FROM&nbsp;&nbsp;&nbsp;DUAL&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;UNION&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;TO_CHAR(TRUNC(SYSDATE+2,'dd'),'YYYYMMDD')&nbsp;&nbsp;AS&nbsp;DATETIME&nbsp;FROM&nbsp;&nbsp;&nbsp;DUAL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;);&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;for&nbsp;i&nbsp;in&nbsp;1..days.count&nbsp;loop&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;bruce_partiton.CreatePartitions('T_CDT_1X_BASIC_Partion',days(i))</SPAN><STRONG><FONT color=#993300><SPAN class=tag>&lt;</SPAN><SPAN class=tag-name>0</SPAN></FONT></STRONG><SPAN>&nbsp;then&nbsp;raise&nbsp;CreatePartitionErr;&nbsp;end&nbsp;if;&nbsp;&nbsp;</SPAN></SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;end&nbsp;loop;&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;--名字写错了bruce_partiton，应该为bruce_partition&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;commit;&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;--异常处理&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>EXCEPTION&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;WHEN&nbsp;CreatePartitionErr&nbsp;THEN&nbsp;rollback;&nbsp;Result&nbsp;</SPAN><SPAN class=attribute><FONT color=#ff0000>:</FONT></SPAN><SPAN>=&nbsp;-1;&nbsp;LogErrDesc&nbsp;</SPAN><SPAN class=attribute><FONT color=#ff0000>:</FONT></SPAN><SPAN>=&nbsp;</SPAN><SPAN class=attribute-value><FONT color=#0000ff>SQLERRM</FONT></SPAN><SPAN>;&nbsp;commit;&nbsp;RETURN;&nbsp;&nbsp;</SPAN></SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;WHEN&nbsp;OTHERS&nbsp;THEN&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;rollback;&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;Result&nbsp;</SPAN><SPAN class=attribute><FONT color=#ff0000>:</FONT></SPAN><SPAN>=&nbsp;-2;&nbsp;&nbsp;</SPAN></SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;LogErrDesc&nbsp;</SPAN><SPAN class=attribute><FONT color=#ff0000>:</FONT></SPAN><SPAN>=&nbsp;</SPAN><SPAN class=attribute-value><FONT color=#0000ff>'CDM_CTCALLTRACEINFO_PRC_NEW&nbsp;Fail!'</FONT></SPAN><SPAN>||substr(dbms_utility.format_error_stack,1,200);&nbsp;&nbsp;</SPAN></SPAN></LI>
+<LI class=alt><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;commit;&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;RETURN;&nbsp;&nbsp;</SPAN></LI>
+<LI class=alt><SPAN>END&nbsp;P_AUTO_CREATE_PARTITION;&nbsp;&nbsp;</SPAN></LI>
+<LI class=""><SPAN>/&nbsp;&nbsp;</SPAN></LI></OL></DIV>
+<P></P>
+<P>2. 调试&nbsp; </P>
+<P>&nbsp;&nbsp; 在PL/SQL中选择存储过程，右键TEST, ADD DEBUGINFO，</P>
+<P><IMG alt="" src="../../upload/2011_07/110729071587081.gif"><BR></P>
+<P><BR></P>
+<P>3. 运行，在Program Window中</P>
+<P><IMG alt="" src="../../upload/2011_07/110729071587082.gif"></P><a href="http://www.linuxidc.com" target="_blank"><img src="/linuxfile/logo.gif" alt="linux" width="15" height="17" /></div>
+<div class="linux301"><script type="text/javascript" src="/linuxfile/linux301.js"></script></div>
+<div class="linux3"><script type="text/javascript" src="/linuxfile/linux3.js"></script></div>
+<div class="linux302"><script type="text/javascript" src="/linuxfile/linux302.js"></script></div>		
+			
+			
+		</div>
+		<div style="padding:0 15px">
+			<ul id="digg" class="digg">
+				<li class="digg1">0</li>
+				<li class="digg2"><a href="###" onclick="iwms.diggIt(this,iwms.aId)">顶一下</a></li>
+			</ul>	
+		</div>
+<div class="linuxfx"><script type="text/javascript" language="javaScript" src="/linuxfile/fx.js"></script></div>	
+<div class="linux8"><script type="text/javascript" language="javaScript" src="/linuxfile/linux8.js"></script></div>
+<div class="linux801"><script type="text/javascript" language="javaScript" src="/linuxfile/linux801.js"></script></div>
+		<div class="nearNews">
+			<div class="prevNews"><a href="../../Linux/2011-07/39481.htm">DBMS_OUTPUT 过多导致Oracle存储过程执行抛异常</a></div>
+			<div class="nextNews"><a href="../../Linux/2011-07/39518.htm">Oracle 设置归档与非归档模式</a></div>
+		</div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">相关资讯</span> &nbsp; &nbsp; &nbsp;
+		<a href="../../search.aspx?where=nkey&amp;keyword=5726" target="_blank">Oracle教程</a>&nbsp; 
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<table width='100%'><tr><td width='50%' valign='top'><ul class='nl'><li><a href="../../Linux/2013-08/8

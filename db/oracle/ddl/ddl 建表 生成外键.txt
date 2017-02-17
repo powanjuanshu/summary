@@ -1,0 +1,95 @@
+CREATE TABLE studentInfo ( 
+  stuNo       CHAR(10) PRIMARY KEY, //以此为别人的外键引用，必须为主键或唯一
+  stuName     VARCHAR2(20) NOT NULL, 
+  stuSex      NUMBER(1), 
+  stuBirthday DATE DEFAULT SYSDATE , 
+  stuAddress VARCHAR2(20) 
+); 
+CREATE TABLE testInfo ( 
+  stuNo       CHAR(10) NOT NULL REFERENCES studentInfo(stuNo), //设置外键时，studentInfo的sutNo必须为主键或唯一，不然会报错：此列不为主键或唯一
+  classNo     CHAR(5) NOT NULL, 
+  testScore   NUMBER(3,1)
+);
+------------------------------------------------------
+create TABLE zhao(
+    id number primary key,
+    mingcheng nvarchar2(50),
+    neirong nvarchar2(50),
+    jiezhiriqi date,
+    zhuangtai nvarchar2(50)
+);
+create TABLE tou(
+    id number primary key,
+    zhao_id number,
+    toubiaoqiye nvarchar2(50),
+    biaoshuneirong nvarchar2(50),
+    toubiaoriqi date,
+    baojia number,
+    zhuangtai nvarchar2(50),
+    foreign KEY(zhao_id) REFERENCES zhao(id)
+);
+-------------------------------------------------------
+CREATE TABLE studentInfo ( 
+  stuNo       CHAR(10) NOT NULL , 
+  stuName     VARCHAR2(20) NOT NULL, 
+  stuSex      NUMBER(1), 
+  stuBirthday DATE DEFAULT SYSDATE , 
+  stuAddress VARCHAR2(20) 
+); 
+CREATE TABLE testInfo ( 
+  stuNo       CHAR(10) NOT NULL , 
+  classNo     CHAR(5) NOT NULL, 
+  testScore   NUMBER(3,1) 
+); 
+alter table studentinfo add constraint pk_1 primary key (stuno); //在创建外键前，必须先把被引用的外键设为主键或唯一
+alter table testinfo add constraint fk_1  foreign key (stuno) references studentinfo(stuno);//被引用的外键必须是主键或唯一，不然会报错：此列唯一或主键不匹配 
+alter table testinfo add constraint uniq_1 unique (stuno,classno);
+---------------------------------------------------------------------------------------------
+创建外键约束时假如使用Oracle默认的创建方式，在删除被参照的数据时，将无法被删除，这一点在Oracle9i中给了我们更多灵活的选择，
+我们可是使用on delete cascade和on delete set null要害字来决定删除被参照数据时是否要将参照这个数据的那些数据一并删除，还是将那些参照这条数据的数据的对应值赋空。
+例如下面这两个表中分别存的时员工的基本信息和公司的部门信息。我们为
+create　table　dept
+(deptno　number(10)　not　null,
+deptname　varchar2(30)　not　null,
+constraint　pk_dept　primary　key(deptno));
+和
+create　table　emp
+(　empno　number(10)　not　null,
+fname　varchar2(20)　,
+lname　varchar2(20)　,
+dept　number(10)　,
+constraint　pk_emp　primary　key(empno));
+然后我们现在分别使用这两个要害字来增加外键试一下，首先我们来试一下on delete cascade
+alter　table　emp
+add　constraint　fk_emp_dept　foreign　key(dept)　references　dept(deptno)　on　delete　cascade;
+先增加外键。然后插入数据。
+insert　into　dept　values(1,’销售部’);
+insert　into　dept　values(2,’财务部’);
+insert　into　emp　values　(2,’Mary’,'Song’,1);
+insert　into　emp　values　(3,’Linda’,'Liu’,2);
+insert　into　emp　values　(4,’Linlin’,'Zhang’,1);
+然后现在我要删除销售部，会有什么后果呢？
+delete　from　dept　where　deptno=1;
+我们发现除了dept中的一条数据被删除了，emp中两条数据也被删除了，其中emp中的两条数据是参照了销售部的这条数据的，这就很轻易理解on delete cascade了。
+接下来我们再来看on delete set null,顾名思义了，这种方式建立的外键约束，当被参照的数据被删除是，参照该数据的那些数据的对应值将会变为空值，下面我们还是通过试验来证实on delete set null作用：
+首先恢复刚才的那几条数据，然后更改约束：
+alter　table　emp
+add　constraint　fk_emp_dept　foreign　key(dept)　references　dept(deptno)　on　delete　set　null;
+然后我们在执行删除操作：
+delete　from　dept　where　deptno　=　1;
+你也会发现除了dept中的销售部被删除以外，emp中参照这条数据的两条数据的dept的值被自动赋空了，这就是on delete set null的作用了。
+使用on delete set null有一点需要注重的是，被参参照其他表的那一列必须能够被赋空，不能有not null约束，对于上面的例子来说是emp中dept列一定不能有not null约束，假如已经定义了not null约束，又使用了on delete set null来删除被参照的数据时，将会发生：ORA-01407: 无法更新 (”DD”.”EMP”.”DEPT”) 为 NULL的错误。
+总的来讲on delete cascade和on delete set null的作用是用来处理级联删除问题的，假如你需要删除的数据被其他数据所参照，那么你应该决定到底希望oracle怎么处理那些参照这些即将要删除数据的数据的，你可以有三种方式：
+禁止删除。这也是Oracle默认的
+将那些参照本值的数据的对应列赋空，这个需要使用on delete set null要害字
+将那些参照本值的数据一并删除，这个需要使用on delete cascade要害字
+
+
+
+
+
+
+
+
+
+

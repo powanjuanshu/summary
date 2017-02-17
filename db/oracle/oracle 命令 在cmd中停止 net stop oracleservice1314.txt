@@ -1,0 +1,13 @@
+设置SET ORACLE_SID=ORCL
+
+ORCL--实例名称
+
+ 
+
+--停止oracle实例服务
+
+C:\Users\Administrator>net stop oracleserviceORCl
+
+OracleServiceORCL 服务正在停止.........
+
+OracleServiceORCL 服务已成功停止。

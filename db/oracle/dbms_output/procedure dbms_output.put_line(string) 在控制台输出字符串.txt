@@ -1,0 +1,4 @@
+DBMS_OUTPUT.PUT_LINE
+一个oracle提供的软件包中的过程
+dbms_output是包
+put_line是包的一个函数或一个过程

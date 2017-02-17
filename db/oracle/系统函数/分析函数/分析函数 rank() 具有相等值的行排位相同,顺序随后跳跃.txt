@@ -1,0 +1,9 @@
+select deptno, ename, sal, bonus, rank() over(partition by deptno order by sal desc, bonus) as rank from emp;
+Êä³ö:
+DEPTNO	ENAME	SAL	BONUS	RANK
+10	KING	5000		1
+10	MILLER	1300		2
+20	SCOTT	3000		1
+20	FORD	3000		1
+20	JONES	2975		3
+20	CLARK	2450		4

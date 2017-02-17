@@ -1,0 +1,2 @@
+查看当前用户的系统权限
+select * from user_sys_privs; 

@@ -1,0 +1,1 @@
+insert into kkk(myid,myname,mydept) select empno,ename,deptno from emp where deptno=10;£®insert into kkk select * from emp“≤ø…“‘£©

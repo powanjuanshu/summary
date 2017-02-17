@@ -1,0 +1,2 @@
+查看当前用户的表级权限
+select * from user_tab_privs; 

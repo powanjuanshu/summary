@@ -1,0 +1,38 @@
+CREATE OR REPLACE PROCEDURE P_AUTO_CREATE_PARTITION(Result Out int, LogErrDesc Out varchar2) is
+  type TypeTable is table of varchar2(20);
+  CreatePartitionErr exception;
+  days TypeTable;
+BEGIN
+  Result := 0;
+  SELECT DATETIME bulk collect
+    into days
+    FROM (SELECT TO_CHAR(TRUNC(SYSDATE - 2, 'dd'), 'YYYYMMDD') AS DATETIME FROM DUAL
+          UNION
+          SELECT TO_CHAR(TRUNC(SYSDATE - 1, 'dd'), 'YYYYMMDD') AS DATETIME FROM DUAL
+          UNION
+          SELECT TO_CHAR(TRUNC(SYSDATE, 'dd'), 'YYYYMMDD') AS DATETIME FROM DUAL
+          UNION
+          SELECT TO_CHAR(TRUNC(SYSDATE + 1, 'dd'), 'YYYYMMDD') AS DATETIME FROM DUAL
+          UNION
+          SELECT TO_CHAR(TRUNC(SYSDATE + 2, 'dd'), 'YYYYMMDD') AS DATETIME FROM DUAL);
+  for i in 1 .. days.count loop
+    if i = 20 then
+      raise CreatePartitionErr;
+    end if;
+  end loop;
+  commit;
+  --“Ï≥£¥¶¿Ì
+EXCEPTION
+  WHEN CreatePartitionErr THEN
+    rollback;
+    Result := -1;
+    LogErrDesc := SQLERRM;
+    commit;
+    --RETURN;
+  WHEN OTHERS THEN
+    rollback;
+    Result := -2;
+    LogErrDesc := 'CDM_CTCALLTRACEINFO_PRC_NEW Fail!'|| substr(dbms_utility.format_error_stack, 1, 200);
+    commit;
+    RETURN;
+END P_AUTO_CREATE_PARTITION;

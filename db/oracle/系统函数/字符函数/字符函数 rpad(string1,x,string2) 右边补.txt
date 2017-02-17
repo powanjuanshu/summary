@@ -1,0 +1,5 @@
+lpad(string1,x[,string2]) --返回在x字符长度的位置上插入一个string2中的字符的string1
+select rpad('abcde', 10, 'w') from dual;
+输出:abcdewwwww
+select rpad('abcde', 10, 'wt') from dual;
+输出:abcdewtwtw

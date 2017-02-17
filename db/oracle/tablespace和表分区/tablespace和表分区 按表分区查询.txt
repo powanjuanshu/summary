@@ -1,0 +1,1 @@
+select * from sxdxsj.customer partition(part00);--part00是分区名

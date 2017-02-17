@@ -1,0 +1,58 @@
+Oracle virtual column(虚拟列)
+
+oracle statistics table insert function存储
+1. 为什么要使用虚拟列
+(1)可以为虚拟列创建索引(oracle为其创建function index)
+(2)可以搜集虚拟列的统计信息statistics,为CBO提供一定的采样分析。
+(3)可以在where 后面使用虚拟列作为选择条件
+(4)只在一处定义,不存储多余数据,查询是动态生成。
+
+2. 语法
+HR@bear> create table inv(
+  2  inv_id   number,
+  3  inv_count  number,
+  4  inv_status  generated always as 
+  5    case  when  inv_count <= 100 then 'GETTING LOW'
+  6          when  inv_count > 100  then 'OKAY'
+  7    end)
+  8  );
+其中 inv_status 为虚拟列
+我们插入一条数据,然后再查询,可以看到虚拟列的值会根据定义动态生成。
+HR@bear> insert into inv (inv_id, inv_count) values (1, 100);
+1 row created.
+HR@bear> select * from inv;
+
+    INV_ID  INV_COUNT INV_STATUS
+---------- ---------- -----------
+         1        100 GETTING LOW
+3.添加一个虚拟列
+alter table inv add
+	inv_comm generated always as(inv_count * 0.1) virtual
+);
+
+4. 修改现有的一个虚拟列
+alter table inv modify inv_status generated always as(
+	case when inv_count <= 50 then 'NEED MORE'
+	when inv_count >50 and inv_count <=200 then 'GETTING LOW'
+	when inv_count > 200 then 'OKAY'
+	end
+);
+
+5.虚拟列可以在where子句中使用
+
+SQL> update inv set inv_count=100 where inv_status='OKAY';
+注意不能直接插入或修改虚拟列的值。
+你可以定义虚拟列的数据类型,如果不指定,oracle会自动指定为定义中依赖的列的数据类型。
+注意事项：
+(1) 只有堆组织表(heap-organized table)才可以定义虚拟列
+(2) 虚拟列不能引用其他的虚拟列
+(3) 虚拟列只能引用自己表中的列, 不能引用其他表中的列。
+(4) 虚拟列值只能是标量 scalar value (a single value, not a set of values)
+
+
+
+
+
+
+
+

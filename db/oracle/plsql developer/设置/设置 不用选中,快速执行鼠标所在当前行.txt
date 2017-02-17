@@ -1,0 +1,2 @@
+Tools->Preferences->SQL Window->AutoSelect statement打勾->Apply->OK
+------结尾必须打上;号

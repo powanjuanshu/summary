@@ -1,0 +1,3 @@
+select substr('abcdefgh',2,4) from dual;
+输出:bcde
+select substr("ABCDEFG", 0, -3) from dual; //返回:EFG,注意参数-3,为负值时表示从尾部开始算起,字符串排列位置不变

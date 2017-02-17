@@ -1,0 +1,51 @@
+分表技术是比较麻烦的,需要手动去创建子表,app服务端读写时候需要计算子表名.
+
+分表的几种方式:
+1.mysql集群
+它并不是分表,但起到了和分表相同的作用.集群可分担数据库的操作次数,将任务分担到多台数据库上.集群可以读写分离,减少读写压力.从而提升数据库性能.
+
+2.自定义规则分表
+大表可以按照业务的规则来分解为多个子表.通常为以下几种类型,也可自己定义规则:
+Range(范围)		这种模式允许将数据划分不同范围.例如可以将一个表通过年份划分成若干个分区.
+Hash(哈希)		这中模式允许通过对表的一个或多个列的Hash Key进行计算,最后通过这个Hash码不同数值对应的数据区域进行分区.例如可以建立一个对表主键进行分区的表.
+Key(键值)		上面Hash模式的一种延伸,这里的Hash Key是MySQL系统产生的.
+List(预定义列表)	这种模式允许系统通过预定义的列表的值来对数据进行分割.
+Composite(复合模式) 	以上模式的组合使用　
+
+分表规则与分区规则一样,在分区模块详细介绍.
+下面以Range简单介绍下如何分表(按照年份表).
+
+假设表结构有4个字段:自增id,姓名,存款金额,存款日期
+
+把存款日期作为规则分表,分别创建几个表
+2011年:account_2011
+2012年:account_2012
+2012年:account_2013
+2012年:account_2014
+2015年:account_2015
+
+app在读写的时候根据日期来查找对应的表名,需要手动来判定.	
+var getTableName = function() {
+    var data = {
+        name: 'tom',
+        money: 2800.00,
+        date: '201410013059'
+    };
+    var tablename = 'account_';
+    var year = parseInt(data.date.substring(0, 4));
+    if (year < 2012) {
+        tablename += 2011; // account_2011
+    } else if (year < 2013) {
+        tablename += 2012; // account_2012
+    } else if (year < 2014) {
+        tablename += 2013; // account_2013
+    } else if (year < 2015) {
+        tablename += 2014; // account_2014
+    } else {
+        tablename += 2015; // account_2015
+    }
+    return tablename;
+}
+
+
+

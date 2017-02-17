@@ -1,0 +1,6 @@
+匹配前面的子表达式零次或多次。例如，zo*能匹配“z”以及“zoo”。*等价于{0,}。
+select regexp_replace('and xxx and  ','^(and( )+)*','') from dual;
+
+
+
+

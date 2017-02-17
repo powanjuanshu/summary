@@ -1,0 +1,3 @@
+--Partitioning是否为true,查看数据库分区表操作的权限是否打开
+SELECT * FROM v$option s ORDER BY s.PARAMETER DESC
+--

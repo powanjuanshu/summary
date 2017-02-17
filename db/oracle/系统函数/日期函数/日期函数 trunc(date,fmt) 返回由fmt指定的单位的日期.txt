@@ -1,0 +1,6 @@
+select trunc(sysdate,'MONTH') from dual;
+输出:01-2月-10
+select trunc(sysdate,'YEAR') from dual;
+输出:01-1月-10
+select trunc(sysdate, 'hh') from dual; 
+-- 2011-3-18 14:00:00 返回当前时间为14:41

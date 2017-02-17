@@ -1,0 +1,5 @@
+It contains three utility functions.
+它包含了三个实用函数。
+
+This is analogous to many Java methods calling one utility method.
+这就好比许多Java方法调用一个工具方法。

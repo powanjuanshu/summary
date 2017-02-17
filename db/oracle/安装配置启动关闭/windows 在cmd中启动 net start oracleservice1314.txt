@@ -1,0 +1,5 @@
+--启动oracle实例服务
+
+C:\Users\Administrator>net start oracleserviceORCl
+OracleServiceORCL 服务正在启动 ........
+OracleServiceORCL 服务已经启动成功。

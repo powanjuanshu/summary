@@ -1,0 +1,2 @@
+This tutorial guids you step-by-step through the fundamental concepts of JUnit4,with emphasis on the new Java5 annotation.
+本教程将循序渐进地向您讲诉JUnit4的基本概念,侧重于新的java5注释

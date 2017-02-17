@@ -1,0 +1,6 @@
+select instr('worldwide', 'd') from dual;
+输出:5
+select instr('acdeadab','a',2,2) from dual;
+输出:8
+INSTR (源字符串, 目标字符串, 起始位置, 匹配序号)
+select instr('xx SOURCE_TYPE_CODE=5 and D_BRANCH_CODE=4','SOURCE_TYPE_CODE') from dual;返回4

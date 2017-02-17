@@ -1,0 +1,111 @@
+显示游标用于处理返回多行的查询
+*声明游标: CURSOR .. IS SELECT ..
+*打开游标: OPEN
+*结果集控制: FETCH .. INTO ..
+*关闭游标: CLOSE
+
+DECLARE
+  my_toy_price toys.toyprice%TYPE;
+  CURSOR toy_cur IS
+    SELECT toyprice FROM toys WHERE toyprice < 250;
+BEGIN
+  OPEN toy_cur;
+  LOOP
+    FETCH toy_cur INTO my_toy_price;
+    EXIT WHEN toy_cur%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE('价格为:' || my_toy_price);
+  END LOOP;
+  CLOSE toy_cur;
+END;
+
+DECLARE
+  myreco dept%ROWTYPE;
+  CURSOR mycur IS
+    SELECT * FROM dept ORDER BY deptno;
+BEGIN
+  OPEN mycur;
+  FETCH mycur INTO myreco;
+  WHILE mycur%FOUND LOOP
+    DBMS_OUTPUT.PUT_LINE(myreco.deptno || myreco.loc);
+    FETCH mycur INTO myreco;
+  END LOOP;
+  CLOSE mycur;
+END;
+
+带参数的显示游标
+*声明显示游标时可以带参数以提高灵活性
+*声明带参数的显示游标的语法如下:
+ CURSOR <cusor_name>(<param_name> <param_type>)
+ IS select_statement;
+
+DECLARE
+  CURSOR mycur(myjob VARCHAR2) IS
+    SELECT * FROM emp WHERE job = myjob;
+BEGIN
+  FOR myreco IN mycur('SALESMAN') LOOP
+    DBMS_OUTPUT.PUT_LINE(myreco.ename);
+  END LOOP;
+END;
+
+DECLARE
+  CURSOR mycur(myjob VARCHAR2) IS
+    SELECT * FROM emp WHERE job = myjob;
+BEGIN
+  FOR myreco IN mycur('SALESMAN') LOOP
+    DBMS_OUTPUT.PUT_LINE(myreco.ename);
+  END LOOP;
+END;
+
+使用显示游标更新行
+*允许使用游标删除或更新活动集中的行
+*声明游标时必须使用SELECT ... FOR UPDATE语句
+ CURSOR <cursor_name> IS SELECT statement FOR UPDATE;
+ UPDATE <table_name> SET <set_value> WHERE CURRENT OF <cursor_name>
+ DELETE FROM <table_name> WHERE CURRENT OF <cursor_name>
+
+DECLARE
+  new_price NUMBER;
+  CURSOR cur_toy IS
+    SELECT toyprice FROM toys WHERE toyprice < 100 FOR UPDATE OF toyprice; -- 如果指定修改列则加上OF toyprice
+BEGIN
+  OPEN cur_toy;
+  LOOP
+    FETCH cur_toy INTO new_price;
+    EXIT WHEN cur_toy%NOTFOUND;
+    UPDATE toys SET toyprice = 1.1 * new_price WHERE CURRENT OF cur_toy;
+  END LOOP;
+  CLOSE cur_toy;
+  COMMIT;
+END;
+
+DECLARE
+  CURSOR mycur(dept_no INTEGER) IS
+    SELECT * FROM dept WHERE deptno > dept FOR UPDATE;
+BEGIN
+  FOR myreco IN mycur(50) LOOP
+    DELETE FROM dept WHERE CURRENT OF mycur;
+  END LOOP
+END;
+
+循环游标
+*循环游标用于简化游标处理代码
+*当用户需要从游标中提取所有记录时使用
+*循环游标的语法如下:
+ FOR <record_index> IN <cursor_name> LOOP
+   <executable statements>
+ END LOOP;
+注意:游标的FOR循环不需要打开游标和关闭游标,因为FOR循环默认帮我们打开游标和关闭游标.
+
+DECLARE
+  CURSOR mycur(myjob VARCHAR2) IS
+    SELECT * FROM emp WHERE job = myjob;
+BEGIN
+  FOR myreco IN mycur('SALESMAN') LOOP
+    DBMS_OUTPUT.PUT_LINE(myreco.ename);
+  END LOOP;
+END;
+
+
+
+
+

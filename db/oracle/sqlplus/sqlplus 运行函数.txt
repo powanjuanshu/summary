@@ -1,0 +1,4 @@
+SELECT fun_tes FROM DUAL;
+Лђеп
+execute :result:=fun_tes;
+print result;

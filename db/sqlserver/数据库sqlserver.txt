@@ -1,0 +1,7 @@
+1.sqlserver的默认端口是1433
+2.jdbc:
+	private final static String drivername="com.microsoft.sqlserver.jdbc.SQLServerDriver";
+	private final static String url="jdbc:sqlserver://localhost:1433;databasename=PM";
+4.自己插自己:insert into emp select * from emp
+5.外键引用的键必须是主键
+6.

@@ -1,0 +1,1 @@
+select * from all_objects t where t.owner=upper('sxdxsj');

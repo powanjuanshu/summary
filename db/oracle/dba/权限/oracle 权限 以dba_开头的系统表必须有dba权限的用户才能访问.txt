@@ -1,0 +1,4 @@
+比如：全部用户被授予的角色
+  select * from dba_role_privs;
+
+普通用户查询则报错：ORA-00942:表或视图不存在

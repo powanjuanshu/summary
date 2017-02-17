@@ -1,0 +1,6 @@
+Instantiate an object of that class. 
+实例化该类的一个对象。
+
+We can define the Types and Properties necessary to instantiate a company. 
+我们可以定义实例化一个公司所必需的类型和属性。
+

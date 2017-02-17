@@ -1,0 +1,5 @@
+select ename,sal,job from emp where sal>2500 union select ename,sal,job form emp where job='MANAGER';      //去除重复
+select ename,sal,job from emp where sal>2500 union all select ename,sal,job form emp where job='MANAGER';  //不去重复
+select ename,sal,job from emp where sal>2500 intersect select ename,sal,job form emp where job='MANAGER';  //取交集
+select ename,sal,job from emp where sal>2500 minus select ename,sal,job form emp where job='MANAGER';      //取差集，减法
+

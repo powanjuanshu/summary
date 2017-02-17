@@ -1,0 +1,5 @@
+conn 用户名/密码@网络服务名 as sysdba/sysoper
+
+当使用特权用户身份连接时，必须带上as sysdba或as sysoper
+
+比如：conn a/a@Oracl as sysdba/sysoper

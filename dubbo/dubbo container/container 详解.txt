@@ -1,0 +1,77 @@
+
+package com.iflytek.epdcloud.ercsvc.service;
+
+import java.io.File;
+
+public class Main {
+
+
+	public static void main(String[] args) {
+
+		String userDir = System.getProperty("user.dir");
+
+		System.out.println(userDir);
+
+		System.setProperty("catalina.base", "../tomcat");
+
+        	com.alibaba.dubbo.container.Main.main(args);
+//查看源码public static final String DEFAULT_SPRING_CONFIG = "classpath*:META-INF/spring/*.xml";表示默认会加载类路径下的META-INF下的spring下的所有xml文件
+    }
+
+
+}
+
+
+在src/main/resources文件夹下创建META-INF/spring/applicationContext.xml和dubbo-provider-benas.xml:
+applicationContext.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	<aop:aspectj-autoproxy />
+	<context:annotation-config />
+	<context:component-scan base-package="com.iflytek.epdcloud" annotation-config="true" />
+	<import resource="classpath*:META-INF/quartz/applicationContext*.xml"/>  
+</beans>
+
+dubbo-provider-benas.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://code.alibabatech.com/schema/dubbo 
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	">
+	<dubbo:monitor protocol="registry" />
+	<dubbo:protocol name="httpt" server="tomcat" port="9100" />
+	<dubbo:service path="statisticsApi" interface="com.iflytek.epdcloud.ercsvc.api.StatisticsApi$Iface" ref="statisticsApiImpl" protocol="httpt" />
+</beans>
+
+在在src/main/resources文件夹下创建dubbo.properties,dubbo container会自动加载这个配置文件:
+#如果不配置dubbo.container这一项,默认为dubbo.container=spring,只加载spring这一个container
+dubbo.container=log4j,spring
+dubbo.application.name=ercsvc
+dubbo.application.owner=demo
+#dubbo.registry.address=zookeeper://127.0.0.1:2181
+dubbo.registry.address=N/A
+dubbo.monitor.protocol=registry
+dubbo.service.loadbalance=roundrobin
+dubbo.log4j.file=logs/cycore-epdres-provider.log
+dubbo.log4j.level=info
+
+
+
+
+
+
+

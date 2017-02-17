@@ -1,0 +1,72 @@
+CREATE TABLE customer(
+       ID NVARCHAR2(200),
+       c_name NVARCHAR2(200),
+       valid NUMBER
+);
+CREATE TABLE phone(
+       ID NVARCHAR2(200),
+       phone NVARCHAR2(200),
+       valid NUMBER
+);
+CREATE TABLE policy(
+       ID NVARCHAR2(200),
+       policy_no NVARCHAR2(200),
+       valid NUMBER
+);
+SELECT * FROM (
+       WITH v_t AS(
+            SELECT c.ID c_id FROM customer c WHERE c.valid=1
+       )
+       (SELECT c.ID,c.c_name FROM customer c LEFT JOIN v_t v ON v.c_id=c.ID WHERE c.valid=1)
+       LEFT JOIN(
+            SELECT * FROM (
+                   SELECT p.ID ID,p.phone phone,row_number() over(PARTITION BY p.ID ORDER BY p.ID) rn FROM phone p WHERE p.valid=1
+            ) WHERE rn=1
+       ) p ON c.Id=p.id
+)
+-----------------------------------------------------------
+with a AS (select * from emp where rownum<=10),
+     b AS (select * from dept)
+select a.ename,b.dname from a,b where a.deptno=b.deptno
+
+----------------------声明的两个虚表a和b必须要在后面的查询中用到，否则会报错，
+
+相当于创建了两张虚表a表示前10名员工信息，b表示部门信息，然后联合查询出前9名员工的姓名和部门
+
+with子句中，定义了a和b，就必须要用a和b，且不能用emp和dept，不然会报错
+
+---------------------------------------------------------------------------------
+SELECT * FROM (
+       WITH vt AS (  --在这个地方不能跟虚表取别名，不然会报错，
+            SELECT * FROM emp
+       )
+       select * from vt v left join emp e on v.empno=e.empno
+)
+--------------------------------------------------------
+这是创建虚表的第二种方法，此种方法在from后面不能带emp，否则会报不可应用在with子句中定义的查询名，即不能用在with中用到的emp表，
+但可以在left join后面用emp，即在left join后面能用在with中用到的emp表，（其实在left join左右换个位置也可以）
+上面第一种方法，这两种情况都不行，都会报错
+
+----以上两种方法都可以定义多张虚表，且都必须用到定义的虚表，否则会报错：
+SELECT * FROM (
+       WITH vt AS (
+            SELECT * FROM emp
+       ),
+       vs AS(
+            SELECT * FROM dept
+       )
+       SELECT * FROM vt LEFT JOIN vs ON vt.deptno=vs.deptno
+)
+
+
+
+
+
+
+
+
+
+
+
+
+

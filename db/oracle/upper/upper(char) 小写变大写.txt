@@ -1,0 +1,4 @@
+select upper('hello') from dual;
+Êä³ö:HELLO
+select upper('abc') from dual;
+Êä³ö:ABC

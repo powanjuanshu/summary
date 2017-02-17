@@ -1,0 +1,2 @@
+select * from user_tab_columns where table_name='表名'; 注意:表名必须大写 查出所有列信息
+select count(column_name) from user_tab_columns where table_name=upper('temp_policy'); 查出一共有多少列

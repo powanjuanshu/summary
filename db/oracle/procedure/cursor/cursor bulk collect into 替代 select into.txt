@@ -1,0 +1,22 @@
+DECLARE
+  TYPE empcurtype IS REF CURSOR; -- 动态游标类型
+  TYPE idlist IS TABLE OF emp.empno%TYPE; -- 集合的类型,TABLE类型可以放置多个结果集
+  TYPE namelist IS TABLE OF emp.ename%TYPE;
+  TYPE sallist IS TABLE OF emp.sal%TYPE;
+  emp_cv empcurtype;
+  ids idlist;
+  names namelist;
+  sals sallist;
+  row_cn number;
+BEGIN
+  OPEN emp_cv FOR SELECT empno, ename, sal FROM emp;
+  FETCH emp_cv BULK COLLECT INTO ids, names, sals;
+  CLOSE emp_vc;
+  FOR i IN ids.FIRST .. ids.LAST LOOP
+    DBMS_OUTPUT.PUT_LINE(ids(i) || names(i) || sals(i));
+  END LOOP;
+END;
+
+
+
+

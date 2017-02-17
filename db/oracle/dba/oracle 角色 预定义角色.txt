@@ -1,0 +1,57 @@
+1. CONNECT
+2. RESOURCE
+3. DBA
+4. EXP_FULL_DATABASE
+5. IMP_FULL_DATABASE
+6. DELETE_CATALOG_ROLE
+7. EXECUTE_CATALOG_ROLE
+8. SELECT_CATALOG_ROLE
+
+
+
+说明：1-3是为了同ORACLE老版本中的概念相兼容而提供的，不能只依赖于这些ROLE
+      4-5是为了使用Import和Export实用程序的方便而提供的
+      6-8是为了数据字典视图和包的卸载而提供的
+	
+CONNECT角色：		--是授予最终用户的典型权利，最基本的
+
+ALTER SESSION		--修改会话
+CREATE CLUSTER		--建立聚簇
+CREATE DATABASE LINK		--建立数据库链接
+CREATE SEQUENCE		--建立序列
+CREATE SESSION		--建立会话
+CREATE SYNONYM		--建立同义词
+CREATE VIEW		--建立视图
+	
+
+RESOURCE角色：		--是授予开发人员的
+
+CREATE CLUSTER		--建立聚簇
+CREATE PROCEDURE		--建立过程
+CREATE SEQUENCE		--建立序列
+CREATE TABLE		--建表
+CREATE TRIGGER		--建立触发器
+CREATE TYPE		--建立类型
+	
+	
+DBA角色：
+
+拥有系统所有系统级权限
+
+
+IMP_FULL_DATABASE角色、EXP_FULL_DATABASE角色：
+
+BACKUP ANY TABLE		--备份任何表
+EXECUTE ANY PROCEDURE		--执行任何操作
+SELECT ANY TABLE		--查询任何表
+
+DELETE_CATALOG_ROLE角色：
+
+这个角色是Oracle8新增加的，如果授予用户这个角色，用户就可以从表sys.aud$中删除记录，
+sys.aud$表中记录着审计后的记录，使用这个角色可以简化审计踪迹管理。
+
+
+SELECT_CATALOG_ROLE角色、EXECUTE_CATALOG_ROLE角色：
+
+SELECT_CATALOG_ROLE角色具有从数据字典查询的权利，
+EXECUTE_CATALOG_ROLE角色具有从数据字典中执行部分过程和函数的权利。

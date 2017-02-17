@@ -1,0 +1,5 @@
+Here, the for() statement is missing a semicolon.
+下面的for（）语句丢失了一个分号。
+
+Separate multiple warning numbers with a comma or semicolon.
+用逗号或分号分隔多个警告号。

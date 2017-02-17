@@ -1,0 +1,314 @@
+本文讨论的是关于oracle从8i开始引进object的概念后的rowid,即扩展(extended)的rowid:
+
+1.rowid的介绍
+先对rowid有个感官认识:
+SQL> select ROWID from Bruce_test where rownum<2;
+ROWID
+------------------ ----------
+AAABnlAAFAAAAAPAAA
+ROWID的格式如下:
+数据对象编号        文件编号        块编号           行编号
+OOOOOO              FFF             BBBBBB    	     RRR
+我们可以看出,从上面的rowid可以得知:
+AAABnl是数据对象编号
+AAF是相关文件编号
+AAAAAP是块编号
+AAA是行编号
+怎么依据这些编号得到具体的十进制的编码值呢,这是经常遇到的问题.这里需要明白rowid的是基于64位编码的18个字符显示(数据对象编号(6)+文件编号(3)+块编号(6)+行编号(3)=18位),
+其中
+A-Z = 0 - 25 (26)
+a-z = 26 - 51 (26)
+0-9 = 52 - 61 (10)
++/ = 62 - 63 (2)
+共64位,明白这个后,就可以计算出10进制的编码值,计算公式如下:
+d * (b^p)
+其中:b就是基数,这里就是64,p就是从右到左,已0开始的位置数
+比如:上面的例子
+文件号AAF,具体的计算应该是:
+5*(64^0)=5；
+0*(64^1)=0；
+0*(64^2)=0；
+文件号就是0+0+5=5
+刚才提到的是rowid的显示方式:基于64位编码的18个字符显示,其实rowid的存储方式是:10个字节即80位存储,其中数据对象编号需要32位,
+相关文件编号需要10位,块编号需要22,位行编号需要16 位,我们可以得出:
+32bit的object number,每个数据库最多有4G个对象
+10bit的file number,每个对象最多有1022个文件(2个文件预留)
+22bit的block number,每个文件最多有4M个BLOCK
+16bit的row number,每个BLOCK最多有64K个ROWS
+
+2.rowid相关的有用的sql
+最简单的基于rowid的显示方式得到的响应的64位编码对应值的sql:
+select rowid ,substr(rowid,1,6) "OBJECT",substr(rowid,7,3) "FILE",substr(rowid,10,6) "BLOCK",substr(rowid,16,3) "ROW" from TableName;
+OWID              OBJECT       FILE   BLOCK        ROW
+------------------ ------------ ------ ------------ ------
+AAABc4AADAAAGLUAAA AAABc4       AAD    AAAGLU       AAA
+AAABc4AADAAAGLUAAB AAABc4       AAD    AAAGLU       AAB
+AAABc4AADAAAGLUAAC AAABc4       AAD    AAAGLU       AAC
+AAABc4AADAAAGLUAAD AAABc4       AAD    AAAGLU       AAD
+AAABc4AADAAAGLUAAE AAABc4       AAD    AAAGLU       AAE
+通过dbms_rowid这个包,可以直接的得到具体的rowid包含的信息:
+select 
+dbms_rowid.rowid_object(rowid) object_id, 
+dbms_rowid.rowid_relative_fno(rowid) file_id,
+dbms_rowid.rowid_block_number(rowid) block_id ,
+dbms_rowid.rowid_row_number(rowid) num 
+from bruce_t where rownum<5;
+OBJECT_ID    FILE_ID   BLOCK_ID        NUM
+---------- ---------- ---------- ----------
+      5944          3      25300          0
+      5944          3      25300          1
+      5944          3      25300          2
+      5944          3      25300          3
+一些使用ROWID的函数
+ROWIDTOCHAR(rowid):将ROWID转换成STRING
+CHARTOROWID('rowid_string'):将STRING转换成ROWID
+另外,就是自己写的一些函数:
+create or replace function get_rowid (l_rowid in varchar2)
+return varchar2
+is
+ls_my_rowid     varchar2(200);         
+rowid_type     number;         
+object_number     number;         
+relative_fno     number;         
+block_number     number;         
+row_number     number;
+begin
+dbms_rowid.rowid_info(l_rowid,rowid_type,object_number,relative_fno, block_number, row_number);         
+ls_my_rowid := 'Object# is      :'||to_char(object_number)||chr(10)||
+        'Relative_fno is :'||to_char(relative_fno)||chr(10)||
+        'Block number is :'||to_char(block_number)||chr(10)||
+        'Row number is   :'||to_char(row_number);
+return ls_my_rowid ;
+end;
+/
+应用上面的函数如下:
+SQL> select get_rowid(rowid), name from bruce_t;
+GET_ROWID(ROWID)                                                                 NAME
+-------------------------------------------------------------------------------- --------------------------------
+Object# is      :5944                                                      BruceLau
+Relative_fno is :3                                                              
+Block number is :25300                                                          
+Row number is   :0                                                              
+Object# is      :5944                                                     MabelTang
+Relative_fno is :3                                                              
+Block number is :25300                                                          
+Row number is   :1
+
+ROWID为该表行的唯一标识,是一个伪列,可以用在SELECT中,但不可以用INSERT, UPDATE来修改该值.
+注意:ROWID的表指,普通表,cluster table, partition table, subpartition table, index, index partitions and subpartitions(注意:不包含index-organized tables).
+Oracle使用ROWID列来建立内部索引.你可以引用ROWID的值,但ROWID并不存放在数据库中,你可以创建一个表包含ROWID数据类型,
+但Oracle不保证该值是合法的rowids.用户必须确保该rowid值是真实合法的.
+
+Oracle使用rowid数据类型存储行地址,rowid可以分成两种,分别适于不同的对像
+
+Physical rowids:存储ordinary table,clustered table,table partition and subpartition,indexe,index partition and subpartition
+Logical rowids :存储IOT的行地址
+另一种rowid类型叫universal rowed(UROWID),支持上述physical rowid和logical rowed,并且支持非oracle table,即支持所有类型的rowid,但COMPATIBLE必须在8.1或以上.
+
+SELECT ROWID, last_name FROM employees;
+
+Oracle内部使用保留在ROWID伪列中的值构建索引结构
+
+再次强调一次,rowid伪列不存储在数据库中,它不是数据库数据,这是从database及table的逻辑结构来说的,事实上,在物理结构上,每行由一个或多个row pieces组成,每个row piece的头部包含了这个piece的address,即rowid.从这个意义上来说,rowid还是占了磁盘空间的.
+
+我们在创建表时,可以为列指定为rowid数据类型,但oracle并不保证列中的数据是合法的rowid值,必须由应用程序来保证,另外,类型为rowid的列需要6 bytes存储数据
+
+1.2, physical rowids
+只在行存在,它的物理地址rowid就不会变化,除非export/import,根据rowid可以直接定位到block去fetch数据,所以physical兼具有高稳定(stability)和高性能(performance)的特点.
+
+这里要注意一点,对于clustered table来说,根据它的存储特点,在同一个block中的不同table的行可能具有同一个rowid;而nonclustered table,每一行或初始行片(initial row piece)都有唯一的rowid
+
+要注意rowid的地址固定的特点,在一个block的某一行被delete并commit后,它占据的address可以被其它事务新insert的行重用.
+
+Physical rowid可以是下面任一一种格式:
+
+    1) Extended rowid
+
+        使用表空间相关的数据块地址,8i及以上使用这种格式
+
+      
+
+2) Restricted rowid
+
+   使用数据库范围的数据址地址,oracle 7或更早前的版本使用
+
+1.2.1extened rowid
+
+      扩展行地址是64编码的物理地址,编码字符是A-Z, a-z, 0-9, +,and/.
+
+      由4部分组成OOOOOOFFFBBBBBBRRR (obj#file#block#row#)
+
+     
+
+      OOOOOO -–data object number
+
+       FFF –-表空间相对的数据文件号
+
+       BBBBBB –-块号
+
+       RRR ---行号
+
+       注意不是16进制表示
+
+      SQL> select rowid,name from obj$ where rownum<=10;
+
+ROWID             NAME
+
+------------------ ------------------------------
+
+AAAAASAABAAAAB6ABc ACCESS$
+
+AAAAASAABAAAC1QAAK AGGXMLIMP
+
+AAAAASAABAAAC1QAAL AGGXQIMP
+
+AAAAASAABAAAGiRAAI ALERT_QT
+
+AAAAASAABAAAGiRAAh ALERT_QUE
+
+AAAAASAABAAAGujAAo ALERT_QUE$1
+
+AAAAASAABAAAGujAAp ALERT_QUE$1
+
+AAAAASAABAAAGiRAAf ALERT_QUE_N
+
+AAAAASAABAAAGiRAAe ALERT_QUE_R
+
+AAAAASAABAAAGiRAAG ALERT_TYPE
+
+我们可以使用dbms_rowid从extened rowid中抽取各部分信息,或者将extened rowid转换成restricted rowed,详细的信息参见sys.dbms_rowid的规范
+
+#根据rowid抽块对像编号
+
+SQL> select dbms_rowid.rowid_object('AAAAASAABAAAGiRAAG') obj# from dual;
+
+     OBJ#
+
+----------
+
+       18
+
+#根据rowid抽取表空间相对文件号
+
+SQL> select dbms_rowid.rowid_relative_fno('AAAAASAABAAAGiRAAG') rfile# from dual;
+
+    RFILE#
+
+----------
+
+        1
+
+#根据rowid抽取块号
+
+SQL> select dbms_rowid.ROWID_BLOCK_NUMBER('AAAAASAABAAAGiRAAG') block# from dual;
+
+   BLOCK#
+
+----------
+
+    26769
+
+#根据rowid抽取行号
+
+SQL> select dbms_rowid.rowid_row_number('AAAAASAABAAAGiRAAG') row# from dual;
+
+     ROW#
+
+----------
+
+        6
+
+#将extended rowid转换成为restricted rowid
+
+SQL> select dbms_rowid.rowid_to_restricted('AAAAASAABAAAGiRAAG',0) restricted_rowid from dual;
+
+RESTRICTED_ROWID
+
+------------------
+
+00006891.0006.0001
+
+1.2.2restricted rowid
+
+限制地址行号与扩展地址行号编码方式不一样,它在内部使用二进制方式表示,当用select查询时,会转换成varchar2/16进制的混合形式,它的组织方式如下:
+
+BBBBBBBB.RRRR.FFFF (block#.row#.file#)
+
+注意,这里的文件号是绝对文件号,而extended rowid中是相对文件号(相对表空间)
+
+Restricted rowid中不再有object number,因为从绝对文件号可以唯一确定数据块
+
+样例可以参考前面的00006891.0006.0001
+
+    另外请注意,块中的行号是从0开始
+
+除了用dbms_rowid来抽取rowid的不同部分外,也可以用substr
+
+#extended rowid
+
+SQL> SELECT ROWID,
+
+2007-02-01 15:19:28
+2         SUBSTR(ROWID,1,6) "OBJECT",
+3         SUBSTR(ROWID,7,3) "FIL",
+4         SUBSTR(ROWID,10,6) "BLOCK",
+5         SUBSTR(ROWID,16,3) "ROW"
+6   from obj$ where rownum<=5;
+
+ROWID              OBJECT       FIL    BLOCK        ROW
+------------------ ------------ ------ ------------ ------
+AAAAASAABAAAAB6AAa AAAAAS       AAB    AAAAB6       AAa
+AAAAASAABAAAAB6AAu AAAAAS       AAB    AAAAB6       AAu
+AAAAASAABAAAAB6AAF AAAAAS       AAB    AAAAB6       AAF
+AAAAASAABAAAAB6AAv AAAAAS       AAB    AAAAB6       AAv
+AAAAASAABAAAAB6AAZ AAAAAS       AAB    AAAAB6       AAZ
+
+#restricted rowid
+SQL> SELECT ROWID,
+2         SUBSTR(ROWID,15,4) "FILE",
+3         SUBSTR(ROWID,1,8) "BLOCK",
+4         SUBSTR(ROWID,10,4) "ROW"
+5   from obj$ where rownum<=5;
+
+ROWID              FILE     BLOCK            ROW
+------------------ -------- ---------------- --------
+AAAAASAABAAAAB6AAa 6AAa     AAAAASAA         AAAA
+AAAAASAABAAAAB6AAu 6AAu     AAAAASAA         AAAA
+AAAAASAABAAAAB6AAF 6AAF     AAAAASAA         AAAA
+AAAAASAABAAAAB6AAv 6AAv     AAAAASAA         AAAA
+AAAAASAABAAAAB6AAZ 6AAZ     AAAAASAA         AAAA
+
+请注意extented rowid与restricted rowid的编码方式不一样,大家不能拿两种不同编码方式的组件作比较,比如AAAAASAABAAAAB6AAa 这行的File#在两种方式下是有不同的值,表示不同的意义,没有可比性.
+
+下面的语句可以查看表的数据分布在几个文件中
+SQL> SELECT COUNT(DISTINCT(SUBSTR(ROWID,7,3))) "FILES" FROM BOSSSTATSDATA;
+
+     FILES
+----------
+        17
+#下面验证bossstatsdata的数据确实分布在17个文件中
+SQL> select count(file_name) from dba_data_files where TABLESPACE_NAME= (select TABLESPACE_NAME from user_tables where table_name='BOSSSTATSDATA');
+
+COUNT(FILE_NAME)
+----------------
+              17
+
+总结Rowid的使用场景
+1) 构建索引结构, 每个key都有一个rowid指向相应的表行
+2) rowid是访问表行的最快的方法
+3) rowid可用于观察表数据是怎样组织的
+4) rowid是表行的唯一标识符
+
+在任何DML中使用rowid时,应该注意确保相关的行不会改变物理地址(不会被export/import,delete)
+
+1.3 logical rowids
+    用于表达IOT行地址的Logical rowid存储在索引的叶子节点中,会随着索引entry的insert在块内或块间移动,所以,它不是基于物理地址而是基于primary key的标识符,所以取名叫logcial rowid
+Oracle使用logical rowids来构建IOT的secondary indexes
+由于在实际的应用中很少会使用到IOT这种对像,关于logical rowid更详细的描述可以参见<<concepts>>中相关章节
+Part IV Oracle Database Application Development
+26 Native Datatypes
+Overview of ROWID and UROWID Datatypes
+
+1.4 非oracle table中的rowid
+在非oracle系统中,不同的系统有不同的rowid格式,并且,不能使用前述标准的rowid到varchar2/16进制的转换方法, 所以,在这种情况下,应用程序可以使用rowid数据类型,不过要使用非标准的转换方法 (最长256bytes的16进制)
+非oracle 系统中的rowid也能存储在UROWID数据类型中

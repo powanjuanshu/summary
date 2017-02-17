@@ -1,0 +1,16 @@
+刚创建一个用户，登录进去会报user LIJIE lacks CREATE SESSION privilege；logon denied.错误
+-----------说的是lijie这个用户没有创建会话的权限
+解决：
+给用户分配connect角色，这个角色里面有CREATE SESSION权限
+先用dba登录到plsql中去，然后打开Command Window，输入
+grant connect to lijie；回车->会提示：Grant succeeded->完成
+在用lijie这个用户登录就没问题了
+---------------------------或直接就爱那个CREATE SESSION这个权限赋给lijie这个用户
+给用户分配CREATE SESSION权限
+先用dba登录到plsql中去，然后打开Command Window，输入
+grant CREATE SESSION to lijie；回车->会提示：Grant succeeded->完成
+在用lijie这个用户登录就没问题了
+--------------但是这样这个用户还没有建表CREATE TABLE的权限，所以还不能建表，如果建表会报权限不足的错误
+
+
+

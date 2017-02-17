@@ -1,0 +1,30 @@
+SELECT * FROM dept;
+SELECT * FROM emp;
+SELECT * FROM cpic_customer;
+SELECT * FROM cpic_policy;
+SELECT * FROM cpic_phone; 
+WITH a AS (
+       SELECT c.ID ID FROM cpic_customer c WHERE c.valid=1
+)
+SELECT * FROM cpic_customer c INNER JOIN a ON c.ID=a.ID
+LEFT JOIN (
+     SELECT * FROM(
+       SELECT 
+       p.Id,
+       p.policy_no,
+       row_number() over(PARTITION BY ID ORDER BY p.policy_no DESC) rn
+       FROM cpic_policy p WHERE p.valid=1
+     ) WHERE rn=1
+) p ON p.ID=a.ID
+LEFT JOIN (
+     SELECT 
+     ph.Id,
+     decode(ph.type,1,ph.phone) mobilephone,
+     decode(ph.TYPE,2,ph.phone) familyphone,
+     decode(ph.type,3,ph.phone) otherphone 
+     FROM cpic_phone ph WHERE ph.valid=1
+) ph ON ph.Id=a.ID;
+
+
+
+

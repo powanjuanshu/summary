@@ -1,0 +1,3 @@
+3.查看角色(只能查看登陆用户拥有的角色)所包含的权限
+
+sql>select * from role_sys_privs;

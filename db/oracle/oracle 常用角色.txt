@@ -1,0 +1,4 @@
+conn  无法在system表空间中建表，需要resource权限
+dba
+resource  能在任何表空间建表
+

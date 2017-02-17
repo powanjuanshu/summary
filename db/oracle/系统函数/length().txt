@@ -1,0 +1,3 @@
+SELECT LENGTH('数据库系统') FROM DUAL; -- 输出的是字符的长度
+输出:5
+

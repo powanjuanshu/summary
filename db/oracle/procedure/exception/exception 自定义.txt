@@ -1,0 +1,63 @@
+用户自定义异常
+
+声明用户定义异常
+DECLARE
+  my_error EXCEPTION;
+
+触发用户定义异常
+RAISE my_error
+
+引发应用程序错误
+RAISE_APPLICATION_ERROR
+  用于创建用户定义的错误信息
+  可以在可执行部分和异常处理部分使用
+  错误编号必须介于-20000和-20999之间
+  错误消息的长度可长达2048个字节
+RAISE_APPLICATION_ERROR(error_number, error_message);
+
+DECLARE
+  err EXCEPTION;
+  category VARCHAR2(10);
+BEGIN
+  category := '&category';
+  IF category NOT IN('附件', '顶盖', '备件') THEN
+    RAISE err;
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('您输入的类别是' || category);
+  END IF;
+EXCEPTION
+  WHEN err THEN
+    DBMS_OUTPUT.PUT_LINE('无法识别该类别');
+END;
+
+
+DECLARE
+  emp_no emp.empno%TYPE;
+  emp_bonus emp.bonus%TYPE;
+  bonus_exception EXCEPTION;
+BEGIN
+  emp_no := 7566;
+  SELECT NVL(bonus, 0) INTO emp_bonus FROM emp
+  WHERE empno = emp_no;
+  IF emp_bonus = 0 THEN
+    RAISE bonus_exception;
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('奖金为:' || emp_bonus);
+  END IF;
+EXCEPTION
+  WHEN bonus_exception THEN
+    RAILSE_APPLICATION_ERROR(-20001, '未指定奖金的值');
+END;
+
+输出:
+ERROR 位于第一行
+ORA-20001: 未指定奖金的值
+ORA-06512: 在line16
+
+
+
+
+
+
+
+

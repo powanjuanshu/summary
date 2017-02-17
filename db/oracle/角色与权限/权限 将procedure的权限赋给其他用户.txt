@@ -1,0 +1,2 @@
+将过程的执行权限授予其他用户:
+GRANT EXECUTE ON myproc to myuser;

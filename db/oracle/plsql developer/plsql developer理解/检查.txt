@@ -1,0 +1,22 @@
+名称	条件					允许	可延迟	已延迟	上次修改
+tttt	(cust_id>0) and (cust_id <= 125)	Y	N	N	2015/2/2 10:44:26
+
+alter table CUST add constraint tttt check ((cust_id>0) and (cust_id <= 125));
+
+alter table CUST add constraint tttt check ((cust_id>0) AND (cust_id <= 125)) deferrable initially deferred;
+
+
+
+create table mytest (
+	sid number(6) not null primary key,
+	sname varchar2(10) not null,
+	ssex char(2) check(ssex in('男','女')),
+	sbirthday date
+);
+
+
+
+
+
+
+

@@ -1,0 +1,2 @@
+select to_multi_byte('abc') from dual;
+--Êä³ö£á£â£ã

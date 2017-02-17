@@ -1,0 +1,6 @@
+日期函数 round(date [,'fmt']) 将日期按照fmt指定的格式四舍五入,fmt为字符串
+select round(sysdate, 'MONTH') from dual;
+输出:01-3月-10
+select round(sysdate, 'YEAR') from dual;
+输出:01-1月-10
+
