@@ -1,0 +1,7 @@
+option batch on
+option confirm off
+option transfer binary
+open ftp://bestpay:bestpay@180.166.69.54:2100
+rm /bestpayserver/project/paycenter-http.war
+put C:\alljar\paycenter-http.war /bestpayserver/project/
+exit

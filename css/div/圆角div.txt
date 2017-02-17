@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <style type="text/css">
+	
+	div {  
+		border:1px solid #ccc;  
+		margin:2em auto 1em;  
+		max-width:650px;  
+		min-width:544px;  
+		-moz-border-radius:10px;  
+		-webkit-border-radius:10px;  
+		border-radius:10px;  
+	}
+  </style>
+ </head>
+ <body>
+	<div>
+		<br>无图片实现圆角框是打发打发是的<br><br>
+	</div>
+ </body>
+</html>

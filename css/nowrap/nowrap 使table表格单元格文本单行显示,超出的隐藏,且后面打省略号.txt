@@ -1,0 +1,12 @@
+<table width="400" border="1" cellspacing="0" cellpadding="3">
+<tr>
+    <td><div nowrap style="width:100px;overflow:hidden;">名称</div></td>
+    <td><div nowrap style="width:100px;overflow:hidden;">城市</div></td>
+    <td><div nowrap style="width:100px;overflow:hidden;">地址</div></td>
+</tr>
+<tr>
+    <td><div nowrap style="width:100px;overflow:hidden;text-overflow:ellipsis;"></div></td>
+    <td><div nowrap style="width:100px;overflow:hidden;text-overflow:ellipsis;">oo123我爱你oooooooooooooooooooooooong</div></td>
+    <td><div style="width:100px;overflow:hidden;text-overflow:ellipsis;"><nobr>oooooooooo oooooooooooooooooooong</nobr></div></td>
+</tr>
+</table>

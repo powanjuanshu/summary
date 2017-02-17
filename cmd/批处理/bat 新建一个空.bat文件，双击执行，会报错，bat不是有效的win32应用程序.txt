@@ -1,0 +1,11 @@
+新建一个空.bat文件，如AUTOEXEC.bat，双击执行，会报错，bat不是有效的win32应用程序
+----------------原因
+因为，AUTOEXEC.bat没有命令代码，所以打开的时候显示不是有效的win32应用程序
+----------------解决：
+点击AUTOEXEC.bat右键，选择编辑，然后输入：
+@echo This Bat Program
+@pause
+然后保存
+
+
+

@@ -1,0 +1,54 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="no-cache" />
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<script type="text/javascript" src="jquery.easyui.min.js"></script>
+<html>
+<select name="select" size="1" style="font-family:Verdana,Arial; font-size: 9pt; color: #FF0000">
+<option value="2" selected>yesky.com</option>
+<option value="1">redidea.net</option>
+</select>
+
+
+-----------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="no-cache" />
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<script type="text/javascript" src="jquery.easyui.min.js"></script>
+<html>
+<head>
+<style>
+.box
+{
+    border: 1px solid red;
+    width:  182px;
+    height: 20px;
+    clip: rect( 0px, 181px, 20px, 0px );
+    overflow: hidden;
+}
+select
+{
+    position: relative;
+    left: -2px;
+    top: -2px;
+    width: 183px; 
+    line-height: 14px; color: #909993;
+    border-style: none	;//取消下拉框的边框，用div边框代替
+    border-width: 0px; 
+}
+</style>
+</head>
+
+<body>
+<div class = box>
+	<select size = "1">
+	<option>内容一</option>
+	<option>内容二</option>
+	</select>
+</div>
+</body>
+</html>

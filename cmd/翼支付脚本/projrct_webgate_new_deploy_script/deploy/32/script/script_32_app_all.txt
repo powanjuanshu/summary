@@ -1,0 +1,9 @@
+option batch on
+option confirm off
+option transfer binary
+open ftp://bestpay:bestpay@180.166.69.54:2100
+rm /bestpayserver/project/*.jar
+rm /bestpayserver/project/*.war
+put C:\alljar\*.jar /bestpayserver/project/
+put C:\alljar\*.war /bestpayserver/project/
+exit

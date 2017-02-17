@@ -1,0 +1,13 @@
+@pause是DOS内部命令:暂时停止批处理文件的执行,前面加@就是连本身也不显示
+执行批处理文件,最后会显示:请按任意键继续...
+如果没有最后的@pause,那么执行批处理文件,最后不会显示:请按任意键继续...,将直接结束进入命令行
+-----------------------------------------
+@echo off
+echo this
+echo is
+::因为开头的@echo off,这里写pause和@pause是等效的,输出:this is后会暂定输出:请按任意键继续. . .;按键后会输出:amazing
+pause
+echo amazing
+goto comment
+ 
+:comment

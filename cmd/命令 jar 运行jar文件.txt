@@ -1,0 +1,6 @@
+windows下通过命令行运行jar文件 
+1.打开CMD
+2.进入jar所在盘符，例如L盘
+3.cd到jar所在文件目录：cd my\SoftWare\IR\IRDATA\libSVM\libsvm-3.0\libsvm-3.0\java
+4.运行：java -jar libsvm.jar。
+结束。

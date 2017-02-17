@@ -1,0 +1,114 @@
+package com.chains;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+public class GetCustomerInfo implements Command {
+	public boolean execute(Context ctx) throws Exception {
+		System.out.println("Get customer info");
+		ctx.put("customerName", "George Burdell");
+		return false;
+	}
+
+}
+---------------------
+package com.chains;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+public class TestDriveVehicle implements Command {
+	public boolean execute(Context ctx) throws Exception {
+		System.out.println("Test drive the vehicle");
+		return false;
+	}
+}
+-------------------
+package com.chains;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+public class NegotiateSale implements Command {
+	public boolean execute(Context ctx) throws Exception {
+		System.out.println("Negotiate sale");
+		return false;
+	}
+}
+-----------------
+package com.chains;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+public class ArrangeFinancing implements Command {
+	public boolean execute(Context ctx) throws Exception {
+		System.out.println("Arrange financing");
+		return false;
+	}
+}
+---------------
+package com.chains;    
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+public  class  CloseSale implements  Command {    
+    public  boolean  execute(Context ctx) throws  Exception {  
+        System.out.println("Congratulations "  + ctx.get("customerName" ) +", you bought a new car!" );  
+        return  false ;  
+    }
+}
+-----------------
+package com.chains.test;
+import org.apache.commons.chain.impl.ContextBase;
+public class SellVehicleContext extends ContextBase {
+	private String customerName;
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String name) {
+		this.customerName = name;
+	}
+}
+-----------------
+package com.chains.test;
+import org.apache.commons.chain.Catalog;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+import org.apache.commons.chain.config.ConfigParser;
+import org.apache.commons.chain.impl.CatalogFactoryBase;
+public class CatalogLoader {
+	private ConfigParser parser;
+	private Catalog catalog;
+	public CatalogLoader() {
+		parser = new ConfigParser();
+	}
+	public Catalog getCatalog() throws Exception {
+		if (catalog == null) {
+			parser.parse(this.getClass().getResource("/com/chains/chain-config.xml"));
+		}
+		catalog = CatalogFactoryBase.getInstance().getCatalog();
+		return catalog;
+	}
+	public static void main(String[] args) throws Exception {
+		CatalogLoader loader = new CatalogLoader();
+		Catalog sampleCatalog = loader.getCatalog();
+		Command command = sampleCatalog.getCommand("sell-vehicle");
+		SellVehicleContext ctx = new SellVehicleContext();
+		command.execute(ctx);
+		System.out.println(ctx.getCustomerName());
+	}
+}
+-----------------------------
+<catalog>
+	<chain name="sell-vehicle">
+		<command id="GetCustomerInfo" className="com.chains.GetCustomerInfo" />
+		<command id="TestDriveVehicle" className="com.chains.TestDriveVehicle" />
+		<command id="NegotiateSale" className="com.chains.NegotiateSale" />
+		<command id="ArrangeFinancing" className="com.chains.ArrangeFinancing" />
+		<command id="CloseSale" className="com.chains.CloseSale" />
+	</chain>
+</catalog>
+-----------------------------
+打印结果如下：
+Get customer info
+Test drive the vehicle
+Negotiate sale
+Arrange financing
+Congratulations George Burdell, you bought a new car!
+George Burdell
+
+
+
+

@@ -1,0 +1,2 @@
+Convention会默认所有的结果页面都存储在WEB-INF/content下，你也可以在struts的properties文件中设定struts.convention.result.path的值到一个新的路径。
+路径最后“/”是不必要的，Convention会自动进行处理。

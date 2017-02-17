@@ -1,0 +1,14 @@
+package com;
+public class DeleteFile{
+	public static void main(String[] args){
+		try {
+			String[] cmdArray={"cmd","/c","del","D:\\zzz\\a.txt"};
+			Runtime.getRuntime().exec(cmdArray);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+----------------------------
+Runtime.getRuntime().exec("del   C:\\temp.txt");      
+

@@ -1,0 +1,7 @@
+option batch on
+option confirm off
+option transfer binary
+open ftp://bestpay:bestpay@180.166.69.55:2100
+rm /bestpayserver/sync/paycenter-bank.jar
+put C:\alljar\paycenter-bank.jar /bestpayserver/sync/
+exit

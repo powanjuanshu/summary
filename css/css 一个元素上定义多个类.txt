@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	.important {
+		font-weight: bold; 
+		color: blue;
+	}
+	
+	p.items { /*类选择器还可以结合元素选择器来使用,比如你文档中有好多个元素使用了类名items,但你只想在p元素这个类名上修改样式,那么你可以这样进行选择并加上相应的样式*/
+		color:red;
+	}
+	
+	.first.last {/*只对元素中同时包含了important和items两个类才能起作用*/
+		color: blue;
+	}
+</style>
+</head>
+<body>
+<ul>
+	<li class="active important items">2</li><!-- 变蓝色,定义了三个class类表示这个元素有三个class类属性 -->
+</ul>
+
+<input value="aaaa1" class="items">
+<p class="items">aaaa2</p><!-- 变红色 -->
+<a class="items">baidu</a>
+
+<p class="first last">bbbb1</p><!-- 变蓝色 -->
+<p class="first">bbbb2</p>
+<p class="last">bbbb3</p>
+</body>
+<script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+<script>
+
+</script>
+</html>
+--------------------------------------
+类选择器(.className)
+
+类选择器是以一独立于文档元素的方式来指定样式,使用类选择器之前需要在html元素上定义类名,换句话说需要保证类名在html标记中存在,这样才能选择类,如:
+<li class="active important items">2</li>
+		
+共中“active,important, items”就是我们以类给li加上一个类名,以便类选择器能正常工作,从而更好的将类选择器的样式与元素相关联.
+.important {font-weight: bold; color: yellow;}
+		
+上面代码表示是给有important类名的元素加上一个字体为粗体,颜色为黄色的样式
+
+类选择器还可以结合元素选择器来使用,比如你文档中有好多个元素使用了类名items,但你只想在p元素这个类名上修改样式,那么你可以这样进行选择并加上相应的样式:
+p.items {color:red;}
+
+类选择器还有可以具备多类名,上面我们也看到了,我们li元素中同时有两个或多少类名,其中他们以空格隔开,那么选择器也可以使用多类连接在一起,如:
+.important {font-weight: bold;}
+.active {color: green;background: lime;}
+.items {color: #fff;background: #000;}
+.important.items {background:#ccc;}
+.first.last {color: blue;}
+
+正如上面的代码所示,".important.items"这个选择器只对元素中同时包含了important和items两个类才能起作用
+
+有一点大家需要注意,如果一个多类选择器包含的类名中其中有一个不存在,那么这个选择器将无法找到相匹配的元素
+
+所有浏览器都支持类选择器,但多类选择器(.className1.className2)不被ie6支持.
+
+

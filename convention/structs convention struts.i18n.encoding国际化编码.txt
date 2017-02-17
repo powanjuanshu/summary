@@ -1,0 +1,1 @@
+<constant name="struts.i18n.encoding" value="UTF-8"/>

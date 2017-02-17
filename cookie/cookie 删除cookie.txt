@@ -1,0 +1,50 @@
+[1]删除cookie
+  Cookie cookie = new Cookie("key", null);
+  cookie.setMaxAge(0);
+  设置为0为立即删除该Cookie；
+  cookie.setPath("/test/test2");
+  删除指定路径上的Cookie，不设置该路径，默认为删除当前路径Cookie；
+  response.addCookie(cookie);
+
+[2]
+package com.mipo.action;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+@Controller
+public class CoockieController {
+	@RequestMapping("query")
+	public void query (HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();
+		System.out.println("fffff:"+cookies);
+		//删掉第一个cookie
+		cookies[0].setMaxAge(0); // 设置为0为立即删除该Cookie,本地的cookie文件也会删除此条cookie记录，记录删完cookie文件也会被删除，会先删除22222222222的cookie
+		response.addCookie(cookies[0]);
+		for (Cookie scookie : cookies) { // 用一个循环语句遍历Cookie对象数组 
+			String name = scookie.getName(); // 取得这个Cookie的名字
+			String value = scookie.getValue(); // 取得这个Cookie的内容 
+			System.out.println("...:"+name); // 通过将取出来的Cookie的名字和内容放在字符串变量中，我们就能对其进行各种操作了。在上面的例子里，可通过循环语句的遍历，将所有Cookie放在一张表格中进行显示。 
+			System.out.println("...:"+value);
+		}
+	}
+	@RequestMapping("login")
+	public void login(HttpServletRequest request, HttpServletResponse response, String username, String password){
+		if ("lijie".equals(username) && "123456".equals(password)) {
+			System.out.println("登陆成功");
+			String cookieName = "22222222222";
+			String cookieData = "22222222222";
+			Cookie cookie = new Cookie(cookieName, cookieData);
+			String cookieName2 = "11111111111111";
+			String cookieData2 = "11111111111111";
+			Cookie cookie2 = new Cookie(cookieName2, cookieData2);
+			cookie.setMaxAge(100); // 存活期为100秒
+			cookie2.setMaxAge(100);
+			response.addCookie(cookie);
+			response.addCookie(cookie2);
+		} else {
+			System.out.println("登陆失败");
+		}
+	}
+}

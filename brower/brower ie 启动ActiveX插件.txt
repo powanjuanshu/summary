@@ -1,0 +1,1 @@
+ie->Internet选项->安全->自定义级别->ActiveX->勾上提示

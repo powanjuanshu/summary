@@ -1,0 +1,7 @@
+如果希望a.css中引入b.css和c.css可以通过@import指令来完成
+@import url("被引入的css文件");
+
+如果希望在html中引入某个也可以在<style>标签中
+<style>
+@import url("某个css文件");
+</style>

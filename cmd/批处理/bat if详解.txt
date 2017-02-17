@@ -1,0 +1,184 @@
+@echo off
+if "%1"=="" goto a
+if "%1"=="b" goto b
+:a
+echo aaaa
+goto end
+:b
+echo bbbb
+goto end
+:end
+-------------------------------------------
+@echo off
+if exist E:\cmd_change2 (
+	echo 有此文件夹
+	set num1=12
+	set num2=21
+	set /a sum=num1+num2
+	::若存在文件夹则打印33
+	echo %sum%
+	
+) else (
+	echo 无此文件
+	set num1=13
+	set num2=24
+	set /a sum=num1+num2
+	::若无有文件夹则打印37
+	echo %sum%
+)
+
+set is_delete=ok
+::==判断字符串是否相等
+::如果带双引号写成%is_delete%=="ok"那么会不等,除非定义的时候也带双引号set is_delete="ok"
+::判断字符串是否相等的时候,if会区分大小写,比如,单纯的if语句会认为字符串abc和字符串Abc不相同,若不想区分大小写,则需要添加 /i 开关,使用 if /i "字符串1"=="字符串2" 的格式;另外,等于符号是连续的"=="而非单独的"="。
+::也可以写成if /i "%is_delete%"=="ok"
+if /i %is_delete%==ok (
+	echo 相等%is_delete%
+) else (
+	echo 不等%is_delete%
+)
+
+set num3=12
+set num4=21
+::不能用>,因为>号是文件定向的关键符号
+if num3 gtr num4 (echo 成立) else (echo 不成立)
+
+::输出:未赋值
+if defined name (echo 已赋值%name%) else (echo 未赋值%name%)
+
+::if语句还有一个精简格式:if条件表达式语句,它的含义是:如果条件表达式成立,将执行语句,否则什么也不做
+::此种写法必须写一行,若echo thisgame换行则会报错:命令语法不正确
+if 1 equ 1 echo thisgame
+-------------------------------------------
+批处理中if的四种用法
+if用于条件判断,适用于以下情形:
+　　1、判断驱动器、文件或文件夹是否存在,用 if exist 语句;
+　　2、判断某两个字符串是否相等,用 if "字符串1"=="字符串2" 语句;
+　　3、判断某两个数值是否相等,用 if 数值1 equ 数值2 语句;
+　　4、判断某个变量是否已经被赋值,用 if defined str 语句;
+
+　　if语句的完整格式是这样的:if 条件表达式 (语句1) else (语句2),它的含义是:如果条件表达式成立,那么,就执行语句1,否则将执行语句2
+　　对于以上四种情形,可以分别使用如下代码:
+　　1、if exist d:\test.txt (echo D盘下有test.txt存在) else (echo D盘下不存在test.txt)
+　　2、if "abc"=="xyz" (echo字符串abc等于字符串xyz) else (echo 字符串abc不等于字符串xyz)
+　　3、if 1 equ 2 (echo 1等于2) else (echo 1不等于2)
+　　4、if defined str (echo 变量str已经被赋值,其值为%str%) else (echo 变量str的值为空)
+　　判断字符串是否相等的时候,if会区分大小写,比如,单纯的if语句会认为字符串abc和字符串Abc不相同,若不想区分大小写,则需要添加 /i 开关,使用 if /i "字符串1"=="字符串2" 的格式;另外,等于符号是连续的"=="而非单独的"="
+　　判断两个数值之间的大小关系,除了等于用equ之外,还有其他的关系符号,所有适用于if语句的关系符号见下表:
+
+中文含义	关系符		英文解释
+
+等于		equ		equal
+大于 		gtr 		greater than
+大于或等于 	geq 		greater than or equal
+小于 		lss 		less than
+小于或不等于 	leq 		less than or equal
+不等于 		neq 		no equal
+
+if语句还有一个精简格式:if条件表达式语句,它的含义是:如果条件表达式成立,将执行语句,否则什么也不做
+-------------------------------------------
+主要用来判断,1、两个“字符串”是否相等;2、两个数值是大于、小于、等于,然后执行相应的命令。
+当然还有特殊用法,如结合errorlevel:if errorlevel 1 echo error
+或者结合defined（定义的意思）:if defined test (echo It is defined) else echo It isn't defined
+
+用法示例:
+1、检测字符串(注意,用if检测字符串是否相等的时候,后面用的不是“=”,而是“==”):
+@echo off
+set "str=this is a test"
+REM 检测变量%str%是否等于test,如果相等,显示OK,否则显示NO
+if "%str%"=="test" (echo OK) else echo NO
+pause>nul
+
+2、检测数值:（注意,批处理中大于符号不能用:“>”,而用"gtr",其它的也类似）
+比较运算符一览:
+EQU - 等于
+NEQ - 不等于
+LSS - 小于
+LEQ - 小于或等于
+GTR - 大于
+GEQ - 大于或等于
+检测数值 20 是否大于 15演示代码:
+@echo off
+set /a num1=20
+set /a num2=15
+if %num1% gtr %num2% echo %num1%大于%num2%
+if %num1% EQU %num2% echo %num1%等于%num2%
+if %num1% LSS %num2% echo %num1%小于%num2%
+pause>nul
+
+3、if结合errorlevel使用:
+说明:环境变量errorlevel的初始值为0,当一些命令执行不成功,就会返回一个数值,如: ,2 等
+IF-ERRORLEVEL 
+测试代码:
+@ECHO OFF 
+XCOPY F:\test.bat D:\ 
+IF ERRORLEVEL 1 ECHO 文件拷贝失败 
+IF ERRORLEVEL 0 ECHO 成功拷贝文件 
+复制代码
+如果文件拷贝成功,屏幕就会显示“成功拷贝文件”,否则就会显示“文件拷贝失败”。 
+IF ERRORLEVEL 是用来测试它的上一个DOS命令的返回值的,注意只是上一个命令的返回值,而且返回值必须依照从大到小次序顺序判断。 
+因此下面的批处理文件是错误的: 
+@ECHO OFF 
+XCOPY C:\AUTOEXEC.BAT D:\ 
+IF ERRORLEVEL 0 ECHO 成功拷贝文件 
+IF ERRORLEVEL 1 ECHO 未找到拷贝文件 
+IF ERRORLEVEL 2 ECHO 用户通过ctrl-c中止拷贝操作 
+IF ERRORLEVEL 3 ECHO 预置错误阻止文件拷贝操作 
+IF ERRORLEVEL 4 ECHO 拷贝过程中写盘错误 
+无论拷贝是否成功,后面的: 
+未找到拷贝文件 
+用户通过ctrl-c中止拷贝操作 
+预置错误阻止文件拷贝操作 
+拷贝过程中写盘错误 
+都将显示出来。
+附录:
+以下就是几个常用命令的返回值及其代表的意义: 
+backup 
+0 备份成功 
+1 未找到备份文件 
+2 文件共享冲突阻止备份完成 
+3 用户用ctrl-c中止备份 
+4 由于致命的错误使备份操作中止 
+diskcomp 
+0 盘比较相同 
+1 盘比较不同 
+2 用户通过ctrl-c中止比较操作 
+3 由于致命的错误使比较操作中止 
+4 预置错误中止比较 
+diskcopy 
+0 盘拷贝操作成功 
+1 非致命盘读/写错 
+2 用户通过ctrl-c结束拷贝操作 
+3 因致命的处理错误使盘拷贝中止 
+4 预置错误阻止拷贝操作 
+format 
+0 格式化成功 
+3 用户通过ctrl-c中止格式化处理 
+4 因致命的处理错误使格式化中止 
+5 在提示“proceed with format（y/n）?”下用户键入n结束 
+xcopy 
+0 成功拷贝文件 
+1 未找到拷贝文件 
+2 用户通过ctrl-c中止拷贝操作 
+4 预置错误阻止文件拷贝操作 
+5 拷贝过程中写盘错误 
+复制代码
+
+4、if还有一个特殊的用法就是可以用来检测某个变量是否已经被定义
+用法示例:
+@echo off
+set "str1=ok"
+set "str2=no"
+if defined str1 echo str1已经被定义
+if defined str2 echo str2已经被定义
+if defined str3 (echo str3已经被定义) else echo str3 没有被定义
+
+pause>nul
+
+
+
+
+
+
+
+

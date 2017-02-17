@@ -1,0 +1,28 @@
+#include "stdio.h"
+#include "time.h"
+#include <errno.h>
+#include <math.h>
+#include "stdlib.h"
+#include <string.h>
+
+/**
+将char字符串转换成十六进制的字符串
+一个char字符转换成十六进制后需要2个字符来存储
+*/
+int main( int argc, char * argv[] )
+{   
+		char sss[6] = {'a','1','b','A'}; // a的ascii码值是97,转换成十六进制是61.A的ascii是65.
+		char xxx[12];
+		sprintf(xxx, "%02X", (unsigned char)sss[0]); // 将sss[0](a)以十六进制方式格式化到xxx中,等同于xxx[0]和xxx[1]中
+		sprintf(xxx+2, "%02X", (unsigned char)sss[1]); // 将sss[1](a)以十六进制方式格式化到xxx中,等同于xxx[2]和xxx[3]中
+		sprintf(xxx+4, "%02X", (unsigned char)sss[2]); // 将sss[2](a)以十六进制方式格式化到xxx中,等同于xxx[4]和xxx[5]中
+		sprintf(xxx+6, "%02X", (unsigned char)sss[3]); // 将sss[3](a)以十六进制方式格式化到xxx中,等同于xxx[6]和xxx[7]中
+		printf("%s\n", xxx); // 打印出a的十六进制是61
+
+		printf("--------------------------\n"); // 以下是网上的例子
+		int a = 0xffaa;
+		char buff[20];
+		sprintf(buff, "0x%x", a); // 将a以十六进制方式格式化到buff中
+		printf("ttttt:[%s]\n", buff); // 打印数组字符串
+		return 0;
+}

@@ -1,0 +1,2 @@
+cookie.setSecure(true);
+seure   指定在网络上如何传输cookie的值 

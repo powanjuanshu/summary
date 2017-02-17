@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	html{
+		border:4px solid red;
+		margin:20px;
+		
+	}
+	body {
+		border:4px solid blue;
+		widht:900px;
+		height:1200px;
+		margin:30px;
+		
+	}
+	.div01{
+		border:1px solid red;
+		width:150px;
+		height: 150px;
+		
+	}
+	.div03{
+		border:1px solid red;
+		width:150px;
+		height: 150px;
+		position:relative;/*绝对定位后这个div不会脱离流,不会让出原来的位置,原来的位置会空着不让 */
+		left:300px;/*离原来位置的左边边缘的距离,如果视窗右侧有滚动条,滑动滚动条此div位置也会跟着移动 */
+		top:300px;/*离原来位置的上边边缘的距离,如果视窗右侧有滚动条,滑动滚动条此div位置也会跟着移动 */
+	}
+	
+	
+</style>
+</head>
+<body>
+	<div class="wrapper body">
+		<div class="div01">
+			aaaaaaaaaa1
+		</div>
+		<div class="div01">
+			aaaaaaaaaa2
+		</div>
+		<div class="div03">
+			aaaaaaaaaa3
+		</div>
+		<div class="div01">
+			aaaaaaaaaa4
+		</div>
+	</div>
+</body>
+</html>
+-------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	html{
+		border:4px solid red;
+		margin:20px;
+		
+	}
+	body {
+		border:4px solid blue;
+		widht:900px;
+		height:1200px;
+		margin:30px;
+		
+	}
+	.div01{
+		border:1px solid red;
+		width:150px;
+		height: 150px;
+		
+	}
+	.div03{
+		border:1px solid red;
+		width:150px;
+		height: 150px;
+		position:absolute;/*绝对定位后这个div会脱离流,让出原来的位置 */
+		left:300px;/*离视窗左边的边缘的距离,与html和body的边缘没有关系,如果视窗右侧有滚动条,滑动滚动条此div位置也会跟着移动 */
+		top:300px;/*离视窗上边的边缘的距离,与html和body的边缘没有关系,如果视窗右侧有滚动条,滑动滚动条此div位置也会跟着移动 */
+	}
+	
+	.wrapper{
+		border:4px solid green;
+		margin:20px;
+		position:absolute;/*如果父级div是absolute或者relative，则div03的基准以这个div的左上点为基准 */
+	}
+</style>
+</head>
+<body>
+	<div class="wrapper body">
+		<div class="div01">
+			aaaaaaaaaa1
+		</div>
+		<div class="div01">
+			aaaaaaaaaa2
+		</div>
+		<div class="div03">
+			aaaaaaaaaa3
+		</div>
+		<div class="div01">
+			aaaaaaaaaa4
+		</div>
+	</div>
+</body>
+</html>
+-------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	html{
+		border:4px solid red;
+		margin:20px;
+	}
+	body {
+		border:4px solid blue;
+		widht:900px;
+		height:1200px;
+		margin:30px;
+		
+	}
+	.div01{
+		border:1px solid red;
+		width:150px;
+		height: 150px;
+		
+	}
+	.div03{
+		border:1px solid red;
+		width:150px;
+		height: 150px;
+		position:absolute;/*绝对定位后这个div会脱离流,让出原来的位置 */
+		left:300px;/*离视窗左边的边缘的距离,与html和body的边缘没有关系,如果视窗右侧有滚动条,滑动滚动条此div位置也会跟着移动 */
+		top:300px;/*离视窗上边的边缘的距离,与html和body的边缘没有关系,如果视窗右侧有滚动条,滑动滚动条此div位置也会跟着移动 */
+	}
+</style>
+</head>
+<body>
+	<div class="div01">
+		aaaaaaaaaa1
+	</div>
+	<div class="div01">
+		aaaaaaaaaa2
+	</div>
+	<div class="div03">
+		aaaaaaaaaa3
+	</div>
+	<div class="div01">
+		aaaaaaaaaa4
+	</div>
+</body>
+</html>
+-------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	html{
+		border:4px solid red;
+		margin:20px;
+	}
+	body {
+		border:4px solid blue;
+		widht:900px;
+		height:1200px;
+		margin:30px;
+	}
+	.div01{
+		border:1px solid red;
+		width:150px;
+		height: 150px;
+		
+	}
+	.div03{
+		border:1px solid red;
+		width:150px;
+		height: 150px;
+		position:fixed;/*固定定位后这个div会脱离流,让出原来的位置*/
+		left:300px;/*离视窗左边的边缘的距离,与html和body的边缘没有关系,而且如果视窗右侧有滚动条,滑动滚动条此div位置也是原来的绝对位置不会移动 */
+		top:300px;/*离视窗上边的边缘的距离,与html和body的边缘没有关系,而且如果视窗右侧有滚动条,滑动滚动条此div位置也是原来的绝对位置不会移动 */
+	}
+</style>
+</head>
+<body>
+	<div class="div01">
+		aaaaaaaaaa1
+	</div>
+	<div class="div01">
+		aaaaaaaaaa2
+	</div>
+	<div class="div03">
+		aaaaaaaaaa3
+	</div>
+	<div class="div01">
+		aaaaaaaaaa4
+	</div>
+</body>
+</html>
+-------------------------------------------------------------
+可以这样说，参考的坐标不一样，absolute是绝对定位，以屏幕左上角（left=0;top=0）为参考点，
+relative是以原来元素的坐标为参考点，比如left=1em的话就会显示时右偏1em。
+-------------------------------------------------------------
+css position: absolute、relative详解
+
+今天在看CSS的时候遇到了position: absolute、relative的问题，一直比较迷糊，今天终于搞清楚了。
+..CSS2.0 HandBook上的解释： 
+
+设置此属性值为 absolute 会将对象拖离出正常的文档流绝对定位而不考虑它周围内容的布局。假如其他具有不同 z-index 属性的对象已经占据了给定的位置，他们之间不会相互影响，而会在同一位置层叠。此时对象不具有外补丁( margin )，但仍有内补丁( padding )和边框( border )。 
+要激活对象的绝对(absolute)定位，必须指定 left ， right ， top ， bottom 属性中的至少一个，并且设置此属性值为 absolute 。否则上述属性会使用他们的默认值 auto ，这将导致对象遵从正常的HTML布局规则，在前一个对象之后立即被呈递。 
+
+TRBL属性（TOP、RIGHT、BOTTOM、LEFT）只有当设定了position属性才有效。 
+当设定position:absolute 
+如果父级（无限）没有设定position属性，那么当前的absolute则结合TRBL属性以浏览器左上角为原始点进行定位 
+如果父级（无限）设定position属性，那么当前的absolute则结合TRBL属性以父级（最近）的左上角为原始点进行定位。 
+
+当设定position: relative 
+则参照父级（最近）的内容区的左上角为原始点结合TRBL属性进行定位（或者说相对于被定位元素在父级内容区中的上一个元素进行偏移），无父级则以BODY的左上角为原始点。相对定位是不能层叠的。在使用相对定位时，无论元素是否进行移动，元素依然占据原来的空间。因此，移动元素会导致它覆盖其他框。 
+
+一般来讲，网页居中的话用Absolute就容易出错，因为网页一直是随着分辨率的大小自动适应的，而Absolute则会以浏览器的左上角为原始点，不会应为分辨率的变化而变化位置。有时还需要依靠z-index来设定容器的上下关系，数值越大越在最上面，数值范围是自然数。当然有一点要注意，父子关系是无法用z-index来设定上下关系的，一定是子级在上父级在下。 
+
+设置此属性值为 relative 会保持对象在正常的HTML流中，但是它的位置可以根据它的前一个对象进行偏移。在相对(relative)定位对象之后的文本或对象占有他们自己的空间而不会覆盖被定位对象的自然空间。与此不同的，在绝对(absolute)定位对象之后的文本或对象在被定位对象被拖离正常文档流之前会占有它的自然空间。放置绝对(absolute)定位对象在可视区域之外会导致滚动条出现。而放置相对(relative)定位对象在可视区域之外，滚动条不会出现。其实对于定位的主要问题是要记住每个定位的意义。相对定位是“相对于“元素在文档流中初始位置的，而绝对定位是”相对于“最近的已经定位的祖先元素。 
+
+以下是补充：
+
+虽然有知道css的绝对定位（absolute）、相对定位（relative），但却从未自己动手写过相关的效果！ 
+忙活了一大半天，也算是完成了！也把这两个属性搞明白了一些！ 
+
+总结如下： 
+
+先看下面这一个层结构 
+
+<body> 
+
+<div id=posi> 
+
+<div id=rel> 此层只应用position：relative;样式 </div> 
+<div id=abs> 此层只应用position：absolute;样式 </div> 
+<div id=sss> 不应用样式 <div> 
+
+</div> 
+
+</body> 
+
+1、absolute：不占位、relative：有占位！ 
+
+如上层结构: 
+
+id为rel的层在显示时，会占用一行！其后面的abs层只会在下一行显示出来！ 
+id为abs的层在显示时，会与后面id为sss的重叠在一起！ 
+
+2、默认情况下（不结合top等来定位），absolute（绝对定位）以父层来定位的 
+如上面的id为abs的层，如果不结合top等来定位，则其显示位置会随父级posi层（posi在文档左下角，其也会在左下角） 
+
+3、在结合top、bottom、right、left等属性时，absolute（绝对定位）以窗口做为定位，relative以自身的占位为基线做偏移！如下： 
+
+<body> 
+
+<div id=posi> 
+
+<div id=sss> 不应用样式 <div> 
+<div id=rel> 此层应用position：relative;bottom：30px;样式 </div> 
+<div id=abs> 此层只应用position：absolute;bottom：30px;样式 </div> 
+
+</div> 
+
+</body> 
+
+以上代码： 
+id为rel的层会上移并与id为sss的层重叠 
+id为abs的层会以窗口为基线，移至距离窗口30像素的位置！ 
+
+4、在结合top、bottom、right、left等属性时，如果想absolute（绝对定位）能以父层做为定位基线的话，则在父层应用absolute或relativ属性就可以!如下： 
+
+<body> 
+
+<div id=posi style=”position：relative”> 
+
+<div id=rel> 此层应用position：relative;bottom：30px;样式 </div> 
+<div id=abs> 此层只应用position：absolute;bottom：30px;样式 </div> 
+
+</div> 
+
+</body> 
+
+以上代码：id为posi的层，也可以用absolute属性！ 
+id为rel的层，不受影响，以自身的占位为基线做偏移！ 
+
+id为abs的层是以id为posi层的底边做为定位基线，如果此时posi层的高度小于30px的话，abs层可能没办法看到哦！ 
+-------------------------------------------------------------
+CSS position绝对定位absolute relative
+
+常常使用position用于层的绝对定位，比如我们让一个层位于一个层内具体什么位置，为即可使用position:absolute和position:relative实现。
+一、position语法与结构
+position语法： 
+position : static absolute relative 
+
+position参数：
+static : 　无特殊定位，对象遵循HTML定位规则
+absolute : 　将对象从文档流中拖出，使用left，right，top，bottom等属性进行绝对定位。而其层叠通过css z-index属性定义。此时对象不具有边距，但仍有补白和边框
+relative : 　对象不可层叠，但将依据left，right，top，bottom等属性在正常文档流中偏移位置
+
+position说明：
+设置对象的定位方式，可以让布局层容易位置绝对定位，控制盒子对象更加准确。
+二、position实际用处   -   TOP
+
+绝对定位position用于定位盒子对象，有时一个布局中几个小对象，不易用css padding、css margin进行相对定位，这个时候我们就可以使用绝对定位来轻松搞定。特别是一个盒子里几个小盒子不规律的布局，这个时候我们使用position绝对定位非常方便布局对象。
+
+绝对定位position示范适用图、不规律布局，为即可利用position:absolute；position:relative进行绝对定位
+绝对定位与float浮动不能同时使用，比如一个大盒子里有的是绝对定位，有的是使用css float浮动定位，这样IE6浏览器将不会显示改大对象里的这些绝对定位与相对定位，这也算是IE6 CSS HACK吧，注意不要混用即可。
+三、绝对定位使用条件   -   TOP
+
+position:absolute；position:relative绝对定位使用通常是父级定义position:relative定位，子级定义position:absolute绝对定位属性，并且子级使用left或right和top或bottom进行绝对定位。
+.divcss5{position:relative} 定义，通常最好再定义CSS宽度和CSS高度
+.divcss5-a{position:absolute;left:10px;top:10px} 这里定义了距离父级左侧距离间距为10px，距离父级上边距离为10px
+或
+.divcss5-a{position:absolute;right:10px;bottom:10px} 这里定义了距离父级靠右距离10px,距离父级靠下边距离为10px
+对应HTML结构
+<div class="divcss5">
+    <div class="divcss5-a"></div>
+</div>
+这样就绝对定位了“divcss5-a”在父级“divcss5”盒子内。
+注意的是，left（左）和right（右）在一个对象只能选一种定义，bottom（下）和top（上）也是在一个对象只能选一种定义。
+四、position应用案例   -   TOP
+
+这里DIVCSS5为大家实例应用position绝对定位，我们设置一个最外层盒子css边框为红色，css width为400px,css height为200px,内部包含了2个盒子，为就用绝对定位这2个盒子，第一个盒子CSS命名为“divcss5-a”,其宽度为100px,背景颜色为黑色，高度为100px,定位距离父级上为10px，距离左为10px;第二个盒子CSS类命名为“divcss5-b”，其宽度和高度分别为50px,css背景颜色为蓝色，距离父级下距离为13px,距离父级右边为15px。
+1、css代码如下
+<style> 
+.divcss5{ position:relative;width:400px;height:200px; 
+border:1px solid #000} 
+/* 定义父级position:relative 为就认为是绝对定位声明吧 */ 
+.divcss5-a{ position:absolute;width:100px;height:100px; 
+left:10px;top:10px;background:#000} 
+/* 使用绝对定位position:absolute样式 并且使用left top进行定位位置 */ 
+.divcss5-b{ position:absolute;width:50px;height:50px; 
+right:15px;bottom:13px;background:#00F} 
+/* 使用绝对定位position:absolute样式 并且使用right bottom进行定位位置 */ 
+</style> 
+2、html代码片段
+<div class="divcss5"> 
+    <div class="divcss5-a"></div> 
+    <div class="divcss5-b"></div> 
+</div> 
+3、DIV+CSS绝对定位案例截图
+
+DIV+CSS position绝对定位布局应用案例
+五、css绝对定位总结   -   TOP
+
+通常我们使用position:absolute；position:relative进行绝对定位布局，通过CSS进行定义定位，DIV布局HTML，注意什么地方使用position:relative，什么地方使用position:absolute进行定位，同时不要忘记使用left、right、top、bottom的配合定位具体位置。绝对定位如果父级不使用position:relative，而直接使用position:absolute绝对定位，这个时候将会以body标签为父级，使用position:absolute定义对象无论位于DIV多少层结构，都将会被拖出以<body>为父级（参考级）进行绝对定位。绝对定位非常好用，但切记不要滥用，什么地方都用，这样有时会懒得计算距离上、下、左、右间距，同时可能会造成CSS代码臃肿，更加经验适当使用，用于该使用地方。
+在绝对定位时候我们可以使用css z-index定义css层重叠顺序。
+同时left、right、bottom、top的数值，可以使用（Photoshop）PS切片工具获取准确的数值。
+

@@ -1,0 +1,18 @@
+[1]
+* cookie.setDomain("localhost");
+* 设置访问域举个例子:位于order.example.com的服务器要读取catalog.example.com设置的cookie.这里就要引入domain属性,
+  假定由位于catalog.example.com的页面创的cookie把自己的path属性设置为"/",
+  把domain属性设置为".example.com",那么所有位于"catalog.example.com"的网页和所有位于"orders.example.com"的网页以及所有位于example.com域的其他服务器上得网页都能够访问这个cookie.
+  如果没有设置cookie的domain值,该属性的默认值就是创建cookie的网页所在的服务器的主机名。
+* 注意:不能将一个cookie的域设置成服务器所在的域之外的域.
+
+[2] cookie.setDomain方法设计跨域共享
+* A机所在的域:home.langchao.com,A有应用webapp_a
+* B机所在的域:jszx.com，B有应用webapp_b
+* 在webapp_a下面设置cookie的时候，增加cookie.setDomain(".jszx.com");这样在webapp_b下面就可以取到cookie。
+* 输入url访问webapp_b的时候，必须输入域名才能解析。比如说在A机器输入:http://lc-bsp.jszx.com:8080/webapp_b,可以获取webapp_a在客户端设置的cookie，而B机器访问本机的应用，输入:http://localhost:8080/webapp_b则不可以获得cookie。
+* 设置了cookie.setDomain(".jszx.com");还可以在默认的home.langchao.com下面共享
+
+
+
+

@@ -1,0 +1,2 @@
+echo aa >> test.txt
+会在当前目录创建一个test.txt文件

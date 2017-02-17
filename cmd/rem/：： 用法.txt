@@ -1,0 +1,29 @@
+可用REM命令来屏蔽命令(在CONFIG.SYS 中也可以用分号(;)代替REM命令,但在批处理文件中则不能替代)
+语法:
+REM [string]
+
+参数:
+string 
+指定要屏蔽的命令或要包含的注解
+-------------
+test.bat:
+@echo off
+md zzz
+md zzzz
+rem 我是一条注释
+echo abc
+rem echo efg
+输出:
+abc
+-------------
+::和rem效果一样,都可用于批处理脚本中的注解
+@echo off
+md zzz
+md zzzz
+:: 我是一条注释
+echo abc
+:: echo efg
+输出:
+abc
+
+

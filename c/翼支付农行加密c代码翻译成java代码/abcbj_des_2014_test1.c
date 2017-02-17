@@ -1,0 +1,974 @@
+/*DES加解密算法C语言实现*/
+#include "stdio.h"
+#include "time.h"
+#include <errno.h>
+#include <math.h>
+#include "stdlib.h"
+#include <string.h>
+
+
+/**************************************************************************/
+/*
+ * BASE64算法
+ * 编码base64_enc( deststring, sourcestring, sourestringlength )
+ * 解码base64_dec( deststring, sourcestring, sourestringlength )
+ */
+static char base64_encoding[] =
+"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+
+
+/***base64***********************************************************************/
+/**************************************************************************/
+
+
+
+#define PLAIN_FILE_OPEN_ERROR -1
+#define KEY_FILE_OPEN_ERROR -2
+#define CIPHER_FILE_OPEN_ERROR -3
+#define OK 1;
+typedef char ElemType;
+       /* 初始置换表IP */
+int IP_Table[64] = { 57,49,41,33,25,17,9,1,
+                                 59,51,43,35,27,19,11,3,
+                                 61,53,45,37,29,21,13,5,
+                                 63,55,47,39,31,23,15,7,
+                                 56,48,40,32,24,16,8,0,
+                                 58,50,42,34,26,18,10,2,
+                                 60,52,44,36,28,20,12,4,
+                                 62,54,46,38,30,22,14,6};
+/* 逆初始置换表IP^-1 */
+int IP_1_Table[64] = {39,7,47,15,55,23,63,31,
+           38,6,46,14,54,22,62,30,
+           37,5,45,13,53,21,61,29,
+           36,4,44,12,52,20,60,28,
+           35,3,43,11,51,19,59,27,
+           34,2,42,10,50,18,58,26,
+           33,1,41,9,49,17,57,25,
+           32,0,40,8,48,16,56,24};
+
+/* 扩充置换表E */
+int E_Table[48] = {31, 0, 1, 2, 3, 4,
+                  3, 4, 5, 6, 7, 8,
+                  7, 8,9,10,11,12,
+                  11,12,13,14,15,16,
+                  15,16,17,18,19,20,
+                  19,20,21,22,23,24,
+                  23,24,25,26,27,28,
+                  27,28,29,30,31, 0};
+
+/* 置换函数P */
+int P_Table[32] = {15,6,19,20,28,11,27,16,
+                  0,14,22,25,4,17,30,9,
+                  1,7,23,13,31,26,2,8,
+                  18,12,29,5,21,10,3,24};
+
+/* S盒 */
+int S[8][4][16] =/* S1 */
+{{{14,4,13,1,2,15,11,8,3,10,6,12,5,9,0,7},
+{0,15,7,4,14,2,13,1,10,6,12,11,9,5,3,8},
+{4,1,14,8,13,6,2,11,15,12,9,7,3,10,5,0},
+{15,12,8,2,4,9,1,7,5,11,3,14,10,0,6,13}},
+/* S2 */
+{{15,1,8,14,6,11,3,4,9,7,2,13,12,0,5,10},
+{3,13,4,7,15,2,8,14,12,0,1,10,6,9,11,5},
+{0,14,7,11,10,4,13,1,5,8,12,6,9,3,2,15},
+{13,8,10,1,3,15,4,2,11,6,7,12,0,5,14,9}},
+/* S3 */
+{{10,0,9,14,6,3,15,5,1,13,12,7,11,4,2,8},
+{13,7,0,9,3,4,6,10,2,8,5,14,12,11,15,1},
+{13,6,4,9,8,15,3,0,11,1,2,12,5,10,14,7},
+{1,10,13,0,6,9,8,7,4,15,14,3,11,5,2,12}},
+/* S4 */
+{{7,13,14,3,0,6,9,10,1,2,8,5,11,12,4,15},
+{13,8,11,5,6,15,0,3,4,7,2,12,1,10,14,9},
+{10,6,9,0,12,11,7,13,15,1,3,14,5,2,8,4},
+{3,15,0,6,10,1,13,8,9,4,5,11,12,7,2,14}},
+/* S5 */
+{{2,12,4,1,7,10,11,6,8,5,3,15,13,0,14,9},
+{14,11,2,12,4,7,13,1,5,0,15,10,3,9,8,6},
+{4,2,1,11,10,13,7,8,15,9,12,5,6,3,0,14},
+{11,8,12,7,1,14,2,13,6,15,0,9,10,4,5,3}},
+/* S6 */
+{{12,1,10,15,9,2,6,8,0,13,3,4,14,7,5,11},
+{10,15,4,2,7,12,9,5,6,1,13,14,0,11,3,8},
+{9,14,15,5,2,8,12,3,7,0,4,10,1,13,11,6},
+{4,3,2,12,9,5,15,10,11,14,1,7,6,0,8,13}},
+/* S7 */
+{{4,11,2,14,15,0,8,13,3,12,9,7,5,10,6,1},
+{13,0,11,7,4,9,1,10,14,3,5,12,2,15,8,6},
+{1,4,11,13,12,3,7,14,10,15,6,8,0,5,9,2},
+{6,11,13,8,1,4,10,7,9,5,0,15,14,2,3,12}},
+/* S8 */
+{{13,2,8,4,6,15,11,1,10,9,3,14,5,0,12,7},
+{1,15,13,8,10,3,7,4,12,5,6,11,0,14,9,2},
+{7,11,4,1,9,12,14,2,0,6,10,13,15,3,5,8},
+{2,1,14,7,4,10,8,13,15,12,9,0,3,5,6,11}}};
+/* 置换选择1 */
+int PC_1[56] = {56,48,40,32,24,16,8,
+              0,57,49,41,33,25,17,
+              9,1,58,50,42,34,26,
+              18,10,2,59,51,43,35,
+              62,54,46,38,30,22,14,
+              6,61,53,45,37,29,21,
+              13,5,60,52,44,36,28,
+              20,12,4,27,19,11,3};
+
+/* 置换选择2 */
+int PC_2[48] = {13,16,10,23,0,4,2,27,
+              14,5,20,9,22,18,11,3,
+              25,7,15,6,26,19,12,1,
+              40,51,30,36,46,54,29,39,
+              50,44,32,47,43,48,38,55,
+              33,52,45,41,49,35,28,31};
+/*122行的46换成了47*/              
+
+/* 对左移次数的规定 */
+int MOVE_TIMES[16] = {1,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1};
+int ByteToBit(ElemType ch,ElemType bit[8+1]);
+int BitToByte(ElemType bit[8+1],ElemType *ch);
+int Char8ToBit64(ElemType ch[8+1],ElemType bit[64+1]);
+int Bit64ToChar8(ElemType bit[64+1],ElemType ch[8+1]);
+int DES_MakeSubKeys(ElemType key[64+1],ElemType subKeys[16][48]);
+int DES_PC1_Transform(ElemType key[64+1], ElemType tempbts[56+1]);
+int DES_PC2_Transform(ElemType key[56+1], ElemType tempbts[48+1]);
+int DES_ROL(ElemType data[56+1], int time);
+int DES_IP_Transform(ElemType data[64+1]);
+int DES_IP_1_Transform(ElemType data[64+1]);
+int DES_E_Transform(ElemType data[48+1]);
+int DES_P_Transform(ElemType data[32+1]);
+int DES_SBOX(ElemType data[48+1]);
+int DES_XOR(ElemType R[48+1], ElemType L[48+1],int count);
+int DES_Swap(ElemType left[32+1],ElemType right[32+1]);
+int DES_EncryptBlock(ElemType plainBlock[8+1], ElemType subKeys[16][48], ElemType cipherBlock[8+1]);
+int DES_DecryptBlock(ElemType cipherBlock[8+1], ElemType subKeys[16][48], ElemType plainBlock[8+1]);
+int DES_Encrypt(char *plainFile, char *keyStr,char *cipherFile);
+int DES_Decrypt(char *cipherFile, char *keyStr,char *plainFile,int nLen);
+int base64Encode( unsigned char *dst, int *dlen, unsigned char *src, int slen );
+int base64Decode( unsigned char *dst, int *dlen, unsigned char *src, int slen);
+
+/* 字节转换成二进制 */
+int ByteToBit(ElemType ch, ElemType bit[8+1]){
+    int cnt;
+    for(cnt = 0;cnt < 8; cnt++){
+        *(bit+cnt) = (ch>>cnt)&1;
+    }
+    return 0;
+}
+
+/* 二进制转换成字节 */
+int BitToByte(ElemType bit[8+1],ElemType *ch){
+    int cnt;
+    for(cnt = 0;cnt < 8; cnt++){
+        *ch |= *(bit + cnt)<<cnt;
+    }
+    return 0;
+}
+
+/* 将长度为8的字符串转为二进制位串 */
+int Char8ToBit64(ElemType ch[8+1],ElemType bit[64+1]){
+    int cnt;
+   /* printf("in Char8ToBit64: ch=[%s]\n",ch);*/
+    for(cnt = 0; cnt < 8; cnt++){       
+        ByteToBit(*(ch+cnt),bit+(cnt<<3));
+       /* printf("in Char8ToBit64: cnt=[%d]bit=[%c]\n",cnt,bit);*/
+    }
+    return 0;
+}
+
+/* 将二进制位串转为长度为8的字符串 */
+int Bit64ToChar8(ElemType bit[64+1],ElemType ch[8+1]){
+    int cnt;
+    memset(ch,0,8);
+    for(cnt = 0; cnt < 8; cnt++){
+        BitToByte(bit+(cnt<<3),ch+cnt);
+    }
+    return 0;
+}
+
+/* 生成子密钥 */
+int DES_MakeSubKeys(ElemType key[64+1],ElemType subKeys[16][48]){
+    ElemType temp[56+1];
+    int cnt;
+    DES_PC1_Transform(key,temp);/* PC1置换 */
+    for(cnt = 0; cnt < 16; cnt++){/* 16轮跌代，产生16个子密钥 */
+        DES_ROL(temp,MOVE_TIMES[cnt]);/* 循环左移 */
+        DES_PC2_Transform(temp,subKeys[cnt]);/* PC2置换，产生子密钥 */
+    }
+    return 0;
+}
+
+/* 密钥置换1 */
+int DES_PC1_Transform(ElemType key[64+1], ElemType tempbts[56+1]){
+    int cnt;   
+    for(cnt = 0; cnt < 56; cnt++){
+        tempbts[cnt] = key[PC_1[cnt]];
+    }
+    return 0;
+}
+
+/* 密钥置换2 */
+int DES_PC2_Transform(ElemType key[56+1], ElemType tempbts[48+1]){
+    int cnt;
+    for(cnt = 0; cnt < 48; cnt++){
+        tempbts[cnt] = key[PC_2[cnt]];
+    }
+    return 0;
+}
+
+/* 循环左移 */
+int DES_ROL(ElemType data[56+1], int time){   
+    ElemType temp[56+1];
+
+    /* 保存将要循环移动到右边的位 */
+    memcpy(temp,data,time);
+    memcpy(temp+time,data+28,time);
+   
+    /* 前28位移动 */
+    memcpy(data,data+time,28-time);
+    memcpy(data+28-time,temp,time);
+
+    /* 后28位移动 */
+    memcpy(data+28,data+28+time,28-time);
+    memcpy(data+56-time,temp+time,time);   
+
+    return 0;
+}
+
+/* IP置换 */
+int DES_IP_Transform(ElemType data[64+1]){
+    int cnt;
+    ElemType temp[64+1];
+    for(cnt = 0; cnt < 64; cnt++){
+        temp[cnt] = data[IP_Table[cnt]];
+    }
+    memcpy(data,temp,64);/*printf("IP置换:data=len[%d][%s]\n",strlen(data),data);*/
+    return 0;
+}
+
+/* IP逆置换 */
+int DES_IP_1_Transform(ElemType data[64+1]){
+    int cnt;
+    ElemType temp[64+1];
+    for(cnt = 0; cnt < 64; cnt++){
+        temp[cnt] = data[IP_1_Table[cnt]];
+    }
+    memcpy(data,temp,64);
+    return 0;
+}
+
+/* 扩展置换 */
+int DES_E_Transform(ElemType data[48+1]){
+    int cnt;
+    ElemType temp[48+1];
+    for(cnt = 0; cnt < 48; cnt++){
+        temp[cnt] = data[E_Table[cnt]];
+    }   
+    memcpy(data,temp,48);
+    return 0;
+}
+
+/* P置换 */
+int DES_P_Transform(ElemType data[32+1]){
+    int cnt;
+    ElemType temp[32+1];
+    for(cnt = 0; cnt < 32; cnt++){
+        temp[cnt] = data[P_Table[cnt]];
+    }   
+    memcpy(data,temp,32);
+    return 0;
+}
+
+/* 异或 */
+int DES_XOR(ElemType R[48+1], ElemType L[48+1] ,int count){
+    int cnt;
+    for(cnt = 0; cnt < count; cnt++){
+        R[cnt] ^= L[cnt];
+    }
+    return 0;
+}
+
+/* S盒置换 */
+int DES_SBOX(ElemType data[48+1]){
+    int cnt;
+    int line,row,output;
+    int cur1,cur2;
+    for(cnt = 0; cnt < 8; cnt++){
+        cur1 = cnt*6;
+        cur2 = cnt<<2;
+       
+        /* 计算在S盒中的行与列 */
+        line = (data[cur1]<<1) + data[cur1+5];
+        row = (data[cur1+1]<<3) + (data[cur1+2]<<2)
+            + (data[cur1+3]<<1) + data[cur1+4];
+        output = S[cnt][line][row];
+
+        /* 化为2进制 */
+        data[cur2] = (output&0X08)>>3;
+        data[cur2+1] = (output&0X04)>>2;
+        data[cur2+2] = (output&0X02)>>1;
+        data[cur2+3] = output&0x01;
+    }   
+    return 0;
+}
+
+/* 交换 */
+int DES_Swap(ElemType left[32+1], ElemType right[32+1]){
+    ElemType temp[32+1];
+    memcpy(temp,left,32);   
+    memcpy(left,right,32);   
+    memcpy(right,temp,32);
+    return 0;
+}
+
+/* 加密单个分组 */
+int DES_EncryptBlock(ElemType plainBlock[8+1], ElemType subKeys[16][48], ElemType cipherBlock[8+1]){
+    ElemType plainBits[64+1];/*ly*/
+    ElemType copyRight[48+1];/*ly*/
+    int cnt;
+
+    memset(&plainBits, 0, sizeof(plainBits)); 
+    Char8ToBit64(plainBlock,plainBits); /*printf("+in 加密单个分组plainBlock=[%s],plainBits=len[%d][%s]\n",plainBlock, strlen(plainBits),plainBits);    */  
+    /* 初始置换（IP置换） */
+    DES_IP_Transform(plainBits);printf("初始置换后：plainBits=len[%d][%s]\n",strlen(plainBits),plainBits);
+
+    /* 16轮迭代 */
+    for(cnt = 0; cnt < 16; cnt++){       
+        memcpy(copyRight,plainBits+32,32);
+        /* 将右半部分进行扩展置换，从32位扩展到48位 */
+        DES_E_Transform(copyRight);
+        /* 将右半部分与子密钥进行异或操作 */
+        DES_XOR(copyRight,subKeys[cnt],48);   
+        /* 异或结果进入S盒，输出32位结果 */
+        DES_SBOX(copyRight);
+        /* P置换 */
+        DES_P_Transform(copyRight);
+        /* 将明文左半部分与右半部分进行异或 */
+        DES_XOR(plainBits,copyRight,32);
+        if(cnt != 15){
+            /* 最终完成左右部的交换 */
+            DES_Swap(plainBits,plainBits+32);
+        }
+    }
+    /* 逆初始置换（IP^1置换） */
+    DES_IP_1_Transform(plainBits);
+    Bit64ToChar8(plainBits,cipherBlock);
+    return 0;
+}
+
+/* 解密单个分组 */
+int DES_DecryptBlock(ElemType cipherBlock[8+1], ElemType subKeys[16][48],ElemType plainBlock[8+1]){
+    ElemType cipherBits[64+1];
+    ElemType copyRight[48+1];
+    int cnt;
+
+    Char8ToBit64(cipherBlock,cipherBits);       
+    /* 初始置换（IP置换） */
+    DES_IP_Transform(cipherBits);
+   
+    /* 16轮迭代 */
+    for(cnt = 15; cnt >= 0; cnt--){       
+        memcpy(copyRight,cipherBits+32,32);
+        /* 将右半部分进行扩展置换，从32位扩展到48位 */
+        DES_E_Transform(copyRight);
+        /* 将右半部分与子密钥进行异或操作 */
+        DES_XOR(copyRight,subKeys[cnt],48);       
+        /* 异或结果进入S盒，输出32位结果 */
+        DES_SBOX(copyRight);
+        /* P置换 */
+        DES_P_Transform(copyRight);       
+        /* 将明文左半部分与右半部分进行异或 */
+        DES_XOR(cipherBits,copyRight,32);
+        if(cnt != 0){
+            /* 最终完成左右部的交换 */
+            DES_Swap(cipherBits,cipherBits+32);
+        }
+    }
+    /* 逆初始置换（IP^1置换） */
+    DES_IP_1_Transform(cipherBits);
+    Bit64ToChar8(cipherBits,plainBlock);
+    return 0;
+}
+
+/* 加密文件 */
+int DES_Encrypt(char *plainFile, char *keyStr,char *cipherFile){
+    //FILE *plain,*cipher;
+    int count=0;
+    int maclen=0;
+    int realen=0;
+    int i=0;
+    ElemType plainBlock[8+1],cipherBlock[8+1],keyBlock[8+1];
+    ElemType bKey[64+1];
+    ElemType subKeys[16][48];
+    
+   /* printf("+DES_Encrypt:plainFile[%s],keyStr[%s],cipherFile=[%s]\n",plainFile,keyStr,cipherFile); */ 
+    
+    /* 设置密钥 */
+    memcpy(keyBlock,keyStr,8);/*printf("+密钥keyBlock=[%s]\n",keyBlock); */
+    /* 将密钥转换为二进制流 */
+    Char8ToBit64(keyBlock,bKey); /*printf("+将密钥转换为二进制流bKey[%s]\n",bKey); */ 
+    /* 生成子密钥 */
+    DES_MakeSubKeys(bKey,subKeys);/*printf("+生成子密钥subKeys[%s]\n",subKeys); */
+   
+   maclen=strlen(plainFile);/*printf("+plainFile=[%s]\n",plainFile);*/
+   count = maclen % 8;
+/*	if (count != 0)
+		{
+		memset(plainFile+maclen,0x00,8-count);
+		realen = maclen + 8-count;
+		
+		
+		}
+	else
+	realen = maclen ;
+  */ 
+      
+   printf("keyBlock[%s],keyStr[%s]\n",keyBlock,keyStr);   
+   printf("bKey[%s],subKeys[%s]\n",bKey,subKeys);   
+   printf("count[%d],maclen[%d]\n",count,maclen);   
+   
+   for (i = 0;i<maclen / 8;i++)
+   {
+   	memset(&plainBlock,0,sizeof(plainBlock));
+   	memcpy(plainBlock,plainFile+8*i,8); /*printf("+i=[%d],plainBlock=[%s]\n",i,plainBlock);*/
+   	DES_EncryptBlock(plainBlock,subKeys,cipherBlock);/*printf("+i=[%d],cipherBlock=len[%d][%s]\n",i,strlen(cipherBlock),cipherBlock);*/
+   	
+   	/*strncat(cipherFile,cipherBlock,8);此处有问题*/
+   	memcpy(cipherFile+8*i,cipherBlock,8);
+   	printf("i=[%d],cipherFile=len[%d][%s]\n",i,strlen(cipherFile),cipherFile);   
+   }
+   memset(&plainBlock,0,sizeof(plainBlock));/****0317**/
+   memcpy(plainBlock,plainFile+8*i,count);
+
+   //memset(plainBlock + count,'\0',7 - count);
+   memset(plainBlock + count,'0',7 - count);
+   
+         	printf("plainBlock=[%s],plainFile[%s]\n",plainBlock,plainFile);   
+
+   
+        /* 最后一个字符保存包括最后一个字符在内的所填充的字符数量 */
+        //plainBlock[7] = 8 - count;
+   sprintf(plainBlock+7,"%1d",8 - count);
+   
+         	printf("plainBlock=[%s],plainFile[%s]\n",plainBlock,plainFile);   
+
+   DES_EncryptBlock(plainBlock,subKeys,cipherBlock);
+         	printf("subKeys=[%s],cipherBlock[%s]\n",subKeys,cipherBlock);   
+
+
+   	/*strncat(cipherFile,cipherBlock,8);此处有问题*/
+   	
+   	memcpy(cipherFile+8*i,cipherBlock,8);
+   
+      	printf("i=[%d],cipherFile[%s]\n",i,cipherFile);   
+
+   
+   
+return OK;
+}
+
+/* 解密文件 */
+int DES_Decrypt(char *cipherFile, char *keyStr,char *plainFile,int nLen){
+//    FILE *plain, *cipher;
+    int i = 0;
+    int count=0;
+    int maclen=0;
+    int realen=0;
+    char tmp[1+1];
+    int tmplen;
+    char tmpchar[4096+1];
+
+    //long fileLen;
+    ElemType plainBlock[8+1],cipherBlock[8+1],keyBlock[8+1];
+    ElemType bKey[64];
+    ElemType subKeys[16][48];
+
+
+    /* 设置密钥 */
+    memcpy(keyBlock,keyStr,8);
+    /* 将密钥转换为二进制流 */
+    Char8ToBit64(keyBlock,bKey);
+    /* 生成子密钥 */
+    DES_MakeSubKeys(bKey,subKeys);
+
+    
+   /*maclen=strlen(cipherFile);有问题*/
+   maclen=nLen;printf("maclen=[%d]\n",maclen);
+   count = maclen % 8;
+/*	if (count != 0)
+		{
+		memset(plainFile+maclen,0x00,8-count);
+		realen = maclen + 8-count;
+		
+		
+		}
+	else
+	realen = maclen ;
+  */ 
+      /**密文长度一定是8的倍数**/
+   memset(&tmpchar,0,sizeof(tmpchar));
+   for (i = 0;i<maclen / 8;i++)
+   {
+   	memset(&cipherBlock,0,sizeof(cipherBlock));
+   	memcpy(cipherBlock,cipherFile+8*i,8);
+   	DES_DecryptBlock(cipherBlock,subKeys,plainBlock);  
+  /* 	strncat(tmpchar,plainBlock,8);*/
+   memcpy(tmpchar+8*i,plainBlock,8);
+   }
+    
+   memset(&tmp,0,sizeof(tmp));
+   strncpy(tmp,tmpchar+maclen-1,1); 
+   tmplen=atoi(tmp);  
+   strncpy(plainFile,tmpchar,maclen-tmplen);
+    
+
+
+return OK;
+}
+
+
+/*********************************************************/
+
+/* encode to BASE 64*/
+/* return buflen */
+int base64_enc(char *buf,char*text,int size)
+{
+int buflen = 0 ;
+
+while(size>0){
+*buf++ = base64_encoding[ (text[0] >> 2 ) & 0x3f];
+if(size>2){
+*buf++ = base64_encoding[((text[0] & 3) << 4) | ((text[1] >> 4) & 0x0f)];
+*buf++ = base64_encoding[((text[1] & 0xF) << 2) | ((text[2] >> 6) &3)];
+*buf++ = base64_encoding[text[2] & 0x3F];
+}else{
+switch(size){
+case 1:
+*buf++ = base64_encoding[(text[0] & 3) << 4 ];
+*buf++ = '=';
+*buf++ = '=';
+break;
+case 2:
+*buf++ = base64_encoding[((text[0] & 3) << 4) | ((text[1] >> 4) & 0x0f)];
+*buf++ = base64_encoding[((text[1] & 0xF) << 2) | ((text[2] >> 6) &3)];
+*buf++ = '=';
+break;
+}
+}
+
+text +=3;
+size -=3;
+buflen +=4;
+}
+
+*buf = 0;
+return buflen;
+}
+
+static char get_base64_value(char ch,char default_value)
+{
+if ((ch >= 'A') && (ch <= 'Z'))
+return ch - 'A';
+if ((ch >= 'a') && (ch <= 'z'))
+return ch - 'a' + 26;
+if ((ch >= '0') && (ch <= '9'))
+return ch - '0' + 52;
+switch (ch) {
+case '+':
+return 62;
+case '/':
+return 63;
+case '=': /* base64 padding */
+return default_value;
+default:
+return default_value;
+}
+}
+
+/*进行base64解码 返回buf中内容长度*/
+/*注意 如果是最后一个字符 那么长度不准备 可能会多1*/
+int base64_dec(char *buf,char*text,int *size)
+{
+char chunk[4];
+int parsenum=0;
+
+int linelen=*size;
+*size =0;
+
+while(linelen>*size){
+if(get_base64_value(*text,-1)==-1){
+text++;
+size++;
+continue;
+}
+
+if(linelen-*size<3)
+return parsenum;
+
+chunk[0] = get_base64_value(text[0],0);
+chunk[1] = get_base64_value(text[1],0);
+chunk[2] = get_base64_value(text[2],0);
+chunk[3] = get_base64_value(text[3],0);
+
+*buf++ = (chunk[0] << 2) | (chunk[1] >> 4);
+*buf++ = (chunk[1] << 4) | (chunk[2] >> 2);
+*buf++ = (chunk[2] << 6) | (chunk[3]);
+
+if(text[1]=='='){
+*size+=1;
+return parsenum+1;
+}
+else if(text[2]=='='){
+*size+=2;
+return parsenum+2;
+}
+else if(text[3]=='='){
+*size+=3;
+return parsenum+3;
+}
+
+text+=4;
+*size+=4;
+parsenum+=3;
+}
+
+return parsenum;
+}
+
+
+/*解码Quoted-Printable,返回解码的长度*/
+int QPrintable_dec(char *buf,char*text,int size)
+{
+int buflen=0; /* 输出的字符计数*/
+int i=0;
+
+while (size>0)
+{
+if (strncmp(text, "=\r\n", 3) == 0) /* 软回车，跳过*/
+{
+text += 3;
+size -= 3;
+}
+else
+{
+if (*text == '=') /* 是编码字节*/
+{
+sscanf(text, "=%02X", buf);
+buf++;
+text += 3;
+size -= 3;
+}
+else /* 非编码字节*/
+{
+*buf++ = (unsigned char)*text++;
+size--;
+}
+
+buflen++;
+}
+}
+
+return buflen;
+}
+
+
+
+/**********************主程序*****************************
+ *执行时3个参数: 
+                参数1-加解密标志 
+                参数2-源字符串 
+                参数3-密钥
+ ********************************************************/
+ 
+int main( int argc, char * argv[] )
+{   
+		char e_str[4096+1];		/* 参加MAC的数据	*/
+	  char Flag[1+1];			/* 加解密标志	*/
+	  char mackey[64+1];			/* MAC运算的密钥	*/
+	  int		maclen=0;			/* 参加MAC的数据长度	*/
+	  char d_str[4096+1];	 		/* DES MAC运算结果	*/
+	  char yh_str[4096+1];	 		/* DES MAC运算结果	*/
+	 	char base64_str[4096+1];	 		/* base64编码值	*/
+
+	  int ret_len=0;
+	  char szTemp[4096+1];	
+	
+	
+	  int len1,len2,len3,len4,len5;   
+    char *abc1,*abc2,*abc3;
+	  
+	  memset(&e_str,0,sizeof(e_str));
+	  memset(&mackey,0,sizeof(mackey));
+	  memset(&d_str,0,sizeof(d_str));
+	  memset(&Flag,0,sizeof(Flag));
+    memset(&base64_str,0,sizeof(base64_str));
+    
+	  strcpy(Flag, argv[1]);/*加解密标志D加密，E解密*/
+	  strcpy(e_str, argv[2]);/*源字符串*/
+	  strcpy(mackey, argv[3]);/*密钥*/
+	  
+	  /*memset(&e_str,0,sizeof(e_str));
+	  strcpy(e_str,"");*/
+    
+	  maclen=strlen(e_str);
+    printf("maclen[%d]\n",maclen);
+    
+    
+    if(argc!=4)
+	  {
+		   printf("参数个数错误[%d]\n",argc);
+		   return (-1);
+	  }
+	  
+	  /***des加密***/
+	  DES_Encrypt(e_str,mackey,d_str);
+	  printf("源明文[%d][%s],密文[%d][%s]\n",strlen(e_str),e_str,strlen(d_str),d_str);
+	  
+	  printf("密文十六进制:\n");
+	int i;  
+	for(i=0;i<24;i++)
+	  {	    
+	  	printf("%02x ",d_str[i]);	  	
+	  }
+	  
+	  /********************************************************/  
+   
+    /*******************密文转base64*******************/
+    /*len3=strlen(d_str)*3;*/    
+    
+    len3=(strlen(e_str)/8+1)*8*3;  //更改
+    printf("\nbase64预设长度len3=[%d]\n",len3);  
+    
+    len4=strlen(e_str)%8+2; printf("第一次 len4=[%d]\n",len4); 
+     
+    len4=(strlen(e_str)/8+1)*8; printf("密文 len4=[%d]\n",len4); 
+   
+    abc3=(char *)malloc(len3);
+    memset(abc3,'\0',len3);
+   
+    /*if(base64Encode((unsigned char *)abc3,&len3,(unsigned char *)d_str,strlen(d_str)) !=0 ) */
+    if(base64Encode((unsigned char *)abc3,&len3,(unsigned char *)d_str,len4) !=0 )  
+    {
+       printf("failed2!\n");
+		   return (1);
+    }
+        
+    printf("base64=len[%d][%s]\n",strlen(abc3),abc3);    
+    
+    /***************base64转密文******************/
+   
+    len2=4096;  
+    abc2=(char *)malloc(len2);
+    memset(abc2,'\0',len2);
+    
+    if(base64Decode((unsigned char *)abc2,&len2,(unsigned char *)abc3,strlen(abc3)) !=0 ) 
+    {
+       printf("failed1\n");
+	     return (1);
+	  
+    }
+    
+    printf("解base64后的密文=len[%d][%s]\n",strlen(abc2),abc2); 
+    
+    printf("-----------------解base64后的密文十六进制---------------\n");
+    for(i=0;i<16;i++)
+	  {
+	  	printf("%02x ",abc2[i]);	
+	  	
+	  }
+	  printf("\n--------------------------------------------------------\n");
+	  
+	  /*********************解密一：base64后的密文解密  （公司开发时请选择此方法)******************/  
+    
+    //memset(&e_str,0,sizeof(e_str));
+    
+    /*根据base64的长度计算明文长度*/
+    if(strlen(abc3)<16)
+       len5=8;
+    else   
+       len5=(strlen(abc3)/8-1)*8; printf("len5=[%d]\n",len5);     
+   
+    //DES_Decrypt(abc2,mackey,e_str,(strlen(e_str)/8+1)*8); /*2014-05-05-修改*/   
+    DES_Decrypt(abc2,mackey,e_str,len5); /*2014-05-12-修改*/    
+    
+    printf("\n经过base64的解密后明文[%d][%s]\n",strlen(e_str),e_str);
+    
+    free(abc2);   
+    free(abc3);      
+    
+    /**************************解密二：密文直接解密***************************/
+    //memset(&e_str,0,sizeof(e_str));
+    
+    printf("长度=[%d]\n",(strlen(e_str)/8+1)*8); 
+    
+    DES_Decrypt(d_str,mackey,e_str,(strlen(e_str)/8+1)*8); /*2014-05-05-修改*/
+    
+    printf("\n直接解密后明文[%d][%s]\n",strlen(e_str),e_str);
+   
+    return 0;
+}
+
+
+#ifndef XYSSL_BASE64_H
+#define XYSSL_BASE64_H
+
+#define XYSSL_ERR_BASE64_BUFFER_TOO_SMALL -0x0010
+#define XYSSL_ERR_BASE64_INVALID_CHARACTER -0x0012
+
+#endif
+
+static const unsigned char base64_enc_map[64] =
+{
+   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+   'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+   'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd',
+   'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+   'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+   'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7',
+   '8', '9', '+', '/'
+};
+
+static const unsigned char base64_dec_map[128] =
+{
+   127, 127, 127, 127, 127, 127, 127, 127, 127, 127,
+   127, 127, 127, 127, 127, 127, 127, 127, 127, 127,
+   127, 127, 127, 127, 127, 127, 127, 127, 127, 127,
+   127, 127, 127, 127, 127, 127, 127, 127, 127, 127,
+   127, 127, 127, 62, 127, 127, 127, 63, 52, 53,
+   54, 55, 56, 57, 58, 59, 60, 61, 127, 127,
+   127, 64, 127, 127, 127, 0, 1, 2, 3, 4,
+   5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+   15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+   25, 127, 127, 127, 127, 127, 127, 26, 27, 28,
+   29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+   39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
+   49, 50, 51, 127, 127, 127, 127, 127
+};
+
+/*
+* Encode a buffer into base64 format
+*/
+int base64Encode( unsigned char *dst, int *dlen, unsigned char *src, int slen )
+{
+   int i, n;
+   int C1, C2, C3;
+   unsigned char *p;
+
+   if( slen == 0 )
+      return( 0 );
+
+   n = (slen << 3) / 6;
+
+   switch( (slen << 3) - (n * 6) )
+   {
+   case 2: n += 3; break;
+   case 4: n += 2; break;
+   default: break;
+   }
+
+   if( *dlen < n + 1 )
+   {
+      *dlen = n + 1;
+      return( XYSSL_ERR_BASE64_BUFFER_TOO_SMALL );
+   }
+
+   n = (slen / 3) * 3;
+
+   for( i = 0, p = dst; i < n; i += 3 )
+   {
+      C1 = *src++;
+      C2 = *src++;
+      C3 = *src++;
+
+      *p++ = base64_enc_map[(C1 >> 2) & 0x3F];
+      *p++ = base64_enc_map[(((C1 & 3) << 4) + (C2 >> 4)) & 0x3F];
+      *p++ = base64_enc_map[(((C2 & 15) << 2) + (C3 >> 6)) & 0x3F];
+      *p++ = base64_enc_map[C3 & 0x3F];
+   }
+
+   if( i < slen )
+   {
+      C1 = *src++;
+      C2 = ((i + 1) < slen) ? *src++ : 0;
+
+      *p++ = base64_enc_map[(C1 >> 2) & 0x3F];
+      *p++ = base64_enc_map[(((C1 & 3) << 4) + (C2 >> 4)) & 0x3F];
+
+      if( (i + 1) < slen )
+         *p++ = base64_enc_map[((C2 & 15) << 2) & 0x3F];
+      else *p++ = '=';
+
+      *p++ = '=';
+   }
+
+   *dlen = p - dst;
+   *p = 0;
+
+   return( 0 );
+}
+
+/*
+* Decode a base64-formatted buffer
+*/
+int base64Decode( unsigned char *dst, int *dlen, unsigned char *src, int slen)
+{
+   int i, j, n;
+   unsigned long x;
+   unsigned char *p;
+
+   for( i = j = n = 0; i < slen; i++ )
+   {
+      if( ( slen - i ) >= 2 &&
+         src[i] == '\r' && src[i + 1] == '\n' )
+         continue;
+
+      if( src[i] == '\n' )
+         continue;
+
+      if( src[i] == '=' && ++j > 2 )
+         return( XYSSL_ERR_BASE64_INVALID_CHARACTER-1 );
+
+      if( src[i] > 127 || base64_dec_map[src[i]] == 127 ) {
+				return( XYSSL_ERR_BASE64_INVALID_CHARACTER-2 );
+			}
+         
+      if( base64_dec_map[src[i]] < 64 && j != 0 )
+         return( XYSSL_ERR_BASE64_INVALID_CHARACTER-3 );
+
+      n++;
+   }
+
+   if( n == 0 )
+      return( 0 );
+
+   n = ((n * 6) + 7) >> 3;
+
+   if( *dlen < n )
+   {
+      *dlen = n;
+      return( XYSSL_ERR_BASE64_BUFFER_TOO_SMALL );
+   }
+
+   for( j = 3, n = x = 0, p = dst; i > 0; i--, src++ )
+   {
+      if( *src == '\r' || *src == '\n' )
+         continue;
+
+      j -= ( base64_dec_map[*src] == 64 );
+      x = (x << 6) | ( base64_dec_map[*src] & 0x3F );
+
+      if( ++n == 4 )
+      {
+         n = 0;
+         if( j > 0 ) *p++ = (unsigned char)( x >> 16 );
+         if( j > 1 ) *p++ = (unsigned char)( x >> 8 );
+         if( j > 2 ) *p++ = (unsigned char)( x );
+      }
+   }
+
+   *dlen = p - dst;
+
+   return( 0 );
+}
+
+

@@ -1,0 +1,30 @@
+<!--<!DOCTYPE html>--><!--如果带上DOCTYPE,下面body只有一行内容,只有文字四周有红色的边线,写这个就是告诉浏览器按以哪种DOCTYPE显示网页-->
+<html>
+<head>
+<style type="text/css">
+	html {
+		border:1px solid red;/*下面body只有一行内容,视窗的四周有红色的边线 */
+	}
+</style>
+</head>
+<body>
+	dfgdfgdf
+</body>
+</html>
+--------------------------------------------------------
+<html>
+<head>
+<style type="text/css">
+	html {
+		border:1px solid red;
+		height: auto; /*若写成height:100%则高度超出了视窗会溢出去,auto超出了视窗会高度会相应变高*/
+	}
+</style>
+</head>
+<body>
+	dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>
+	dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>
+	dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>
+	dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>dfgdfgdf<br>
+</body>
+</html>

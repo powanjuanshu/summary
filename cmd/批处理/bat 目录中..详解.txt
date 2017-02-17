@@ -1,0 +1,7 @@
+@echo off
+::其中%~dp0表示此文件所在的目录;其中的..表示此文件所在目录的父目录;整个表示此文件所在目录的父目录下的cmd_change目录
+set GEN_SRC_DIR="%~dp0..\cmd_change"
+::输出为:"E:\cmd_set\..\cmd_change"
+echo %GEN_SRC_DIR%
+::文件的目录为E:\cmd_set,运行后会切换到E:\cmd_change目录
+cd %GEN_SRC_DIR%

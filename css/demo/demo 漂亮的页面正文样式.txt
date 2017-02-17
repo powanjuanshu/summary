@@ -1,0 +1,18 @@
+页面正文样式
+body {
+     scrollbar-face-color: #ededf3;
+     scrollbar-highlight-color: #ffffff;
+     scrollbar-shadow-color: #93949f;
+     scrollbar-3dlight-color: #ededf3;
+     scrollbar-arrow-color: #082468;
+     scrollbar-track-color: #f7f7f9;
+     scrollbar-darkshadow-color: #ededf3;
+     font-size: 9pt;
+     color: #003366;
+     overflow:auto;
+}
+ 
+td { font-size: 12px }
+th {
+     font-size: 12px;
+}

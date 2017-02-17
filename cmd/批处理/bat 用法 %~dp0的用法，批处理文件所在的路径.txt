@@ -1,0 +1,18 @@
+@echo 是否开始部署32？
+@echo Y/N
+@set /p choice=请确认:
+@set choice=%choice:~0,1%
+@if /I "%choice%"=="Y" goto Y
+@if /I "%choice%"=="N" exit
+@goto end
+
+:Y
+echo "deploy_32_all start..."
+set curdir=%~dp0
+set curtxt=%curdir%script\script_32_all.txt
+--------------
+set p=%~dp0sublime_text.exe
+设置变量p的值为：批出理文件所在的路径+sublime_text.exe,例如你这个批处理文件放在d:\123\
+则变量p的值为:d:\123\sublime_text.exe
+set paths=%p:\=\\%
+把变量p中的\符号替换成\\,接上面例子，则变量paths的值为:d:\\123\\sublime_text.exe

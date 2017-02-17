@@ -1,0 +1,35 @@
+你说的没错，就是指定多个class的意思，在HTML的层面上说的话，这样指定的class是同级的。同级的class需要看CSS文件的先后次序，后加载的css会覆盖前面加载的css。写到style的话因为是最后解析的所以是最高的一个优先级。
+--------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="jquery.js"></script>
+<style type="text/css">
+.aaa{
+	color: #fff;
+}
+.bbb{
+	width: 370px;
+}
+</style>
+<title>Insert title here</title>
+</head>
+<body>
+<div id="aaa" class="bbb">
+	<button onclick="quit()" id="code1" class="aaa bbb">退出1</button><br>
+	<button onclick="quit()" id="xcode2">退出2</button><br>
+	<button onclick="quit()" id="scode3">退出3</button><br>
+	<div id="ccc">
+		<input id="orgId2" value="orgId2" onclick="quit()" type="text">
+		<button onclick="quit()" id="scode4">退出4</button><br>
+	</div>
+</div>
+<script type="text/javascript">
+function quit(){
+	var button = $("button:first");
+	alert(button.prop("outerHTML"));//打印:<button onclick="quit()" id="code1">退出1</button>
+}
+</script>
+</body>
+</html>

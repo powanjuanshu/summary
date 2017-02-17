@@ -1,0 +1,89 @@
+package com.chains;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+public class GetCustomerInfo implements Command {
+	public boolean execute(Context ctx) throws Exception {
+		System.out.println("Get customer info");
+		ctx.put("customerName", "George Burdell");
+		return false;
+	}
+
+}
+---------------------
+package com.chains;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+public class TestDriveVehicle implements Command {
+	public boolean execute(Context ctx) throws Exception {
+		System.out.println("Test drive the vehicle");
+		return false;
+	}
+}
+-------------------
+package com.chains;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+public class NegotiateSale implements Command {
+	public boolean execute(Context ctx) throws Exception {
+		System.out.println("Negotiate sale");
+		return false;
+	}
+}
+-----------------
+package com.chains;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+public class ArrangeFinancing implements Command {
+	public boolean execute(Context ctx) throws Exception {
+		System.out.println("Arrange financing");
+		return false;
+	}
+}
+---------------
+package com.chains;    
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+public  class  CloseSale implements  Command {    
+    public  boolean  execute(Context ctx) throws  Exception {  
+        System.out.println("Congratulations "  + ctx.get("customerName" ) +", you bought a new car!" );  
+        return  false ;  
+    }
+}
+-----------------
+package com.chains.test;
+import org.apache.commons.chain.Command;
+import org.apache.commons.chain.Context;
+import org.apache.commons.chain.impl.ChainBase;
+import org.apache.commons.chain.impl.ContextBase;
+import com.chains.ArrangeFinancing;
+import com.chains.CloseSale;
+import com.chains.GetCustomerInfo;
+import com.chains.NegotiateSale;
+import com.chains.TestDriveVehicle;
+public class SellVehicleChain extends ChainBase {
+	public SellVehicleChain() {
+		addCommand(new GetCustomerInfo());
+		addCommand(new TestDriveVehicle());
+		addCommand(new NegotiateSale());
+		addCommand(new ArrangeFinancing());
+		addCommand(new CloseSale());
+	}
+	public static void main(String[] args) throws Exception {
+		Command process = new SellVehicleChain();
+		Context ctx = new ContextBase();
+		process.execute(ctx);
+		System.out.println(ctx.get("customerName"));
+	}
+}
+-----------------------------
+打印结果如下：
+Get customer info
+Test drive the vehicle
+Negotiate sale
+Arrange financing
+Congratulations George Burdell, you bought a new car!
+George Burdell
+
+
+
+

@@ -1,0 +1,21 @@
+我们在c盘根目录下创建a.bat文件，内容为: 
+echo　this is a.bat 
+call d:\b.bat 
+echo done 
+然后在d盘根目录下创建b.bat，内容为： 
+echo this is b.bat 
+保存后，打开cmd，进入c盘根目录，然后输入1.bat，显示如下： 
+C:\>a.bat
+ 
+C:\>echo this is a.bat
+this is a.bat
+ 
+C:\>call d:\b.bat
+ 
+C:\>echo this is b.bat
+this is b.bat
+ 
+C:\>echo donedone 
+done
+
+详细出处参考：http://www.jb51.net/article/8477.htm

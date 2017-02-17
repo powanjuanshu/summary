@@ -1,0 +1,1 @@
+<constant name="struts.conventin.result.path" value="/WEB-INF/content/"/>  //结果资源所在路径，也就是返回的页面路径

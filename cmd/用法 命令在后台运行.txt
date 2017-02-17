@@ -1,0 +1,4 @@
+start /b java -jar springtour.jar
+
+在控制台中： 
+start /b java -jar springtour.jar，在后台启动了进程，但是控制台一旦关闭，后台进程a也没有了。

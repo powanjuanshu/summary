@@ -1,0 +1,18 @@
+你定义了一个login.action，那么struts2将在WEB-INF/content下面寻找login.jsp文件。
+----------------
+messageList.jsp:
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+<body>
+<a href="loginss.action">loginss.action</a>
+</body>
+</html>
+-----------------
+loginss.jsp:
+xxxxxxxxx
+----------------以上虽然我们没定义Loginss.action，但是convention会默认的根据名字跳转到/WEB-INF下的content目录下的loginss.jsp
+
+

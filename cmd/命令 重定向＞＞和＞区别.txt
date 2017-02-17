@@ -1,0 +1,2 @@
+echo aa >> test.txt   表示追加到文件的后面
+echo a > test.txt  表示重新覆盖原来的内容

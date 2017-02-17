@@ -1,0 +1,65 @@
+[1] cookie.setPath("/test/test2");
+  设置Cookie路径，不设置的话为当前路径(对于Servlet来说为request.getContextPath() + web.xml里配置的该Servlet的url-pattern路径部分) 。
+  response.addCookie(cookie);
+[2] cookie的setPath方法使用:正常的cookie只能在一个应用中共享，即一个cookie只能由创建它的应用获得。
+* 可在同一应用服务器内共享方法:设置cookie.setPath("/");
+  本机tomcat/webapp下面有两个应用:webapp_a和webapp_b， 
+* 原来在webapp_a下面设置的cookie，在webapp_b下面获取不到，path默认是产生cookie的应用的路径。
+* 若在webapp_a下面设置cookie的时候，增加一条cookie.setPath("/");或者cookie.setPath("/webapp_b/");
+  就可以在webapp_b下面获取到cas设置的cookie了。
+* 此处的参数，是相对于应用服务器存放应用的文件夹的根目录而言的(比如tomcat下面的webapp)，因此cookie.setPath("/");之后，可以在webapp文件夹下的所有应用共享cookie，而cookie.setPath("/webapp_b/");
+  是指cas应用设置的cookie只能在webapp_b应用下的获得，即便是产生这个cookie的webapp_a应用也不可以。
+* 设置cookie.setPath("/webapp_b/jsp")或者cookie.setPath("/webapp_b/jsp/")的时候，只有在webapp_b/jsp下面可以获得cookie，在webapp_b下面但是在jsp文件夹外的都不能获得cookie。
+* 设置cookie.setPath("/webapp_b");，是指在webapp_b下面才可以使用cookie，这样就不可以在产生cookie的应用webapp_a下面获取cookie了
+* 有多条cookie.setPath("XXX");语句的时候，起作用的以最后一条为准。
+
+[3]
+package com.mipo.action;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+@Controller
+public class CoockieController {
+	@RequestMapping("query")
+	public void query (HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();
+		System.out.println("fffff:"+cookies);
+		//删掉第一个cookie
+		cookies[0].setMaxAge(0); // 设置为0为立即删除该Cookie,本地的cookie文件也会删除此条cookie记录，记录删完cookie文件也会被删除，会先删除22222222222的cookie
+		response.addCookie(cookies[0]);
+		for (Cookie scookie : cookies) { // 用一个循环语句遍历Cookie对象数组 
+			String name = scookie.getName(); // 取得这个Cookie的名字
+			String value = scookie.getValue(); // 取得这个Cookie的内容 
+			System.out.println("...:"+name); // 通过将取出来的Cookie的名字和内容放在字符串变量中，我们就能对其进行各种操作了。在上面的例子里，可通过循环语句的遍历，将所有Cookie放在一张表格中进行显示。 
+			System.out.println("...:"+value);
+		}
+	}
+	@RequestMapping("login")
+	public void login(HttpServletRequest request, HttpServletResponse response, String username, String password){
+		if ("lijie".equals(username) && "123456".equals(password)) {
+			System.out.println("登陆成功");
+			String cookieName = "22222222222";
+			String cookieData = "22222222222";
+			Cookie cookie = new Cookie(cookieName, cookieData); // 这一行建立了一个Cookie对象，初始化有两个参数，第一个参数cookieName定义了Cookie的名字，后一个参数，也是一个字符串，定义了Cookie的内容。也就是我们希望网页在用户的机器上标识的文件内容。
+			//path指定与Cookie关联在一起的网页.默认情况下,cookie会和创建它的网页以及与这个网页处于同一个目录下的网页和处于该目录下的子目录关联
+			cookie.setPath("/test/test2"); // 设置为cookie.setPath("/")相对于localhost/，可以通过Cookie[] cookies = request.getCookies()取得
+			//设置Cookie路径，cookie中的域为localhost/test/test2
+			//不设置的话为当前路径(对于Servlet来说为request.getContextPath()+web.xml里配置的该Servlet的url-pattern路径部分),(相对于springmvc来说为localhost/annotation_web/)
+			//通过Cookie[] cookies = request.getCookies()取得时候只能取得不设置path或设置为cookie.setPath("/")的cookie
+			response.addCookie(cookie);
+			
+			String cookieName2 = "11111111111111";
+			String cookieData2 = "11111111111111";
+			Cookie cookie2 = new Cookie(cookieName2, cookieData2); // 这一行建立了一个Cookie对象，初始化有两个参数，第一个参数cookieName定义了Cookie的名字，后一个参数，也是一个字符串，定义了Cookie的内容。也就是我们希望网页在用户的机器上标识的文件内容。
+			cookie.setMaxAge(1000); // 存活期为1000秒,一个Cookie在用户的硬盘里面存在的时间并不是无限期的，在建立Cookie对象的时候，我们必须制定Cookie的存活期，超过了这个存活期后，Cookie文件就不再起作用，会被用户的浏览器自行删除。如果我们希望用户在下次访问这个页面的时候，Cookie文件仍然有效而且可以被网页读出来的话，我们可以将Cookie的存活期设得稍微长一些。比如cookie.setMaxAge(365*24*60*60)可以让Cookie文件在一年内有效 
+			cookie2.setMaxAge(1000); // 如果设置为负值的话，则为浏览器进程Cookie(内存中保存)，关闭浏览器就失效。零值则是要删除该Cookie
+			response.addCookie(cookie);
+			response.addCookie(cookie2);
+		} else {
+			System.out.println("登陆失败");
+		}
+	}
+}
+

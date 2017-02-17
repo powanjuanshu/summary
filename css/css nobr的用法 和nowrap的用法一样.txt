@@ -1,0 +1,6 @@
+<div style="width:90px;height:30px;overflow:hidden;border:1px solid red;"><nobr>金风玉露一相逢，更深却人间无数</nobr></div>
+------或写成一下形式
+<div style="width:90px;height:30px;white-space:nowrap;overflow:hidden;border:1px solid red;">金风玉露一相逢，更深却人间无数</div>
+------或写成以下形式
+<div style="width:90px;height:30px;overflow:hidden;border:1px solid red;" nowrap>金风玉露一相逢，更深却人间无数</div>
+

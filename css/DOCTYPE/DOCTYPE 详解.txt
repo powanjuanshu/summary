@@ -1,0 +1,48 @@
+<!--<!DOCTYPE html>--><!-- html5的DOCTYPE --><!--如果带上DOCTYPE,下面body只有一行内容,只有文字四周有红色的边线,写这个就是告诉浏览器按以哪种DOCTYPE显示网页-->
+<html>
+<head>
+<style type="text/css">
+	html {
+		border:1px solid red;/*下面body只有一行内容,视窗的四周有红色的边线 */
+	}
+</style>
+</head>
+<body>
+	dfgdfgdf
+</body>
+</html>
+--------------------------------
+<!DOCTYPE html> 能不能不加啊？ 不加又出错了
+能加，加上一般是不会出错的，因为此声明兼容所有HTML的历史版本和最新的HTML5。
+1、<!DOCTYPE> 声明必须是 HTML 文档的第一行，位于 <html> 标签之前。
+<!DOCTYPE> 声明不是 HTML 标签；它是指示 web 浏览器关于页面使用哪个 HTML 版本进行编写的指令。
+2、在 HTML 4.01 中，<!DOCTYPE> 声明引用 DTD，因为 HTML 4.01 基于 SGML。DTD 规定了标记语言的规则，这样浏览器才能正确地呈现内容。HTML5 不基于 SGML，所以不需要引用 DTD。
+3、请始终向 HTML 文档添加 <!DOCTYPE> 声明，这样浏览器才能获知文档类型。
+4、HTML 4.01 与 HTML5 之间的差异在 HTML 4.01 中有三种 <!DOCTYPE> 声明。在 HTML5 中只有一种：<!DOCTYPE html>
+网页中用了 <!DOCTYPE html... 就表示该页面采用了W3C标准，这样做可以增强页面的兼容性，降低对浏览器的依赖性。
+不加这一行，就表示页面采用浏览器本身的解析标准，这样会造成页面在不同的浏览器（IE、火狐等）可能出现不同的显示效果。
+--------------------------------
+被忽视的DOCTYPE说明分析
+
+自己在做web开发的时候，往往着重于界面设计及数据逻辑上的处理，而对一些细节不是特别注意。
+doctype就是其中一个: 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> 
+1.　　doctype是什么 
+　　doctype标签 用来指定document的dtd(Document Type Definition)的，写在每个html的最前面，形如： 
+　　<!DOCTYPE RootElement Availability "URI" [declarations]> 
+如几种常见的doctype: 
+HTML 4.01: Strict<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+HTML 4.01 Transitional<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+XHTML 1.1 Strict DTD<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+2.　　doctype能做什么 
+　　有没有指定doctype, 以及指定不同的doctype都会激活不同的浏览器模式，从而产生对一些对html，css和js的影响，其中最著名的就是所谓的盒模型问题。 
+　　2.1　　为什么会有多种模式 
+　　在很久很久以前还是netscape和ie争霸天下的时代，由于太强大了，浏览器模式是由浏览器自己说了算的。时光流逝，转眼到了战国群雄的时代，大家发现如果都自己说了算的话天下就乱套了，就商量说推举个盟主吧，于是w3c就上台了。但是问题又来了，譬如IE，虽说再不能一头独大，向标准看齐是大势所趋，但是假如浏览器只支持标准的话，之前的许多页面又会产生一些问题。 
+　　于是doctype应运而生，假如没有指定任何doctype，就采用原先的模式，被称为怪癖模式(Quirks Mode)，假如指定了doctype，就遵循标准，被称为标准模式或严格模式(Standards Mode)。期间，以Mozilla为代表的几位，觉得标准模式里诸如img的解析不是很合适，就保留了一些个人意见，在指定一些特定的doctype情况下，会采用一种准标准模式(Almost Standards Mode)，具体情况请参考Activating Browser Modes with Doctype，或是@随网之舞的译文用doctype激活浏览器模式。 
+　　2.2　　不同模式的具体影响 
+　　@ppk大牛已经给我们做了很好的总结，Quirks mode and strict mode。 
+3.　　建议采用的doctype 
+　　<!DOCTYPE HTML> 
+　　理由：支持html5，在不识别的情况下，会采用严格模式。 
+　　再加入一些reset css，如img { display: block }解决浏览器兼容问题。 
+　　需要提醒注意的是，现在很多人使用的<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">以及<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">在几个主要浏览器下都只相当于怪癖模式，换句话说，可以不加。

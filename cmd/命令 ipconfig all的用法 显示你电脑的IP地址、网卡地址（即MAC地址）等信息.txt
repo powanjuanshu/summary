@@ -1,0 +1,11 @@
+此命令主要用于显示你电脑的IP地址、网卡地址（即MAC地址）等信息：
+        Connection-specific DNS Suffix  . :
+        Description . . . . . . . . . . . : Realtek RTL8139 Family PCI Fast Ethe
+rnet NIC   ----网卡型号
+        Physical Address. . . . . . . . . : 00-15-58-76-6C-E9----网卡地址，即MAC地址
+        Dhcp Enabled. . . . . . . . . . . : No   -----说明你是静态指定的，否则是"YES"
+        IP Address. . . . . . . . . . . . : 192.168.0.162----你电脑的IP地址
+        Subnet Mask . . . . . . . . . . . : 255.255.255.0---子网掩码，具体何用途不再解释
+        Default Gateway . . . . . . . . . : 192.168.0.1----网关地址，很重要，错了没法上网
+        DNS Servers . . . . . . . . . . . : 61.153.177.200---DNS，解析域名用，错了QQ可以，网页打不开
+                                            61.153.177.202--多个DNS，如果第一个不通了，自动用第二个

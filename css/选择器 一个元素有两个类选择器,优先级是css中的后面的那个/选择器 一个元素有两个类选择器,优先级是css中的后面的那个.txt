@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <style type="text/css">
+	.cls01 {
+		text-decoration:underline;/*这个属性下面没有重复所以没有被覆盖会显示下划线*/
+		color:orange;
+	}
+
+	.cls02 {/*如果有重复则这个属性将覆盖上面的,下面文字显示红色*/
+		color:red;
+	}
+  </style>
+  
+ </head>
+ <body>
+  <h1 class="cls02 cls01">This is a important jack heading</h1>
+  
+ </body>
+</html>

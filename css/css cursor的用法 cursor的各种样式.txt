@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<table width="100%" border="1">  
+<tr style="cursor:all-scroll"><td>all-scroll</td></tr>  
+<tr style="cursor:auto"><td>auto</td></tr>  
+<tr style="cursor:col-resize"><td>col-resize </td></tr>  
+<tr style="cursor:crosshair"><td>crosshair</td></tr>  
+<tr style="cursor:default"><td>default</td></tr>  
+<tr style="cursor:hand"><td>hand</td></tr>  
+<tr style="cursor:help"><td>help</td></tr>  
+<tr style="cursor:move"><td>move</td></tr>  
+<tr style="cursor:no-drop"><td>no-drop</td></tr>  
+<tr style="cursor:not-allowed"><td>not-allowed</td></tr>  
+<tr style="cursor:pointer"><td>pointer</td></tr>  
+<tr style="cursor:progress "><td>progress </td></tr>  
+<tr style="cursor:row-resize"><td>row-resize</td></tr>  
+<tr style="cursor:text"><td>text</td></tr>  
+<tr style="cursor:url(uri)"><td>url(uri)</td></tr>  
+<tr style="cursor:vertical-text"><td>vertical-text</td></tr>  
+<tr style="cursor:wait"><td>wait</td></tr>  
+<tr style="cursor:N-resize"><td>N-resize</td></tr>  
+<tr style="cursor:S-resize"><td>S-resize</td></tr>  
+<tr style="cursor:W-resize"><td>W-resize</td></tr>  
+<tr style="cursor:E-resize"><td>E-resize</td></tr>  
+<tr style="cursor:NE-resize"><td>NE-resize</td></tr>  
+<tr style="cursor:NW-resize"><td>NW-resize</td></tr>  
+<tr style="cursor:SW-resize"><td>SW-resize</td></tr>  
+<tr style="cursor:SE-resize"><td>SE-resize</td></tr>  
+</table>

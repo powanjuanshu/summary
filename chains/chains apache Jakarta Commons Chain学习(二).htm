@@ -1,0 +1,629 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Jakarta Commons Chain学习(二) - Anvil的专栏 - 博客频道 - CSDN.NET</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="原文：http://www.360doc.com/content/06/0612/10/2718_133115.shtml就像我们在第一部分中讨论的那样，Commons Chain提供了一个基于Java的框架和API来描述顺序的处理过程。现在这个在Javarta Commons项目下开发的框架正在最新的Struts发布版（在这指的是1.3版本）中接受考验。在这一部分，我将具体描述Struts如何使用Chain简化HTTP请求处理。Commons Chain允许你定义多组顺序的命令。每一组命令" />
+<script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+<link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/default/css/style.css?v=1.1" />
+<link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/x_yp/rss/list" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+</head>
+<body>
+<script src="http://csdnimg.cn/pubnav/js/pub_topnav_2011.js"type="text/javascript"></script>
+
+<div id="container">
+<div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h1><a href="http://blog.csdn.net/x_yp">Anvil的专栏</a></h1>
+            <h2></h2>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg"></div>
+    <div class="navigator">
+        <ul>
+            <li id="btnContents"><a href="http://blog.csdn.net/x_yp?viewmode=contents"><span><img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+            <li id="btnView"><a href="http://blog.csdn.net/x_yp?viewmode=list"><span><img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+            <li id="btnRss"><a href="http://blog.csdn.net/x_yp/rss/list"><span><img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>
+</ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "x_yp";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/x_yp";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "warmsmellofcolitas";
+</script>
+
+<div id="body">
+<div id="main">
+<div class="main">
+<div class="notice"> 
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/9819385" target="_blank">
+<font color=red>《这些年，我们读过的技术经典图书》主题有奖征文</font></a>
+
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://www.csdn.net/article/2013-08-06/2816471" target="_blank"><font color=blue>专访李铁军：从医生到金山首席安全专家的转变 
+</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+<a href="http://blog.csdn.net/adali/article/details/9813651"target="_blank">
+<font color=blue>独一无二的职位：开源社区经理 
+ </font></a>
+
+
+
+
+</div>
+<div id="article_details" class="details">
+    <div class="article_title">
+    <span class="ico ico_type_Repost"></span>
+    <h3>
+        <span class="link_title"><a href="/x_yp/article/details/6155422">
+        Jakarta Commons Chain学习(二)
+        </a></span>
+    </h3>
+</div>
+
+        
+    <div class="article_manage">
+        <span class="link_categories">
+        分类：
+            <a href="/x_yp/article/category/670010">技术</a> 
+        </span>
+    <span class="link_postdate">2011-01-20 17:12</span>
+    <span class="link_view" title="阅读次数">403人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="#comments">评论</a>(0)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:collectArticle('Jakarta Commons Chain学习(二)','6155422');return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="#report"  onclick="javascript:report(6155422,2);return false;" title="举报">举报</a></span>
+    
+</div>
+<div class="tag2box"><a href='http://blog.csdn.net/tag/details.html?tag=struts' target=_blank>struts</a><a href='http://blog.csdn.net/tag/details.html?tag=command' target=_blank>command</a><a href='http://blog.csdn.net/tag/details.html?tag=servlet' target=_blank>servlet</a><a href='http://blog.csdn.net/tag/details.html?tag=action' target=_blank>action</a><a href='http://blog.csdn.net/tag/details.html?tag=exception' target=_blank>exception</a><a href='http://blog.csdn.net/tag/details.html?tag=null' target=_blank>null</a></div>
+
+
+    
+<div id="article_content" class="article_content">
+<p>原文：http://www.360doc.com/content/06/0612/10/2718_133115.shtml<br />
+<br />
+就像我们在第一部分中讨论的那样，Commons Chain提供了一个基于Java的框架和API来描述顺序的处理过程。现在这个在Javarta Commons项目下开发的框架正在最新的Struts发布版（在这指的是1.3版本）中接受考验。在这一部分，我将具体描述Struts如何使用 Chain简化HTTP请求处理。 <br />
+<br />
+Commons Chain允许你定义多组顺序的命令。每一组命令（也就是链）负责实现某种处理。链中每一个命令都是一个实现了Command接口的Java类。这个接口只包含了一个execute方法，方法有一个类型是Context的参数。execute方法返回true来声明请求的处理已完成，这时链的执行就会结束。如果返回false，处理将交给下个命令继续。 <br />
+<br />
+你可以使用Commons Chain的API或者XML文件定义链。使用XML文件可以提供最大的灵活性，因为这样做你可以在部署期修改链的定义。下面是我在第一篇文章中使用的链定义文件： <br />
+&lt;catalog&gt;<br />
+&nbsp; &lt;chain name=&quot;sell-vehicle&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;command&nbsp;&nbsp; id=&quot;GetCustomerInfo&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; className=&quot;com.jadecove.chain.sample.GetCustomerInfo&quot;/&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;command&nbsp;&nbsp; id=&quot;TestDriveVehicle&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; className=&quot;com.jadecove.chain.sample.TestDriveVehicle&quot;/&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;command&nbsp;&nbsp; id=&quot;NegotiateSale&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; className=&quot;com.jadecove.chain.sample.NegotiateSale&quot;/&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;command&nbsp;&nbsp; id=&quot;ArrangeFinancing&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; className=&quot;com.jadecove.chain.sample.ArrangeFinancing&quot;/&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;command&nbsp;&nbsp; id=&quot;CloseSale&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; className=&quot;com.jadecove.chain.sample.CloseSale&quot;/&gt;<br />
+&nbsp; &lt;/chain&gt;<br />
+&lt;/catalog&gt;<br />
+<br />
+<span style="color: #ff6600;">Struts使用Chain替换了原来传统的在RequestProcessor类中执行的HTTP请求处理。</span>
+Struts的ActionServlet通过struts-config.xml决定使用哪个RequestProcessor。如果没有显式的指出，ActionServlet将使用org.apache.struts.action.RequestProcessor。他首先得到一个RequestProcessor的实例，调用实例的init方法，然后执行实例的process方法。<br />
+下面是原来的RequestProcessor的init方法：<br />
+public void init(ActionServlet servlet, ModuleConfig moduleConfig)<br />
+&nbsp;&nbsp;&nbsp; throws ServletException {<br />
+&nbsp;&nbsp;&nbsp; synchronized (actions) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; actions.clear();<br />
+&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; this.servlet = servlet;<br />
+&nbsp;&nbsp;&nbsp; this.moduleConfig = moduleConfig;<br />
+}<br />
+没有什么不可思议的地方&mdash;&mdash;这个方法只是简单的清除了Action实例缓存，设置了几个实例变量。RequestProcessor的核心在它的process方法。这个方法里定义了处理请求和响应的顺序算法<br />
+<br />
+public void process(HttpServletRequest request,&nbsp; HttpServletResponse response)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throws IOException, ServletException {<br />
+&nbsp;&nbsp;&nbsp; // Wrap multipart requests with a special wrapper<br />
+&nbsp;&nbsp;&nbsp; request = processMultipart(request);<br />
+&nbsp;&nbsp;&nbsp; // Identify the path component we will use to select a mapping<br />
+&nbsp;&nbsp;&nbsp; String path = processPath(request, response);<br />
+&nbsp;&nbsp;&nbsp; if (path == null) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />
+&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; // Select a Locale for the current user if requested<br />
+&nbsp;&nbsp;&nbsp; processLocale(request, response);<br />
+&nbsp;&nbsp;&nbsp; // Set the content type and no-caching headers if requested<br />
+&nbsp;&nbsp;&nbsp; processContent(request, response);<br />
+&nbsp;&nbsp;&nbsp; processNoCache(request, response);<br />
+&nbsp;&nbsp;&nbsp; // General purpose preprocessing hook<br />
+&nbsp;&nbsp;&nbsp; if (!processPreprocess(request, response)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />
+&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; this.processCachedMessages(request, response);<br />
+&nbsp;&nbsp; // Identify the mapping for this request<br />
+&nbsp;&nbsp; ActionMapping mapping = processMapping(request, response, path);<br />
+&nbsp;&nbsp;&nbsp; if (mapping == null) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />
+&nbsp;&nbsp; }<br />
+&nbsp;&nbsp; // Check for any role required to perform this action<br />
+&nbsp;&nbsp;&nbsp; if (!processRoles(request, response, mapping)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />
+&nbsp;&nbsp; }<br />
+&nbsp;&nbsp; // Process any ActionForm bean related to this request<br />
+&nbsp;&nbsp;&nbsp; ActionForm form = processActionForm(request, response, mapping);<br />
+&nbsp;&nbsp; processPopulate(request, response, form, mapping);<br />
+&nbsp; if (!processValidate(request, response, form, mapping)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />
+&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; // Process a forward or include specified by this mapping<br />
+&nbsp;&nbsp; if (!processForward(request, response, mapping)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />
+&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;if (!processInclude(request, response, mapping)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />
+&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; // Create or acquire the Action instance to process this request<br />
+&nbsp;&nbsp; Action action = processActionCreate(request, response, mapping);<br />
+&nbsp;if (action == null) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />
+&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; // Call the Action instance itself<br />
+&nbsp;&nbsp;&nbsp; ActionForward forward =&nbsp; processActionPerform(request, response,action, form, mapping);<br />
+&nbsp; // Process the returned ActionForward instance<br />
+&nbsp;processForwardConfig(request, response, forward);<br />
+}<br />
+<br />
+<br />
+<span style="color: #ff6600;">这个处理就是为Commons Chain定制的（一些Struts的拥护者同时也是Chain的拥护者决不是巧合。）这个处理由一串顺序的步骤组成，这些步骤是一些名为processXX的方法。</span>
+它们的输入主要由request和response对象组成。其中一些方法会返回Struts的对象，如ActionMapping和ActionForm。如果这些对象为null就返回false，表示处理无法继续；另一些方法直接返回true或false，false用于表示请求已被处理而且无法继续执行。<br />
+<br />
+Struts 1.3提供了一个新的请求处理类（ComposableRequestProcessor）来使用Commons Chain，这个类继承RequestProcessor，覆盖了init和process方法。ComposableRequestProcessor的init方法从链编目中载入请求处理链。默认情况下，这个编目名是struts，命令名是servlet-standar<br />
+public void init(ActionServlet servlet, ModuleConfig moduleConfig)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throws ServletException {<br />
+&nbsp;&nbsp;&nbsp; super.init(servlet, moduleConfig);<br />
+&nbsp;&nbsp;&nbsp; ControllerConfig controllerConfig = moduleConfig.getControllerConfig();<br />
+&nbsp;&nbsp;&nbsp; String catalogName = controllerConfig.getCatalog();<br />
+&nbsp;&nbsp; catalog = CatalogFactory.getInstance().getCatalog(catalogName);<br />
+&nbsp;&nbsp; if (catalog == null) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw new ServletException(&quot;Cannot find catalog &lsquo;&quot; +&nbsp; catalogName + &quot;&lsquo;&quot;);<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; String commandName = controllerConfig.getCommand();<br />
+&nbsp;&nbsp; command = catalog.getCommand(commandName);<br />
+&nbsp;&nbsp;&nbsp; if (command == null) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw new ServletException(&quot;Cannot find command &lsquo;&quot; +&nbsp; commandName + &quot;&lsquo;&quot;);<br />
+&nbsp;&nbsp; }<br />
+}<br />
+为了运行链（也就是运行命令）ComposableRequestProcessor覆盖了process方法：<br />
+public void process(HttpServletRequest request,&nbsp; HttpServletResponse response)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throws IOException, ServletException {<br />
+&nbsp;&nbsp;&nbsp; // Wrap the request in the case of a multipart request<br />
+&nbsp;&nbsp;&nbsp; request = processMultipart(request);&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; // Create and populate a Context for this request<br />
+&nbsp;&nbsp;&nbsp; ActionContext context = contextInstance(request, response);<br />
+&nbsp;&nbsp;&nbsp; // Create and execute the command.<br />
+&nbsp;&nbsp; try {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; command.execute(context);<br />
+&nbsp;&nbsp;&nbsp; } catch (Exception e) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Execute the exception processing chain??<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw new ServletException(e);<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; // Release the context.<br />
+&nbsp;&nbsp; context.release();<br />
+}<br />
+<br />
+处理请求的步骤在一个名为chain-config.xml的XML文件中定义，这个文件里定义了一组需要顺序执行的命令。（在这processMultipart方法是个例外。这个在ComposableRequestProcessor里实现的方法包装了内容类型是multipart/form-data的请求）。为了了解它是如何工作的，我们来仔细察看一下chain-config.xml的内容。首先，Struts使用了子链，Commons Chain中通过使用LookupCommand将整个链看成是一个命令。Struts使用了元素define使基于LookupCommand的子链定义更便捷。<br />
+&lt;define name= &quot;lookup&quot; className=&quot;org.apache.commons.chain.generic.LookupCommand&quot;/&gt;<br />
+ComposableRequestProcessor执行了名为servlet-standard的链。这个链包含了3个命令：<br />
+servlet-exception&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 处理异常的Chain过滤器。过滤器是一种实现了postprocess方法的特殊命令。postprocess会在链中命令执行后调用（实际上是在那些在过滤器声明之后的命令执行后调用）。<br />
+process-action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 处理请求并执行恰当的action的主要流程。<br />
+process-view&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 处理到视图的转向（例如JSP页面）。<br />
+<br />
+&lt;chain name=&quot;servlet-standard&quot;&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;!-- Establish exception handling filter --&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;command&nbsp; className=&quot;org.apache.struts.chain.commands.ExceptionCatcher&quot; catalogName=&quot;struts&quot;<br />
+&nbsp;&nbsp; exceptionCommand=&quot;servlet-exception&quot;/&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;lookup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; catalogName=&quot;struts&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name=&quot;process-action&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional=&quot;false&quot;/&gt;<br />
+&nbsp;&nbsp; &lt;lookup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; catalogName=&quot;struts&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name=&quot;process-view&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional=&quot;false&quot;/&gt;<br />
+&lt;/chain&gt;<br />
+<br />
+process-action链定义了处理请求和调用你自己的action的命令组：<br />
+<br />
+&lt;chain name=&quot;process-action&quot;&gt;<br />
+&nbsp; &lt;lookup catalogName=&quot;struts&quot; name=&quot;servlet-standard-preprocess&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional=&quot;true&quot;/&gt;<br />
+&nbsp;&lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.SelectLocale&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.RequestNoCache&quot;&nbsp; /&gt;<br />
+&nbsp;&lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.SetContentType&quot;&nbsp; /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.SelectAction&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.AuthorizeAction&quot;&nbsp; /&gt;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.CreateActionForm&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.PopulateActionForm&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.ValidateActionForm&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.SelectInput&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.ExecuteCommand&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.SelectForward&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.SelectInclude&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.PerformInclude&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.CreateAction&quot;&nbsp; /&gt;<br />
+&nbsp; &lt;command className=&nbsp;&nbsp;&nbsp; &quot;org.apache.struts.chain.commands.servlet.ExecuteAction&quot;&nbsp; /&gt;<br />
+&lt;/chain&gt;<br />
+<br />
+原始的RequestProcessor中的方法processXX被实现了Command接口类重写了实现。在Struts里，每一个Command的实现都继承了一个抽象的基类。这个基类实现了Command的execute方法。这个execute方法调用具体的子类方法执行实际的操作。<br />
+<br />
+我们来考察如何在HTTP请求中存取locale。首先，下面是原始的RequestProcessor中processLocale的实现：<br />
+protected void processLocale(HttpServletRequest request,&nbsp;&nbsp; HttpServletResponse response) {<br />
+&nbsp;&nbsp;&nbsp; // Are we configured to select the Locale automatically?<br />
+&nbsp;&nbsp;&nbsp; if (!moduleConfig.getControllerConfig().getLocale()) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />
+&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; // Has a Locale already been selected?<br />
+&nbsp;&nbsp; HttpSession session = request.getSession();<br />
+&nbsp;&nbsp;&nbsp; if (session.getAttribute(Globals.LOCALE_KEY) != null) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />
+&nbsp;&nbsp; }<br />
+&nbsp;&nbsp; // Use the Locale returned by the servlet container (if any)<br />
+&nbsp;&nbsp; Locale locale = request.getLocale();<br />
+&nbsp;&nbsp; if (locale != null) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; session.setAttribute(Globals.LOCALE_KEY, locale);<br />
+&nbsp;&nbsp; }<br />
+}<br />
+<br />
+新的用链处理locale的实现使用了两个类：AbstractSelectLocale和SelectLocale。<br />
+抽象类AbstractSelectLocale实现了execute方法：<br />
+public boolean execute(Context context) throws Exception {<br />
+&nbsp;&nbsp;&nbsp; ActionContext actionCtx = (ActionContext) context;<br />
+&nbsp;&nbsp;&nbsp; // Are we configured to select Locale automatically?<br />
+&nbsp;&nbsp; ModuleConfig moduleConfig = actionCtx.getModuleConfig();<br />
+&nbsp;&nbsp; if (!moduleConfig.getControllerConfig().getLocale()) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return (false);<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp; // Retrieve and cache appropriate Locale for this request<br />
+&nbsp;&nbsp; Locale locale = getLocale(actionCtx);<br />
+&nbsp;&nbsp;&nbsp; actionCtx.setLocale(locale);<br />
+&nbsp;&nbsp;&nbsp; return (false);<br />
+}<br />
+<br />
+SelectLocale继承了AbstractSelectLocale并实现了抽象方法getLocale：<br />
+protected Locale getLocale(ActionContext context) {<br />
+&nbsp;&nbsp; ServletActionContext saContext = (ServletActionContext) context;<br />
+&nbsp;&nbsp; // Has a Locale already been selected?<br />
+&nbsp;&nbsp;&nbsp; HttpSession session = saContext.getRequest().getSession();<br />
+&nbsp;&nbsp;&nbsp; Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);<br />
+&nbsp;&nbsp;&nbsp; if (locale != null) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return (locale);<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; // Select and cache the Locale to be used<br />
+&nbsp;&nbsp;&nbsp; locale = saContext.getRequest().getLocale();<br />
+&nbsp;&nbsp; if (locale == null) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; locale = Locale.getDefault();<br />
+&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; session.setAttribute(Globals.LOCALE_KEY, locale);<br />
+&nbsp;&nbsp;&nbsp; return (locale);<br />
+}<br />
+<br />
+抽象类和它的实现类都充分使用了接收到的context对象。<span style="color: #ff6600;">在Commons Chain里，Context对象作为链中的命令的共享存储空间。</span>
+与RequestProcessor直接操作HTTP请求和响应不同的是，命令需要做一些额外的工作来操作他们。上面的抽象命令将context向下转型成ActionContext类型。ActionContext可以显式地操作Struts相关属性，例如消息资源（message resource）、正在执行的Action以及请求（request）和会话（session）的资源和服务。但是，ActionContext并不依赖Servlet API。命令的具体实现类进一步将context向下转型到ServletActionContext类型。ServletActionContext实<br />
+现了ActionContext接口，并且包装了Commons Chain的ServletWebContext。ServletWebContext包含了一些servlet对象，例如HttpServletRequest、HttpServletResponse和ServletContext。<br />
+<br />
+Struts 1.3的开发人员尽力降低了和Servlet API的耦合。通过构建上面显示的使用Chain Context的结构，Struts将对Servlet API的依赖隔离到了最底层：具体的命令实现类。事实上，你会发现Struts的命令遵循了一个及其一致的模式：<br />
+<span style="color: #ff6600;">1.一个抽象命令实现了Command的execute方法，它只对ActionContext做处理。<br />
+2.在execute方法中，这个抽象的基类调用一个自定义的抽象方法完成特定的servlet工作。<br />
+3. 具体的子类实现了自定义的抽象方法，将ActionContext向下转型到ServletActionContext，然后使用HttpServletRequest和HttpSession等执行特殊的工作。<br />
+4.根据抽象方法返回的结果，抽象命令会返回false（链继续执行）或true（链停止执行）。</span>
+<br />
+如果你想自定义ComposableRequestProcessor的行为就需要了解ComposableRequestProcessor和链配置。<br />
+Commons Chain为开发人员提供了多种方法自定义Struts的请求处理。例如，假设你想自定义locale的处理，你可以使用下面任意一种技术：<br />
+1.你自己继承AbstractSelectLocale并实现getLocale方法。将chain-config.xml中的className改成你自己写的类名。<br />
+2.自己实现Command接口，然后替换原来的类。将chain-config.xml中的className改成你自己写的类名。<br />
+3.最后一种：使用LookupCommand，你可以将处理locale的单一命令替换成一个子链。<br />
+<br />
+在Commons Chain和Struts 1.3仍在不断变化中，所以上面说的可能会有变化。你最好下载最新的Struts的源码，仔细看看它是如何使用Chain的。我想你会发现这样实现是经过深思熟虑的；现在为Struts的请求处理加入自定义的行为要比以前更容易，更不受束缚。</p>
+</div>
+
+<div class="share_buttons" id="sharePanel"></div>
+<!--192.168.100.34-->
+<div class="article_next_prev">
+    <li class="prev_article"><span>上一篇：</span><a href="/x_yp/article/details/6155075">Jakarta Commons Chain学习(一)</a></li>
+    <li class="next_article"><span>下一篇：</span><a href="/x_yp/article/details/6187493">java动态代理学习（一）</a></li>
+</div>
+
+
+    
+</div>
+<div id="ad_cen">
+<script type="text/javascript" >BAIDU_CLB_SLOT_ID = "117306";</script>
+<script type="text/javascript" src="http://cbjs.baidu.com/js/o.js"></script>
+</div>
+<script type="text/javascript">
+    //new Ad(4, 'ad_cen');
+</script>
+<div id="comment_title" class="panel_head">查看评论<a name="comments"></a></div>
+<div id="comment_list"></div>
+<div id="comment_bar"></div>
+<div id="comment_form"></div>
+<div class="announce">* 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+<script type="text/javascript">
+    var fileName = '6155422';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+<div id="ad_bot"></div>
+<script type="text/javascript">
+    new Ad(5, 'ad_bot');
+</script>
+<div id="report_dialog"></div>
+
+<div id="d-top" style="display:none;">
+<a id="d-top-a" href="#" title="回到顶部">
+<img src="http://static.blog.csdn.net/images/top.png" alt="TOP" /></a>
+</div>
+<script type="text/javascript">
+    $(function(){
+        var d_top=$('#d-top');
+        document.onscroll=function(){
+            var scrTop=(document.body.scrollTop||document.documentElement.scrollTop);
+            if(scrTop>500){
+                d_top.show();
+            }else{
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function(){
+            scrollTo(0,0);
+            this.blur();
+            return false;
+        });
+    });
+</script>
+
+<div class="clear"></div>
+</div>
+</div>
+
+<div id="side">
+<div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/x_yp" target="_blank">
+    <img src="http://avatar.csdn.net/1/5/A/1_x_yp.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/x_yp" class="user_name" target="_blank">x_yp</a></span>
+</div>
+<div class="interact">
+<a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+<a href="javascript:void(0);" class="letter" onclick="loginto(1)" title="[发私信]"></a>
+</div>
+<div id="blog_medal">
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>39940次</span></li>
+    <li>积分：<span>681分</span></li>
+    <li>排名：<span>第17975名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>21篇</span></li>
+    <li>转载：<span>63篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>7条</span></li>
+</ul>
+</ul>
+</div>
+
+<div class="panel">
+<ul class="panel_body" style="padding:0;">
+<script type="text/javascript" src="http://cbjs.baidu.com/js/m.js"></script> 
+<script type="text/javascript"> 
+BAIDU_CLB_preloadSlots("724643","117306"); 
+</script>
+<script type="text/javascript">BAIDU_CLB_fillSlot("724643");</script> 
+</ul>
+</div>
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="submit" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">
+<li>
+<a href="http://blog.csdn.net/x_yp/article/category/713019">Web 2.0</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/x_yp/article/category/828652">云计算</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/x_yp/article/category/670021">其他</a><span>(7)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/x_yp/article/category/670010">技术</a><span>(36)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/x_yp/article/category/670018">管理</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/x_yp/article/category/670019">设计</a><span>(13)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/x_yp/article/category/683842">软件产品化</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/x_yp/article/category/799504">软件创业</a><span>(1)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/x_yp/article/category/787767">软件解决方案</a><span>(12)</span>
+</li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="http://blog.csdn.net/x_yp/article/month/2013/07">2013年07月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2013/05">2013年05月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2012/01">2012年01月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2011/06">2011年06月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2011/05">2011年05月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2011/04">2011年04月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2011/03">2011年03月</a><span>(19)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2011/02">2011年02月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2011/01">2011年01月</a><span>(9)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2010/12">2010年12月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2010/11">2010年11月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2010/10">2010年10月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2010/09">2010年09月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2010/08">2010年08月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2010/07">2010年07月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2010/06">2010年06月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2010/05">2010年05月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/x_yp/article/month/2010/04">2010年04月</a><span>(7)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head"><span>阅读排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/x_yp/article/details/6153099" title="STRUTS2中的设计模式">STRUTS2中的设计模式</a><span>(2679)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6358630" title="过滤器、监听器、拦截器的区别">过滤器、监听器、拦截器的区别</a><span>(2505)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6234327" title="Tomcat时区设置方法">Tomcat时区设置方法</a><span>(2249)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6152587" title="STRUTS2核心控制器：FilterDispatcher">STRUTS2核心控制器：FilterDispatcher</a><span>(1754)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6200889" title="多个地方同时向一个文件读写的互斥问题解决方案">多个地方同时向一个文件读写的互斥问题解决方案</a><span>(1558)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6231571" title="Webservice学习笔记四，XML-RPC与SOAP 区别">Webservice学习笔记四，XML-RPC与SOAP 区别</a><span>(1468)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6231918" title="Webservice学习笔记六，SOAP, REST and XML-RPC报文格式收集">Webservice学习笔记六，SOAP, REST and XML-RPC报文格式收集</a><span>(1396)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6104547" title="Apache Commons BeanUtils包学习(2)-beanutils.PropertyUtils, beanutils.DynaBean">Apache Commons BeanUtils包学习(2)-beanutils.PropertyUtils, beanutils.DynaBean</a><span>(1352)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6228375" title="*.docx,*.xlsx,*.pptx文件下载后变成.zip文件,*.csv文件下载后变为.html文件">*.docx,*.xlsx,*.pptx文件下载后变成.zip文件,*.csv文件下载后变为.html文件</a><span>(1124)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/5827239" title="程序员的职业发展--读IBM大中华区架构师寇卫东文章有感 ">程序员的职业发展--读IBM大中华区架构师寇卫东文章有感 </a><span>(1066)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/x_yp/article/details/6228375" title="*.docx,*.xlsx,*.pptx文件下载后变成.zip文件,*.csv文件下载后变为.html文件">*.docx,*.xlsx,*.pptx文件下载后变成.zip文件,*.csv文件下载后变为.html文件</a><span>(1)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6152587" title="STRUTS2核心控制器：FilterDispatcher">STRUTS2核心控制器：FilterDispatcher</a><span>(1)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6152863" title="STRUTS2拦截器介绍">STRUTS2拦截器介绍</a><span>(1)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6153099" title="STRUTS2中的设计模式">STRUTS2中的设计模式</a><span>(1)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6255739" title="Javascript跨域访问解决方案(二）">Javascript跨域访问解决方案(二）</a><span>(1)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6395251" title="httpclient认证">httpclient认证</a><span>(1)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6200895" title="弹出页面进行文件下载，如何在文件下载完毕后，将该弹出的页面关闭掉的解决方案">弹出页面进行文件下载，如何在文件下载完毕后，将该弹出的页面关闭掉的解决方案</a><span>(1)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6229516" title="如何获取方法参数的描述信息">如何获取方法参数的描述信息</a><span>(0)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6231538" title="Web service学习笔记三，RPC与REST区别">Web service学习笔记三，RPC与REST区别</a><span>(0)</span>
+</li>
+<li>
+<a href="/x_yp/article/details/6231571" title="Webservice学习笔记四，XML-RPC与SOAP 区别">Webservice学习笔记四，XML-RPC与SOAP 区别</a><span>(0)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend"></ul>
+</div>
+<script type="text/javascript">
+ new Ad(12, 'ad_commend');
+</script><div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+    <a href="/x_yp/article/details/6395251#comments">httpclient认证</a>
+    <p style="margin:0px;"><a href="/zgh476189321" class="user_name">zgh476189321</a>:
+讲的真好！！
+    </p>
+    </li>
+    <li>
+    <a href="/x_yp/article/details/6228375#comments">*.docx,*.xlsx,*.pptx文件下载后变成.zip文件,*.csv文件下载后变为.html文件</a>
+    <p style="margin:0px;"><a href="/honey_beeqiang" class="user_name">honey_beeqiang</a>:
+无解啊，求解决
+    </p>
+    </li>
+    <li>
+    <a href="/x_yp/article/details/6200895#comments">弹出页面进行文件下载，如何在文件下载完毕后，将该弹出的页面关闭掉的解决方案</a>
+    <p style="margin:0px;"><a href="/oldfoolwolf" class="user_name">oldfoolwolf</a>:
+我也遇到同样的问题,报错:java.lang.IllegalStateException: forw...
+    </p>
+    </li>
+    <li>
+    <a href="/x_yp/article/details/6152587#comments">STRUTS2核心控制器：FilterDispatcher</a>
+    <p style="margin:0px;"><a href="/funnyone" class="user_name">funnyone</a>:
+FilterDispatcher
+    </p>
+    </li>
+    <li>
+    <a href="/x_yp/article/details/6153099#comments">STRUTS2中的设计模式</a>
+    <p style="margin:0px;"><a href="/javapolo2" class="user_name">javapolo2</a>:
+“Action位于堆栈的底部”，我觉得这句话有点问题，个人感觉应该是action中要调用的方法位于堆...
+    </p>
+    </li>
+    <li>
+    <a href="/x_yp/article/details/6152863#comments">STRUTS2拦截器介绍</a>
+    <p style="margin:0px;"><a href="/leh123" class="user_name">leh123</a>:
+不错~
+    </p>
+    </li>
+    <li>
+    <a href="/x_yp/article/details/6255739#comments">Javascript跨域访问解决方案(二）</a>
+    <p style="margin:0px;"><a href="/lslxdx" class="user_name">lslxdx</a>:
+解决方案很全面，言简意赅！关于“iframe 代理”能否找个例子啊？
+    </p>
+    </li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+</div>
+
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js?v=1.1"></script>
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=785413"></script>
+
+<script type="text/javascript">
+document.write('<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js?' + Math.floor(new Date()/120000).toString(36) + '="></'+'script>');
+</script>
+
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js?v=1"></script>
+
+
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+
+<script type="text/javascript" src="http://zz.csdn.net/js/count.js"></script>
+
+</div>
+</body>
+</html>

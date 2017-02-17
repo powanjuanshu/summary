@@ -1,0 +1,1 @@
+Action名的映射：去掉Action后缀，单词之间加中画线，单词首字母变小写，比如TestFormAction类对应名为test-form

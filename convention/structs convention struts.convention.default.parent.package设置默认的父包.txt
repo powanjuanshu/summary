@@ -1,0 +1,1 @@
+<constant name="struts.convention.default.parent.package" value="convention-default"/> //default

@@ -1,0 +1,7 @@
+在D盘下创建AUTOEXEC.bat，然后输入：
+@echo This Bat Program
+@pause
+---------------运行
+直接双击这个文件,黑屏会一闪而过。
+---------------
+开始->运行->cmd->切换到AUTOEXEC.bat的目录，AUTOEXEC.bat回车执行

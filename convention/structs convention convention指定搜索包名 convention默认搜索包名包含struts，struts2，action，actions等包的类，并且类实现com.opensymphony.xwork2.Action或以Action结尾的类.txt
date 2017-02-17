@@ -1,0 +1,2 @@
+如果你没有配置struts的struts.convention.package.locators属性，
+那么strusts2将搜索包名中包含struts,struts2,action,actions等关键字类，并且类实现com.opensymphony.xwork2.Action或者名称以Action结尾的类

@@ -1,0 +1,25 @@
+<style>
+*{
+	scrollbar-face-color:red;
+}
+</style>
+<div style="width:120px;height:120px;white-space:nowrap;overflow:scroll;">金风玉露一相逢，更深却人间无数<br>
+金风玉露一相逢，更深却人间无数<br>
+金风玉露一相逢，更深却人间无数<br>
+金风玉露一相逢，更深却人间无数<br>
+金风玉露一相逢，更深却人间无数<br>
+金风玉露一相逢，更深却人间无数<br>
+金风玉露一相逢，更深却人间无数<br>
+金风玉露一相逢，更深却人间无数<br>
+金风玉露一相逢，更深却人间无数<br>
+金风玉露一相逢，更深却人间无数<br>
+</div>
+----------------------------------------------------------
+SCROLLBAR-FACE-COLOR: //滚动条凸出部分的颜色 
+SCROLLBAR-HIGHLIGHT-COLOR: //滚动条空白部分的颜色 
+SCROLLBAR-SHADOW-COLOR: //立体滚动条阴影的颜色 
+SCROLLBAR-3DLIGHT-COLOR: //滚动条亮边的颜色 
+SCROLLBAR-ARROW-COLOR: //上下按钮上三角箭头的颜色 
+SCROLLBAR-TRACK-COLOR: //滚动条的背景颜色 
+SCROLLBAR-DARKSHADOW-COLOR: //滚动条强阴影的颜色 
+SCROLLBAR-BASE-COLOR: //滚动条的基本颜色 

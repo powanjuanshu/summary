@@ -1,0 +1,4 @@
+<div style="height:20px;border:1px solid red;" nowrap>abcdefg在天愿作比翼鸟，在地愿为连理枝</div>
+----------------------
+高度大于20px时div下边与文字的空隙会增大，高度小于20px时div不会变矮，说明普通文字的高度为20px
+

@@ -1,0 +1,19 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>浦东发展银行信用卡</title>
+    <style>
+      .sty1 {
+        font-size: 20px;
+      }
+      .sty2 {
+        color: aqua;
+      }
+    </style>
+</head>
+<body>
+  <div class="sty1 sty2">
+    尊敬的客户<br/>请选择您需要的支付方式
+  </div>
+</body>
+</html>

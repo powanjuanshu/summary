@@ -1,0 +1,5 @@
+<div style="width:90px;height:30px;white-space:nowrap;overflow:hidden;border:1px solid red;">露一相逢玉露一相逢露一相逢露一相逢</div>
+------或写成以下形式
+<div style="width:90px;height:30px;overflow:hidden;border:1px solid red;" nowrap>露一相逢玉露一相逢露一相逢露一相逢</div>
+------或写成一下形式
+<div style="width:90px;height:30px;overflow:hidden;border:1px solid red;"><nobr>露一相逢玉露一相逢露一相逢露一相逢</nobr></div>

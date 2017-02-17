@@ -1,0 +1,5 @@
+<style>
+</style>
+<div style="width:500px;height:20px;border:1px solid red;">abcdefg在天愿作比翼鸟，在地愿为连理枝</div>
+----------------------
+若div放不下里面的文字，则div会撑大，宽度不变，依然为50px，高度会变高，高度会大于20px，即以宽度为标准，长度会自动调整

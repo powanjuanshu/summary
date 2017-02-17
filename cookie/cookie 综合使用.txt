@@ -1,0 +1,92 @@
+[1]
+package com.mipo.action;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+@Controller
+public class CoockieController {
+	@RequestMapping("query")
+	public void query (HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();
+		System.out.println("fffff:"+cookies);
+		//删掉第一个cookie
+		cookies[0].setMaxAge(0); // 设置为0为立即删除该Cookie,本地的cookie文件也会删除此条cookie记录，记录删完cookie文件也会被删除，会先删除22222222222的cookie
+		response.addCookie(cookies[0]);
+		for (Cookie scookie : cookies) { // 用一个循环语句遍历Cookie对象数组 
+			String name = scookie.getName(); // 取得这个Cookie的名字
+			String value = scookie.getValue(); // 取得这个Cookie的内容 
+			System.out.println("...:"+name); // 通过将取出来的Cookie的名字和内容放在字符串变量中，我们就能对其进行各种操作了。在上面的例子里，可通过循环语句的遍历，将所有Cookie放在一张表格中进行显示。 
+			System.out.println("...:"+value);
+		}
+	}
+	@RequestMapping("login")
+	public void login(HttpServletRequest request, HttpServletResponse response, String username, String password){
+		if ("lijie".equals(username) && "123456".equals(password)) {
+			System.out.println("登陆成功");
+			String cookieName = "22222222222";
+			String cookieData = "22222222222";
+			Cookie cookie = new Cookie(cookieName, cookieData); // 这一行建立了一个Cookie对象，初始化有两个参数，第一个参数cookieName定义了Cookie的名字，后一个参数，也是一个字符串，定义了Cookie的内容。也就是我们希望网页在用户的机器上标识的文件内容。
+			//path指定与Cookie关联在一起的网页.默认情况下,cookie会和创建它的网页以及与这个网页处于同一个目录下的网页和处于该目录下的子目录关联。 
+			cookie.setPath("/test/test2"); // 设置为cookie.setPath("/")相对于localhost/，可以通过Cookie[] cookies = request.getCookies()取得
+			//设置Cookie路径，cookie中的域为localhost/test/test2 恩，
+			//不设置的话为当前路径(对于Servlet来说为request.getContextPath()+web.xml里配置的该Servlet的url-pattern路径部分),(相对于springmvc来说为localhost/annotation_web/)
+			//通过Cookie[] cookies = request.getCookies()取得时候只能取得不设置path或设置为cookie.setPath("/")的cookie
+			response.addCookie(cookie);		
+			/*
+			* cookie.setDomain("localhost");
+			* domain 设置访问域 举个例子：位于order.example.com的服务器要读取catalog.example.com设置的cookie.这里就要引入domain属性,假定由位于catalog.example.com的页面创  的cookie把自己的path属性设置为"/",
+			* 把domain属性设置为".example.com",那么所有位于"catalog.example.com"的网页和所有位于"orders.example.com"的网页以及所有位于example.com域的其他服务器上得网页都能够访问这个cookie.
+			* 如果没有设置cookie的domain值,该属性的默认值就是创建cookie的网页所在的  服务器的主机名。   注意：不能将一个cookie的域设置成服务器所在的域之外的域. 
+			* cookie.setSecure(true); 
+			* seure   指定在网络上如何传输cookie的值 
+			*/
+			String cookieName2 = "11111111111111";
+			String cookieData2 = "11111111111111";
+			Cookie cookie2 = new Cookie(cookieName2, cookieData2); // 这一行建立了一个Cookie对象，初始化有两个参数，第一个参数cookieName定义了Cookie的名字，后一个参数，也是一个字符串，定义了Cookie的内容。也就是我们希望网页在用户的机器上标识的文件内容。
+			//默认情况下,Cookie的值只在浏览器的会话期间存在,当用户退出浏览器这些值就消失了
+			cookie.setMaxAge(1000); // 存活期为1000秒,一个Cookie在用户的硬盘里面存在的时间并不是无限期的，在建立Cookie对象的时候，我们必须制定Cookie的存活期，超过了这个存活期后，Cookie文件就不再起作用，会被用户的浏览器自行删除。如果我们希望用户在下次访问这个页面的时候，Cookie文件仍然有效而且可以被网页读出来的话，我们可以将Cookie的存活期设得稍微长一些。比如cookie.setMaxAge(365*24*60*60)可以让Cookie文件在一年内有效 
+			cookie2.setMaxAge(1000); // 如果设置为负值的话，则为浏览器进程Cookie(内存中保存)，关闭浏览器就失效。零值则是要删除该Cookie
+			response.addCookie(cookie);
+			response.addCookie(cookie2);
+		} else {
+			System.out.println("登陆失败");
+		}
+	}
+}
+[2]
+方法解释
+String getComment()返回cookie中注释,如果没有注释的话将返回空值.
+String getDomain() 返回cookie中Cookie适用的域名. 使用getDomain() 方法可以指示浏览器把Cookie返回给同 一域内的其他服务器,而通常Cookie只返回给与发送它的服务器名字完全相同的服务器。注意域名必须以点开始（例如.yesky.com）
+int getMaxAge() 返回Cookie过期之前的最大时间，以秒计算。
+String getName()返回Cookie的名字。名字和值是我们始终关心的两个部分，笔者会在后面详细介绍 getName/setName。
+String getPath()返回Cookie适用的路径。如果不指定路径，Cookie将返回给当前页面所在目录及其子目录下 的所有页面。
+boolean getSecure() 如果浏览器通过安全协议发送cookies将返回true值，如果浏览器使用标准协议则返回false值。
+String getValue() 返回Cookie的值。笔者也将在后面详细介绍getValue/setValue。
+int getVersion() 返回Cookie所遵从的协议版本。
+void setComment(String purpose) 设置cookie中注释。
+void setDomain(String pattern) 设置cookie中Cookie适用的域名
+void setMaxAge(int expiry) 以秒计算，设置Cookie过期时间。
+void setPath(String uri) 指定Cookie适用的路径。
+void setSecure(boolean flag) 指出浏览器使用的安全协议，例如HTTPS或SSL。
+void setValue(String newValue) cookie创建后设置一个新的值。
+void setVersion(int v) 设置Cookie所遵从的协议版本。
+
+需要注意的一些问题 
+通过上面两个简单的例子，可以看到，用JSP进行Cookie的操作，是非常简单的。不过我们在实际操作中还要注意一些问题： 
+* Cookie的兼容性问题 
+  Cookie的格式有2个不同的版本，第一个版本，我们称为Cookie Version 0，是最初由Netscape公司制定的，也被几乎所有的浏览器支持。
+  而较新的版本，Cookie Version 1，则是根据RFC 2109文档制定的。为了确保兼容性，JAVA规定，前面所提到的涉及Cookie的操作都是针对旧版本的Cookie进行的。
+  而新版本的Cookie目前还不被Javax.servlet.http.Cookie包所支持。 
+* Cookie的内容 
+  同样的Cookie的内容的字符限制针对不同的Cookie版本也有不同。在Cookie Version 0中，某些特殊的字符，例如：空格，方括号，圆括号，等于号（=），逗号，双引号，
+  斜杠，问号，@符号，冒号，分号都不能作为Cookie的内容。这也就是为什么我们在例子中设定Cookie的内容为"Test_Content"的原因。 
+  虽然在Cookie Version 1规定中放宽了限制，可以使用这些字符，但是考虑到新版本的Cookie规范目前仍然没有为所有的浏览器所支持，因而为保险起见，
+  我们应该在Cookie的内容中尽量避免使用这些字符.
+
+
+
+
+
+

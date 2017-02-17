@@ -1,0 +1,16 @@
+copy 
+拷贝文件 
+copy c:test.txt d:test.bak 
+复制 c:test.txt 文件到 d: ，并重命名为 test.bak 
+copy con test.txt 
+从屏幕上等待输入，按 Ctrl+Z 结束输入，输入内容存为test.txt文件 
+con代表屏幕，prn代表打印机，nul代表空设备 
+copy 1.txt + 2.txt 3.txt 
+合并 1.txt 和 2.txt 的内容，保存为 3.txt 文件 
+如果不指定 3.txt ，则保存到 1.txt 
+copy test.txt + 
+复制文件到自己，实际上是修改了文件日期 
+------------------------------------------------------
+@echo off
+copy d:build.xml e:zzz\build.xml.bak
+------复制d:build.xml文件到e:zzz,并重命名为build.xml.bak

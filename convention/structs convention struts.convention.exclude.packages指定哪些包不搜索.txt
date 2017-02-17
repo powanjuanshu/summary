@@ -1,0 +1,2 @@
+<constant name="struts.convention.exclude.packages"
+          value="org.apache.struts.*,org.apache.struts2.*,org.springframwork.web.struts.*,org.sprigframework.web.struts2.*,org.hibernate.*"/>  //value指定的包都不搜索

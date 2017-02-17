@@ -1,0 +1,77 @@
+@echo off
+::也可以写成if %1==skipPause goto comment
+::%1表示跟在命令行后面的第一个参数
+if "%1"=="skipPause" goto :comment
+echo this
+::跳转到结束位置,:eof表示文件末尾结束位置
+goto :eof
+:comment
+echo amazing
+::若输入命令行为cmd_set.bat,则输出为:this
+::若输入命令行为cmd_set.bat skipPause,则输出为:amazing
+--------------------------------
+批处理 %~1和%1区别
+下面是批处理,运行后就知道了
+@echo off
+call :sub "abc"
+pause
+call :sub abc"
+pause
+call :sub "abc
+pause
+goto :eof
+:sub
+echo %1 %~1
+::  输出以下信息:
+::  "abc" abc
+::  请按任意键继续. . .
+::  abc" abc"
+::  请按任意键继续. . .
+::  "abc abc
+::  请按任意键继续. . .
+::  总的来说是:无头不删,有头连尾删(头指的是引号)
+--------------------------------
+%[1-9]表示参数,参数是指在运行批处理文件时在文件名后加的以空格(或者Tab)分隔的字符串。变量可以从%0到%9,%0表示批处理命令本身,其它参数字符串用%1到%9顺序表示。
+
+例1:
+C:根目录下有一批处理文件名为f.bat,内容为:
+@echo off
+format %1
+
+执行f a:
+那么在执行f.bat时,%1就表示a:,这样format %1就相当于format a:,于是上面的命令运行时实际执行的是format a:
+
+例2:
+C:根目录下一批处理文件名为t.bat,内容为:
+@echo off
+type %1
+type %2
+
+运行t a.txt b.txt
+%1 : 表示a.txt
+%2 : 表示b.txt
+于是上面的命令将顺序地显示a.txt和b.txt文件的内容。
+
+参数在批处理中也作为变量处理, 所以同样使用百分号作为引导符, 其后跟0-9中的一个数字构成参数引用符. 引用符和参数之间 (例如上文中的 %1 与 a: ) 的关系类似于变量指针与变量值的关系. 
+当我们要引用第十一个或更多个参数时, 就必须移动DOS 的参数起始指针. shift 命令正充当了这个移动指针的角色, 它将参数的起始指针移动到下一个参数, 类似C 语言中的指针操作. 图示如下:
+
+初始状态,cmd 为命令名, 可以用 %0 引用
+cmd arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8 arg9 arg10
+^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+| | | | | | | | | |
+%0 %1 %2 %3 %4 %5 %6 %7 %8 %9
+
+经过1次shift后, cmd 将无法被引用
+cmd arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8 arg9 arg10
+^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+| | | | | | | | | |
+%0 %1 %2 %3 %4 %5 %6 %7 %8 %9
+
+经过2次shift后, arg1也被废弃, %9指向为空, 没有引用意义
+cmd arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8 arg9 arg10
+^ ^ ^ ^ ^ ^ ^ ^ ^
+| | | | | | | | |
+%0 %1 %2 %3 %4 %5 %6 %7 %8
+
+遗憾的是, win9x 和DOS下均不支持 shift 的逆操作. 只有在 nt 内核命令行环境下, shift 才支持 /n 参数, 可以以第一参数为基准返复移动起始指针.
+

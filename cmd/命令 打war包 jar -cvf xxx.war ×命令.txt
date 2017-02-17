@@ -1,0 +1,8 @@
+1.利用jdk里的工具
+例如我们要打包的文件在D:\cbweb；
+运行 cmd； md D:\cbweb进入D:\cbweb
+然后输入jar -cvf  cbweb.war *
+回车，文件配打包成cbweb.war *，位于D:\cbweb中。
+2.利用eclipse
+在WebRoot上单击右键，选择Export选项， 
+然后选择J2EE   WAR   file选项，然后选择工程名称和路径，单击完成就可以了。

@@ -1,0 +1,7 @@
+语法： 
+white-space  normal  pre  nowrap 
+取值： 
+normal  默认值。默认处理方式。文本自动处理换行。假如抵达容器边界内容会转到下一行 
+pre  换行和其他空白字符都将受到保护。这个值需要IE6+或者 !DOCTYPE 声明为 standards-compliant mode 支持。如果 !DOCTYPE 声明没有指定为 standards-compliant mode ，此属性可以使用，但是不会发生作用。结果等同于 normal 。参阅 pre 对象 
+nowrap  强制在同一行内显示所有文本，直到文本结束或者遭遇 br 对象
+-------------------------------------------------------------------------

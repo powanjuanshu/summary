@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<body>
+<div style="width:180px;height:100px;white-space:nowrap;overflow:scroll;overflow-x:hidden;border:1px solid red;">
+露一相逢，更深却人sdkfsdkfsdkfdskhfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk<br>
+金风玉<br>
+金风玉<br>
+金风玉<br>
+金风玉<br>
+金风玉<br>
+金风玉<br>
+金风玉<br>
+金风玉<br>
+金风玉<br>
+</div>
+</body>
+------或写成以下形式
+<div style="width:90px;height:30px;white-space:nowrap;overflow:scroll;border:1px solid red;">金风玉金风玉金风玉金风玉金风玉</div>
+<div style="width:90px;height:30px;overflow:scroll;border:1px solid red;" nowrap>金风玉金风玉金风玉金风玉金风玉</div>
+<div style="width:90px;height:30px;overflow:hidden;border:1px solid red;"><nobr>金风玉金风玉金风玉金风玉金风玉</nobr></div>
+-----------------
+以上遇到<br>才会换行，且div大小不变

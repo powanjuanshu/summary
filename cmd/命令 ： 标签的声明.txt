@@ -1,0 +1,9 @@
+@echo off
+goto b
+:a
+echo aaaaa
+goto end
+:b
+echo bbbbb
+goto end
+:end

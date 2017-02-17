@@ -1,0 +1,51 @@
+<html>
+<head>
+<style type="text/css">
+	html {
+		border:1px solid red;
+		overflow:hidden;
+	}	
+	.div01{
+		border:1px solid red;
+		width:150px;
+		height: 150px;
+		overflow:inherit;/*继承了上面的html的overflow属性,即也为hidden,内容会被修剪，并且其余内容是不可见的*/
+	}
+</style>
+</head>
+<body>
+	<div class="div01">
+		aaaaaaaaaaaaaaaaaaaaaaaa
+	</div>
+	bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>
+	bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>
+	bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>
+	bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>bbbbbbbb<br>
+</body>
+</html>
+------------------------------------
+CSS overflow 属性
+div {
+  width:150px;
+  height:150px;
+  overflow:scroll;
+  }
+
+所有主流浏览器都支持 overflow 属性。注释：任何的版本的 Internet Explorer （包括 IE8）都不支持属性值 "inherit"。
+
+定义和用法
+overflow 属性规定当内容溢出元素框时发生的事情。
+
+这个属性定义溢出元素内容区的内容会如何处理。如果值为 scroll，不论是否需要，用户代理都会提供一种滚动机制。因此，有可能即使元素框中可以放下所有内容也会出现滚动条。
+默认值：	visible
+继承性：	no
+版本：	CSS2
+JavaScript 语法：	object.style.overflow="scroll"
+
+值	描述
+visible	默认值。内容不会被修剪，会呈现在元素框之外。
+hidden	内容会被修剪，并且其余内容是不可见的。
+scroll	内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。
+auto	如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。
+inherit	规定应该从父元素继承 overflow 属性的值。
+

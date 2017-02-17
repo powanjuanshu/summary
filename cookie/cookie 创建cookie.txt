@@ -1,0 +1,50 @@
+[1]设置cookie
+  Cookie cookie = new Cookie("key", "value");
+  cookie.setMaxAge(saveTime*24*60*60);
+  生存周期默认时间为秒，如果设置为负值的话，则为浏览器进程Cookie(内存中保存)，关闭浏览器就失效。  
+  零值则是要删除该Cookie。如:
+  Cookie deleteNewCookie=new Cookie("newcookie",null); 
+  deleteNewCookie.setMaxAge(0); //删除该Cookie 
+  deleteNewCookie.setPath("/"); 
+  response.addCookie(deleteNewCookie);
+
+[2]
+package com.mipo.action;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+@Controller
+public class CoockieController {
+	@RequestMapping("query")
+	public void query (HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();
+		System.out.println("fffff:"+cookies);
+		for (Cookie scookie : cookies) { // 用一个循环语句遍历Cookie对象数组 
+			String name = scookie.getName(); // 取得这个Cookie的名字
+			String value = scookie.getValue(); // 取得这个Cookie的内容 
+			System.out.println("...:"+name); // 通过将取出来的Cookie的名字和内容放在字符串变量中，我们就能对其进行各种操作了。在上面的例子里，可通过循环语句的遍历，将所有Cookie放在一张表格中进行显示。 
+			System.out.println("...:"+value);
+		}
+	}
+	@RequestMapping("login")
+	public void login(HttpServletRequest request, HttpServletResponse response, String username, String password){
+		if ("lijie".equals(username) && "123456".equals(password)) {
+			System.out.println("登陆成功");
+			String cookieName = "22222222222";
+			String cookieData = "22222222222";
+			Cookie cookie = new Cookie(cookieName, cookieData); // 这一行建立了一个Cookie对象，初始化有两个参数，第一个参数cookieName定义了Cookie的名字，后一个参数，也是一个字符串，定义了Cookie的内容。也就是我们希望网页在用户的机器上标识的文件内容。
+			String cookieName2 = "11111111111111";
+			String cookieData2 = "11111111111111";
+			Cookie cookie2 = new Cookie(cookieName2, cookieData2); // 这一行建立了一个Cookie对象，初始化有两个参数，第一个参数cookieName定义了Cookie的名字，后一个参数，也是一个字符串，定义了Cookie的内容。也就是我们希望网页在用户的机器上标识的文件内容。
+			//默认情况下,Cookie的值只在浏览器的会话期间存在,当用户退出浏览器这些值就消失了
+			cookie.setMaxAge(100); // 存活期为100秒,一个Cookie在用户的硬盘里面存在的时间并不是无限期的，在建立Cookie对象的时候，我们必须制定Cookie的存活期，超过了这个存活期后，Cookie文件就不再起作用，会被用户的浏览器自行删除。如果我们希望用户在下次访问这个页面的时候，Cookie文件仍然有效而且可以被网页读出来的话，我们可以将Cookie的存活期设得稍微长一些。比如cookie.setMaxAge(365*24*60*60)可以让Cookie文件在一年内有效 
+			cookie2.setMaxAge(100); // 如果设置为负值的话，则为浏览器进程Cookie(内存中保存)，关闭浏览器就失效。零值则是要删除该Cookie
+			response.addCookie(cookie);
+			response.addCookie(cookie2);
+		} else {
+			System.out.println("登陆失败");
+		}
+	}
+}

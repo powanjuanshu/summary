@@ -1,0 +1,8 @@
+1.解决方法==> 保证jdk1.6 要使用 11以上版,如jdk1.6_u23
+2.解决方案：是jdk版本不同，本用的JDK6 换成JDK7 就好了 
+3.解决方法：
+  如果是java application项目，将apache-cxf-2.7.0\lib\endorsed下的jar文件，复制到Java\jdk1.6.0_03\jre\lib\endorsed目录下
+  如果是java web项目，则在一个servlet类（Controller、Service等）中，打印： 
+  system.out.println(System.getProperty("java.endorsed.dirs"));
+  找到相应位置，将apache-cxf-2.7.0\lib\endorsed下的jar文件放到对应目录下即可。没有endorsed目录，自己建一个。
+
