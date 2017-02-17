@@ -1,0 +1,2 @@
+Options->Session Options->Terminal->Emulation->Scrollback->Scrollback buffer:10000
+设置最多显示1万条日志

@@ -1,0 +1,8 @@
+struts2
+spring2.5
+hibernate3.3
+
+先搭建hibernate，将hibernate的jar文件拷贝到lib目录下
+搭建struts2，将struts2的jar文件拷贝到lib目录下，然后在修改WEB-INF下的web.xml文件，然后在src目录下引进struts.xml文件，然后建立Action
+再搭建spring，将spring的jar文件拷贝到lib目录下
+将mysql驱动jar文件拷贝到lib目录下

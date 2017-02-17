@@ -1,0 +1,36 @@
+package com.storeserver.server;
+
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class Main {
+	public static void main(String[] args) {
+		JFrame jf = new JFrame();
+		jf.setSize(300, 200); // 设置大小
+		jf.setTitle("腾讯"); // 设置标题
+		jf.setLocationRelativeTo(null); // 居中设置
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 设置关闭窗口的的时候关闭程序
+		Container c= jf.getContentPane();
+		
+		JButton button1 = new JButton("SOURTH");
+		JButton button2 = new JButton("EAST");
+		JButton button3 = new JButton("WEST");
+		JButton button4 = new JButton("CENTER");
+		JButton button5 = new JButton("CENTER6");
+		JButton button6 = new JButton("NORTH");
+		FlowLayout fl = new FlowLayout(); // 从左到右，从上到下的布局
+		c.setLayout(fl);
+		c.add(button1);
+		c.add(button2);
+		c.add(button3);
+		c.add(button4);
+		c.add(button5);
+		c.add(button6);
+		jf.setVisible(true); // 这个是必须要的，否则什么都看不到，什么都没有，而且必须放在最后
+	}
+	
+}

@@ -1,0 +1,59 @@
+applicationContext.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+		default-lazy-init="default">
+		<!-- 工作台 -->
+		<bean id="workBench" class="cz.WorkBench"/>
+		<!-- 方法详细 -->
+		<bean id="sayJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+			<property name="targetObject" ref="workBench"/>
+	  		<property name="targetMethod" value="say"/>
+	  		<property name="concurrent" value="false"/>
+		</bean>
+		<!-- 触发器 -->
+		<bean id="sayTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+			<property name="jobDetail" ref="sayJobDetail"/>
+			<property name="startDelay" value="60000"/><!--延时触发trigger的时间，单位为毫秒，默认为0，设置为1分钟-->
+			<property name="repeatInterval" value="86400000"/><!--循环触发trigger的时间，单位为毫秒，设置为86400000毫秒，为24小时-->
+		</bean>
+		
+		<bean id="startTasks" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+			<property name="triggers">
+				<list>
+					<ref local="sayTrigger"/><!--也可以写成<ref bean="sayTrigger"/>-->
+				</list>
+			</property>
+		</bean>
+</beans>
+-----------------------------
+package cz;
+public class WorkBench {
+	public void say () {
+		System.out.println("say ye wu!");
+	}
+}
+-----------------------------
+package cz;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class TesMain {
+	public static void main(String[] args) throws Exception{
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+		Object lock = new Object();
+		synchronized (lock) {
+			while (true) {
+				lock.wait();
+			}
+		}
+	}
+}

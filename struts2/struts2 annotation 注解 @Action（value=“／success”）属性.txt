@@ -1,0 +1,22 @@
+@Action中可指定一个value属性。类似于指定<action name=”success”/>属性值
+
+@Action(value="/getProgramTypeInfo",results={@Result(name="success",location="",type="dispatcher")})
+	public String getProgramTypeInfo(){
+		try{
+			System.out.println("-----------------");
+			HttpServletResponse response = ServletActionContext.getResponse();
+			// 设置输出信息的格式及字符集
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/text;charset=UTF-8");
+			response.setHeader("Cache-Control", "no-cache");
+			PrintWriter out = response.getWriter();
+			if (null != programBean.getCategoryId()){
+				String temp = topProgramSettingService.findProgramTypeInfo(programBean.getCategoryId());
+				out.write(temp);
+			}
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}

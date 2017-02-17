@@ -1,0 +1,8 @@
+@Resource 的作用相当于 @Autowired
+@Autowired 按 byType 自动注入，而 @Resource 默认按 byName自动注入。
+@Resource 有两个属性是比较重要的，分别是 name 和 type，
+Spring 将@Resource 注释的 name 属性解析为 Bean 的名字，而 type 属性则解析为 Bean 的类型。
+所以如果使用name属性，则使用 byName 的自动注入策略，而使用 type 属性时则使用 byType 自动注入策略。
+如果既不指定name也不指定type属性，这时将通过反射机制使用 byName 自动注入策略。
+Resource 注释类位于 Spring 发布包的 lib/j2ee/common-annotations.jar 类包中，因此在使用之前必须将其加入到项目的类库中。
+

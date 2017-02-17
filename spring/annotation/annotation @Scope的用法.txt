@@ -1,0 +1,28 @@
+package com.spdbccc.account.entry.bizfront.action;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ValueConstants;
+
+@Controller
+@Scope("prototype") // 或者@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@RequestMapping("/fastpay/")
+@Slf4j
+public class FastPayAction {
+    public FastPayAction() {
+        System.out.println("FastPayAction原型初始化"); // bean设置成原型,每次请求都初始化一次
+    }
+
+    @RequestMapping("BFFastPay.do")
+    @ResponseBody
+    public String queryBind (@RequestParam(value = "data1", required = true) String data, @RequestParam(required = true) String sign, String cardNo, int operType) {
+        System.out.println("hhh"+ ConfigurableBeanFactory.SCOPE_PROTOTYPE+"uuu");
+        log.info("dataaa:{},{},{},{}", data, sign, cardNo, operType);
+        return "colitas";
+    }
+}

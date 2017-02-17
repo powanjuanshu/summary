@@ -1,0 +1,11 @@
+#status.index当前行的序号，从0开始#status.count=#status.index+1
+遍历的时候，当前行的序号，从0开始
+---------------
+<s:iterator id="info" value="programBeans" status="status">
+	<s:if test="#status.index==4">
+	</s:if>
+	<s:else>
+	</s:else>
+</s:iterator>
+
+

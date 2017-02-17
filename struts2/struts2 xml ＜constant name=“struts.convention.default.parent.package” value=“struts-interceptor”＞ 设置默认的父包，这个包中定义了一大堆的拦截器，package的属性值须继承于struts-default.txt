@@ -1,0 +1,21 @@
+定义一个缺省的包，这个包中定义了一大堆的拦截器，默认为conventionDefault，package的属性值须继承于struts-default
+设置默认的父包，一般我们都设置一个default包继承自struts-default。大部分类再继承default。如果有特殊的类需要特殊的包，只能在action中再指定父包了。
+---------------
+<struts>
+    <constant name="struts.convention.default.parent.package" value="struts-interceptor"/>
+    <package name="struts-interceptor" extends="json-default,struts-default">
+       <interceptors>
+         	<interceptor name="checkInterceptor" class="com.cowise.core.interceptor.CheckInterceptor" ></interceptor>
+       </interceptors>
+    </package>
+</struts>
+--------------------
+此配置可以不写：写一个package，则默认会将这个（第一个）package为默认的
+<struts>
+    <package name="default" extends="convention-default">
+        <result-types>  
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
+        </result-types>
+    </package>
+</struts>
+

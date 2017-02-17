@@ -1,0 +1,15 @@
+示例代码二：在package-info.java中配置@Namespace注解
+Java代码  
+@org.apache.struts2.convention.annotation.Namespace("/custom")
+package com.example.actions;
+那么包com.example.actions中所有的action的Namespace都被指向了/custom。 
+
+
+
+
+
+
+
+
+
+

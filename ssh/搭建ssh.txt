@@ -1,0 +1,7 @@
+1.先添spring     AOP,web,jdbc,core,persistence勾上
+2.再添hibernate
+3.再添struts     struts2spring包，struts也要配监听
+
+1.2spring配3.1hibernate
+
+

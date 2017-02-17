@@ -1,0 +1,20 @@
+将struts2-spring-plugin-2.0.8.jar文件包含到我们的应用中，放到WEB-INF/lib目录下面即可。在这个插件包中有个struts-plugin.xml文件，它的内容如下:
+<struts>
+<bean type="com.opensymphony.xwork2.ObjectFactory" name="spring"
+class="org.apache.struts2.spring.StrutsSpringObjectFactory" />
+<constant name="struts.objectFactory" value="spring" />
+<package name="spring-default">
+<interceptors>
+<interceptor name="autowiring"
+class="com.opensymphony.xwork2.spring.interceptor.ActionAutowiringInterceptor"/>
+<interceptor name="sessionAutowiring"
+class="org.apache.struts2.spring.interceptor.SessionContextAutowiringInterceptor"/>
+</interceptors>
+</package>
+</struts> 
+--------------------------
+这里它将框架常量struts.objectFactory覆盖了，设置为”spring”，其实这里是使用了缩写，我们可以写全称：org.apache.struts2.spring.StrutsSpringObjectFactory
+这个缩写的spring是和bean配置中的name属性相对应的
+
+
+

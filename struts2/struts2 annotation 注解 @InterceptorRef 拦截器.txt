@@ -1,0 +1,84 @@
+<struts>
+    <package name="default" extends="convention-default">
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
+        </result-types>
+        <interceptors>
+         	<interceptor name="checkInterceptor3" class="com.str.CheckInterceptor3" />
+       	</interceptors>
+       	<!-- 实验证明定义全局结果必须在interceptor后面定义，不然会报错 -->
+       	<global-results>
+		 	<result name="checkLogin" type="redirect">/checklogin.jsp</result>  
+	</global-results>
+    </package>
+</struts>
+--------------------使用params属性指定要传给拦截器的参数。形式为{键，值，键，值…………}，键值总是会成对出现
+TestAction.java:
+public class TestAction extends ActionSupport{
+	@Action(value="jqgrid",interceptorRefs={
+			@InterceptorRef(value="checkInterceptor3",params={"name","jack","password","rose"}),
+			@InterceptorRef("defaultStack")
+	})
+	public void jqgrid(){
+		System.out.println("uuu");
+	}
+}
+------------------
+CheckInterceptor3.java:
+package com.str;
+import com.neusoft.gazelle.core.entity.User;
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+public class CheckInterceptor3 extends AbstractInterceptor {
+	private String name;
+	private String password;
+	@Override
+	public String intercept(ActionInvocation invocation) throws Exception {
+		System.out.println("kkkkk");
+		System.out.println(name);
+		System.out.println(password);
+		User user=(User) invocation.getInvocationContext().getSession().get("loginUserInfo");
+		if(user==null){
+			return "checkLogin";
+		}
+		String next=invocation.invoke();
+		return next;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+-----------------
+拦截器可以在类和方法的层面上应用。在方法层面指定拦截器使用@Action注解，在类层面指定拦截器使用@InterceptorRefs注解。
+类层面引用的拦截器会应用在所有的方法上，如下面的例子 
+@InterceptorRefs({  
+	@InterceptorRef("interceptor-1"),  
+	@InterceptorRef("defaultStack")  
+})  
+public class HelloWorld extends ActionSupport {  
+	@Action(value="action1", interceptorRefs=@InterceptorRef("validation"))  
+	public String execute() {  
+		return SUCCESS;  
+	}  
+  
+	@Action(value="action2")  
+	public String doSomething() {  
+		return SUCCESS;  
+	}  
+}  
+------------------
+如上代码所示，execute()方法应用了interceptor-1,validation和defaultStack中的所有拦截器；而doSomething()方法则没有validation拦截器。 
+
+
+
+
+

@@ -1,0 +1,62 @@
+classpath:/applicationContext.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+		default-lazy-init="default"><!--如何此处没有写，或者写成default-lazy-init="default"，那么默认是非懒加载的(即启动的时候就会初始化这些bean)-->
+		
+		<bean id="jack" class="cz.Jack"></bean>
+</beans>
+-----------------------------------------
+package cz;
+public class Jack {
+	public Jack () {
+		System.err.println("uuuu");
+	}
+	
+	public void say () {
+		System.out.println("xxxx");
+	}
+}
+-----------------------------------------
+package ioc.test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import cz.Jack;
+
+public class TesMain {
+	public static void main(String[] args) throws Exception{
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+		
+		// Object j = ctx.getBean("jack");
+		// System.out.println(j);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

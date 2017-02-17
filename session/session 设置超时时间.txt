@@ -1,0 +1,15 @@
+程序中session都有一个默认的过期时间,其中tomcat中的默认时间为30分钟,根据需要我们可以去手动设置session的过期时间,以下是设置session的过期时间的三个方法:
+
+* 在tomcat-->conf-->conf/web.xm中的<session-config>中设置:
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
+
+* 在项目的web.xml中定义:
+  <session-config>
+    <session-timeout>20</session-timeout>
+  </session-config>
+  注:20则设置过期时间为20分钟
+
+* 在程序中定义:
+  session.setMaxInactiveInterval(30*60);

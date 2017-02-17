@@ -1,0 +1,99 @@
+web.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+           version="2.5">
+    <listener>
+        <listener-class>com.spdbccc.account.entry.bizfront.listener.InitContextListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:spring/spring-common.xml</param-value>
+    </context-param>
+</web-app>
+-------------------------------
+spring-common.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+    <context:component-scan base-package="com.spdbccc.account"/>
+</beans>
+-------------------------------
+package com.spdbccc.account.entry.bizfront.listener;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import org.springframework.web.context.ContextLoaderListener;
+import javax.servlet.ServletContextEvent;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Properties;
+public class InitContextListener extends ContextLoaderListener {
+    @Override
+    public void contextInitialized(ServletContextEvent event) {
+        super.contextInitialized(event); // 调用spring容器的初始化方法,不调用此方法无法初始化spring容器
+        try {
+            String configPath = InitContextListener.class.getResource("").getPath().replaceAll("%20", " ");
+            configPath = configPath.substring(0, configPath.indexOf("classes")) + "/classes/log4j.properties";
+            InputStream logIn = new FileInputStream(configPath);
+            Properties p = new Properties();
+            p.load(logIn);
+            PropertyConfigurator.configure(p);
+            Logger log = Logger.getLogger(InitContextListener.class);
+            log.debug("InitContextListener log4j init success------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+-------------------------------
+package com.spdbccc.account.service;
+import org.springframework.stereotype.Service;
+@Service
+public class FastPayService {
+    public FastPayService() {
+        System.out.println("xxxxxxxxxxxxxx");
+    }
+}-------------------------------
+log4j.properties:
+log4j.rootLogger = info,debug,console
+log4j.category.com.spdbccc = debug,core
+log4j.additivity.com.spdbccc = true
+log4j.category.oracle.jdbc = debug
+log4j.additivity.oracle.jdbc = true
+log4j.logger.java.sql = debug
+log4j.appender.console = org.apache.log4j.ConsoleAppender
+log4j.appender.console.layout = org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern = %-4r %-5p [%t] [%d{yyyy-MM-dd HH\:mm\:ss,SSS}] %10c.%M[%L]- %m%n
+# core.log
+log4j.appender.core = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.core.file =d:/entry_bizfront.log
+log4j.appender.core.DatePattern ='.'yyyy-MM-dd
+log4j.appender.core.MaxFileSize=102400KB
+log4j.appender.core.layout = org.apache.log4j.PatternLayout
+log4j.appender.core.layout.conversionPattern = %-4r %-5p [%t] [%d{yyyy-MM-dd HH\:mm\:ss,SSS}] %10c.%M[%L]- %m%n
+log4j.appender.core.append = true
+log4j.logger.com.ibatis=debug
+log4j.logger.java.sql.Connection=debug
+log4j.logger.java.sql.Statement=debug
+log4j.logger.java.sql.PreparedStatement=debug
+log4j.logger.java.sql.ResultSet=debug
+
+
+
+
+
+
+
+
+

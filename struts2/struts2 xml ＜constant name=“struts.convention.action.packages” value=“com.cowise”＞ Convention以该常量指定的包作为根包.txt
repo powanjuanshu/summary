@@ -1,0 +1,5 @@
+convention以该常量指定的包作为根包
+---------------
+<struts>
+	<constant name="struts.convention.action.packages" value="com.cowise"/><!--convention以该常量指定的包作为根包-->
+</struts>

@@ -1,0 +1,307 @@
+test.html:
+<html>
+<head>
+	<script type="text/javascript" src="/integral_market/static/theme1/script/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+	$(function(){
+		$("#c").click(function(){
+			var saveDataAry=[];  
+	        var data1={"usrename":"test","password":"gz"};  
+	        var data2={"usrename":"ququ","password":"gr"};  
+	        saveDataAry.push(data1);  
+	        saveDataAry.push(data2);         
+	        $.ajax({ 
+	            type:"POST",
+	            url:"/integral_market/api/goods/abc.do",
+	            dataType:"json",      
+	            contentType:"application/json",               
+	            data:JSON.stringify(saveDataAry),
+	            success:function(data){
+	            	
+	            }
+	         }); 
+		});
+		
+		$("#c").click(function(){
+	        var data1={"pageIndex":1};  
+	        $.ajax({ 
+	            type:"POST",
+	            url:"/integral_market/api/goods/queryGoods.do",
+	            dataType:"json",      
+	            contentType:"application/json",               
+	            data:JSON.stringify(data1),
+	            success:function(data){
+	            	alert(data);
+	            	var js = JSON.stringify(data);
+	            	alert(js);
+	            }
+	         }); 
+		});
+	});
+</script>
+</html>
+
+package com.iflytek.integralmarket.controller;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.iflytek.integralmarket.vo.GoodsQueryParams;
+import com.iflytek.integralmarket.vo.Person;
+@Controller()
+@RequestMapping("/api/goods")
+public class GoodsController {
+	@ResponseBody
+	@RequestMapping("/abc")
+	public String abc(@RequestBody Person queryParams){
+		System.out.println("hahah");
+		return "";
+	}
+	@ResponseBody
+	@RequestMapping("/queryGoods")
+	public String queryGoods(@RequestBody GoodsQueryParams queryParams){
+		System.out.println("hahah");
+		return "";
+	}
+}
+
+---------------------------------
+SpringMVC层跟JSon结合，几乎不需要做什么配置，代码实现也相当简洁。再也不用为了组装协议而劳烦辛苦了！ 
+
+一、Spring注解@ResponseBody，@RequestBody和HttpMessageConverter 
+
+Spring 3.X系列增加了新注解@ResponseBody，@RequestBody 
+
+@RequestBody 将HTTP请求正文转换为适合的HttpMessageConverter对象。
+@ResponseBody 将内容或对象作为 HTTP 响应正文返回，并调用适合HttpMessageConverter的Adapter转换对象，写入输出流。
+
+HttpMessageConverter接口，需要开启<mvc:annotation-driven  />。 
+AnnotationMethodHandlerAdapter将会初始化7个转换器，可以通过调用AnnotationMethodHandlerAdapter的getMessageConverts()方法来获取转换器的一个集合 List<HttpMessageConverter> 
+引用
+ByteArrayHttpMessageConverter 
+StringHttpMessageConverter 
+ResourceHttpMessageConverter 
+SourceHttpMessageConverter 
+XmlAwareFormHttpMessageConverter 
+Jaxb2RootElementHttpMessageConverter 
+MappingJacksonHttpMessageConverter
+
+
+可以理解为，只要有对应协议的解析器，你就可以通过几行配置，几个注解完成协议——对象的转换工作！ 
+
+PS:Spring默认的json协议解析由Jackson完成。 
+
+二、servlet.xml配置 
+
+Spring的配置文件，简洁到了极致，对于当前这个需求只需要三行核心配置： 
+Xml代码  收藏代码
+<context:component-scan base-package="org.zlex.json.controller" />  
+<context:annotation-config />  
+<mvc:annotation-driven />  
+
+
+三、pom.xml配置 
+
+闲言少叙，先说依赖配置，这里以Json+Spring为参考： 
+pom.xml 
+Xml代码  收藏代码
+<dependency>  
+        <groupId>org.springframework</groupId>  
+        <artifactId>spring-webmvc</artifactId>  
+        <version>3.1.2.RELEASE</version>  
+        <type>jar</type>  
+        <scope>compile</scope>  
+    </dependency>  
+    <dependency>  
+        <groupId>org.codehaus.jackson</groupId>  
+        <artifactId>jackson-mapper-asl</artifactId>  
+        <version>1.9.8</version>  
+        <type>jar</type>  
+        <scope>compile</scope>  
+    </dependency>  
+    <dependency>  
+        <groupId>log4j</groupId>  
+        <artifactId>log4j</artifactId>  
+        <version>1.2.17</version>  
+        <scope>compile</scope>  
+    </dependency>  
+
+主要需要spring-webmvc、jackson-mapper-asl两个包，其余依赖包Maven会帮你完成。至于log4j，我还是需要看日志嘛。 
+包依赖图： 
+点击查看原始大小图片
+至于版本，看项目需要吧！ 
+
+四、代码实现 
+
+域对象： 
+Java代码  收藏代码
+public class Person implements Serializable {  
+  
+    private int id;  
+    private String name;  
+    private boolean status;  
+  
+    public Person() {  
+        // do nothing  
+    }  
+}  
+
+
+这里需要一个空构造，由Spring转换对象时，进行初始化。 
+
+@ResponseBody，@RequestBody，@PathVariable 
+控制器： 
+Java代码  收藏代码
+@Controller  
+public class PersonController {  
+  
+    /** 
+     * 查询个人信息 
+     *  
+     * @param id 
+     * @return 
+     */  
+    @RequestMapping(value = "/person/profile/{id}/{name}/{status}", method = RequestMethod.GET)  
+    public @ResponseBody  
+    Person porfile(@PathVariable int id, @PathVariable String name,  
+            @PathVariable boolean status) {  
+        return new Person(id, name, status);  
+    }  
+  
+    /** 
+     * 登录 
+     *  
+     * @param person 
+     * @return 
+     */  
+    @RequestMapping(value = "/person/login", method = RequestMethod.POST)  
+    public @ResponseBody  
+    Person login(@RequestBody Person person) {  
+        return person;  
+    }  
+}  
+
+
+备注：@RequestMapping(value = "/person/profile/{id}/{name}/{status}", method = RequestMethod.GET)中的{id}/{name}/{status}与@PathVariable int id, @PathVariable String name,@PathVariable boolean status一一对应，按名匹配。 这是restful式风格。 
+如果映射名称有所不一，可以参考如下方式： 
+
+Java代码  收藏代码
+@RequestMapping(value = "/person/profile/{id}", method = RequestMethod.GET)  
+public @ResponseBody  
+Person porfile(@PathVariable("id") int uid) {  
+    return new Person(uid, name, status);  
+}  
+
+
+GET模式下，这里使用了@PathVariable绑定输入参数，非常适合Restful风格。因为隐藏了参数与路径的关系，可以提升网站的安全性，静态化页面，降低恶意攻击风险。
+POST模式下，使用@RequestBody绑定请求对象，Spring会帮你进行协议转换，将Json、Xml协议转换成你需要的对象。
+@ResponseBody可以标注任何对象，由Srping完成对象——协议的转换。
+
+
+做个页面测试下： 
+JS 
+Js代码  收藏代码
+$(document).ready(function() {  
+    $("#profile").click(function() {  
+        profile();  
+    });  
+    $("#login").click(function() {  
+        login();  
+    });  
+});  
+function profile() {  
+    var url = 'http://localhost:8080/spring-json/json/person/profile/';  
+    var query = $('#id').val() + '/' + $('#name').val() + '/'  
+            + $('#status').val();  
+    url += query;  
+    alert(url);  
+    $.get(url, function(data) {  
+        alert("id: " + data.id + "\nname: " + data.name + "\nstatus: "  
+                + data.status);  
+    });  
+}  
+function login() {  
+    var mydata = '{"name":"' + $('#name').val() + '","id":"'  
+            + $('#id').val() + '","status":"' + $('#status').val() + '"}';  
+    alert(mydata);  
+    $.ajax({  
+        type : 'POST',  
+        contentType : 'application/json',  
+        url : 'http://localhost:8080/spring-json/json/person/login',  
+        processData : false,  
+        dataType : 'json',  
+        data : mydata,  
+        success : function(data) {  
+            alert("id: " + data.id + "\nname: " + data.name + "\nstatus: "  
+                    + data.status);  
+        },  
+        error : function() {  
+            alert('Err...');  
+        }  
+    });  
+
+Table 
+Html代码  收藏代码
+<table>  
+    <tr>  
+        <td>id</td>  
+        <td><input id="id" value="100" /></td>  
+    </tr>  
+    <tr>  
+        <td>name</td>  
+        <td><input id="name" value="snowolf" /></td>  
+    </tr>  
+    <tr>  
+        <td>status</td>  
+        <td><input id="status" value="true" /></td>  
+    </tr>  
+    <tr>  
+        <td><input type="button" id="profile" value="Profile——GET" /></td>  
+        <td><input type="button" id="login" value="Login——POST" /></td>  
+    </tr>  
+</table>  
+
+
+四、简单测试 
+
+Get方式测试： 
+点击查看原始大小图片
+
+点击查看原始大小图片
+
+Post方式测试： 
+点击查看原始大小图片
+
+点击查看原始大小图片
+
+五、常见错误 
+POST操作时，我用$.post()方式，屡次失败，一直报各种异常： 
+点击查看原始大小图片
+
+引用
+org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported 
+org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported 
+org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported
+
+直接用$.post()直接请求会有点小问题，尽管我标识为json协议，但实际上提交的ContentType还是application/x-www-form-urlencoded。需要使用$.ajaxSetup()标示下ContentType。 
+Js代码  收藏代码
+function login() {  
+    var mydata = '{"name":"' + $('#name').val() + '","id":"'  
+            + $('#id').val() + '","status":"' + $('#status').val() + '"}';  
+    alert(mydata);  
+    $.ajaxSetup({  
+        contentType : 'application/json'  
+    });  
+    $.post('http://localhost:8080/spring-json/json/person/login', mydata,  
+            function(data) {  
+                alert("id: " + data.id + "\nname: " + data.name  
+                        + "\nstatus: " + data.status);  
+            }, 'json');  
+};  
+
+效果是一样！ 
+
+详见附件！ 

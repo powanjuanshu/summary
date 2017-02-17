@@ -1,0 +1,2 @@
+Options -> Session Options -> Connection -> Logon Actions -> 勾选Automate logon -> 勾选Send initial carriage return -> Add -> 
+Expet:填入控制台左边的key -> Send:填入你想输入的值 -> OK -> 然后继续Add -> 然后Ok

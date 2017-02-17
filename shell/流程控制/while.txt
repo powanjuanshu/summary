@@ -1,0 +1,40 @@
+while循环一般格式:
+while 命令
+do
+  命令1
+  命令2
+  ...
+done
+
+注意:在while和do之间虽然通常只使用一个命令,但可以放几个命令,命令通常用作测试条件.
+
+
+#!/bin/sh
+#whileread
+echo "按住<ctrl>+D退出输入."
+while echo -n "输入你最喜欢的电影:";read FILM
+do
+  echo "yeah,${FILM}是一部好电影!"
+done
+
+#!/bin/sh
+#whileread
+while read LINE
+do echo $LINE
+done < names.txt
+
+while :
+done
+...
+done
+注意:上面表示永远循环,除非遇到break
+
+
+
+
+
+
+
+
+
+

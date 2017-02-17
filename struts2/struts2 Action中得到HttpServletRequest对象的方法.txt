@@ -1,0 +1,45 @@
+Struts2获取request三种方法
+struts2里面有三种方法可以获取request,最好使用ServletRequestAware接口通过IOC机制注入Request对象。
+--------------------------------------------------------------------------------------------
+方法一：在Action中获取request
+Action中代码：
+Map request=(Map)ActionContext.getContext().get("request");
+List<Task> tasks=taskManager.findAll();
+request.put("tasks",tasks);
+在JSP页面中获取其中的值：
+<s:iterator id="task" value="#request.tasks">
+       <tr class="table_header">
+        <td><s:property value="#task.tname"/></td>
+        <td><s:property value="#task.tuid"/></td>
+        <td><s:property value="#task.tstartTime"/></td>
+        <td><s:property value="#task.tendTime"/></td>
+        <td><s:property value="#task.tstate"/></td>
+        <td><input type="radio" id="choose" name="choose" onclick="getId(this.value)" value="<s:property value='#task.tid'/>"/></td> 
+       </tr>
+</s:iterator>
+--------------------------------------------------------------------------------------------我最喜欢用的一种方式
+方法二：通过ServletActionContext类来获取，使用struts2经验如果处理get传参是中文，只能使用该方法进行处理乱码问题
+Action中代码：
+HttpServletRequest request=ServletActionContext.getRequest();
+request.setAttribute("username","zhangsan");
+在jsp中获取其中的值
+<s:property value="#request.username">或者${requestScope.req}
+-------------------------------------------------------------------------------------------- 
+方法三：通过ServletRequestAware接口通过IOC机制注入Request对象
+Action中的代码：
+Action实现ServletRequestAware接口，实现接口中的方法
+     private HttpServletRequest request;
+     //实现接口中的方法
+     public void setServletRequest(HttpServletRequest request){
+     	this.request=request;
+     }
+     //然后在execute()方法中就可以使用了
+     public String execute(){
+      	request.setAttribute("username","zhangsan");
+      	request.getSession().getServletContext().getApplication();//得到Application
+     }
+     该方法必须要实现，而且该方法是自动被调用
+     这个方法在被调用的过程中，会将创建好的request对象通过参数的方式传递给你，你可以用来赋给你本类中的变量，然后request就可以使用了
+     注意：setServletRequest()方法一定会再execute()方法被调用前执行
+在jsp页面中获取其中的值
+<s:property value="#request.task.tname"/>

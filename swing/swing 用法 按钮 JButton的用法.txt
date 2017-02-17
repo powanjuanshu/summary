@@ -1,0 +1,25 @@
+package com.storeserver.server;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import javax.swing.*;
+public class Main {
+	public static void main(String[] args) {
+		JFrame jf = new JFrame();
+		jf.setSize(300, 300); // 设置大小
+		jf.setTitle("腾讯"); // 设置标题
+		jf.setLocationRelativeTo(null); // 居中设置
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 设置关闭窗口的的时候关闭程序
+		Container c= jf.getContentPane();
+		c.setLayout(new FlowLayout());
+		JLabel jl = new JLabel("用户名："); // 文本域
+		JTextField jt = new JTextField(); // 文本输入框
+		jt.setPreferredSize(new Dimension(100, 20)); // 文本输入框设置大小
+		JButton jb = new JButton("提交");
+		c.add(jl);
+		c.add(jt);
+		c.add(jb);
+		jf.setVisible(true); // 这个是必须要的，否则什么都看不到，什么都没有，而且必须放在最后
+	}
+	
+}

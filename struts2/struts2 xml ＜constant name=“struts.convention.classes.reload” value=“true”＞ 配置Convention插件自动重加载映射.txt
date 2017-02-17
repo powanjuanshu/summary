@@ -1,0 +1,7 @@
+配置Convention插件自动重加载映射
+---------------
+<struts>
+	<!--以下两项在生产模式中要去掉-->
+	<constant name="struts.devMode" value="false" /><!-- 开发模式，更改配置文件无需重启服务器。 -->
+	<constant name="struts.convention.classes.reload" value="true" /><!--配置Convention插件自动重加载映射-->
+</struts>

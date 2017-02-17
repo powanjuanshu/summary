@@ -1,0 +1,13 @@
+public class RandomCode{
+	public RandomCode(){
+		System.out.println("xxxooo");
+	}
+	@PostConstruct
+	public void sayHello(){
+		System.out.println("po");
+	}
+}
+---
+<bean class="com.util.RandomCode" lazy-init="false"/>
+---
+服务器在启动时会先打出xxxooo，在打出po

@@ -1,0 +1,17 @@
+I have a web application that was running on tomcat5.5. Now i want to deploy it on tomcat 6. when runing it, i got an error saying: 
+org.apache.jasper.JasperException: java.lang.ClassCastException:org.apache.catalina.util.DefaultAnnotationProcessor cannot be cast to org.apache.AnnotationProcessor 
+        at org.apache.jasper.servlet.JspServletWrapper.handleJspException(JspServletWrapper.java:522) 
+        at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:356) 
+After a search, i found that DefaultAnnotationProcessor implements AnnotationProcessor and in tomcat 6 catalina.jar and jasper.jar both of them contains AnnotationProcessor interface in the same package. Some solution was suggested by kind people but it doesn't work for me, which is adding this line: 
+<Loader delegate="true" /> 
+to the context element in the context.xml file of tomcat. 
+Did any body face this problem? 
+warm regards 
+根据上面的描述，并修改了tomcat里的context.xml文件，在context 元素下添加 
+<Loader delegate="true" />  
+即可 
+关于LOADER用法可以参照TOMCAT文档,如下:
+http://tomcat.apache.org/tomcat-6.0-doc/config/loader.html
+----
+org.apache.catalina.util.DefaultAnnotationProcessor cannot be cast to org.apache.AnnotationProcessor这个错误。后来查资料问群友，终于搞明白。
+是tomcat的lib文件夹jar包和项目的lib文件下的jar包冲突了把项目下lib文件下和tomcat的jar的重复的全部删除。错误终于被搞定。

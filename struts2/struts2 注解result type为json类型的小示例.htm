@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Struts 2中注解result type为json类型的小示例 - CSDNBenbenChong的专栏 - 博客频道 - CSDN.NET</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="java类代码：package com.rain.json.action;import org.apache.struts2.convention.annotation.Action;import org.apache.struts2.convention.annotation.ParentPackage;import org.apache.struts2.convention.ann" />
+<script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+<link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/default/css/style.css?v=1.1" />
+<link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/CSDNBenbenChong/rss/list" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+</head>
+<body>
+<script src="http://csdnimg.cn/pubnav/js/pub_topnav_2011.js"type="text/javascript"></script>
+
+<div id="container">
+  <script type="text/javascript">
+    var username = "CSDNBenbenChong";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/csdnbenbenchong";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "warmsmellofcolitas";
+</script>
+
+<div id="body">
+<div id="main">
+<div class="main">
+  <div id="article_details" class="details">
+    <div class="article_title">
+    <span class="ico ico_type_Original"></span>
+    <h3>
+        <span class="link_title"><a href="/csdnbenbenchong/article/details/7054718">
+        Struts 2中注解result type为json类型的小示例
+        </a></span>
+    </h3>
+</div>
+
+        
+    <div id="article_content" class="article_content">
+
+<p>&nbsp;</p>
+<p>
+<pre name="code" class="java">package com.rain.json.action;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
+
+@ParentPackage(&quot;json-default&quot;)
+@Results({ @Result(name = &quot;jsonExample&quot;, type = &quot;json&quot;) })
+public class JsonExampleAction {
+	private String result;
+	private String type;
+
+	@Action(value = &quot;/json/jsonExample&quot;)
+	public String jsonExample() {
+		if (&quot;json&quot;.equals(type)) {
+			result = &quot;json&quot;;
+		} else {
+			result = &quot;other&quot;;
+		}
+		return &quot;jsonExample&quot;;
+	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+}<br>
+jsp页面代码：
+</pre>
+<pre name="code" class="html">&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot; pageEncoding=&quot;utf-8&quot;%&gt;
+&lt;%
+String path = request.getContextPath();
+String basePath = request.getScheme()+&quot;://&quot;+request.getServerName()+&quot;:&quot;+request.getServerPort()+path+&quot;/&quot;;
+%&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;base href=&quot;&lt;%=basePath%&gt;&quot;&gt;
+    &lt;title&gt;jsonExample&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;&lt;%=basePath%&gt;js/base/jquery-1.4.4.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+    	function jsonExample(){
+    		$.ajax({
+    			type : &quot;POST&quot;,
+				dataType : &quot;json&quot;,
+				data : {type:&quot;json&quot;},
+				url : &quot;&lt;%=basePath%&gt;json/jsonExample.do&quot;,
+				async : false,
+				success : function(data) {
+					if (data.result == &quot;json&quot;) {
+						alert(&quot;json&quot;);
+					} else if (data.result == &quot;other&quot;) {
+						alert(&quot;other&quot;);
+					}
+				}
+    		});
+    	}
+    &lt;/script&gt;
+  &lt;/head&gt;
+  
+  &lt;body&gt;
+    &lt;input type=&quot;button&quot; value=&quot;json&quot; onclick=&quot;jsonExample();&quot;/&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre><br>
+<br>
+
+</div>
+
+<!--192.168.100.33-->
+  </div>
+  <script type="text/javascript">
+    //new Ad(4, 'ad_cen');
+</script>
+  <script type="text/javascript">
+    var fileName = '7054718';
+    var commentscount = 1;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+<script type="text/javascript">
+    new Ad(5, 'ad_bot');
+</script>
+<div id="d-top" style="display:none;">
+<a id="d-top-a" href="#" title="回到顶部">
+<img src="http://static.blog.csdn.net/images/top.png" alt="TOP" /></a>
+</div>
+<script type="text/javascript">
+    $(function(){
+        var d_top=$('#d-top');
+        document.onscroll=function(){
+            var scrTop=(document.body.scrollTop||document.documentElement.scrollTop);
+            if(scrTop>500){
+                d_top.show();
+            }else{
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function(){
+            scrollTo(0,0);
+            this.blur();
+            return false;
+        });
+    });
+</script>
+
+<div class="clear"></div>
+</div>
+</div>
+
+<div class="clear"></div>
+</div>
+
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js?v=1.1"></script>
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=1026244"></script>
+
+<script type="text/javascript">
+document.write('<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js?' + Math.floor(new Date()/120000).toString(36) + '="></'+'script>');
+</script>
+
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js?v=1"></script>
+
+
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+
+<script type="text/javascript" src="http://zz.csdn.net/js/count.js"></script>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+package com.spdbccc.account.entry.bizfront.action;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ValueConstants;
+
+@Controller
+@Scope("prototype") // 或者@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@RequestMapping("/fastpay/")
+@Slf4j
+public class FastPayAction {
+    @RequestMapping("BFFastPay.do")
+    @ResponseBody
+    /* http://localhost:8888/entry-1/fastpay/BFFastPay.do?data1=123&sign=123&cardNo=123&operType=123
+       如果@RequestParam(required=true) String sign,那么sign必须传可以写成sign=则sign为空字符,但不能去掉会报400,
+       @RequestParam默认required=true
+       @RequestParam主要作用是对参数进行控制,如果没有@RequestParam则随便传不传,不传则为null
+       当可选参数operType=或不存在时,Spring默认将其赋值为null,但由于operType已定于为基本类型int,所以赋值失败报错！
+    */
+    public String queryBind (@RequestParam(value = "data1", required = true) String data, @RequestParam(required = true) String sign, String cardNo, int operType) {
+        System.out.println("hhh"+ ConfigurableBeanFactory.SCOPE_PROTOTYPE+"uuu");
+        log.info("dataaa:{},{},{},{}", data, sign, cardNo, operType);
+
+
+
+        return "colitas";
+    }
+}

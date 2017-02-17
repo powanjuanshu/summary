@@ -1,0 +1,5 @@
+<!--convention搜索Action类的类名后缀。默认值为Action-->
+---------------
+<struts>
+	<constant name="struts.convention.action.suffix" value="Action" /><!--convention搜索Action类的类名后缀。默认值为Action-->
+</struts>

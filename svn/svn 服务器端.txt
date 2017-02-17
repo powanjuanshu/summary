@@ -1,0 +1,82 @@
+服务器端软件的安装:
+* VisualSVN-Server-2.5.4.msi
+* 安装文件:VisualSVN-Server-2.5.4.msi
+* 双击安装
+* 一路next
+* finish
+
+创建仓库:
+* 用cmd创建仓库
+  若D盘下已存在svnRepository文件夹
+  在cmd命令下切换到D盘的svnRepository文件夹下
+  然后输入svnadmin create svnrepo回车
+  然后你会在D盘的svnRepository文件夹下看到svnrepo文件夹,此svnrepo文件夹就是我们创建的仓库
+* 用鼠标创建仓库
+  若D盘下已存在svnRepository文件夹
+  然后在svnRepository新建svnrepo文件夹,这个文件夹就是我们的仓库,文件夹名就是仓库名
+  然后进入svnrepo文件夹,空白位置右键反键->TortoiseSVN->Create repository here
+  然后你会看到在svnrepo文件夹下生成的很多文件夹和文件,此svnrepo文件夹就是我们创建的仓库
+
+仓库中各个文件夹的意思:
+* conf全部装的是配置文件
+* db正真存储版本的地方
+* hooks钩子
+* locks用于在某些文件上加锁
+* format版本
+* readme帮助
+
+启动仓库:
+* 打开cmd命令窗口
+* 切换到svnrepo仓库的上级目录,假设上级目录为svnRepository,则切换到svnRepository文件夹
+* 然后输入:svnserve -d -r svnrepo回车
+* 光标跑到下行,表示仓库启动成功
+  -d表示后台运行
+  -r表示root以超级管理员运行
+
+
+
+新建一个项目:比如在本机上有一个仓库svnrepo在运行,想把D盘shell目录下的项目上传到svn上
+* 关联:
+  进入shell目录（必须是空目录）->
+  反键->SVN Checkout->URL of repository输入svn://localhost/->Checkout directory输入D:\shell->OK->
+  此时shell文件夹下会生成一个.svn的文件夹,且shell文件夹图标会有一个绿勾
+* 新建项目目录,关联项目目录到本地tortoise
+  在shell目录下新建一个project1目录->在project目录下新建一个Hello.java文件,此时project1目录图标上有一个问号
+  在project1目录上反键->TortoiseSVN->add->将project1和Hello.java打勾->OK,此时project1和Hello.java图标上会有一个蓝色十字架
+* 然后在project1目录上反键->SVN Commit->Recent message:写明为什么提交这次更改,将project1和Hello.java勾上->OK->
+  此时会弹出框提示你输入用户名和密码(如果没设置用户名则直接报提交失败,Authorization failed)->OK->此时project1和Hello.java上会打上绿色的勾->此时在svn上传项目成功
+
+
+创建用户:
+* 打开conf文件夹下的svnserve.conf文件
+* 去掉前面的#号,即打开password-db=passwd,表示创建用户是在此conf文件夹下的passwd文件中进行
+* 此svnserve.conf文件的anon-access=read,表示以匿名方式访问只能读
+* 此svnserve.conf文件的anon-access=write,表示以匿名方式访问只能写,如果不允许匿名访问则不打开这两项
+* 然后打开passwd文件,然后中添加一行
+  u1=p1,则表示添加了一个用户名为u1,密码为p1的用户
+
+
+更改用户:
+Settings->Saved Data->Authentication Data->clear,即可清除保存的上个用户登录信息，当再次用到svn时，会提示输入用户名密码，输入新的用户名密码即可。
+后者手动删除下面目录下的svn登录用户信息保存文件：
+C:\Documents and Settings\javaLee\Application Data\Subversion\auth\svn.simple 
+
+设置密码:
+* [users]
+* # harry = harryssecret
+* # sally = sallyssecret  //一开始就有这两个用户，默认被注释了
+* scott=tiger  //前面是用户名，后面是密码
+* //你的项目组有几个人你就设置几个用户，给他们设上不同的密码就可以了
+
+
+
+
+
+
+
+
+
+
+
+
+

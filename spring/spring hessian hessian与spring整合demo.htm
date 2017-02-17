@@ -1,0 +1,921 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=8.0000" 
+http-equiv="X-UA-Compatible">
+<TITLE>hessian demo和hessian与spring整合demo - Nolan - 博客园</TITLE>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type><LINK 
+rel=stylesheet type=text/css 
+href="http://common.cnblogs.com/blog/css/common.css?id=20130704"><LINK 
+id=MainCss rel=stylesheet type=text/css 
+href="http://common.cnblogs.com/Skins/sea/style.css?id=20130704"><LINK 
+rel=stylesheet type=text/css 
+href="http://common.cnblogs.com/blog/css/common2.css"><LINK rel=stylesheet 
+type=text/css href="http://common.cnblogs.com/css/shStyle.css"><LINK title=RSS 
+rel=alternate type=application/rss+xml 
+href="http://www.cnblogs.com/nolan022/rss"><LINK title=RSD rel=EditURI 
+type=application/rsd+xml href="http://www.cnblogs.com/nolan022/rsd.xml"><LINK 
+rel=wlwmanifest type=application/wlwmanifest+xml 
+href="http://www.cnblogs.com/nolan022/wlwmanifest.xml">
+<SCRIPT type=text/javascript src="http://common.cnblogs.com/script/gpt.js" 
+async="true"></SCRIPT>
+
+<SCRIPT type=text/javascript src="http://www.google-analytics.com/ga.js" 
+async="true"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/jquery.js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+var currentBlogApp = 'nolan022';
+</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/blog/script/common.js?id=20130704"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/json2.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/syntaxHighlighter.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://partner.googleadservices.com/gampad/google_ads_gpt.js" 
+async="true"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://pagead2.googlesyndication.com/pagead/osd.js"></SCRIPT>
+</HEAD>
+<BODY>
+<DIV id=centercontent>
+<DIV class=post>
+  <H1 class=postTitle>hessian demo和hessian与spring整合demo</H1>
+<DIV id=cnblogs_post_body>
+<P>　　Hessian是一个轻量级的remoting on 
+http工具，使用简单的方法提供了RMI（Remote Method Invocation，远程方法调用）的功能。采用的是二进制RPC（Remote 
+Procedure Call 
+Protocol，远程过程调用协议）协议，因为采用的是二进制协议，所以它很适合于发送二进制数据。&nbsp;<BR>　　
+在进行基于Hessian的项目开发时，应当注意以下几点：&nbsp;<BR>　　▲JAVA服务器端必须具备以下几点：&nbsp;<BR>　　•包含Hessian的jar包。&nbsp;<BR>　　•设计一个接口，用来给客户端调用。&nbsp;<BR>　　•实现该接口的功能。&nbsp;<BR>　　•配置web.xml，配好相应的servlet。&nbsp;<BR>　　•对象必须实现Serializable 
+接口。&nbsp;<BR>　　•对于复杂对像可以使用Map的方法传递。&nbsp;<BR>　　▲客户端必须具备以下几点：&nbsp;<BR>　　•java客户端包含Hessian.jar的包。&nbsp;<BR>　　•具有和服务器端结构一样的接口。&nbsp;<BR>•利用HessianProxyFactory调用远程接口。&nbsp;<BR><BR>下面是一个hessian的简单例子。&nbsp;<BR><BR>Java服务器端：&nbsp;<BR><BR>环境：j2sdk1.4.2、Tomcat6.0&nbsp;<BR>依赖的包：hessian-3.1.6.jar&nbsp;<BR><BR>新建一个名为HessianServer的web 
+project。将hessian-3.1.6.jar放入WEB-INF/lib文件夹中。&nbsp;<BR><BR>创建接口：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-j start=1>
+  <LI><SPAN class=keyword>package</SPAN>&nbsp;server.demo;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>interface</SPAN>&nbsp;DemoApi&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>void</SPAN>&nbsp;setName(String&nbsp;name);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;String&nbsp;sayHello();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;User&nbsp;getUser();&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>实现接口：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-j start=1>
+  <LI><SPAN class=keyword>package</SPAN>&nbsp;server.demo;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>class</SPAN>&nbsp;DemoService&nbsp;<SPAN 
+  class=keyword>implements</SPAN>&nbsp;DemoApi&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>private</SPAN>&nbsp;String&nbsp;name;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;String&nbsp;sayHello()&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>return</SPAN>&nbsp;<SPAN 
+  class=string>"Hello&nbsp;"</SPAN>+name;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>void</SPAN>&nbsp;setName(String&nbsp;name)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>this</SPAN>.name=name;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<SPAN 
+  class=string>"Hello&nbsp;"</SPAN>+name);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;User&nbsp;getUser()&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>return</SPAN>&nbsp;<SPAN 
+  class=keyword>new</SPAN>&nbsp;User(<SPAN 
+  class=string>"lingling"</SPAN>,&nbsp;<SPAN 
+  class=string>"pass"</SPAN>);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>创建User类，注意：一定要implements Serializable。&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-j start=1>
+  <LI><SPAN class=keyword>package</SPAN>&nbsp;server.demo;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;java.io.Serializable;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>class</SPAN>&nbsp;User&nbsp;<SPAN 
+  class=keyword>implements</SPAN>&nbsp;Serializable&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;name&nbsp;=&nbsp;<SPAN 
+  class=string>"kitty"</SPAN>;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;password&nbsp;=&nbsp;<SPAN 
+  class=string>"nopass"</SPAN>;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;User()&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>super</SPAN>();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;User(String&nbsp;name,&nbsp;String&nbsp;password)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>super</SPAN>();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>this</SPAN>.name&nbsp;=&nbsp;name;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>this</SPAN>.password&nbsp;=&nbsp;password;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;String&nbsp;getName()&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>return</SPAN>&nbsp;name;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>void</SPAN>&nbsp;setName(String&nbsp;name)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>this</SPAN>.name&nbsp;=&nbsp;name;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;String&nbsp;getPassword()&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>return</SPAN>&nbsp;password;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>void</SPAN>&nbsp;setPassword(String&nbsp;password)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>this</SPAN>.password&nbsp;=&nbsp;password;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>配置web.xml：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-xml start=1>
+  <LI><SPAN class=tag>&lt;</SPAN><SPAN class=tag-name>servlet</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>servlet-name</SPAN><SPAN class=tag>&gt;</SPAN>first<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>servlet-name</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>servlet-class</SPAN><SPAN 
+  class=tag>&gt;</SPAN>com.caucho.hessian.server.HessianServlet<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>servlet-class</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>init-param</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;</SPAN><SPAN class=tag-name>param-name</SPAN><SPAN 
+  class=tag>&gt;</SPAN>service-class<SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>param-name</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;</SPAN><SPAN class=tag-name>param-value</SPAN><SPAN 
+  class=tag>&gt;</SPAN>server.demo.DemoService<SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>param-value</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>init-param</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=tag>&lt;/</SPAN><SPAN class=tag-name>servlet</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>servlet-mapping</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>servlet-name</SPAN><SPAN class=tag>&gt;</SPAN>first<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>servlet-name</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>url-pattern</SPAN><SPAN class=tag>&gt;</SPAN>/helloworld<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>url-pattern</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>servlet-mapping</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>将项目发布到tomcat服务器上。&nbsp;<BR><BR>Java客户端：&nbsp;<BR><BR>环境：j2sdk1.4.2&nbsp;<BR>依赖的包：hessian-3.1.6.jar&nbsp;<BR><BR>创建一个名为HessianClient的java 
+project，载入hessian-3.1.6.jar。&nbsp;<BR><BR>创建与服务器一样的接口及User类，注意它们所在的包路径也要与服务器相同，否则会出现java.lang.ClassNotFoundException。&nbsp;<BR><BR>接口：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-j start=1>
+  <LI><SPAN class=keyword>package</SPAN>&nbsp;server.demo;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>interface</SPAN>&nbsp;DemoApi&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>void</SPAN>&nbsp;setName(String&nbsp;name);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;String&nbsp;sayHello();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;User&nbsp;getUser();&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>User类：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-j start=1>
+  <LI><SPAN class=keyword>package</SPAN>&nbsp;server.demo;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;java.io.Serializable;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>class</SPAN>&nbsp;User&nbsp;<SPAN 
+  class=keyword>implements</SPAN>&nbsp;Serializable&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;name&nbsp;=&nbsp;<SPAN 
+  class=string>"kitty"</SPAN>;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;password&nbsp;=&nbsp;<SPAN 
+  class=string>"nopass"</SPAN>;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;User()&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>super</SPAN>();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;User(String&nbsp;name,&nbsp;String&nbsp;password)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>super</SPAN>();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>this</SPAN>.name&nbsp;=&nbsp;name;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>this</SPAN>.password&nbsp;=&nbsp;password;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;String&nbsp;getName()&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>return</SPAN>&nbsp;name;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>void</SPAN>&nbsp;setName(String&nbsp;name)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>this</SPAN>.name&nbsp;=&nbsp;name;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>public</SPAN>&nbsp;String&nbsp;getPassword()&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>return</SPAN>&nbsp;password;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>void</SPAN>&nbsp;setPassword(String&nbsp;password)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=keyword>this</SPAN>.password&nbsp;=&nbsp;password;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>客户端程序：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-j start=1>
+  <LI><SPAN class=keyword>package</SPAN>&nbsp;client.demo;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;java.net.MalformedURLException;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;server.demo.DemoApi;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;com.caucho.hessian.client.HessianProxyFactory;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>class</SPAN>&nbsp;ClientTest&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>static</SPAN>&nbsp;<SPAN 
+  class=keyword>void</SPAN>&nbsp;main(String[]&nbsp;args)&nbsp;<SPAN 
+  class=keyword>throws</SPAN>&nbsp;MalformedURLException,&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ClassNotFoundException&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;url&nbsp;=&nbsp;<SPAN 
+  class=string>"http://localhost:9520/HessianServer/helloworld"</SPAN>;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HessianProxyFactory&nbsp;factory&nbsp;=&nbsp;<SPAN 
+  class=keyword>new</SPAN>&nbsp;HessianProxyFactory();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DemoApi&nbsp;api&nbsp;=&nbsp;(DemoApi)&nbsp;factory.create(url);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;api.setName(<SPAN 
+  class=string>"test"</SPAN>);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(api.sayHello());&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(api.getUser().getName());&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(api.getUser().getPassword());&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>现在，启动tomcat，运行ClientTest。运行结果：&nbsp;<BR>Hello 
+test&nbsp;<BR>lingling&nbsp;<BR>pass&nbsp;<BR><BR>现在，在以上基础上将hessian与spring整合。&nbsp;<BR><BR>Java服务器端（即我们上面建的名为HessianServer的web 
+project）：&nbsp;<BR><BR>环境：j2sdk1.4.2、Tomcat6.0&nbsp;<BR>依赖的包：&nbsp;<BR>1. 
+Hessian包：hessian-3.1.6.jar&nbsp;<BR>2. spring-framework-2.0.2包：&nbsp;<BR>a) 
+aopalliance.jar&nbsp;<BR>b) commons-logging.jar&nbsp;<BR>c) 
+log4j-1.2.14.jar&nbsp;<BR>d) spring.jar&nbsp;<BR>e) spring-aop.jar&nbsp;<BR>f) 
+spring-beans.jar&nbsp;<BR>g) spring-context.jar&nbsp;<BR>h) 
+spring-core.jar&nbsp;<BR>i) spring-jdbc.jar&nbsp;<BR>j) 
+spring-jms.jar&nbsp;<BR>k) spring-web.jar&nbsp;<BR>l) 
+spring-webmvc.jar&nbsp;<BR><BR>配置web.xml，web.xml中增加：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-xml start=1>
+  <LI><SPAN class=tag>&lt;</SPAN><SPAN class=tag-name>servlet</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>servlet-name</SPAN><SPAN class=tag>&gt;</SPAN>remote<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>servlet-name</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>servlet-class</SPAN><SPAN 
+class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.springframework.web.servlet.DispatcherServlet&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>servlet-class</SPAN><SPAN 
+class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>init-param</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;</SPAN><SPAN class=tag-name>param-name</SPAN><SPAN 
+  class=tag>&gt;</SPAN>namespace<SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>param-name</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;</SPAN><SPAN class=tag-name>param-value</SPAN><SPAN 
+  class=tag>&gt;</SPAN>classes/remote-servlet<SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>param-value</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>init-param</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>load-on-startup</SPAN><SPAN class=tag>&gt;</SPAN>1<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>load-on-startup</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=tag>&lt;/</SPAN><SPAN class=tag-name>servlet</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>servlet-mapping</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>servlet-name</SPAN><SPAN class=tag>&gt;</SPAN>remote<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>servlet-name</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>url-pattern</SPAN><SPAN class=tag>&gt;</SPAN>/remote/*<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>url-pattern</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>servlet-mapping</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>写spring的发布hessian服务的配置文件remote-servlet.xml，这个文件就建在工程的src下，即deploy到tomcat后，在WEB-INF/classes目录下。注意：这个文件为什么叫remote-servlet.xml呢？因为我们在web.xml中有配置：&lt;param-value&gt;classes/remote-servlet&lt;/param-value&gt;所以文件名为remote-servlet.xml。&nbsp;<BR>以下是remote-servlet.xml的内容：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-xml start=1>
+  <LI>&lt;!DOCTYPE&nbsp;beans&nbsp;PUBLIC&nbsp;"-//SPRING//DTD&nbsp;BEAN//EN"&nbsp;"http://www.springframework.org/dtd/spring-beans.dtd"<SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=tag>&lt;</SPAN><SPAN class=tag-name>beans</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>bean</SPAN>&nbsp;<SPAN class=attribute>id</SPAN>=<SPAN 
+  class=attribute-value>"demoService"</SPAN>&nbsp;<SPAN 
+  class=attribute>class</SPAN>=<SPAN 
+  class=attribute-value>"server.demo.DemoService"</SPAN>&nbsp;<SPAN 
+  class=tag>/&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>bean</SPAN>&nbsp;<SPAN class=attribute>name</SPAN>=<SPAN 
+  class=attribute-value>"/helloSpring"</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=attribute>class</SPAN>=<SPAN 
+  class=attribute-value>"org.springframework.remoting.caucho.HessianServiceExporter"</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;</SPAN><SPAN class=tag-name>property</SPAN>&nbsp;<SPAN 
+  class=attribute>name</SPAN>=<SPAN 
+  class=attribute-value>"service"</SPAN>&nbsp;<SPAN 
+  class=attribute>ref</SPAN>=<SPAN 
+  class=attribute-value>"demoService"</SPAN>&nbsp;<SPAN 
+  class=tag>/&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;</SPAN><SPAN class=tag-name>property</SPAN>&nbsp;<SPAN 
+  class=attribute>name</SPAN>=<SPAN 
+  class=attribute-value>"serviceInterface"</SPAN>&nbsp;<SPAN 
+  class=attribute>value</SPAN>=<SPAN 
+  class=attribute-value>"server.demo.DemoApi"</SPAN>&nbsp;<SPAN 
+  class=tag>/&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>bean</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=tag>&lt;/</SPAN><SPAN class=tag-name>beans</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>好了，现在可以测试一下了。在刚才建的名为HessianClient的java 
+project中修改client.demo.ClientTest.java如下：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-j start=1>
+  <LI><SPAN class=keyword>package</SPAN>&nbsp;client.demo;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;java.net.MalformedURLException;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;server.demo.DemoApi;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;com.caucho.hessian.client.HessianProxyFactory;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>class</SPAN>&nbsp;ClientTest&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>static</SPAN>&nbsp;<SPAN 
+  class=keyword>void</SPAN>&nbsp;main(String[]&nbsp;args)&nbsp;<SPAN 
+  class=keyword>throws</SPAN>&nbsp;MalformedURLException,&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ClassNotFoundException&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=comment>//&nbsp;String&nbsp;url&nbsp;=&nbsp;"http://localhost:9520/HessianServer/helloworld";</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;url&nbsp;=&nbsp;<SPAN 
+  class=string>"http://localhost:9520/HessianServer/remote/helloSpring"</SPAN>;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HessianProxyFactory&nbsp;factory&nbsp;=&nbsp;<SPAN 
+  class=keyword>new</SPAN>&nbsp;HessianProxyFactory();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DemoApi&nbsp;api&nbsp;=&nbsp;(DemoApi)&nbsp;factory.create(DemoApi.<SPAN 
+  class=keyword>class</SPAN>,&nbsp;url);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;api.setName(<SPAN 
+  class=string>"test"</SPAN>);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(api.sayHello());&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(api.getUser().getName());&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(api.getUser().getPassword());&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>现在，启动tomcat，运行ClientTest。运行结果：&nbsp;<BR>Hello 
+test&nbsp;<BR>lingling&nbsp;<BR>pass&nbsp;<BR><BR>如果客户端也使用spring呢？现在做一个spring整合hessian的客户端demo。首先载入spring-framework-2.0.2包：<BR>1） 
+aopalliance.jar&nbsp;<BR>2） commons-logging.jar&nbsp;<BR>3） 
+log4j-1.2.14.jar&nbsp;<BR>4） spring.jar&nbsp;<BR>5） spring-aop.jar&nbsp;<BR>6） 
+spring-beans.jar&nbsp;<BR>7） spring-context.jar&nbsp;<BR>8） 
+spring-core.jar&nbsp;<BR>9） spring-jdbc.jar&nbsp;<BR>10） 
+spring-jms.jar&nbsp;<BR>11） spring-web.jar&nbsp;<BR>12） 
+spring-webmvc.jar&nbsp;<BR>在名为HessianClient的java 
+project中src目录下，新建一个remote-client.xml，这个文件可随意命名。remote-client.xml内容为：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-xml start=1>
+  <LI>&lt;!DOCTYPE&nbsp;beans&nbsp;PUBLIC&nbsp;"-//SPRING//DTD&nbsp;BEAN//EN"&nbsp;"http://www.springframework.org/dtd/spring-beans.dtd"<SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=tag>&lt;</SPAN><SPAN class=tag-name>beans</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;</SPAN><SPAN 
+  class=tag-name>bean</SPAN>&nbsp;<SPAN class=attribute>id</SPAN>=<SPAN 
+  class=attribute-value>"helloSpring"</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=attribute>class</SPAN>=<SPAN 
+  class=attribute-value>"org.springframework.remoting.caucho.HessianProxyFactoryBean"</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;</SPAN><SPAN class=tag-name>property</SPAN>&nbsp;<SPAN 
+  class=attribute>name</SPAN>=<SPAN 
+  class=attribute-value>"serviceUrl"</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;</SPAN><SPAN class=tag-name>value</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://localhost:9520/HessianServer/remote/helloSpring&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>value</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>property</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;</SPAN><SPAN class=tag-name>property</SPAN>&nbsp;<SPAN 
+  class=attribute>name</SPAN>=<SPAN 
+  class=attribute-value>"serviceInterface"</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;</SPAN><SPAN class=tag-name>value</SPAN><SPAN 
+  class=tag>&gt;</SPAN>server.demo.DemoApi<SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>value</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=tag>&lt;/</SPAN><SPAN class=tag-name>property</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=tag>&lt;/</SPAN><SPAN 
+  class=tag-name>bean</SPAN><SPAN class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=tag>&lt;/</SPAN><SPAN class=tag-name>beans</SPAN><SPAN 
+  class=tag>&gt;</SPAN>&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>在刚才建的名为HessianClient的java 
+project中修改client.demo.ClientTest.java如下：&nbsp;</P>
+<DIV class=dp-highlighter>
+  <OL class=dp-j start=1>
+  <LI><SPAN class=keyword>package</SPAN>&nbsp;client.demo;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;java.net.MalformedURLException;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;org.springframework.context.ApplicationContext;&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;org.springframework.context.support.ClassPathXmlApplicationContext;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN 
+  class=keyword>import</SPAN>&nbsp;server.demo.DemoApi;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI><SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>class</SPAN>&nbsp;ClientTest&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=keyword>public</SPAN>&nbsp;<SPAN 
+  class=keyword>static</SPAN>&nbsp;<SPAN 
+  class=keyword>void</SPAN>&nbsp;main(String[]&nbsp;args)&nbsp;<SPAN 
+  class=keyword>throws</SPAN>&nbsp;MalformedURLException,&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ClassNotFoundException&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=comment>//&nbsp;String&nbsp;url&nbsp;=&nbsp;"http://localhost:9520/HessianServer/helloworld";</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=comment>//&nbsp;String&nbsp;url&nbsp;=</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=comment>//&nbsp;"http://localhost:9520/HessianServer/remote/helloSpring";</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=comment>//&nbsp;HessianProxyFactory&nbsp;factory&nbsp;=&nbsp;new&nbsp;HessianProxyFactory();</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=comment>//&nbsp;DemoApi&nbsp;api&nbsp;=&nbsp;(DemoApi)&nbsp;factory.create(DemoApi.class,&nbsp;url);</SPAN>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ApplicationContext&nbsp;context&nbsp;=&nbsp;<SPAN 
+  class=keyword>new</SPAN>&nbsp;ClassPathXmlApplicationContext(&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+  class=string>"remote-client.xml"</SPAN>);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DemoApi&nbsp;api&nbsp;=&nbsp;(DemoApi)&nbsp;context.getBean(<SPAN 
+  class=string>"helloSpring"</SPAN>);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;api.setName(<SPAN 
+  class=string>"test"</SPAN>);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(api.sayHello());&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(api.getUser().getName());&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(api.getUser().getPassword());&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P><BR>现在，启动tomcat，运行ClientTest。运行结果：&nbsp;<BR>Hello 
+test&nbsp;<BR>lingling&nbsp;<BR>pass&nbsp;<BR><BR>至此over～&nbsp;<BR>PS：有时候可能因hessian或spring的版本问题使程序不能运行</P>
+<P><STRONG>Hessian入门(集合,对象)</STRONG></P>
+<OL>
+  <LI>主要是讲述使用Hessian传递集合以及对象.</LI>
+  <LI>传递的对象必须序列化</LI>
+  <LI>相比起Webservice,Hessian无需配置xml&nbsp;&nbsp;&nbsp;(XXX.aegis.xml)&nbsp;实体Bean的xml文件</LI></OL>
+<P>4.&nbsp;&nbsp;&nbsp;&nbsp;简单&nbsp;轻量&nbsp;无需多余配置.</P>
+<P>开发流程:</P>
+<P>1.书写实体Bean[必须序列化]</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI class=alt>package&nbsp;com.wtang.domain;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;java.io.Serializable;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>public&nbsp;class&nbsp;User&nbsp;implements&nbsp;Serializable&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;static&nbsp;final&nbsp;long&nbsp;serialVersionUID&nbsp;=&nbsp;21287917233879L;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;String&nbsp;userName;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;String&nbsp;password;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;String&nbsp;getUserName()&nbsp;{&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;userName;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;setUserName(String&nbsp;userName)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.userName&nbsp;=&nbsp;userName;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;String&nbsp;getPassword()&nbsp;{&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;password;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;setPassword(String&nbsp;password)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.password&nbsp;=&nbsp;password;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI class=alt>}&nbsp;&nbsp;</LI></OL></DIV>
+<P>2.定义接口</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI class=alt>package&nbsp;com.wtang.isay;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;java.util.List;&nbsp;&nbsp;</LI>
+  <LI>import&nbsp;java.util.Map;&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;com.wtang.domain.User;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI class=alt>public&nbsp;interface&nbsp;Isay&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;String&nbsp;sayHello(List&lt;User&gt;&nbsp;list);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;String&nbsp;sayHi(Map&lt;String,&nbsp;User&gt;&nbsp;map);&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P>3.接口具体实现</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI class=alt>package&nbsp;com.wtang.isay;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;java.util.Iterator;&nbsp;&nbsp;</LI>
+  <LI>import&nbsp;java.util.List;&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;java.util.Map;&nbsp;&nbsp;</LI>
+  <LI>import&nbsp;com.wtang.domain.User;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>public&nbsp;class&nbsp;IsayImpl&nbsp;implements&nbsp;Isay&nbsp;{&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;String&nbsp;sayHello(List&lt;User&gt;&nbsp;list)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringBuffer&nbsp;sb&nbsp;=&nbsp;new&nbsp;StringBuffer();&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(Iterator&nbsp;iterator&nbsp;=&nbsp;list.iterator();&nbsp;iterator.hasNext();)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User&nbsp;user&nbsp;=&nbsp;(User)&nbsp;iterator.next();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append(user.getUserName());&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append("==");&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append(user.getPassword());&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append("==");&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;sb.toString();&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;String&nbsp;sayHi(Map&lt;String,&nbsp;User&gt;&nbsp;map)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringBuffer&nbsp;sb&nbsp;=&nbsp;new&nbsp;StringBuffer();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(String&nbsp;o&nbsp;:&nbsp;map.keySet())&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append(map.get(o).getUserName());&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append("==");&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append(map.get(o).getPassword());&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append("==");&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;sb.toString();&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P>4.配置Web.xml</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI class=alt>&lt;servlet&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&lt;servlet-name&gt;hi&lt;/servlet-name&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;servletclass&gt;com.caucho.hessian.server.HessianServlet&lt;/servlet-class&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&lt;init-param&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;service-class&lt;/param-name&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;com.wtang.isay.IsayImpl&lt;/param-value&gt;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/init-param&gt;&nbsp;&nbsp;</LI>
+  <LI>&lt;/servlet&gt;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&lt;servlet-mapping&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;servlet-name&gt;hi&lt;/servlet-name&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&lt;url-pattern&gt;/hi&lt;/url-pattern&gt;&nbsp;&nbsp;</LI>
+  <LI class=alt>&lt;/servlet-mapping&gt;&nbsp;&nbsp;</LI></OL></DIV>
+<P>5.客户端调用</P>
+<P>&nbsp;</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI class=alt>package&nbsp;com.wtang.test;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;java.net.MalformedURLException;&nbsp;&nbsp;</LI>
+  <LI>import&nbsp;java.util.ArrayList;&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;java.util.HashMap;&nbsp;&nbsp;</LI>
+  <LI>import&nbsp;java.util.List;&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;java.util.Map;&nbsp;&nbsp;</LI>
+  <LI>import&nbsp;com.caucho.hessian.client.HessianProxyFactory;&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;com.wtang.domain.User;&nbsp;&nbsp;</LI>
+  <LI>import&nbsp;com.wtang.isay.Isay;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>public&nbsp;class&nbsp;Test&nbsp;{&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;static&nbsp;void&nbsp;main(String[]&nbsp;args)&nbsp;throws&nbsp;MalformedURLException&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;url&nbsp;=&nbsp;"http://localhost:8080/HessianCollection/hi";&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HessianProxyFactory&nbsp;factory&nbsp;=&nbsp;new&nbsp;HessianProxyFactory();&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Isay&nbsp;i&nbsp;=&nbsp;(Isay)&nbsp;factory.create(Isay.class,&nbsp;url);&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;result1,&nbsp;result2&nbsp;=&nbsp;"";&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;List&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;User&gt;&nbsp;list&nbsp;=&nbsp;new&nbsp;ArrayList&lt;User&gt;();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User&nbsp;user1&nbsp;=&nbsp;new&nbsp;User();&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user1.setUserName("chenweitang");&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user1.setPassword("123");&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User&nbsp;user2&nbsp;=&nbsp;new&nbsp;User();&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user2.setUserName("hello");&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user2.setPassword("world");&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list.add(user1);&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list.add(user2);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result1&nbsp;=&nbsp;i.sayHello(list);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("List结果:"&nbsp;+&nbsp;result1);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Map&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map&lt;String,&nbsp;User&gt;&nbsp;map&nbsp;=&nbsp;new&nbsp;HashMap&lt;String,&nbsp;User&gt;();&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map.put(user1.getUserName(),&nbsp;user1);&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map.put(user2.getUserName(),&nbsp;user2);&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result2&nbsp;=&nbsp;i.sayHi(map);&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Map结果:"&nbsp;+&nbsp;result2);&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P>结果:</P>
+<P>List结果:chenweitang==123==hello==world==<BR>Map结果:hello==world==chenweitang==123==</P>
+<P><STRONG>Hessian入门(与Spring集成)</STRONG></P>
+<P>&nbsp;说明&nbsp;：</P>
+<OL>
+  <LI>讲述如何配置Hessian的服务器端(与Spring集成).</LI>
+  <LI>讲述客户端如何调用</LI></OL>
+<P>①&nbsp;&nbsp;&nbsp;使用HessianProxyFactory&nbsp;&nbsp;Hessian代理工厂直接调用</P>
+<P>②&nbsp;&nbsp;&nbsp;使用HessianProxyFactoryBean Hessian代理工厂Bean来完成接口调用.</P>
+<OL>
+  <LI>讲述如何配置Hessian的服务器端(与Spring集成).</LI></OL>
+<P>接口定义类: com.wtang.isay. Isay:</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI class=alt>package&nbsp;com.wtang.isay;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI class=alt>public&nbsp;interface&nbsp;Isay&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;String&nbsp;sayHello(String&nbsp;arg1,String&nbsp;arg2);&nbsp;&nbsp;</LI>
+  <LI class=alt>}&nbsp;&nbsp;</LI></OL></DIV>
+<P>接口具体实现类: com.wtang.isay. IsayImpl</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI class=alt>package&nbsp;com.wtang.isay;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>public&nbsp;class&nbsp;IsayImpl&nbsp;implements&nbsp;Isay&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;String&nbsp;sayHello(String&nbsp;arg1,&nbsp;String&nbsp;arg2)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;"Hello:"&nbsp;+&nbsp;arg1&nbsp;+&nbsp;arg2;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P>配置Web.xml:</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI class=alt>&lt;servlet&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&lt;servlet-name&gt;remote&lt;/servlet-name&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;使用Spring的代理Servlet&nbsp;--&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;init-param&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;namespace&lt;/param-name&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;classes/remote-servlet&lt;/param-value&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/init-param&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;&nbsp;&nbsp;</LI>
+  <LI>&lt;/servlet&gt;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&lt;servlet-mapping&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;servlet-name&gt;remote&lt;/servlet-name&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&lt;url-pattern&gt;/remote/*&lt;/url-pattern&gt;&nbsp;&nbsp;</LI>
+  <LI class=alt>&lt;/servlet-mapping&gt;&nbsp;&nbsp;</LI></OL></DIV>
+<P>配置<STRONG>remote-servlet.xml</STRONG>[该文件位于src目录下,即编译后存在与classes下]:</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI 
+  class=alt>&lt;!DOCTYPE&nbsp;beans&nbsp;PUBLIC&nbsp;"-//SPRING//DTD&nbsp;BEAN//EN"&nbsp;"http://www.springframework.org/dtd/spring-beans.dtd"&gt;&nbsp;&nbsp;</LI>
+  <LI>&lt;beans&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;接口的具体实现类&nbsp;--&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&lt;bean&nbsp;id="impl"&nbsp;class="com.wtang.isay.IsayImpl"&nbsp;/&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;使用Spring的HessianServie做代理&nbsp;--&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&lt;bean&nbsp;name="/helloSpring"&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;class="org.springframework.remoting.caucho.HessianServiceExporter"&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;service引用具体的实现实体Bean--&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="service"&nbsp;ref="impl"&nbsp;/&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="serviceInterface"&nbsp;value="com.wtang.isay.Isay"&nbsp;/&gt;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/bean&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;可以配置多个HessianServiceExporter代理Bean&nbsp;--&gt;&nbsp;&nbsp;</LI>
+  <LI>&lt;/beans&gt;&nbsp;&nbsp;</LI></OL></DIV>
+<P>注:</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+这个文件为什么叫<STRONG>remote-servlet.xml</STRONG>呢？</P>
+<P>因为我们在web.xml中有配置：&lt;servlet-name&gt;remote&lt;/servlet-name&gt;。</P>
+<P>所以remote-servlet.xml的文件名必须以</P>
+<P>&lt;servlet-name&gt;中配置的servlet-name作为文件名的开头，</P>
+<P>且文件名的格式必须是[servlet-name]-servlet.xml格式，否则检测不到。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;即:</P>
+<P>&lt;param-value&gt;classes/remote-servlet&lt;/param-value&gt;</P>
+<P>所以文件名为remote-servlet.xml。</P>
+<OL>
+  <LI>讲述客户端如何调用</LI></OL>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;①&nbsp;使用HessianProxyFactory&nbsp; 
+Hessian代理工厂直接调用</P>
+<P>&nbsp;即:</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI class=alt>package&nbsp;com.wtang.test;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;java.net.MalformedURLException;&nbsp;&nbsp;</LI>
+  <LI>import&nbsp;com.caucho.hessian.client.HessianProxyFactory;&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;com.wtang.isay.Isay;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI class=alt>public&nbsp;class&nbsp;NormalClient&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;static&nbsp;void&nbsp;main(String[]&nbsp;args)&nbsp;throws&nbsp;MalformedURLException&nbsp;{&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//Spring&nbsp;Hessian代理Servelet&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;url&nbsp;=&nbsp;"http://localhost:8080/HessianSpring/remote/helloSpring";&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HessianProxyFactory&nbsp;factory&nbsp;=&nbsp;new&nbsp;HessianProxyFactory();&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Isay&nbsp;api&nbsp;=&nbsp;(Isay)&nbsp;factory.create(Isay.class,&nbsp;url);&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(api.sayHello("chen",&nbsp;"weitang"));&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P>输出Hello:chenweitang</P>
+<OL>
+  <LI>讲述客户端如何调用</LI></OL>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;②&nbsp;使用HessianProxyFactoryBean 
+Hessian代理工厂Bean来完成接口调用.</P>
+<P>配置客户端 remote-client.xml:</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI 
+  class=alt>&lt;!DOCTYPE&nbsp;beans&nbsp;PUBLIC&nbsp;"-//SPRING//DTD&nbsp;BEAN//EN"&nbsp;"http://www.springframework.org/dtd/spring-beans.dtd"&gt;&nbsp;&nbsp;</LI>
+  <LI>&lt;beans&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;客户端Hessian代理工厂Bean&nbsp;--&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&lt;bean&nbsp;id="clientSpring"&nbsp;class="org.springframework.remoting.caucho.HessianProxyFactoryBean"&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;请求代理Servlet路径&nbsp;--&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="serviceUrl"&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&lt;value&gt;http://localhost:8080/HessianSpring/remote/helloSpring&lt;/value&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/property&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;接口定义&nbsp;--&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="serviceInterface"&gt;&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;value&gt;com.wtang.isay.Isay&lt;/value&gt;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/property&gt;&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/bean&gt;&nbsp;&nbsp;</LI>
+  <LI>&lt;/beans&gt;&nbsp;&nbsp;</LI></OL></DIV>
+<P>调用:</P>
+<DIV class="dp-highlighter bg_java">
+  <OL class=dp-j start=1>
+  <LI class=alt>package&nbsp;com.wtang.test;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>import&nbsp;org.springframework.context.ApplicationContext;&nbsp;&nbsp;</LI>
+  <LI>import&nbsp;org.springframework.context.support.ClassPathXmlApplicationContext;&nbsp;&nbsp;</LI>
+  <LI class=alt>import&nbsp;com.wtang.isay.Isay;&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;</LI>
+  <LI class=alt>public&nbsp;class&nbsp;SpringClient&nbsp;{&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;static&nbsp;void&nbsp;main(String[]&nbsp;args)&nbsp;{&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ApplicationContext&nbsp;contex&nbsp;=&nbsp;new&nbsp;ClassPathXmlApplicationContext(&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"remote-client.xml");&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;获得客户端的Hessian代理工厂bean&nbsp;&nbsp;</LI>
+  <LI 
+  class=alt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Isay&nbsp;i&nbsp;=&nbsp;(Isay)&nbsp;contex.getBean("clientSpring");&nbsp;&nbsp;</LI>
+  <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(i.sayHello("chen",&nbsp;"weitang"));&nbsp;&nbsp;</LI>
+  <LI class=alt>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</LI>
+  <LI>}&nbsp;&nbsp;</LI></OL></DIV>
+<P>输出Hello:chenweitang</P>
+</DIV>
+<SCRIPT type=text/javascript>
+var isLogined = false;
+var cb_blogId = 84495;
+var cb_entryId = 2616296;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "84e1e7ac-cf43-e011-ac81-842b2b196315";
+var cb_entryCreatedDate = '2012/7/31 9:39:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV class=clear></DIV>
+<DIV id=blog_post_info_block>
+<DIV id=blog_post_info>
+<DIV id=BlogPostCategory></DIV>
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/google-analytics.js"></SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Struts2零配置开发（注解Annotation的使用）一 - 年岁有加，并非垂老，理想丢弃，方堕暮年 - ITeye技术网站</title>
+    <meta name="description" content="    以前使用Struts2的时候参数都是在struts.xml里面配置的，现在转入了一个新的项目中，发现这个项目struts.xml中只定义了几个常量，并没有大量的action、interceptor的配置信息，项目显得非常整洁，但是同时也看的云里雾里。今天花了一小会看了一个Struts2 Convention Plugin的官方文档，才大致了解了一二，这里简单叙述一下。     具体的阐述请参 ..." />
+    <meta name="keywords" content="Struts, Apache, XML, Web, HTML Struts2零配置开发（注解Annotation的使用）一" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="年岁有加，并非垂老，理想丢弃，方堕暮年" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1359603811" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+  <div id="page">
+    <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1090836">Struts2零配置开发（注解Annotation的使用）一</a>
+      <em class="actions">      </em></h3>
+    <div class='news_tag'></div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    &nbsp;&nbsp;&nbsp; 以前使用Struts2的时候参数都是在struts.xml里面配置的，现在转入了一个新的项目中，发现这个项目struts.xml中只定义了几个常量，并没有大量的action、interceptor的配置信息，项目显得非常整洁，但是同时也看的云里雾里。今天花了一小会看了一个Struts2 Convention Plugin的官方文档，才大致了解了一二，这里简单叙述一下。
+<br />
+<br />&nbsp;&nbsp;&nbsp; 具体的阐述请参考官网<a target="_blank" href="http://struts.apache.org/2.1.6/docs/convention-plugin.html">http://struts.apache.org/2.1.6/docs/convention-plugin.html</a>。Convention Plugin是从2.1版本开始引进的。2.1以前的版本请参考<a target="_blank" href="http://struts.apache.org/2.0.14/docs/zero-configuration.html">http://struts.apache.org/2.0.14/docs/zero-configuration.html</a>。不同的版本大家再到官网查看一下吧。呵呵
+<br />
+<br />下面是常用的常量
+<br /><table class="bbcode"><tr><td>name</td><td>default value</td><td>description</td></tr><tr><td>struts.convention.result.path</td><td>/WEB-INF/content/ </td><td>Directory where templates are located</td></tr><tr><td>struts.convention.result.flatLayout</td><td> true</td><td> If set to false, the result can be put in its own directory: resultsRoot/namespace/actionName/result.extension</td></tr><tr><td>struts.convention.package.locators</td><td>action,actions,struts,struts2</td><td>Packages whose name end with one of these strings will be scanned for actions</td></tr><tr><td>struts.convention.exclude.packages</td><td>org.apache.struts.*,org.apache.struts2.*</td><td>Packages excluded from the action scanning</td></tr><tr><td>struts.convention.package.locators.basePackage</td><td></td><td>If set, only packages that start with its value will be scanned for actions</td></tr></table>
+<br />
+<br />下面是步骤：
+<br />1，首先需要将架包(struts2-convention-plugin-xxx.jar)导入工程中(如果将action打包在了jar包中，那么属性struts.convention.action.disableJarScanning需要设置为true)。 
+<br />2,跳转路径是根据请求路径的url处理的，即使没有请求对应的action，但是WEB-INF目录下有对应的页面，也可以跳转到页面上去。例如我们有页面WEB-INF/content/hello-world.jsp，如果我们请求http://localhost:8080/hello-world，即使没有HelloWorldAction，那么我们仍然能跳转到上面的欢迎页面，这是因为Convention plugin获取跳转结果只是根据Struts获取的URL，而不是action中配置的跳转路径。
+<br />
+<br />下面是Annotation的分类：
+<br />1，Action annotation。
+<br />最简单的例子
+<br /><pre name="code" class="java">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+
+public class HelloWorld extends ActionSupport {
+  @Action("/different/url")
+  public String execute() {
+    return SUCCESS;
+  }
+}</pre>那么这个HelloWorld的访问url就变为了/different/url。
+<br />
+<br />一个方法可以被映射到多个url上面，如下所示，方位注解中的两个url都可以访问这个方法
+<br /><pre name="code" class="java">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
+
+public class HelloWorld extends ActionSupport {
+  @Actions({
+    @Action("/different/url"),
+    @Action("/another/url")
+  })
+  public String execute() {
+    return SUCCESS;
+  }
+}</pre>
+<br />如果一个action中有多个方法，那么可以分别为各个方法指定访问url<pre name="code" class="java">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
+
+public class HelloWorld extends ActionSupport {
+  @Action("/different/url")
+  public String execute() {
+    return SUCCESS;
+
+  }
+
+  @Action("url")
+  public String doSomething() {
+    return SUCCESS;
+  }
+}</pre>请注意上面这个类的第二个方法doSomething()，它的url是“url”，这是个相对路径是，也就是说访问这个方法时的正确路径是namespace+url。而execute()通过访问/different/url就可以访问。
+<br />
+<br />使用@Action的interceptorRefs 属性可以指定action或者方法的interceptor，如下面的例子<pre name="code" class="java">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
+
+public class HelloWorld extends ActionSupport {
+  @Action(interceptorRefs={@InterceptorRef("validation"), @InterceptorRef("defaultStack")})
+  public String execute() {
+    return SUCCESS;
+  }
+
+  @Action("url")
+  public String doSomething() {
+    return SUCCESS;
+  }
+}</pre>上面的action中execute()方法应用了validation拦截器和defaultStack拦截器栈。
+<br />
+<br />还可以使用params属性指定要传给拦截器的参数。形式为{键，值，键，值…………}，键值总是会成对出现，如下面的例子<pre name="code" class="java">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
+
+public class HelloWorld extends ActionSupport {
+  @Action(interceptorRefs=@InterceptorRef(value="validation",params={"programmatic", "false", "declarative", "true}))
+  public String execute() {
+    return SUCCESS;
+  }
+
+  @Action("url")
+  public String doSomething() {
+    return SUCCESS;
+  }
+}</pre>如果Action没有显式的指定拦截器的话，默认的拦截器会应用在这个Action上。
+<br />
+<br />2,Interceptor Annotation。
+<br />拦截器可以在类和方法的层面上应用。在方法层面指定拦截器使用@Action注解，在类层面指定拦截器使用@InterceptorRefs注解。类层面引用的拦截器会应用在所有的方法上，如下面的例子<pre name="code" class="java">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
+
+@InterceptorRefs({
+    @InterceptorRef("interceptor-1"),
+    @InterceptorRef("defaultStack")
+})
+public class HelloWorld extends ActionSupport {
+  @Action(value="action1", interceptorRefs=@InterceptorRef("validation"))
+  public String execute() {
+    return SUCCESS;
+  }
+
+  @Action(value="action2")
+  public String doSomething() {
+    return SUCCESS;
+  }
+}</pre>如上代码所示，execute()方法应用了interceptor-1,validation和defaultStack中的所有拦截器；而doSomething()方法则没有validation拦截器。
+<br />
+<br />3,Result Annotation。
+<br />Convention plugin允许为一个Action设置多个跳转路径，使用@Result注解标识。@Result可以已经用在Action上，可以应用在方法上，应用在Action上作为全局路径，应用在Method上那么只对当前的Method起作用。如下面的例子<pre name="code" class="java">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
+
+@Results({
+  @Result(name="failure", location="fail.jsp")
+})
+public class HelloWorld extends ActionSupport {
+  @Action(value="/different/url", 
+    results={@Result(name="success", location="http://struts.apache.org", type="redirect")}
+  )
+  public String execute() {
+    return SUCCESS;
+  }
+
+  @Action("/another/url")
+  public String doSomething() {
+    return SUCCESS;
+  }
+}</pre>同@InterceptorRef注解，@Result注解同样可以使用params属性设置参数，实例如下<pre name="code" class="java">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
+
+public class HelloWorld extends ActionSupport {
+  @Action(value="/different/url", 
+    results={@Result(name="success", type="httpheader", params={"status", "500", "errorMessage", "Internal Error"})}
+  )
+  public String execute() {
+    return SUCCESS;
+  }
+
+  @Action("/another/url")
+  public String doSomething() {
+    return SUCCESS;
+  }
+}</pre>
+<br />由于篇幅太长，其他的注解下一篇文章再介绍。
+  </div>
+
+  
+
+
+  
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo"></div>
+  </div>
+
+  </div>
+
+
+</div>
+
+        </div>
+
+      </div>
+    </body>
+</html>

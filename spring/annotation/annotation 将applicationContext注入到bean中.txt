@@ -1,0 +1,69 @@
+从spring2.5开始，我们可以自动装配ApplicationContext和beanFactory，方法如下：
+private @Autowired ApplicationContext appContext;
+private @Autowired BeanFactory beanFactory;
+---------------------------------------------------
+package cz;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class TesMain {
+	public static void main(String[] args) throws Exception{
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+		AAA a = (AAA) ctx.getBean("xxxxx");
+		a.say();
+		Object lock = new Object();
+        	synchronized (lock) {
+            		while (true) {
+                		lock.wait();
+            		}
+        	}
+	}
+}
+----------------------------------------------------------------
+package cz;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+@Component(value="xxxxx")
+public class AAA {
+	@Autowired
+	ApplicationContext applicationContext;
+	public AAA(){
+		System.out.println("AAA");
+	}
+	public void say() {
+		System.out.println("xxxxxxx");
+		System.out.println(applicationContext);
+		BBB b = (BBB) applicationContext.getBean("BBB");
+		b.say();
+	}
+}
+-----------------------------------------
+package cz;
+import org.springframework.stereotype.Component;
+@Component
+public class BBB {
+	public BBB(){
+		System.out.println("BBB");
+	}
+	public void say(){
+		System.out.println("yyyyyy");
+	}
+}
+------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+		default-lazy-init="default">
+	<context:component-scan base-package="cz" />
+</beans>
+

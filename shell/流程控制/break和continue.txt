@@ -1,0 +1,58 @@
+#!/bin/bash
+#breakout
+while :
+do
+  echo -n "Enter any number [1...5]:"
+  read ANS
+  case $ANS in 
+    1|2|3|4|5)
+      echo "you enter a number between 1 and 5"
+      ;;
+    *)
+      echo "wrong number,bye."
+      break
+      ;;
+  esac
+done
+
+#!/bin/bash
+#breakout
+while :
+do
+  echo -n "enter any number [1...5]:"
+  read ANS
+  case $ANS in
+    1|2|3|4|5)
+      echo "you enter a number between 1 and 5."
+      ;;
+    *)
+      echo -n "wrong number,continue(y/n)?:"
+      read IS_CONTINUE
+      case $IS_CONTINUE in
+        y|yes|Y|Yes)
+          continue
+          ;;
+        *)
+          break
+          ;;
+      esac
+    esac
+done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

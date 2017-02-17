@@ -1,0 +1,30 @@
+package com.spdbccc.account.entry.bizfront.action;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+@Controller
+@Scope("prototype") // 或者@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@RequestMapping("/fastpay/")
+@Slf4j
+public class FastPayAction {
+    @RequestMapping("BFFastPay.do")
+    @ResponseBody
+    public String queryBind (FastModel fastModel) { // 必须要有getter和setter方法,不然属性都是null
+        System.out.println("hhh" + fastModel.userId + "uuu");
+        System.out.println("hhh" + fastModel.certType + "uuu");
+        return "colitas";
+    }
+}
+----------------------
+package com.spdbccc.account.entry.bizfront.action;
+import lombok.Data;
+@Data
+public class FastModel {
+    public String userId;
+    public String certType;
+}
+

@@ -1,0 +1,56 @@
+ws_export.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	
+	<!-- XFire导出器模板 -->
+	<bean id="baseWebService" class="org.codehaus.xfire.spring.remoting.XFireExporter" lazy-init="false" abstract="true">
+		<property name="serviceFactory" ref="xfire.serviceFactory" /> <!-- 引用xfire.xml中定义的工厂 -->
+		<property name="xfire" ref="xfire" /> <!-- 引用xfire.xml中的xfire实例 -->
+	</bean>
+
+	<!--用parent可以简化我们的写法，不然我们发布很多webservice的时候，都要写上面那段重复太多，繁琐重复的写法如下
+	<bean id="businessService" class="org.codehaus.xfire.spring.remoting.XFireExporter" lazy-init="false">
+		<property name="serviceFacotry" ref="xfire.serviceFactory"/>
+		<property name="xfire" ref="xfire"/>
+		<property name="serviceBean" ref="commandDispatcher"/>
+		<property name="serviceClass" value="com.huateng.haobai.ppcore.control.IDispatchControl"/>
+	</bean>
+	<bean id="businessService2" class="org.codehaus.xfire.spring.remoting.XFireExporter" lazy-init="false">
+		<property name="serviceFacotry" ref="xfire.serviceFactory"/>
+		<property name="xfire" ref="xfire"/>
+		<property name="serviceBean" ref="commandDispatcher2"/>
+		<property name="serviceClass" value="com.huateng.haobai.ppcore.control.IDispatchControl2"/>
+	</bean>
+	-->
+	
+	<bean id="businessService" parent="baseWebService">
+		<property name="serviceBean" ref="commandDispatcher"/>
+		<property name="serviceClass" value="com.huateng.haobai.ppcore.control.IDispatchControl"/>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+			<map>
+				<entry key="/businessService">
+					<ref bean="businessService" />
+				</entry>
+				<entry key="/businessService2">
+					<ref bean="businessService" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>
+-----------------------------
+
+
+
+
+

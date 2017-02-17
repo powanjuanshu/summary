@@ -1,0 +1,19 @@
+语句格式:
+* if   条件1 
+  then 命令1
+  elif 条件2
+  then 命令2
+  else 命令3
+  fi   完成
+* if   条件
+  then 命令
+  fi
+
+例子:
+#!/bin/bash
+#iftest
+if[ "10" -lt "12" ] # if[后面必须要有空格
+then
+  echo "yes,10 is less than 12"
+fi
+  

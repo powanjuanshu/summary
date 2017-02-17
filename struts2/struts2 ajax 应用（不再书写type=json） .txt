@@ -1,0 +1,64 @@
+index.jsp:
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript"  src="<%=request.getContextPath()%>/js/jquery-1.6.2.js"></script>
+</head>
+<script type="text/javascript">
+function b(){
+	var options={
+		url:'jsonTest.do',
+		type:'POST',
+		dataType:'json',//指定返回的解析类型，也可以是xml
+		data:{
+			name:'lilei',
+			sex:'1'
+		},
+		success:function(rs){
+			if(rs.name){
+				alert(rs.name+'\t'+rs.sex);
+			}
+		},
+		error:function(rs){
+			alert(2);
+		},
+		timeout:3000
+	};
+	$.ajax(options);
+}
+</script>
+<body>
+<a href="#" onclick="b()">ajax</a>
+</body>
+</html>
+--------------------------
+TestAction.java:
+package com.neusoft.gazelle.core.action;
+public class TestAction extends ActionSupport{
+	@Action(value="jsonTest")
+	public void jsonTest() throws Exception{
+		HttpServletRequest request= ServletActionContext.getRequest();
+		HttpServletResponse response= ServletActionContext.getResponse();
+		String name=request.getParameter("name");
+		String sex=request.getParameter("sex");
+		JSONObject json=new JSONObject();
+		json.put("name", name);
+		if(Integer.parseInt(sex)==1){
+			json.put("sex", "男");
+		}else{
+			json.put("sex", "女");
+		}
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/json");
+		response.setDateHeader("Expires",0);
+		PrintWriter out=response.getWriter();
+		out.print(json.toString());
+		out.flush();
+		out.close();
+	}
+}
+----------------------
+
+

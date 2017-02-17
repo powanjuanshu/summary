@@ -1,0 +1,541 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>使用MethodInterceptor实现AOP - 信仰 忍耐 - ITeye技术网站</title>
+    <meta name="description" content="1. 先写出业务对象接口及实现业务对象。     public interface Interface {      public void hello();  }       这里写俩个实现。     public class InterfaceImpl implements Interface {        /**        * @see com.alipay.aop.BusinessI ..." />
+    <meta name="keywords" content=" 使用MethodInterceptor实现AOP" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="信仰 忍耐" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1393920955" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/black.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">信仰 忍耐</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://dnizna.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://dnizna.iteye.com" class="p-author" target="_blank">darren_nizna</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1157663">使用MethodInterceptor实现AOP</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/171172">[JAVA]java语言</a></li> </ul>
+        <div class='news_tag'>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <p>1. 先写出业务对象接口及实现业务对象。</p>
+<p> </p>
+<pre class="java" name="code">public interface Interface {
+    public void hello();
+}
+</pre>
+<p>   这里写俩个实现。</p>
+<p>
+</p>
+<pre class="java" name="code">public class InterfaceImpl implements Interface {
+
+    /** 
+     * @see com.alipay.aop.BusinessInterface#hello()
+     */
+    @Override
+    public void hello() {
+        System.out.println("AOP TEST!!");
+    }
+}
+</pre>
+ 
+<p> </p>
+<pre class="java" name="code">public class InterfaceImplTest implements Interface {
+
+    /** 
+     * @see aop.Interface#hello()
+     */
+    @Override
+    public void hello() {
+        System.out.println("helo world!!");
+    }
+
+}
+</pre>
+<p> </p>
+<p> </p>
+<p>2. 实现自己的代理，创建自己的<span style="font-size: 14px; line-height: 21px; font-family: Simsun;"><strong>interceptor</strong></span></p>
+<p> </p>
+<pre class="java" name="code">public class MyInterceptor implements MethodInterceptor {
+
+    /** 
+     * @see org.aopalliance.intercept.MethodInterceptor#invoke(org.aopalliance.intercept.MethodInvocation)
+     */
+    @Override
+    public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+        String info = methodInvocation.getMethod().getDeclaringClass()+ "." + 
+        methodInvocation.getMethod().getName() + "()";
+        
+        System.out.println(info);
+        
+        try{
+            Object result = methodInvocation.proceed();
+            return result;
+        }
+        finally{
+            System.out.println(info);
+        }
+    }
+}</pre>
+<p> </p>
+<p>3. 配置文件</p>
+<p> <span style="white-space: pre;">&lt;?xml version="1.0" encoding="GBK"?&gt;</span></p>
+<pre class="java" name="code">&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:sofa="http://img.alipay.net/dtd/schema/service"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://img.alipay.net/dtd/schema/service http://img.alipay.net/dtd/schema/service/sofa-service.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+         http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd"
+	default-autowire="byName"&gt;
+	
+	&lt;bean id="beanTarget" class="aop.InterfaceImpl"/&gt;
+	
+	&lt;bean id="hello" class="aop.InterfaceImplTest" /&gt;
+	
+	&lt;bean id="myInterceptor" class="aop.MyInterceptor"/&gt;
+	
+	&lt;bean id="bean" class="org.springframework.aop.framework.ProxyFactoryBean"&gt;
+		&lt;property name="proxyInterfaces"&gt;
+			&lt;value&gt;aop.Interface&lt;/value&gt;
+		&lt;/property&gt;
+		
+		&lt;property name="interceptorNames"&gt;
+			&lt;list&gt;
+				&lt;value&gt;myInterceptor&lt;/value&gt;
+				&lt;value&gt;beanTarget&lt;/value&gt;
+			&lt;/list&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean id="testBean" class="org.springframework.aop.framework.ProxyFactoryBean"&gt;
+		&lt;property name="proxyInterfaces"&gt;
+			&lt;value&gt;aop.Interface&lt;/value&gt;
+		&lt;/property&gt;
+		
+		&lt;property name="interceptorNames"&gt;
+			&lt;list&gt;
+				&lt;value&gt;myInterceptor&lt;/value&gt;
+				&lt;value&gt;hello&lt;/value&gt;
+			&lt;/list&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+&lt;/beans&gt;</pre>
+ 
+<p> </p>
+<p> </p>
+<p>4. 测试代码</p>
+<p> </p>
+<p> </p>
+<pre class="java" name="code">public class Main {
+
+    /**
+     * 
+     * @param args
+     */
+    public static void main(String[] args) {
+        ClassPathResource resource = new ClassPathResource("spring.xml");
+        XmlBeanFactory beanFactory = new XmlBeanFactory(resource);
+        Interface bean = (Interface)beanFactory.getBean("bean");
+        bean.hello();
+        
+        Interface testBean = (Interface)beanFactory.getBean("testBean");
+        testBean.hello();
+    }
+}
+</pre>
+  </div>
+
+  
+
+
+  
+  
+  <div id="bottoms" class="clearfix">
+    <div id="digg_bottom" class="clearfix"><div class='digged'><strong>3</strong> <br/>顶</div><div class='digged'><strong>6</strong> <br/>踩</div></div>
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      
+      
+      <a href="/blog/1033824" class="pre" title="菜单级联简单例子">菜单级联简单例子</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2011-08-25 11:13</li>
+      <li>浏览 3295</li>
+      <li><a href="#comments">评论(3)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/1157663" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc2279027">
+  <div class="comment_title">
+    3 楼
+    <a href='http://nhy338.iteye.com' target='_blank' title='nhy338'>nhy338</a>
+    2012-08-28&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">mark,留着以后看</div>
+</div>
+
+<div id="bc2230046">
+  <div class="comment_title">
+    2 楼
+    <a href='http://13429151328-163-com.iteye.com' target='_blank' title='爪哇夜未眠'>爪哇夜未眠</a>
+    2011-11-18&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">这个是spring里面的方法拦截</div>
+</div>
+
+<div id="bc2222331">
+  <div class="comment_title">
+    1 楼
+    <a href='http://sunnylocus.iteye.com' target='_blank' title='sunnylocus'>sunnylocus</a>
+    2011-10-13&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">做下标记，明天有空仔细研究下方法拦截，感觉这是好东西！</div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1157663;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', '使用MethodInterceptor实现AOP');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', '使用MethodInterceptor实现AOP');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://dnizna.iteye.com'><img alt="darren_nizna的博客" class="logo" src="http://www.iteye.com/upload/logo/user/244045/d2111a39-2a41-3adb-937a-f179726922be.jpg?1272902786" title="darren_nizna的博客: 信仰 忍耐" /></a></div>
+  <div id="blog_owner_name">darren_nizna</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 26532 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1324994303" title="男" /></li>
+              <li>来自: 长沙</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://aozhejin.iteye.com' target='_blank'><img alt="aozhejin的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="aozhejin的博客: " /></a></div>
+                <div class="left"><a href='http://aozhejin.iteye.com' target='_blank' title='aozhejin'>aozhejin</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://dylinshi126.iteye.com' target='_blank'><img alt="dylinshi126的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="dylinshi126的博客: " /></a></div>
+                <div class="left"><a href='http://dylinshi126.iteye.com' target='_blank' title='dylinshi126'>dylinshi126</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://galaxystar.iteye.com' target='_blank'><img alt="galaxystar的博客" class="logo" src="http://www.iteye.com/upload/logo/user/350979/472ad1ea-3916-3b46-9b45-153f56be19fa-thumb.jpg?1290086833" title="galaxystar的博客: 请访问 kenwublog.com" /></a></div>
+                <div class="left"><a href='http://galaxystar.iteye.com' target='_blank' title='galaxystar'>galaxystar</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://tzjz-20.iteye.com' target='_blank'><img alt="tzjz_20的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="tzjz_20的博客: " /></a></div>
+                <div class="left"><a href='http://tzjz-20.iteye.com' target='_blank' title='tzjz_20'>tzjz_20</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (29)</a></li>
+                
+                  <li><a href="/category/104787">[数据结构]线段树 (7)</a></li>
+                
+                  <li><a href="/category/104961">[字符串]后缀数组 (3)</a></li>
+                
+                  <li><a href="/category/105013">[动态规划]背包 (1)</a></li>
+                
+                  <li><a href="/category/105465">[字符串]AC自动机 (5)</a></li>
+                
+                  <li><a href="/category/105870">[图论]树 (2)</a></li>
+                
+                  <li><a href="/category/108103">[图论]网络流 (4)</a></li>
+                
+                  <li><a href="/category/111538">程序笔试 (1)</a></li>
+                
+                  <li><a href="/category/117823">[动态规划]dp优化 (2)</a></li>
+                
+                  <li><a href="/category/120137">[Linux] (1)</a></li>
+                
+                  <li><a href="/category/124010">[数据结构]RMQ (1)</a></li>
+                
+                  <li><a href="/category/155719">javascript (1)</a></li>
+                
+                  <li><a href="/category/171172">[JAVA]java语言 (1)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (8)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2011-08">2011-08</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2011-05">2011-05</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2011-04">2011-04</a> (1)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://nhy338.iteye.com' target='_blank' title='nhy338'>nhy338</a>： 
+                  mark,留着以后看<br />
+                  <a href="/blog/1157663#bc2279027">使用MethodInterceptor实现AOP</a>
+                </li>
+                
+                <li>
+                  <a href='http://13429151328-163-com.iteye.com' target='_blank' title='爪哇夜未眠'>爪哇夜未眠</a>： 
+                  这个是spring里面的方法拦截<br />
+                  <a href="/blog/1157663#bc2230046">使用MethodInterceptor实现AOP</a>
+                </li>
+                
+                <li>
+                  <a href='http://sunnylocus.iteye.com' target='_blank' title='sunnylocus'>sunnylocus</a>： 
+                  做下标记，明天有空仔细研究下方法拦截，感觉这是好东西！<br />
+                  <a href="/blog/1157663#bc2222331">使用MethodInterceptor实现AOP</a>
+                </li>
+                
+                <li>
+                  <a href='http://nwwhbp.iteye.com' target='_blank' title='nwwhbp'>nwwhbp</a>： 
+                  都是些基础的东西，学习了，谢谢LZ的分享。<br />
+                  <a href="/blog/695532#bc1554608">Kingsoft西山居笔试试题</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2014 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15060174-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+      
+    
+  </body>
+</html>

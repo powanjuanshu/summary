@@ -1,0 +1,116 @@
+服务器端：
+-------------
+package com.hessian;
+public interface DemoApi {
+	public void setName(String name);
+	public String sayHello();
+	public User getUser();
+}
+------------
+package com.hessian;
+public class DemoService implements DemoApi{
+	private String name;
+	public void setName(String name) {
+		this.name=name;
+		System.out.println("xxx"+name);
+	}
+	public String sayHello() {
+		return "fuck"+name;
+	}
+	public User getUser() {
+		User user=new User();
+		user.setName("lingling");
+		user.setPassword("pass");
+		return user;
+	}
+}
+-------------
+package com.hessian;
+import java.io.Serializable;
+public class User implements Serializable{
+	String name="kitty";
+	String password="nopass";
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+-------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>AnalysisTool</display-name>
+	<description>Welcome to CPIC Analysis Tool.</description>
+	<!--spring applicationcontext载入-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:/applicationContext.xml</param-value>
+	</context-param>
+    	<listener>
+       		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    	</listener>
+	<servlet>
+		<servlet-name>remote</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>namespace</param-name>
+			<param-value>classes/remote-servlet</param-value>
+			<load-on-startup>1</load-on-startup>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>remote</servlet-name>
+		<url-pattern>/remote/*</url-pattern>
+	</servlet-mapping>
+</web-app>
+--------------
+因为我们在web.xml中有配置：<param-value>classes/remote-servlet</param-value>所以文件名为remote-servlet.xml
+类路径下的：remote-servlet.xml：
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">  
+<beans>  
+    <bean id="demoService" class="com.hessian.DemoService" />  
+    <bean name="/helloSpring" class="org.springframework.remoting.caucho.HessianServiceExporter">  
+        <property name="service" ref="demoService" />  
+        <property name="serviceInterface" value="com.hessian.DemoApi" />  
+    </bean>  
+</beans>
+----------------
+客户端：
+package com.hessian;
+import java.net.MalformedURLException;
+import com.caucho.hessian.client.HessianProxyFactory;
+public class Client {
+	public static void main(String[] args) throws MalformedURLException, ClassNotFoundException {
+		String url="http://localhost:80/ssh/remote/helloSpring";
+		HessianProxyFactory factory=new HessianProxyFactory();
+		DemoApi api=(DemoApi) factory.create(DemoApi.class,url);//这个接口的包名和类名要和服务器端接口的包名和类名相同，否则会报错
+		api.setName("jack");
+		System.out.println(api.sayHello());
+		System.out.println(api.getUser().getName());
+		System.out.println(api.getUser().getPassword());
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

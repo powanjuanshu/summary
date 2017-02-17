@@ -1,0 +1,2 @@
+* ÊהÈכ: echo $SHELL
+* Êה³צ: /bin/bash

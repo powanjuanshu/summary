@@ -1,0 +1,954 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><META content="IE=8.0000" http-equiv="X-UA-Compatible">
+<TITLE>JSP学习笔记(九十二)：整合spring与cxf，利用cxf编写webservice - 魔豆 - 博客园</TITLE>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type><LINK 
+rel=stylesheet type=text/css 
+href="http://common.cnblogs.com/blog/css/common.css?id=20130704"><LINK 
+id=MainCss rel=stylesheet type=text/css 
+href="http://common.cnblogs.com/Skins/BlackSun/style.css?id=20130704"><LINK 
+rel=stylesheet type=text/css 
+href="http://common.cnblogs.com/blog/css/common2.css"><LINK rel=stylesheet 
+type=text/css href="http://common.cnblogs.com/css/shStyle.css"><LINK title=RSS 
+rel=alternate type=application/rss+xml 
+href="http://www.cnblogs.com/modou/rss"><LINK title=RSD rel=EditURI 
+type=application/rsd+xml href="http://www.cnblogs.com/modou/rsd.xml"><LINK 
+rel=wlwmanifest type=application/wlwmanifest+xml 
+href="http://www.cnblogs.com/modou/wlwmanifest.xml">
+<SCRIPT type=text/javascript src="http://common.cnblogs.com/script/gpt.js" 
+async="true"></SCRIPT>
+
+<SCRIPT type=text/javascript src="http://www.google-analytics.com/ga.js" 
+async="true"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/encoder.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/jquery.js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+var currentBlogApp = 'modou';
+</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/blog/script/common.js?id=20130704"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/json2.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/syntaxHighlighter.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://partner.googleadservices.com/gampad/google_ads_gpt.js" 
+async="true"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="http://pagead2.googlesyndication.com/pagead/osd.js"></SCRIPT>
+</HEAD>
+<BODY><A name=top></A>
+<DIV id=top>
+<DIV>
+<TABLE class=HeaderTitles>
+  <TBODY>
+  <TR>
+    <TD>
+      <H1 class=HeaderTitle><A id=Header1_HeaderTitle class=HeaderMainTitle 
+      href="http://www.cnblogs.com/modou/"><FONT 
+      color=#f1660b>魔豆的BLOG</FONT></A></H1>
+      <P id=tagline>一个程序员的学习足迹...</P></TD></TR></TBODY></TABLE></DIV>
+<DIV>
+<TABLE id=HeaderBar class=HeaderBar>
+  <TBODY>
+  <TR>
+    <TD class=HeaderBarTab noWrap>&nbsp; <A id=Header1_MyLinks1_HomeLink 
+      href="http://www.cnblogs.com/">博客园</A>&nbsp;:: <A 
+      id=Header1_MyLinks1_MyHomeLink 
+      href="http://www.cnblogs.com/modou/">首页</A>&nbsp;:: &nbsp;:: <A 
+      accessKey=9 id=Header1_MyLinks1_ContactLink 
+      href="http://space.cnblogs.com/msg/send/%e9%ad%94%e8%b1%86" 
+      rel=nofollow>联系</A>&nbsp;:: <A id=Header1_MyLinks1_Syndication 
+      href="http://www.cnblogs.com/modou/rss">订阅</A> <A 
+      id=Header1_MyLinks1_XMLLink class=XMLLink 
+      href="http://www.cnblogs.com/modou/rss"><IMG alt=订阅 
+      src="http://www.cnblogs.com/images/xml.gif"></A>&nbsp;:: <A 
+      id=Header1_MyLinks1_Admin 
+      href="http://www.cnblogs.com/modou/admin/EditPosts.aspx" 
+      rel=nofollow>管理</A> </TD>
+    <TD class=HeaderBarTabBack width="100%" noWrap>
+      <TABLE class=BlogStatsBar>
+        <TBODY>
+        <TR>
+          <TD width="100%"></TD>
+          <TD class=BlogStatsBar noWrap>&nbsp; 11 Posts&nbsp;:: 314 Stories :: 
+            92 Comments :: 10 Trackbacks 
+</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></DIV></DIV>
+<TABLE id=maintable>
+  <TBODY>
+  <TR>
+    <TD id=leftmenu>
+      <H3>公告</H3>
+      <DIV class=News>
+      <DIV id=blog-news>使用中开发语言：Java<BR>使用中开发工具：Eclipse3.4 
+      EE<BR>使用中数据库：Oracle10g<BR>使用学习中框架：<BR>Struts2+Spring2.5<BR><BR><B>JAVA学习交流QQ群：17886000</B><BR>
+      <DIV id=profile_block>昵称：<A 
+      href="http://home.cnblogs.com/u/modou/">魔豆</A><BR>园龄：<A 
+      title=入园时间：2004-07-20 
+      href="http://home.cnblogs.com/u/modou/">9年</A><BR>粉丝：<A 
+      href="http://home.cnblogs.com/u/modou/followers/">52</A><BR>关注：<A 
+      href="http://home.cnblogs.com/u/modou/followees/">1</A>
+      <DIV id=p_b_follow><A 
+      onclick="cnblogs.UserManager.FollowBlogger('9583310b-63cf-dd11-9e4d-001cf0cd104b')" 
+      href="javascript:void(0);">+加关注</A></DIV></DIV></DIV></DIV>
+      <DIV id=blog-sidecolumn>
+      <DIV class=mySearch>
+      <H3 class=catListTitle>搜索</H3>
+      <DIV id=widget_my_zzk class=div_my_zzk><INPUT 
+      onkeydown="return zzk_go_enter(event);" id=q class=input_my_zzk 
+type=text>&nbsp;<INPUT id=btnZzk class=btn_my_zzk onclick=zzk_go() value=找找看 type=button></DIV>
+      <DIV id=widget_my_google class=div_my_zzk><INPUT 
+      onkeydown="return google_go_enter(event)" id=google_q class=input_my_zzk 
+      type=text name=google_q>&nbsp;<INPUT class=btn_my_zzk onclick=google_go() value=谷歌搜索 type=button></DIV></DIV>
+      <DIV class=mainMenuBackground>
+      <H3>随笔分类<SPAN 
+style="FONT-SIZE: 11px; FONT-WEIGHT: normal">(10)</SPAN></H3>
+      <UL>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_0_Link_0 
+        href="http://www.cnblogs.com/modou/category/457170.html">Java(1)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_0_Link_1 
+        href="http://www.cnblogs.com/modou/category/6746.html">VB.NET(6)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_0_Link_2 
+        href="http://www.cnblogs.com/modou/category/7796.html">生活随笔(3)</A> <SPAN 
+        style="WIDTH: 10px"></SPAN></LI></UL>
+      <H3>文章分类<SPAN 
+      style="FONT-SIZE: 11px; FONT-WEIGHT: normal">(303)</SPAN></H3>
+      <UL>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_0 
+        href="http://www.cnblogs.com/modou/category/334285.html">Android(2)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_1 
+        href="http://www.cnblogs.com/modou/category/14255.html">ASP(3)</A> <SPAN 
+        style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_2 
+        href="http://www.cnblogs.com/modou/category/7714.html">ASP.NET(8)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_3 
+        href="http://www.cnblogs.com/modou/category/257583.html">Flex(51)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_4 
+        href="http://www.cnblogs.com/modou/category/7584.html">JavaScript(19)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_5 
+        href="http://www.cnblogs.com/modou/category/200276.html">Java客户端(9)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_6 
+        href="http://www.cnblogs.com/modou/category/156513.html">Java其他(32)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_7 
+        href="http://www.cnblogs.com/modou/category/32459.html">Java学习笔记(100)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_8 
+        href="http://www.cnblogs.com/modou/category/216852.html">Java学习笔记Ⅱ(24)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_9 
+        href="http://www.cnblogs.com/modou/category/194992.html">jquery(4)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_10 
+        href="http://www.cnblogs.com/modou/category/158381.html">Oracle(24)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_11 
+        href="http://www.cnblogs.com/modou/category/24549.html">SQL 
+        Server(13)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_12 
+        href="http://www.cnblogs.com/modou/category/197350.html">其它(7)</A> <SPAN 
+        style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_1_Link_13 
+        href="http://www.cnblogs.com/modou/category/164872.html">问题解答(7)</A> 
+        <SPAN style="WIDTH: 10px"></SPAN></LI></UL>
+      <H3>文章档案<SPAN 
+      style="FONT-SIZE: 11px; FONT-WEIGHT: normal">(314)</SPAN></H3>
+      <UL>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_0 
+        href="http://www.cnblogs.com/modou/archives/2012/09.html" 
+        rel=nofollow>2012年9月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_1 
+        href="http://www.cnblogs.com/modou/archives/2012/07.html" 
+        rel=nofollow>2012年7月 (4)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_2 
+        href="http://www.cnblogs.com/modou/archives/2012/06.html" 
+        rel=nofollow>2012年6月 (4)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_3 
+        href="http://www.cnblogs.com/modou/archives/2012/05.html" 
+        rel=nofollow>2012年5月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_4 
+        href="http://www.cnblogs.com/modou/archives/2012/04.html" 
+        rel=nofollow>2012年4月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_5 
+        href="http://www.cnblogs.com/modou/archives/2012/01.html" 
+        rel=nofollow>2012年1月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_6 
+        href="http://www.cnblogs.com/modou/archives/2011/12.html" 
+        rel=nofollow>2011年12月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_7 
+        href="http://www.cnblogs.com/modou/archives/2011/11.html" 
+        rel=nofollow>2011年11月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_8 
+        href="http://www.cnblogs.com/modou/archives/2011/09.html" 
+        rel=nofollow>2011年9月 (5)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_9 
+        href="http://www.cnblogs.com/modou/archives/2011/08.html" 
+        rel=nofollow>2011年8月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_10 
+        href="http://www.cnblogs.com/modou/archives/2011/07.html" 
+        rel=nofollow>2011年7月 (3)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_11 
+        href="http://www.cnblogs.com/modou/archives/2011/06.html" 
+        rel=nofollow>2011年6月 (2)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_12 
+        href="http://www.cnblogs.com/modou/archives/2011/04.html" 
+        rel=nofollow>2011年4月 (3)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_13 
+        href="http://www.cnblogs.com/modou/archives/2011/03.html" 
+        rel=nofollow>2011年3月 (6)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_14 
+        href="http://www.cnblogs.com/modou/archives/2011/02.html" 
+        rel=nofollow>2011年2月 (2)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_15 
+        href="http://www.cnblogs.com/modou/archives/2011/01.html" 
+        rel=nofollow>2011年1月 (6)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_16 
+        href="http://www.cnblogs.com/modou/archives/2010/12.html" 
+        rel=nofollow>2010年12月 (38)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_17 
+        href="http://www.cnblogs.com/modou/archives/2010/11.html" 
+        rel=nofollow>2010年11月 (2)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_18 
+        href="http://www.cnblogs.com/modou/archives/2010/10.html" 
+        rel=nofollow>2010年10月 (4)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_19 
+        href="http://www.cnblogs.com/modou/archives/2010/08.html" 
+        rel=nofollow>2010年8月 (5)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_20 
+        href="http://www.cnblogs.com/modou/archives/2010/07.html" 
+        rel=nofollow>2010年7月 (5)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_21 
+        href="http://www.cnblogs.com/modou/archives/2010/06.html" 
+        rel=nofollow>2010年6月 (4)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_22 
+        href="http://www.cnblogs.com/modou/archives/2010/04.html" 
+        rel=nofollow>2010年4月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_23 
+        href="http://www.cnblogs.com/modou/archives/2010/03.html" 
+        rel=nofollow>2010年3月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_24 
+        href="http://www.cnblogs.com/modou/archives/2009/11.html" 
+        rel=nofollow>2009年11月 (2)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_25 
+        href="http://www.cnblogs.com/modou/archives/2009/09.html" 
+        rel=nofollow>2009年9月 (9)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_26 
+        href="http://www.cnblogs.com/modou/archives/2009/08.html" 
+        rel=nofollow>2009年8月 (7)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_27 
+        href="http://www.cnblogs.com/modou/archives/2009/07.html" 
+        rel=nofollow>2009年7月 (13)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_28 
+        href="http://www.cnblogs.com/modou/archives/2009/06.html" 
+        rel=nofollow>2009年6月 (10)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_29 
+        href="http://www.cnblogs.com/modou/archives/2009/05.html" 
+        rel=nofollow>2009年5月 (8)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_30 
+        href="http://www.cnblogs.com/modou/archives/2009/04.html" 
+        rel=nofollow>2009年4月 (3)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_31 
+        href="http://www.cnblogs.com/modou/archives/2009/03.html" 
+        rel=nofollow>2009年3月 (8)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_32 
+        href="http://www.cnblogs.com/modou/archives/2009/02.html" 
+        rel=nofollow>2009年2月 (5)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_33 
+        href="http://www.cnblogs.com/modou/archives/2009/01.html" 
+        rel=nofollow>2009年1月 (6)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_34 
+        href="http://www.cnblogs.com/modou/archives/2008/12.html" 
+        rel=nofollow>2008年12月 (7)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_35 
+        href="http://www.cnblogs.com/modou/archives/2008/11.html" 
+        rel=nofollow>2008年11月 (11)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_36 
+        href="http://www.cnblogs.com/modou/archives/2008/10.html" 
+        rel=nofollow>2008年10月 (20)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_37 
+        href="http://www.cnblogs.com/modou/archives/2008/09.html" 
+        rel=nofollow>2008年9月 (30)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_38 
+        href="http://www.cnblogs.com/modou/archives/2008/08.html" 
+        rel=nofollow>2008年8月 (35)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_39 
+        href="http://www.cnblogs.com/modou/archives/2005/09.html" 
+        rel=nofollow>2005年9月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_40 
+        href="http://www.cnblogs.com/modou/archives/2005/08.html" 
+        rel=nofollow>2005年8月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_41 
+        href="http://www.cnblogs.com/modou/archives/2005/06.html" 
+        rel=nofollow>2005年6月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_42 
+        href="http://www.cnblogs.com/modou/archives/2005/04.html" 
+        rel=nofollow>2005年4月 (21)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_43 
+        href="http://www.cnblogs.com/modou/archives/2005/01.html" 
+        rel=nofollow>2005年1月 (1)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_44 
+        href="http://www.cnblogs.com/modou/archives/2004/11.html" 
+        rel=nofollow>2004年11月 (6)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_45 
+        href="http://www.cnblogs.com/modou/archives/2004/08.html" 
+        rel=nofollow>2004年8月 (4)</A> <SPAN style="WIDTH: 10px"></SPAN></LI>
+        <LI class=menuItemList><A id=ctl02_CatList_LinkList_2_Link_46 
+        href="http://www.cnblogs.com/modou/archives/2004/07.html" 
+        rel=nofollow>2004年7月 (3)</A> <SPAN 
+      style="WIDTH: 10px"></SPAN></LI></UL></DIV>
+      <H3>积分与排名</H3>
+      <UL>
+        <LI>积分 - 140970 
+        <LI>排名 - 776 </LI></UL>
+      <H3 class=catListTitle>最新评论</H3>
+      <DIV id=RecentComments class=RecentComment>
+      <DIV id=RecentCommentsBlock>
+      <UL>
+        <LI class=recent_comment_title><A 
+        href="http://www.cnblogs.com/modou/archive/2010/12/04/1896668.html#2713985">1. 
+        Re:Flex4中使用组件添加柱状图、饼状图等图表</A></LI><LI class=recent_comment_body>请问，加哪个特效可以让饼状图和柱状图的数据慢慢的上升，就像滚动条似的，可以在图表中显示出来效果的？？请帮我解答一下，谢谢了。可以发到我的QQ邮箱里1158107063@qq.com</LI>
+        <LI class=recent_comment_author>--1158107063</LI>
+        <LI class=recent_comment_title><A 
+        href="http://www.cnblogs.com/modou/archive/2012/07/28/2613230.html#2596202">2. 
+        Re:JSP学习笔记(一百二十四)：spring3中使用task实现计划任务</A></LI><LI class=recent_comment_body>已经百篇了啊</LI>
+        <LI class=recent_comment_author>--花儿笑弯了腰</LI>
+        <LI class=recent_comment_title><A 
+        href="http://www.cnblogs.com/modou/archive/2012/09/11/2679815.html#2570609">3. 
+        Re:转：java 全角半角转换函数</A></LI><LI class=recent_comment_body>很喜欢博主的文章，刚刚用豆约翰博客备份专家备份了您的全部博文。</LI>
+        <LI class=recent_comment_author>--岁月静好，过客匆匆</LI>
+        <LI class=recent_comment_title><A 
+        href="http://www.cnblogs.com/modou/archive/2010/12/18/1909960.html#2570591">4. 
+        Re:转：Flex的Array和ArrayCollection</A></LI><LI class=recent_comment_body>很喜欢博主的文章，刚刚用豆约翰博客备份专家备份了您的全部博文。</LI>
+        <LI class=recent_comment_author>--岁月静好，过客匆匆</LI>
+        <LI class=recent_comment_title><A 
+        href="http://www.cnblogs.com/modou/archive/2012/09/11/2679815.html#2497556">5. 
+        Re:转：java 全角半角转换函数</A></LI><LI class=recent_comment_body>很喜欢博主的文章，刚刚用豆约翰博客备份专家备份了您的全部博文。</LI>
+        <LI class=recent_comment_author>--lonelyxmas</LI></UL></DIV></DIV>
+      <H3 class=catListTitle>阅读排行榜</H3>
+      <DIV id=TopViewPosts class=RecentComment>
+      <DIV id=TopViewPostsBlock>
+      <UL>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2004/11/16/64379.html">1. 
+        水晶报表10高级开发版下载及序列号(11186)</A></LI>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2004/07/23/26722.html">2. 
+        ProgressBar控件的使用(VB.NET)(3132)</A></LI>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2004/07/23/26896.html">3. 
+        往SQL Server数据库中添加图片(VB.NET)(1612)</A></LI>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2004/07/23/26783.html">4. 
+        我对委托的理解(VB.NET)(1502)</A></LI>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2004/07/21/26071.html">5. 
+        把一个数组的值赋给另一个数组(VB.NET)(1191)</A></LI></UL></DIV></DIV>
+      <H3 class=catListTitle>评论排行榜</H3>
+      <DIV id=TopCommentsPosts class=RecentComment>
+      <DIV id=TopFeedbackPostsBlock>
+      <UL>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2004/11/16/64379.html">1. 
+        水晶报表10高级开发版下载及序列号(25)</A></LI>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2004/07/23/26896.html">2. 
+        往SQL Server数据库中添加图片(VB.NET)(1)</A></LI>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2011/12/10/2283616.html">3. 
+        转：有理想的程序员必须知道的15件事(1)</A></LI>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2004/07/23/26722.html">4. 
+        ProgressBar控件的使用(VB.NET)(1)</A></LI>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2004/07/21/26071.html">5. 
+        把一个数组的值赋给另一个数组(VB.NET)(0)</A></LI></UL></DIV></DIV>
+      <H3 class=catListTitle>推荐排行榜</H3>
+      <DIV class=RecentComment>
+      <DIV id=TopDiggPostsBlock>
+      <UL>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2011/12/10/2283616.html">1. 
+        转：有理想的程序员必须知道的15件事(3)</A></LI>
+        <LI><A 
+        href="http://www.cnblogs.com/modou/archive/2013/03/05/2945230.html">2. 
+        Oracle数据库中number类型在hibernate的引用(1)</A></LI></UL></DIV></DIV></DIV></TD>
+    <TD id=main>
+      <DIV class=post>
+      <DIV class=postTitle><A id=cb_post_title_url 
+      href="http://www.cnblogs.com/modou/articles/1390645.html">JSP学习笔记(九十二)：整合spring与cxf，利用cxf编写webservice</A> 
+      </DIV>
+      <DIV class=postText>
+      <DIV id=cnblogs_post_body>
+      <P><STRONG><SPAN style="FONT-SIZE: large"><SPAN 
+      style="FONT-SIZE: medium">一、下载cxf</SPAN></SPAN></STRONG></P>
+      <P>下载地址：<A 
+      href="http://cxf.apache.org/download.html">http://cxf.apache.org/download.html</A></P>
+      <P>我下载的是最新版的cxf 2.1.3</P>
+      <P>&nbsp;</P>
+      <P><STRONG><SPAN 
+      style="FONT-SIZE: medium">二、准备工作：在spring环境下使用cxf</SPAN></STRONG></P>
+      <P>1.下载完cxf的包后，至少需要添加如下包，才能正常使用cxf（我一个一个试的，很郁闷，居然要那么多，下载的包里都有）：</P>
+      <DIV class=cnblogs_code>
+      <DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A 
+      title=复制代码 onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG 
+      alt=复制代码 
+      src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV><SPAN 
+      id=Code_Open_Text_163627><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><SPAN 
+      style="COLOR: #000000">cxf</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">2.1</SPAN><SPAN 
+      style="COLOR: #000000">.</SPAN><SPAN style="COLOR: #000000">3</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR><BR>commons</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">logging</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">1.1</SPAN><SPAN 
+      style="COLOR: #000000">.</SPAN><SPAN style="COLOR: #000000">1</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>geronimo</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">activation_1.1_spec</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">1.0</SPAN><SPAN 
+      style="COLOR: #000000">.</SPAN><SPAN style="COLOR: #000000">2</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>geronimo</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">annotation_1.0_spec</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">1.1</SPAN><SPAN 
+      style="COLOR: #000000">.</SPAN><SPAN style="COLOR: #000000">1</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>geronimo</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">ws</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">metadata_2.0_spec</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">1.1</SPAN><SPAN 
+      style="COLOR: #000000">.</SPAN><SPAN style="COLOR: #000000">2</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>geronimo</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">stax</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">api_1.0_spec</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">1.0</SPAN><SPAN 
+      style="COLOR: #000000">.</SPAN><SPAN style="COLOR: #000000">1</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>geronimo</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">jaxws_2.1_spec</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">1.0</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>jaxb</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">api</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">2.1</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>jaxb</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">impl</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">2.1</SPAN><SPAN 
+      style="COLOR: #000000">.</SPAN><SPAN style="COLOR: #000000">7</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>saaj</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">api</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">1.3</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>wstx</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">asl</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">3.2</SPAN><SPAN 
+      style="COLOR: #000000">.</SPAN><SPAN style="COLOR: #000000">6</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>wsdl4j</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">1.6</SPAN><SPAN 
+      style="COLOR: #000000">.</SPAN><SPAN style="COLOR: #000000">2</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>XmlSchema</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">1.4</SPAN><SPAN 
+      style="COLOR: #000000">.</SPAN><SPAN style="COLOR: #000000">2</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR>xml</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">resolver</SPAN><SPAN 
+      style="COLOR: #000000">-</SPAN><SPAN 
+      style="COLOR: #000000">1.2</SPAN><SPAN 
+      style="COLOR: #000000">.jar<BR></SPAN></SPAN>
+      <DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A 
+      title=复制代码 onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG 
+      alt=复制代码 
+      src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV></DIV>
+      <P>&nbsp;</P>
+      <P>2.添加如下内容到web.xml</P>
+      <DIV class=cnblogs_code>
+      <DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A 
+      title=复制代码 onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG 
+      alt=复制代码 
+      src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV><SPAN 
+      id=Code_Open_Text_164110><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><SPAN 
+      style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #008000">&lt;!--</SPAN><SPAN 
+      style="COLOR: #008000">&nbsp;CXF&nbsp;WebService&nbsp;</SPAN><SPAN 
+      style="COLOR: #008000">--&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">servlet</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">servlet-name</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000">CXFServlet</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;/</SPAN><SPAN 
+      style="COLOR: #800000">servlet-name</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">display-name</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000">CXF&nbsp;Servlet</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;/</SPAN><SPAN 
+      style="COLOR: #800000">display-name</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">servlet-class</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000">org.apache.cxf.transport.servlet.CXFServlet</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;/</SPAN><SPAN 
+      style="COLOR: #800000">servlet-class</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">load-on-startup</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000">3</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;/</SPAN><SPAN 
+      style="COLOR: #800000">load-on-startup</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;/</SPAN><SPAN 
+      style="COLOR: #800000">servlet</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">servlet-mapping</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">servlet-name</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000">CXFServlet</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;/</SPAN><SPAN 
+      style="COLOR: #800000">servlet-name</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">url-pattern</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000">/services/*</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;/</SPAN><SPAN 
+      style="COLOR: #800000">url-pattern</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;/</SPAN><SPAN 
+      style="COLOR: #800000">servlet-mapping</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN></SPAN>
+      <DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A 
+      title=复制代码 onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG 
+      alt=复制代码 
+      src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV></DIV>
+      <P>&nbsp;</P>
+      <P>3.在spring配置文件中，修改文件内容为：</P>
+      <DIV class=cnblogs_code>
+      <DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A 
+      title=复制代码 onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG 
+      alt=复制代码 
+      src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV><SPAN 
+      id=Code_Open_Text_164702><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">beans&nbsp;</SPAN><SPAN 
+      style="COLOR: #ff0000">xmlns</SPAN><SPAN 
+      style="COLOR: #0000ff">="http://www.springframework.org/schema/beans"</SPAN><SPAN 
+      style="COLOR: #ff0000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;xmlns:xsi</SPAN><SPAN 
+      style="COLOR: #0000ff">="http://www.w3.org/2001/XMLSchema-instance"</SPAN><SPAN 
+      style="COLOR: #ff0000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;xmlns:jaxws</SPAN><SPAN 
+      style="COLOR: #0000ff">="http://cxf.apache.org/jaxws"</SPAN><SPAN 
+      style="COLOR: #ff0000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;xsi:schemaLocation</SPAN><SPAN 
+      style="COLOR: #0000ff">="<BR>http://www.springframework.org/schema/beans&nbsp;http://www.springframework.org/schema/beans/spring-beans.xsd<BR>http://cxf.apache.org/jaxws&nbsp;http://cxf.apache.org/schemas/jaxws.xsd"</SPAN><SPAN 
+      style="COLOR: #0000ff">&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">import&nbsp;</SPAN><SPAN 
+      style="COLOR: #ff0000">resource</SPAN><SPAN 
+      style="COLOR: #0000ff">="classpath:META-INF/cxf/cxf.xml"</SPAN><SPAN 
+      style="COLOR: #ff0000">&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">/&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">import&nbsp;</SPAN><SPAN 
+      style="COLOR: #ff0000">resource</SPAN><SPAN 
+      style="COLOR: #0000ff">="classpath:META-INF/cxf/cxf-extension-soap.xml"</SPAN><SPAN 
+      style="COLOR: #ff0000">&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">/&gt;</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">&lt;</SPAN><SPAN 
+      style="COLOR: #800000">import&nbsp;</SPAN><SPAN 
+      style="COLOR: #ff0000">resource</SPAN><SPAN 
+      style="COLOR: #0000ff">="classpath:META-INF/cxf/cxf-servlet.xml"</SPAN><SPAN 
+      style="COLOR: #ff0000">&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">/&gt;</SPAN></SPAN>
+      <DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A 
+      title=复制代码 onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG 
+      alt=复制代码 
+      src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV></DIV>
+      <P>添加的内容有三部分：</P>
+      <P>①xmlns:jaxws="<A 
+      href="http://cxf.apache.org/jaxws">http://cxf.apache.org/jaxws</A>"</P>
+      <P>②http://cxf.apache.org/jaxws <A 
+      href="http://cxf.apache.org/schemas/jaxws.xsd">http://cxf.apache.org/schemas/jaxws.xsd</A></P>
+      <P>③&nbsp;&lt;import resource="classpath:META-INF/cxf/cxf.xml" 
+      /&gt;<BR>&nbsp;&lt;import 
+      resource="classpath:META-INF/cxf/cxf-extension-soap.xml" 
+      /&gt;<BR>&nbsp;&lt;import 
+      resource="classpath:META-INF/cxf/cxf-servlet.xml" /&gt;</P>
+      <P>可以在原有配置文件上修改</P>
+      <P>&nbsp;</P>
+      <P><STRONG><SPAN 
+      style="FONT-SIZE: medium">三、开始使用：编写服务端WebService</SPAN></STRONG></P>
+      <P>1.添加一个接口，Hello.java：</P>
+      <DIV class=cnblogs_code>
+      <DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A 
+      title=复制代码 onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG 
+      alt=复制代码 
+      src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV><SPAN 
+      id=Code_Open_Text_165319><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><SPAN 
+      style="COLOR: #0000ff">package</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;com.test.webservice;<BR><BR></SPAN><SPAN 
+      style="COLOR: #0000ff">import</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;javax.jws.WebService;<BR><BR>@WebService<BR></SPAN><SPAN 
+      style="COLOR: #0000ff">public</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">interface</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;Hello&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">public</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;String&nbsp;say(String&nbsp;text);<BR>}<BR></SPAN></SPAN>
+      <DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A 
+      title=复制代码 onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG 
+      alt=复制代码 
+      src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV></DIV>
+      <P>2.实现这个接口，HelloImpl.java：</P>
+      <DIV class=cnblogs_code>
+      <DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A 
+      title=复制代码 onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG 
+      alt=复制代码 
+      src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV><SPAN 
+      id=Code_Open_Text_165447><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><SPAN 
+      style="COLOR: #0000ff">package</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;com.test.webservice.impl;<BR><BR></SPAN><SPAN 
+      style="COLOR: #0000ff">import</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;javax.jws.WebService;<BR><BR></SPAN><SPAN 
+      style="COLOR: #0000ff">import</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;com.ruiri.webservice.Hello;<BR><BR>@WebService(endpointInterface&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">=</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">com.test.webservice.Hello</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">)<BR></SPAN><SPAN 
+      style="COLOR: #0000ff">public</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">class</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;HelloImpl&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">implements</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;Hello&nbsp;{<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">public</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;String&nbsp;say(String&nbsp;text)&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(text);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #0000ff">return</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">Hello,</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">+</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;text;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>}<BR></SPAN></SPAN>
+      <DIV class=cnblogs_code_toolbar><SPAN class=cnblogs_code_copy><A 
+      title=复制代码 onclick=copyCnblogsCode(this) href="javascript:void(0);"><IMG 
+      alt=复制代码 
+      src="http://common.cnblogs.com/images/copycode.gif"></A></SPAN></DIV></DIV>
+      <P>跟平时使用的接口和类一样，只是添加了对应的注解</P>
+      <P>3.在spring的配置文件添加如下内容:</P>
+      <DIV class=cnblogs_code><SPAN id=Code_Open_Text_170010><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><SPAN 
+      style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">&lt;</SPAN><SPAN 
+      style="COLOR: #000000">jaxws:endpoint&nbsp;id</SPAN><SPAN 
+      style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">helloWorld</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;implementor</SPAN><SPAN 
+      style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">com.test.webservice.impl.HelloImpl</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;address</SPAN><SPAN 
+      style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">/HelloWorld</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">/&gt;</SPAN></SPAN></DIV>
+      <P>这样，服务端的WebService就做好了，在浏览器可以通过 http://站点/services/ 看到可见的service</P>
+      <P>&nbsp;</P>
+      <P><STRONG><SPAN 
+      style="FONT-SIZE: medium">四、编写客户端WebService</SPAN></STRONG></P>
+      <P>1.编写一个接口，这里还使用先前写的Hello.java</P>
+      <P>2.在spring的配置文件添加如下内容:</P>
+      <DIV class=cnblogs_code><SPAN id=Code_Open_Text_170624><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><SPAN 
+      style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">&lt;</SPAN><SPAN 
+      style="COLOR: #000000">jaxws:client&nbsp;id</SPAN><SPAN 
+      style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">helloClient</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;serviceClass</SPAN><SPAN 
+      style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">com.ruiri.webservice.Test1</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;address</SPAN><SPAN 
+      style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">http://站点/services/HelloWorld</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">/&gt;</SPAN></SPAN></DIV>
+      <P>3.在代码用调用这个bean：</P>
+      <DIV class=cnblogs_code><SPAN id=Code_Open_Text_170830><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><SPAN 
+      style="COLOR: #000000">ServletContext&nbsp;sc&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">=</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;getServletContext();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>WebApplicationContext&nbsp;ac&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">=</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;WebApplicationContextUtils.getRequiredWebApplicationContext(sc);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello&nbsp;hello&nbsp;</SPAN><SPAN 
+      style="COLOR: #000000">=</SPAN><SPAN 
+      style="COLOR: #000000">&nbsp;(Hello)&nbsp;ac.getBean(</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">helloClient</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String 
+      str = hello</SPAN><SPAN style="COLOR: #000000">.say(</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">zhang</SPAN><SPAN 
+      style="COLOR: #000000">"</SPAN><SPAN 
+      style="COLOR: #000000">);</SPAN></SPAN></DIV>
+      <P>这样，客户端调用的代码也有了，配置稍微有些麻烦，配置完后，使用倒是很简单。</P></DIV>
+      <DIV id=MySignature></DIV>
+      <SCRIPT type=text/javascript>
+var isLogined = false;
+var cb_blogId = 4183;
+var cb_entryId = 1390645;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "9583310b-63cf-dd11-9e4d-001cf0cd104b";
+var cb_entryCreatedDate = '2009/2/14 17:12:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+      <DIV class=clear></DIV>
+      <DIV id=blog_post_info_block>
+      <DIV id=blog_post_info>
+      <DIV id=BlogPostCategory>分类: <A 
+      href="http://www.cnblogs.com/modou/category/32459.html">Java学习笔记</A></DIV>
+      <DIV id=EntryTag></DIV>
+      <DIV id=green_channel>绿色通道： <A id=green_channel_digg 
+      onclick="DiggIt(cb_entryId,cb_blogId,1);green_channel_success(this,'谢谢推荐！');" 
+      href="javascript:void(0);">好文要顶</A> <A id=green_channel_follow 
+      onclick=c_follow(); href="javascript:void(0);">关注我</A> <A 
+      id=green_channel_favorite onclick="AddToWz(cb_entryId);return false;" 
+      href="javascript:void(0);">收藏该文</A><A id=green_channel_contact 
+      href="http://space.cnblogs.com/msg/send/%e9%ad%94%e8%b1%86" 
+      target=_blank>与我联系</A> <A id=green_channel_weibo title=分享至新浪微博 
+      onclick=ShareToTsina() href="javascript:void(0);"><IMG alt="" 
+      src="http://static.cnblogs.com/images/icon_weibo_24.png"></A> </DIV>
+      <DIV id=digg_block>
+      <DIV id=author_profile>
+      <DIV id=author_profile_info class=author_profile_info>
+      <DIV id=author_profile_detail class=author_profile_info><A 
+      href="http://home.cnblogs.com/u/modou/">魔豆</A><BR><A 
+      href="http://home.cnblogs.com/u/modou/followees">关注 - 1</A><BR><A 
+      href="http://home.cnblogs.com/u/modou/followers">粉丝 - 52</A> </DIV></DIV>
+      <DIV class=clear></DIV>
+      <DIV id=author_profile_honor></DIV>
+      <DIV id=author_profile_follow><A onclick="c_follow();return false;" 
+      href="javascript:void(0);">+加关注</A> </DIV></DIV>
+      <DIV id=div_digg>
+      <DIV class=diggit onclick="votePost(cb_entryId,'Digg')"><SPAN 
+      id=digg_count class=diggnum>0</SPAN> </DIV>
+      <DIV class=buryit onclick="votePost(cb_entryId,'Bury')"><SPAN 
+      id=bury_count class=burynum>0</SPAN> </DIV>
+      <DIV class=clear></DIV>
+      <DIV id=digg_tips class=diggword>(请您对文章做出评价) </DIV></DIV></DIV></DIV>
+      <DIV class=clear></DIV>
+      <DIV id=post_next_prev><A class=p_n_p_prefix 
+      href="http://www.cnblogs.com/modou/archive/2005/04/08/133786.html">« 
+      </A>上一篇：<A title="发布于2005-04-08 09:46" 
+      href="http://www.cnblogs.com/modou/archive/2005/04/08/133786.html">C-omega 
+      vs ADO.net </A><BR><A class=p_n_p_prefix 
+      href="http://www.cnblogs.com/modou/archive/2009/03/16/1412786.html">» 
+      </A>下一篇：<A title="发布于2009-03-16 00:06" 
+      href="http://www.cnblogs.com/modou/archive/2009/03/16/1412786.html">体验网页版的QQ</A><BR></DIV></DIV>
+      <SCRIPT type=text/javascript>
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {  
+        loadViewCount(cb_entryId);
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+      </DIV>
+      <DIV class=postfoot>posted on <SPAN id=post-date>2009-02-14 17:12</SPAN> 
+      <A href="http://www.cnblogs.com/modou/">魔豆</A> 阅读(<SPAN 
+      id=post_view_count>3916</SPAN>) 评论(<SPAN id=post_comment_count>2</SPAN>) 
+      &nbsp;<A 
+      href="http://www.cnblogs.com/modou/admin/EditArticles.aspx?postid=1390645" 
+      rel=nofollow>编辑</A> <A onclick="AddToWz(1390645);return false;" 
+      href="#">收藏</A> </DIV></DIV>
+      <SCRIPT type=text/javascript 
+      src="http://counter.cnblogs.com/blog/post/1390645"></SCRIPT>
+
+      <DIV id=blog-comments-placeholder>
+      <DIV id=comments_pager_top></DIV><A name=feedback></A>
+      <DIV id=comments>
+      <H3>Feedback</H3>
+      <DIV class=comment_block>
+      <DIV class=commentTitle><A class=layer href="#1865932">#1楼</A><A 
+      id=comment_anchor_1865932 name=1865932></A><SPAN> <SPAN 
+      class=comment_date>2010-07-07 13:36</SPAN></SPAN><A 
+      id=a_comment_author_1865932 href="http://www.cnblogs.com/huoyj/" 
+      target=_blank>huoyj</A> <A class=sendMsg2This title=发送站内短消息 
+      href="http://space.cnblogs.com/msg/send/huoyj">&nbsp;</A></DIV>
+      <DIV class=commentText>
+      <DIV id=comment_body_1865932 
+      class=blog_comment_body>serviceClass="com.ruiri.webservice.Test1",问一下，你这个Test1是哪一个类，谢谢</DIV>
+      <DIV class=comment_vote><A class=comment_digg 
+      onclick="return voteComment(1865932,'Digg',this)" 
+      href="javascript:void(0);">支持(0)</A><A class=comment_bury 
+      onclick="return voteComment(1865932,'Bury',this)" 
+      href="javascript:void(0);">反对(0)</A></DIV><SPAN style="DISPLAY: none" 
+      id=comment_1865932_avatar>http://pic.cnitblog.com/face/u143223.jpg</SPAN></DIV>
+      <DIV class=commentFooter>&nbsp;&nbsp;<SPAN 
+      class=comment_actions></SPAN></DIV></DIV>
+      <DIV class=comment_block>
+      <DIV class=commentTitle><A class=layer href="#1866619">#2楼</A><A 
+      id=comment_anchor_1866619 name=1866619></A>[<SPAN 
+      class=louzhu>楼主</SPAN>]<SPAN style="DISPLAY: none" 
+      id=comment-maxId>1866619</SPAN><SPAN style="DISPLAY: none" 
+      id=comment-maxDate>2010/7/8 11:28:26</SPAN><SPAN> <SPAN 
+      class=comment_date>2010-07-08 11:28</SPAN></SPAN><A 
+      id=a_comment_author_1866619 href="http://www.cnblogs.com/modou/" 
+      target=_blank>魔豆</A> <A class=sendMsg2This title=发送站内短消息 
+      href="http://space.cnblogs.com/msg/send/%e9%ad%94%e8%b1%86">&nbsp;</A></DIV>
+      <DIV class=commentText>
+      <DIV id=comment_body_1866619 class=blog_comment_body><A title=查看所回复的评论 
+      href="#1865932">@</A>huoyj<BR>好久不用，我也忘记了- -</DIV>
+      <DIV class=comment_vote><A class=comment_digg 
+      onclick="return voteComment(1866619,'Digg',this)" 
+      href="javascript:void(0);">支持(0)</A><A class=comment_bury 
+      onclick="return voteComment(1866619,'Bury',this)" 
+      href="javascript:void(0);">反对(0)</A></DIV></DIV>
+      <DIV class=commentFooter>&nbsp;&nbsp;<SPAN 
+      class=comment_actions></SPAN></DIV></DIV></DIV>
+      <DIV id=comments_pager_bottom></DIV></DIV>
+      <SCRIPT type=text/javascript>var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+
+      <DIV id=comment_form class=commentform>
+      <DIV id=divCommentShow></DIV>
+      <DIV id=comment_nav><SPAN id=span_refresh_tips></SPAN><A 
+      id=lnk_RefreshComments onclick="return RefreshCommentList();" 
+      href="javascript:void(0);">刷新评论</A><A onclick="return RefreshPage();" 
+      href="#">刷新页面</A><A href="#top">返回顶部</A></DIV>
+      <DIV id=comment_form_container>
+      <DIV class=login_tips>注册用户登录后才能发表评论，请 <A class=underline 
+      onclick="return login('commentform');" href="javascript:void(0);" 
+      rel=nofollow>登录</A> 或 <A class=underline onclick="return register();" 
+      href="javascript:void(0);" rel=nofollow>注册</A>，<A 
+      href="http://www.cnblogs.com">访问</A>网站首页。</DIV></DIV>
+      <SCRIPT type=text/javascript>
+    if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+      <DIV id=ad_text_under_commentbox class=ad_text_commentbox></DIV>
+      <DIV id=site_nav_under><A title=程序员的网上家园 href="http://www.cnblogs.com/" 
+      target=_blank>博客园首页</A><A title=程序员问答社区 href="http://q.cnblogs.com/" 
+      target=_blank>博问</A><A title=IT新闻 href="http://news.cnblogs.com/" 
+      target=_blank>新闻</A><A href="http://home.cnblogs.com/ing/" 
+      target=_blank>闪存</A><A href="http://job.cnblogs.com/" 
+      target=_blank>程序员招聘</A><A href="http://kb.cnblogs.com/" 
+      target=_blank>知识库</A></DIV>
+      <DIV id=ad_under_post_holder>
+      <DIV id=google_ad_c1 class=c_ad_block><!-- cnblogs_blogpost_C1_sitehome -->
+      <DIV style="WIDTH: 300px; HEIGHT: 250px" 
+      id=div-gpt-ad-1346480159711-0><IFRAME 
+      style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; VERTICAL-ALIGN: bottom; BORDER-TOP: 0px; BORDER-RIGHT: 0px" 
+      id=google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0 height=250 
+      marginHeight=0 src='javascript:window["contents"]' frameBorder=0 width=300 
+      allowTransparency 
+      name=google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0 
+      marginWidth=0 scrolling=no></IFRAME></DIV></DIV>
+      <DIV id=blog_news_kb>
+      <DIV class="itnews c_ad_block"><B>最新IT新闻</B>:<BR>· <A 
+      href="http://news.cnblogs.com/n/183203/" 
+      target=_blank>惠普美国推99美元学生平板</A><BR>· <A 
+      href="http://news.cnblogs.com/n/183202/" target=_blank>台湾高校发现360偷偷上传文件 
+      建议全校师生卸载</A><BR>· <A href="http://news.cnblogs.com/n/183201/" 
+      target=_blank>看妹子还是看游戏？ChinaJoy抢先探班</A><BR>· <A 
+      href="http://news.cnblogs.com/n/183200/" 
+      target=_blank>QQ空间城市排行：看中国各地的社交趣事</A><BR>· <A 
+      href="http://news.cnblogs.com/n/183199/" target=_blank>周鸿祎名誉侵权案再败诉 
+      360官司十二连败</A><BR>» <A title=IT新闻 href="http://news.cnblogs.com/" 
+      target=_blank>更多新闻...</A></DIV>
+      <DIV id=kb_block class="itnews c_ad_block"><B>最新知识库文章</B>:<BR>
+      <DIV id=kb_recent>· <A href="http://kb.cnblogs.com/page/183123/" 
+      target=_blank>你优化系统的目标是什么？</A><BR>· <A 
+      href="http://kb.cnblogs.com/page/182686/" target=_blank>淘宝图片服务的学习</A><BR>· 
+      <A href="http://kb.cnblogs.com/page/182951/" 
+      target=_blank>即便没有读者，你也要写博客</A><BR>· <A 
+      href="http://kb.cnblogs.com/page/177886/" 
+      target=_blank>学习新技术的10个建议</A><BR>· <A 
+      href="http://kb.cnblogs.com/page/182356/" 
+      target=_blank>自己怎么一步步喜欢上编程的</A><BR></DIV>» <A 
+      href="http://kb.cnblogs.com/" target=_blank>更多知识库文章...</A></DIV></DIV>
+      <DIV id=google_ad_c2 class=c_ad_block><!-- cnblogs_blogpost_C2_sitehome -->
+      <DIV style="WIDTH: 468px; HEIGHT: 60px" 
+      id=div-gpt-ad-1346479110744-1><IFRAME 
+      style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; VERTICAL-ALIGN: bottom; BORDER-TOP: 0px; BORDER-RIGHT: 0px" 
+      id=google_ads_iframe_/1090369/cnblogs_blogpost_C2_sitehome_0 height=60 
+      marginHeight=0 src='javascript:window["contents"]' frameBorder=0 width=468 
+      allowTransparency 
+      name=google_ads_iframe_/1090369/cnblogs_blogpost_C2_sitehome_0 
+      marginWidth=0 scrolling=no></IFRAME></DIV></DIV></DIV>
+      <DIV id=HistoryToday class=c_ad_block></DIV></DIV></TD></TR></TBODY></TABLE>
+<P id=footer>Copyright @ 魔豆<BR>Powered by: <A href="http://scottwater.com/blog" 
+target=_blank>.Text</A> and <A href="http://asp.net" target=_blank>ASP.NET</A> 
+<BR>Theme by: <A href="http://www.DotNetMonster.com" target=_blank>.NET 
+Monster</A> </P>
+<SCRIPT type=text/javascript 
+src="http://common.cnblogs.com/script/google-analytics.js"></SCRIPT>
+</BODY></HTML>

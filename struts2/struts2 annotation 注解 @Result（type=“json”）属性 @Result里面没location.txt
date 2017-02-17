@@ -1,0 +1,11 @@
+<result-types>
+	<result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+</result-types>
+
+@Result(name="success",type="json",params={"root","result"})
+----
+既然是ajax,你请求,会返回你提交请求的页面所以不用设置location
+服务器端输出PrintWriter out out.println(json.toString);
+客户端用javascript脚本解析 json数据即可如果你用的是jquery可以在对应的function(data){alert(data);//此处data就是服务器端返回的数据}
+
+

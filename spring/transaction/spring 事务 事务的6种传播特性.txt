@@ -1,0 +1,7 @@
+事务的几种传播特性：
+1.PROPAGATION_REQUIRED:如果有事务就用，没有就开启
+2.PROPAGATION_SUPPROTS:如果有事务就用，如果没有就非事务执行
+3.PROPAGATION_MANDATORY:如果有事务就用，如果没有就抛异常
+4.PROPAGATION_REQUIRED_NEW:只要你开启方法就开启事务
+5.PROPAGATION_NOT_SUPPROTED:总是非事务执行，并挂起任务存在的事务
+6.PROPAGATION_NEVER:总是非事务执行，如果存在一个事务，则抛异常

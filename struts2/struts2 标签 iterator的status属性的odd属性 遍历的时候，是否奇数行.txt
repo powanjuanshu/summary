@@ -1,0 +1,8 @@
+<s:iterator id="info" value="programBeans" status="status">
+	<s:if test="#status.odd">
+	</s:if>
+	<s:else>
+	</s:else>
+</s:iterator>
+
+

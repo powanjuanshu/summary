@@ -1,0 +1,7 @@
+struts.objectFactory这个属性用于说明Struts2的对象池创建工厂，Struts2也有自己的对象池，就像spring那样，在配置文件中你可以应用对象池中的对象，也可以借助于
+spring中的对象池，当想要得到spring中的对象池时，声明struts.objectFactory为spring。
+
+这里它将框架常量struts.objectFactory覆盖了，设置为spring，其实这里是使用了缩写，spring可以写全称：org.apache.struts.spring.StrutsSpringObjectFactory.
+默认情况下所有由框架创建的对象都是由ObjectFactory实例化的，ObjectFactory提供了与其他IoC容器如Spring，Pico等集成的方法。
+
+覆盖这个ObjectFactory类必须继承ObjectFactory类，并且要有一个不带参数的构造方法。在这里我们用org.apache.struts2.spring.StrutsSpringObjectFactory代替了默认的ObjectFactory

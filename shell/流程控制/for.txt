@@ -1,0 +1,27 @@
+for循环一般格式为:
+  for 变量名 in 列表
+  do
+    命令1
+    命令2
+  done
+
+当变量值在列表里,for循环即执行一次所有命令,使用变量名访问列表中取值.命令可为任何有效的shell命令和语句.变量名为任何单词.
+in列表用法是可选的,如果不用它,for循环使用命令行的位置参数.in列表可以包含替换,字符串和文件名.
+
+#!/bin/bash
+#forlist1
+for lo in 1 2 3 4 5
+do
+  echo $lo
+done
+
+#!/bin/bash
+#forlist2
+for lo in "orange red bue grey" // 认为是一个元素,如果不带引号则认为是4个元素
+do
+  echo $lo
+done
+
+
+
+

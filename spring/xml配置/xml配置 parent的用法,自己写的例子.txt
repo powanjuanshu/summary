@@ -1,0 +1,107 @@
+classpath:/spring/applicationContext.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+		default-lazy-init="default">
+		
+		<bean id="jack" class="cz.Jack" abstract="true"><!--定义了abstract，这个bean不能被容器实例化,只能起模板作用,供其他bean继承-->
+			<property name="username" value="hum"/><!--在Jack类中可不定义username和password属性,但子bean继承这个bean后，子类中必须要有这两个属性和set方法。如果没有abstract，它的属性必须在类中定义，不然会报错-->
+			<property name="password" value="886688"/>
+		</bean>
+		
+		<bean id="rose" class="cz.Rose" parent="jack"></bean><!--rose子bean继承jack父bean后，在Rose类中必须定义上面property的对应的属性和set方法(不然会报错)。但是在Jack类中的属性，Rose类中不需要定义-->
+		<bean id="jack2" parent="jack"></bean><!--这里没有配置class属性，子类和父类是同一个，那么Jack类中必须要有username和password属性和set方法，这里会初始化第一个Jack的实例-->
+		<bean id="jack3" parent="jack"></bean><!--这里会初始化第二个Jack的实例-->
+		<!--如果不用parent，如果username和passord都相同，那么会产生重复代码，比如下面的写法:模板的作用
+		<bean id="jack2" class="cz.Jack">
+			<property name="username" value="hum"/>
+			<property name="password" value="886688"/>
+		</bean>
+		<bean id="jack3" class="cz.Jack">
+			<property name="username" value="hum"/>
+			<property name="password" value="886688"/>
+		</bean>
+		-->
+</beans>
+-------------------------------------------------
+package cz;
+
+public class Jack {
+	public String fuc;
+	
+	public String username;
+	public String password;
+	
+	public Jack () {
+		System.err.println("fuc");
+	}
+	public void say () {
+		System.out.println("xxxx");
+	}
+	public String getFuc() {
+		return fuc;
+	}
+	public void setFuc(String fuc) {
+		this.fuc = fuc;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+-------------------------------------------------
+package cz;
+
+public class Rose {
+	public String username;
+	public String password;
+
+	public Rose () {
+		System.err.println("rose");
+	}
+	public void hi () {
+		System.out.println("hihi:"+username);
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+
+-------------------------------------------------
+package ioc.test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import cz.Rose;
+public class TesMain {
+	public static void main(String[] args) throws Exception{
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+	}
+}
+

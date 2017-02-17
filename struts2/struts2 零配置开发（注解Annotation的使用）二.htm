@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Struts2零配置开发（注解Annotation的使用）二 - 年岁有加，并非垂老，理想丢弃，方堕暮年 - ITeye技术网站</title>
+    <meta name="description" content="接上篇。 4,Namespace annotation 可以定义在Action中或者是定义在package-info.java文件中。在Action中定义的@Namespace会应用在该Action中所有的相对url上。如果定义在package-info.java文件中，那么该包中的所有的Action的namespace（不包括子包中的action）。 实例代码一：在Action中使用@Namesp ..." />
+    <meta name="keywords" content="Java, Apache, log4j, Struts, Web Struts2零配置开发（注解Annotation的使用）二" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="年岁有加，并非垂老，理想丢弃，方堕暮年" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1359603811" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+  <div id="page">
+    <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1095151">Struts2零配置开发（注解Annotation的使用）二</a>
+      <em class="actions">      </em>&nbsp;</h3>
+    </div>
+
+  <div id="blog_content" class="blog_content">
+    接上篇。
+<br />4,Namespace annotation
+<br />可以定义在Action中或者是定义在package-info.java文件中。在Action中定义的@Namespace会应用在该Action中所有的相对url上。如果定义在package-info.java文件中，那么该包中的所有的Action的namespace（不包括子包中的action）。
+<br />实例代码一：在Action中使用@Namespace注解。<pre class="java" name="code">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+
+@Namespace("/custom")
+public class HelloWorld extends ActionSupport {
+  @Action("/different/url")
+  public String execute() {
+    return SUCCESS;
+  }
+
+  @Action("url")
+  public String doSomething() {
+    return SUCCESS;
+  }
+}</pre>如上代码，execute()访问的url为/different/url,doSomething()的访问url为/custom/url，这个路径前面追加了@Namespace。
+<br />
+<br />示例代码二：在package-info.java中配置@Namespace注解<pre class="java" name="code">@org.apache.struts2.convention.annotation.Namespace("/custom")
+package com.example.actions;</pre>那么包com.example.actions中所有的action的Namespace都被指向了/custom。
+<br />
+<br />5,ResultPath annotation，用来改变结果页面所在的目录。如下例所示<pre class="java" name="code">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ResultPath;
+
+@ResultPath("/WEB-INF/jsps")
+public class HelloWorld extends ActionSupport {
+  public String execute() {
+    return SUCCESS;
+  }
+}</pre>该Action跳转的结果页面将指向/WEB-INF/jsps目录。
+<br />
+<br />6,ParentPackage annotation，用来改变特定的Action类或者是java包的parent XWork packages（不好意思，这几个单词怎么翻译觉得都不好，就直接引用了）。示例代码如下<pre class="java" name="code">package com.example.actions;
+
+import com.opensymphony.xwork2.ActionSupport; 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+@ParentPackage("customXWorkPackage")
+public class HelloWorld extends ActionSupport {
+  public String execute() {
+    return SUCCESS;
+  }
+}</pre>
+<br />
+<br />7,ExceptionMapping Annotation，用来配置action出现异常时的跳转路径。该注解同样可以使用params属性配置要传入的参数。该注解可以配置在Action级别和Method级别，配置在Action级别对所有的Method都适用；配置在Method级别只对当前的Method使用。示例代码如下：
+<br />在Action上配置ExceptionMapping Annotation：<pre class="java" name="code">@ExceptionMappings({
+    @ExceptionMapping(exception = "java.lang.NullPointerException", result = "success", params = {"param1", "val1"})
+})
+public class ExceptionsActionLevelAction {
+
+    public String execute() throws Exception {
+        return null;
+    }
+}</pre>在Method上配置ExceptionMapping Annotation，使用params属性传入要设置的参数<pre class="java" name="code">public class ExceptionsMethodLevelAction {
+    @Action(value = "exception1", exceptionMappings = {
+            @ExceptionMapping(exception = "java.lang.NullPointerException", result = "success", params = {"param1", "val1"})
+    })
+    public String run1() throws Exception {
+        return null;
+    }
+}</pre>
+<br />
+<br />Convention Plugin在Action中的配置改变时，可以自动加载改变的内容而不用重新启动容器。这时需要在struts.xml文件中做如下设置<pre class="java" name="code">&lt;constant name="struts.devMode" value="true"/&gt;
+&lt;constant name="struts.convention.classes.reload" value="true" /&gt;
+</pre>但这种加载方式只是实验性的并且还没有在所有的容器中进行测试，因此官方不推荐使用。
+<br />
+<br />==========常见错误============
+<br />1,"There is no Action mapped for namespace /orders and action name view.",这说明URL"/orders/view.action"并没有被映射到任何一个action，这是你需要检查action的namespace或者action的名称是否正确。
+<br />2,如果碰见如“"No result defined for action my.example.actions.orders.ViewAction and result success"的错误，说明action被映射到了正确的url上，但是action返回success时要跳转的页面并没有找到，请确保您的工程的正确目录中含有诸如/WEB-INF/content/orders/view-success.jsp的页面。
+<br />
+<br />============难点=============
+<br />1,要确保Action的namespace要有对应的页面。定位器(action,actions,struts,strutss)后面的namespace将作为action的namespace，并且用来定位该action要跳转到的页面。例如包my.example.actions.orders中有个名为ViewAction的action,那么他会被映射到/orders/view.action,该Action对应的页面必须在目录/WEB-INF/content/orders下面，例如/WEB-INF/content/orders/view-success.jsp。
+<br />2,关于Convention Plugin的日志输出。本插件在Debug模式下会输出大量的日志信息，因此不建议开启Debug模式。如果你是用的是JDK自带的logger,可以使用"trace"日志级别打印日志；如果使用的是Log4J，可以在配置文件中做如下配置<pre class="java" name="code">log4j.logger.org.apache.struts2.convention=DEBUG</pre>
+  </div>
+
+  
+
+
+  
+  
+  <div id="bottoms" class="clearfix">
+    <div id="digg_bottom" class="clearfix"><div class='digged'></div></div>
+    </div>
+
+  </div>
+
+
+</div>
+
+        </div>
+
+      </div>
+    </body>
+</html>

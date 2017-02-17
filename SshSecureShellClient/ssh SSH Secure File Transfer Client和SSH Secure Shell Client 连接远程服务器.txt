@@ -1,0 +1,54 @@
+先安装客户端软件：SSHSecurityShellClient-3.2.9.exe，一路next
+双击图标SSH Secure File Transfer Client，启动SSH安全文件传输客户端
+点击Quick Connect，弹出Connect to Remote Host对话框：在Host Name：输入远程服务器的IP，比如：10.196.19.29，在User Name：输入用户名，比如：jtdx，Port：默认为22即可，其余默认即可
+点击Connect，然后弹出一个Host Identification对话框，问你是不是记住钥匙，选NO，然后会弹出Enter Password输入密码对话框，在Password输入密码：比如：1qaz2wsx，点击OK
+进入操作界面：左边Local Name是我们本地文件和文件夹，右边Romote Name是远程服务器的文件和文件夹
+文件可以直接从左边或本地磁盘拖到右边即远程服务器上，也可以从远程服务器上直接拖到左边或本地磁盘上
+--应用目录
+/cpic/jtdx/user_projects/domains/base_domain/AnalysisTool/WebContent
+--log
+/cpic/jtdx/user_projects/domains/base_domain/rotatelogs/nohup_%Y%m%d%H%M.log
+--启动
+/cpic/jtdx/user_projects/domains/base_domain/bin
+./nohupstart.sh
+--congnos js文件地址
+D:/cpic/bea/user_projects/domains/base_domain/cognos/p2pd/servlet/ppwb
+
+双击图标SSH Secure Shell Client，或直接在SSH Secure File Transfer Client界面中点击New Terminal Window按钮，启动SSH安全Shell脚本客户端
+进入登录界面：会显示最后登陆的时间和IP：Last login:Fri Jul 6 18:24:54 2012 from 10.191.38.154
+	[jtdx@HQJSTXAPP2 ~]$ 这个串中左边是用户名，右边不知道是什么意思
+在[jtdx@HQJSTXAPP2 ~]$后面输入：cd /cpic/jtdx/user_projects/domains/base_domain/bin然后回车，切换到有启动服务器命令的文件夹击bin目录
+即界面为：[jtdx@HQJSTXAPP2 ~]$ cd /cpic/jtdx/user_projects/domains/base_domain/bin
+然后输入：[jtdx@HQJSTXAPP2 bin]$ pwd，可查看我们现在的完整路径，/cpic/jtdx/user_projects/domains/base_domain/bin,这个界面中右边的bin就是我们现在所在的文件夹名称
+然后输入：ls -l，会显示这个文件夹下所有文件
+然后输入：./nohupstart.sh，./不可少，表示当前目录，nuhupstart.sh为启动命令的文件
+然后输入：cd ..退回到上一级目录，即base_domain目录
+然后输入：cd rotatelogs进入日志文件夹，或者直接cd日志路径，/cpic/jtdx/user_projects/domains/base_domain/rotatelogs/nohup_%Y%m%d%H%M.log
+然后输入：ls -l,会显示所有日志文件
+然后输入：tail nohup_201207061036.log，选出最新的日志文件跟踪显示在控制台
+注意：
+./stopWebLogic.sh前面必须要有./
+/cpic/jtdx/user_projects/domains/base_domain/servlers/AdminServer/temp删除缓存
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

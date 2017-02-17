@@ -1,0 +1,50 @@
+package com.neusoft.gazelle.core.webservice1;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class Main {
+	public static void main(String[] args) throws InterruptedException {
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:/spring/spring-mvc.xml");
+		Bill bill = (Bill) context.getBean("bill");
+		bill.say();
+		Thread.sleep(1000000);
+	}
+}
+--------------------------
+spring-mvc.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:soap="http://cxf.apache.org/bindings/soap"
+	xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+		http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+	<context:component-scan base-package="com.neusoft.gazelle.core.webservice1" />
+	<util:properties id="app" location="classpath:app-54.properties"/>
+</beans>
+--------------------------
+app-54.properties:
+logLevel=DEBUG
+logAdditivity=true
+logDefaultFile=DEBUG
+logRoot=/bestpayserver/project/logs
+#zookeeper.address=172.17.9.63:50066
+zookeeper.address=172.17.121.41:2181
+cache_reload = 172.17.8.44
+
+
+
+
+
+
+
+
+
+

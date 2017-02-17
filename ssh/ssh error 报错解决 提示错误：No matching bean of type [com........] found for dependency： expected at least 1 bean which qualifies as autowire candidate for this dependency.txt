@@ -1,0 +1,12 @@
+No matching bean of type [com........] found for dependency: expected at least 1 bean which qualifies as autowire candidate for this dependency.  
+自动注入的时候，找不到对应的bean
+原因是：对应要注入的实现类没有加注解，如dao层@Repository如service层@Service
+---
+at least 1 bean which qualifies as autowire candidate
+参考:
+http://space.baidu.com.cn/%B5%DA%D2%BB%B8%F6%C9%CF%BB%F0%D0%C7/blog/item/e60214b2465c57b0d9335a87.html
+我的报错在在controller包的Controller类，就是:
+@Autowired
+private IHelloService helloService;
+这里会报错，后来看到这个文章的提示，检查了一下component-scan,才发现没有对com.services.imple进行扫描，加上去就解决了。
+<context:component-scan base-package="com.controller,com.services.impl,com.dao.impl,com.pojo" />

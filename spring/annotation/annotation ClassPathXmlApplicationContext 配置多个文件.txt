@@ -1,0 +1,9 @@
+package com.neusoft.gazelle.core.webservice;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class Main {
+	public static void main(String[] args) {
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"applicationContext-webservice.xml","applicationContext.xml"}); 
+      		Abc hello = (Abc) context.getBean("hw"); 
+      		hello.hi("a", "b");
+	}
+}

@@ -1,0 +1,76 @@
+web.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <servlet>
+  	<servlet-name>test</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	<!-- 如果没配置此项，会默认会根据servlet-name的名字test，在后面加上-servlet.xml，在WEB-INF目录下找这个配置文件
+	<init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:/spring/spring-mvc.xml</param-value>
+        </init-param>
+	--> 
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>test</servlet-name>
+  	<url-pattern>/</url-pattern><!--如果是*.do，则是以do为后缀的请求才进入springmvc，此处是所有请求-->
+  </servlet-mapping>
+</web-app>
+-------------------------
+WEB-INF/test-servlet.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <mvc:annotation-driven/><!--这个好像必须要-->
+    <mvc:resources mapping="/css/**" location="/css/" /><!--必须把资源文件加进去，不然jsp引入css文件会找不到文件，控制台会告诉我们的-->
+    <mvc:resources mapping="/js/**" location="/js/" /><!--必须把资源文件加进去，不然jsp引入js文件会找不到文件，控制台会告诉我们的-->
+	<context:component-scan base-package="spring.abc" />
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	    <property name="prefix" value="/WEB-INF/jsp/"/><!--如果是value="/"，则是在WebContent目录下面找-->
+	    <property name="suffix" value=".jsp" />
+	</bean>
+</beans>
+-------------------------------
+package spring.abc;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+@Controller
+public class HelloController {
+	//produces指定生产什么类型的内容，如produces="application/json"表示JSON类型的内容，Spring的根据相应的HttpMessageConverter进行请求内容区数据到@RequestBody注解的命令对象的转换，Spring会根据相应的HttpMessageConverter进行模型数据（返回值）到JSON响应内容的转换
+	//可以不需要前面的/，即可以@RequestMapping(value="hello")
+	@RequestMapping(value="/hello",produces="text/html;charset=UTF-8") // 如果@RequestMapping(value={"/payWebUnify.action","/payWebUnify.do"})，则两个请求都可以进来
+	public String helloWorld (@RequestParam Map<String,String> params,HttpServletRequest request,Map<String,Object> context) { // 得到request，得到上下文context，用户请求的参数可以自动放入params
+		System.out.println("xxx");
+		System.out.println("yyy:"+request.getParameter("username")); // 可以得到请求的参数
+		System.out.println("zzz:"+params.get("password")); // 从params中也可以得到请求的参数
+		return "payment/web/bestpay";
+	}
+}
+
+-----------------------------------------
+WebContent/WEB-INF/jsp/payment/web/bestpay.jsp:
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+hahahaaha
+</body>
+</html>
+
+
+
+
+

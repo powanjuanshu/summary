@@ -1,0 +1,33 @@
+<%
+    //临时user，注意用你的User对象声明
+    User tmpusr = null;
+    //从session中取你放user的list
+    List usrLst = request.getsseion.get(“userlist”);
+    //遍历list
+    for(i=0;i<usrLst.size();i++){
+        //取lst中的object然后强制类型转换，此处最好做异常处理加try、catch，防止页面出错
+        tmpusr = (User) usrLst.get(i);
+        //你的业务逻辑
+    	String usrName = tmpusr.getName();
+     	……
+    }
+   ……
+%>
+--------------------------------
+<%@page import="com.cpic.action.Task"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<%
+	Task p=(Task)request.getAttribute("task");
+	System.out.println(p.getPeople().name());
+%>
+<body>
+username:${requestScope.username}
+password:${requestScope.password}
+${task.people.name()}
+</body>
+</html>

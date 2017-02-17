@@ -1,0 +1,13 @@
+<package namespace="/admin">
+	
+</package>
+login.jsp:
+<form action="login">
+</form>
+tfc是我的项目名，表单提交 
+那么你的浏览器地址是http://localhost：8080/tfc/admin/login.action.
+你的浏览器地址是根据namespace/action名称访问的，这个namespace是虚拟路径，可以在项目中完全不存在。
+随便取但是我在项目中为了方面查找jsp页面，会将jsp文件的路径与namespace相匹配，所以我的项目jsp的路径就是tfc/admin/jsp，
+此时你再比较浏览器地址tfc/admin/login.action。这样你就可以很方面的通过action找到匹配的页面了
+----
+命名空间，在浏览器里面输入的东西，http://ip地址:端口号/项目部署名称/namespace/action名称

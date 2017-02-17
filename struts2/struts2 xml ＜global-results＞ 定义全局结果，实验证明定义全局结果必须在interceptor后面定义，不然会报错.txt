@@ -1,0 +1,30 @@
+定义全局结果，实验证明定义全局结果必须在interceptor后面定义，不然会报错
+---------------
+<struts>
+    <package name="default" extends="convention-default">
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
+        </result-types>
+        <interceptors>
+         	<interceptor name="checkInterceptor" class="com.str.CheckInterceptor" >
+         		<param name="test">hello</param>
+         	</interceptor>
+         	<interceptor name="checkInterceptor2" class="com.str.CheckInterceptor2" >
+         		<param name="test">hello2</param>
+         	</interceptor>
+       	</interceptors>
+	<!--实验证明定义全局结果必须在interceptor后面定义，不然会报错-->
+       	<global-results>
+		 <result name="checkLogin" type="redirect">checklogin.do</result>  
+	</global-results>
+       	<action name="register" class="com.neusoft.gazelle.core.action.TestAction">
+	       	<result name="fail">/index3.jsp</result>
+	       	<result name="jb">/index3.jsp</result>
+	       	<interceptor-ref name="checkInterceptor"></interceptor-ref>
+	       	<interceptor-ref name="checkInterceptor2"></interceptor-ref>
+	       	<interceptor-ref name="defaultStack"></interceptor-ref>
+       	</action>
+       	
+       	
+    </package>
+</struts>

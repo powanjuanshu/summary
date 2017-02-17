@@ -1,0 +1,3 @@
+<intercept-url pattern="/" access="permitAll"/> 
+<http pattern="/aboutus/**/*" security="none"/> 
+注意，permitAll和none是有区别的，permitAll指所有登录和未登录人员都可以访问，这个设置是需要经过security filter的，而none也指所有人员都可以访问，但不会经过sec filter。这个设置在一些地方会有影响，比如，要在不必授权的页面获取当前已登录用户的principal，这个时候，设置none肯定是获取不到，应该用permitAll

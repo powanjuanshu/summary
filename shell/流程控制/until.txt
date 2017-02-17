@@ -1,0 +1,34 @@
+until循环一般格式为:
+until 条件
+do
+  命令1
+  命令2
+done
+
+注意:条件可为任意测试条件,测试发生在循环末尾,因此循环至少执行一次.
+
+#!/bin/sh
+#until_mon
+#监控分区
+Part="/backup"
+#得到磁盘使用的百分比
+LOOK_OUT=`df|grep "$Part"|awk '{print $5}'|sed 's/%//g'`
+echo $LOOK_OUT
+until ["$LOOK_OUT" -gt "90"]
+do
+  echo "Filesystem backup is nearly full" | mail root
+  LOOK_OUT=`df|grep "$Part"|awk '{print $5}'|sed 's/%//g'`
+  sleep 3600
+done
+
+
+
+
+
+
+
+
+
+
+
+

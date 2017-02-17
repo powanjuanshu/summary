@@ -1,0 +1,11 @@
+Shell的类型: ash, bash, ksh, csh, tcsh
+* 可以通过/etc/shells这个文件来查看系统中有多少套shell
+  cat /etc/shells
+  /bin/sh
+  /bin/bash
+  /sbin/nologin
+  /bin/bash2
+  /bin/ash
+  /bin/bsh
+  /bin/tcsh
+  /bin/csh

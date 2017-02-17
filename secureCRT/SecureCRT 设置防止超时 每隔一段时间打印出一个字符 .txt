@@ -1,0 +1,1 @@
+在切换标签栏反键->Session Options->Terminal->Anti-idle->勾上Send string ：d every 60 seconds->OK

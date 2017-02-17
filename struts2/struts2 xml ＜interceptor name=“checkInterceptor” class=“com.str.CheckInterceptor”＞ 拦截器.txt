@@ -1,0 +1,89 @@
+如果没有自定义拦截器，则会默认选择struts-default.xml中的defaultStack拦截器。
+你自定义拦截器后，默认的拦截器就不起作用，必须在最后将defaultStack引入进来，否则struts2的很多功能就失效了。而且位置必须在所有拦截器的最后面
+---------------
+<struts>
+<package name="default" extends="convention-default">
+        <interceptors>
+         	<interceptor name="checkInterceptor" class="com.str.CheckInterceptor" >
+			<param name="test">hello</param>
+		</interceptor>
+		<interceptor name="checkInterceptor2" class="com.str.CheckInterceptor2" >
+         		<param name="test">hello2</param>
+         	</interceptor>
+       	</interceptors>
+       	<action name="register" class="com.neusoft.gazelle.core.action.TestAction">
+	       	<result name="fail">/index3.jsp</result>
+	       	<result name="jb">/index3.jsp</result>
+	       	<interceptor-ref name="checkInterceptor"></interceptor-ref>
+		<interceptor-ref name="checkInterceptor2"></interceptor-ref>
+		<interceptor-ref name="defaultStack"></interceptor-ref>
+       	</action>
+</package>
+</struts>
+-----------------
+CheckInterceptor.java:
+package com.str;
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+public class CheckInterceptor extends AbstractInterceptor {
+	private String test;
+	public String getTest() {
+		return test;
+	}
+	public void setTest(String test) {
+		System.out.println("test invoked");
+		this.test = test;
+	}
+	@Override
+	public void init() {
+		System.out.println("init");
+	}
+	@Override
+	public void destroy() {
+		System.out.println("destory");
+	}
+	@Override
+	public String intercept(ActionInvocation invocation) throws Exception {
+		System.out.println(test);
+		System.out.println("interceptor1"+invocation.getAction().getClass());
+		System.out.println("before interceptor");
+		String next=invocation.invoke();
+		System.out.println("after interceptor");
+		return next;
+	}
+}
+-----------------
+CheckInterceptor2.java:
+package com.str;
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+public class CheckInterceptor2 extends AbstractInterceptor {
+	private String test;
+	public String getTest() {
+		return test;
+	}
+	public void setTest(String test) {
+		System.out.println("test2 invoked2");
+		this.test = test;
+	}
+	@Override
+	public void init() {
+		System.out.println("init2");
+	}
+	@Override
+	public void destroy() {
+		System.out.println("destory2");
+	}
+	@Override
+	public String intercept(ActionInvocation invocation) throws Exception {
+		System.out.println(test);
+		System.out.println("interceptor2"+invocation.getAction().getClass());
+		System.out.println("before interceptor");
+		String next=invocation.invoke();
+		System.out.println("after interceptor");
+		return next;
+	}
+}
+--------------
+
+

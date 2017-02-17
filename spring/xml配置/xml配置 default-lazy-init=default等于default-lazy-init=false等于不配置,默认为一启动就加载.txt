@@ -1,0 +1,50 @@
+<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<property name="sessionFactory" ref="sessionFactory" />
+</bean>
+
+<bean id="transactionProxyTemplate" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+	<property name="transactionManager" ref="transactionManager" />
+	<property name="transactionAttributes">
+		<props>
+			<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+			<prop key="login">PROPAGATION_REQUIRED,readOnly</prop>
+			<prop key="query*">PROPAGATION_REQUIRED,readOnly</prop>
+			<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+			<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+			<prop key="*">PROPAGATION_REQUIRED,-Exception</prop>
+		</props>
+	</property>
+</bean>
+<!--这种写法是独立的代理，不要上面的transactionProxyTemplate这个bean也可以，为target指定的bean做事务代理-->
+<bean id="idBrokerDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<property name="transactionManager" ref="transactionManager" />
+	<property name="target" ref="idBrokerDaoTarget" />
+	<property name="transactionAttributes">
+		<props>
+			<prop key="updateNextValue">PROPAGATION_REQUIRES_NEW</prop>
+		</props>
+	</property>
+</bean>
+
+<bean id="idBrokerDaoTarget" class="com.ulane.core.persistence.idbroker.dao.impl.IdBrokerDaoHibernate">
+	<property name="sessionFactory" ref="sessionFactory" />
+</bean>
+
+<!--这个service是继承了transactionProxyTemplate，所以他是个事务代理，为target指定的bean做事务代理，这样写的好处，可以每个servcie都继承transactionProxyTemplate。模块化-->
+<bean id="productService" parent="transactionProxyTemplate">
+	<property name="target">
+		<bean class="com.ulane.ulink.product.service.impl.ProductServiceImpl">
+			<property name="sessionFactory" ref="sessionFacotry" />
+		</bean>
+	</property>
+	<property name="proxyInterfaces">
+		<value>com.ulane.ulink.product.service.ProductService</value>
+	</property>
+</bean>
+
+
+
+
+
+
+

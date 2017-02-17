@@ -1,0 +1,2 @@
+Edit->Settings->Global Settings->Appearance->Scrollback buffer填写：10000 line
+设置日志最多显示1万条

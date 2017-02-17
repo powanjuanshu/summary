@@ -1,0 +1,6 @@
+默认包路径包含action,actions,struts,struts2的所有包都会被struts作为含有Action类的路径来搜索。你可以通过设置这个属性来修改这个配置。
+比如<constant name="struts.convention.package.locators" value="web,action"/>
+---------------
+<struts>
+	<constant name="struts.convention.package.locators" value="front"/><!--默认包路径包含action,actions,struts,struts2的所有包都会被struts作为含有Action类的路径来搜索。你可以通过设置这个属性来修改这个配置。比如<constant name="struts.convention.package.locators" value="web,action"/>-->
+</struts>

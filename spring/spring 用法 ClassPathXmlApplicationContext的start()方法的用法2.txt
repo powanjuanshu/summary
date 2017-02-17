@@ -1,0 +1,55 @@
+package ioc.test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class TesMain {
+	public static void main(String[] args) throws Exception{
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+		ctx.start();
+	}
+}
+----------------------------
+package ioc.test;
+import org.springframework.context.SmartLifecycle;
+public class AAA implements SmartLifecycle{
+	@Override
+	public boolean isRunning() {
+		// true:在容器调用start方法的时候不运行bean的start方法。在容器调用stop方法的时候运行bean的stop(Runnable arg0)方法。
+		// false:在容器调用start方法的时候运行bean的start方法。在容器调用stop方法的时候不运行bean的stop(Runnable arg0)方法。
+		return true; 
+	}
+	@Override
+	public int getPhase() {
+		return 0; // getPhase返回的值决定启动的顺序,值越小越先启动,越后关闭,用于调整在有多个这样的bean的时候,这些bean之间启动的优先级。 
+	}
+	@Override
+	public boolean isAutoStartup() {
+		return false; // isAutoStartup返回的值决定是否在Spring启动的时候运行start方法,ture的话则运行。
+	}
+	@Override
+	public void start() {
+		System.out.println("start");
+	}
+	@Override
+	public void stop(Runnable runnable) {
+		System.out.println("stop run");
+	}
+	@Override
+	public void stop() {
+		System.out.println("stop");
+	}
+}
+-------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<bean id="aaa" class="ioc.test.AAA"/>
+</beans>

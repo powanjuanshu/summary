@@ -1,0 +1,23 @@
+package com.storeserver.server;
+
+import java.awt.Container;
+import java.awt.FlowLayout;
+import javax.swing.*;
+
+public class Main {
+	public static void main(String[] args) {
+		JFrame jf = new JFrame();
+		jf.setSize(300, 300); // 设置大小
+		jf.setTitle("腾讯"); // 设置标题
+		jf.setLocationRelativeTo(null); // 居中设置
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 设置关闭窗口的的时候关闭程序
+		Container c= jf.getContentPane();
+		c.setLayout(new FlowLayout());
+		JComboBox jc = new JComboBox(new Object[]{"aaa","bbb"});
+		jc.addItem("xixi");
+		jc.addItem("haha");
+		c.add(jc);
+		jf.setVisible(true); // 这个是必须要的，否则什么都看不到，什么都没有，而且必须放在最后
+	}
+	
+}

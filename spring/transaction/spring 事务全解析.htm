@@ -1,0 +1,467 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Spring 事务全解析(转) - 好好学习，天天向上。 - ITeye技术网站</title>
+    <meta name="description" content="   spring事务管理全解析  文章出处：DIY部落(http://www.diybl.com/course/3_program/java/javajs/2007923/73069.html#)     了解事务：          事务是一组原子（Atomic）操作的 ..." />
+    <meta name="keywords" content=" Spring 事务全解析(转)" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="好好学习，天天向上。" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1374052918" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+  <div id="page">
+    <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1337139">Spring 事务全解析</a></h3>
+    </div>
+  <div id="blog_content" class="blog_content">
+    <p>
+</p>
+<pre name="code" class="java">spring事务管理全解析
+
+了解事务：
+        事务是一组原子（Atomic）操作的工作单元，以数据库存取的实例来说，就是一组SQL指令，这一组SQL指令必须全部执行成功，若因为某个原因未全部执行成功（例如其中一行SQL有错误），则先前所有执行过的SQL指令都会被撤消。
+
+JDBC是如何控制事务的
+
+try ...{
+    .....
+    connection.setAutoCommit(false);
+    .....
+    // 一连串SQL操作
+    connection.commit();
+} catch(SQLException) ...{
+    // 发生错误，撤消所有变更
+    connection.rollback();
+}
+Spring是把JDBC事务管理进来了封装，Spring事务管理的抽象关键在于org.springframework.transaction.PlatformTransactionManager接口，里面有 commit 和 rollback
+ 
+public interface PlatformTransactionManager ...{
+    TransactionStatus getTransaction(TransactionDefinition
+                    definition)  throws TransactionException;
+    void commit(TransactionStatus status)
+                                   throws TransactionException;
+    void rollback(TransactionStatus status)
+                                   throws TransactionException;
+}
+TransactionDefinition接口的实例定义了
+事务的隔离程度（Isolation level）
+传播行为（Propagation behavior）
+超时（Timeout）
+只读（Read-only）等
+ 
+DataSourceTransactionManager、HibernateTransactionManager、JdoTransaction- Manager、JtaTransactionManager等是实现了该接口
+ 
+ 
+Spring提供编程式的事务管理（Programmatic transaction management）与声明式的事务管理（Declarative transaction management）：
+ 
+1、编程式的事务管理可以清楚地控制事务的边界，也就是让您自行实现事务开始时间、撤消操作的时机、结束时间等，可以实现细粒度的事务控制。
+ 
+2、然而多数的情况下，事务并不需要细粒度的控制，而是采用声明式的事务管理，好处是Spring事务管理的相关API可以不用介入程序之中，从对象的角度来看，它并不知道自己正被纳入事务管理之中，在不需要事务管理的时候，只要在设置文件上修改一下设置，即可移去事务管理服务。
+ 
+声明式的事务管理举例  以DataSource，mysql举例
+        &lt;bean id="dataSource"
+                class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+                  destroy-method="close"&gt; 
+ 
+            &lt;property name="driverClassName" value="com.mysql.jdbc.Driver"/&gt;
+   
+            &lt;property name="url" value="jdbc:mysql://localhost:3306/demo"/&gt;
+   
+            &lt;property name="username" value="caterpillar"/&gt;
+   
+            &lt;property name="password" value="123456"/&gt;
+ 
+        &lt;/bean&gt;
+ 
+   
+ 
+        &lt;bean id="transactionManager"
+              class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;
+             
+            &lt;property name="dataSource" ref="dataSource"/&gt;
+           
+        &lt;/bean&gt;
+ 
+   
+ 
+        &lt;bean id="userDAO" class="onlyfun.caterpillar.UserDAO"&gt;
+   
+            &lt;property name="dataSource" ref="dataSource"/&gt;
+   
+        &lt;/bean&gt;
+ 
+   
+ 
+        &lt;bean id="userDAOProxy"
+            class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"&gt;
+ 
+        &lt;property name="proxyInterfaces"&gt;
+            &lt;list&gt;
+                &lt;value&gt;onlyfun.caterpillar.IUserDAO&lt;/value&gt;
+            &lt;/list&gt;
+        &lt;/property&gt;
+ 
+        &lt;property name="target" ref="userDAO"/&gt;
+ 
+        &lt;property name="transactionManager" ref="transactionManager"/&gt;
+ 
+        &lt;property name="transactionAttributes"&gt;
+ 
+            &lt;props&gt;
+ 
+                &lt;prop key="insert*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+ 
+            &lt;/props&gt;
+ 
+        &lt;/property&gt;       
+ 
+           &lt;/bean&gt;    
+ 
+ 
+TransactionProxyFactoryBean需要一个TransactionManager，由于这里使用的是JDBC，所以使用DataSourceTransactionManager，TransactionProxyFactoryBean是个代理对象，"target" 属性指定要代理的对象，事务管理会自动介入指定的方法前后，这里使用 "transactionAttributes" 属性指定，"insert*" 表示指定方法名称以insert开头的都要纳入事务管理，您也可以指定方法全名，如果在方法执行过程中发生错误，则所有先前的操作自动撤回，否则正常提交。
+ 
+在"insert*" 等方法上指定了 "PROPAGATION_REQUIRED"，表示在目前的事务中执行操作，如果事务不存在就建立一个新的，相关的常数意义都可以在API文件的TransactionDefinition接口中找到。您可以加上多个事务定义，中间使用逗号 "," 区隔，例如可以加上只读，或者是指定某个异常发生时撤回操作：
+ 
+PROPAGATION_REQUIRED,readOnly,-MyCheckedException
+ 
+MyCheckedException前面加上 "-" 时，表示发生指定异常时撤消操作，如果前面加上 "+"，表示发生异常时立即提交。
+ 
+由于"userDAO"被"userDAOProxy"代理了，所以要做的是取得"userDAOProxy"，而不是"userDAO"，
+        IUserDAO userDAO =
+            (IUserDAO) context.getBean("userDAOProxy");
+        userDAO.insert(user);
+ 
+ 申明式事务管理一般都是粗粒度的，这里可以看到，整个方法都被纳入事务管理，其实在大部分的业务处理中，这样做是没有什么不好的。
+ 
+ 
+事务的属性介绍
+ 
+传播行为
+  说明
+ 
+PROPAGATION_MANDATORY
+ 方法必须在一个现存的事务中进行，否则丢出异常
+ 
+PROPAGATION_NESTED
+ 在一个嵌入的事务中进行，如果不是，则同PROPAGATION_REQUIRED
+ 
+PROPAGATION_NEVER
+ 指出不应在事务中进行，如果有就丢出异常
+ 
+PROPAGATION_NOT_SUPPORTED
+ 指出不应在事务中进行，如果有就暂停现存的事务
+ 
+PROPAGATION_REQUIRED
+ 支持现在的事务，如果没有就建立一个新的事务
+ 
+PROPAGATION_REQUIRES_NEW
+ 建立一个新的事务，如果现存一个事务就暂停它
+ 
+PROPAGATION_SUPPORTS
+ 支持现在的事务，如果没有就以非事务的方式执行
+ 
+隔离层级
+ 说明
+ 
+ISOLATION_DEFAULT
+ 使用底层数据库预设的隔离层级
+ 
+ISOLATION_READ_COMMITTED
+ 允许事务读取其他并行的事务已经送出（Commit）的数据字段，可以防止Dirty read问题
+ 
+ISOLATION_READ_UNCOMMITTED
+ 允许事务读取其他并行的事务还没送出的数据，会发生Dirty、Nonrepeatable、Phantom read等问题
+ 
+ 
+续表
+ 
+隔离层级
+ 说明
+ 
+ISOLATION_REPEATABLE_READ
+ 要求多次读取的数据必须相同，除非事务本身更新数据，可防止Dirty、Nonrepeatable read问题
+ 
+ISOLATION_SERIALIZABLE
+ 完整的隔离层级，可防止Dirty、Nonrepeatable、Phantom read等问题，会锁定对应的数据表格，因而有效率问题
+ 
+ 
+ 只读提示（Read-only hints）
+如果事务只进行读取的动作，则可以利用底层数据库在只读操作时发生的一些最佳化动作，由于这个动作利用到数据库在只读的事务操作最佳化，因而必须在事务中才有效，也就是说要搭配传播行为PROPAGATION_REQUIRED、PROPAGATION_REQUIRES_NEW、PROPAGATION_NESTED来设置。
+ 
+ 
+ 
+ 
+事务超时期间（The transaction timeout period）
+有的事务操作可能延续很长一段的时间，事务本身可能关联到数据表格的锁定，因而长时间的事务操作会有效率上的问题，对于过长的事务操作，您要考虑Roll back事务并要求重新操作，而不是无限时的等待事务完成。
+ 
+您可以设置事务超时期间，计时是从事务开始时，所以这个设置必须搭配传播行为PROPAGATION_REQUIRED、PROPAGATION_REQUIRES_NEW、PROPAGATION_NESTED来设置。
+ 
+ 
+（上面是从《spring2.0技术开发》摘抄的，里面有些概念还含糊不清，有待实验考证下）
+ 
+这里我来介绍一种新的模式，不知道大家有没有用到过，在文档中没有发现
+ 
+ 
+ 
+    &lt;bean id="txProxyTemplate" abstract="true" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"&gt;
+        &lt;property name="transactionManager"&gt;&lt;ref local="transactionManager"/&gt;&lt;/property&gt;
+        &lt;property name="transactionAttributes"&gt;
+            &lt;props&gt;
+                &lt;prop key="add*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                &lt;prop key="create*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                &lt;prop key="update*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                &lt;prop key="delete*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                &lt;prop key="license*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                &lt;prop key="save*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                &lt;prop key="increase*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                &lt;prop key="active*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                &lt;prop key="modify*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                &lt;prop key="*"&gt;PROPAGATION_REQUIRED,readOnly&lt;/prop&gt;
+            &lt;/props&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;   
+我在这里不去指定target  那么去哪里指定呢？
+    &lt;bean id="providerServiceTarget" class="cn.com.zjtelecom.mall.service.pojo.ProviderService" /&gt;
+    &lt;bean id="providerService" parent="txProxyTemplate" &gt;
+        &lt;property name="target"&gt;&lt;ref local="providerServiceTarget"/&gt;&lt;/property&gt;   
+    &lt;/bean&gt;
+这里的意图，大家只有非常了解代理模式才会明白其中的道理。那么分开设置有什么好处呢？模块化，大家可以公用这个代理模式，而且可以定义自己的声明，和其他人的声明无关。
+ 
+ 
+TransactionProxyFactoryBean
+配置这个类，是为了现宽广地实现事务的管理，也可以说是为了要和hibenate结合起来，TransactionProxyFactoryBean这个类一般有三个构造参数要注入，一个是hibernate的sessionFactory,这是为了spring可以和hibernate结合，第二个是用户的DAO类，而这个DAO类本身也需要把hibernate的sessionFactory作为构造参数注入到它的父类的构造函数中。第三个注入的，其实是事务管理的策略，通过AOP的方式实现的，例如DAO类中有有insert(String   sql);update(String   sql);delelte(String   sql);三个方法，我们可以设定当insert执行时如果抛出异常，就执行rollback等操作。Select不存在异常，这里就一般 不写了。
+ 
+下面给出声明式的事务管理的另外一个举例（使用HibernateTransactionManager实现PlatformTransactionManager）：
+ 
+ 
+ 
+       &lt;bean id="dataSource"
+              class="org.apache.commons.dbcp.BasicDataSource"&gt;
+              &lt;property name="driverClassName"&gt;
+                     &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;&lt;/property&gt;
+              &lt;property name="url"&gt;
+                     &lt;value&gt;jdbc:mysql://localhost/fancyshop&lt;/value&gt;&lt;/property&gt;
+              &lt;property name="username"&gt;
+                     &lt;value&gt;root&lt;/value&gt;&lt;/property&gt;
+              &lt;property name="password"&gt;
+                     &lt;value&gt;&lt;/value&gt;&lt;/property&gt;
+       &lt;/bean&gt;
+ 
+    &lt;bean id="sessionFactory"
+       class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"&gt;
+              &lt;property name="dataSource"&gt;
+                     &lt;ref bean="dataSource" /&gt;
+              &lt;/property&gt;
+              &lt;property name="mappingResources"&gt;
+                     &lt;list&gt;
+                            &lt;value&gt;jack/shop/po/User.hbm.xml&lt;/value&gt;
+                            &lt;value&gt;jack/shop/po/Product.hbm.xml&lt;/value&gt;
+                            &lt;value&gt;jack/shop/po/Advertise.hbm.xml&lt;/value&gt;
+                            &lt;value&gt;jack/shop/po/UserKind.hbm.xml&lt;/value&gt;
+                     &lt;/list&gt;
+              &lt;/property&gt;
+              &lt;property name="hibernateProperties"&gt;
+                     &lt;props&gt;
+                            &lt;prop key="hibernate.dialect"&gt;
+                                   org.hibernate.dialect.MySQLDialect
+                            &lt;/prop&gt;
+                     &lt;/props&gt;
+              &lt;/property&gt;
+       &lt;/bean&gt;
+ 
+&lt;!-- 、、、、、、、、、、、、、、、、、、、、、、、、、、 DAO 、、、、、、、、、、、、、、、、、、、、、、、、、、、 --&gt;
+&lt;bean id="userDAO" class="jack.shop.dao.impl.UserDAOImpl"&gt;
+              &lt;property name="sessionFactory"&gt;
+                     &lt;ref bean="sessionFactory" /&gt;
+              &lt;/property&gt;
+       &lt;/bean&gt;
+&lt;bean id="userDAOProxy"
+       class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"&gt;
+              &lt;property name="transactionManager"&gt;
+                     &lt;ref bean="transactionManager" /&gt;
+              &lt;/property&gt;
+              &lt;property name="target"&gt;
+                     &lt;ref local="userDAO" /&gt;
+              &lt;/property&gt;
+              &lt;property name="transactionAttributes"&gt;
+                     &lt;props&gt;
+                            &lt;prop key="insert*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                            &lt;prop key="get*"&gt;PROPAGATION_REQUIRED,readOnly&lt;/prop&gt;
+                     &lt;/props&gt;
+              &lt;/property&gt;
+       &lt;/bean&gt;
+ 
+&lt;bean id="productDAO" class="jack.shop.dao.impl.ProductDAOImpl"&gt;
+              &lt;property name="sessionFactory"&gt;
+                     &lt;ref bean="sessionFactory" /&gt;
+              &lt;/property&gt;
+       &lt;/bean&gt;
+&lt;bean id="productDAOProxy"
+       class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"&gt;
+              &lt;property name="transactionManager"&gt;
+                     &lt;ref bean="transactionManager" /&gt;
+              &lt;/property&gt;
+              &lt;property name="target"&gt;
+                     &lt;ref local="productDAO" /&gt;
+              &lt;/property&gt;
+              &lt;property name="transactionAttributes"&gt;
+                     &lt;props&gt;
+                            &lt;prop key="insert*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+                            &lt;prop key="get*"&gt;PROPAGATION_REQUIRED,readOnly&lt;/prop&gt;
+                            &lt;prop key="query*"&gt;PROPAGATION_REQUIRED,readOnly&lt;/prop&gt;
+                     &lt;/props&gt;
+              &lt;/property&gt;
+       &lt;/bean&gt;
+ 
+在Struts2中集成了Spring之后再集成Hibernate就非常容易了，在这里我们需要用到Spring提供的ORM模块。通过这个模块Spring提供了对Hibernate、JDO、OJB和iBatis的集成。
+在与Hibernate集成时我们需要用到Spring的LocalSessionFactoryBean类，这个类可以看作是连接Spring与Hibernate的桥梁。
+ 
+ 
+Spring整合ibatis也是类似的：
+&lt;bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"&gt;
+              &lt;property name="configLocation" value="config.xml"/&gt;
+              &lt;property name="xxx"&gt;
+                     &lt;bean class="org.springframework.jdbc.support.lob.OracleLobHandler"/&gt;
+              &lt;/property&gt;
+       &lt;/bean&gt;
+提供持久层访问接口DAO，具体实现位于DAOImpl类中，Spring提供SqlMapClientDaoSupport这个抽象类的目的就是为了获取其SqlMapClientTemplate对象，并通过SqlMapClientTemplate对象直接访问数据库，如下：
+public class CommonDaoImpl extends SqlMapClientDaoSupport implements CommonDao
+{
+public List getInputData(String sqlID, Object entity) throws ServiceException
+    {
+        return this.getSqlMapClientTemplate().queryForList(sqlID, entity);
+}
+。。。
+}
+相应的Spring也提供了类似的HibernateDaoSupport，然后通过HibernateTemplate直接访问数据库。
+public class AdvertiseDAOImpl extends HibernateDaoSupport implements
+              IAdvertiseDAO {
+public List queryByKind(Integer kind, Integer state)
+                     throws AdvertiseException {
+              List lst;
+              String hql = "from Advertise a where a.kind = " + kind
+                            + ((state == 0) ? "" : (" AND a.state=" + state));
+ 
+              try {
+                     lst = getHibernateTemplate().find(hql);
+                     return lst;
+              } catch (Throwable e) {
+                     throw new AdvertiseException(
+                                   "AdvertiseException at queryByKind() method: "
+                                                 + e.getMessage());
+              }
+       }
+。。。
+}
+ 
+从整体上来看整个过程是分多步细化的，也就是面向接口的编程吧：首先了解服务Service，这个服务还有一个实现类ServiceImpl，这个实现类中组合IDao，当然IDao也有一个实现类IDaoImpl，具体实现持久层数据的访问；然后就是装配ServiceImpl，即需要实例userDAO，装配的时候通过代理实现即userDAOProxy；装配userDAOProxy，这个时候需要属性注入transactionManager，target和transactionAttributes，其中target就是userDao。
+ 
+ 
+注意：find()方法是hibernate2中的方法，hibernate3中一般使用get()和load()</pre>
+ 
+  </div>
+
+  
+
+
+  
+  
+  </div>
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1337139;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'Spring 事务全解析(转)');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'Spring 事务全解析(转)');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+    </div>
+
+  </div>
+  <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+    
+<script type="text/javascript" src="http://js.tongji.linezing.com/jyao/tongji.js"></script>
+      
+    
+  </body>
+</html>

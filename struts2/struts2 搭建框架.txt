@@ -1,0 +1,59 @@
+struts2环境搭建
+1.下载struts2框架
+  下载地址 http://struts.apache.org/download.cgi#struts223
+2.创建web项目，导入使用struts2所必须的jar包。
+  创建web项目，在lib目录下添加必须的jar包。所必须的jar包有
+　　　commons-fileupload-1.2.1.jar，commons-io-1.3.2.jar，commons-logging-api-1.1.jar，freemarker-2.3.16.jar，javassist-3.7.ga.jar，ognl-3.0.jar，
+　　　struts2-core-2.2.1.1.jar，xwork-core-2.2.1.1.jar
+  注意：由于struts2版本的差异性，上面提到的包不一定满足所有版本的需求。配置完struts2后，请部署运行一下。根据运行时的错误提示来添加jar包
+　比如，配置struts-2.2.1.1时需要commons-io-1.3.2.jar包和javassist-3.7.ga.jar包，但是2.1版本就不需要这两个包。
+3.编写struts.xml文件
+ 　MyEclipse项目中的src根目录下建立一个struts.xml文件。（可以打开下载的struts2安装包里的apps目录下的任意一个jar包，
+   在里面的WEB_INFR/src目录下，寻找struts.xml文件，将该文件复制进项目的src根目录下，将里面的内容清空（只留下标签和头部标签即可））
+4.在web.xml中加入struts2 MVC框架启动配置
+　　　　在struts2安装包里找到web.xml文件，将里面的和标签及其内容拷贝进项目中的web.config文件即可。 以上就是用Myeclips 搭配struts2的步骤，下边写一个简单的登录示例：
+struts2示例 
+1.创建login.jsp页面,在body内创建一个form表单。  
+　　<form action="login.action" methed="post">    
+　　　　username:<input type="text" name="username"/><br/> 
+　　　　password:<input type="text" name="password"/><br/>  
+　　<input type="submit" value="submit"/></form>
+2.编写LoginAction.java 
+　　　　package com.test.action;public class LoginAction {
+　　　　　　　　private String  username;
+　　　　　　　　private String password;
+　　　　 　　　 public String getUsername(){
+　　　　　　　　　　return username;
+　　　　　　　　}
+ 　　　　　　　 public void setUsername(String username){
+　　　　　　　　　　this.username = username;  
+　　　　　　　　}
+　　　　　　　　public String getPassword(){
+　　　　　　　　　　return password;
+　　　　　　　　}
+　　　　　　　　public void setPassword(String password){
+　　　　　　　　　　this.password = password;  
+　　　　　　　　}
+　　　　　　　　public String execute(){
+　　　　　　　　　　return "success";
+　　　　　　　　}
+3.配置struts.xml文件，代码如下 
+　　　　　　　　<struts>
+　　　　　　　　 　　<package name="struts2" extends="struts-default"> 
+　　　　　　　　　　　　<action ame="login" class="com.test.action.LoginAction">  
+　　　　　　　　　　　　　　　<result name="success">/result.jsp</result> 
+　　　　　　　　　　　　</action>
+　　　　　　　　 　　</package>
+ 　　　　　　　 </struts>  
+4. 配置web.xml文件。代码如下：
+   　　　　　　 <filter>  
+　　　　　　　　　　　　<filter-name>struts2</filter-name>  
+　　　　　　　　　　　　<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>  
+　　　　　　　　</filter>
+　　　　　　　　<filter-mapping>
+　　　　　　　　　　　　<filter-name>struts2</filter-name>
+　　　　　　　　　　　　<url-pattern>/*</url-pattern>
+　　　　　　　　</filter-mapping>
+5.创建结果页面
+  　　　　　　  username:${requestScope.username}   
+　　　　　　　  password:${requestScope.password}

@@ -1,0 +1,18 @@
+缺少get和set方法
+----
+通过get set方法获取
+
+在对应的action类中定义同名变量,并生成set get方法，那么参数将会自动获取值
+
+String username;
+
+ public String getUsername()
+ {
+  return username;
+ }
+
+ public void setUsername(String username)
+ {
+  this.username = username;
+ }
+

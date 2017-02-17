@@ -1,0 +1,1 @@
+解压Tomcat 压缩包，Tomcat目录\common\lib下有jsp-api.jar,把它加到classpath变量里就可以. 

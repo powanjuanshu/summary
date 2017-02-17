@@ -1,0 +1,83 @@
+动态方法调用
+在Struts2中动态方法调用有三种方式,动态方法调用就是为了解决一个Action对应多个请求的处理,以免Action太多
+
+第一种方式:指定method属性
+这种方式我们前面已经用到过,类似下面的配置就可以实现
+<action name="chainAction" class="chapter2.action.Chapter2Action"
+method="chainAction">
+<result name="chainAction" type="chain">redirect</result>
+</action>  
+<action name="plainText" class="chapter2.action.Chapter2Action"
+method="plainText">
+<result name="plainText" type="plainText">/WEB-INF/JspPage/chapter2/plaintext.jsp</result>
+</action> 
+
+第二种方式:感叹号方式(需要开启),官网不推荐使用这种方式,建议大家不要使用.
+用这种方式需要先开启一个开关
+<constant name="struts.enable.DynamicMethodInvocation" value="true" /> 
+将此常量设置为true,这种方式才能使用,使用见示例
+Action
+package chapter3.action;
+
+public class Chapter3Action {
+public String result1(){
+   return "result1";
+}
+
+public String result2(){
+   return "result2";
+}
+} 
+
+Jsp中访问方式
+<body>
+    <a href="${basePath}/chapter3/chapter3Action!result1">result1</a><br>
+    <a href="${basePath}/chapter3/chapter3Action!result2">result2</a><br>
+</body> 
+如果配置了后缀,必须这样写:
+/chapter4/chapter4Action!create.action
+XML中配置方式
+<package name="chapter3" namespace="/chapter3" extends="struts-default">
+   <action name="chapter3Action" class="chapter3.action.Chapter3Action">
+    <result name="result1">/WEB-INF/JspPage/chapter3/result1.jsp</result>
+    <result name="result2">/WEB-INF/JspPage/chapter3/result2.jsp</result>
+    <result name="chapter3">/WEB-INF/JspPage/chapter3/chapter3.jsp</result>
+   </action>
+</package> 
+
+第三种方式:通配符方式(官网推荐使用)
+首先得关闭开关
+<constant name="struts.enable.DynamicMethodInvocation" value="false" /> 
+这一种方式是由第一种转变过来的,我们可以看到,第一种方式有很多重复的代码,那么我们可以进行变形,看下面的代码
+<action name="chapter3_*" class="chapter3.action.Chapter3Action"
+method="{1}">
+<result name="test">/…/test.jsp</result>
+</action> 
+chapter3_*这里的*就是你呆会要匹配的字符串,即你在后面的请求中得这样写
+http://...../ chapter3_create 或 http://...../ chapter3_update
+注意,这时你action中必须有create和update方法与之匹配,甚至还可以这样匹配
+<action name="chapter3_*" class="chapter3.action.Chapter3Action"
+method="{1}">
+<result name="test">/…/{1}.jsp</result>
+</action> 
+但是这时一定要有对应的JSP页面存在,并且相应的路径不能错,这就对我们的命名进行了强制性的规定,一定要规范.
+
+课堂示例:
+Action
+public class Chapter4Action extends ActionSupport {
+public String list(){
+   return "list";
+}
+
+public String create(){
+   return "create";
+}
+
+public String index(){
+   return "index";
+}
+} 
+XML:
+<action name="chapter4_*" class="chapter4.action.Chapter4Action" method="{1}">
+    <result name="{1}">/WEB-INF/JspPage/chapter4/chapter4_{1}.jsp</result>
+</action>

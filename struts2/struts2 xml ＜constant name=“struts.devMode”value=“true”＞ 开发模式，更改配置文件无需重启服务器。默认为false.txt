@@ -1,0 +1,8 @@
+struts2中的配置文件中只要添加以下配置，那么以后修改配置文件不用重启tomcat的方法
+开发模式，更改配置文件无需重启服务器
+---------------
+<struts>
+	<!--以下两项在生产模式中要去掉-->
+	<constant name="struts.devMode" value="false" /><!--开发模式，更改配置文件无需重启服务器。默认为false-->
+	<constant name="struts.convention.classes.reload" value="true" /><!--配置Convention插件自动重加载映射-->
+</struts>

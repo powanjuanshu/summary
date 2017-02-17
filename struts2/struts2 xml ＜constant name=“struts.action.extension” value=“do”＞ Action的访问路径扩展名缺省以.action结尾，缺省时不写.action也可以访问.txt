@@ -1,0 +1,33 @@
+首先查看一下你的web.xml文件。 <!-- 配置中央控制器 --> 
+<filter>  
+<filter-name>struts2</filter-name>  
+<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class> 
+</filter>  
+<filter-mapping>  
+<filter-name>struts2</filter-name>  
+<url-pattern>*.action</url-pattern>//如果这里写了.action。如果写了就必须要加.action。可以写/*这样就不需要写.action
+</filter-mapping>
+------------------------
+其实后缀是什么并不重要，可以以为xx.do什么的，看你在XML文件中是怎么配制过滤器的。  
+<servlet-mapping>
+<servlet-name>action</servlet-name>    
+<url-pattern>*.do</url-pattern>    
+</servlet-mapping>
+就在<url-pattern>里面改
+--------------------------
+将web.xml中url-pattern改成/*，然后再加上这个配置即可
+<struts>
+	<constant name="struts.action.extension" value="do"/>
+</struts>
+--------------------------
+用struts标签s:form会根据<constant name="struts.action.extension" value="do"/>自动在Action后面加do，即跳转的路径是jqgrid.do，如果不用struts标签s:form，而用标准的form，则跳转的路径是jqgrid，会包404
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<body>
+<s:form name="programBean" action='jqgrid' method="post"></s:form>
+<a onclick="javascript:document.forms[0].submit();">查询</a>
+</body>
+</html>
+

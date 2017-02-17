@@ -1,0 +1,15 @@
+所以这里struts的filter的url不要配置成/*，最好配成*.action或.jsp
+当你想不要进入struts时就不带后缀.action和.jsp，灵活运用
+
+<filter>
+  	<filter-name>struts2</filter-name>
+  	<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>struts2</filter-name>
+  	<url-pattern>*.action</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>struts2</filter-name>
+  	<url-pattern>*.jsp</url-pattern>
+  </filter-mapping>

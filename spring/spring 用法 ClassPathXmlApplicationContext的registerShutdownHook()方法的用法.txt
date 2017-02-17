@@ -1,0 +1,36 @@
+package cz;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class TesMain {
+	public static void main(String[] args) throws Exception{
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+		ctx.registerShutdownHook();
+		//如果没有ctx.registerShutdownHook，则注释下面语句（或执行stop方法），不会调用des方法，但执行destroy方法，任然会调用des方法
+		ctx.stop(); //ctx.destroy; 
+	}
+}
+---------------
+package cz;
+public class AAA {
+	public void ini(){
+		System.out.println("ini");
+	}
+	public void des(){
+		System.out.println("des");
+	}
+}
+----------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<bean id="aaa" class="cz.AAA" init-method="ini" destroy-method="des"/>
+</beans>

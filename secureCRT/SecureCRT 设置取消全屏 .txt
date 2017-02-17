@@ -1,0 +1,2 @@
+ALT+ENTER 来切换
+或者ALT+V -> 取消Full Screen

@@ -1,0 +1,48 @@
+case语句格式:
+case 值 in
+模式1)
+  命令1
+  ;;
+模式2)
+  命令2
+  ;;
+esac
+
+case取值后面必须为单词in,每一模式必须以右括号结束.取值可以为变量或常数.匹配发现取值符合某一模式后,其间所有命令开始执行直至;;.
+模式匹配符*表示任意字符,?表示任意单字符,[..]表示类或范围中任意字符.
+
+#!/bin/bash
+#case select
+echo -n "Enter a number from 1 to 3:"
+read ANS
+case #ANS in
+1)
+  echo "you select 1"
+  ;;
+2)
+  echo "you select 2"
+  ;;
+3)
+  echo "you select 3"
+  ;;
+y|Y)
+  echo "you select #ANS"
+  ;;
+*)
+  echo "`basename #0`: This is not between 1 and 3" >&2
+  exit;
+  ;;
+esac
+
+
+
+  
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{
+					"classpath:META-INF/spring/a.bean.xml", 
+					"classpath*:META-INF/spring/b.bean.xml"});
+---------------------
+两种写法是希望在当前程序的classpath下去加载META-INF/spring/a.bean.xml和META-INF/spring/b.bean.xml.
+
+前者没有*作为前缀,在classpath下面找不到META-INF/spring/a.bean.xml时,程序会马上抛出FileNotFoundException,提示你文件找不到,这种Fail Fast的风格,在定位问题的时候可能很有帮助.
+
+后者因为加上了*通配符,所以即使在classpath下面找不到META-INF/spring/b.bean.xml时,程序只会偷偷忍掉,不做任何错误提示.当然,这在某些特定的场景下,可能也是有意义的.
+
+

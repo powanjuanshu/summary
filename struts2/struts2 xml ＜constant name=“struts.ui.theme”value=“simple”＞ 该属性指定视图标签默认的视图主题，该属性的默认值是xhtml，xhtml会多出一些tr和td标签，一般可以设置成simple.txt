@@ -1,0 +1,5 @@
+该属性指定视图标签默认的视图主题，该属性的默认值是xhtml，xhtml会多出一些tr和td标签，一般可以设置成simple
+---------------
+<struts>
+	<constant name="struts.ui.theme" value="simple"/><!--该属性指定视图标签默认的视图主题，该属性的默认值是xhtml，xhtml会多出一些tr和td标签，一般可以设置成simple-->
+</struts>
