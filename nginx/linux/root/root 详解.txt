@@ -1,0 +1,23 @@
+root:http核心模块
+语法：root path 
+默认值：root html 
+使用字段：http, server, location ,location中的if字段
+请求到达后的文件根目录,可以是相对路径,也可以是绝对路径。
+----------------------------
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+
+        location / {
+                root lijie; #表示nginx安装目录下的lijie目录(/usr/local/nginx/lijie/),如果是root /lijie;表示linux的/lijie的目录
+                index index.html;
+        }
+    }
+}

@@ -1,0 +1,513 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<title>linux/centos安装nginx常见错误及解决办法-linux服务器应用-黑吧安全网</title>
+<meta name="keywords" content="linux/centos安装nginx常见错误及解决办法,服务器 - linux服务器应用" />
+<meta name="description" content=" 1. 安装完成Nginx后无法站外访问？   刚安装好nginx一个常见的问题是无法站外访问，本机wget、telnet都正常。而服务器之外，不管是局域网的其它主机还是互联网的主机都无法访问站点。如果用telnet的话，提示： 正在连接到" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
+<link href="http://static.myhack58.com/css/global.css" rel="stylesheet" type="text/css" />
+<script src="http://static.myhack58.com/js/main.js" type="text/javascript"></script>
+<script>
+function tab(o,o2,n,o1c,o2c){
+			var m_n = document.getElementById(o).getElementsByTagName(o1c);
+			var c_n = document.getElementById(o2).getElementsByTagName(o2c);
+			for(i=0;i<m_n.length;i++){
+				 m_n[i].className=i==n?"on":"";
+ 				 c_n[i].className=i==n?"dis":"undis";
+				 }
+		}
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?020d6208a1c666d9504e5a1eac65ed67";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<div id="page" class="wrap">
+<DIV class=miniNav>
+<UL class=t_r>
+  <LI><A 
+  onclick="this.style.behavior='url(#default#homepage)';this.sethomepage('http://www.myhack58.com');" 
+  href="http://www.myhack58.com/#">设为首页</A> </LI>
+  <LI><a href="javascript:window.external.addFavorite('http://www.myhack58.com','黑吧安全网');">收藏本站</a> </LI>
+  <LI><A href="http://bbs.myhack58.com/" target="_blank">技术论坛</A> </LI>
+  <LI><A href="http://vip.myhack58.com/" target="_blank">技术培训</A> </LI>
+  <LI><A href="http://www.myhack58.com/public.html" target="_blank">作品投稿</A> </LI>
+  <LI><A href="http://feed.myhack58.com" target="_blank">RSS订阅</A> </LI>
+  <LI><a target="_blank" href="http://list.qq.com/cgi-bin/qf_invite?id=0360cf41d650bb4cd469ae58bc682833894116c7169f0de0">订阅到邮箱</a> </LI>
+  
+  
+</UL><A 
+href="#" target=_blank>欢迎来到 <FONT 
+color=#e20300><STRONG>黑吧</STRONG></FONT><STRONG></STRONG><FONT 
+color=#1274b5><STRONG>安全网</STRONG></FONT> 聚焦网络安全前沿资讯，精华内容，交流技术心得！</A></DIV>
+  <!-- 网站头部模版 -->
+  <div id="header">
+    <div id="logo"> <a href="/"><img width="141" height="62" alt="黑吧安全网  www.myhack58.com" src="http://static.myhack58.com/img/logo.jpg"></a> </div>
+  <div id="rss"><script type="text/javascript" src="http://www.myhack58.com/acdb02/banner.js"></script> </div>
+  
+    <!-- 网站搜索 -->
+    <div id="search">
+     	<form action="/search.asp" name="formsearch">
+			<select class="btn_x" onchange="changetype();" id="searchtxt" name="m" gtbfieldid="3">
+            <option value="1">文章</option>
+            <option value="2">软件</option>
+       
+          </select>
+				<input type="hidden" name="kwtype" value="0" />
+				<input name="word" type="text" class="keyword" id="search-keyword" /><input name="" type="submit" class="search-submit" value="搜索" />
+			</form>
+    </div>
+    <div class="box10"></div>
+    <!-- 网站导航 -->
+    <ul id="nav">
+      <li><a class="fb" href="/">本站首页</a></li>
+      	<li id="tabmenu1"><a href="/Article/html/1/Article_001_1.htm" title="最新事件"><span>最新事件</span></a></li>
+<li id="tabmenu2"><a href="/Article/html/2/Article_002_1.htm" title="漏洞预警"><span>漏洞预警</span></a></li>
+<li id="tabmenu3"><a href="/Article/html/3/Article_003_1.htm" title="入侵检测"><span>入侵检测</span></a></li>
+<li id="tabmenu4"><a href="/Article/60/Article_060_1.htm" title="黑客防御"><span>黑客防御</span></a></li>
+<li id="tabmenu5"><a href="/Article/48/Article_048_1.htm" title="操作系统"><span>操作系统</span></a></li>
+<li id="tabmenu6"><a href="/Article/free/Article_069_1.htm" title="免费资源"><span>免费资源</span></a></li>
+<li id="tabmenu7"><a href="/Article/64/Article_064_1.htm" title="病毒防范"><span>病毒防范</span></a></li>
+<li id="tabmenu8"><a href="/Article/sort097/Article_097_1.htm" title="无线安全"><span>无线安全</span></a></li>
+<li id="tabmenu9"><a href="/Article/sort099/Article_099_1.htm" title="服务器"><span>服务器</span></a></li>
+<li id="tabmenu10"><a href="/Article/68/Article_068_1.htm" target="_blank" title="编程开发"><span>编程开发</span></a></li>
+<li id="tabmenu11"><a href="/Article/sort0103/Article_103_1.htm" target="_blank" title="网站建设"><span>网站建设</span></a></li>
+
+	  
+	   </ul>
+    <div id="subnav"><a href="/Soft/html/9/Soft_009_1.htm" title="技术视频教程"><span>技术视频教程</span></a> | <a href="/Soft/html/12/Soft_012_1.htm" title="破解加密"><span>破解加密</span></a> | <a href="/Soft/html/13/Soft_013_1.htm" title="综合资源"><span>综合资源</span></a> | <a href="/Soft/html/15/Soft_015_1.htm" title="安全软件"><span>安全软件</span></a> | <a href="/Soft/53/Soft_053_1.htm" title="综合类学习视频教程"><span>综合类学习视频教程</span></a> | <a href="/Soft/46/Soft_046_1.htm" title="网吧技术"><span>网吧技术</span></a> | <a href="/Soft/sort098/Soft_098_1.htm" title="服务器软件"><span>服务器软件</span></a> | 
+	</div>
+  </div>
+
+   <div id="ad_index_bottom" class="grid-3">
+<script type="text/javascript" src="http://www.myhack58.com/acdb02/top1.js"></script> 
+    </div>
+  <div class="box10"></div>
+  <!-- 网站内容模版 -->
+  <div class="pc0359">
+  <div id="content1" class="grid-2">
+	<div id="nav_bread">
+      
+        <h3>当前位置：<a href="/">首页</a>&nbsp;>&nbsp;<a href="/Article/sort099/Article_099_1.htm">服务器</a> > <a href="/Article/sort099/sort0102/Article_102_1.htm">linux服务器应用</a>&nbsp;>&nbsp;linux/centos安装nginx常见错误及解决办法</h3>
+        <div class="clear"></div>
+
+      </div>
+	
+	
+    <div class="main">
+      
+      <div id="main_content">
+      	 <div class="hd">
+            <h1>linux/centos安装nginx常见错误及解决办法</h1>
+            
+              <div class="info">
+              	<span class="where">来源：本站转载</span>
+                <span class="author">作者：佚名</span>
+                <span class="time">时间：2014-02-07</span>
+				<span class="">TAG：<a href="/Article/tag.asp?name=centos" target="_blank">centos</a> <a href="/Article/tag.asp?name=nginx" target="_blank">nginx</a> </span>
+                   <span class=""><b><a href="/public.html"><font color="#ff0000">我要投稿</font></a></b></span>
+              </div>
+          </div>
+
+         <div class="bd f16">
+		 
+
+             				<tr><td><p>&nbsp;1. 安装完成Nginx后无法站外访问？</p>
+<div>&nbsp;</div>
+<div>&nbsp; 刚安装好nginx一个常见的问题是无法站外访问，本机wget、telnet都正常。而服务器之外，不管是局域网的其它主机还是互联网的主机都无法访问站点。如果用telnet的话，提示：</div>
+<div>&nbsp;</div>
+<div>正在连接到192.168.0.xxx...不能打开到主机的连接， 在端口 80: 连接失败</div>
+<div>&nbsp;</div>
+<div>如果用wget命令的话，提示：</div>
+<div>&nbsp;</div>
+<div>Connecting to 192.168.0.100:80... failed: No route to host.</div>
+<div>&nbsp;</div>
+<div>如果是以上的故障现象，很可能是被CentOS的防火墙把80端口拦住了，尝试执行以下命令，打开80端口：</div>
+<div>&nbsp;</div>
+<div>iptables -I INPUT -p tcp --dport 80 -j ACCEPT</div>
+<div>&nbsp;</div>
+<div>然后用：</div>
+<div>&nbsp;</div>
+<div>/etc/init.d/iptables status</div>
+<div>&nbsp;</div>
+<div>查看当前的防火墙规则，如果发现有这样一条：</div>
+<div>&nbsp;</div>
+<div>ACCEPT &nbsp; &nbsp; tcp &nbsp;-- &nbsp;0.0.0.0/0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;0.0.0.0/0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; tcp dpt:80</div>
+<div>&nbsp;</div>
+<div>就说明防火墙规则已经添加成功了，再在站外访问就正常了。</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>2. 编译pcre错误(源码安装nginx必须先要装pcre)</div>
+<div>&nbsp;</div>
+<div>libtool: compile: unrecognized option `-DHAVE_CONFIG_H'</div>
+<div>&nbsp;</div>
+<div>libtool: compile: Try `libtool --help' for more information.</div>
+<div>&nbsp;</div>
+<div>make[1]: *** [pcrecpp.lo] Error 1</div>
+<div>&nbsp;</div>
+<div>make[1]: Leaving directory `/usr/local/src/pcre-8.21'</div>
+<div>&nbsp;</div>
+<div>make: *** [all] Error 2</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>解决办法：安装g++,别忘了重新configure</div>
+<div>&nbsp;</div>
+<div>apt-get install g++</div>
+<div>&nbsp;</div>
+<div>apt-get install build-essential</div>
+<div>&nbsp;</div>
+<div>make clean</div>
+<div>&nbsp;</div>
+<div>./configure</div>
+<div>&nbsp;</div>
+<div>make</div>
+<div>&nbsp;</div>
+<div>3. make出错</div>
+<div>&nbsp;</div>
+<div>make: *** No rule to make target `build', needed by `default'. &nbsp;Stop.</div>
+<div>&nbsp;</div>
+<div>./configure: error: SSL modules require the OpenSSL library.</div>
+<div>&nbsp;</div>
+<div>You can either do not enable the modules, or install the OpenSSL library</div>
+<div>&nbsp;</div>
+<div>into the system, or build the OpenSSL library statically from the source</div>
+<div>&nbsp;</div>
+<div>with nginx by using --with-openssl=&lt;path&gt; option.</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>ubuntu下解决办法:</div>
+<div>&nbsp;</div>
+<div>apt-get install openssl</div>
+<div>&nbsp;</div>
+<div>apt-get install libssl-dev</div>
+<div>&nbsp;</div>
+<div>centos下解决办法:</div>
+<div>&nbsp;</div>
+<div>yum -y install openssl openssl-devel</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>4.依赖软件prce,ssl,zlib未安装错误</div>
+<div>&nbsp;</div>
+<div>1)如果报错</div>
+<div>&nbsp;</div>
+<div>./configure: error: the HTTP rewrite module requires the PCRE library.</div>
+<div>&nbsp;</div>
+<div>You can either disable the module by using --without-http_rewrite_module</div>
+<div>&nbsp;</div>
+<div>option, or install the PCRE library into the system, or build the PCRE library</div>
+<div>&nbsp;</div>
+<div>statically from the source with nginx by using --with-pcre=&lt;path&gt; option.</div>
+<div>&nbsp;</div>
+<div>需要安装pcre包</div>
+<div>&nbsp;</div>
+<div>Pcre</div>
+<div>&nbsp;</div>
+<div>tar zxvf pcre-8.12.tar.gz</div>
+<div>&nbsp;</div>
+<div>cd pcre-8.12</div>
+<div>&nbsp;</div>
+<div>./configure</div>
+<div>&nbsp;</div>
+<div>make</div>
+<div>&nbsp;</div>
+<div>make install</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>2)如果报错</div>
+<div>&nbsp;</div>
+<div>./configure: error: the HTTP cache module requires md5 functions</div>
+<div>&nbsp;</div>
+<div>from OpenSSL library. &nbsp;You can either disable the module by using</div>
+<div>&nbsp;</div>
+<div>--without-http-cache option, or install the OpenSSL library into the system,</div>
+<div>&nbsp;</div>
+<div>or build the OpenSSL library statically from the source with nginx by using</div>
+<div>&nbsp;</div>
+<div>--with-http_ssl_module --with-openssl=&lt;path&gt; options.</div>
+<div>&nbsp;</div>
+<div>需要安装openssl</div>
+<div>&nbsp;</div>
+<div>tar zxvf openssl-0.9.8g.tar.gz</div>
+<div>&nbsp;</div>
+<div>cd openssl-0.9.8g</div>
+<div>&nbsp;</div>
+<div>./config --prefix=/usr/local/ --openssldir=/usr/local/openssl -g3 shared zlib-dynamic enable-camellia</div>
+<div>&nbsp;</div>
+<div>make</div>
+<div>&nbsp;</div>
+<div>make install</div>
+<div>&nbsp;</div>
+<div>测试是否安装成功：openssl version</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>3)如果报错</div>
+<div>&nbsp;</div>
+<div>configure: error: zlib not found.</div>
+<div>&nbsp;</div>
+<div>需要安装：gzip.tar.gz</div>
+<div>&nbsp;</div>
+<div>tar zxvf gzip.tar.gz</div>
+<div>&nbsp;</div>
+<div>./configure</div>
+<div>&nbsp;</div>
+<div>make</div>
+<div>&nbsp;</div>
+<div>make install</div></td></tr>			</table>			<!--内容正文-->
+
+             <div id="oh968">
+<!-- 将此标记放在您希望显示like按钮的位置 -->
+<div class="bdlikebutton"></div>
+
+<!-- 将此代码放在适当的位置，建议在body结束前 -->
+<script id="bdlike_shell"></script>
+<script>
+var bdShare_config = {
+	"type":"large",
+	"color":"green",
+	"uid":"384242"
+};
+document.getElementById("bdlike_shell").src="http://bdimg.share.baidu.com/static/js/like_shell.js?t=" + new Date().getHours();
+</script>
+              <!--分页导航-->
+             </div>
+
+
+    <div class="oh96">
+【声明】:黑吧安全网(http://www.myhack58.com)登载此文出于传递更多信息之目的，并不代表本站赞同其观点和对其真实性负责，仅适于网络安全技术爱好者学习研究使用，学习中请遵循国家相关法律法规。如有问题请联系我们，联系邮箱admin@myhack58.com，我们会在最短的时间内进行处理。
+
+
+<!-- Baidu Button BEGIN -->
+
+ <div id="oh96">
+					
+						
+
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_qzone"></a>
+<a class="bds_hi"></a>
+<a class="bds_youdao"></a>
+<a class="bds_sdo"></a>
+<a class="bds_qingbiji"></a>
+<a class="bds_kanshou"></a>
+<a class="bds_xg"></a>
+<a class="bds_mail"></a>
+<a class="bds_copy"></a>
+<a class="bds_print"></a>
+<span class="bds_more"></span>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=384242" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+</div>
+
+   </div>
+
+
+
+
+
+         </div>
+
+
+
+
+
+<div class="ft">
+ <div class="f14 f_blue"><span class="bold">上一篇：</span><a href="/Article/60/63/2014/42238.htm">SecureCRT中文乱码解决已设置UTF-8了</a><span class="hb">【<a href="/index.html">返回黑吧安全网首页</a>】【<a target="_blank" href="http://bbs.myhack58.com/">进入黑吧技术论坛</a>】</span></div>
+            <div class="f14 f_blue"><span class="bold">下一篇：</span><a href="/Article/sort099/sort0102/2014/42240.htm">webmin忘记密码重设方法</a></div>
+        </div>
+<!--cnzz tui-->
+	<script  type="text/javascript" c=gd  charset="utf-8"  src="http://tui.cnzz.net/cs.php?id=1000080047"></script>
+<!--cnzz tui-->
+			
+<div class="uy">
+	<!-- UY BEGIN -->
+<!--兼容版，可保证页面完全兼容-->
+<div id="SOHUCS"></div>
+<script>
+  (function(){
+    var appid = 'cyreOzJSR',
+    conf = 'prod_ec30ce7fd990720ee71be77e794fc64c';
+    var doc = document,
+    s = doc.createElement('script'),
+    h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+    s.type = 'text/javascript';
+    s.charset = 'utf-8';
+    s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+    h.insertBefore(s,h.firstChild);
+  })()
+</script>
+<!-- UY END -->			
+</div>	
+
+	
+
+	
+		
+
+		
+		
+      </div>
+
+    </div>
+    <div class="sub">
+
+	  
+<div class="CMBox">
+			
+			<ul class="adv32"><li><script type="text/javascript" src="http://www.myhack58.com/acdb02/fk.js"></script> </li></ul>
+			
+			<ul class="titul"><li>最新更新</li></ul>
+			<ul class="numul">
+				<li><a href="/Article/html/2/5/2014/50348.htm" title="某高校管理系统存在通用型SQL注入漏洞">某高校管理系统存在通用型SQL注入漏</a></li>
+<li><a href="/Article/html/2/5/2014/50347.htm" title="短信中国SQL注入漏洞">短信中国SQL注入漏洞</a></li>
+<li><a href="/Article/html/2/5/2014/50346.htm" title="PHPCMS后台低权限拿webSHELL">PHPCMS后台低权限拿webSHELL</a></li>
+<li><a href="/Article/html/2/5/2014/50345.htm" title="圆通某站点任意文件下载导致信息泄漏">圆通某站点任意文件下载导致信息泄</a></li>
+<li><a href="/Article/html/2/5/2014/50344.htm" title="赛迪网运维不当导致数据库可泄漏">赛迪网运维不当导致数据库可泄漏</a></li>
+<li><a href="/Article/sort097/2014/50343.htm" title="公共WiFi的全民时代">公共WiFi的全民时代</a></li>
+<li><a href="/Article/html/2/5/2014/50342.htm" title="绕过安全狗注入">绕过安全狗注入</a></li>
+<li><a href="/Article/html/2/5/2014/50341.htm" title="新型Mysql报错注入">新型Mysql报错注入</a></li>
+<li><a href="/Article/html/1/4/2014/50340.htm" title="美蒙大拿州医疗服务遭攻击 或致信息外泄">美蒙大拿州医疗服务遭攻击 或致信息</a></li>
+<li><a href="/Article/48/65/2014/50339.htm" title="Win7 的ReadyBoost 不加内存提速电脑">Win7 的ReadyBoost 不加内存提速电</a></li>
+
+			</ul>
+									
+			<ul class="lwhiteine"></ul>
+			
+			<div class="titul">
+				<ul>
+					<li>相关阅读</li>
+				</ul>
+			</div>
+			<ul class="iconul">
+					<li><a href="/Article/48/65/2014/50331.htm" title="如何在windows下远程链接linux主机"> ·如何在windows下远程链接linux主机...</a></li>
+<li><a href="/Article/48/66/2014/50330.htm" title="Linux服务器的初步配置设置流程"> ·Linux服务器的初步配置设置流程</a></li>
+<li><a href="/Article/48/66/2014/50259.htm" title="Linuxchmod命令详解"> ·Linuxchmod命令详解</a></li>
+<li><a href="/Article/48/66/2014/50250.htm" title="详解linux系统下SSH原理与运用"> ·详解linux系统下SSH原理与运用</a></li>
+<li><a href="/Article/48/66/2014/50249.htm" title="如何在Mac下配置Linux并安装Nginx+PHP"> ·如何在Mac下配置Linux并安装Nginx+...</a></li>
+<li><a href="/Article/68/2014/50229.htm" title="LINUXCGI编程"> ·LINUXCGI编程</a></li>
+<li><a href="/Article/48/67/2014/50199.htm" title="如何在MacBook Pro Retina上安装Linux"> ·如何在MacBook Pro Retina上安装Li...</a></li>
+<li><a href="/Article/48/66/2014/50198.htm" title="Linux系统ARP攻击的实现与防范"> ·Linux系统ARP攻击的实现与防范</a></li>
+<li><a href="/Article/sort099/sort0102/2014/50069.htm" title="在Ubuntu, Linux Mint上安装Nginx 1.6.0"> ·在Ubuntu, Linux Mint上安装Nginx ...</a></li>
+<li><a href="/Article/html/2/5/2014/50065.htm" title="Linux Kernel &amp;#39;/drivers/media/media-device.c&amp;#39;本地信息泄露漏洞"> ·Linux Kernel &#39;/drivers/media...</a></li>
+
+			</ul>
+			
+			
+			
+			<ul class="lwhiteine"></ul>
+			
+			<div class="titul">
+				<ul>
+					<li>本类热门</li>
+				</ul>
+			</div>
+			<ul class="iconul">
+					<li><a href="/Article/sort099/sort0102/2014/50069.htm" title="在Ubuntu, Linux Mint上安装Nginx 1.6.0">在Ubuntu, Linux Mint上安装Nginx 1.6.</a></li>
+<li><a href="/Article/sort099/sort0102/2014/50052.htm" title="在Ubuntu 14.04 上使用Bacula和Webmin设置备份服务器">在Ubuntu 14.04 上使用Bacula和Webmin设</a></li>
+<li><a href="/Article/sort099/sort0102/2014/49825.htm" title="CentOS6.5下编译安装Nginx1.40+PHP5.57+MySQL5.5.35">CentOS6.5下编译安装Nginx1.40+PHP5.57</a></li>
+<li><a href="/Article/sort099/sort0102/2014/49514.htm" title="memcached 分布式方案 Consistent Hashing算法">memcached 分布式方案 Consistent Hash</a></li>
+<li><a href="/Article/sort099/sort0102/2014/49424.htm" title="Centos搭建SVN服务器三步曲">Centos搭建SVN服务器三步曲</a></li>
+<li><a href="/Article/sort099/sort0102/2014/49044.htm" title="Unix与Linux之间的差异不可忽视">Unix与Linux之间的差异不可忽视</a></li>
+<li><a href="/Article/sort099/sort0102/2014/48951.htm" title="Centos6.3 JDK和tomcat安装配置">Centos6.3 JDK和tomcat安装配置</a></li>
+<li><a href="/Article/sort099/sort0102/2014/48917.htm" title="使用OpenVPN Access Server 轻松搭建 VPN 服务器">使用OpenVPN Access Server 轻松搭建 V</a></li>
+<li><a href="/Article/sort099/sort0102/2014/48915.htm" title="如何诊断CDN故障">如何诊断CDN故障</a></li>
+<li><a href="/Article/sort099/sort0102/2014/48832.htm" title="LNMP安装配置Zabbix搭建企业级监控平台">LNMP安装配置Zabbix搭建企业级监控平台</a></li>
+
+			</ul>
+			
+			
+			
+			<ul class="lwhiteine"></ul>
+			
+			<div class="titul">
+				<ul>
+					<li>最近下载</li>
+				</ul>
+			</div>
+			<ul class="iconul">
+					<li><a href="/Soft/html/15/39/2014/2014062522516.htm" title="SUMo Portable中文版|软件危险漏洞隐藏检查工具 V3.10.10.237">SUMo Portable中文版|软件危险漏洞隐藏</a></li>
+<li><a href="/Soft/html/15/50/2014/2014062522515.htm" title="win764位ark工具|AntiSpy中文版 v2.2">win764位ark工具|AntiSpy中文版 v2.2</a></li>
+<li><a href="/Soft/html/15/41/2014/2014062522514.htm" title="明明如月Access2003密码恢复助手|Access2003密码破解工具 V2.50">明明如月Access2003密码恢复助手|Acces</a></li>
+<li><a href="/Soft/html/15/50/2014/2014062222513.htm" title="百度音乐-ZD423修改 v9.0.2 绿色破解VIP精简版 -">百度音乐-ZD423修改 v9.0.2 绿色破解VI</a></li>
+<li><a href="/Soft/html/15/50/2014/2014062222512.htm" title="最著名的IRC客户端 - mIRC v7.34">最著名的IRC客户端 - mIRC v7.34</a></li>
+<li><a href="/Soft/html/15/50/2014/2014062222511.htm" title="AIDA64 Extreme Edition v4.50.3019 绿色中文注册版">AIDA64 Extreme Edition v4.50.3019 绿</a></li>
+<li><a href="/Soft/html/15/39/2014/2014062222510.htm" title="瑞星路由卫士">瑞星路由卫士</a></li>
+<li><a href="/Soft/html/15/39/2014/2014062222509.htm" title="Stunnel 通讯隧道加密 v5.02">Stunnel 通讯隧道加密 v5.02</a></li>
+<li><a href="/Soft/html/15/32/2014/2014062222508.htm" title="Digital Defender Antivirus Free 免费杀毒软件 v3.3.62">Digital Defender Antivirus Free 免费</a></li>
+<li><a href="/Soft/html/15/32/2014/2014062222507.htm" title="迈克菲出品的Rootkit清除工具 - McAfee Rootkit Remover v0.8.9.174">迈克菲出品的Rootkit清除工具 - McAfee</a></li>
+
+			</ul>
+			
+			
+			
+			
+			
+			 </div>
+	  
+  
+  	 </div>
+
+    </div>
+    
+  </div>
+  
+  <div class="box10"></div>
+   <div id="ad_index_bottom" class="grid-3">
+<script type="text/javascript" src="http://www.myhack58.com/acdb02/indexfoot.js"></script> 
+    </div>
+  <div class="box10"></div><!--广告-->
+
+    
+<!-- 网站底部模版 -->
+  <div id="footer" class="grid-3">
+    <ul>
+
+	  
+	 <li> <a href="/contact.html" >联系我们</a> <em>|</em> </li>
+<li> <a href="/about.html" >关于我们</a> <em>|</em> </li> 
+<li> <a href="/copyright.html" >免责条款</a> <em>|</em> </li>
+<li> <a href="/ad.html" >广告服务</a> <em>|</em> </li>
+<li> <a href="/public.html" >作品投稿</a> <em>|</em></li> 
+<li> <a href="/sitemap.html" >网站地图</a> <em>|</em></li> 
+<li> <a href="http://feed.myhack58.com" >RSS订阅</a> <em>|</em></li>
+<li> <a href="http://bbs.myhack58.com" >技术交流论坛</a> <em>|</em> </li> 
+<li> <a href="http://vip.myhack58.com/" target="_blank">网络安全培训</a> <em></em> </li>
+
+	  
+	  
+	  
+	  
+	  
+	  
+    </ul>
+    <p class="clear">工信部网站备案号：湘ICP备11018141号 <a target="_blank" rel="nofollow" href="http://bbs.myhack58.com/wjba.htm">湖南省公安厅网监总队备案号：4304001000018</a>   网站法律顾问：<a href="http://www.myhack58.com/flgw.htm" target="_blank" rel="nofollow">上海庄毅雄律师</a>　武汉黄灿律师</p>
+    <p class="clear">本站内容来自于互联网,仅适于网络安全技术爱好者学习研究使用，学习中请遵循国家相关法律法规，黑客不作恶，黑客维护网络安全</p>
+	<p class="clear">建议使用IE8及以上版本或Chrome、Firefox等等浏览器访问本站，可获得更好的用户体验。</p>
+    <p class="clear">版权所有:<a href="http://www.myhack58.com/" >黑吧安全网</a>--品质来自专业，专业打造IT技术精英</p>
+ 
+  </div>
+</div>
+
+
+</body>
+</html>

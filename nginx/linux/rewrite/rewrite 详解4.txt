@@ -1,0 +1,213 @@
+超详细的 NGINX URL重写实例讲解
+
+本文介绍nginx URL重写的相关知识，包括301重定向的内容等，希望对大家有所帮助。
+
+nginx rewrite 实现二级域名跳转
+当访问http://abc.test.com跳转到http://www.test.com/test/abc/
+
+方法一:
+这种方法浏览器地址会变www.test.com/test/abc
+实现访问如下:
+ 
+复制代码 代码如下:
+server {
+        listen 80;
+        server_name www.test.com;
+        location / {
+                root /data/test;
+                index index.html;
+        }
+}
+server {
+        listen 80;
+        server_name *.test.com;
+        if ( $http_host ~* "^(.*)\.test\.com$") {
+                set $domain $1;
+                rewrite ^(.*) http://www.test.com/test/$domain/ break;
+        }
+}
+
+方法二、
+当访问http://abc.test.com跳转到http://www.test.com/test/abc/
+ 
+复制代码 代码如下:
+server {
+        listen 80;
+        server_name *.test.com;
+        root /usr/local/www;
+        #这是里可以加多个目录,如果不加目录，会无法访问到abc.test.com/目录下的文件,如图片目录/images
+        location ~ ^/(test|images|styles)/
+        {
+                proxy_redirect        off;
+                proxy_set_header    Host   www.test.com;
+                proxy_pass      http://192.168.1.2:8080;
+        }
+        location / {
+                set $domain default;
+                if ( $http_host ~* "^(.*)\.test\.com$") {
+                        set $domain $1;
+                }
+                rewrite ^/(.*)    /test/$domain/$1 last;
+        }
+        access_log off;
+}
+
+rewrite命令
+nginx的rewrite相当于apache的rewriterule(大多数情况下可以把原有apache的rewrite规则加上引号就可以直接使用)，它可以用在server,location 和IF条件判断块中,命
+
+令格式如下：
+rewrite 正则表达式 替换目标 flag标记
+flag标记可以用以下几种格式：
+last - 基本上都用这个Flag。
+break - 中止Rewirte，不在继续匹配
+redirect - 返回临时重定向的HTTP状态302
+permanent - 返回永久重定向的HTTP状态301
+例如下面这段设定nginx将某个目录下面的文件重定向到另一个目录,$2对应第二个括号(.*)中对应的字符串：
+ 
+复制代码 代码如下:
+location /download/ {
+        rewrite ^(/download/.*)/m/(.*)\..*$ $1/nginx-rewrite/$2.gz break;
+}
+
+nginx重定向的IF条件判断
+在server和location两种情况下可以使用nginx的IF条件判断，条件可以为以下几种：
+正则表达式
+
+如：
+匹配判断
+~ 为区分大小写匹配; !~为区分大小写不匹配
+~* 为不区分大小写匹配；!~为不区分大小写不匹配
+
+就是当用户输入 www.a.com.cn 自动跳转到www.a.com 这个域名：
+
+rewrite ^/(.*)$ http://www.a.com/$1 permanent; 或者cname
+例如下面设定nginx在用户使用ie的使用重定向到/nginx-ie目录下：
+if ($http_user_agent ~ MSIE) {
+        rewrite ^(.*)$ /nginx-ie/$1 break;
+}
+文件和目录判断
+-f和!-f判断是否存在文件
+-d和!-d判断是否存在目录
+-e和!-e判断是否存在文件或目录
+-x和!-x判断文件是否可执行
+
+例如下面设定nginx在文件和目录不存在的时候重定向：
+ 
+复制代码 代码如下:
+if (!-e $request_filename) {
+        proxy_pass http://127.0.0.1;
+}
+
+return
+返回http代码，例如设置nginx防盗链：
+ 
+复制代码 代码如下:
+location ~* \.(gif|jpg|png|swf|flv)$ {
+        valid_referers none blocked www.jefflei.comwww.leizhenfang.com;
+        if ($invalid_referer) {
+                return 404;
+        }
+}
+
+记一正则，匹配非某单词
+由于要rewrite一个地址从
+/mag/xx/xxx/ -> /m/xxx
+但原先 /mag/xx/more/ 要保留
+这就得写一个比较奇特的正则了，尝试了比较多的写法也没成功
+
+最先想到的是：
+ 
+复制代码 代码如下:
+location ~* ^/mag/[^/]+/[^(more)]+/ {
+  rewrite ^/mag/[^/]+/(.*) /m/$1 permanent;
+}
+
+[]的写法并不凑效，里面是匹配单个字符的，这样无效，匹配不了
+
+还是小范同学不错，研究的深入，提供了非某单词的写法 (?!more)
+ 
+复制代码 代码如下:
+location ~* ^/mag/[^/]+/(?!more)([^/]+)/ {
+  rewrite ^/mag/[^/]+/(.*) /m/$1 permanent;
+}
+
+这个写法勉强可以应付了，后面的匹配单元虽说还不完美，但也能够对付我的所有需求内容了。
+有需要的可以参考此写法。
+
+常用分组语法
+
+捕获
+(exp) 匹配exp,并捕获文本到自动命名的组里
+(?exp) 匹配exp,并捕获文本到名称为name的组里，也可以写成(?'name'exp)
+(?:exp) 匹配exp,不捕获匹配的文本，也不给此分组分配组号
+(?=exp) 匹配exp前面的位置
+(?<=exp) 匹配exp后面的位置
+(?!exp) 匹配后面跟的不是exp的位置
+(?<!exp) 匹配前面不是exp的位置
+
+为何要使用301重定向
+
+在网站建设中需要网页重定向的情况很多：如网页目录结构变动，网页重命名、网页的扩展名改变、网站域名改变等。如果不做重 定向，用户的收藏和搜索引擎数据库中的旧地址只能让访客得到一个404错误信息页面，访问流量白白丧失。不仅如此，之前该页面的一切积累（比如PR值）就 都白费了。
+
+301重定向不仅能使页面实现自动跳转，对于搜索引擎来说，也可能可以传递PR值。
+
+nginx重定向规则详细介绍，请参考：http://www.jbxue.com/article/2186.html
+
+301重定向方法
+
+进行了301重定向，把www .jefflei.com和jefflei.com合并，并把之前的域名也一并合并. 有两种实现方法,第一种方法是判断nginx核心变量host(老版本是http_host)：
+ 
+复制代码 代码如下:
+server {
+server_name www.jefflei.com jefflei.com ;
+if ($host != 'www.jefflei.com' ) {
+rewrite ^/(.*)$ http://www.jefflei.com/$1 permanent;
+}
+...
+}
+ 
+
+第二种方法：
+ 
+复制代码 代码如下:
+server {
+server_name jefflei.com;
+rewrite ^/(.*) http://www.jefflei.com/$1 permanent;
+}
+
+测试了第一种方法ok，这两种方法中， permanent是关键，详细说明见nginx重定向规则说明。
+
+last – 基本上都用这个Flag。
+break – 中止Rewirte，不在继续匹配
+redirect – 返回临时重定向的HTTP状态302
+permanent – 返回永久重定向的HTTP状态301
+
+好了,现在可以检查结果，这里可以看返回的HTTP头信息：
+http://www.seoconsultants.com/tools/headers.asp
+
+第二种方法没有测试成功...
+
+测试是否定向成功
+http://qinfy.net/301-redirect-for-nginx/
+
+输入指令~
+/usr/local/nginx/sbin/nginx -t
+
+提示：
+the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok
+configuration file /usr/local/nginx/conf/nginx.conf test is successful
+
+测试成功~ 重启nginx~ 输入指令~
+/usr/local/nginx/sbin/nginx -s reload
+
+重启之后测试一下~是否成功设定完成！ 输入指令~
+curl -I imcat.tk
+
+会输出：
+HTTP/1.1 301 Moved Permanently
+Server: nginx/0.7.65
+Date: Tue, 03 Aug 2010 01:12:37 GMT
+Content-Type: text/html
+Content-Length: 185
+Connection: keep-alive
+Location: http://qinfy.net/

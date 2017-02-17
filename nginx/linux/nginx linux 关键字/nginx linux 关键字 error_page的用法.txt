@@ -1,0 +1,66 @@
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        error_page 404 /404.html; #因为默认的root为nginx的根目录下的html目录,那么404会去找nginx根目录下的html下的404页面
+    }
+}
+-----------------------
+上面和下面效果相同
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name xxx;
+        error_page 500 502 404 503 504 /50x.html; #如果包404错误会去找下面的location,然后在/lijie目录下找50x.html文件,即完整会去找/lijie/50x.html这个文件
+        location /50x.html {
+                root /lijie;
+        }
+    }
+}
+-----------------------
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        root /html;
+        error_page 404 /404.html; #因为指定了root为/html,那么404会去找/html/404.html
+	error_page 500 502 503 504 /50x.html;
+        error_page 403=http://www.xxx.com/404.html;
+    }
+}
+-----------------------
+如果碰巧网站出了问题,或者用户试图访问一个并不存在的页面时,此时服务器会返回代码为404的错误信息,此时对应页面就是404页面
+404页面的默认内容和具体的服务器有关。如果后台用的是NGINX服务器,那么404页面的内容则为:404 Not Found
+为什么要自定义404页面
+在访问时遇到上面这样的404错误页面,我想99%(未经调查,估计数据)的用户会把页面关掉,用户就这样悄悄的流失了
+如果此时能有一个漂亮的页面能够引导用户去他想去的地方必然可以留住用户.因此,每一个网站都应该自定义自己的404页面
+NGINX下如何自定义404页面
+IIS和APACHE下自定义404页面的经验介绍文章已经非常多了,NGINX的目前还比较少,为了解决自家的问题特地对此作了深入的研究。研究结果表明:
+NGINX下配置自定义的404页面是可行的,而且很简单,只需如下几步:
+1.创建自己的404.html页面 
+2.更改nginx.conf在http定义区域加入: fastcgi_intercept_errors on; 
+3.更改nginx.conf(或单独网站配置文件,例如在nginx -> sites-enabled下的站点配置文件)
+中在server区域加入:error_page 404  /404.html或者error_page 404=http://www.xxx.com/404.html
+
+
+

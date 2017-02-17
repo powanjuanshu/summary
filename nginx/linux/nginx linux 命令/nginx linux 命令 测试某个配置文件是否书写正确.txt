@@ -1,0 +1,6 @@
+/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/lijie/lijie.conf 
+Êä³ö:
+nginx: the configuration file /usr/local/nginx/lijie/lijie.conf syntax is ok
+nginx: configuration file /usr/local/nginx/lijie/lijie.conf test is successful
+
+

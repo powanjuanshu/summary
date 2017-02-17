@@ -1,0 +1,50 @@
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    upstream tomcats {
+        server 192.168.242.88:8080 weight=50;
+        server 192.168.242.88:9080 weight=50;
+
+    }
+    server {
+        listen 801; #会监听本机的801端口
+        server_name yyyy;
+        location ~ ^/images/ {
+                root /lijie/abc/css;
+        }
+    }
+    server {
+        listen 802; #会监听本机的802端口
+        server_name xxxx;
+        location ~ ^/images/ {
+                root /lijie/abc/sky;
+        }   
+            
+    }
+    server {
+        listen 808; #会监听本机的808端口
+        server_name www.testtestxxsddffds.com;
+        location ~ ^/NginxStatus/ {
+                stub_status on;
+                access_log on;
+        }
+    
+        #location ~ ^/images/ {
+        #       root /lijie/abc/sky;
+        #}
+
+        #location ~ \.(htm|html|gif|jpg|jpeg|png|bmp|ico|css|js|txt)$ {
+        #       root /lijie/abc/lyn;
+        #       expires 24h;
+        #}
+    }
+}
+------------------------------
+访问的时候要带上端口号:http://192.168.242.88:802/images/abc.jpg
+

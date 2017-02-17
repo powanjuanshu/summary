@@ -1,0 +1,1 @@
+在nginx的根目录下的html目录放一个favicon.ico图片,浏览器左上角会出现这个logo

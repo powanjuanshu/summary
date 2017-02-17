@@ -1,0 +1,107 @@
+1.检查安装nginx的依赖性,nginx的模块需要第三方库的支持,检查是否安装下列库:
+  zlib,zlib-devel,openssl,openssl-devel,prce,prce-devel
+  #rpm -qa|grep zlib
+	zlib-devel-1.1.4-8
+	zlib-1.1.4-8
+  #rpm -qa|grep openssl
+	openssl-0.9.7a-2
+	openssl-devel-0.9.7a-2
+  #rpm -qa|grep gcc
+	compat-gcc-c++-7.3-2.96.118
+	gcc-c++-3.2.2-5
+	gcc-java-3.2.2-5
+	libgcc-3.2.2-5
+	compat-gcc-7.3-2.96.118
+	gcc-3.2.2-5
+	gcc-gnat-3.2.2-5
+	gcc-objc-3.2.2-5
+	gcc-g77-3.2.2-5
+  #rpm -qa|grep autoconf
+	autoconf-2.57-3
+  #rpm -qa|grep automake
+	automake14-1.4p6-5.1
+	automake-1.6.3-5
+	automake15-1.5-6
+  还有必须安装prce
+
+2.添加nginx使用的用户和组:
+  #groupadd nginx            // nginx使用的组
+  #useradd -g nginx nginx    // nginx使用用户
+3.安装:
+  #cd /home/tar_packet/
+  #tar -zxvf nginx-1.6.2.tar.gz -C /home/install_packet/
+  #cd ../install_packet/
+  #cd nginx-1.6.2
+  #ls
+	auto  CHANGES  CHANGES.ru  conf  configure  contrib  html  LICENSE  Makefile  man  objs  README  src
+  #./configure --prefix=/usr/local/nginx \                  #定义一个目录,存放服务器上的文件,也就是nginx的安装目录.默认使用/usr/local/nginx.
+    --user=nginx \					    #设置nginx工作进程的用户.安装完成后,可随时更改的名称,在nginx.conf配置文件中.使用的user指令.默认用户名为nobody
+    --group=nginx \					    #设置nginx工作进程的组.安装完成后,可随时更改的名称,在nginx.conf配置文件中,使用的user指令.默认为非特权用户.
+    --with-http_stub_status_module \                        #启用server status页,其中参数--with-http_stub_status_module是为了启用nginx的NginxStatus功能，用来监控Nginx的当前状态.
+    --with-openssl=/home/install_packet/openssl-0.9.8g      #开启http ssl模块,使nginx可以支持https请求,这个模块需要已经安装openssl.(openssl的源码包的地址,不是安装路径)(或者写成--with-http_ssl_module经过验证好像不行)
+    回车后打印:
+    checking for OS
+    + Linux 2.6.18-164.eI5 i686
+    checking for C compiler ... found
+    checking for gcc builtin atomic operations ... not found
+    ......
+    nginx http uwsgi temporary files:"uwsgi_temp"
+    nginx http scgi temporary files:"scgi_temp"
+  #make
+  #make install
+4.安装成功后/usr/local/nginx目录如下:
+  client_body_temp  conf  fastcgi_temp  html  logs  proxy_temp  sbin  scgi_temp  uwsgi_temp
+4.启动nginx
+  确保系统的80端口没被其他程序占用,运行/usr/local/nginx/sbin/nginx命令来启动nginx
+  #netstat -apn|grep 80
+  如果查不到结果执行:
+  #/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf // 参数-c指定了配置文件的路径,如果不加-c参数,nginx会默认加载其安装目录下conf目录下的nginx.conf文件
+5.打开浏览器访问此机器的IP,如果浏览器出现Welcome to nginx!则表示nginx已安装并运行成功.
+6.到这里nginx就安装完成了,如果只是处理静态html就不用继续安装了,如果你需要处理php脚本的话,还需要安装php-fpm.
+
+
+------------------------------------
+下面是我安装时出现的错误:
+1.安装各种支持的第三方软件.
+2.安装openssl
+  需要安装openssl
+  tar zxvf openssl-0.9.8g.tar.gz
+  cd openssl-0.9.8g
+  ./config --prefix=/usr/local/ --openssldir=/usr/local/openssl -g3 shared zlib-dynamic enable-camellia
+  make
+  make install
+  测试是否安装成功：openssl version
+  3)如果报错
+    configure: error: zlib not found.
+    需要安装：gzip.tar.gz
+    tar zxvf gzip.tar.gz
+    ./configure
+    make
+    make install
+3.安装PCRE
+  需要安装pcre包
+  tar zxvf pcre-8.12.tar.gz
+  cd pcre-8.12
+  ./configure
+  make
+  make install
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

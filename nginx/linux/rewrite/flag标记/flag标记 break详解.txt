@@ -1,0 +1,25 @@
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name *.test.com;
+        location /test1.txt/ {
+                rewrite /test1.txt/ /test2.txt break;
+        }
+        location ~ test2.txt {
+                return 508;
+        }
+    }
+}
+-------------------------
+使用break会停止匹配下面的location,直接发起请求www.xxx.com/test2.txt，由于不存在文件test2.txt，则会直接显示404。
+使用last的话，会继续搜索下面是否有符合条件(符合重写后的/test2.txt请求)的location。此时，/test2.txt刚好与面location的条件对应上了,
+进入花括号{}里面的代码执行，这里会返回508。
+508是我随便设置的一个数字,反正只是测验而已.直接在屏幕上是看不到显示的.在火狐的firebug中能够看到信息

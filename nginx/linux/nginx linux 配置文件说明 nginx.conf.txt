@@ -1,0 +1,172 @@
+user nginx; #工作进程的属主,运行用户,也可以带上组如:user nobody nobody;
+worker_processes 4; #工作进程数,一般与CPU核数等同
+#全局错误日志及PID文件
+#error_log /var/log/nginx/error.log; #默认在/usr/local/nginx/logs/error.log
+#pid /var/run/nginx.pid; #默认在/usr/local/nginx/logs/nginx.pid
+
+#配置工作模式和连接数上限
+events {
+    #工作模式有:
+    #select(标准模式),
+    #poll(标准模式),
+    #kqueue(高效模式,适用FreeBSD 4.1+,OpenBSD 2.0 and MacOS X)
+    #epoll(高效模式,本例使用,适用Linux 2.6+,SuSE 8.2),Linux下性能最好的event模式,epoll是多路复用IO(I/O Multiplexing)中的一种方式,但是仅用于linux2.6以上内核,可以大大提高nginx的性能
+    #/dev/poll(高效模式,适用Solaris 7 11/99+,HP/UX 11.22+,IRIX 6.5.15+和Tru64 UNIX 5.1A+)
+    #use poll; #可以被注释掉
+    worker_connections 2048; #每个工作进程允许最大的同时连接数,单个后台worker process进程的最大并发链接数
+}
+
+#设定http服务器,利用它的反向代理功能提供负载均衡支持
+http {
+    #设定mime类型,由nginx目录下的/usr/local/nginx/conf/mime.types文件定义
+    include /usr/local/nginx/conf/mime.types; #如果此文件和配置文件在同级目录,也可以不要前面的目录直接写mime.types
+    default_type application/octet-stream;
+    #sendfile指令指定nginx是否调用sendfile函数(zero copy方式)来输出文件,对于普通应用,必须设为on,如果用来进行下载等应用磁盘IO重负载应用,可设置为off,以平衡磁盘与网络I/O处理速度,降低系统的uptime
+    sendfile on;
+    #send_timeout 3m;
+    keepalive_timeout 65; #连接超时时间
+    #tcp_nopush on;
+    #tcp_nodelay on;
+    #client_body_timeout 3m;
+    #client_header_timeout 3m;
+    #postpone_output 1460;
+    #output_buffers 1 32k;
+
+    access_log /usr/local/nginx/logs/access.log; #设定访问日志路径,默认为/usr/local/nginx/logs/access.log
+    #设定日志格式
+    #log_format main '$remote_addr - $remote_user [$time_local]'
+    #		     '"$request" $status $bytes_sent'
+    #		     '"$http_referer" "$http_user_agent"'
+    #		     '"$gzip_ratio"'
+
+    #gzip on; #开启gzip模块,要求安装gzip,在运行./config时要指定
+    #gzip_min_length 1100;
+    #gzip_buffers 48k;
+    #gzip_types text/plain;
+    #output_buffers 132k;
+    #postpone_output 1460;
+    #include gzip.conf; #以上gzip模块的配置可以写进gzip.conf文件,只要这句话就能代替上面gzip的配置
+
+    #设定请求缓冲
+    client_header_buffer_size 1k;
+    large_client_header_buffers 4 4k;
+
+    #include /etc/nginx/conf.d/*.conf; #这里可以用正则表达式表示
+    #include /etc/nginx/sites-enabled/*; #这里可以用正则表达式表示
+
+    #集群中的所有后台服务器的配置信息,设定负载均衡的服务器列表
+    #upstream后面的名字可以换,比如:upstream mysvr {...}
+    #下面有一个例子:
+    #本例是指在同一台服务器,多台服务器改变ip即可
+    #server 127.0.0.1:8081 weight=5;
+    #server 127.0.0.1:8082;
+    #server 127.0.0.1:8083;
+    upstream tomcats {
+	server 192.168.0.11:8080 weight=10; #weigth参数表示权值,权值越高被分配到的几率越大
+	server 192.168.0.11:8081 weight=10; #weigth参数表示权值,权值越高被分配到的几率越大
+	server 192.168.0.12:8080 weight=10; #weigth参数表示权值,权值越高被分配到的几率越大
+	server 192.168.0.12:8081 weight=10; #weigth参数表示权值,权值越高被分配到的几率越大
+	server 192.168.0.13:8080 weight=10; #weigth参数表示权值,权值越高被分配到的几率越大
+	server 192.168.0.13:8081 weight=10; #weigth参数表示权值,权值越高被分配到的几率越大
+	#server 192.168.8.x:80 weight=10; #weigth参数表示权值,权值越高被分配到的几率越大,其中192.168.8.x:80表示最后3位为任意数
+    }
+
+    server {
+        listen 80; #设定虚拟主机HTTP的端口,默认为侦听80端口,改成其他端口会出现问题
+        server_name localhost; #可以设置成www.xx.com,比如:定义使用www.xx.com访问
+    	#access_log logs/www.xx.com.access.log main; #设定本虚拟主机的访问日志
+        charset utf-8; #设置编码
+
+	#默认请求
+	#对"/"启用负载均衡
+	#下面一个例子:对aspx后缀的进行负载均衡请求
+	#location ~ .*\.aspx$ {...}
+	location / {
+		proxy_pass http://tomcats; #反向代理,比如:proxy_pass http://mysvr; #请求转向mysvr定义的服务器列表
+		#以下是一些反向代理的配置可删除
+		#proxy_redirect off;
+		#后端的Web服务器可以通过X-Forwarded-For获取用户真实IP
+		#proxy_set_header Host $host;
+		#proxy_set_header X-Real-IP $remote_addr;
+		#proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		#client_max_body_size 10m; #允许客户端请求的最大单文件字节数
+		#client_body_buffer_size 128k; #缓冲区代理缓冲用户端请求的最大字节数
+		#proxy_connect_timeout 90;  #nginx跟后端服务器连接超时时间(代理连接超时)
+		#proxy_send_timeout 90; #后端服务器数据回传时间(代理发送超时)
+		#proxy_read_timeout 90; #连接成功后,后端服务器响应时间(代理接收超时)
+		#proxy_buffer_size 4k; #设置代理服务器(nginx)保存用户头信息的缓冲区大小
+		#proxy_buffers 4 32k; #proxy_buffers缓冲区，网页平均在32k以下的话，这样设置
+		#proxy_busy_buffers_size 64k; #高负荷下缓冲大小(proxy_buffers*2)
+		#proxy_temp_file_write_size 64k; #设定缓存文件夹大小,大于这个值,将从upstream服务器传
+		#include proxy.conf; #以上proxy模块的配置可以写进proxy.conf文件,只要这句话就能代替上面proxy的配置
+
+		#root /root; #定义服务器的默认网站根目录位置
+		#index index.php index.html index.htm; #定义首页索引文件的名称
+		#fastcgi_pass www.xx.com;
+		#fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+		#include /etc/nginx/fastcgi_params;
+	}
+
+	#欢迎页面index页面,比如
+	location / {
+            root   /lijie/sky;
+            index  abc.html cba.html abcccc.html;
+        }
+
+	#设定查看Nginx状态的地址
+	location ~ ^/NginxStatus/ {
+		stub_status on; #Nginx状态监控配置
+		access_log off;
+		#auth_basic "NginxStatus";
+        	#auth_basic_user_file conf/htpasswd;
+	}
+	
+	#禁止访问WEB-INF里的文件
+	location ~ ^/(WEB-INF)/ {
+		deny all;
+	}
+
+	#禁止访问.htxxx文件
+    	location ~ /\.ht {
+        	deny all;
+    	}
+
+	#静态文件,通过正则表达式,我们可让Nginx识别出各种静态文件,例如images路径下的所有请求可以写为:
+	#比如:http://192.168.242.88/images/abc/getimgdata.jpg,会在/lijie/abc/sky的根目录下找images/abc目录下的getimgdata.jpg文件,即/lijie/abc/sky/images/abc/getimgdata.jpg,如果没有会报404找不到
+	location ~ ^/images/ {
+		root /lijie/abc/sky;
+	}
+	
+	#而下面的配置则定义了几种文件类型的请求处理方式
+	#对于例如图片,静态HTML文件,js脚本文件和css样式文件等,我们希望Nginx直接处理并返回给浏览器,这样可以大大的加快网页浏览时的速度
+	#因此对于这类文件我们需要通过root指令来指定文件的存放路径,同时因为这类文件并不常修改,通过expires指令来控制其在浏览器的缓存,以减少不必要的请求
+	#expires指令可以控制HTTP应答中的Expires和Cache-Control的头标(起到控制页面缓存的作用)您可以使用例如以下的格式来书写expires:
+	#expires 1 January, 1970, 00:00:01 GMT;
+	#expires 60s;
+	#expires 30m;
+	#expires 24h;
+	#expires 1d;
+	#expires max;
+	#expires off;
+	#比如:http://192.168.242.88/wcg/color.css,会去寻找/lijie/abc/lyn/wcg/color.css这个文件
+	location ~ \.(htm|html|gif|jpg|jpeg|png|bmp|ico|css|js|txt)$ {
+		root /lijie/abc/lyn;
+		expires 24h;
+	}
+
+	#例子:location ~ ^/(images|javascript|js|css|flash|media|static)/ {...}
+	location ~ \.(htm|html|asp|php|gif|jpg|jpeg|png|bmp|ico|rar|css|js|zip|java|jar|txt|flv|swf|mid|doc|ppt|xls|pdf|txt|mp3|wma)$ { 
+		root /opt/webapp;
+		expires 24h; #过期日期,例如:expires 30d;过期30天,静态文件不怎么更新,过期可以设大一点,如果频繁更新,则可以设置得小一点
+	}
+	
+	location = /50x.html {
+		root html;
+	}
+
+	#定义错误提示页面
+	error_page 404 /html/404.html; #错误提示页面
+	error_page 502 503 /html/502.html; #错误提示页面
+	error_page 500 504 /50x.html; #错误提示页面
+    }
+}

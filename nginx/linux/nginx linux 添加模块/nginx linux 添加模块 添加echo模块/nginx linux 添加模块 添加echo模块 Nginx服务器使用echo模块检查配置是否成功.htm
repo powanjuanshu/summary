@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>Nginx服务器使用echo模块检查配置是否成功 - 服务器之家</title>
+<meta name="keywords" content="Nginx,服务器,使用,echo,模块,检查,配置,是否," />
+<meta name="description" content="1.nginx 的echo模块的介绍 echo模块是国人编写的nginx的第三方模块，下载官方nginx后需要再下载echo模块，并且配合nginx编译安装，安装此模块后可以在nginx的url访问中可以通过echo命令输出字符到用户的浏览器中，可用于检测nginx的可访问性，检测nginx的配置" />
+<link rel="stylesheet" href="/template/style/style.css" type="text/css" />
+<link rel="stylesheet" href="/template/style/page.css" type="text/css" />
+<link rel="stylesheet" href="/template/style/layout.css" type="text/css" />
+<link type="text/css" rel="stylesheet" href="/template/style/shCoreDefault.css" />
+</head>
+<body class="server110">
+<script type="text/javascript" src="/template/js/shCore.js"></script>
+<div class="Top">
+	<span>
+  <a href="http://www.server110.com/lnamp/" target="_blank">LNAMP安装</a> - 
+  <a href="http://www.server110.com/linux/201408/10915.html">LINUX教程</a> - 
+  <a href="http://www.yundaiwei.com/" target='_blank'><font color="red">云主机代维</font></a>
+  </span>
+    服务器之家，专注于服务器技术!
+</div>
+<div class="Head">
+	<div class="logo FL"><h1><a href="http://www.server110.com"><img src="/template/images/logo.png" alt="服务器之家" /></a></h1></div>
+    <div class="ad_468 FR">
+      <script type="text/javascript">
+      /*全站顶部右侧*/
+      var cpro_id = "u1489154";
+      </script>
+      <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+    </div>
+</div>
+<div class="Nav">
+    <a href='http://www.server110.com/'>首页</a>
+    
+    <a href='/cloud/'  rel='dropmenu11'>云和虚拟化</a>
+    
+    <a href='/database/'  rel='dropmenu1'>数据库服务器</a>
+    
+    <a href='/web/'  rel='dropmenu2'>Web服务器</a>
+    
+    <a href='/ftp/'  rel='dropmenu3'>FTP服务器</a>
+    
+    <a href='/mail/'  rel='dropmenu4'>邮件服务器</a>
+    
+    <a href='/system/'  rel='dropmenu5'>服务器系统</a>
+    
+    <a href='/security/'  rel='dropmenu6'>服务器安全</a>
+    
+    <a href='/script/'  rel='dropmenu7'>脚本编程</a>
+    
+    <a href='/software/'  rel='dropmenu8'>建站程序</a>
+    
+    <a href='/webpage/'  rel='dropmenu9'>网页前端</a>
+    
+    <a href='/operation/'  rel='dropmenu10'>网站运营</a>
+    
+</div>
+
+<div class="Nav_box">
+	<div class="tag FL">
+    	<a href='/original/'>本站原创</a>
+    </div>
+    <div class="so FR">
+		<script type="text/javascript">
+      /*百度站内搜索*/
+			document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E%3Cscript charset="utf-8" src="http://rp.baidu.com/rp3w/3w.js?sid=9149198320401485197') + '&t=' + (Math.ceil(new Date()/3600000)) + unescape('"%3E%3C/script%3E'));
+		</script>
+    </div>
+</div>
+<div class="ad_960">
+  <script type="text/javascript">
+      /*全站顶部通栏1*/
+      var cpro_id = "u1399762";
+  </script>
+  <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    /*全站横幅主题链接*/
+    var cpro_id = "u1432304";
+  </script>
+  <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>
+
+<!-- /header -->
+<div class="main4">
+    <div class="m4_left FL">
+        <div class="m4_t1">当前位置：<a href='http://www.server110.com/index.html'>首页</a> > <a href='/web/'>Web服务器</a> > <a href='/nginx/'>Nginx</a> >  正文</div>
+        <div class="m4_box3">
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_b" style="line-height: 12px;">
+<img src="http://bdimg.share.baidu.com/static/images/type-button-6.jpg?cdnversion=20120831" />
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=button&amp;uid=6785694" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+</script>
+<!-- Baidu Button END -->
+        </div>
+        <h1 class="m4_box4">Nginx服务器使用echo模块检查配置是否成功</h1>
+        <div class="m4_box5">时间：2013-09-26 &nbsp;&nbsp; 来源：服务器之家 &nbsp;&nbsp; 投稿：root</div>
+
+        <div>
+          <div id= "left">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:300px;height:250px"
+                 data-ad-client="ca-pub-1892357599595152"
+                 data-ad-slot="4531983840"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+          <div id= "right">
+            <script type="text/javascript">
+            var cpro_id = "u1371555";
+            </script>
+            <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+          </div>
+        </div>
+
+        <div class="m4_box6">
+            1.<a href='http://www.server110.com/nginx/' target='_blank'><u>nginx</u></a> 的echo模块的介绍<br />
+echo模块是国人编写的nginx的第三方模块，下载官方nginx后需要再下载echo模块，并且配合nginx编译安装，安装此模块后可以在nginx的url访问中可以通过echo命令输出字符到用户的浏览器中，可用于检测nginx的可访问性，检测nginx的配置的正确性（这是当前我需要用的nginx的主要功能），可用于打印你希望了解的http代理相关http参数，总之在调试配置nginx环节，echo命令非常有用。<br />
+<br />
+详情见：http://www.oschina.net/question/12_45735<br />
+<br />
+2.nginx的echo安装<br />
+安装第三方模块的时候不能使用rpm以及yum方式安装nginx，如果以前用以上方式安装过nginx的话，请先卸载掉。<br />
+&nbsp;&nbsp;&nbsp;&nbsp; 2.1
+我们下载nginx的源码包（http://nginx.org/download/nginx-1.2.7.tar.gz）以及echo模块的源码包（https://github.com/agentzh/echo-nginx-module/tags）选择最新版本<br />
+&nbsp;&nbsp; 2.2
+分别加压nginx源码包以及echo模块源码包，例如此处我解压的路径为：nginx的路径：/opt/nginx-source
+;echo模块的路径:/opt/nginx-echo-source<br />
+&nbsp;&nbsp; 2.3 命令cd进入nginx源码路径，此处:cd /opt/nginx-source ;<br />
+&nbsp; &nbsp; 2.4 配置nginx编译文件，执行编译配置命令：./configure
+--prefix=/opt/nginx --add-module=/opt/nginx-echo-source<br />
+配置时屏幕会输出日志，检查配置过程中是否有error，如果有请自行修复，一般是缺少类库，缺少啥类库，就下载安装什么类库<br />
+&nbsp;&nbsp; 2.5 编译nginx，在nginx源码目录中执行命令： make<br />
+&nbsp;&nbsp; 2.6 编译安装nginx，在nginx 源码目录中执行命令：make install<br />
+<br />
+3.nginx的echo使用测试<br />
+&nbsp;&nbsp;&nbsp; 配置nginx的配置文件<br />
+&nbsp;server {<br />
+listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8083;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; server_name&nbsp; _;<br />
+access_log&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/var/log/nginx/cn-camm.server.access.log main;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; set $tag "0";<br />
+if ( $host !~ ^appbuilder.vicp.cc$ ){<br />
+set $tag "$tag,1";<br />
+}<br />
+if ( $host !~ ^localhost$ ){<br />
+set $tag "$tag,2";<br />
+}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( $tag ~ ^0,1,2$
+){<br />
+return 403;<br />
+}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; location / {<br />
+echo "can act?";<br />
+if ($host != '192.168.1.250' ) {<br />
+echo "not equal 250";<br />
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 403;<br />
+}<br />
+echo "asdfasdf";<br />
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+proxy_pass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; http://cncamm;<br />
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+proxy_set_header Host $host:8083;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp; }<br />
+<br />
+配置时注意<br />
+1.echo命令只能放在url请求中，如果放在url请求外，会报错 如果报[emerg]: "echo" directive
+is&nbsp;<em>not allowed here</em>&nbsp;in&nbsp; ，请检查echo放置的位置<br />
+2.一次url请求，echo
+只能打印一行，如果有逻辑判断，且判断成功，则echo会执行判断成功里边的echo，否则执行最后一句echo（此处不一定正确，在测试中发现是此现象）<br />
+3.如果echo后边有配置return 或者配置
+proxy_pass，则echo的输出会被覆盖，即浏览器无法看到echo的内容<br />
+4.echo的内容不是写在nginx的配置文件中，而是输出到浏览器中，所以echo的打印字符的查看请在浏览器中查看<br />
+<br />
+            <script type="text/javascript">      
+            SyntaxHighlighter.all();       
+            </script>
+        </div>
+
+
+        <div>
+          <div id= "left">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:300px;height:250px"
+                 data-ad-client="ca-pub-1892357599595152"
+                 data-ad-slot="7345849448"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+          <div id= "right">
+            <script type="text/javascript">
+            /*文章下方*/
+            var cpro_id = "u1489212";
+            </script>
+            <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+          </div>
+        </div>
+
+
+        <div class="dede_pagess">
+            <ul class="pagelist">
+            
+            </ul>
+        </div>
+
+        <div class="m4_box7">
+            上一篇：<a href='/nginx/201309/1794.html'>Windows系统中安装配置Nginx服务器</a> <br />
+            下一篇：<a href='/nginx/201309/1796.html'>Windows系统中以服务形式运行Nginx服务器</a> 
+        </div>
+        <div class="m4_box8">
+            <div class="m4_t2">相关内容</div>
+            <ul>
+                <li>·<a href="/nginx/201411/10971.html">Nginx Web服务器安全配置二十条建议</a></li>
+<li>·<a href="/nginx/201411/10951.html">Linux系统下编译安装Nginx服务器</a></li>
+<li>·<a href="/nginx/201411/10949.html">在命令行中实时监控分析Nginx日志</a></li>
+<li>·<a href="/nginx/201411/10943.html">加强Nginx服务器配置防御黑客攻击</a></li>
+<li>·<a href="/nginx/201410/10930.html">Nginx服务器拒绝非GET方式请求保障安</a></li>
+<li>·<a href="/nginx/201408/10910.html">Nginx配置多个域名</a></li>
+<li>·<a href="/nginx/201408/10909.html">Nginx配置域名和目录的用户认证</a></li>
+<li>·<a href="/nginx/201408/10907.html">Nginx安装配置PageSpeed模块实现网站</a></li>
+<li>·<a href="/nginx/201408/10906.html">Nginx虚拟主机配置</a></li>
+<li>·<a href="/nginx/201408/10905.html">Nginx服务器缓存设置实例讲解</a></li>
+<li>·<a href="/nginx/201408/10904.html">Nginx缓存配置一例及参数说明</a></li>
+<li>·<a href="/nginx/201408/10903.html">Nginx的安装和配置方法</a></li>
+<li>·<a href="/nginx/201408/10830.html">Nginx服务器如何禁止通过IP直接访问服</a></li>
+<li>·<a href="/nginx/201407/10814.html">Nginx如何配置301永久重定向</a></li>
+<li>·<a href="/nginx/201407/10813.html">Nginx配置SSL证书实现访问HTTPS网站</a></li>
+<li>·<a href="/nginx/201407/10812.html">Nginx配置文件解析相关代码分析</a></li>
+
+                <div class="clear"></div>
+            </ul>
+        </div>
+    </div>
+    <div class="m4_right FR">
+        <div class="ad_300">
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- 文章页右侧上方 -->
+          <!-- <img src="/template/images/ad/300X250.gif" width="300" height="250" alt="广告位" /> -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:300px;height:250px"
+               data-ad-client="ca-pub-1892357599595152"
+               data-ad-slot="3694379047"></ins>
+          <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+        <div class="m4_box2">
+            <div class="m4_t2">最新内容</div>
+            <ul>
+                <li>·<a href="/nginx/201411/10971.html">Nginx Web服务器安全配置二十条建议</a></li>
+<li>·<a href="/nginx/201411/10951.html">Linux系统下编译安装Nginx服务器</a></li>
+<li>·<a href="/nginx/201411/10949.html">在命令行中实时监控分析Nginx日志</a></li>
+<li>·<a href="/nginx/201411/10943.html">加强Nginx服务器配置防御黑客攻击</a></li>
+<li>·<a href="/nginx/201410/10930.html">Nginx服务器拒绝非GET方式请求保障安全性</a></li>
+<li>·<a href="/nginx/201408/10910.html">Nginx配置多个域名</a></li>
+<li>·<a href="/nginx/201408/10909.html">Nginx配置域名和目录的用户认证</a></li>
+<li>·<a href="/nginx/201408/10907.html">Nginx安装配置PageSpeed模块实现网站加速</a></li>
+<li>·<a href="/nginx/201408/10906.html">Nginx虚拟主机配置</a></li>
+<li>·<a href="/nginx/201408/10905.html">Nginx服务器缓存设置实例讲解</a></li>
+
+            </ul>
+        </div>
+
+        <div class="ad_300">
+          <script type="text/javascript">
+          /*文章右侧，最新文章下方*/
+          var cpro_id = "u1489206";
+          </script>
+          <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+        </div>
+
+        <div class="m4_box2">
+            <div class="m4_t2">推荐内容</div>
+            <ul>
+                <li>·<a href="/nginx/201312/4409.html">Nginx 502错误原因和解决方法总结</a></li>
+<li>·<a href="/nginx/201310/2711.html">Nginx服务器如何设置cache缓存</a></li>
+<li>·<a href="/nginx/201309/1797.html">Nginx rewrite伪静态实例讲解</a></li>
+<li>·<a href="/nginx/201309/1292.html">如何在Apache，iis和Nginx服务器设置404错</a></li>
+<li>·<a href="/nginx/201309/1205.html">Nginx服务器屏蔽某些国家访问网站</a></li>
+<li>·<a href="/nginx/201308/477.html"><font color='#FF0000'>nginx+php使用open_basedir限制站点目录防</font></a></li>
+<li>·<a href="/nginx/201308/451.html">Nginx web服务器20个实用技巧</a></li>
+<li>·<a href="/nginx/201308/273.html">设置Nginx自定义404错误页面并返回404状态</a></li>
+
+            </ul>
+        </div>
+        <div class="m4_box2">
+            <div class="m4_t2">热点内容</div>
+            <ul>
+                <li>·<a href="/nginx/201309/1792.html">解决Nginx服务器中403 forbidden的错误</a></li>
+<li>·<a href="/nginx/201310/2800.html">Nginx服务器中使用lua获取get或post参数</a></li>
+<li>·<a href="/nginx/201309/983.html">Nginx绑定多个域名的方法</a></li>
+<li>·<a href="/nginx/201309/1711.html">安装配置Nginx+PHP-fpm服务器环境</a></li>
+<li>·<a href="/nginx/201402/5733.html">LNAMP添加站点教程</a></li>
+<li>·<a href="/nginx/201309/959.html">window设置Nginx+iis实现负载均衡</a></li>
+<li>·<a href="/nginx/201311/3520.html">CentOS 6.5系统中安装配置Nginx服务器的方</a></li>
+<li>·<a href="/nginx/201308/477.html"><font color='#FF0000'>nginx+php使用open_basedir限制站点目录防</font></a></li>
+<li>·<a href="/nginx/201310/2409.html">解决Nginx服务器104: connection reset by </a></li>
+<li>·<a href="/nginx/201309/1248.html">Nginx批量配置多域名绑定</a></li>
+
+            </ul>
+        </div>
+        <div class="ad_300">
+          <script type="text/javascript">
+          var cpro_id = "u1390221";
+          </script>
+          <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    /*文章页－右下角悬浮*/
+    var cpro_id = "u1432314";
+    </script>
+    <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+
+    <div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+/*全站对联*/
+var cpro_id = "u1489218";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+
+<div class="footer">
+	<p>
+        <a href="#">关于我们</a>  |  
+        <a href="#">网站声明</a>  |  
+        <a href="#">意见反馈</a>  |  
+        <a href="#">业务合作</a>  |  
+        <a href="#">友情链接</a>  |  
+        <a href="#">联系我们</a>  |  
+        <a href="#">收费服务</a>
+    </p>
+	<p><span class="en-code" style="font-family: arial;">Copyright &#169; 2002-2014</span>.<a href="http://www.server110.com" target="_blank">服务器之家</a> 版权所有 <a href="http://www.miitbeian.gov.cn/" target="_blank">辽ICP备13009196号</a></p>
+	<br/>
+  <div style="display:none">
+    <script type="text/javascript">
+      var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+      document.write(unescape("%3Cdiv id='cnzz_stat_icon_1000036443'%3E%3C/div%3E%3Cscript src='" + cnzz_protocol +	"s22.cnzz.com/z_stat.php%3Fid%3D1000036443' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </div>
+
+</div>
+<!-- /footer -->
+</body>
+</html>

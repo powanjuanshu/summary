@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>关于Nginx的return配置小技巧 - 服务器之家</title>
+<meta name="keywords" content="关于,Nginx,return,配置,技巧,Nginx,re" />
+<meta name="description" content="Nginx的 return 关键字属于HttpRewriteModule模块: 语法:returnhttp状态码 默认值:无 上下文:server,location,if 该指令将结束执行直接返回http状态码到客户端. 支持的http状态码:200,204,400,402-406,408,410,411,413,416,500-504，还有非标准的444状态码." />
+<link rel="stylesheet" href="/template/style/style.css" type="text/css" />
+<link rel="stylesheet" href="/template/style/page.css" type="text/css" />
+<link rel="stylesheet" href="/template/style/layout.css" type="text/css" />
+<link type="text/css" rel="stylesheet" href="/template/style/shCoreDefault.css" />
+</head>
+<body class="server110">
+<script type="text/javascript" src="/template/js/shCore.js"></script>
+<div class="Top">
+	<span>
+  <a href="http://www.server110.com/lnamp/" target="_blank">LNAMP安装</a> - 
+  <a href="http://www.server110.com/linux/201408/10915.html">LINUX教程</a> - 
+  <a href="http://www.yundaiwei.com/" target='_blank'><font color="red">云主机代维</font></a>
+  </span>
+    服务器之家，专注于服务器技术!
+</div>
+<div class="Head">
+	<div class="logo FL"><h1><a href="http://www.server110.com"><img src="/template/images/logo.png" alt="服务器之家" /></a></h1></div>
+    <div class="ad_468 FR">
+      <script type="text/javascript">
+      /*全站顶部右侧*/
+      var cpro_id = "u1489154";
+      </script>
+      <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+    </div>
+</div>
+<div class="Nav">
+    <a href='http://www.server110.com/'>首页</a>
+    
+    <a href='/cloud/'  rel='dropmenu11'>云和虚拟化</a>
+    
+    <a href='/database/'  rel='dropmenu1'>数据库服务器</a>
+    
+    <a href='/web/'  rel='dropmenu2'>Web服务器</a>
+    
+    <a href='/ftp/'  rel='dropmenu3'>FTP服务器</a>
+    
+    <a href='/mail/'  rel='dropmenu4'>邮件服务器</a>
+    
+    <a href='/system/'  rel='dropmenu5'>服务器系统</a>
+    
+    <a href='/security/'  rel='dropmenu6'>服务器安全</a>
+    
+    <a href='/script/'  rel='dropmenu7'>脚本编程</a>
+    
+    <a href='/software/'  rel='dropmenu8'>建站程序</a>
+    
+    <a href='/webpage/'  rel='dropmenu9'>网页前端</a>
+    
+    <a href='/operation/'  rel='dropmenu10'>网站运营</a>
+    
+</div>
+
+<div class="Nav_box">
+	<div class="tag FL">
+    	<a href='/original/'>本站原创</a>
+    </div>
+    <div class="so FR">
+		<script type="text/javascript">
+      /*百度站内搜索*/
+			document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E%3Cscript charset="utf-8" src="http://rp.baidu.com/rp3w/3w.js?sid=9149198320401485197') + '&t=' + (Math.ceil(new Date()/3600000)) + unescape('"%3E%3C/script%3E'));
+		</script>
+    </div>
+</div>
+<div class="ad_960">
+  <script type="text/javascript">
+      /*全站顶部通栏1*/
+      var cpro_id = "u1399762";
+  </script>
+  <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    /*全站横幅主题链接*/
+    var cpro_id = "u1432304";
+  </script>
+  <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>
+
+<!-- /header -->
+<div class="main4">
+    <div class="m4_left FL">
+        <div class="m4_t1">当前位置：<a href='http://www.server110.com/index.html'>首页</a> > <a href='/web/'>Web服务器</a> > <a href='/nginx/'>Nginx</a> >  正文</div>
+        <div class="m4_box3">
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_b" style="line-height: 12px;">
+<img src="http://bdimg.share.baidu.com/static/images/type-button-6.jpg?cdnversion=20120831" />
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=button&amp;uid=6785694" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+</script>
+<!-- Baidu Button END -->
+        </div>
+        <h1 class="m4_box4">关于Nginx的return配置小技巧</h1>
+        <div class="m4_box5">时间：2013-08-27 &nbsp;&nbsp; 来源：服务器之家 &nbsp;&nbsp; 投稿：root</div>
+
+        <div>
+          <div id= "left">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:300px;height:250px"
+                 data-ad-client="ca-pub-1892357599595152"
+                 data-ad-slot="4531983840"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+          <div id= "right">
+            <script type="text/javascript">
+            var cpro_id = "u1371555";
+            </script>
+            <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+          </div>
+        </div>
+
+        <div class="m4_box6">
+            <img alt="关于Nginx的return关键字小技巧" src="http://upload.server110.com/image/20130827/033K35U7-0.png" /><br />
+Nginx的<a href="http://wiki.nginx.org/HttpRewriteModule#return">return</a>关键字属于HttpRewriteModule模块:<br />
+语法:return&nbsp;http状态码<br />
+默认值:无<br />
+上下文:server,location,if<br />
+该指令将结束执行直接返回http状态码到客户端.<br />
+支持的http状态码:200,&nbsp;204,&nbsp;400,&nbsp;402-406,&nbsp;408,&nbsp;410,&nbsp;411,&nbsp;413,&nbsp;416&nbsp;,&nbsp;500-504，还有非标准的444状态码.<br />
+<br />
+<b>使用方法:</b> <br />
+#不符合规则的返回403禁止访问<br />
+location&nbsp;/download/&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;rewrite&nbsp;&nbsp;^(/download/.*)/media/(.*)\..*$&nbsp;&nbsp;$1/mp3/$2.mp3&nbsp;&nbsp;break;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;&nbsp;&nbsp;403;<br />
+}<br />
+<br />
+<b>小技巧</b> <br />
+这些小技巧都是wiki里没有介绍的，而系统却是支持的。<br />
+如下配置文件:<br />
+server&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;test.liguangming.com;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;80;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;/&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add_header&nbsp;Content-Type&nbsp;"text/plain;charset=utf-8";<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;200&nbsp;"Your&nbsp;IP&nbsp;Address:$remote_addr";<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}<br />
+执行请求:<br />
+curl&nbsp;-i&nbsp;http://test.liguangming.com<br />
+返回内容如下:<br />
+HTTP/1.1&nbsp;200&nbsp;OK<br />
+Server:&nbsp;<a href='http://www.server110.com/nginx/' target='_blank'><u>nginx</u></a>/1.0.13<br />
+Date:&nbsp;Thu,&nbsp;10&nbsp;May&nbsp;2012&nbsp;10:01:15&nbsp;GMT<br />
+Content-Type:&nbsp;application/octet-stream<br />
+Content-Length:&nbsp;30<br />
+Connection:&nbsp;keep-alive<br />
+Content-Type:&nbsp;text/plain;charset=utf-8<br />
+Your&nbsp;IP&nbsp;Address:123.128.217.19<br />
+好玩吧,还有呢，比如如下的配置文件:<br />
+server&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;test.liguangming.com;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;80;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;/&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;http://liguangming.com/;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}<br />
+执行请求:<br />
+curl&nbsp;-i&nbsp;http://test.liguangming.com<br />
+返回内容如下:<br />
+HTTP/1.1&nbsp;302&nbsp;Moved&nbsp;Temporarily<br />
+Server:&nbsp;nginx/1.0.13<br />
+Date:&nbsp;Thu,&nbsp;10&nbsp;May&nbsp;2012&nbsp;10:06:58&nbsp;GMT<br />
+Content-Type:&nbsp;text/html<br />
+Content-Length:&nbsp;161<br />
+Connection:&nbsp;keep-alive<br />
+Location:&nbsp;http://liguangming.com/<br />
+Content-Type:&nbsp;text/plain;charset=utf-8<br />
+&lt;html&gt;<br />
+&lt;head&gt;&lt;title&gt;302&nbsp;Found&lt;/title&gt;&lt;/head&gt;<br />
+&lt;body&nbsp;bgcolor="white"&gt;<br />
+&lt;center&gt;&lt;h1&gt;302&nbsp;Found&lt;/h1&gt;&lt;/center&gt;<br />
+&lt;hr&gt;&lt;center&gt;nginx/1.0.13&lt;/center&gt;<br />
+&lt;/body&gt;<br />
+&lt;/html&gt;<br />
+是个302转向，为什么会这样呢？在nginx的源代码里找到src/http/modules/ngx_http_rewrite_module.c文件,
+找到return关键字的解析配置:<br />
+{&nbsp;ngx_string("return"),<br />
+&nbsp;&nbsp;NGX_HTTP_SRV_CONF|NGX_HTTP_SIF_CONF|NGX_HTTP_LOC_CONF|NGX_HTTP_LIF_CONF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|NGX_CONF_TAKE12,<br />
+&nbsp;&nbsp;ngx_http_rewrite_return,<br />
+&nbsp;&nbsp;NGX_HTTP_LOC_CONF_OFFSET,<br />
+&nbsp;&nbsp;0,<br />
+&nbsp;&nbsp;NULL&nbsp;},<br />
+看到NGX_CONF_TAKE12,原来return允许接受一个或者两个参数啊.<br />
+再接着往下看找到ngx_http_rewrite_return函数:<br />
+static&nbsp;char&nbsp;*<br />
+ngx_http_rewrite_return(ngx_conf_t&nbsp;*cf,&nbsp;ngx_command_t&nbsp;*cmd,&nbsp;void&nbsp;*conf)<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ngx_http_rewrite_loc_conf_t&nbsp;&nbsp;*lcf&nbsp;=&nbsp;conf;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;u_char&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*p;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ngx_str_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*value,&nbsp;*v;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ngx_http_script_return_code_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*ret;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ngx_http_compile_complex_value_t&nbsp;&nbsp;&nbsp;ccv;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ret&nbsp;=&nbsp;ngx_http_script_start_code(cf-&gt;pool,&nbsp;&amp;lcf-&gt;codes,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sizeof(ngx_http_script_return_code_t));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(ret&nbsp;==&nbsp;NULL)&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;NGX_CONF_ERROR;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;=&nbsp;cf-&gt;args-&gt;elts;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ngx_memzero(ret,&nbsp;sizeof(ngx_http_script_return_code_t));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ret-&gt;code&nbsp;=&nbsp;ngx_http_script_return_code;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;p&nbsp;=&nbsp;value[1].data;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ret-&gt;status&nbsp;=&nbsp;ngx_atoi(p,&nbsp;value[1].len);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(ret-&gt;status&nbsp;==&nbsp;(uintptr_t)&nbsp;NGX_ERROR)&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(cf-&gt;args-&gt;nelts&nbsp;==&nbsp;2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;(ngx_strncmp(p,&nbsp;"http://",&nbsp;sizeof("http://")&nbsp;-&nbsp;1)&nbsp;==&nbsp;0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;ngx_strncmp(p,&nbsp;"https://",&nbsp;sizeof("https://")&nbsp;-&nbsp;1)&nbsp;==&nbsp;0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;ngx_strncmp(p,&nbsp;"$scheme",&nbsp;sizeof("$scheme")&nbsp;-&nbsp;1)&nbsp;==&nbsp;0))<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret-&gt;status&nbsp;=&nbsp;NGX_HTTP_MOVED_TEMPORARILY;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v&nbsp;=&nbsp;&amp;value[1];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ngx_conf_log_error(NGX_LOG_EMERG,&nbsp;cf,&nbsp;0,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"invalid&nbsp;return&nbsp;code&nbsp;"%V"",&nbsp;&amp;value[1]);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;NGX_CONF_ERROR;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(cf-&gt;args-&gt;nelts&nbsp;==&nbsp;2)&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;NGX_CONF_OK;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v&nbsp;=&nbsp;&amp;value[2];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ngx_memzero(&amp;ccv,&nbsp;sizeof(ngx_http_compile_complex_value_t));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ccv.cf&nbsp;=&nbsp;cf;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ccv.value&nbsp;=&nbsp;v;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ccv.complex_value&nbsp;=&nbsp;&amp;ret-&gt;text;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(ngx_http_compile_complex_value(&amp;ccv)&nbsp;!=&nbsp;NGX_OK)&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;NGX_CONF_ERROR;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;NGX_CONF_OK;<br />
+}<br />
+当一个参数的时候，并不一定要是状态码，如果是一个网址，以http，https,或者与请求相同的协议，就会返回一个302重定向.
+相当于:<br />
+return&nbsp;302&nbsp;http://liguangming.com/;<br />
+第二个参数会作为内容返回,其实这不就是一个简单的原生的echo模块吗?
+赶着回去吃饭，匆忙写成的，难免有疏漏，有时间再修改.<br />
+            <script type="text/javascript">      
+            SyntaxHighlighter.all();       
+            </script>
+        </div>
+
+
+        <div>
+          <div id= "left">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:300px;height:250px"
+                 data-ad-client="ca-pub-1892357599595152"
+                 data-ad-slot="7345849448"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+          <div id= "right">
+            <script type="text/javascript">
+            /*文章下方*/
+            var cpro_id = "u1489212";
+            </script>
+            <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+          </div>
+        </div>
+
+
+        <div class="dede_pagess">
+            <ul class="pagelist">
+            
+            </ul>
+        </div>
+
+        <div class="m4_box7">
+            上一篇：<a href='/nginx/201308/765.html'>LNAMP（Apache+nginx）环境中获取访客真实IP的方法</a> <br />
+            下一篇：<a href='/nginx/201308/843.html'>LNMP(Linux+Nginx+MySQL+PHP)服务器环境编译安装及配置全过程</a> 
+        </div>
+        <div class="m4_box8">
+            <div class="m4_t2">相关内容</div>
+            <ul>
+                <li>·<a href="/nginx/201411/10971.html">Nginx Web服务器安全配置二十条建议</a></li>
+<li>·<a href="/nginx/201411/10951.html">Linux系统下编译安装Nginx服务器</a></li>
+<li>·<a href="/nginx/201411/10949.html">在命令行中实时监控分析Nginx日志</a></li>
+<li>·<a href="/nginx/201411/10943.html">加强Nginx服务器配置防御黑客攻击</a></li>
+<li>·<a href="/nginx/201410/10930.html">Nginx服务器拒绝非GET方式请求保障安</a></li>
+<li>·<a href="/nginx/201408/10910.html">Nginx配置多个域名</a></li>
+<li>·<a href="/nginx/201408/10909.html">Nginx配置域名和目录的用户认证</a></li>
+<li>·<a href="/nginx/201408/10907.html">Nginx安装配置PageSpeed模块实现网站</a></li>
+<li>·<a href="/nginx/201408/10906.html">Nginx虚拟主机配置</a></li>
+<li>·<a href="/nginx/201408/10905.html">Nginx服务器缓存设置实例讲解</a></li>
+<li>·<a href="/nginx/201408/10904.html">Nginx缓存配置一例及参数说明</a></li>
+<li>·<a href="/nginx/201408/10903.html">Nginx的安装和配置方法</a></li>
+<li>·<a href="/nginx/201408/10830.html">Nginx服务器如何禁止通过IP直接访问服</a></li>
+<li>·<a href="/nginx/201407/10814.html">Nginx如何配置301永久重定向</a></li>
+<li>·<a href="/nginx/201407/10813.html">Nginx配置SSL证书实现访问HTTPS网站</a></li>
+<li>·<a href="/nginx/201407/10812.html">Nginx配置文件解析相关代码分析</a></li>
+
+                <div class="clear"></div>
+            </ul>
+        </div>
+    </div>
+    <div class="m4_right FR">
+        <div class="ad_300">
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- 文章页右侧上方 -->
+          <!-- <img src="/template/images/ad/300X250.gif" width="300" height="250" alt="广告位" /> -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:300px;height:250px"
+               data-ad-client="ca-pub-1892357599595152"
+               data-ad-slot="3694379047"></ins>
+          <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+        <div class="m4_box2">
+            <div class="m4_t2">最新内容</div>
+            <ul>
+                <li>·<a href="/nginx/201411/10971.html">Nginx Web服务器安全配置二十条建议</a></li>
+<li>·<a href="/nginx/201411/10951.html">Linux系统下编译安装Nginx服务器</a></li>
+<li>·<a href="/nginx/201411/10949.html">在命令行中实时监控分析Nginx日志</a></li>
+<li>·<a href="/nginx/201411/10943.html">加强Nginx服务器配置防御黑客攻击</a></li>
+<li>·<a href="/nginx/201410/10930.html">Nginx服务器拒绝非GET方式请求保障安全性</a></li>
+<li>·<a href="/nginx/201408/10910.html">Nginx配置多个域名</a></li>
+<li>·<a href="/nginx/201408/10909.html">Nginx配置域名和目录的用户认证</a></li>
+<li>·<a href="/nginx/201408/10907.html">Nginx安装配置PageSpeed模块实现网站加速</a></li>
+<li>·<a href="/nginx/201408/10906.html">Nginx虚拟主机配置</a></li>
+<li>·<a href="/nginx/201408/10905.html">Nginx服务器缓存设置实例讲解</a></li>
+
+            </ul>
+        </div>
+
+        <div class="ad_300">
+          <script type="text/javascript">
+          /*文章右侧，最新文章下方*/
+          var cpro_id = "u1489206";
+          </script>
+          <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+        </div>
+
+        <div class="m4_box2">
+            <div class="m4_t2">推荐内容</div>
+            <ul>
+                <li>·<a href="/nginx/201312/4409.html">Nginx 502错误原因和解决方法总结</a></li>
+<li>·<a href="/nginx/201310/2711.html">Nginx服务器如何设置cache缓存</a></li>
+<li>·<a href="/nginx/201309/1797.html">Nginx rewrite伪静态实例讲解</a></li>
+<li>·<a href="/nginx/201309/1292.html">如何在Apache，iis和Nginx服务器设置404错</a></li>
+<li>·<a href="/nginx/201309/1205.html">Nginx服务器屏蔽某些国家访问网站</a></li>
+<li>·<a href="/nginx/201308/477.html"><font color='#FF0000'>nginx+php使用open_basedir限制站点目录防</font></a></li>
+<li>·<a href="/nginx/201308/451.html">Nginx web服务器20个实用技巧</a></li>
+<li>·<a href="/nginx/201308/273.html">设置Nginx自定义404错误页面并返回404状态</a></li>
+
+            </ul>
+        </div>
+        <div class="m4_box2">
+            <div class="m4_t2">热点内容</div>
+            <ul>
+                <li>·<a href="/nginx/201309/1792.html">解决Nginx服务器中403 forbidden的错误</a></li>
+<li>·<a href="/nginx/201310/2800.html">Nginx服务器中使用lua获取get或post参数</a></li>
+<li>·<a href="/nginx/201309/983.html">Nginx绑定多个域名的方法</a></li>
+<li>·<a href="/nginx/201309/1711.html">安装配置Nginx+PHP-fpm服务器环境</a></li>
+<li>·<a href="/nginx/201402/5733.html">LNAMP添加站点教程</a></li>
+<li>·<a href="/nginx/201309/959.html">window设置Nginx+iis实现负载均衡</a></li>
+<li>·<a href="/nginx/201311/3520.html">CentOS 6.5系统中安装配置Nginx服务器的方</a></li>
+<li>·<a href="/nginx/201308/477.html"><font color='#FF0000'>nginx+php使用open_basedir限制站点目录防</font></a></li>
+<li>·<a href="/nginx/201310/2409.html">解决Nginx服务器104: connection reset by </a></li>
+<li>·<a href="/nginx/201309/1248.html">Nginx批量配置多域名绑定</a></li>
+
+            </ul>
+        </div>
+        <div class="ad_300">
+          <script type="text/javascript">
+          var cpro_id = "u1390221";
+          </script>
+          <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    /*文章页－右下角悬浮*/
+    var cpro_id = "u1432314";
+    </script>
+    <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+
+    <div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+/*全站对联*/
+var cpro_id = "u1489218";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+
+<div class="footer">
+	<p>
+        <a href="#">关于我们</a>  |  
+        <a href="#">网站声明</a>  |  
+        <a href="#">意见反馈</a>  |  
+        <a href="#">业务合作</a>  |  
+        <a href="#">友情链接</a>  |  
+        <a href="#">联系我们</a>  |  
+        <a href="#">收费服务</a>
+    </p>
+	<p><span class="en-code" style="font-family: arial;">Copyright &#169; 2002-2014</span>.<a href="http://www.server110.com" target="_blank">服务器之家</a> 版权所有 <a href="http://www.miitbeian.gov.cn/" target="_blank">辽ICP备13009196号</a></p>
+	<br/>
+  <div style="display:none">
+    <script type="text/javascript">
+      var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+      document.write(unescape("%3Cdiv id='cnzz_stat_icon_1000036443'%3E%3C/div%3E%3Cscript src='" + cnzz_protocol +	"s22.cnzz.com/z_stat.php%3Fid%3D1000036443' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </div>
+
+</div>
+<!-- /footer -->
+</body>
+</html>

@@ -1,0 +1,503 @@
+三、rewrite语法
+rewrite 正则 替换 [标志位]
+
+其中标志位有四种:
+* break 	停止rewrite检测,也就是说当含有break flag的rewrite语句被执行时,该语句就是rewrite的最终结果 
+* last 		停止rewrite检测,但是跟break有本质的不同,last的语句不一定是最终结果,这点后面会跟nginx的location匹配一起提到 
+* redirect 	返回302临时重定向,一般用于重定向到完整的URL(包含http:部分),地址栏会显示跳转后的地址
+* permanent 	返回301永久重定向,一般用于重定向到完整的URL(包含http:部分),地址栏会显示跳转后的地址
+因为301和302不能简单的只返回状态码，还必须有重定向的URL，这就是return指令无法返回301,302的原因了。
+这里last和break区别有点难以理解：
+* last一般写在server和if中，而break一般使用在location中
+* last不终止重写后的url匹配，即新的url会再从server走一遍匹配流程，而break终止重写后的匹配
+* break和last都能组织继续执行后面的rewrite指令
+
+因为301和302不能简单的只单纯返回状态码,还必须有重定向的URL,这就是return指令无法返回301,302的原因了. 
+
+作为替换rewrite可以更灵活的使用redirect和permanent标志实现301和302. 比如Blog搬家要做的域名重定向,在nginx中就会这么写
+rewrite ^(.*)$ http://newdomain.com/ permanent;
+
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name *.test.com;
+        location / {
+                if ($request_method = GET){
+                        rewrite ^ http://example.com/ permanent;
+                }
+        }
+    }
+}
+请求http://www.test.com/浏览器会跳转到http://example.com/页面
+------------------------------------------------
+rewrite功能就是结合正则表达式和标志位实现url重写以及重定向(重定向的必须写成http://xxx的形式,不然会按目录重写不会重定向).rewrite只能放在server{},location{},if{}中，
+并且只能对域名后边的除去传递的参数外的字符串起作用，
+例如 http://seanlook.com/a/we/index.php?id=1&u=str 只对/a/we/index.php重写.
+
+表明看rewrite和location功能有点像，都能实现跳转，主要区别在于rewrite是在同一域名内更改获取资源的路径，而location是对一类路径做控制访问或反向代理，
+可以proxy_pass到其他机器.很多情况下rewrite也会写在location里，它们的执行顺序是：
+* 执行server块的rewrite指令
+* 执行location匹配
+* 执行选定的location中的rewrite指令
+如果其中某步URI被重写，则重新循环执行1-3，直到找到真实存在的文件；循环超过10次，则返回500 Internal Server Error错误.
+------------------------------------------------
+if指令与全局变量
+
+if判断指令
+语法为if(condition){...}，对给定的条件condition进行判断。如果为真，大括号内的rewrite指令将被执行，if条件(conditon)可以是如下任何内容：
+* 当表达式只是一个变量时，如果值为空或任何以0开头的字符串都会当做false
+* 直接比较变量和内容时，使用=或!=
+* 正则表达式匹配，~*不区分大小写的匹配，!~区分大小写的不匹配
+
+1、下面是可以用来判断的表达式：
+-f和!-f用来判断是否存在文件
+-d和!-d用来判断是否存在目录
+-e和!-e用来判断是否存在文件或目录
+-x和!-x用来判断文件是否可执行
+例如:
+if ($http_user_agent ~ MSIE) { //如果UA包含"MSIE"，rewrite请求到/msie/目录下
+    rewrite ^(.*)$ /msie/$1 break;
+}
+
+if ($http_cookie ~* "id=([^;]+)(?:;|$)") {
+    set $id $1;
+ } //如果cookie匹配正则，设置变量$id等于正则引用部分
+
+if ($request_method = POST) {
+    return 405;
+} //如果提交方法为POST，则返回状态405（Method not allowed）。return不能返回301,302
+
+if ($slow) {
+    limit_rate 10k;
+} //限速，$slow可以通过 set 指令设置
+
+if (!-f $request_filename){
+    break;
+    proxy_pass  http://127.0.0.1; 
+} //如果请求的文件名不存在，则反向代理到localhost 。这里的break也是停止rewrite检查
+
+if ($args ~ post=140){
+    rewrite ^ http://example.com/ permanent;
+} //如果query string中包含"post=140"，永久重定向到example.com
+
+location ~* \.(gif|jpg|png|swf|flv)$ {
+    valid_referers none blocked www.jefflei.com www.leizhenfang.com;
+    if ($invalid_referer) {
+        return 404;
+    } //防盗链
+}
+
+全局变量
+下面是可以用作if判断的全局变量
+    $args ： #这个变量等于请求行中的参数，同$query_string
+    $content_length ： 请求头中的Content-length字段。
+    $content_type ： 请求头中的Content-Type字段。
+    $document_root ： 当前请求在root指令中指定的值。
+    $host ： 请求主机头字段，否则为服务器名称。
+    $http_user_agent ： 客户端agent信息
+    $http_cookie ： 客户端cookie信息
+    $limit_rate ： 这个变量可以限制连接速率。
+    $request_method ： 客户端请求的动作，通常为GET或POST。
+    $remote_addr ： 客户端的IP地址。
+    $remote_port ： 客户端的端口。
+    $remote_user ： 已经经过Auth Basic Module验证的用户名。
+    $request_filename ： 当前请求的文件路径，由root或alias指令与URI请求生成。
+    $scheme ： HTTP方法（如http，https）。
+    $server_protocol ： 请求使用的协议，通常是HTTP/1.0或HTTP/1.1。
+    $server_addr ： 服务器地址，在完成一次系统调用后可以确定这个值。
+    $server_name ： 服务器名称。
+    $server_port ： 请求到达服务器的端口号。
+    $request_uri ： 包含请求参数的原始URI，不包含主机名，如：”/foo/bar.php?arg=baz”。
+    $uri ： 不带请求参数的当前URI，$uri不包含主机名，如”/foo/bar.html”。
+    $document_uri ： 与$uri相同。
+例：http://localhost:88/test1/test2/test.php
+$host：localhost
+$server_port：88
+$request_uri：http://localhost:88/test1/test2/test.php
+$document_uri：/test1/test2/test.php
+$document_root：/var/www/html
+$request_filename：/var/www/html/test1/test2/test.php
+------------------------------------------------
+nginx rewrite基本语法
+nginx的rewrite语法其实很简单.用到的指令无非是这几个
+* set 主要是用来设置变量用的,没什么特别的
+* if
+* return
+* break
+* rewrite
+麻雀虽小,五脏俱全.只是简单的几个指令却可以做出绝对不输apache的简单灵活的配置.
+
+if主要用来判断一些在rewrite语句中无法直接匹配的条件,比如检测文件存在与否,http header,cookie等,
+用法: if(条件) {…}
+当if表达式中的条件为true,则执行if块中的语句
+当表达式只是一个变量时,如果值为空或者任何以0开头的字符串都会当作false
+直接比较内容时,使用 = 和 !=
+使用正则表达式匹配时,使用
+~ 大小写敏感匹配 
+~* 大小写不敏感匹配 
+!~ 大小写敏感不匹配 
+!~* 大小写不敏感不匹配
+这几句话看起来有点绕,总之记住: ~为正则匹配, 后置*为大小写不敏感, 前置!为”非”操作
+随便一提,因为nginx使用花括号{}判断区块,所以当正则中包含花括号时,则必须用双引号将正则包起来.对下面讲到的rewrite语句中的正则亦是如此. 
+比如 “\d{4}\d{2}\.+”
+使用-f,-d,-e,-x检测文件和目录
+* -f 检测文件存在
+* -d 检测目录存在
+* -e 检测文件,目录或者符号链接存在
+* -x 检测文件可执行
+跟~类似,前置!则为”非”操作
+举例:
+if ($http_user_agent ~ MSIE) {
+	rewrite  ^(.*)$  /msie/$1  break;
+}
+------------------------------------------------
+多目录转成参数
+abc.domian.com/sort/2 => abc.domian.com/index.php?act=sort&name=abc&id=2
+if ($host ~* (.*)\.domain\.com) {
+    set $sub_name $1;
+    rewrite ^/sort\/(\d+)\/?$ /index.php?act=sort&cid=$sub_name&id=$1 last;
+}
+
+目录对换
+/123456/xxxx -> /xxxx?id=123456
+rewrite ^/(\d+)/(.+)/ /$2?id=$1 last;
+
+下面设定nginx在用户使用ie的使用重定向到/nginx-ie目录下：
+if ($http_user_agent ~ MSIE) {
+    rewrite ^(.*)$ /nginx-ie/$1 break;
+}
+
+目录自动加“/”
+if (-d $request_filename){
+    rewrite ^/(.*)([^/])$ http://$host/$1$2/ permanent;
+}
+
+禁止htaccess
+location ~/\.ht {
+    deny all;
+}
+
+禁止多个目录
+location ~ ^/(cron|templates)/ {
+    deny all;
+    break;
+}
+
+禁止以/data开头的文件,可以禁止/data/下多级目录下.log.txt等请求
+location ~ ^/data {
+    deny all;
+}
+
+禁止单个目录,不能禁止.log.txt能请求
+location /searchword/cron/ {
+    deny all;
+}
+
+禁止单个文件
+location ~ /data/sql/data.sql {
+    deny all;
+}
+
+给favicon.ico和robots.txt设置过期时间;这里为favicon.ico为99天,robots.txt为7天并不记录404错误日志
+location ~(favicon.ico) {
+    log_not_found off;
+    expires 99d;
+    break;
+}
+
+location ~(robots.txt) {
+    log_not_found off;
+    expires 7d;
+    break;
+}
+
+设定某个文件的过期时间;这里为600秒，并不记录访问日志
+location ^~ /html/scripts/loadhead_1.js {
+    access_log off;
+    root /opt/lampp/htdocs/web;
+    expires 600;
+    break;
+}
+
+文件反盗链并设置过期时间,这里的return 412 为自定义的http状态码，默认为403，方便找出正确的盗链的请求
+rewrite ^/ http://leech.c1gstudio.com/leech.gif;显示一张防盗链图片
+access_log off;不记录访问日志，减轻压力
+expires 3d所有文件3天的浏览器缓存
+location ~* ^.+\.(jpg|jpeg|gif|png|swf|rar|zip|css|js)$ {
+    valid_referers none blocked *.c1gstudio.com *.c1gstudio.net localhost 208.97.167.194;
+    if ($invalid_referer) {
+      rewrite ^/ http://leech.c1gstudio.com/leech.gif;
+      return 412;
+      break;
+     }
+     access_log off;
+     root /opt/lampp/htdocs/web;
+     expires 3d;
+     break;
+}
+
+只充许固定ip访问网站，并加上密码
+root /opt/htdocs/www;
+allow 208.97.167.194;
+allow 222.33.1.2;
+allow 231.152.49.4;
+deny all;
+auth_basic “C1G_ADMIN”;
+auth_basic_user_file htpasswd;
+
+将多级目录下的文件转成一个文件，增强seo效果
+/job-123-456-789.html 指向/job/123/456/789.html
+rewrite ^/job-([0-9]+)-([0-9]+)-([0-9]+)\.html$ /job/$1/$2/jobshow_$3.html last;
+
+将根目录下某个文件夹指向2级目录,如/shanghaijob/ 指向 /area/shanghai/,如果你将last改成permanent，那么浏览器地址栏显是/location/shanghai/
+rewrite ^/([0-9a-z]+)job/(.*)$ /area/$1/$2 last;
+
+上面例子有个问题是访问/shanghai 时将不会匹配
+rewrite ^/([0-9a-z]+)job$ /area/$1/ last;
+rewrite ^/([0-9a-z]+)job/(.*)$ /area/$1/$2 last;
+
+这样/shanghai 也可以访问了，但页面中的相对链接无法使用，
+如./list_1.html真实地址是/area/shanghia/list_1.html会变成/list_1.html,导至无法访问.
+
+
+文件和目录不存在的时候重定向：
+if (!-e $request_filename) {
+    proxy_pass http://127.0.0.1;
+}
+
+域名跳转
+server {
+    listen 80;
+    server_name jump.c1gstudio.com;
+    index index.html index.htm index.php;
+    root /opt/lampp/htdocs/www;
+    rewrite ^/ http://www.c1gstudio.com/;
+    access_log off;
+}
+
+多域名转向
+server_name www.c1gstudio.com www.c1gstudio.net;
+index index.html index.htm index.php;
+root /opt/lampp/htdocs;
+if ($host ~ “c1gstudio\.net”) {
+    rewrite ^(.*) http://www.c1gstudio.com$1 permanent;
+}
+
+三级域名跳转
+if ($http_host ~* “^(.*)\.i\.c1gstudio\.com$”) {
+    rewrite ^(.*) http://top.yingjiesheng.com$1;
+    break;
+}
+
+域名镜向
+server {
+    listen 80;
+    server_name mirror.c1gstudio.com;
+    index index.html index.htm index.php;
+    root /opt/lampp/htdocs/www;
+    rewrite ^/(.*) http://www.c1gstudio.com/$1 last;
+    access_log off;
+}
+
+某个子目录作镜向
+location ^~ /zhaopinhui {
+    rewrite ^.+ http://zph.c1gstudio.com/ last;
+    break;
+}
+
+给discuz某版块单独配置域名
+server_name bbs.c1gstudio.com news.c1gstudio.com;
+location = / {
+    if ($http_host ~ news\.c1gstudio.com$) {
+      rewrite ^.+ http://news.c1gstudio.com/forum-831-1.html last;
+      break;
+    }
+}
+
+jspace rewrite
+location ~ .*\.php?$ {
+    #fastcgi_pass unix:/tmp/php-cgi.sock;
+    fastcgi_pass 127.0.0.1:9000;
+    fastcgi_index index.php;
+    include fcgi.conf;
+}
+location ~* ^/index.php/ {
+    rewrite ^/index.php/(.*) /index.php?$1 break;
+    fastcgi_pass 127.0.0.1:9000;
+    fastcgi_index index.php;
+    include fcgi.conf;
+}
+
+五、防盗链location ~* \.(gif|jpg|swf)$ {
+valid_referers none blocked start.igrow.cn sta.igrow.cn;
+if ($invalid_referer) {
+rewrite ^/ http://$host/logo.png;
+}
+}
+六、根据文件类型设置过期时间
+location ~* \.(js|css|jpg|jpeg|gif|png|swf)$ {
+  if (-f $request_filename) {
+    expires    1h;
+    break;
+  }
+}
+
+七、禁止访问某个目录
+location ~* \.(txt|doc)${
+  root /data/www/wwwroot/linuxtone/test;
+  deny all;
+}
+
+---------------------------------------------------------------
+#user www www;
+
+#worker_processes 8;
+
+error_log logs/error.log info;
+
+pid logs/nginx.pid;
+worker_rlimit_nofile 65536;
+
+
+events 
+{
+
+  # use epoll;
+  worker_connections  65536;
+
+}
+
+
+http 
+{
+
+  include mime.types;
+
+  default_type application/octet-stream;
+
+  server_names_hash_bucket_size 128;
+  sendfile on;
+  tcp_nopush on;
+
+  keepalive_timeout 65;
+  tcp_nodelay on;
+	
+  gzip on;
+  client_max_body_size 50m;
+  fastcgi_intercept_errors on;
+	
+	
+  proxy_buffer_size 128k;
+	
+  proxy_buffers 32 32k;
+	
+  proxy_busy_buffers_size 128k;
+	
+  fastcgi_buffer_size 128k;
+	
+  fastcgi_buffers 32 32k;
+	
+	
+  log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+	    '"$http_referer" $status $body_bytes_sent $request_body '
+	    '"$http_user_agent" "$http_x_forwarded_for"';
+
+
+	
+	
+	
+
+  #xpe版,网上开户中台
+	
+  upstream api.xpe.com {
+		
+    server 127.0.0.1:9080;
+	
+  }
+
+	
+  server {
+		
+    listen       80;
+
+    server_name  api.xpe.com;
+
+    # 这里将url改写了,原来的url为http://api.xpe.com/notice/CRH-SMS0001.action?mobile_tel=15611111111
+    # 改写后的url为http://api.xpe.com/notice/CRH-SMS0001.json?mobile_tel=15611111111
+    # 改写后会继续走下面的location用改写后的url进行反向代理访问
+    rewrite 	^(.*)(.action)$  									$1.json last;
+
+    rewrite	^/$ 											/CRH-KH0000.json last;
+		
+    rewrite	^/WT([6])([0-9])([0-9])([0-9])$								/CRH-WT$1$2$3$4.json last;
+
+    rewrite	^/WA([0-8])([0-9])([0-9])([0-9])$							/CRH-KH$1$2$3$4.json last;
+
+    rewrite	^/Mserver/CRH-KH([0-9])([0-9])([0-9])([0-9])$		                                /CRH-KH$1$2$3$4.json last;
+
+    rewrite	^/OP([9])([0-9])([0-9])([0-9])$								/CRH-KH$1$2$3$4.json last;
+
+    rewrite	^/WT([6])([0-9])([0-9])([0-9])$								/CRH-KH$1$2$3$4.json last;
+
+    location / {
+
+      # 这里的反向代理最后面的/要不要都可以
+      proxy_pass http://api.xpe.com/; # 如果访问http://api.xpe.com/abc/ag.txt,不会找安装目录下的html\abc\ag.txt文件,直接访问反向代理
+
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+      proxy_set_header X-real-uri $request;
+
+    }
+  }
+
+
+}
+---------------------------------------------------------------
+rewrite实例1
+http {
+    # 定义image日志格式
+    log_format imagelog '[$time_local] ' $image_file ' ' $image_type ' ' $body_bytes_sent ' ' $status;
+    # 开启重写日志
+    rewrite_log on;
+    server {
+        root /home/www;
+        location / {
+                # 重写规则信息
+                error_log logs/rewrite.log notice; 
+                # 注意这里要用‘’单引号引起来，避免{}
+                rewrite '^/images/([a-z]{2})/([a-z0-9]{5})/(.*)\.(png|jpg|gif)$' /data?file=$3.$4;
+                # 注意不能在上面这条规则后面加上“last”参数，否则下面的set指令不会执行
+                set $image_file $3;
+                set $image_type $4;
+        }
+        location /data {
+                # 指定针对图片的日志格式，来分析图片类型和大小
+                access_log logs/images.log mian;
+                root /data/images;
+                # 应用前面定义的变量。判断首先文件在不在，不在再判断目录在不在，如果还不在就跳转到最后一个url里
+                try_files /$arg_file /image404.html;
+        }
+        location = /image404.html {
+                # 图片不存在返回特定的信息
+                return 404 "image not found\n";
+        }
+}
+对形如/images/ef/uh7b3/test.png的请求，重写到/data?file=test.png，于是匹配到location /data，先看/data/images/test.png文件存不存在，
+如果存在则正常响应，如果不存在则重写tryfiles到新的image404 location，直接返回404状态码。
+
+rewrite实例2
+rewrite ^/images/(.*)_(\d+)x(\d+)\.(png|jpg|gif)$ /resizer/$1.$4?width=$2&height=$3? last;
+对形如/images/bla_500x400.jpg的文件请求，重写到/resizer/bla.jpg?width=500&height=400地址，并会继续尝试匹配location。
+

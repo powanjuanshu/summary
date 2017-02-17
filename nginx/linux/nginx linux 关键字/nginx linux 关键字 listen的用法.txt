@@ -1,0 +1,112 @@
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 8011; #如果不写此配置,默认的是80端口,如果写成listen 192.168.242.89:8011貌似没用访问这个ip没有,还是用本机的ip192.168.242.88
+    }
+}
+------------------------------
+listen:http核心模块
+语法(0.7.x):listen address:port [ default [ backlog=num | rcvbuf=size | sndbuf=size | accept_filter=filter | deferred | bind | ssl ] ] 
+语法(0.8.x):listen address:port [ default_server [ backlog=num | rcvbuf=size | sndbuf=size | accept_filter=filter | deferred | bind | ssl ] ] 
+默认值:listen 80
+使用字段:server 
+listen指令指定了server{...}字段中可以被访问到的ip地址及端口号,可以只指定一个ip,一个端口,或者一个可解析的服务器名。
+如果只有ip地址指定,则默认端口为80.
+如果指令有default参数,那么这个server块将是通过"地址:端口"来进行访问的默认服务器,这对于你想为那些不匹配server_name指令中的主机名指定默认server块的虚拟主机(基于域名)
+非常有用，如果没有指令带有default参数，那么默认服务器将使用第一个server块
+listen允许一些不同的参数,即系统调用listen(2)和bind(2)中指定的参数,这些参数必须用在default参数之后:
+backlog=num -- 指定调用listen(2)时backlog的值,默认为-1。
+rcvbuf=size -- 为正在监听的端口指定SO_RCVBUF。
+sndbuf=size -- 为正在监听的端口指定SO_SNDBUF。
+accept_filter=filter -- 指定accept-filter。
+------------------------------
+基于名字的虚拟服务器
+nginx首先决定哪个server应该处理请求,我们先从一个简单的例子开始:三台监听80端口的虚拟服务器
+server {
+    listen       80;
+    server_name  linuxidc.com  www.codesky.net;
+    ...
+}
+server {
+    listen       80;
+    server_name  nginx.net  www.nginx.net;
+    ...
+}
+server {
+    listen       80;
+    server_name  linuxidc.net  www.linuxidc.net;
+    ...
+}
+在这个配置中,nginx测试的是只通过header line "Host"决定哪台server处理请求.
+如果"Host"header line不匹配任何server_name,或者用户请求中根本就不包括这些server_name,
+那么nginx将会将这个请求转发给默认的server.在上面的配置中,第一个就是默认server(这是nginx默认的配置规则)
+如果你不想让第一个server作为默认的,那么可以在listen指令中添加"default_server"参数来明确指定
+如下:
+server {
+    listen       80  default_server;
+    server_name  nginx.net  www.nginx.net;
+    ...
+}
+PS：0.8.21之后的nginx版本才支持"default_server"参数
+   "default_server"参数是监听端口的一个属性,不是服务器名字
+怎么阻止没有指定服务器名字的请求
+如果不想处理没有指定的“Host”header line请求,你需要定义一个丢掉请求的服务器
+如下:
+server {
+    listen       80;
+    server_name  "";
+    return       444;
+}
+server_name是空的话就可以匹配没有"Host"header line的请求,会返回一个特定代码444,并断开客户端的链接
+0.8.48版本以后,nginx就有了处理上述那种请求的功能,所以这个设置在配置文件中可以忽略了
+服务器名和IP地址混合的虚拟服务器
+我们来看一个更复杂的配置,虚拟服务器监听不同地址的端口
+如下:
+server {
+    listen       192.168.1.1:80;
+    server_name  linuxidc.com  www.codesky.net;
+    ...
+}
+server {
+    listen       192.168.1.1:80;
+    server_name  nginx.net  www.nginx.net;
+    ...
+}
+server {
+    listen       192.168.1.2:80;
+    server_name  linuxidc.net  www.linuxidc.net;
+    ...
+}
+在这种配置中,nginx首先检查"server"模块"listen"指令中对应的的IP地址和端口
+然后检查请求的"Host"header line中"server"模块的"server_name"项
+如果找不到主机名就会把请求转给默认server
+比如:
+192.168.1.1:80端口收到www.linuxidc.net的请求,就会把请求转发给第一个server的192.168.1.1:80处理，
+即使第一个server没有指定www.linuxidc.net
+就如之前所说,默认server是监听端口的属性,不同的默认servers可能会被指定不同的监听端口
+比如:
+server {
+    listen        192.168.1.1:80;
+    server_name   linuxidc.com  www.codesky.net;
+    ...
+}
+server {
+    listen        192.168.1.1:80  default_server;
+    server_name   nginx.net  www.nginx.net;
+    ...
+}
+server {
+    listen        192.168.1.2:80  default_server;
+    server_name   linuxidc.net  www.linuxidc.net;
+    ...
+}
+
+
+

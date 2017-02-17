@@ -1,0 +1,37 @@
+server:http核心模块
+语法:server {...}
+默认值:no
+使用字段:http
+server字段包含虚拟主机的配置.
+没有明确的机制来分开基于域名(请求中的主机头)和基于IP的虚拟主机可以通过listen指令来指定必须连接到这个server块的所有地址和端口,
+并且在server_name指令中可以指定所有的域名.
+--------------------
+如果定义一个空server,那么访问http://192.168.242.88/能正常访问:Welcome to nginx!可能是默认了监听端口为80,且是默认的server(default_server),即
+server {listen 80 default_server;}
+访问http://192.168.242.88/java.js,返回的文件是/usr/local/nginx/html/java.js,默认了root为nginx的根目录下的html文件夹(/usr/local/nginx/html/),即
+server {root html; # 等同于root /usr/local/nginx/html/,不能是root /html,这表示绝对路径,是在linux根目录下的html目录}
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        
+    }
+}
+--------------------
+如果不定义server,那么访问http://192.168.242.88/,无法访问.
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+}

@@ -1,0 +1,11 @@
+access_log:日志模块
+语法：access_log path [format [buffer=size | off]] 
+默认值：access_log log/access.log combined 
+使用字段：http, server, location 
+参数为连接日志指定了路径，格式和缓冲区大小。使用“off”将在当前的字段中清除access_log的所有参数，如果没有指定日志格式，默认为“combined”。
+缓冲区大小不能超过写入磁盘文件的最小大小。
+日志文件路径可以包含变量（0.7.4以上版本），但是有一些限制：
+1)nginx指定的用户必须有创建日志文件的权限。
+2)缓冲区不会工作
+3)每个到来的连接，日志文件将被打开并且在记录日志后迅速关闭，然而，频繁使用的文件描述符将被保存到open_log_file_cache中，关于日志的轮询记录，
+必须记住随着时间的过去（使用open_log_file_cache的valid参数设置），日志仍然在旧的文件中记录。

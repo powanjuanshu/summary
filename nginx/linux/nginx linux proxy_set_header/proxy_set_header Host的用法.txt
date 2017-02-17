@@ -1,0 +1,108 @@
+192.168.242.99的配置:
+worker_processes 1;
+events {
+        worker_connections 1024;
+}
+http {
+        include mime.types;
+        default_type application/octet-stream;
+        sendfile on;
+        keepalive_timeout 65;
+        upstream paycenter-webpay {
+                server 192.168.242.88:80;
+        }
+        server {
+                listen 80;
+                underscores_in_headers on;
+                server_name *.test.com;
+                location / {
+                        proxy_pass http://paycenter-webpay;
+                        #proxy_set_header X-Real-IP $remote_addr;
+                        #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header Host www.lij.com;
+                }
+        }
+}
+192.168.242.88的配置:
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name *.test.com;
+        location / {
+                echo http_host:$http_host;
+                echo proxy_add_x_forwarded_for:$proxy_add_x_forwarded_for;
+                echo remote_addr:$remote_addr;
+                echo host:$host;
+        }
+    }
+}
+访问:http://www.shunjialin.com/,返回:
+http_host:paycenter-webpay
+proxy_add_x_forwarded_for:192.168.242.99
+remote_addr:192.168.242.99
+host:paycenter-webpay
+---------------------------
+192.168.242.99的配置:
+worker_processes 1;
+events {
+        worker_connections 1024;
+}
+http {
+        include mime.types;
+        default_type application/octet-stream;
+        sendfile on;
+        keepalive_timeout 65;
+        upstream paycenter-webpay {
+                server 192.168.242.88:80;
+        }
+        server {
+                listen 80;
+                underscores_in_headers on;
+                server_name *.test.com;
+                location / {
+                        proxy_pass http://paycenter-webpay;
+                }
+        }
+}
+192.168.242.88的配置:
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name *.test.com;
+        location / {
+                echo http_host:$http_host;
+                echo proxy_add_x_forwarded_for:$proxy_add_x_forwarded_for;
+                echo remote_addr:$remote_addr;
+                echo host:$host;
+        }
+    }
+}
+访问:http://www.shunjialin.com/,返回:
+http_host:paycenter-webpay
+proxy_add_x_forwarded_for:192.168.242.99
+remote_addr:192.168.242.99
+host:paycenter-webpay
+
+
+
+
+
+
+
+

@@ -1,0 +1,47 @@
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    upstream tomcats {
+        server 192.168.242.88:8080 weight=50;
+        server 192.168.242.88:9080 weight=50;
+
+    }
+    server {
+        server_name yyyy;
+        location ~ ^/images/ {
+                root /lijie/abc/css;
+        }
+    }
+    server {
+        server_name xxxx;
+        location ~ ^/images/ {
+                root /lijie/abc/sky;
+        }
+    }
+}
+-------------------------------
+运用火狐的Poster工具发送请求:
+URL:http://192.168.242.88/images/abc.txt
+Headers:
+host:yyyy
+按GET按钮发送请求,返回:
+2014/12/08 18:03:27 [error] 12019#0: *1 open() "/lijie/abc/css/images/abc.txt" failed (2: No such file or directory), client: 192.168.242.1, server: yyyy, request: "GET /images/abc.txt HTTP/1.1", host: "yyyy"
+-------------------------------
+运用火狐的Poster工具发送请求:
+URL:http://192.168.242.88/images/abc.txt
+Headers:
+host:xxxx
+按GET按钮发送请求,返回:
+2014/12/08 18:03:12 [error] 12019#0: *1 open() "/lijie/abc/sky/images/abc.txt" failed (2: No such file or directory), client: 192.168.242.1, server: xxxx, request: "GET /images/abc.txt HTTP/1.1", host: "xxxx"
+
+
+
+
+
+

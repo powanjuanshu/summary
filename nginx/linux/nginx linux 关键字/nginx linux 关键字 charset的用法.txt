@@ -1,0 +1,5 @@
+charset:字符集设置模块
+语法：charset encoding|off 
+默认值：charset off 
+使用字段：http, server, location, location中的if字段 
+这个指令使应答头中的"Content-Type"字段使用指定的编码集，如果这个字符集与source_charset指令设置的字符集不相同，将重新编码字符集，参数off表明不在应答头中添加"Content-Type"信息。

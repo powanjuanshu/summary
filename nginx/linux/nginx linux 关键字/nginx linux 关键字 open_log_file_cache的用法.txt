@@ -1,0 +1,11 @@
+open_log_file_cache：日志模块
+语法：open_log_file_cache max=N [inactive=time] [min_uses=N] [valid=time] | off 
+默认值：open_log_file_cache off 
+使用字段：http server location 
+这个指令为频繁使用的日志文件描述符所在的路径变量设置缓存。
+指令选项：
+·max - 缓存中存储的最大文件描述符数。
+·inactive - 设置缓存中在某个时间段内没有使用的文件描述符将被移除，默认为10秒。
+·min_uses - 在一定时间内（inactive指定），一个文件描述符最少使用多少次后被放入缓存，默认为1。
+·valid - 设置检查同名文件存在的时间，默认是60秒。
+·off - 关闭缓存。

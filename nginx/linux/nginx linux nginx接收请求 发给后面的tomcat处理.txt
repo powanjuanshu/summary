@@ -1,0 +1,47 @@
+lijie3.conf:
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name localhost;
+        location ~ ^/NginxStatus/ {
+                stub_status on;
+                access_log on;
+        }
+
+        location ~ ^/images/ {
+                root /lijie/abc/sky;
+        }
+
+        location ~ \.(htm|html|gif|jpg|jpeg|png|bmp|ico|css|js|txt)$ {
+                root /lijie/abc/lyn;
+                expires 24h;
+        }
+
+        location / {
+                proxy_pass http://localhost:8080;
+                proxy_set_header X-Real-IP $remote_addr;
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+            root html;
+        }
+    }
+}
+-------------------------
+在本机上起一个tomcat:http://192.168.242.88:8080/xxx/aaa 返回:haha
+-------------------------
+/usr/local/nginx/sbin/nginx -c /usr/local/nginx/lijie/lijie3.conf 
+-------------------------
+http://192.168.242.88:80/xxx/aaa 会将请求转发给tomat 返回:haha
+
+
+

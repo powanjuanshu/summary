@@ -1,0 +1,21 @@
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name *.test.com;
+        location / {
+                return http://liguangming.com/;
+        }
+    }
+}
+
+注意:
+* location / 作为特殊的规则,任何请求的uri都匹配它,但只有在不匹配其他location的正则表达式时才会查看里面的规则.
+* location 只会检查请求的uri部分,不会检查参数(请求中?及其之后的部分)

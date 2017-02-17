@@ -1,0 +1,41 @@
+server_name:http核心模块
+
+语法:server_name name [...]
+默认值:server_name hostname
+使用字段:server
+
+这个指令有两个作用:
+将http请求的主机头与在nginx配置文件中的server{...}字段中指定的参数进行匹配,并且找出第一个匹配结果.这就是如何定义虚拟主机的方法,域名遵循下述优先级规则:
+1、完整匹配的名称
+2、名称开始于一个文件通配符：*.example.com
+3、名称结束于一个文件通配符：www.example.*
+4、使用正则表达式的名称
+(略过没有匹配到的情况)
+--------------------------
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name bestpaywapwg.com.cn;
+        root /lijie1;
+    }
+    server {
+        listen 80;
+        server_name bestpaywebwg.com.cn;
+        root /lijie2;
+    }
+}
+--------------------
+如果请求头的host为bestpaywapwg.com.cn,会去/lijie1目录下找
+如果请求头的host为bestpaywebwg.com.cn,会去/lijie2目录下找
+如果请求头的host都不是,会以一个为默认的server,所以会去/lijie1目录下找
+
+
+

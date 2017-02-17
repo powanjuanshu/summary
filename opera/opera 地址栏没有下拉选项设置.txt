@@ -1,0 +1,2 @@
+在opera的地址栏里输入opera:config#Show%20Dropdown%20Button%20In%20Addressfield
+进去，然后就出来一个选项的，勾选，然后保存，就有箭头了，我试过了，确实可以

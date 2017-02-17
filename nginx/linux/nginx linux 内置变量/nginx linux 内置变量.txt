@@ -1,0 +1,44 @@
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name *.test.com;
+        location / {
+                echo a1:$http_post;
+                echo a2:$args; #请求中的参数 【username=123】
+                echo a3:$uri; #请求的URI 【/】
+                echo a4:$host; #请求信息中的"Host",如果请求中没有Host行则等于设置,和下面的相同 【www.test.com】
+		echo a4:$http_host; # www.test.com,和上面的相同
+		echo a4:$proxy_add_x_forwarded_for; # 192.168.242.1为客户端的,192.168.242.99为中间的nginx服务器ip 【192.168.242.1, 192.168.242.99】
+                echo a5:$hostname; 【localhost.localdomain】
+                echo a6:$http_cookie; #cookie 信息
+                echo a7:$http_user_agent; #客户端代理信息,就是哪个浏览器 【Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)】
+                echo a8:$http_x_forwarded_for; #最后一个访问服务器的Ip地址
+                echo a9:$nginx_version; 【1.6.2】
+                echo a10:$query_string; #与$args相同 【username=123】
+                echo a11:$remote_addr; #客户端地址 【192.168.242.1】
+                echo a12:$remote_port; #客户端端口号 【3395】
+                echo a13:$remote_user; #客户端用户名，认证用
+                echo a14:$request; #用户请求 【GET /?username=123 HTTP/1.1】
+                echo a15:$request_body; 
+                echo a16:$request_body_file; #发往后端的本地文件名称
+                echo a17:$request_method; #请求的方法，比如"GET"、"POST"等 【GET】
+                echo a18:$request_uri; #请求的URI,带参数 【/?username=123】
+                echo a19:$server_addr; #服务器地址,如果没有用listen指明服务器地址,使用这个变量将发起一次系统调用以取得地址(造成资源浪费) 【192.168.242.88】
+                echo a20:$server_name; #请求到达的服务器名 【*.test.com】
+                echo a21:$server_port; #请求到达的服务器端口号 【80】
+                echo a22:$server_protocol; #请求的协议版本，"HTTP/1.0"或"HTTP/1.1" 【HTTP/1.1】
+        }
+    }
+}
+
+
+
+

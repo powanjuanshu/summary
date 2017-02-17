@@ -1,0 +1,15 @@
+三、关闭
+
+　　查询nginx主进程号
+
+　　ps -ef | grep nginx
+
+　　从容停止   kill -QUIT 主进程号
+
+　　快速停止   kill -TERM 主进程号
+
+　　强制停止   kill -9 nginx
+
+　　若nginx.conf配置了pid文件路径，如果没有，则在logs目录下
+
+　　kill -信号类型 '/usr/local/nginx/logs/nginx.pid'

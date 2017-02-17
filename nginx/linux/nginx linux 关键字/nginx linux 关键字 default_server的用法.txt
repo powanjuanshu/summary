@@ -1,0 +1,52 @@
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name bestpaywapwg.com.cn;
+        root /lijie1;
+    }
+    server {
+        listen 80 default_server;
+        server_name bestpaywebwg.com.cn;
+        root /lijie2;
+    }
+}
+如果请求头的host为bestpaywapwg.com.cn,会去/lijie1目录下找
+如果请求头的host为bestpaywebwg.com.cn,会去/lijie2目录下找
+如果请求头的host都不是,会以第二个为默认的server,所以会去/lijie2目录下找
+--------------------
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name bestpaywapwg.com.cn;
+        root /lijie1;
+    }
+    server {
+        listen 80;
+        server_name bestpaywebwg.com.cn;
+        root /lijie2;
+    }
+}
+--------------------
+如果请求头的host为bestpaywapwg.com.cn,会去/lijie1目录下找
+如果请求头的host为bestpaywebwg.com.cn,会去/lijie2目录下找
+如果请求头的host都不是,默认为第一个,所以会去/lijie1目录下找
+
+
+
+

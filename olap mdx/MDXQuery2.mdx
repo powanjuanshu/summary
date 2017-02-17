@@ -1,0 +1,264 @@
+//-----------------空间登陆次数(无数据)-----------------//
+SELECT TopCount(
+	(
+		Order --对唯独进行讲叙排序
+		(
+			[用户].[Login Count].[Login Count],
+			StrToValue([用户].[Login Count].currentmember.name),
+			BDESC
+		),
+		[用户].[User Name].children -- *就是，的另一重表达方式；children就是[User Name]的另一种表达方式
+	),
+	11
+) ON 0 
+from [空间开设]
+where ({[空间用户角色].[Role Name].[teacher]},[用户].[School Id].[4637130095000000153])
+
+//-----------------资源排行榜慢-----------------//
+WITH 
+member  [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])   
+member [资源下载量] as ([Measures].[Resource Down Count 计数])   
+SELECT     
+Order(  ([用户].[User Name].children,[用户].[User Id].children),  ([资源上传量]*100+[资源下载量]),  BDESC   ) on rows,   
+{[资源上传量],[资源下载量]}  ON  columns    
+FROM [资源雷达] 
+where ([用户].[School Id].[4637130095000000153])  
+//-----------------正常-----------------//
+WITH    
+member [登录数] as ([Measures].[最大的 Login Count])    
+SELECT     
+Order(([用户].[User Name].children,[用户].[User Id].children),  [登录数],   BDESC   )  on rows,  
+{[登录数]}  ON  columns   
+FROM [空间开设] 
+where ([用户].[School Id].[2244000020000000166])  
+//-----------------正常-----------------//
+WITH   
+member [登录数] as ([Measures].[最大的 Login Count])  
+Member [说说数] AS ([Measures].[最大的 Post Count]) 
+Member [日志数] AS ([Measures].[最大的 Blog Count]) 
+Member [上传图片数] AS ([Measures].[最大的 Postimage Count])  
+SELECT {[说说数] ,[日志数],[上传图片数],[登录数]} ON 0,    
+subset(topcount([用户].[User Id].children*[用户].[User Name].children,20,[说说数]),0,20) ON 1   
+FROM [空间开设] where (  [用户].[School Id].[2244000020000000166]) 
+
+with    member [登录数] as ([Measures].[最大的 Login Count])    
+SELECT     
+Order(  ([用户].[User Name].children,[用户].[User Id].children),  [登录数],   BDESC   )  on rows,  
+{[登录数]}  ON  columns   
+FROM [空间开设] 
+where ([用户].[School Id].[4637130095000000010])  
+
+//-----------------正常-----------------//
+with   
+member  [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])   
+member [资源下载量] as ([Measures].[Resource Down Count 计数])   
+SELECT     
+Order(  ([用户].[User Name].children,[用户].[User Id].children),  ([资源上传量]*100+[资源下载量]),  BDESC   ) on rows,   
+{[资源上传量],[资源下载量]}  ON  columns    
+FROM [资源雷达] where ([用户].[School Id].[4637130095000000004])  
+//-----------------首页排行榜，正常-----------------//
+with    
+member [登录数] as ([Measures].[最大的 Login Count])    
+SELECT     
+Order(  ([用户].[User Name].children,[用户].[User Id].children),  [登录数],   BDESC   )  on rows,  
+{[登录数]}  ON  columns   
+FROM [空间开设] 
+where ([用户].[School Id].[4637130095000000004])  
+//-----------------首页排行榜,正常-----------------//
+with   
+MEMBER [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])   
+MEMBER [资源下载量] as ([Measures].[Resource Down Count 计数])   
+SELECT     
+Order(  ([用户].[User Name].children,[用户].[User Id].children),  ([资源上传量]*100+[资源下载量]),  BDESC   ) on rows,   
+{[资源上传量],[资源下载量]}  ON  columns    
+FROM [资源雷达] 
+where ([用户].[School Id].[4637130095000000004])  
+
+with 
+member  [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])
+member [资源下载量] as ([Measures].[Resource Down Count 计数])
+SELECT ([区域].[County Name].children,[区域].[County Id].children) ON rows,
+{[资源上传量],[资源下载量]}  ON  columns FROM [资源雷达] where ([区域].[City ID 1].[371300])
+
+ with  
+ member [用户数] as ([Measures].[Space Open Count 计数])  
+ SELECT   ([空间区域].[county Name].children,[空间区域].[county Id].children) ON rows,   
+ {[用户数]}  ON columns 
+ FROM [空间开设] 
+ where ([空间区域].[City ID 1].[371300]) 
+
+//-----------------正常-----------------//
+WITH 
+MEMBER [教师基数] AS SUM({[空间用户角色].[Role Name].[teacher]},[Measures].[Space Open Count 计数])
+MEMBER [教研员基数] AS SUM({[空间用户角色].[Role Id].[2000000037000000026],[空间用户角色].[Role Id].[2000000037000000027],[空间用户角色].[Role Id].[2000000037000000028],[空间用户角色].[Role Id].[2300000001000000006]},[Measures].[Space Open Count 计数])
+MEMBER [教师开通数] AS (SUM({[空间用户角色].[Role Name].[teacher]},([Measures].[Space Open Count 计数],[空间开设].[Open Name].[已激活空间])))
+MEMBER [教师开通率] AS (SUM({[空间用户角色].[Role Name].[teacher]},([Measures].[Space Open Count 计数],[空间开设].[Open Name].[已激活空间]))/[教师基数])*100
+MEMBER [教研员开通率] AS (SUM({[空间用户角色].[Role Id].[2000000037000000026],[空间用户角色].[Role Id].[2000000037000000027],[空间用户角色].[Role Id].[2000000037000000028],[空间用户角色].[Role Id].[2300000001000000006]},([Measures].[Space Open Count 计数],[空间开设].[Open Name].[已激活空间]))/[教研员基数])*100
+MEMBER [教师活跃数] AS (SUM({[空间用户角色].[Role Name].[teacher]},([Measures].[Space Open Count 计数],[空间活跃].[Active Name].[活跃用户])))
+MEMBER [教师活跃率] AS (SUM({[空间用户角色].[Role Name].[teacher]},([Measures].[Space Open Count 计数],[空间活跃].[Active Name].[活跃用户]))/[教师基数])*100
+MEMBER [教研员活跃率] AS (SUM({[空间用户角色].[Role Id].[2000000037000000026],[空间用户角色].[Role Id].[2000000037000000027],[空间用户角色].[Role Id].[2000000037000000028],[空间用户角色].[Role Id].[2300000001000000006]},([Measures].[Space Open Count 计数],[空间活跃].[Active Name].[活跃用户]))/[教研员基数])*100
+MEMBER [总基数] AS [Measures].[Space Open Count 计数]
+MEMBER [总开通率] AS (([Measures].[Space Open Count 计数],[空间开设].[Open Name].[已激活空间])/[总基数])*100
+MEMBER [总活跃率] AS (([Measures].[Space Open Count 计数],[空间活跃].[Active Name].[活跃用户])/[总基数])*100
+SELECT{[教师开通率],[教师活跃率]}  ON ROWS,
+Order({[空间区域].[County Id].children*[空间区域].[County Name].children},[教师开通率],bdesc) ON COLUMNS  
+FROM [空间开设]  
+where [空间区域].[City Id 1].[371300]
+//-----------------正常-----------------//
+SELECT [用户].[User Id].[User Id] ON 0 
+FROM [空间开设] 
+where [用户].[School Id].[4637130095000000055]
+//-----------------区域教研活动统计,正常-----------------//
+SELECT 
+[Measures].[Qxpt Teaching Count 计数] on rows,
+([类型].[Code].[Code]*[类型].[Name].[Name]) on columns 
+from [教研平台]
+where [学校].[School Id].[4637130095000000153] -- 4637130095000000055
+//-----------------区域教研活动统计，正常-----------------//
+SELECT 
+subset([用户].[User Id].children*[用户].[User Name].children,0,20)on rows,
+[类型].[Code].[Code] on columns 
+from [教研平台] 
+where [用户].[School Id].[4637130095000000153]
+-------------------------------
+select {[教学类型].[App Name].[App Name]} on columns, [教学类型].[App Type Id].children on rows FROM [教研教学使用]
+select [用户].[User Id].[User Id] ON 0  FROM [空间开设] where [用户].[School Id].[4637130095000000055]
+
+-----------------------个人教研情况一览------
+SELECT 
+{[Measures].[Teaching App Count 计数]} ON ROWS, 
+TopCount({[用户].[User Id].children*[用户].[User Name].Children},10) ON COLUMNS 
+FROM [教研教学使用] 
+where ([用户].[School Id].[4637130095000000055])
+-----------------------个人教研情况一览------
+SELECT 
+subset([用户].[User Id].children*[用户].[user Name].children,0,20) ON 1, 
+{[教学类型].[App Type Id].[App Type Id]} ON 0 
+FROM [教研教学使用] 
+where ([用户].[School Id].[4637130095000000055])
+
+------------首页排行慢的问题
+with   
+member [学校数] as ([Measures].[Dim Resource School 计数])   
+member [教师数] as ([空间用户角色].[Role Name].[teacher],[Measures].[Space Open Count 计数])+([空间用户角色].[Role Name].[instructor],[Measures].[Space Open Count 计数])  
+member [学生数] as ([空间用户角色].[Role Name].[student],[Measures].[Space Open Count 计数])  
+SELECT  {[学校数],[教师数],[学生数]}  
+ON columns   
+FROM [空间开设]  
+where ([学校].[School Id].[2244000020000000160])  
+
+11:03:29.953 [http-bio-8080-exec-6] DEBUG c.i.rrttrack.cube.CubeDaoHelper - MDX:with   member [学校数] as ([Measures].[Dim Resource School 计数])   member [教师数] as ([空间用户角色].[Role Name].[teacher],[Measures].[Space Open Count 计数])+([空间用户角色].[Role Name].[instructor],[Measures].[Space Open Count 计数])  member [学生数] as ([空间用户角色].[Role Name].[student],[Measures].[Space Open Count 计数])  SELECT  {[学校数],[教师数],[学生数]}  ON columns   FROM [空间开设]  where ([学校].[School Id].[2244000020000000160])  
+11:04:56.965 [http-bio-8080-exec-7] DEBUG c.i.r.cube.Olap4jConnectionPool - Creating new instance of bean 'Olap4jConnection'
+11:04:56.968 [http-bio-8080-exec-7] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean 'Olap4jConnection'
+11:04:56.972 [http-bio-8080-exec-7] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Invoking init method  'init' on bean with name 'Olap4jConnection'
+11:05:05.400 [http-bio-8080-exec-7] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean 'Olap4jConnection'
+11:05:09.610 [http-bio-8080-exec-7] DEBUG c.i.rrttrack.cube.CubeDaoHelper - MDX:  with   member  [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])   member [资源下载量] as ([Measures].[Resource Down Count 计数])   SELECT     Order(  ([用户].[User Name].children,[用户].[User Id].children),  ([资源上传量]*100+[资源下载量]),  BDESC   ) on rows,   {[资源上传量],[资源下载量]}  ON  columns    FROM [资源雷达] where ([用户].[School Id].[2244000020000000160])  
+11:05:17.058 [http-bio-8080-exec-8] DEBUG c.i.r.cube.Olap4jConnectionPool - Creating new instance of bean 'Olap4jConnection'
+11:05:17.059 [http-bio-8080-exec-8] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean 'Olap4jConnection'
+11:05:17.062 [http-bio-8080-exec-8] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Invoking init method  'init' on bean with name 'Olap4jConnection'
+11:05:18.721 [http-bio-8080-exec-6] DEBUG c.i.rrttrack.cube.CubeDaoHelper - MDX: with  member  [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])  member [资源下载量] as ([Measures].[Resource Down Count 计数])  SELECT   {[资源上传量],[资源下载量]}  ON columns  FROM [资源雷达]  where ([学校].[School Id].[2244000020000000160])  
+11:05:21.576 [http-bio-8080-exec-6] DEBUG c.i.rrttrack.cube.CubeDaoHelper - MDX: with  member [班级数] as ([Measures].[Dim Resource Class 计数])  SELECT   {[班级数]}  ON columns  FROM [资源雷达]  where ([班级].[School Id].[2244000020000000160])  
+11:05:22.642 [http-bio-8080-exec-8] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean 'Olap4jConnection'
+11:05:22.643 [http-bio-8080-exec-8] DEBUG c.i.rrttrack.cube.CubeDaoHelper - MDX:  with   member  [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])   member [资源下载量] as ([Measures].[Resource Down Count 计数])   SELECT     Order(  ([用户].[User Name].children,[用户].[User Id].children),  ([资源上传量]*100+[资源下载量]),  BDESC   ) on rows,   {[资源上传量],[资源下载量]}  ON  columns    FROM [资源雷达] where ([用户].[School Id].[2244000020000000160])  
+11:05:41.418 [http-bio-8080-exec-7] DEBUG c.i.rrttrack.cube.CubeDaoHelper - MDX: with    member [登录数] as ([Measures].[最大的 Login Count])    SELECT     Order(  ([用户].[User Name].children,[用户].[User Id].children),  [登录数],   BDESC   )  on rows,  {[登录数]}  ON  columns   FROM [空间开设] where ([用户].[School Id].[2244000020000000160])  
+11:05:42.442 [http-bio-8080-exec-8] DEBUG c.i.rrttrack.cube.CubeDaoHelper - MDX: with    member [登录数] as ([Measures].[最大的 Login Count])    SELECT     Order(  ([用户].[User Name].children,[用户].[User Id].children),  [登录数],   BDESC   )  on rows,  {[登录数]}  ON  columns   FROM [空间开设] where ([用户].[School Id].[2244000020000000160])  
+
+with    
+member [登录数] as ([Measures].[最大的 Login Count])    
+SELECT     
+Order(  ([用户].[User Name].children,[用户].[User Id].children),  [登录数],   BDESC   )  on rows,  
+subset({[登录数]},0,2)  ON  columns   
+FROM [空间开设] 
+where ([用户].[School Id].[2244000020000000160])  
+
+subset(topcount([用户].[User Id].children*[用户].[User Name].children,20,[说说数]),0,20)
+
+with   
+member  [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])   
+member [资源下载量] as ([Measures].[Resource Down Count 计数])   
+SELECT     
+Order(  ([用户].[User Name].children,[用户].[User Id].children),  ([资源上传量]*100+[资源下载量]),  BDESC   ) on rows,   
+{[资源上传量],[资源下载量]}  ON  columns    
+FROM [首页资源排行榜]
+where ([用户].[School Id].[2244000020000000160])  
+
+with   member  [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])   member [资源下载量] as ([Measures].[Resource Down Count 计数])   SELECT     Order(  ([用户].[User Name].children,[用户].[User Id].children),  ([资源上传量]*100+[资源下载量]),  BDESC   ) on rows,   {[资源上传量],[资源下载量]}  ON  columns    FROM [资源雷达] where ([用户].[School Id].[4637130095000000055])  
+
+select subset([用户].[User Id].children*[用户].[User Name].children,0,200)on 1,[类型].[Code].[Code] on 0 from [教研平台] where [用户].[School Id].[4637130095000000051]
+
+
+with    
+member [登录数] as ([Measures].[最大的 Login Count])    
+member [资源上传量] as ([hp资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])    
+member [资源下载量] as ([Measures].[Resource Down Count 计数])    
+SELECT   
+subset(  Order(  ([hp用户].[User Name].children,[hp用户].[User Id].children),  [登录数],   BDESC   ) ,0,15) on rows,  
+{[登录数],[资源上传量],[资源下载量]}  ON  columns   
+FROM [首页排行] 
+where ([hp用户].[School Id].[2300000001000425296])  
+
+with
+member [学校数] as  ([Measures].[Dim Resource School 计数])
+member [教师数] as  ([hp角色].[Role Name].[teacher], [Measures].[Dim Resource User 计数])
+select {[学校数],[教师数]} on columns 
+from [首页排行]
+where ([hp学校].[School Id].[2300000001000425296])
+
+with   
+member [学校数] as ([Measures].[Dim Resource School 计数])   
+member [教师数] as ([空间用户角色].[Role Name].[teacher],[Measures].[Space Open Count 计数])+([空间用户角色].[Role Name].[instructor],[Measures].[Space Open Count 计数])  
+member [学生数] as ([空间用户角色].[Role Name].[student],[Measures].[Space Open Count 计数])  
+SELECT {[学校数],[教师数],[学生数]}  ON columns   
+FROM [空间开设]  
+where ([学校].[School Id].[2300000001000425296])  
+
+with 
+Member [资源总数] as ([Measures].[Resource Complete 计数]) 
+Member [已建资源] as ([建设情况].[Name].[已建],[Measures].[Resource Complete 计数]) 
+Member [已建资源总数] as sum({[日期].[Date].[2009-08-21]:[日期].[Date].[2016-11-08]},[已建资源]) 
+select {[已建资源总数],[资源总数]} ON 0 from [资源完整性]
+
+select {[日期].[Date].[2016-11-08]:[日期].[Date].[2016-12-08]} on 0 from [资源完整性]  where [建设情况].[Name].[已建] 
+
+SELECT ( [区域].[County Name].children,[区域].[County Id].children )  ON  1,  [User Count 计数] on 0 FROM [资源雷达]   where [区域].[City Name].[临沂市]
+with 
+member  [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])    
+member  [人均上传资源贡献] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])/([资源来源].[Source Id].[UGC],[Measures].[User Count 计数])  
+SELECT {[资源上传量],[人均上传资源贡献]} ON 0 ,
+{subset((order(except([区域].[County Id].children,[区域].[County Id].[]),[资源上传量],desc),[区域].[County Name].children) ,0,20)    } ON 1   
+FROM [资源雷达] 
+where ([区域].[City ID 1].[371300])   
+
+with 
+member  [人均上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数])/([资源来源].[Source Id].[UGC],[Measures].[User Count 计数]) 
+member  [资源上传量] as ([资源来源].[Source Id].[UGC],[Measures].[Resource Count 计数]) 
+member  [未审核资源上传量] as ([资源来源].[Source Id].[UGC],[审核].[Audit Id].[0],[Measures].[Resource Count 计数]) 
+SELECT  { [资源上传量], [人均上传量],[未审核资源上传量] }  ON  ROWS,  
+{[日期].[Date].[2016-11-08]:[日期].[Date].[2016-12-08]} ON columns 
+FROM [资源雷达] 
+where ([区域].[City Name].[临沂市]) 
+
+-- 新开发的教研教学模块mdx查询
+with
+member [登陆次数] as ([Measures].[Teach Statistic Login Count 计数])
+member [博客数量] as ([Measures].[Teach Statistic Blog Count 计数])
+member [时间区间登陆次数] as sum({[Teach Statistic Date].[Date].[2015-09-18]:[Teach Statistic Date].[Date].[2016-11-08]}, [登陆次数])
+member [时间区间博客数量] as sum({[Teach Statistic Date].[Date].[2015-09-18]:[Teach Statistic Date].[Date].[2016-11-08]}, [博客数量])
+select 
+subset(  Order(  ([Teach Statistic User].[Login Name].children,[Teach Statistic User].[User Id].children),  [时间区间登陆次数],   BDESC) ,0,1500) on rows,  
+{[时间区间登陆次数],[时间区间博客数量]}  ON  columns   
+from [教研教学]
+
+where ([hp学校].[School Id].[2300000001000425296])
+
+
+
+SELECT subset([用户].[User Id].children*[用户].[user Name].children,0,20) ON 1, {[教学类型].[App Type Id].[App Type Id]} ON 0 FROM [教研教学使用] where ([用户].[School Id].[4637130095000000153])
+
+
+
+
+
+
+
+

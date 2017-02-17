@@ -1,0 +1,62 @@
+index:默认主页设置模块
+
+语法:index file-path [file-path [ ... ] ];
+默认值:no
+使用字段:server,location
+-----------------------------
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+
+        location / {
+                root /lijie;
+                index index.html;
+        }
+    }
+}
+请求http://192.168.242.88/,如果找不到/lijie/index.html,那么会报403 Forbidden,后台会报:[error] directory index of "/lijie/" is forbidden
+如果找到/lijie/index.html,那么正确返回
+-----------------------------
+但下面的情况是不知道什么情况,和上面的情况不同:
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        server_name =  www.lijie1.com;
+        location / {
+                root /lijie1;
+                index index.html;
+        }
+    }
+    server {
+        server_name www.lijie2.com;
+        location / {
+                root /lijie2;
+                index index.html;
+        }
+    }
+    server {
+        server_name www.lijie3.com;
+        location / {
+                root /lijie3;
+                index index.html;
+        }
+    }
+}
+请求http://192.168.242.88/,如果找不到/lijie/index.html,那么会报404
+
+
+

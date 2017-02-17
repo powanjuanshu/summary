@@ -1,0 +1,26 @@
+worker_processes  1;
+events {
+    worker_connections  1024;
+}
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+    server {
+        listen       80;
+        server_name  localhost;
+        location ~ ^/NginxStatus/ {
+                stub_status on;
+                access_log on;
+        }
+        location / {
+            root html; #如果不是路径,那么就是在nginx安装目录下的html目录.如果写全路径(如root /lijie;),那么会找指定的全路径
+            index index.html index.htm; #在root指定的目录下(如:index abc.html cba.html abcccc.html;)按顺序找指定的文件,http://l92.168.242.88/也可以直接输入:http://l92.168.242.88/index.html找到
+        }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+}

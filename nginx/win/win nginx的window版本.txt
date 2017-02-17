@@ -1,0 +1,173 @@
+Nginx是一个轻量级的高性能Http WebServer,以事件驱动方式编写,因此相比Apache而言,Nginx更加稳定、性能更好,而且配置简单,资源占用较低。
+1. 安装 Nginx
+从v0.7.52 开始,Nginx开始发布Windows版本的 Nginx,你可以在其官方网站上面下载：http://nginx.net
+下载后直接解压即可,这里解压缩到c:\nginx目录。
+2. 启动Nginx
+命令行进入c:\nginx目录,运行nginx.exe,启动控制台窗口。默认启用80端口。用过Tomcat的人都希望能在控制台看到启动日志,nginx的日志却不得不查看logs目录下的相应log文件。
+3. 访问欢迎html页
+在浏览器中访问http://localhost,可以看到默认的欢迎页.
+4. 停止Nginx
+Ctrl+C没反应。于是关闭控制台窗口。可是再访问http://localhost依然有效。查看进程,发现nginx根本没有被关闭。因此如果想彻底关闭nginx,应该是
+    nginx -s stop  
+请参考官方文档nginx/Windows usage
+或者使用windows的taskkill命令：
+    taskkill /F /IM nginx.exe > nul  
+
+5. Ngnix常用配置
+Nginx的所有配置都默认使用conf/nginx.conf文件,其地位相当于apache的httpd.conf文件 。当运行nginx.exe暗含运行了nginx -c conf\nginx.conf. 如果想使用自己定义的conf文件如my.conf,命令为nginx -c conf\my.conf.
+常用配置如下：
+Nginx.conf代码  收藏代码
+
+    http {  
+      server {  
+        #1.侦听80端口   
+        listen  80;   
+        location / {  
+            # 2. 默认主页目录在nginx安装目录的html子目录。  
+            root   html;  
+            index  index.html index.htm;  
+            # 3. 没有索引页时,罗列文件和子目录  
+            autoindex on;  
+            autoindex_exact_size on;  
+            autoindex_localtime on;  
+        }  
+        # 4.指定虚拟目录  
+        location /tshirt {  
+        alias D:\programs\Apache2\htdocs\tshirt;  
+        index index.html index.htm;  
+        }  
+      }  
+      # 5.虚拟主机www.emb.info配置  
+      server {  
+        listen          80;  
+        server_name     www.emb.info;  
+        access_log emb.info/logs/access.log;  
+        location / {  
+          index index.html;  
+          root  emb.info/htdocs;  
+        }  
+      }  
+    }  
+
+
+
+小提示：
+运行nginx -V可以查看该Win32平台编译版支持哪些模块。我这里的结果为：
+Log代码  收藏代码
+
+    nginx version: nginx/0.7.65  
+    TLS SNI support enabled  
+    configure arguments:   
+    --builddir=objs.msvc8   
+    --crossbuild=win32   
+    --with-debug --prefix=   
+    --conf-path=conf/nginx.conf   
+    --pid-path=logs/nginx.pid   
+    --http-log-path=logs/access.log   
+    --error-log-path=logs/error.log   
+    --sbin-path=nginx.exe   
+    --http-client-body-temp-path=temp/client_body_temp   
+    --http-proxy-temp-path=temp/proxy_temp   
+    --http-fastcgi-temp-path=temp/fastcgi_temp   
+    --with-cc-opt=-DFD_SETSIZE=1024   
+    --with-pcre=objs.msvc8/lib/pcre-7.9   
+    --with-openssl=objs.msvc8/lib/openssl-0.9.8k   
+    --with-openssl-opt=enable-tlsext   
+    --with-zlib=objs.msvc8/lib/zlib-1.2.3   
+    --with-select_module   
+    --with-http_ssl_module   
+    --with-http_realip_module   
+    --with-http_addition_module   
+    --with-http_sub_module   
+    --with-http_dav_module   
+    --with-http_stub_status_module   
+    --with-http_flv_module   
+    --with-http_gzip_static_module   
+    --with-http_random_index_module   
+    --with-http_secure_link_module   
+    --with-mail   
+    --with-mail_ssl_module   
+    --with-ipv6  
+
+
+显然,最经常用的memcache, rewrite模块都没在其中,因此该win32编译版本仅能供基本开发测试使用,对于产品平台,应该重新编译自己想要的win32版本,或者在linux下使用更方s便。 
+-----------------------------------------------------
+下载到软件包后，解压 nginx-nginx1.0.11.zip 包到你喜欢的根目录，并将目录名改为nginx。
+
+然后，执行下列操作：
+
+cd nginx
+
+start nginx
+
+这样，nginx 服务就启动了。打开任务管理器，查看 nginx.exe 进程，有二个进程会显示，占用系统资源，那是相当的少。然后再打开浏览器，输入 http://127.0.0.1/  就可以看到nginx的欢迎页面了，非常友好
+
+ nginx -s stop          // 停止nginx
+nginx -s reload       // 重新加载配置文件
+nginx -s quit          // 退出nginx
+二、接下来就是配置nginx的conf文件了。下面是我的配置：
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+events {
+    worker_connections  1024;
+}
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+    access_log  logs/access.log  main;
+    sendfile        on;
+    keepalive_timeout  65;
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location ~* software/(.*).*\.(jpg|rar)
+        {
+            expires 21d;
+            root d:/temp/;
+            access_log d:/temp/soft.3g.cn_nginx_s3gd-205.log;
+            proxy_store on;
+            proxy_store_access user:rw group:rw all:rw;
+            proxy_temp_path            d:/temp/;
+            proxy_redirect          off;
+
+            proxy_set_header        Host 112.25.10.140;
+            proxy_set_header        X-Real-IP $remote_addr;
+            proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+            client_max_body_size    10m;
+            client_body_buffer_size 1280k;
+            proxy_connect_timeout   900;
+            proxy_send_timeout      900;
+            proxy_read_timeout      900;
+            proxy_buffer_size       40k;
+            proxy_buffers           40 320k;
+            proxy_busy_buffers_size 640k;
+            proxy_temp_file_write_size 640k;
+            if ( !-e $request_filename)
+            {
+                 proxy_pass  http://112.25.10.140:80;
+            }
+        }
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+}

@@ -1,0 +1,96 @@
+upstream paycenter-pwebtest {
+    server 172.17.9.71:8030;
+    server 172.17.9.72:8030;
+    server 172.17.9.73:8030;
+}
+server {
+  listen 1090;
+
+  server_name webtest2.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-preline-webtest-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-preline-webtest-error.log;
+
+  location / {
+     proxy_pass http://paycenter-pwebtest;
+       proxy_set_header        X-Real-IP $remote_addr;
+       proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header        Host $http_host;  
+  }
+  #webpay wappay only allow office ip accesss
+  include /tools/nginx/sites-enabled/http-limits.config;
+
+
+#  location ~ (.*)$ {
+#     if ( $scheme ~* http){
+#        rewrite ^(.*)  https://${SERVER_NAME}$1 last;
+#     }
+#  }
+}
+server {
+  listen 1091 ssl;
+
+  ssl_certificate /tools/nginx/ssl/bestpay.pem;
+  ssl_certificate_key /tools/nginx/ssl/bestpay.key;
+
+  server_name webtest2.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-preline-webtest-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-preline-webtest-error.log;
+
+  location / {
+     proxy_pass http://paycenter-pwebtest;
+	proxy_set_header        X-Real-IP $remote_addr;
+       proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header        Host $http_host;
+  
+ }
+  #webpay wappay only allow office ip accesss
+  include /tools/nginx/sites-enabled/http-limits.config;
+}
+
+
+
+upstream paycenter-preline-ivrtest {
+#    server 172.17.9.71:8050;
+    server 172.17.9.72:8050;
+#    server 172.17.9.73:8050;
+}
+server {
+  listen 1090;
+
+  server_name ivrtest2.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-preline-ivrtest-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-preline-ivrtest-error.log;
+
+  location / {
+     proxy_pass http://paycenter-preline-ivrtest;
+	proxy_set_header        X-Real-IP $remote_addr;
+       proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header        Host $http_host;  
+  }
+  #webpay wappay only allow office ip accesss
+  include /tools/nginx/sites-enabled/http-limits.config;
+}
+server {
+  listen 1091 ssl;
+
+  ssl_certificate /tools/nginx/ssl/bestpay.pem;
+  ssl_certificate_key /tools/nginx/ssl/bestpay.key;
+
+  server_name ivrtest2.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-preline-ivrtest-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-preline-ivrtest-error.log;
+
+  location / {
+     proxy_pass http://paycenter-preline-ivrtest;
+	proxy_set_header        X-Real-IP $remote_addr;
+       proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header        Host $http_host; 
+ }
+  #webpay wappay only allow office ip accesss
+  include /tools/nginx/sites-enabled/http-limits.config;
+}
+

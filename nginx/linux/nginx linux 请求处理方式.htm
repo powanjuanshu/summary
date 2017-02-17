@@ -1,0 +1,416 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<title>Nginx的请求处理方式_服务器应用_Linux公社-Linux系统门户网站</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon"/>
+<meta name="description" content="处理访问到Nginx所在IP地址的请求，并且这些请求的HTTP头信息中的Host为所要处理的域名（如下以80端口为例），如下几个server就对"/>
+<meta name="keywords" content="Nginx,Nginx的请求处理方式,服务器,Linux服务器,Apache,Hadoop,集群,分布式,Nginx,Tomcat,分布式系统"/>
+<link rel="canonical" href="http://www.linuxidc.com/Linux/2011-12/49513.htm"/>
+<meta name="generator" content="Linux公社"/>
+<meta name="generator" content="Linux"/>
+<link rel="stylesheet" href="../../style/systems/style.css" type="text/css"/>
+<meta name="generator" content="专业的Linux网站"/>
+<script type="text/javascript" src="../../inc/jquery.js"></script>
+<script type="text/javascript" src="../../inc/iwms.js"></script>
+<script type="text/javascript">iwms.urlPrefix="../../";</script>
+
+<script type="text/javascript" src="../../inc/show.js"></script>
+</head>
+<body>
+<div class="topBar">
+	<div class="twidth">
+	
+	<div style="float:right">
+		<script type="text/javascript" src="../../inc/language.js"></script>
+	</div>
+	
+	<div id="topUser">你好，游客 <a href="#" onclick="iwms.logPop()">登录</a>
+	<a href="../../memberreg.aspx" rel="nofollow">注册</a>
+	<a href="../../search.aspx" rel="nofollow">搜索</a>
+	</div>
+	</div>
+</div>
+<div class="twidth">
+<div id="sitehead">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<table width="100%">
+	<tr align="center"><td width="160">
+	<a href="http://www.linuxidc.com/"><img style="filter: chroma(color=#FFFFFF);" src="../../pic/logo.jpg" alt="Linux公社" width="155" height="53" border="0" /></a>
+	</td><td>
+	<div align="center"><script src="/linuxfile/linux.js" type="text/javascript" language="javaScript"></script></div>
+	</td>
+	</tr></table>
+</div>
+</div>
+<div id="navbar">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm" class="first">首页</a><a href="../../it/">Linux新闻</a><a href="../../Linuxit/">Linux教程</a><a href="../../MySql/">数据库技术</a><a href="../../RedLinux/">Linux编程</a><a href="../../Apache/" class="thisclass">服务器应用</a><a href="../../Unix/">Linux安全</a><a href="../../download/">Linux下载</a><a href="../../Linuxrz/">Linux认证</a><a href="../../theme/">Linux主题</a><a href="../../Linuxwallpaper/">Linux壁纸</a><a href="../../linuxsoft/">Linux软件</a><a href="../../digi/">数码</a><a href="../../mobile/">手机</a><a href="../../diannao/">电脑</a>
+
+</div>
+</div>
+
+<div id="navsub">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm">首页</a> → <a href="../../Apache/">服务器应用</a>
+</div>
+</div>
+<div class="linuxe1"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxe1.js"></script></div>
+<div class="linux1"><script type="text/javascript" language="javaScript" src="/linuxfile/linux1.js"></script></div>
+<div class="linuxa"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxa.js"></script></div>
+<div class="linuxa1"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxa1.js"></script></div>
+<table id="middle" width="100%" cellspacing="0" cellpadding="0" style="table-layout:fixed">
+<tr valign="top"><td>
+
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<div class="moreR">
+			背景：<script type="text/javascript">WriteBg()</script>
+		</div>
+		<span class="tt">阅读新闻</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm" id="bodyTd">
+		<div id="printBody" style="word-break:break-all;">
+			<div style="text-align:center"><h1 class="aTitle">Nginx的请求处理方式</h1></div>
+			
+			<table width="97%" align="center">
+				<tr>
+				<td width="140">[日期：2011-12-16]</td>
+				<td align="center">来源：csdn&nbsp;
+				作者：poechant</td>
+				<td width="160" align="right">[字体：<a href="javascript:ContentSize(16)">大</a> <a href="javascript:ContentSize(0)">中</a> <a href="javascript:ContentSize(12)">小</a>]
+				</td></tr>
+			</table>
+<div id="li_all">
+<div id="li_1"><script type="text/javascript" src="/linuxfile/linux201.js"></script></div>
+<div id="li_2"><script type="text/javascript" src="/linuxfile/linux2.js"></script></div>
+</div>
+			<div id="content"><div class="linux19"><script type="text/javascript" language="javaScript" src="/linuxfile/linux19.js"></script></div> <P>1.处理什么样的请求</P>
+<P>处理访问到Nginx所在IP地址的请求，并且这些请求的HTTP头信息中的Host为所要处理的域名（如下以80端口为例），如下几个server就对应响应的请求：</P>
+<P>
+<TABLE style="TABLE-LAYOUT: fixed; BORDER-COLLAPSE: collapse" borderColor=#cccccc cellSpacing=0 width="100%" bgColor=#555555 border=0>
+<TBODY>
+<TR>
+<TD>&nbsp; 
+<OL>
+<LI class=alt><SPAN><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;80;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;linuxidc.net&nbsp;&nbsp;www.linuxidc.net;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;80;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;linuxidc.com&nbsp;&nbsp;www.linuxidc.com;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;80;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;nginx.com&nbsp;&nbsp;www.nginx.com;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN></LI></OL></TD></TR></TBODY></TABLE></P>
+<P><STRONG>2.默认server</STRONG> </P>
+<P></P>
+<P>如果不主动设置默认server，那么第一个server就会被当做默认server。若要主动设置，应该如下配置：</P>
+<P>
+<TABLE style="TABLE-LAYOUT: fixed; BORDER-COLLAPSE: collapse" borderColor=#cccccc cellSpacing=0 width="100%" bgColor=#555555 border=0>
+<TBODY>
+<TR>
+<TD>&nbsp; 
+<OL>
+<LI class=alt><SPAN><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;80&nbsp;&nbsp;default_server;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;linuxidc.com&nbsp;&nbsp;www.linuxidc.com;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN></LI></OL></TD></TR></TBODY></TABLE></P>
+<P>此项的版本注意事项：</P>
+<P>0.8.21版本之前，使用default关键词；</P>
+<P>从0.8.21版本开始，使用default_server关键词。</P>
+<P><BR></P>
+<P>另外注意，default_server是端口的一个属性，不是server_name的一个属性。</P>
+<P><BR><STRONG>3.如何处理未定义host为server_name的请求</STRONG> </P>
+<P>比如，如果不想处理HTTP请求中没有HOST字段的头信息的情况，那么可以如下：</P>
+<P>
+<TABLE style="TABLE-LAYOUT: fixed; BORDER-COLLAPSE: collapse" borderColor=#cccccc cellSpacing=0 width="100%" bgColor=#555555 border=0>
+<TBODY>
+<TR>
+<TD>&nbsp; 
+<OL>
+<LI class=alt><SPAN><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;80;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;"";&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;444;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN></LI></OL></TD></TR></TBODY></TABLE></P>
+<P>此项的版本注意事项： </P>
+<P></P>
+<P>0.8.48之前的版本，如果没有设置server_name的话，那么会把server_name设置为本机的hostname。</P>
+<P>0.8.48开始的版本，如果没有设置server_name的话，那么会把server_name设置为""，所以如果要达到上述代码的效果，在此版本开始可以不设置server_name。</P>
+<P><BR></P>
+<P><STRONG>4.Nginx的虚拟主机监听</STRONG></P>
+<P>请先看如下配置：</P>
+<P>
+<TABLE style="TABLE-LAYOUT: fixed; BORDER-COLLAPSE: collapse" borderColor=#cccccc cellSpacing=0 width="100%" bgColor=#555555 border=0>
+<TBODY>
+<TR>
+<TD>&nbsp; 
+<OL>
+<LI class=alt><SPAN><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;192.168.1.1:80;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;linuxidc.net&nbsp;&nbsp;www.linuxidc.net;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;192.168.1.1:80;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;linuxidc.com&nbsp;&nbsp;www.linuxidc.com;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;192.168.1.2:80;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;nginx.com&nbsp;&nbsp;www.nginx.com;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN></LI></OL></TD></TR></TBODY></TABLE></P>
+<P>这个应该很好理解，如果listen的IP地址和端口号都吻合了，就看HTTP请求中的HOST头信息与某个server_name中的name是否吻合。如果server_name不吻合，就到该端口对应的default_server那里处理请求，如果default_server的server_name也没有与HOST头信息吻合，那么就放弃该请求。 </P>
+<P></P>
+<P>特别再次强调，default_server是端口的属性，而非server_name的属性。所以可以有如下配置：</P>
+<P>
+<TABLE style="TABLE-LAYOUT: fixed; BORDER-COLLAPSE: collapse" borderColor=#cccccc cellSpacing=0 width="100%" bgColor=#555555 border=0>
+<TBODY>
+<TR>
+<TD>&nbsp; 
+<OL>
+<LI class=alt><SPAN><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;192.168.1.1:80;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;&nbsp;linuxidc.net&nbsp;&nbsp;www.linuxidc.net;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;192.168.1.1:80&nbsp;&nbsp;default_server;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;&nbsp;linuxidc.com&nbsp;&nbsp;www.linuxidc.com;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>server&nbsp;{&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;192.168.1.2:80&nbsp;&nbsp;default_server;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;&nbsp;nginx.com&nbsp;&nbsp;www.nginx.com;&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=""><SPAN><FONT color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;</FONT></SPAN> 
+<LI class=alt><SPAN><FONT color=#ffffff>}&nbsp;&nbsp;</FONT></SPAN></LI></OL></TD></TR></TBODY></TABLE></P><a href="http://www.linuxidc.com" target="_blank"><img src="/linuxfile/logo.gif" alt="linux" width="15" height="17" /></div>
+<div class="linux301"><script type="text/javascript" src="/linuxfile/linux301.js"></script></div>
+<div class="linux3"><script type="text/javascript" src="/linuxfile/linux3.js"></script></div>
+<div class="linux302"><script type="text/javascript" src="/linuxfile/linux302.js"></script></div>		
+			<table align="center"><tr><td><div class="pager"><ul><li class="p_current">1</li><li><a href="../../Linux/2011-12/49513p2.htm">2</a></li><li><a href="../../Linux/2011-12/49513p2.htm" title="下一页">下一页</a></li><li><div><input type="text" value="2" onkeydown="pager.Jump(event,this)"/></div><script type="text/javascript" src="../../inc/pager.js"></script><script type="text/javascript">var pager=new iwmsPager(1,2,true);</script></li></ul></div></td></tr></table>
+			
+		</div>
+		<div style="padding:0 15px">
+			<ul id="digg" class="digg">
+				<li class="digg1">0</li>
+				<li class="digg2"><a href="###" onclick="iwms.diggIt(this,iwms.aId)">顶一下</a></li>
+			</ul>	
+		</div>
+<div class="linuxfx"><script type="text/javascript" language="javaScript" src="/linuxfile/fx.js"></script></div>	
+<div class="linux8"><script type="text/javascript" language="javaScript" src="/linuxfile/linux8.js"></script></div>
+<div class="linux801"><script type="text/javascript" language="javaScript" src="/linuxfile/linux801.js"></script></div>
+		<div class="nearNews">
+			<div class="prevNews"><a href="../../Linux/2011-12/49512.htm">Nginx配置与部署详解基本命令</a></div>
+			<div class="nextNews"><a href="../../Linux/2011-12/49514.htm">Jetty的配置、部署与API使用</a></div>
+		</div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">相关资讯</span> &nbsp; &nbsp; &nbsp;
+		<a href="../../search.aspx?where=nkey&amp;keyword=5431" target="_blank">Nginx</a>&nbsp; 
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<table width='100%'><tr><td width='50%' valign='top'><ul class='nl'><li><a href="../../Linux/2014-10/108012.htm"  target="_blank"  title="Nginx+FastCGI到底是谁影响超时时间">Nginx+FastCGI到底是谁影响超时时</a>&nbsp; <span class="gray">(<span class="time">今 09:58</span>)</span></li>
+<li><a href="../../Linux/2014-08/105237.htm"  target="_blank" >Nginx服务笔记</a>&nbsp; <span class="gray">(08月07日)</span></li>
+<li><a href="../../Linux/2014-07/104896.htm"  target="_blank"  title="CentOS 5下安装tfs并使用Nginx做访问">CentOS 5下安装tfs并使用Nginx做访</a>&nbsp; <span class="gray">(07月31日)</span></li>
+</ul></td><td width='50%' valign='top'><ul class='nl'><li><a href="../../Linux/2014-08/105639.htm"  target="_blank"  title="Linux下Nginx1.7.4+PHP5.5.15安装配置">Linux下Nginx1.7.4+PHP5.5.15安装</a>&nbsp; <span class="gray">(08月16日)</span></li>
+<li><a href="../../Linux/2014-08/105236.htm"  target="_blank"  title="PHP+FastCGI+Nginx动态请求处理配置">PHP+FastCGI+Nginx动态请求处理配</a>&nbsp; <span class="gray">(08月07日)</span></li>
+<li><a href="../../Linux/2014-07/104569.htm"  target="_blank" >Nagios平台从Apache迁移到Nginx</a>&nbsp; <span class="gray">(07月23日)</span></li>
+</ul></td></tr></table>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">图片资讯</span> &nbsp; &nbsp; &nbsp;
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+<div class="imgList"><ul><li style="width:25%"><a href="../../Linux/2014-07/103957.htm"  target="_blank"  title="2014 年度 NGINX 大会 10 月将在旧金山举行"><img src="../../upload/2014_07/140702082246321t.jpg" alt="2014 年度 NGINX 大会 10 月将在旧金山举行" width="120" height="90"/>2014 年度 NGINX 大会</a></li><li style="width:25%"><a href="../../Linux/2014-06/102667.htm"  target="_blank"  title="Nginx取代Apache成为世界前1万家网站中最受欢迎的Web服务器"><img src="../../upload/2014_06/140604082062861t.jpg" alt="Nginx取代Apache成为世界前1万家网站中最受欢迎的Web服务器" width="120" height="90"/>Nginx取代Apache成为</a></li><li style="width:25%"><a href="../../Linux/2014-04/99283.htm"  target="_blank"  title="CentOS 5.9 启动Nginx失败"><img src="../../upload/2014_04/14040117457373t.jpg" alt="CentOS 5.9 启动Nginx失败" width="120" height="90"/>CentOS 5.9 启动Nginx</a></li><li style="width:25%"><a href="../../Linux/2013-11/92862.htm"  target="_blank"  title="使用请求限制保护 Nginx 不被 Flood 攻击"><img src="../../upload/2013_11/131117090184761t.jpg" alt="使用请求限制保护 Nginx 不被 Flood 攻击" width="120" height="90"/>使用请求限制保护 </a></li><li style="width:25%"><a href="../../Linux/2013-09/90148.htm"  target="_blank"  title="Nginx架构的企业级应用"><img src="../../upload/2013_09/130915173327681t.jpg" alt="Nginx架构的企业级应用" width="120" height="90"/>Nginx架构的企业级应</a></li><li style="width:25%"><a href="../../Linux/2013-09/89878.htm"  target="_blank"  title="Nginx：接管整个网络的俄罗斯软件"><img src="../../upload/2013_09/130909155648621t.jpg" alt="Nginx：接管整个网络的俄罗斯软件" width="120" height="90"/>Nginx：接管整个网络</a></li><li style="width:25%"><a href="../../Linux/2013-08/89255.htm"  target="_blank"  title="Nginx 发布面向企业的 Nginx Plus 服务"><img src="../../upload/2013_08/130823183584241t.jpg" alt="Nginx 发布面向企业的 Nginx Plus 服务" width="120" height="90"/>Nginx 发布面向企业的</a></li><li style="width:25%"><a href="../../Linux/2013-07/87548.htm"  target="_blank"  title="LEMP架构及应用部署——Nginx延伸"><img src="../../upload/2013_07/1307181710416122t.jpg" alt="LEMP架构及应用部署——Nginx延伸" width="120" height="90"/>LEMP架构及应用部署—</a></li></ul></div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+	
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">本文评论</span>
+		 	　　<a href="../../remark.aspx?id=49513" target="_blank">查看全部评论</a> <span class="gray">(0)</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<table width="100%" style="margin:6px">		
+		<tr><td width="100%">
+			<form action="" name="fmRemarkSt" onsubmit="return remark.post(this);">
+			<input type="hidden" value="1" name="face"/>
+			表情： <img src="../../pic/b.gif" alt="表情" class="face1" style="cursor:pointer;vertical-align:middle" onclick="remark.dispFace(this)" onmouseout="remark.hideFace()"/>
+			姓名： <input type="text" name="username" value="" maxlength="15" style="width:60px" class="inputbg"/>
+			<input type="checkbox" id="rmAnonymitySt" onclick="remark.anony(this)"/><label for="rmAnonymitySt">匿名</label>
+			字数 <input type="text" id="bodyLen" size="3" readonly="readonly" style="border-width:0;background:transparent;vertical-align:middle" value="0"/>
+			<br/>
+			<textarea name="body" cols="40" rows="4" onkeydown="remark.dispLen(this)" onkeyup="remark.handle(event,this);remark.dispLen(this)" style="width:40em;height:100px;margin:3px 0;overflow-y:auto"></textarea>
+				<br/>
+		　　　<input type="checkbox" checked="checked" id="rmAgreeSt"/><label for="rmAgreeSt">同意评论声明</label>
+		　　　<button type="submit" style="width:50px">发表</button>
+			</form>
+		</td></tr>
+		<tr><td width="100%">
+			评论声明
+			<ul style="list-style-type:square;margin:5px 0 0 1em;padding:0">
+			<li>尊重网上道德，遵守中华人民共和国的各项有关法律法规</li>
+			<li>承担一切因您的行为而直接或间接导致的民事或刑事法律责任</li>
+			<li>本站管理人员有权保留或删除其管辖留言中的任意内容</li>
+			<li>本站有权在网站内转载或引用您的评论</li>
+			<li>参与本评论即表明您已经阅读并接受上述条款</li>
+			</ul>
+		</td></tr>
+		</table>
+		<script type="text/javascript" src="../../inc/remark.js"></script>
+		<script type="text/javascript">
+			remark.maxSize=500;
+			remark.minSize=2;
+			remark.sourceEle=$(document.fmRemarkSt).find("button").get(0);
+			iwms.vCode="D2BDA41E";
+			iwms.user.name.length==0 ? $i("rmAnonymitySt").click() : $i("rmAnonymitySt").form.username.value=iwms.user.name;
+		</script>
+		
+		<div class="reCont" id="reContainer"></div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+</td><td width="300" valign="top">
+<div class="linux901"><script type="text/javascript" language="javaScript" src="/linuxfile/linux901.js"></script></div>
+<div class="linux902"><script type="text/javascript" language="javaScript" src="/linuxfile/linux902.js"></script></div>
+<div class="linux903"><script type="text/javascript" language="javaScript" src="/linuxfile/linux903.js"></script></div>
+<div class="linux905"><script type="text/javascript" language="javaScript" src="/linuxfile/linux905.js"></script></div>
+	
+	<div class="lframe">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">最新资讯</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<ul class="nl">
+<li><a href="../../Linux/2014-10/108012.htm" target="_blank">Nginx+FastCGI到底是谁影响超时时间</a></li>
+<li><a href="../../Linux/2014-10/108011.htm" target="_blank">Nginx+PHP-FPM时快时慢的解决</a></li>
+<li><a href="../../Linux/2014-10/108010.htm" target="_blank">C语言经典---结构体</a></li>
+<li><a href="../../Linux/2014-10/108009.htm" target="_blank">C语言经典排序</a></li>
+<li><a href="../../Linux/2014-10/108008.htm" target="_blank">LNMP出现502 bad gateway的解决</a></li>
+<li><a href="../../Linux/2014-10/108007.htm" target="_blank">Juniper JunosE 拒绝服务漏洞（CVE-2014-6378）</a></li>
+<li><a href="../../Linux/2014-10/108006.htm" target="_blank">Linux日历程序California 0.2 发布下载</a></li>
+<li><a href="../../Linux/2014-10/108005.htm" target="_blank">Linux Kernel 3.17 带来了很多新特性</a></li>
+<li><a href="../../Linux/2014-10/108004.htm" target="_blank">Linux 基金会无人机开源代码库项目 Dronecode</a></li>
+<li><a href="../../Linux/2014-10/108003.htm" target="_blank">CyanogenMod 复用代码复制了中间人攻击弱点</a></li>
+</ul>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+
+	<div class="lframe">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">本周热门</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<ul class="nl">
+<li><a href="../../Linux/2013-04/82075.htm" target="_blank" title="502 bad gateway是什么意思？502 bad gateway怎么解决！">502 bad gateway是什么意思？502 bad gateway怎</a></li>
+<li><a href="../../Linux/2010-08/27874.htm" target="_blank">解决Nginx 504 Gateway Time-out的一些方法</a></li>
+<li><a href="../../Linux/2010-05/26203.htm" target="_blank" title="Apache无法启动解决 the requested operation has failed">Apache无法启动解决 the requested operation </a></li>
+<li><a href="../../Linux/2012-10/72095.htm" target="_blank">自己搭建家庭“云”</a></li>
+<li><a href="../../Linux/2014-01/95493.htm" target="_blank">实例讲解Nginx下的rewrite规则</a></li>
+<li><a href="../../Linux/2012-12/76947.htm" target="_blank">Hadoop安装部署笔记之-HBase完全分布模式安装</a></li>
+<li><a href="../../Linux/2013-08/88187.htm" target="_blank">Ubuntu 12.04安装Hadoop</a></li>
+<li><a href="../../Linux/2014-07/104470.htm" target="_blank">Kafka使用入门教程</a></li>
+<li><a href="../../Linux/2014-10/107924.htm" target="_blank" title="Ubuntu 14.04 配置 LAMP+phpMyAdmin PHP(5.5.9)开发环境">Ubuntu 14.04 配置 LAMP+phpMyAdmin PHP(5.5.9)</a></li>
+<li><a href="../../Linux/2012-05/59792.htm" target="_blank">Linux下如何搭建VPN服务器</a></li>
+</ul>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	<div class="linuxy9"><script type="text/javascript" language="javaScript" src="/linuxfile/y9.js"></script></div>	
+</td></tr>
+</table>
+<div class="linux906"><script type="text/javascript" language="javaScript" src="/linuxfile/linux906.js"></script></div>
+<div id="footer">
+<a href="http://www.linuxidc.com/aboutus.htm">Linux公社简介</a> - <a href="http://www.linuxidc.com/adsense.htm">广告服务</a> - <a href="http://www.linuxidc.com/sitemap.aspx">网站地图</a> - <a href="http://www.linuxidc.com/help.htm">帮助信息</a> - <a href="http://www.linuxidc.com/contactus.htm">联系我们</a><br />本站（LinuxIDC）所刊载文章不代表同意其说法或描述，仅为提供更多信息，也不构成任何建议。<br /><script type="text/javascript" language="javaScript" src="/linuxfile/qq.js"></script><br />
+<script type="text/javascript" language="javaScript" src="/linuxfile/foot.js"></script><br />Copyright &copy; 2006-2014　<a href="http://www.linuxidc.com/">Linux公社</a>　All rights reserved 浙ICP备06018118号
+	<script type="text/javascript">iwms.aId=49513;$(function(){iwms.imgCont=$i('content');iwms.imgResize();InitContStyle();iwms.getVars();})</script>
+	
+</div>
+</div>
+<script type="text/javascript" language="javaScript" src="/linuxren/linuxren1.js"></script>
+<script type="text/javascript" language="javaScript" src="/linuxren/linuxren2.js"></script>
+<script type="text/javascript" language="javaScript" src="/linuxren/linuxren3.js"></script>
+</body>
+</html>

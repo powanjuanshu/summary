@@ -1,0 +1,16 @@
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        location /test {
+                set $a 32;
+                echo $a;
+        }
+    }
+}
+---------------------
+设置变量$a,必须前面以$开头
+
+

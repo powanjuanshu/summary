@@ -1,0 +1,20 @@
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+    server {
+        listen       80;
+        server_name  localhost;
+        location / {
+	    # 这句话相当于请求的目录在前面多加了一级msie目录
+	    # 如果请求地址为:http://wskh.xpe.com/abc/aaa.txt, 则会找nginx安装目录/html/msie/abc/aaa.txt,不会找nginx安装目录/html/abc/aaa.txt
+	    rewrite ^(.*)$ /msie/$1 break;
+        }
+    }
+}

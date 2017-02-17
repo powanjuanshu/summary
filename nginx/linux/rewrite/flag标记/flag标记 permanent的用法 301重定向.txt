@@ -1,0 +1,46 @@
+nginx的rewrite指令中可以通过设置该条rewrite的flag来对该规则进行说明.一般可以设置的flag有:last,break,redirect,permanent四种
+redirect说明,这条规则是一个临时的跳转,并且此时如果观察http请求的话,http的响应状态码为302.返回302临时重定向,地址栏会显示跳转后的地址 
+----------------------------
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        listen 80;
+        server_name *.test.com;
+        location / {
+                if ($request_method = GET){
+                        rewrite "/a" http://example.com/ permanent;
+                }
+        }
+    }
+}
+----------------------------
+访问http://192.168.242.88/a,会跳转到http://example.com/页面,用firedebug显示status为:301 Moved Permanently
+----------------------------
+nginx的rewrite指令中可以通过设置该条rewrite的flag来对该规则进行说明。一般可以设置的flag有：last，break，redirect，permanent四种。
+redirect说明，这条规则是一个临时的跳转，并且此时如果观察http请求的话，http的响应状态码为302.一般用于重定向到完整的URL(包括http部分)
+permanent说明，这条规则是一个永久性的跳转，并且此时，http的响应状态码为301.一般用于重定向到完整的URL(包括http部分)
+那么什么是永久性跳转，什么是临时跳转，这有什么作用呢？下面我们举例说明：
+如果有一个url，/a。
+如果配置成
+rewrite "/a" "http://test.html" redirect;
+则说明这个跳转是一个临时跳转，此时如果有网络爬虫爬这个链接时，是不会更新自己的url数据库的。
+但是如果配置成permanet，则爬虫会更新自己的url数据库，把/a更新为http://test.html。
+这也就是临时跳转和永久跳转的区别。
+
+
+	
+ 
+
+
+
+
+
+
+

@@ -1,0 +1,308 @@
+#user www www;
+
+#worker_processes 8;
+
+error_log logs/error.log info;
+
+pid logs/nginx.pid;
+worker_rlimit_nofile 65536;
+
+
+events 
+{
+
+  # use epoll;
+  worker_connections  65536;
+
+}
+
+
+http 
+{
+
+  include mime.types;
+
+  default_type application/octet-stream;
+
+  server_names_hash_bucket_size 128;
+  sendfile on;
+  tcp_nopush on;
+
+  keepalive_timeout 65;
+  tcp_nodelay on;
+	
+  gzip on;
+  client_max_body_size 50m;
+  fastcgi_intercept_errors on;
+	
+	
+  proxy_buffer_size 128k;
+	
+  proxy_buffers 32 32k;
+	
+  proxy_busy_buffers_size 128k;
+	
+  fastcgi_buffer_size 128k;
+	
+  fastcgi_buffers 32 32k;
+	
+	
+  log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+  '"$http_referer" $status $body_bytes_sent $request_body ' '"$http_user_agent" "$http_x_forwarded_for"';
+
+
+	
+	
+	
+
+  #xpe版,网上开户中台
+	
+  upstream api.xpe.com {
+		
+    server 127.0.0.1:9080;
+	
+  }
+
+	
+  server {
+		
+    listen       80;
+		
+    server_name  api.xpe.com;
+
+    rewrite 	^(.*)(.action)$  									$1.json last;
+
+    rewrite	^/$ 											/CRH-KH0000.json last;
+		
+    rewrite	^/WT([6])([0-9])([0-9])([0-9])$								/CRH-WT$1$2$3$4.json last;
+
+    rewrite	^/WA([0-8])([0-9])([0-9])([0-9])$							/CRH-KH$1$2$3$4.json last;
+
+    rewrite	^/Mserver/CRH-KH([0-9])([0-9])([0-9])([0-9])$		                                /CRH-KH$1$2$3$4.json last;
+
+    rewrite	^/OP([9])([0-9])([0-9])([0-9])$								/CRH-KH$1$2$3$4.json last;
+
+    rewrite	^/WT([6])([0-9])([0-9])([0-9])$								/CRH-KH$1$2$3$4.json last;
+
+    location / {
+
+      # 这里的反向代理最后面的/要不要都可以
+      proxy_pass http://api.xpe.com/; # 如果访问http://api.xpe.com/abc/ag.txt,不会找安装目录下的html\abc\ag.txt文件,直接访问反向代理
+
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+      proxy_set_header X-real-uri $request;
+
+    }
+  }
+
+
+}
+
+--------------------------------------------------------
+#user www www;
+
+#worker_processes 8;
+
+error_log logs/error.log info;
+
+pid logs/nginx.pid;
+worker_rlimit_nofile 65536;
+
+
+events 
+{
+
+  # use epoll;
+  worker_connections  65536;
+
+}
+
+
+http 
+{
+
+  include mime.types;
+
+  default_type application/octet-stream;
+
+  server_names_hash_bucket_size 128;
+  sendfile on;
+  tcp_nopush on;
+
+  keepalive_timeout 65;
+  tcp_nodelay on;
+	
+  gzip on;
+  client_max_body_size 50m;
+  fastcgi_intercept_errors on;
+	
+	
+  proxy_buffer_size 128k;
+	
+  proxy_buffers 32 32k;
+	
+  proxy_busy_buffers_size 128k;
+	
+  fastcgi_buffer_size 128k;
+	
+  fastcgi_buffers 32 32k;
+	
+	
+  log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+ '"$http_referer" $status $body_bytes_sent $request_body '
+ '"$http_user_agent" "$http_x_forwarded_for"';
+
+
+	
+	
+	
+
+  #xpe版,网上开户中台
+	
+  upstream api.xpe.com {
+		
+    server 127.0.0.1:9080;
+	
+  }
+
+	
+  server {
+		
+    listen       80;
+		
+    server_name  api.xpe.com;
+
+    rewrite 	^(.*)(.action)$  									$1.json last;
+
+    rewrite	^/$ 											/CRH-KH0000.json last;
+		
+    rewrite	^/WT([6])([0-9])([0-9])([0-9])$								/CRH-WT$1$2$3$4.json last;
+
+    rewrite	^/WA([0-8])([0-9])([0-9])([0-9])$							/CRH-KH$1$2$3$4.json last;
+
+    rewrite	^/Mserver/CRH-KH([0-9])([0-9])([0-9])([0-9])$		                                /CRH-KH$1$2$3$4.json last;
+
+    rewrite	^/OP([9])([0-9])([0-9])([0-9])$								/CRH-KH$1$2$3$4.json last;
+
+    rewrite	^/WT([6])([0-9])([0-9])([0-9])$								/CRH-KH$1$2$3$4.json last;
+
+    location / {
+
+      # 这里的proxy_pass和上面的upstream名称不一样,后面多了一级目录,但是也会找到上面这个反向代理
+      # 如果在host中已经配置api.xpe.com映射为127.0.0.1,访问http://api.xpe.com/notice/CRH-SMS0001.json?mobile_tel=15611111111,
+      # 会在加一个/api/,反向代理的url为反向代理的(127.0.0.1:9080)http://ip:port/api/notice/CRH-SMS0001.json?mobile_tel=15611111111,这里容易出错要注意
+
+      # 其实不是加了一个/api/,其实是将/替换成了/api/,看下面这个例子就明白了
+      proxy_pass http://api.xpe.com/api/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+      proxy_set_header X-real-uri $request;
+
+    }
+  }
+
+
+}
+
+--------------------------------------------------------
+#user www www;
+#worker_processes 8;
+error_log logs/error.log info;
+pid logs/nginx.pid;
+worker_rlimit_nofile 65536;
+events {
+  # use epoll;
+  worker_connections  65536;
+
+}
+http {
+  include mime.types;
+  default_type application/octet-stream;
+  server_names_hash_bucket_size 128;
+  sendfile on;
+  tcp_nopush on;
+  keepalive_timeout 65;
+  tcp_nodelay on;
+  gzip on;
+  client_max_body_size 50m;
+  fastcgi_intercept_errors on;
+  proxy_buffer_size 128k;
+  proxy_buffers 32 32k;
+  proxy_busy_buffers_size 128k;
+  fastcgi_buffer_size 128k;
+  fastcgi_buffers 32 32k;
+  log_format main '$remote_addr - $remote_user [$time_local] "$request" ' '"$http_referer" $status $body_bytes_sent $request_body ' '"$http_user_agent" "$http_x_forwarded_for"';
+   #通知(内部虚拟域名)
+   upstream  notice.xpe.com {
+     server 127.0.0.1:9080;
+   }
+  server {
+    listen       80;
+    server_name  api.xpe.com;
+    location ^~ /notice/ {
+      # 如果在host中已经配置api.xpe.com映射为127.0.0.1,访问http://api.xpe.com/notice/CRH-SMS0001.json?mobile_tel=15611111111,
+      # 会将/notice/替换为/xpe-sisap-notice/xxxnoticexxx/abc/
+      # 反向代理的url为反向代理的(127.0.0.1:9080)http://ip:port/api//xpe-sisap-notice/xxxnoticexxx/abc/CRH-SMS0001.json?mobile_tel=15611111111,这里容易出错要注意
+      proxy_pass http://notice.xpe.com/xpe-sisap-notice/xxxnoticexxx/abc/;
+      proxy_cookie_path  /xpe-sisap-notice/ /;
+    }
+  }
+}
+--------------------------------------------------------
+#user www www;
+#worker_processes 8;
+error_log logs/error.log info;
+pid logs/nginx.pid;
+worker_rlimit_nofile 65536;
+events {
+  # use epoll;
+  worker_connections  65536;
+
+}
+http {
+  include mime.types;
+  default_type application/octet-stream;
+  server_names_hash_bucket_size 128;
+  sendfile on;
+  tcp_nopush on;
+  keepalive_timeout 65;
+  tcp_nodelay on;
+  gzip on;
+  client_max_body_size 50m;
+  fastcgi_intercept_errors on;
+  proxy_buffer_size 128k;
+  proxy_buffers 32 32k;
+  proxy_busy_buffers_size 128k;
+  fastcgi_buffer_size 128k;
+  fastcgi_buffers 32 32k;
+  log_format main '$remote_addr - $remote_user [$time_local] "$request" ' '"$http_referer" $status $body_bytes_sent $request_body ' '"$http_user_agent" "$http_x_forwarded_for"';
+   #通知(内部虚拟域名)
+   upstream  notice.xpe.com {
+     server 127.0.0.1:9080;
+   }
+  server {
+    listen       80;
+    server_name  api.xpe.com;
+    location ^~ /notice/CRH {
+      # 如果在host中已经配置api.xpe.com映射为127.0.0.1,访问http://api.xpe.com/notice/CRH-SMS0001.json?mobile_tel=15611111111,
+      # 会将/notice/CRH替换为/xpe-sisap-notice/xxxnoticexxx/abc/
+      # 反向代理的url为反向代理的(127.0.0.1:9080)http://ip:port/api//xpe-sisap-notice/xxxnoticexxx/abc/-SMS0001.json?mobile_tel=15611111111,这里容易出错要注意
+      proxy_pass http://notice.xpe.com/xpe-sisap-notice/xxxnoticexxx/abc/;
+      proxy_cookie_path  /xpe-sisap-notice/ /;
+    }
+  }
+}
+
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+
+    upstream tomcats {
+        server 192.168.242.88:8080 weight=50;
+        server 192.168.242.88:9080 weight=50;
+
+    }
+
+    server {
+        listen 80;
+        server_name localhost;
+        location ~ ^/NginxStatus/ {
+                stub_status on;
+                access_log on;
+        }
+
+        location ~ ^/images/ {
+                root /lijie/abc/sky;
+        }   
+              
+        #location ~ \.(htm|html|gif|jpg|jpeg|png|bmp|ico|css|js|txt)$ {
+        #       root /lijie/abc/lyn;
+        #       expires 24h;
+        #}
+              
+        location / {
+                proxy_pass http://tomcats;
+                proxy_set_header X-Real-IP $remote_addr;
+        }
+    
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+            root html;
+        }
+    }
+}
+----------------
+单独访问tomcat1:http://192.168.242.88:8080/xxx/index.html,返回:iihatethisgame.
+单独访问tomcat2:http://192.168.242.88:9080/xxx/index.html,返回:iihatethisgame.lovethisgame
+----------------
+访问nginx:http://192.168.242.88:80/xxx/index.html
+循环返回:iihatethisgame.iihatethisgame.lovethisgame
+
+
+
+
+
+
+
+
+
+
+
+
+

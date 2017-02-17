@@ -1,0 +1,9 @@
+#./configure \
+    --prefix=/usr/local/nginx \                             #定义一个目录,存放服务器上的文件,也就是nginx的安装目录.默认使用/usr/local/nginx.
+    --user=nginx \					    #设置nginx工作进程的用户.安装完成后,可随时更改的名称,在nginx.conf配置文件中.使用的user指令.默认用户名为nobody
+    --group=nginx \					    #设置nginx工作进程的组.安装完成后,可随时更改的名称,在nginx.conf配置文件中,使用的user指令.默认为非特权用户.
+    --with-http_stub_status_module \                        #安装可以查看nginx状态的程序,其中参数--with-http_stub_status_module是为了启用nginx的NginxStatus功能，用来监控Nginx的当前状态.
+    --with-openssl=/home/install_packet/openssl-0.9.8g \    #启用http ssl模块,使nginx可以支持https请求,这个模块需要已经安装openssl.(openssl的源码包的地址,不是安装路径)(或者写成--with-http_ssl_module经过验证好像不行)
+    --with-pcre=/usr/include/pcre \  			    #启用正则表达式
+    --with-http_memcached_module \			    #启用memcache缓存
+    --with-http_rewrite_module                              #启用支持url重写

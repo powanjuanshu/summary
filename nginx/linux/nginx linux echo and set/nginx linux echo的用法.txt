@@ -1,0 +1,19 @@
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+    server {
+        location /test {
+                set abc 32;
+                echo abc;
+        }
+    }
+}
+------------------
+echo是打印内容,对于调试非常方便,会在页面打印出32.
+echo只能在location中使用,在server中使用会报错.

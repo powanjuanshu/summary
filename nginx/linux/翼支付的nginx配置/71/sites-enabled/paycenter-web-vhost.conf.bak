@@ -1,0 +1,269 @@
+upstream paycenter-web {
+    server localhost:8030;
+}
+server{
+ listen 1080;
+ server_name webpaywg.bestpay.com.cn;
+ access_log /bestpayserver/server-logs/nginx/paycenter-web1080-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-web1080-error.log;
+ location ~ (.*)$ {
+     if ( $scheme ~* http){
+        rewrite ^(.*)  https://${SERVER_NAME}$1 last;
+     }
+  }
+}
+server{
+ listen 1080;
+ server_name  wappaywg.bestpay.com.cn;
+ access_log /bestpayserver/server-logs/nginx/paycenter-wap1080-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-wap1080-error.log;
+ location ~ (.*)$ {
+     if ( $scheme ~* http){
+        rewrite ^(.*)  https://${SERVER_NAME}$1 last;
+     }
+  }
+}
+server{
+ listen 1080;
+ server_name  ivrpaywg.bestpay.com.cn;
+ access_log /bestpayserver/server-logs/nginx/paycenter-ivr1080-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-ivr1080-error.log;
+ #location ~ (.*)$ {
+ #    if ( $scheme ~* http){
+ #       rewrite ^(.*)  https://${SERVER_NAME}$1 last;
+ #    }
+ # }
+location / {
+     proxy_pass http://paycenter-ws;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+server {
+  #listen 1080;
+  listen 8088;
+  server_name webpaywg.bestpay.com.cn;
+  
+  access_log /bestpayserver/server-logs/nginx/paycenter-web-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-web-error.log;
+  
+  location / {
+     proxy_pass http://paycenter-web;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+server {
+  listen 1084;
+  listen 8008;
+
+  server_name webpaynotice.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-web-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-web-error.log;
+
+  location / {
+     proxy_pass http://paycenter-web;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+server { 
+  listen 1081 ssl;
+
+  ssl_certificate /tools/nginx/ssl/bestpay.pem;
+  ssl_certificate_key /tools/nginx/ssl/bestpay.key;
+
+  server_name webpaywg.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-web-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-web-error.log;
+
+  location / {
+     proxy_pass http://paycenter-web;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+  #testpage allow  company pepole visit
+  location ~ ^/testpage/(.*)$ {
+     allow 116.228.55.237;
+     allow 222.66.102.162;
+     allow 101.95.128.138;
+     deny all;
+     proxy_pass http://paycenter-web;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+server { 
+  listen 1085 ssl;
+
+  ssl_certificate /tools/nginx/ssl/bestpay.pem;
+  ssl_certificate_key /tools/nginx/ssl/bestpay.key;
+
+  server_name webpaynotice.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-web-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-web-error.log;
+
+  location / {
+     proxy_pass http://paycenter-web;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+  #testpage allow  company pepole visit
+  location ~ ^/testpage/(.*)$ {
+     allow 116.228.55.237;
+     allow 222.66.102.162;
+     allow 101.95.128.138;
+     deny all;
+     proxy_pass http://paycenter-web;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+upstream paycenter-wap {
+    server localhost:8040;
+}
+server {
+  #listen 1080;
+  listen 8091;
+  server_name wappaywg.bestpay.com.cn;
+ 
+  access_log /bestpayserver/server-logs/nginx/paycenter-wap-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-wap-error.log;
+ 
+  location / {
+     proxy_pass http://paycenter-wap;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+server {
+  listen 1084;
+
+  server_name wappaynotice.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-wap-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-wap-error.log;
+
+  location / {
+     proxy_pass http://paycenter-wap;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+server {
+  listen 1081 ssl;
+
+  ssl_certificate /tools/nginx/ssl/bestpay.pem;
+  ssl_certificate_key /tools/nginx/ssl/bestpay.key;
+
+  server_name wappaywg.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-web-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-web-error.log;
+
+  location / {
+     proxy_pass http://paycenter-wap;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+server {
+  listen 1085 ssl;
+
+  ssl_certificate /tools/nginx/ssl/bestpay.pem;
+  ssl_certificate_key /tools/nginx/ssl/bestpay.key;
+
+  server_name wappaynotice.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-wap-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-wap-error.log;
+
+  location / {
+     proxy_pass http://paycenter-wap;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+upstream paycenter-ws {
+    server localhost:8050;
+}
+server {
+  #listen 1080;
+  listen 8093; 
+  server_name ivrpaywg.bestpay.com.cn;
+ 
+  access_log /bestpayserver/server-logs/nginx/paycenter-ws-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-ws-error.log;
+ 
+  location / {
+     proxy_pass http://paycenter-ws;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+server {
+  listen 1084;
+
+  server_name ivrpaynotice.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-ws-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-ws-error.log;
+
+  location / {
+     proxy_pass http://paycenter-ws;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+server {
+  listen 1081 ssl;
+
+  ssl_certificate /tools/nginx/ssl/bestpay.pem;
+  ssl_certificate_key /tools/nginx/ssl/bestpay.key;
+
+  server_name ivrpaywg.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-ivr-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-ivr-error.log;
+
+  location / {
+     proxy_pass http://paycenter-ws;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
+server {
+  listen 1085 ssl;
+
+  ssl_certificate /tools/nginx/ssl/bestpay.pem;
+  ssl_certificate_key /tools/nginx/ssl/bestpay.key;
+
+  server_name ivrpaynotice.bestpay.com.cn;
+
+  access_log /bestpayserver/server-logs/nginx/paycenter-ivr-access.log;
+  error_log /bestpayserver/server-logs/nginx/paycenter-ivr-error.log;
+
+  location / {
+     proxy_pass http://paycenter-ws;
+     proxy_set_header        X-Real-IP $remote_addr;
+     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header        Host $http_host;
+  }
+}
