@@ -1,0 +1,33 @@
+* (?=pattern)执行正向预测先行搜索的子表达式,该表达式匹配处于匹配pattern的字符串的起始点的字符串.
+* 它是一个非捕获匹配,即不能捕获供以后使用的匹配.
+* 例如,"Windows (?=95| 98| NT| 2000)"与"Windows 2000"中的"Windows"匹配,但不与"Windows 3.1"中的"Windows"匹配.
+* 预测先行不占用字符,即发生匹配后,下一匹配的搜索紧随上一匹配之后,而不是在组成预测先行的字符后.
+* (?=exp)代表一个位置,而不是字符
+------------------------
+package com.ccbsh;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		Pattern p = Pattern.compile(".*(?=</td>)"); // 正向肯定预查,在任何匹配pattern的字符串开始处匹配查找字符串
+		String str ="20分钟</td>"; // 在</td>处开始,向前查找匹配字符串,如果是 20分钟</txd> 那么匹配失败
+		Matcher m = p.matcher(str);
+		while(m.find())
+			System.out.println(m.group()); // 打出20分钟
+	}
+}
+---------------------------
+package com.ccbsh;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		Pattern p = Pattern.compile("(?<=<td>).*(?=</td>)");
+		String str ="<td>20分钟</td>";
+		Matcher m = p.matcher(str);
+		while(m.find())
+			System.out.println(m.group()); // 打出20分钟
+	}
+}
+
+

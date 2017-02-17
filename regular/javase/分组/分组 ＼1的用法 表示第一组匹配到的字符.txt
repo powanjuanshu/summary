@@ -1,0 +1,23 @@
+[1]
+package com.ccbsh;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		String str = "zhangsanttttxiaoqiangmmmmmmmmmmzhaoliu";
+		// 将多个叠词转换成单个词，即将tttt变成t，将mmmmmmmmmm变成m
+		// 组的感念:((A)(B(C))) 组按(的顺序排列,((A)(B(C)))为第一组,(A)为第二组,(B(C))为第三组,(C)第四组,第零组表示整个表达式。
+		str = str.replaceAll("(.)\\1+", "$1"); // \1表示第一组,前面的\表示转义,将后面的\转义,(.)表示第一个字符,第二个表示用第一组的字符出现1次或多次
+		// $1表示第一组匹配的字符串
+		System.out.println(str); // 打印zhangsantxiaoqiangmzhaoliu
+}
+
+[2]
+package com.ccbsh;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		// 手机号中间四位是*，前3位和后四位保留
+		String str = "15800001111";
+		str = str.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"); // \1表示第一组,前面的\表示转义,将后面的\转义,(.)表示第一个字符,第二个表示用第一组的字符出现1次或多次
+		// $1表示第一组匹配的字符串
+		System.out.println(str); // 打印158****1111
+	}
+}

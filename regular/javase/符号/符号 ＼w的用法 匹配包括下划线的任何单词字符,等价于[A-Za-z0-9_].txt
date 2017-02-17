@@ -1,0 +1,24 @@
+package threedes;
+public class Main4 {
+	public static void main(String[] args) {
+		boolean a1 = "a".matches("\\w"); // 匹配包括下划线的任何单词字符，等价于[A-Za-z0-9_]
+		boolean a2 = "az".matches("\\w"); // 匹配包括下划线的任何单词字符，等价于[A-Za-z0-9_]
+		System.out.println(a1); // true
+		System.out.println(a2); // false
+	}
+}
+-------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern pattern = Pattern.compile("\\w"); // \n的用法 匹配一个换行符,等价于\x0a和\cJ
+		Matcher m1 = pattern.matcher("a");
+		Matcher m2 = pattern.matcher("ab");
+		boolean a = m1.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		boolean b = m2.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		System.out.println(a); // true
+		System.out.println(b); // false
+	}
+}

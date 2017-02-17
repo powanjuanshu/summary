@@ -1,0 +1,97 @@
+x|y匹配x或y。例如，'z|food'能匹配z或food，(z|f)ood'则匹配"zood"或"food"
+----------------------------------
+package com.iflytek.integralmarket.vo;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main {
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("z|food"); // 匹配grood或者fiood,如果Pattern p = Pattern.compile("z|food");匹配z或者food
+		Matcher m = p.matcher("zoodd");
+		System.out.println(m.matches());//打出:false
+		System.out.println(m.find());;//打出:true
+		System.out.println(m.group());//打出:z
+	}
+}
+----------------------------------
+package com.bestpay.http;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main5 {
+	public static void main(String[] args) throws Exception {
+		Pattern p =Pattern.compile("123|5678");
+		Matcher m = p.matcher("123678");
+		boolean b = m.matches();
+		System.out.println(b); // 返回false
+		
+		Matcher m2 = p.matcher("5678");
+		boolean b2 = m2.matches();
+		System.out.println(b2); // 返回true
+	}
+}
+对比下面的:
+package com.iflytek.epdcloud.ercsvc.service;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main5 {
+	public static void main(String[] args) throws Exception {
+		Pattern p =Pattern.compile("12(3|5)678");
+		Matcher m = p.matcher("123678");
+		boolean b = m.matches();
+		System.out.println(b); // 返回true
+		
+		Pattern p2 =Pattern.compile("12(3c|5d)678");
+		Matcher m2 = p2.matcher("123t678");
+		boolean b2 = m2.matches();
+		System.out.println(b2); // 返回true
+		
+		Pattern p3 =Pattern.compile("12(3c|5d)678");
+		Matcher m3 = p3.matcher("123cd678");
+		boolean b3 = m3.matches();
+		System.out.println(b3); // 返回false
+	}
+}
+----------------------------------
+package threedes;
+public class Main4 {
+	public static void main(String[] args) {
+		boolean a1 = "p".matches("[a-z]|[A-Z]"); // a到z或者A到Z,x|y匹配x或y 例如'z|food'能匹配z或food,(z|f)ood'则匹配"zood"或"food"，等价于[a-zA-Z]
+		boolean a2 = "1".matches("[a-z]|[A-Z]"); // a到z或者A到Z,x|y匹配x或y 例如'z|food'能匹配z或food,(z|f)ood'则匹配"zood"或"food"，等价于[a-zA-Z]
+		System.out.println(a1); // false
+		System.out.println(a2); // true
+	}
+}
+----------------------------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern pattern = Pattern.compile("[a-z]|[A-Z]"); // a到z或者A到Z,x|y匹配x或y 例如'z|food'能匹配z或food,(z|f)ood'则匹配"zood"或"food"，等价于[a-zA-Z]
+		Matcher m1 = pattern.matcher("p");
+		Matcher m2 = pattern.matcher("1");
+		boolean a = m1.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		boolean b = m2.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		System.out.println(a); // false
+		System.out.println(b); // true
+	}
+}
+----------------------------------
+package com.hundsun.hswh.adaptor.ufxdd.cache;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Test {
+	public static void main(String[] args) {
+		String sss = "A|A．有限：除银行活期账户和定期存款外，我基本没有其他投资经验;B|B．一般：除银行活期账户和定期存款外，我购买过基金、保险等理财产品，但还需要进一步的指导;C|C．丰富：我是一位有经验的投资者，参与过股票、基金等产品的交易，并倾向于自己做出投资决策;D|D．非常丰富：我是一位非常有经验的投资者，参与过权证、期货或创业板等高风险产品的交易";
+		String reg = "(?<=D．).{0,100}?(?=;)|(?<=D．).{0,100}"; // 如果没有|(?<=D．).{0,100}，则无输出
+		Pattern pattern = Pattern.compile(reg);
+		Matcher matcher = pattern.matcher(sss);
+		while (matcher.find()) {
+			System.out.println(matcher.group()); // 输出：非常丰富：我是一位非常有经验的投资者，参与过权证、期货或创业板等高风险产品的交易
+		}
+		
+		
+	}
+}
+
+
+

@@ -1,0 +1,30 @@
+正则表达式"(^|&)" ,什么意思?
+
+^匹配字符串开头,&就是&字符,(^|&)匹配字符串开头或者&字符,如果其后还有正则,那么必须出现在字符串开始或&字符之后
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <style type="text/css">
+		
+    </style>
+    </head>
+    <body>
+       	
+    </body>
+    <script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+   	<script type="text/javascript">
+   	
+   	(function ($) {
+   		/*^匹配字符串开头,&就是&字符,(^|&)匹配字符串开头或者&字符，如果其后还有正则，那么必须出现在字符串开始或&字符之后*/
+   		$.getUrlParam = function (name) {
+   			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");//这个正则是寻找&+参数名=值+&且&可以不存在
+   			var r = window.location.search.substr(1).match(reg);
+   			if (r != null) return decodeURI(r[2]);//这里是开始匹配，找到了返回对应url值，没找到返回null
+   				return null;
+   		}
+   	})(jQuery);
+   	
+   	var username = $.getUrlParam("username");
+   	alert(username);//访问http://localhost:8080/integral_market/static/div2.html?username=123&sex=male&password=321会打印出:123
+   	</script> 
+</html>

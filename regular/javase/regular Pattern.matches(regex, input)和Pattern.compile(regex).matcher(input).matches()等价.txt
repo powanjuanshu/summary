@@ -1,0 +1,22 @@
+[1]
+* matches()对整个字符串进行匹配,只有整个字符串都匹配了才返回true
+* find()要求字符串的一部分匹配表达式即可
+
+[2]
+代码如下:
+String result = "${jboss.home}\\image";
+Matcher m = Pattern.compile("\\$\\{.*\\}").matcher(result);
+m.find(); // 返回true
+Pattern.matches("\\$\\{.*\\}", result); // 返回false
+为什么?
+matches要求字符串整个匹配正则表达式,你的表达式最后是"}",而字符串后面还有\\image,所以返回false.
+find要求字符串的一部分匹配表达式即可.
+
+[3]
+我们现在回头看一下Pattern.matcher(String regex,CharSequence input),它与下面这段代码等价
+Pattern.compile(regex).matcher(input).matches()
+不是与Pattern.compile(regex).matcher(input).find()等价
+
+[4]
+find()对字符串进行匹配,匹配到的字符串可以在任何位置.
+

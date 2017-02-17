@@ -1,0 +1,10 @@
+package com.ccbsh;
+
+public class Test {
+	public static void main(String[] args) throws Exception {
+		String str = "zhangsanttttxiaoqiangmmmmmmmmmmzhaoliu";
+		// 组的感念:((A)(B(C))) 组按(的顺序排列,((A)(B(C)))为第一组,(A)为第二组,(B(C))为第三组,(C)第四组,第零组表示整个表达式。
+		str = str.replaceAll("(.)\\1+", "xxx"); // \1表示第一组,前面的\表示转义,将后面的\转义,(.)表示第一个字符,第二个表示用第一组的字符出现1次或多次
+		System.out.println(str);
+	}
+}

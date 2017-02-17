@@ -1,0 +1,43 @@
+* matches(),find()都会影响标记,而reset()可以重置这些标记！
+* 另外，这些标记不会循环,会消耗完所有字符
+* matcher的状态包括关于最近匹配的start和end,reset把matcher的状态清空了
+
+------------------------------
+package wsclient;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main3 {
+	public static void main(String[] args) {
+		// reset()方法，可将现有的Matcher对象应用于一个新的字符序列
+		Matcher m = Pattern.compile("[frb][aiu][gx]").matcher("fix the rug with bags");
+		while (m.find()) {
+			System.out.println(m.group()); // fix
+										   // rug
+										   // bag
+		}
+		m.reset("fix the rig with rags");
+		while (m.find()) {
+			System.out.println(m.group()); // fix
+										   // rig
+										   // rag
+		}
+	}
+}
+------------------------------
+package wsclient;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main3 {
+	public static void main(String[] args) {
+	    Pattern p = Pattern.compile("\\d{3,5}");
+	    String s = "123-34345-234-00";
+	    Matcher m = p.matcher(s);
+	    System.out.println(m.matches()); // false,会消耗标记
+	    System.out.println(m.find()+" start at:"+m.start()+" end at:"+m.end()); //true start at:4 end at:9
+	    System.out.println(m.find()+" start at:"+m.start()+" end at:"+m.end()); //true start at:10 end at:13
+	    m.reset();
+	    System.out.println(m.find()+" start at:"+m.start()+" end at:"+m.end()); //true start at:0 end at:3
+	    System.out.println(m.find()+" start at:"+m.start()+" end at:"+m.end()); //true start at:4 end at:9
+	    System.out.println(m.find()+" start at:"+m.start()+" end at:"+m.end()); //true start at:10 end at:13
+	}
+}

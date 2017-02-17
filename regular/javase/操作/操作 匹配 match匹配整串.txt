@@ -1,0 +1,17 @@
+matches()对整个字符串进行匹配,只有整个字符串都匹配了才返回true
+find要求字符串的一部分匹配表达式即可
+--------------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("\\d{3,5}");
+      String s = "123-34345-234-00";
+      Matcher m = p.matcher(s);
+      boolean a = m.matches();
+      boolean b = m.find();
+      System.out.println(a);
+      System.out.println(b);
+	}
+}

@@ -1,0 +1,14 @@
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("[abc]{1,3}");
+		Matcher m = p.matcher("xxabcxxabcxxabcxx");
+		while (m.find()) {
+			System.out.println(m.start());
+		}
+		String[] s = p.split("xxabkkabcxxabcxx"); // ·Ö¸ô×Ö·û´®
+		System.out.println(s[1]); // kk
+	}
+}

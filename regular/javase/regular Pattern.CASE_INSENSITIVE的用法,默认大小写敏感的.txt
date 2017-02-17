@@ -1,0 +1,21 @@
+package wsclient;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main3 {
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("java", Pattern.CASE_INSENSITIVE);
+        	Matcher m = p.matcher("java Java JAVa JaVa IloveJAVA you hateJava afasdfasdf");
+        	StringBuffer buf = new StringBuffer();
+        	int i=0;
+        	while(m.find()) {
+        		i++;
+       	     	    	if(i%2 == 0) {
+       	         		m.appendReplacement(buf, "java");
+            		} else {
+                		m.appendReplacement(buf, "JAVA");
+            		}
+        	}
+        	m.appendTail(buf);
+        	System.out.println(buf);
+	}
+}

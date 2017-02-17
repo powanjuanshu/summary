@@ -1,0 +1,45 @@
+[1]
+* ?:是不想被捕获的时候使用可以提高程序执行速度
+* ([a-z][0-9])+ 会捕获()里内容,反向引用的时候可以用上.
+* (?:[a-z][0-9])+ 不会捕获()里内容.不能使用反向引用
+* 例子:
+package com.ccbsh;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.methods.PostMethod;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		String s = "sunjialinnnngggg";
+		String s1 = s.replaceAll("(n){2,}(g){2,}", "$1"); // 匹配到nnnngggg,并替换第一组匹配的内容n
+		String s2 = s.replaceAll("(?:n){2,}(g){2,}", "$1"); // 组里面前面加?:表示这组将不被捕获,可以提高程序执行速度,那么替换的第一组的内容为g
+		System.out.println(s1); // 打印出sunjialin
+		System.out.println(s2); // 打印出sunjialig
+		
+	}
+}
+
+[2]
+* 匹配pattern但不捕获该匹配的子表达式,即它是一个非捕获匹配,不存储供以后使用的匹配.这对于用"或"字符(|)组合模式部件的情况很有用.
+* 例如:与"industry|industries"相比,"industr(?:y|ies)"是一个更加经济的表达式.
+* 例子:
+package com.bestpay.http;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class PsbcModel {
+	public static void main(String[] args) {
+		String ss = "MercDtTm=ihatethisgame";
+		Pattern p = Pattern.compile("(MercDtTm).{1,30}");
+		Matcher m = p.matcher(ss);
+		while(m.find()) {
+			System.out.println(m.group(1)); // 打印出MercDtTm,这是正常的
+		}
+		Pattern p2 = Pattern.compile("(?:MercDtTm).{1,30}");
+		Matcher m2 = p2.matcher(ss);
+		while (m2.find()) {
+			System.out.println(m2.group(1)); // 这样是找不到,会报错:Exception in thread "main" java.lang.IndexOutOfBoundsException: No group 1
+		}
+	}
+}
+
+
+

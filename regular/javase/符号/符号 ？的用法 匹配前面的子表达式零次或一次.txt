@@ -1,0 +1,29 @@
+. 一个，可以单独使用，匹配一个字符
+* 0次或多次，匹配前面的子表达式零次或多次，不能单独使用，左边必须有字符，如"aa".matcheres("*")会报错：Exception in thread "main" java.util.regex.PatternSyntaxException: Dangling meta character '*' near index 0
+? 0次或1次，匹配前面的子表达式零次或一次，不能单独使用，左边必须有字符，如"aa".matcheres("?")会报错：Exception in thread "main" java.util.regex.PatternSyntaxException: Dangling meta character '?' near index 0
++ 1次或多次，匹配前面的子表达式一次或多次，不能单独使用，左边必须有字符，如"aa".matcheres("+")会报错：Exception in thread "main" java.util.regex.PatternSyntaxException: Dangling meta character '+' near index 0
+---------------------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern pattern = Pattern.compile("a?"); // 0个或1个，匹配前面的子表达式零次或一次，不能单独使用，左边必须有字符，如"aa".matcheres("?")会报错：Exception in thread "main" java.util.regex.PatternSyntaxException: Dangling meta character '?' near index 0
+		Matcher m1 = pattern.matcher("a");
+		Matcher m2 = pattern.matcher("aa");
+		boolean a = m1.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		boolean b = m2.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		System.out.println(a);
+		System.out.println(b);
+	}
+}
+---------------------------
+package threedes;
+public class Main4 {
+	public static void main(String[] args) {
+		boolean a1 = "a".matches("a?"); // 0个或1个，匹配前面的子表达式零次或一次，不能单独使用，左边必须有字符，如"aa".matcheres("?")会报错：Exception in thread "main" java.util.regex.PatternSyntaxException: Dangling meta character '?' near index 0
+		boolean a2 = "aa".matches("a?"); // 0个或1个，匹配前面的子表达式零次或一次，不能单独使用，左边必须有字符，如"aa".matcheres("?")会报错：Exception in thread "main" java.util.regex.PatternSyntaxException: Dangling meta character '?' near index 0
+		System.out.println(a1);
+		System.out.println(a2);
+	}
+}

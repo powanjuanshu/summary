@@ -1,0 +1,56 @@
+* 贪婪匹配:正则表达式默认最大长度匹配,也就是所谓的贪婪匹配.
+* 非贪婪匹配:就是匹配到就好,最少的匹配字符.
+
+* 在量词后面直接加上一个问号?就是非贪婪模式.
+  量词:
+       {m, n}	:  m到n个
+　　　　　  *	:  任意多个
+　　　　　  +	:  一个到多个
+　　　　　  ?	:  0或一个
+
+package com.iflytek.epdcloud.ercsvc.service;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main5 {
+	public static void main(String[] args) throws Exception {
+		String text = "(content:\"rcpt to root\";pcre:\"word\";)";
+		
+		String rule1 = "content:\".+\""; // 贪婪模式,默认为贪婪模式
+		Pattern p1 = Pattern.compile(rule1);
+		Matcher m1 = p1.matcher(text);
+		while (m1.find()) {
+			System.out.println("匹配结果:" + m1.group(0));//匹配结果:content:"rcpt to root";pcre:"word"
+		}
+		
+		String rule2 = "content:\".+?\""; // 非贪婪模式
+		Pattern p2 = Pattern.compile(rule2);
+		Matcher m2 = p2.matcher(text);
+		while (m2.find()) {
+			System.out.println("匹配结果:" + m2.group(0));//匹配结果:content:"rcpt to root"
+		}
+	}
+}
+------------------------------------------------
+package com.hundsun.hswh.adaptor.ufxdd.cache;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Test {
+	public static void main(String[] args) {
+		String sss = "A|A．有限：除银行活期账户和定期存款外，我基本没有其他投资经验;B|B．一般：除银行活期账户和定期存款外，我购买过基金、保险等理财产品，但还需要进一步的指导;C|C．丰富：我是一位有经验的投资者，参与过股票、基金等产品的交易，并倾向于自己做出投资决策;D|D．非常丰富：我是一位非常有经验的投资者，参与过权证、期货或创业板等高风险产品的交易";
+		String reg = "(?<=B．).{0,100}(?=;)";
+		Pattern pattern = Pattern.compile(reg);
+		Matcher matcher = pattern.matcher(sss);
+		while (matcher.find()) {
+			System.out.println(matcher.group()); // 输出：一般：除银行活期账户和定期存款外，我购买过基金、保险等理财产品，但还需要进一步的指导;C|C．丰富：我是一位有经验的投资者，参与过股票、基金等产品的交易，并倾向于自己做出投资决策
+		}
+		String reg2 = "(?<=B．).{0,100}?(?=;)";
+		Pattern pattern2 = Pattern.compile(reg2);
+		Matcher matcher2 = pattern2.matcher(sss);
+		while (matcher2.find()) {
+			System.out.println(matcher2.group()); // 输出：一般：除银行活期账户和定期存款外，我购买过基金、保险等理财产品，但还需要进一步的指导
+		}
+		
+	}
+}
+
+

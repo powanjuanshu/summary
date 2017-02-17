@@ -1,0 +1,27 @@
+package threedes;
+public class Main4 {
+	public static void main(String[] args) {
+		boolean a1 = "hello sir".matches(".*ir$"); // $为限制结尾
+		boolean a2 = "x@".matches(".*ir$"); // $为限制结尾
+		System.out.println(a1); // true
+		System.out.println(a2); // false
+	}
+}
+
+---------------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern pattern = Pattern.compile(".*ir$"); // $为限制结尾
+		Matcher m1 = pattern.matcher("hello sir");
+		Matcher m2 = pattern.matcher("x@");
+		boolean a = m1.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		boolean b = m2.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		System.out.println(a); // true
+		System.out.println(b); // false
+	}
+}
+
+

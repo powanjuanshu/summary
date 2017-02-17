@@ -1,0 +1,25 @@
+package threedes;
+public class Main4 {
+	public static void main(String[] args) {
+		boolean a1 = "R".matches("[A-Z&&[RFG]]"); // &&代表交集,A到Z并且是RFG中的任意字符
+		boolean a2 = "A".matches("[A-Z&&[RFG]]"); // &&代表交集,A到Z并且是RFG中的任意字符
+		System.out.println(a1); // true
+		System.out.println(a2); // false
+	}
+}
+-------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern pattern = Pattern.compile("[A-Z&&[RFG]]"); // &&代表交集,A到Z并且是RFG中的任意字符
+		Matcher m1 = pattern.matcher("A");
+		Matcher m2 = pattern.matcher("R");
+		boolean a = m1.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		boolean b = m2.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		System.out.println(a); // false
+		System.out.println(b); // true
+	}
+}
+

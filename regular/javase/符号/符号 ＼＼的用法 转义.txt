@@ -1,0 +1,16 @@
+* "^.*?\\.(jpg|png|bmp|gif)$"
+* 上面这个正则表达式为什么有两个反斜杠呢？反斜杠点\.就能表示点.了，为什么还要在\.前面多加一个\？
+* 这要分两步看
+  首先字符串中的\\被编译器解释为\
+  然后作为正则表达式，\.又被正则表达式引擎解释为.
+* 两个斜杠的转义字符表示一个斜杠
+* 在Java程序中\\.只表示一个点.
+
+package com.ccbsh;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		String str = "zhangsan.xiaoqiang.zhaoliu";
+		String str2[] = str.split("\\."); // \.是表示转义，但是在字符串里面必须前面多加个\将后面的\转义成字符串，"\\."在字符串里将第一个\将第二个字符串\转义成字符串,然后再转义.
+		System.out.println(str2[1]);
+	}
+}

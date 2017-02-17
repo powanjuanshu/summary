@@ -1,0 +1,182 @@
+[1]
+* java.util.regex是一个用正则表达式所订制的模式来对字符串进行匹配工作的类库包
+* 它包括两个类:Pattern和Matcher 
+* Pattern是一个正则表达式经编译后的表现模式
+* Matcher是一个状态机器,它依据Pattern做为匹配模式对字符串展开匹配检查
+* 首先一个Pattern实例订制了一个所用语法与PERL类似的正则表达式经编译后的模式,然后一个Matcher实例在这个给定的Pattern实例的模式控制下进行字符串的匹配工作
+
+[2] Pattern类:
+* 方法static Pattern compile(String regex)将给定的正则表达式编译并赋予给Pattern类
+* 方法static Pattern compile(String regex, int flags)同上,但增加flag参数的指定,可选的flag参数包括:CASE INSENSITIVE,MULTILINE,DOTALL,UNICODE CASE, CANON EQ 
+* 方法int flags()返回当前Pattern的匹配flag参数
+* 方法Matcher matcher(CharSequence input)生成一个给定命名的Matcher对象
+* 方法static boolean matches(String regex, CharSequence input)
+    编译给定的正则表达式并且对输入的字串以该正则表达式为模开展匹配,该方法适合于该正则表达式只会使用一次的情况,也就是只进行一次匹配工作,
+    因为这种情况下并不需要生成一个Matcher实例
+* String pattern()返回该Patter对象所编译的正则表达式
+* String[] split(CharSequence input)将目标字符串按照Pattern里所包含的正则表达式为模进行分割。
+* String[] split(CharSequence input, int limit)作用同上,增加参数limit目的在于要指定分割的段数,如将limi设为2,那么目标字符串将根据正则表达式分为割为两段。
+* 一个正则表达式,也就是一串有特定意义的字符,必须首先要编译成为一个Pattern类的实例,这个Pattern对象将会使用matcher()方法来生成一个Matcher实例
+  接着便可以使用该 Matcher实例以编译的正则表达式为基础对目标字符串进行匹配工作,多个Matcher是可以共用一个Pattern对象的。
+  现在我们先来看一个简单的例子,再通过分析它来了解怎样生成一个Pattern对象并且编译一个正则表达式,最后根据这个正则表达式将目标字符串进行分割
+  import java.util.regex.*;
+  public class Replacement{
+    public static void main(String[] args) throws Exception {
+      Pattern p = Pattern.compile("[/]+"); // 生成一个Pattern,同时编译一个正则表达式
+      // 用Pattern的split()方法把字符串按"/"分割
+      String[] result = p.split("Kevin has seen<LEON>seveal times,because it is a good film./凯文已经看过<这个杀手不太冷>几次了,因为它是一部好电影。/名词:凯文");
+      for (int i=0; i<result.length; i++)
+        System.out.println(result[i]);
+    }
+  }
+  输出结果为:
+    Kevin has seen<LEON>seveal times,because it is a good film.
+    凯文已经看过<这个杀手不太冷>几次了,因为它是一部好电影。
+    名词:凯文
+  很明显,该程序将字符串按"/"进行了分段,我们以下再使用 split(CharSequence input, int limit)方法来指定分段的段数,程序改动为:
+  tring[] result = p.split("Kevin has seen<LEON>seveal times,because it is a good film./凯文已经看过<这个杀手不太冷>几次了,因为它是一部好电影。/名词:凯文", 2); 
+  这里面的参数"2"表明将目标语句分为两段。 
+  输出结果则为: 
+    Kevin has seen<LEON>seveal times,because it is a good film.
+    凯文已经看过<这个杀手不太冷>几次了,因为它是一部好电影。/名词:凯文
+
+[3] Matcher类:
+* Matcher appendReplacement(StringBuffer sb, String replacement) 将当前匹配子串替换为指定字符串,
+  并且将替换后的子串以及其之前到上次匹配子串之后的字符串段添加到一个StringBuffer对象里。 
+* StringBuffer appendTail(StringBuffer sb) 将最后一次匹配工作后剩余的字符串添加到一个StringBuffer对象里。 
+* int end() 返回当前匹配的子串的最后一个字符在原目标字符串中的索引位置 。 
+* int end(int group) 返回与匹配模式里指定的组相匹配的子串最后一个字符的位置。 
+* boolean find() 尝试在目标字符串里查找下一个匹配子串。 
+* boolean find(int start) 重设Matcher对象,并且尝试在目标字符串里从指定的位置开始查找下一个匹配的子串。 
+* String group() 返回当前查找而获得的与组匹配的所有子串内容 
+* String group(int group) 返回当前查找而获得的与指定的组匹配的子串内容 
+* int groupCount() 返回当前查找所获得的匹配组的数量。 
+* boolean lookingAt() 检测目标字符串是否以匹配的子串起始。 
+* boolean matches() 尝试对整个目标字符展开匹配检测,也就是只有整个目标字符串完全匹配时才返回真值。 
+* Pattern pattern() 返回该Matcher对象的现有匹配模式,也就是对应的Pattern 对象。 
+* String replaceAll(String replacement) 将目标字符串里与既有模式相匹配的子串全部替换为指定的字符串。 
+* String replaceFirst(String replacement) 将目标字符串里第一个与既有模式相匹配的子串替换为指定的字符串。 
+* Matcher reset() 重设该Matcher对象。 
+* Matcher reset(CharSequence input) 重设该Matcher对象并且指定一个新的目标字符串。 
+* int start() 返回当前查找所获子串的开始字符在原目标字符串中的位置。 
+* int start(int group) 返回当前查找所获得的和指定组匹配的子串的第一个字符在原目标字符串中的位置。 
+* 光看方法的解释是不是很不好理解？不要急,待会结合例子就比较容易明白了
+
+* 我们分别来看看各方法的使用: 
+
+* matches()/lookingAt()/find(): 
+* Matcher对象是由一个Pattern对象调用其matcher()方法而生成的,一旦该Matcher对象生成,它就可以进行三种不同的匹配查找操作: 
+* matches()方法尝试对整个目标字符展开匹配检测,也就是只有整个目标字符串完全匹配时才返回真值。 
+* lookingAt ()方法将检测目标字符串是否以匹配的子串起始。 
+* find()方法尝试在目标字符串里查找下一个匹配子串。 
+* 以上三个方法都将返回一个布尔值来表明成功与否。 
+
+* replaceAll ()/appendReplacement()/appendTail(): 
+* Matcher类同时提供了四个将匹配子串替换成指定字符串的方法: 
+* replaceAll() 
+* replaceFirst() 
+* appendReplacement() 
+* appendTail() 
+* replaceAll()与replaceFirst()的用法都比较简单,请看上面方法的解释。我们主要重点了解一下appendReplacement()和appendTail()方法。 
+* appendReplacement(StringBuffer sb, String replacement)将当前匹配子串替换为指定字符串,
+  并且将替换后的子串以及其之前到上次匹配子串之后的字符串段添加到一个StringBuffer对象里,
+  而appendTail(StringBuffer sb)方法则将最后一次匹配工作后剩余的字符串添加到一个StringBuffer对象里。 
+  例如,有字符串fatcatfatcatfat,假设有正则表达式模式为"cat",第一次匹配后调用appendReplacement(sb,"dog"),那么这时StringBuffer sb的内容为fatdog,
+  也就是fatcat中的cat被替换为dog并且与匹配子串前的内容加到sb里,而第二次匹配后调用appendReplacement(sb,"dog"),那么sb的内容就变为fatdogfatdog,
+  如果最后再调用一次appendTail(sb),那么sb最终的内容将是fatdogfatdogfat。 
+  还是有点模糊?那么我们来看个简单的程序(该例将把句子里的"Kelvin"改为"Kevin"):
+  import java.util.regex.*; 
+  public class MatcherTest{ 
+    public static void main(String[] args) throws Exception {
+      Pattern p = Pattern.compile("Kevin"); // 生成Pattern对象并且编译一个简单的正则表达式"Kelvin"
+      Matcher m = p.matcher("Kelvin Li and Kelvin Chan are both working in Kelvin Chen's KelvinSoftShop company"); // 用Pattern类的matcher()方法生成一个Matcher对象
+      StringBuffer sb = new StringBuffer(); 
+      int i=0;
+      boolean result = m.find(); // 使用find()方法查找第一个匹配的对象
+      while(result) { // 使用循环将句子里所有的kelvin找出并替换再将内容加到sb里 
+        i++; 
+        m.appendReplacement(sb, "Kevin"); 
+        System.out.println("第"+i+"次匹配后sb的内容是:"+sb);
+        result = m.find(); // 继续查找下一个匹配对象 
+      }
+      m.appendTail(sb); // 最后调用appendTail()方法将最后一次匹配后的剩余字符串加到sb里;
+      System.out.println("调用m.appendTail(sb)后sb的最终内容是:"+ sb.toString()); 
+    }
+  }
+  最终输出结果为:
+  第1次匹配后sb的内容是:Kevin
+  第2次匹配后sb的内容是:Kevin Li and Kevin
+  第3次匹配后sb的内容是:Kevin Li and Kevin Chan are both working in Kevin
+  第4次匹配后sb的内容是:Kevin Li and Kevin Chan are both working in Kevin Chen's Kevin
+  调用m.appendTail(sb)后sb的最终内容是:Kevin Li and Kevin Chan are both working in Kevin Chen's KevinSoftShop company.
+  看了上面这个例程是否对appendReplacement(),appendTail()两个方法的使用更清楚呢,如果还是不太肯定最好自己动手写几行代码测试一下
+
+* group()/group(int group)/groupCount(): 
+* 该系列方法返回与组匹配的子串内容,下面代码将很好解释其用法: 
+  import java.util.regex.*; 
+  public class GroupTest {
+    public static void main(String[] args) throws Exception {
+      Pattern p = Pattern.compile("(ca)(t)");
+      Matcher m = p.matcher("one cat,two cats in the yard");
+      StringBuffer sb = new StringBuffer();
+      boolean result = m.find();
+      System.out.println("该次查找获得匹配组的数量为:"+m.groupCount());
+      for(int i=1;i<=m.groupCount();i++){
+        System.out.println("第" + i + "组的子串内容为:" + m.group(i));
+      }
+    }
+  }
+  输出为: 
+    该次查找获得匹配组的数量为:2 
+    第1组的子串内容为:ca 
+    第2组的子串内容为:t 
+  Matcher对象的其他方法因比较好理解且由于篇幅有限,请读者自己编程验证。 
+
+[4] 一个检验Email地址的小程序
+* 最后我们来看一个检验Email地址的例程,该程序是用来检验一个输入的EMAIL地址里所包含的字符是否合法,虽然这不是一个完整的EMAIL地址检验程序,
+  它不能检验所有可能出现的情况,但在必要时您可以在其基础上增加所需功能。
+  import java.util.regex.*; 
+  public class Email { 
+    public static void main(String[] args) throws Exception {
+      String input = args[0]; 
+      //检测输入的EMAIL地址是否以 非法符号"."或"@"作为起始字符 
+      Pattern p = Pattern.compile("^\\.|^@");
+      Matcher m = p.matcher(input); 
+      if (m.find()){
+        System.out.println("EMAIL地址不能以'.'或'@'作为起始字符 ");
+      }
+      //检测是否以"www."为起始 
+      p = Pattern.compile("^www."); 
+      m = p.matcher(input); 
+      if (m.find()){
+        System.out.println("EMAIL地址不能以'www.'起始");
+      }
+      //检测是否包含非法字符
+      p = Pattern.compile("[^A-Za-z0-9.@_-~#]+");
+      m = p.matcher(input);
+      StringBuffer sb = new StringBuffer();
+      boolean result = m.find();
+      boolean deletedIllegalChars = false;
+      while(result) {
+        //如果找到了非法字符那么就设下标记
+        deletedIllegalChars = true;
+        //如果里面包含非法字符如冒号双引号等,那么就把他们消去,加到SB里面
+        m.appendReplacement(sb, "");
+        result = m.find();
+      }
+      m.appendTail(sb);
+      input = sb.toString();
+      if (deletedIllegalChars) { 
+        System.out.println("输入的EMAIL地址里包含有冒号、逗号等非法字符,请修改"); 
+        System.out.println("修改后合法的地址应类似: "+input); 
+      }
+    }
+  }
+  例如,我们在命令行输入:java Email www.kevin@163.net
+  那么输出结果将会是:EMAIL地址不能以'www.'起始
+  如果输入的EMAIL为@kevin@163.net
+  则输出为:EMAIL地址不能以'.'或'@'作为起始字符
+  当输入为:cgjmail#$%@163.net
+  那么输出就是:
+  输入的EMAIL地址里包含有冒号、逗号等非法字符,请修改
+  修改后合法的地址应类似: cgjmail@163.net

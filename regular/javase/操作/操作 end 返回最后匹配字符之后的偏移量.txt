@@ -1,0 +1,41 @@
+package threedes;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("\\d{3,5}");
+      String s = "12-34345-234-00";
+      Matcher m = p.matcher(s);
+      boolean a = m.matches();
+      // System.out.println(m.start()); // 返回最后匹配字符之后的偏移量.如果没有尝试任何匹配，或者以前的匹配操作失败，则报错：IllegalStateException
+      boolean b = m.find();
+      System.out.println(m.end()); // 8  // 返回最后匹配字符之后的偏移量.如果没有尝试任何匹配，或者以前的匹配操作失败，则报错：IllegalStateException
+      System.out.println(a); // false
+      System.out.println(b); // true
+	}
+}
+-------------------
+package com.ccbsh;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		String str = "da jia hao,ming tian bu fang jia!";
+		String regex = "\\b[a-z]{3}\\b"; // \\b表示单词边界，如果没有单词边界那么会把四个单词找出来
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(str);
+		while(m.find()){
+			System.out.println(m.group());
+			System.out.println(m.start()+":"+m.end()); // 开始索引和结束索引，包括开始，不包括结束的
+			// jia
+			//	3:6
+			//	hao
+			//	7:10
+			//	jia
+			//	29:32
+		}
+		
+	}
+}

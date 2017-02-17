@@ -1,0 +1,14 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+	$(function(){
+		init();
+	})
+	function init(){
+		var reg = new RegExp("^[1-9][0-9]{5}$");//邮政编码的验证（开头不能为0，共6位）
+		str = "430200";
+		alert(reg.test(str));//打印:true
+
+	}
+    </script>
+</html>

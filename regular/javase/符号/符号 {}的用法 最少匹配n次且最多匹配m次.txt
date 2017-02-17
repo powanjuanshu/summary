@@ -1,0 +1,25 @@
+package threedes;
+public class Main4 {
+	public static void main(String[] args) {
+		boolean a1 = "1395".matches("\\d{1,3}"); // {m,n}表示最少匹配n次且最多匹配m次，\d匹配一个数字字符。等价于[0-9]
+		boolean a2 = "139".matches("\\d{1,3}"); // {m,n}表示最少匹配n次且最多匹配m次，\d匹配一个数字字符。等价于[0-9]
+		System.out.println(a1); // false
+		System.out.println(a2); // true
+	}
+}
+-------------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern pattern = Pattern.compile("\\d{1,3}"); // {m,n}表示最少匹配n次且最多匹配m次，\d匹配一个数字字符。等价于[0-9]
+		Matcher m1 = pattern.matcher("1395");
+		Matcher m2 = pattern.matcher("139");
+		boolean a = m1.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		boolean b = m2.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		System.out.println(a); // false
+		System.out.println(b); // true
+	}
+}
+

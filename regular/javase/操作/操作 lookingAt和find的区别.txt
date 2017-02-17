@@ -1,0 +1,46 @@
+* 与matches方法类似,此方法始终从区域的开头开始;与之不同的是,它不需要匹配整个区域.
+* 此方法从匹配器区域的开头开始,如果该方法的前一次调用成功了并且从那时开始匹配器没有被重置,则从以前匹配操作没有匹配的第一个字符开始.
+  如果匹配成功,则可以通过start、end和group方法获取更多信息.当且仅当输入序列的子序列匹配此匹配器的模式时才返回true.
+--------------------------------
+package wsclient;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main3 {
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("\\d{3,5}");
+		String s = "123-34345-234-00";
+		Matcher m = p.matcher(s);
+		System.out.println(m.matches()); // false
+		m.reset();
+		System.out.println(m.find()); // true
+		System.out.println(m.start() + "-" + m.end()); // 0-3
+		System.out.println(m.find()); // true
+		System.out.println(m.start() + "-" + m.end()); // 4-9
+		System.out.println(m.find()); // true
+		System.out.println(m.start() + "-" + m.end()); // 10-13
+		System.out.println(m.find()); // false
+		System.out.println(m.lookingAt()); // true
+		System.out.println(m.start() + "-" + m.end()); // 0-3
+		System.out.println(m.lookingAt()); // true
+		System.out.println(m.start() + "-" + m.end()); // 0-3
+	}
+	
+}
+--------------------------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("\\d{3,5}");
+		String s1 = "123-34345-234-00";
+		String s2 = "12-34345-234-00";
+		Matcher m1 = p.matcher(s1);
+		Matcher m2 = p.matcher(s2);
+		boolean b1 = m1.lookingAt(); // 你说的都是Matcher上的方法,其中matches()方法用来判断整个输入字符串是否匹配,而lookAt()方法则是用来判断该字符串(不必是整个字符串)的开始部分是否能够匹配模式,当且仅当输入序列的前缀匹配此匹配器的模式时才返回 true
+		boolean b2 = m2.lookingAt();
+		System.out.println(b1); // true
+		System.out.println(b2); // false
+	}
+}
+

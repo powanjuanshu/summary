@@ -1,0 +1,88 @@
+match函数是使用正则表达式对字符串进行查找，并将查找的结果作为数组返回
+语法 : stringObj.match(regExp)
+
+stringObj	对其进行查找的String对象或字符串文字
+regExp		正则表达式模式和可用标志的正则表达式对象
+
+如果match函数方法没有找到匹配返回null。如果找到匹配返回一个数组并且更新全局RegExp对象的属性以反映匹配结果。match返回的数组有三个属性:input、index和lastIndex
+input属性包含整个的被查找字符串。Index属性包含了在整个被查找字符串中匹配的子字符串的位置。
+lastIndex属性包含了最后一次匹配中最后一个字符的下一个位置。如果没有设置全局标志(g)，数组的0元素包含整个匹配，
+而第1到n元素包含了匹配中曾出现过的任一个子匹配。这相当于没有设置全局标志的exec方法。如果设置了全局标志，元素0到n中包含所有匹配
+
+function MatchDemo(){
+	var r, re; // 声明变量
+	var s = "The rain in Spain falls mainly in the plain";
+	re = /ain/i; // 创建正则表达式
+	r = s.match(re); // 尝试匹配搜索字符串 
+	return(r); // 返回第一次出现ain的地方 
+} 
+
+function MatchDemo(){ 
+	var r, re; // 声明变量。 
+	var s = "The rain in Spain falls mainly in the plain"; 
+	re = /ain/ig; // 创建正则表达式模式。 
+	r = s.match(re); // 尝试去匹配搜索字符串。 
+	return(r); // 返回的数组包含了所有 "ain" 
+	// 出现的四个匹配。 
+}  
+
+var r, re = "Spain"; 
+r = "The rain in Spain".replace(re, "Canada");  
+
+match()方法用于从字符串中查找指定的值，本方法类似于indexOf()和lastindexOf()，不同的是它返回的是指定的值，而不是指定值在字符串中的位置。indexOf()和lastindexOf()方法返回位置数字 如果找不到返回-1。注意区分大小写 
+<script type="text/javascript"> 
+	var str="Hello world!" 
+	document.write(str.match("world") + "") 
+	document.write(str.match("World") + "") 
+	document.write(str.match("worlld") + "") 
+	document.write(str.match("world!")) 
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

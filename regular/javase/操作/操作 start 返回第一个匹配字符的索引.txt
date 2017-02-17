@@ -1,0 +1,62 @@
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("java", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher("java Java JAVa JaVa IloveJAVA you hateJava afasdfasdf"); // 奇数替换大写，偶数替换小写
+		StringBuffer buf = new StringBuffer();
+		int i = 0;
+		while (m.find()) {
+			System.out.println(m.start()); // 0 5 10 15 25 38匹配的下标索引，返回以前匹配的初始索引，返回第一个匹配字符的索引.如果没有尝试任何匹配，或者以前的匹配操作失败，则报错：IllegalStateException
+			i++;
+			if (i % 2 == 0) {
+				m.appendReplacement(buf, "java");
+			} else {
+				m.appendReplacement(buf, "JAVA");
+			}
+		}
+		m.appendTail(buf);
+		System.out.println(buf.toString());
+	}
+}
+---------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile(".{3,10}+[0-9]");
+      String s = "aaaa5bbbb68";
+      Matcher m = p.matcher(s);
+      if(m.find())
+          System.out.println(m.start() + "-" + m.end()); // 0-11
+      else 
+          System.out.println("not match!");
+	}
+}
+-------------------
+package com.ccbsh;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		String str = "da jia hao,ming tian bu fang jia!";
+		String regex = "\\b[a-z]{3}\\b"; // \\b表示单词边界，如果没有单词边界那么会把四个单词找出来
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(str);
+		while(m.find()){
+			System.out.println(m.group());
+			System.out.println(m.start()+":"+m.end()); // 开始索引和结束索引，包括开始，不包括结束的
+			// jia
+			//	3:6
+			//	hao
+			//	7:10
+			//	jia
+			//	29:32
+		}
+		
+	}
+}
+
+

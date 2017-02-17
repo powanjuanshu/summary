@@ -1,0 +1,25 @@
+package wsclient;
+public class Main3 {
+	public static void main(String[] args) {
+		boolean a1 = "hello sir".matches("^h[a-z]{1,3}o\\b.*"); // \b匹配一个单词边界,也就是指单词和空格间的位置.例如er\b可以匹配never中的er,但不能匹配verb中的er
+		boolean a2 = "hellosir".matches("^h[a-z]{1,3}o\\b.*");
+		System.out.println(a1); // true
+		System.out.println(a2); // false
+	}
+}
+--------------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern pattern = Pattern.compile("^h[a-z]{1,3}o\\b.*"); // \b匹配一个单词边界,也就是指单词和空格间的位置.例如er\b可以匹配never中的er,但不能匹配verb中的er
+		Matcher m1 = pattern.matcher("hello sir");
+		Matcher m2 = pattern.matcher("x@");
+		boolean a = m1.matches(); // 不要写成m1.find,find是只要找到就是true,匹配一部分,matches是匹配所有
+		boolean b = m2.matches(); // 不要写成m1.find,find是只要找到就是true,匹配一部分,matches是匹配所有
+		System.out.println(a); // true
+		System.out.println(b); // false
+	}
+}
+

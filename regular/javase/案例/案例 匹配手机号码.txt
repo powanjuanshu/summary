@@ -1,0 +1,9 @@
+package jdbc;
+public class Main2 {
+	public static void main(String[] args) {
+		String sss="(1[3|4|5|8][0-9]|177|176|178)[0-9]{4,8}";
+		String mo = "17718718526";
+		boolean bb = mo.matches(sss);
+		System.out.println(bb);
+	}
+}	

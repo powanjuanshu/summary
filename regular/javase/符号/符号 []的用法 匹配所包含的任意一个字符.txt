@@ -1,0 +1,28 @@
+package threedes;
+public class Main4 {
+	public static void main(String[] args) {
+		boolean a1 = "3".matches("[0-9]"); // 字符集合。[]表示匹配所包含的任意一个字符，[0-9]代表代表数字0到9
+		boolean a2 = "139".matches("a+"); // 字符集合。[]表示匹配所包含的任意一个字符，[0-9]代表代表数字0到9
+		boolean a3 = "116123".matches("1[126]6\\d{3}"); // 字符集合。[]表示匹配所包含的任意一个字符，[0-9]代表代表数字0到9
+		boolean a4 = "116123".matches("1[21|2|6]6\\d{3}"); // 字符集合。[]表示匹配所包含的任意一个字符，[0-9]代表代表数字0到9
+		System.out.println(a1); // true
+		System.out.println(a2); // false
+		System.out.println(a3); // true
+		System.out.println(a4); // true
+	}
+}
+---------------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern pattern = Pattern.compile("[0-9]"); // 字符集合。[]表示匹配所包含的任意一个字符，[0-9]代表代表数字0到9
+		Matcher m1 = pattern.matcher("3");
+		Matcher m2 = pattern.matcher("139");
+		boolean a = m1.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		boolean b = m2.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		System.out.println(a);
+		System.out.println(b);
+	}
+}

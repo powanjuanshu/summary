@@ -1,0 +1,32 @@
+排除型字符组
+作用：规定某个位置不容许出现的字符
+形式：以[^...]给出,在方括号内列出不容许出现的字符
+注意：排除型字符组仍然必须匹配一个字符
+[^xyz]负值字符集合。匹配未包含的任意字符(即不包括x,y,z)(排除x,y,z)。例如'[^abc]'可以匹配"plain"中的'p'
+-----------------------
+package threedes;
+public class Main4 {
+	public static void main(String[] args) {
+		boolean a1 = "p".matches("[^abc]"); // [^xyz]负值字符集合。[^abc]abc之外的字符，匹配未包含的任意字符。例如[^abc]可以匹配p
+		boolean a2 = "abc".matches("[^abc]"); // [^xyz]负值字符集合。[^abc]abc之外的字符，匹配未包含的任意字符。例如[^abc]可以匹配p
+		System.out.println(a1); // false
+		System.out.println(a2); // true
+	}
+}
+-----------------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern pattern = Pattern.compile("[^abc]"); // [^xyz]负值字符集合。[^abc]abc之外的字符，匹配未包含的任意字符。例如[^abc]可以匹配p
+		Matcher m1 = pattern.matcher("p");
+		Matcher m2 = pattern.matcher("abc");
+		boolean a = m1.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		boolean b = m2.matches(); // 不要写成m1.find，find是只要找到就是true，匹配一部分，matches是匹配所有
+		System.out.println(a); // false
+		System.out.println(b); // true
+	}
+}
+
+

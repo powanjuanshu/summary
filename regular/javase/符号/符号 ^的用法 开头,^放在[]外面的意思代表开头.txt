@@ -1,0 +1,77 @@
+package wsclient;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main2 {
+	public static void main(String[] args) {
+		String input = "@kevin@163.net";
+		Pattern p1 = Pattern.compile("^\\."); // 在开头找是否有.这个字符号(即第一个字符是否为.)
+		Pattern p2 = Pattern.compile("\\."); // 在字符串所有地方找是否有.这个字符号
+		Matcher m1 = p1.matcher(input);
+		Matcher m2 = p2.matcher(input);
+		if (m1.find()) {
+			System.out.println("匹配到");
+		} else {
+			System.out.println("没匹配"); // 打印:没匹配
+		}
+		if (m2.find()) {
+			System.out.println("匹配到"); // 打印:匹配到
+		} else {
+			System.out.println("没匹配");
+		}
+	}
+}
+-------------
+package wsclient;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main2 {
+	public static void main(String[] args) {
+		String input = "@kevin@163.net";
+		Pattern p1 = Pattern.compile("^@"); // 下面调用matches方法匹配不到,这个正则只匹配开头的@,在这里相当于只能匹配到String input="@"这个字符串,效果和Pattern.compile("@")相同;但是下面调用find方法匹配的话,效果就和Pattern.compile("@")不同
+		Matcher m1 = p1.matcher(input);
+		if (m1.matches()) {
+			System.out.println("匹配到");
+		} else {
+			System.out.println("没匹配");
+		}
+		
+	}
+}
+---------------------
+package com.ccbsh;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		Pattern pattern = Pattern.compile("^Java.*"); // 查找以Java开头,任意结尾的字符串
+		Matcher matcher = pattern.matcher("Java不是人");
+		boolean b= matcher.matches();
+		System.out.println(b); // true
+	}
+}
+---------------------
+package threedes;
+public class Main4 {
+	public static void main(String[] args) {
+		boolean a1 = "hello sir".matches("^h.*"); // ^放在[]外面的意思代表开头
+		boolean a2 = "x@".matches("^h.*"); // ^放在[]外面的意思代表开头
+		System.out.println(a1); // true
+		System.out.println(a2); // false
+	}
+}
+---------------------
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern pattern = Pattern.compile("^h.*"); // ^放在[]外面的意思代表开头
+		Matcher m1 = pattern.matcher("hello sir");
+		Matcher m2 = pattern.matcher("x@");
+		boolean a = m1.matches(); // 不要写成m1.find,find是只要找到就是true,匹配一部分,matches是匹配所有
+		boolean b = m2.matches(); // 不要写成m1.find,find是只要找到就是true,匹配一部分,matches是匹配所有
+		System.out.println(a); // true
+		System.out.println(b); // false
+	}
+}
+

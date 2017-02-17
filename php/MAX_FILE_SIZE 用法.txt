@@ -1,0 +1,33 @@
+ 话说 MAX_FILE_SIZE (2012-07-31 01:02:29)
+转载
+▼
+标签： max_file_size 杂谈 	分类： PHP程序设计
+
+PHP关于文件上传部分，特别提到表单隐藏域：MAX_FILE_SIZE，意思是接收文件的最大尺寸。文档中给出的例子如下：
+<form enctype="multipart/form-data" action="_URL_" method="POST">
+<input type="hidden" name="MAX_FILE_SIZE" value="30000">
+Send this file: <input name="userfile" type="file">
+<input type="submit" value="Send File">
+</form>
+
+这 里设置MAX_FILE_SIZE ＝ 30000，期待一种可能，使得浏览器在传送文件之前能够依此作出预先判断，如果文件尺寸大于30000字节，则不执行实际的POST动作。也就是不往服务器发送文件内容，而是直接在客户端提醒用户“你试图上传的文件超过30000字节”。
+
+这的确是一个非常棒的主张，但在现实中却暂时无法实现。不是因为这个限制可以“被简单地绕过”，而是IE和FireFox这两个主流浏览器都不支持这个特性。PHP的这个建议尚未被采纳。
+
+MAX_FILE_SIZE还有一个用场：后台PHP会判断接收到的文件大小是否大于这个值，如果超出，$_FILES['thisfile']['error']会被设置为UPLOAD_ERR_FORM_SIZE(2)，同时放弃保存临时文件，将$_FILES['thisfile']['size']置0。
+
+这个例子，没问题，表现正常，当我试图上传一个40多K的文件时，PHP程序报告“文件超过MAX_FILE_SIZE”。
+
+但是，如果我们将表单中的MAX_FILE_SIZE从30000减少到1000，情形又如何呢？
+
+    上传800字节的文件，正常；
+    上传40K的文件，PHP报告文件过大，也正常；
+    上传3000个字节的文件，PHP未报告错误，它成功保存了文件！出乎意料！
+
+问题就出在main/rfc1867.c中判断文件是否超长的这部分代码上。php每次从buffer中读取FILLUNIT字节长度的内容后，首先判断“已经读到的内容长度(total_bytes)”是否大于MAX_FILE_SIZE，然后再增加“已经读到的内容长度(total_bytes)”。这样一来，和预计的结果之间至多会有FILLUNIT字节的误差，而FILLUNIT=1024*5＝5K。（点击bug了解详细内容）
+
+这就是说，当MAX_FILE_SIZE<5K时，上传一个大于MAX_FILE_SIZE，但是小于5K的文件是没有问题的。
+
+当然，因为这个设置很容易被绕过，所以服务器端编程不应当依赖于MAX_FILE_SIZE。而且，5K到底是个很小的数值，对大多数上传文件的表单来说没有影响。
+
+btw, PHP中post_max_size，upload_max_filesize, MAX_FILE_SIZE的设置，和客户端上传给服务器端的流量大小无关。Apache服务器从客户端接收长度不超过LimitRequestBody字节数的请求，然后传送给php模块，php模块再决定是否保存成临时文件，设置$_FILES全局变量，移交给script进一步处理。这个Apache的LimitRequestBody选项缺省值=0，允许Request body的最大字节数是2G（Linux + Apache）

@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+   	<script type="text/javascript">
+   	(function ($) {
+   		$.getUrlParam = function (name) {
+   			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+   			var r = window.location.search.substr(1).match(reg);
+   			if (r != null) return decodeURI(r[2]);
+   				return null;
+   		}
+   	})(jQuery);
+	
+   	var username = $.getUrlParam("username");
+   	alert(username);//访问http://localhost:8080/integral_market/static/div2.html?username=123&password=321会打印出:123
+   	</script> 
+</html>

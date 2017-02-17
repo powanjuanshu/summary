@@ -1,0 +1,41 @@
+package threedes;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Main44 {
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("(\\d{3,5})([a-z]{2})");
+      String s = "123aa-34345bb-234cc-00";
+      Matcher m = p.matcher(s);
+      while(m.find()) {
+          System.out.println(m.group(1)); // 123 3434 234  返回在以前匹配操作期间由给定组捕获的输入子序列。 
+          System.out.println(m.group(2)); // aa bb cc返回在以前匹配操作期间由给定组捕获的输入子序列。
+          System.out.println(m.group()); // 123aa 34345bb 234cc组零表示整个模式，因此表达式 m.group(0)等效于 m.group() 
+      }
+	}
+}
+-------------------------------
+package com.ccbsh;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		String str = "da jia hao,ming tian bu fang jia!";
+		String regex = "\\b[a-z]{3}\\b"; // \\b表示单词边界，如果没有单词边界那么会把四个单词找出来
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(str);
+		while(m.find()){
+			System.out.println(m.group());
+			System.out.println(m.start()+":"+m.end()); // 开始索引和结束索引，包括开始，不包括结束的
+			// jia
+			//	3:6
+			//	hao
+			//	7:10
+			//	jia
+			//	29:32
+		}
+		
+	}
+}
+
+
+

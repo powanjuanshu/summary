@@ -1,0 +1,30 @@
+* 见jdk的Pattern文档:
+  MULTILINE
+  public static final int MULTILINE
+  Enables multiline mode.
+  In multiline mode the expressions ^ and $ match just after or just before, respectively, a line terminator or the end of the input sequence. By default these expressions only match at the beginning and the end of the entire input sequence.
+  Multiline mode can also be enabled via the embedded flag expression (?m).
+* (?m)是打开多行模式的开关，^是匹配一行的开头
+
+package wsclient;
+public class Main2 {
+	public static void main(String[] args) {
+		String str1 = "                  ZJU  University in Zhejiang  Province,      China\n                I love you!!!";
+		String str2 = "                  ZJU  University in Zhejiang  Province,      China                  I love you!!!";
+		String str3 = str1.replaceAll("(?m)^ +", "");// 删除每行开头部分所有空格,(?m)打开多行状态，为使每一行都达到这个效果，而不仅仅只是删除文本开头部分的空格。
+		String str4 = str1.replaceAll("^ +", "");
+		String str5 = str2.replaceAll("(?m)^ +", "");
+		System.out.println(str3); //ZJU  University in Zhejiang  Province,      China
+		                          //I love you!!!
+		System.out.println(str4); //ZJU  University in Zhejiang  Province,      China
+        				  //                I love you!!!
+		System.out.println(str5); //ZJU  University in Zhejiang  Province,      China                  I love you!!!
+	}
+}
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+package com.ccbsh;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		Pattern pattern = Pattern.compile("[\u4e00-\u9fa5]+");
+		Matcher matcher = pattern.matcher("匹配中文字符的正则表达式");
+		System.out.println(matcher.matches());
+	}
+}

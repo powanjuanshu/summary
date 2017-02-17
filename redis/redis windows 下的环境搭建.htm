@@ -1,0 +1,1419 @@
+<!DOCTYPE html PUBliC "-//W3C//dtD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/dtD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link rel="stylesheet" href="http://www.2cto.com/statics/css/article.css" type="text/css" />
+
+<link href="http://www.2cto.com/statics/css/dialog.css" rel="stylesheet" type="text/css" />
+<title>redis windows下的环境搭建 - Windows操作系统 - 红黑联盟</title>
+<meta name="keywords" content="redis,windows,环境" />
+<meta name="description" content="先说下安装吧！感觉这东西跟mongodb差不多，安装和布置挺简单，下载地址：https://github.com/dmajkic/redis/downloads 下载下来的包里有两个，一个是32位的，一个是64位的。根据自己的实情情况选择，我的是32b..." />
+<script type="text/javascript" src="http://www.2cto.com/statics/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://www.2cto.com/statics/js/jquery.sgallery.js"></script>
+<script type="text/javascript" src="http://www.2cto.com/statics/js/search_common.js"></script>
+<script type="text/javascript" src="http://cbjs.baidu.com/js/m.js"></script>
+<script type="text/javascript" src="http://www.2cto.com/statics/js/json.js"></script>
+<script language="javascript" type="text/javascript" src="http://www.2cto.com/statics/js/dialog.js"></script>
+
+
+</head>
+
+<body>
+<div class="line_top_box">
+	<dl class="top_box_left">
+		<dd class="left_logo"><a href="http://www.2cto.com"></a></dd>
+		<dd class="left_menu_link">
+																<a class='Channel' href='/News/'>资讯</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/Article/'>安全</a>&nbsp;|&nbsp;
+													<a class='Channel' href='http://bbs.2cto.com'>论坛</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/Soft/'>下载</a>&nbsp;|&nbsp;
+													<a class='Channel' href='http://book.2cto.com'>读书</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/kf/'>程序开发</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/database/'>数据库</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/os/'>系统</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/net/'>网络</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/ebook/'>电子书</a>&nbsp;|&nbsp;
+													<a class='Channel' href='http://zz.2cto.com/'>站长学院</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/ym/'>源码</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/QQ/'>QQ</a>&nbsp;|&nbsp;
+													<a class='Channel' href='http://space.2cto.com'>专栏</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/px/'>考试</a>&nbsp;|&nbsp;
+													<a class='Channel' href='/shouce/'>手册</a>&nbsp;|&nbsp;
+														</dd>
+	</dl>
+</div>
+<div class="line_top_lmbox">
+	<dl class="lmpic"></dl>
+	<dl class="lmlinkbox"><dd>
+										<a class='Channel' href='http://www.2cto.com/os/linux/'>Linux</a>|
+							<a class='Channel' href='http://www.2cto.com/os/windows/'>Windows</a>|
+							<a class='Channel' href='http://www.2cto.com/os/dos/'>Dos命令行</a>|
+							<a class='Channel' href='http://www.2cto.com/os/liulanqi/'>浏览器</a>|
+							<a class='Channel' href='http://www.2cto.com/os/xuniji/'>虚拟机</a>|
+							<a class='Channel' href='http://www.2cto.com/os/qita/'>其他</a>|
+								</dd></dl>
+	<dl class="LoginBox"><dd><script type="text/javascript">document.write('<iframe src="http://www.2cto.com/index.php?m=member&c=index&a=mini&forward='+encodeURIComponent(location.href)+'&siteid=1" allowTransparency="true"  width="150" height="32" frameborder="0" scrolling="no"></iframe>')</script></dd></dl>
+</div>
+<div class="divline8"></div>
+<div class="tadv">
+
+<a target="_blank" href="http://vip.2cto.com/"><img src="http://www.2cto.com/adv/980-80.gif" width="980" height="90" /></a>
+<!-- 广告位：顶部banner -->
+<script type="text/javascript">BAIDU_CLB_fillSlot("298612");</script>
+
+</div>
+
+
+<div class="divline8"></div>
+<div class="it165_box">
+	<div class="box_left">
+		
+		<dl class="box_p">
+			<dd class="pRight"><a href="http://www.2cto.com">首页</a><span> > </span><a href="http://www.2cto.com/os/">系统</a> > <a href="http://www.2cto.com/os/windows/">Windows</a> >  正文</dd>
+			<script type="text/javascript">BAIDU_CLB_fillSlot("703722");</script>
+			</dl>
+		<dl class="box_t"><dd>redis windows下的环境搭建</dd></dl>
+																										<dl class="box_INFO">
+			<dd class="frinfo line_blue">2012-04-02 10:48:47  &nbsp;&nbsp;&nbsp;&nbsp;<a style="font-weight:bold;padding:5px 0px 5px 20px;background:url('http://www.2cto.com/statics/images/icon/user_comment.png') left center no-repeat" href="#comment_iframe">我来说两句&nbsp;</a>&nbsp;&nbsp;  &nbsp;&nbsp;  </dd>
+			<dd class="frsize line_blue">
+			<span id='favorite'>
+				<a href="javascript:;" onclick="add_favorite('redis windows下的环境搭建');" class="t6">收藏</a>
+			</span>&nbsp;&nbsp;
+				<a target="_blank" href="http://www.2cto.com/index.php?m=member&c=content&a=publish&modid=1&siteid=1"><img border="0" src="http://www.2cto.com/statics/images/dl.jpg" />我要投稿</a>
+			</dd>
+			
+		</dl>
+		<dl class="box_body" id="fontzoom"><dd id="Article">
+		<div><br />
+先说下安装吧！感觉这东西跟mongodb差不多，安装和布置挺简单，</div>
+<div><br />
+<a href="http://www.2cto.com/soft" target="_blank" class="keylink">下载</a>地址：https://github.com/dmajkic/redis/downloads 下载下来的包里有两个，</div>
+<div>一个是32位的，一个是64位的。根据自己的实情情况选择，我的是32bit，</div>
+<div>把这个文件夹复制到其它地方，比如D：\redis 目录下。</div>
+<div>打开一个cmd窗口 &nbsp;使用cd命令切换目录到d:\redis &nbsp;运行 redis-server.exe redis.conf &nbsp;</div>
+<div>如果想方便的话，可以把redis的路径加到系统的环境变量里，这样就省得再输路径了，后面的那个redis.conf可以省略，如果省略，会启用默认的。输入之后，会显示如下界面：</div>
+<div><img src="http://up.2cto.com/2012/0402/20120402111041385.png" /><br />
+&nbsp;</div>
+<div>这时候别启一个cmd窗口，原来的不要关闭，不然就无法访问服务端了</div>
+<div>切换到redis目录下运行 redis-cli.exe -h 127.0.0.1 -p 6379 出现下图：</div>
+<div><img src="http://up.2cto.com/2012/0402/20120402111041181.png" /><br />
+&nbsp;</div>
+<div>这时候，就已经完成配置了，现在说下它的的redis.conf配置文件。下面是相关项的说明，</div>
+<div>&nbsp;</div>
+<div>001</div>
+<div># Redis configuration file example</div>
+<div>002</div>
+<div>&nbsp;</div>
+<div>003</div>
+<div># Note on units: when memory size is needed, it is possible to specifiy</div>
+<div>004</div>
+<div># it in the usual form of 1k 5GB 4M and so forth:</div>
+<div>005</div>
+<div>#</div>
+<div>006</div>
+<div># 1k =&gt; 1000 bytes</div>
+<div>007</div>
+<div># 1kb =&gt; 1024 bytes</div>
+<div>008</div>
+<div># 1m =&gt; 1000000 bytes</div>
+<div>009</div>
+<div># 1mb =&gt; 1024*1024 bytes</div>
+<div>010</div>
+<div># 1g =&gt; 1000000000 bytes</div>
+<div>011</div>
+<div># 1gb =&gt; 1024*1024*1024 bytes</div>
+<div>012</div>
+<div>#</div>
+<div>013</div>
+<div># units are case insensitive so 1GB 1Gb 1gB are all the same.</div>
+<div>014</div>
+<div>&nbsp;</div>
+<div>015</div>
+<div># By default Redis does not run as a daemon. Use &#39;yes&#39; if you need it.</div>
+<div>016</div>
+<div># Note that Redis will write a pid file in /var/run/redis.pid when daemonized.</div>
+<div>017</div>
+<div>daemonize no&nbsp;</div>
+<div>018</div>
+<div>Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程</div>
+<div>019</div>
+<div>&nbsp;</div>
+<div>020</div>
+<div># When running daemonized, Redis writes a pid file in /var/run/redis.pid by</div>
+<div>021</div>
+<div># default. You can specify a custom pid file location here.</div>
+<div>022</div>
+<div>pidfile /var/run/redis.pid</div>
+<div>023</div>
+<div>当Redis以守护进程方式运行时，Redis默认会把pid写入/var/run/redis.pid文件，可以通过pidfile指定</div>
+<div>024</div>
+<div># Accept connections on the specified port, default is 6379.</div>
+<div>025</div>
+<div># If port 0 is specified Redis will not listen on a TCP socket.</div>
+<div>026</div>
+<div>port 6379</div>
+<div>027</div>
+<div>指定Redis监听端口，默认端口为6379</div>
+<div>028</div>
+<div># If you want you can bind a single interface, if the bind option is not</div>
+<div>029</div>
+<div># specified all the interfaces will listen for incoming connections.</div>
+<div>030</div>
+<div>#</div>
+<div>031</div>
+<div># bind 127.0.0.1</div>
+<div>032</div>
+<div>绑定的主机地址</div>
+<div>033</div>
+<div># Specify the path for the unix socket that will be used to listen for</div>
+<div>034</div>
+<div># incoming connections. There is no default, so Redis will not listen</div>
+<div>035</div>
+<div># on a unix socket when not specified. &nbsp;www.2cto.com &nbsp;</div>
+<div>036</div>
+<div>#</div>
+<div>037</div>
+<div># unixsocket /tmp/redis.sock</div>
+<div>038</div>
+<div># unixsocketperm 755</div>
+<div>039</div>
+<div>&nbsp;</div>
+<div>040</div>
+<div># Close the connection after a client is idle for N seconds (0 to disable)</div>
+<div>041</div>
+<div>timeout 0</div>
+<div>042</div>
+<div>当 客户端闲置多长时间后关闭连接，如果指定为0，表示关闭该功能</div>
+<div>043</div>
+<div># Set server verbosity to &#39;debug&#39;</div>
+<div>044</div>
+<div># it can be one of:</div>
+<div>045</div>
+<div># debug (a lot of information, useful for development/testing)</div>
+<div>046</div>
+<div># verbose (many rarely useful info, but not a mess like the debug level)</div>
+<div>047</div>
+<div># notice (moderately verbose, what you want in production probably)</div>
+<div>048</div>
+<div># warning (only very important / critical messages are logged)</div>
+<div>049</div>
+<div>loglevel verbose</div>
+<div>050</div>
+<div>指定日志记录级别，Redis总共支持四个级别：debug、verbose、notice、warning，默认为verbose</div>
+<div>051</div>
+<div># Specify the log file name. Also &#39;stdout&#39; can be used to force</div>
+<div>052</div>
+<div># Redis to log on the standard output. Note that if you use standard</div>
+<div>053</div>
+<div># output for logging but daemonize, logs will be sent to /dev/null</div>
+<div>054</div>
+<div>logfile stdout</div>
+<div>055</div>
+<div>日志记录方式，默认为标准输出，如果配置Redis为守护进程方式运行，而这里又配置为日志记录方式为标准输出，则日志将会发送给/dev/null</div>
+<div>056</div>
+<div># To enable logging to the system logger, just set &#39;syslog-enabled&#39; to yes,</div>
+<div>057</div>
+<div># and optionally update the other syslog parameters to suit your needs.</div>
+<div>058</div>
+<div># syslog-enabled no</div>
+<div>059</div>
+<div>&nbsp;</div>
+<div>060</div>
+<div># Specify the syslog identity.</div>
+<div>061</div>
+<div># syslog-ident redis</div>
+<div>062</div>
+<div>&nbsp;</div>
+<div>063</div>
+<div># Specify the syslog facility. &nbsp;Must be USER or between LOCAL0-LOCAL7.</div>
+<div>064</div>
+<div># syslog-facility local0</div>
+<div>065</div>
+<div>&nbsp;</div>
+<div>066</div>
+<div># Set the number of databases. The default database is DB 0, you can select</div>
+<div>067</div>
+<div># a different one on a per-connection basis using SELECT &lt;dbid&gt; where</div>
+<div>068</div>
+<div># dbid is a number between 0 and &#39;databases&#39;-1</div>
+<div>069</div>
+<div>databases 16 &nbsp;www.2cto.com &nbsp;</div>
+<div>070</div>
+<div>设置<a href="http://www.2cto.com/database/" target="_blank" class="keylink">数据库</a>的数量，默认数据库为0，可以使用SELECT &lt;dbid&gt;命令在连接上指定数据库id</div>
+<div>071</div>
+<div>################################ SNAPSHOTTING &nbsp;#################################</div>
+<div>072</div>
+<div>#</div>
+<div>073</div>
+<div># Save the DB on disk:</div>
+<div>074</div>
+<div>#</div>
+<div>075</div>
+<div># &nbsp; save &lt;seconds&gt; &lt;changes&gt;</div>
+<div>076</div>
+<div>#</div>
+<div>077</div>
+<div># &nbsp; Will save the DB if both the given number of seconds and the given</div>
+<div>078</div>
+<div># &nbsp; number of write operations against the DB occurred.</div>
+<div>079</div>
+<div>#</div>
+<div>080</div>
+<div># &nbsp; In the example below the behaviour will be to save:</div>
+<div>081</div>
+<div># &nbsp; after 900 sec (15 min) if at least 1 key changed</div>
+<div>082</div>
+<div># &nbsp; after 300 sec (5 min) if at least 10 keys changed</div>
+<div>083</div>
+<div># &nbsp; after 60 sec if at least 10000 keys changed</div>
+<div>084</div>
+<div>#</div>
+<div>085</div>
+<div># &nbsp; Note: you can disable saving at all commenting all the &quot;save&quot; lines.</div>
+<div>086</div>
+<div>&nbsp;</div>
+<div>087</div>
+<div>save 900 1</div>
+<div>088</div>
+<div>save 300 10</div>
+<div>089</div>
+<div>save 60 10000</div>
+<div>090</div>
+<div>分别表示900秒（15分钟）内有1个更改，300秒（5分钟）内有10个更改以及60秒内有10000个更改。</div>
+<div>091</div>
+<div>指定在多长时间内，有多少次更新操作，就将数据同步到数据文件，可以多个条件配合</div>
+<div>092</div>
+<div># Compress string objects using LZF when dump .rdb databases?</div>
+<div>093</div>
+<div># For default that&#39;s set to &#39;yes&#39; as it&#39;s almost always a win.</div>
+<div>094</div>
+<div># If you want to save some CPU in the saving child set it to &#39;no&#39; but</div>
+<div>095</div>
+<div># the dataset will likely be bigger if you have compressible values or keys.</div>
+<div>096</div>
+<div>rdbcompression yes</div>
+<div>097</div>
+<div>指定存储至本地数据库时是否压缩数据，默认为yes，Redis采用LZF压缩，如果为了节省CPU时间，可以关闭该选项，但会导致数据库文件变的巨大</div>
+<div>098</div>
+<div># The filename where to dump the DB</div>
+<div>099</div>
+<div>dbfilename dump.rdb</div>
+<div>100</div>
+<div>指定本地数据库文件名，默认值为dump.rdb</div>
+<div>101</div>
+<div># The working directory.</div>
+<div>102</div>
+<div>#</div>
+<div>103</div>
+<div># The DB will be written inside this directory, with the filename specified</div>
+<div>104</div>
+<div># above using the &#39;dbfilename&#39; configuration directive.</div>
+<div>105</div>
+<div>#</div>
+<div>106</div>
+<div># Also the Append Only File will be created inside this directory.</div>
+<div>107</div>
+<div>#</div>
+<div>108</div>
+<div># Note that you must specify a directory here, not a file name.</div>
+<div>109</div>
+<div>dir ./</div>
+<div>110</div>
+<div>指定本地数据库存放目录</div>
+<div>111</div>
+<div>################################# REPLICATION #################################</div>
+<div>112</div>
+<div>&nbsp;</div>
+<div>113</div>
+<div># Master-Slave replication. Use slaveof to make a Redis instance a copy of</div>
+<div>114</div>
+<div># another Redis server. Note that the configuration is local to the slave</div>
+<div>115</div>
+<div># so for example it is possible to configure the slave to save the DB with a</div>
+<div>116</div>
+<div># different interval, or to listen to another port, and so on. &nbsp;www.2cto.com &nbsp;</div>
+<div>117</div>
+<div>#</div>
+<div>118</div>
+<div># slaveof &lt;masterip&gt; &lt;masterport&gt;</div>
+<div>119</div>
+<div>slaveof &lt;masterip&gt; &lt;masterport&gt; 设置当本机为slav服务时，设置master服务的IP地址及端口，在Redis启动时，它会自动从master进行数据同步</div>
+<div>120</div>
+<div># If the master is password protected (using the &quot;requirepass&quot; configuration</div>
+<div>121</div>
+<div># directive below) it is possible to tell the slave to authenticate before</div>
+<div>122</div>
+<div># starting the replication synchronization process, otherwise the master will</div>
+<div>123</div>
+<div># refuse the slave request.</div>
+<div>124</div>
+<div>#</div>
+<div>125</div>
+<div># masterauth &lt;master-password&gt;</div>
+<div>126</div>
+<div>masterauth &lt;master-password&gt; 当master服务设置了密码保护时，slav服务连接master的密码</div>
+<div>127</div>
+<div># When a slave lost the connection with the master, or when the replication</div>
+<div>128</div>
+<div># is still in progress, the slave can act in two different ways:</div>
+<div>129</div>
+<div>#</div>
+<div>130</div>
+<div># 1) if slave-serve-stale-data is set to &#39;yes&#39; (the default) the slave will</div>
+<div>131</div>
+<div># &nbsp; &nbsp;still reply to client requests, possibly with out of data data, or the</div>
+<div>132</div>
+<div># &nbsp; &nbsp;data set may just be empty if this is the first synchronization.</div>
+<div>133</div>
+<div>#</div>
+<div>134</div>
+<div># 2) if slave-serve-stale data is set to &#39;no&#39; the slave will reply with</div>
+<div>135</div>
+<div># &nbsp; &nbsp;an error &quot;SYNC with master in progress&quot; to all the kind of commands</div>
+<div>136</div>
+<div># &nbsp; &nbsp;but to INFO and SLAVEOF.</div>
+<div>137</div>
+<div>#</div>
+<div>138</div>
+<div>slave-serve-stale-data yes</div>
+<div>139</div>
+<div>&nbsp;</div>
+<div>140</div>
+<div># Slaves send PINGs to server in a predefined interval. It&#39;s possible to change</div>
+<div>141</div>
+<div># this interval with the repl_ping_slave_period option. The default value is 10</div>
+<div>142</div>
+<div># seconds. &nbsp;www.2cto.com &nbsp;</div>
+<div>143</div>
+<div>#</div>
+<div>144</div>
+<div># repl-ping-slave-period 10</div>
+<div>145</div>
+<div>&nbsp;</div>
+<div>146</div>
+<div># The following option sets a timeout for both Bulk transfer I/O timeout and</div>
+<div>147</div>
+<div># master data or ping response timeout. The default value is 60 seconds.</div>
+<div>148</div>
+<div>#</div>
+<div>149</div>
+<div># It is important to make sure that this value is greater than the value</div>
+<div>150</div>
+<div># specified for repl-ping-slave-period otherwise a timeout will be detected</div>
+<div>151</div>
+<div># every time there is low traffic between the master and the slave.</div>
+<div>152</div>
+<div>#</div>
+<div>153</div>
+<div># repl-timeout 60</div>
+<div>154</div>
+<div>&nbsp;</div>
+<div>155</div>
+<div>################################## SECURITY ###################################</div>
+<div>156</div>
+<div>&nbsp;</div>
+<div>157</div>
+<div># Require clients to issue AUTH &lt;PASSWORD&gt; before processing any other</div>
+<div>158</div>
+<div># commands. &nbsp;This might be useful in environments in which you do not trust</div>
+<div>159</div>
+<div># others with access to the host running redis-server.</div>
+<div>160</div>
+<div>#</div>
+<div>161</div>
+<div># This should stay commented out for backward compatibility and because most</div>
+<div>162</div>
+<div># people do not need auth (e.g. they run their own servers).</div>
+<div>163</div>
+<div>#</div>
+<div>164</div>
+<div># Warning: since Redis is pretty fast an outside user can try up to</div>
+<div>165</div>
+<div># 150k passwords per second against a good box. This means that you should</div>
+<div>166</div>
+<div># use a very strong password otherwise it will be very easy to break.</div>
+<div>167</div>
+<div>#</div>
+<div>168</div>
+<div># requirepass foobared</div>
+<div>169</div>
+<div>&nbsp;requirepass foobared 设置Redis连接密码，如果配置了连接密码，客户端在连接Redis时需要通过AUTH &lt;password&gt;命令提供密码，默认关闭</div>
+<div>170</div>
+<div># Command renaming.</div>
+<div>171</div>
+<div>#</div>
+<div>172</div>
+<div># It is possilbe to change the name of dangerous commands in a shared</div>
+<div>173</div>
+<div># environment. For instance the CONFIG command may be renamed into something</div>
+<div>174</div>
+<div># of hard to guess so that it will be still available for internal-use</div>
+<div>175</div>
+<div># tools but not available for general clients.</div>
+<div>176</div>
+<div>#</div>
+<div>177</div>
+<div># Example:</div>
+<div>178</div>
+<div>#</div>
+<div>179</div>
+<div># rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52</div>
+<div>180</div>
+<div>#</div>
+<div>181</div>
+<div># It is also possilbe to completely kill a command renaming it into</div>
+<div>182</div>
+<div># an empty string:</div>
+<div>183</div>
+<div>#</div>
+<div>184</div>
+<div># rename-command CONFIG &quot;&quot;</div>
+<div>185</div>
+<div>&nbsp;</div>
+<div>186</div>
+<div>################################### LIMITS ####################################</div>
+<div>187</div>
+<div>&nbsp;</div>
+<div>188</div>
+<div># Set the max number of connected clients at the same time. By default there</div>
+<div>189</div>
+<div># is no limit, and it&#39;s up to the number of file descriptors the Redis process</div>
+<div>190</div>
+<div># is able to open. The special value &#39;0&#39; means no limits.</div>
+<div>191</div>
+<div># Once the limit is reached Redis will close all the new connections sending</div>
+<div>192</div>
+<div># an error &#39;max number of clients reached&#39;. &nbsp;www.2cto.com &nbsp;</div>
+<div>193</div>
+<div>#</div>
+<div>194</div>
+<div># maxclients 128</div>
+<div>195</div>
+<div>maxclients 128 设置同一时间最大客户端连接数，默认无限制，Redis可以同时打开的客户端连接数为Redis进程可以打开的最大文件描述符数，如果设置 maxclients 0，表示不作限制。当客户端连接数到达限制时，Redis会关闭新的连接并向客户端返回max number of clients reached错误信息</div>
+<div>196</div>
+<div># Don&#39;t use more memory than the specified amount of bytes.</div>
+<div>197</div>
+<div># When the memory limit is reached Redis will try to remove keys with an</div>
+<div>198</div>
+<div># EXPIRE set. It will try to start freeing keys that are going to expire</div>
+<div>199</div>
+<div># in little time and preserve keys with a longer time to live.</div>
+<div>200</div>
+<div># Redis will also try to remove objects from free lists if possible.</div>
+<div>201</div>
+<div>#</div>
+<div>202</div>
+<div># If all this fails, Redis will start to reply with errors to commands</div>
+<div>203</div>
+<div># that will use more memory, like SET, LPUSH, and so on, and will continue</div>
+<div>204</div>
+<div># to reply to most read-only commands like GET.</div>
+<div>205</div>
+<div>#</div>
+<div>206</div>
+<div># WARNING: maxmemory can be a good idea mainly if you want to use Redis as a</div>
+<div>207</div>
+<div># &#39;state&#39; server or cache, not as a real DB. When Redis is used as a real</div>
+<div>208</div>
+<div># database the memory usage will grow over the weeks, it will be obvious if</div>
+<div>209</div>
+<div># it is going to use too much memory in the long run, and you&#39;ll have the time</div>
+<div>210</div>
+<div># to upgrade. With maxmemory after the limit is reached you&#39;ll start to get</div>
+<div>211</div>
+<div># errors for write operations, and this may even lead to DB inconsistency.</div>
+<div>212</div>
+<div>#</div>
+<div>213</div>
+<div># maxmemory &lt;bytes&gt;</div>
+<div>214</div>
+<div>&nbsp;maxmemory &lt;bytes&gt;指定Redis最大内存限制，Redis在启动时会把数据加载到内存中，达到最大内存后，Redis会先尝试清除已到期或即将到期的Key，当此方法处理 后，仍然到达最大内存设置，将无法再进行写入操作，但仍然可以进行读取操作。Redis新的vm机制，会把Key存放内存，Value会存放在swap区</div>
+<div>215</div>
+<div># MAXMEMORY POLICY: how Redis will select what to remove when maxmemory</div>
+<div>216</div>
+<div># is reached? You can select among five behavior:</div>
+<div>217</div>
+<div>#</div>
+<div>218</div>
+<div># volatile-lru -&gt; remove the key with an expire set using an LRU algorithm</div>
+<div>219</div>
+<div># allkeys-lru -&gt; remove any key accordingly to the LRU algorithm</div>
+<div>220</div>
+<div># volatile-random -&gt; remove a random key with an expire set</div>
+<div>221</div>
+<div># allkeys-&gt;random -&gt; remove a random key, any key</div>
+<div>222</div>
+<div># volatile-ttl -&gt; remove the key with the nearest expire time (minor TTL)</div>
+<div>223</div>
+<div># noeviction -&gt; don&#39;t expire at all, just return an error on write operations</div>
+<div>224</div>
+<div>#</div>
+<div>225</div>
+<div># Note: with all the kind of policies, Redis will return an error on write</div>
+<div>226</div>
+<div># &nbsp; &nbsp; &nbsp; operations, when there are not suitable keys for eviction.</div>
+<div>227</div>
+<div>#</div>
+<div>228</div>
+<div># &nbsp; &nbsp; &nbsp; At the date of writing this commands are: set setnx setex append</div>
+<div>229</div>
+<div># &nbsp; &nbsp; &nbsp; incr decr rpush lpush rpushx lpushx linsert lset rpoplpush sadd</div>
+<div>230</div>
+<div># &nbsp; &nbsp; &nbsp; sinter sinterstore sunion sunionstore sdiff sdiffstore zadd zincrby</div>
+<div>231</div>
+<div># &nbsp; &nbsp; &nbsp; zunionstore zinterstore hset hsetnx hmset hincrby incrby decrby</div>
+<div>232</div>
+<div># &nbsp; &nbsp; &nbsp; getset mset msetnx exec sort &nbsp;www.2cto.com &nbsp;</div>
+<div>233</div>
+<div>#</div>
+<div>234</div>
+<div># The default is:</div>
+<div>235</div>
+<div>#</div>
+<div>236</div>
+<div># maxmemory-policy volatile-lru</div>
+<div>237</div>
+<div>&nbsp;</div>
+<div>238</div>
+<div># LRU and minimal TTL algorithms are not precise algorithms but approximated</div>
+<div>239</div>
+<div># algorithms (in order to save memory), so you can select as well the sample</div>
+<div>240</div>
+<div># size to check. For instance for default Redis will check three keys and</div>
+<div>241</div>
+<div># pick the one that was used less recently, you can change the sample size</div>
+<div>242</div>
+<div># using the following configuration directive.</div>
+<div>243</div>
+<div>#</div>
+<div>244</div>
+<div># maxmemory-samples 3</div>
+<div>245</div>
+<div>&nbsp;</div>
+<div>246</div>
+<div>############################## APPEND ONLY MODE ###############################</div>
+<div>247</div>
+<div>&nbsp;</div>
+<div>248</div>
+<div># By default Redis asynchronously dumps the dataset on disk. If you can live</div>
+<div>249</div>
+<div># with the idea that the latest records will be lost if something like a crash</div>
+<div>250</div>
+<div># happens this is the preferred way to run Redis. If instead you care a lot</div>
+<div>251</div>
+<div># about your data and don&#39;t want to that a single record can get lost you should</div>
+<div>252</div>
+<div># enable the append only mode: when this mode is enabled Redis will append</div>
+<div>253</div>
+<div># every write operation received in the file appendonly.aof. This file will</div>
+<div>254</div>
+<div># be read on startup in order to rebuild the full dataset in memory.</div>
+<div>255</div>
+<div>#</div>
+<div>256</div>
+<div># Note that you can have both the async dumps and the append only file if you</div>
+<div>257</div>
+<div># like (you have to comment the &quot;save&quot; statements above to disable the dumps).</div>
+<div>258</div>
+<div># Still if append only mode is enabled Redis will load the data from the</div>
+<div>259</div>
+<div># log file at startup ignoring the dump.rdb file.</div>
+<div>260</div>
+<div>#</div>
+<div>261</div>
+<div># IMPORTANT: Check the BGREWRITEAOF to check how to rewrite the append</div>
+<div>262</div>
+<div># log file in background when it gets too big.</div>
+<div>263</div>
+<div>&nbsp;</div>
+<div>264</div>
+<div>appendonly no</div>
+<div>265</div>
+<div>appendonly no指定是否在每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可能会在断电时导致一段时间内的数据丢失。因为 redis本身同步数据文件是按上面save条件来同步的，所以有的数据会在一段时间内只存在于内存中。默认为no</div>
+<div>266</div>
+<div># The name of the append only file (default: &quot;appendonly.aof&quot;)</div>
+<div>267</div>
+<div># appendfilename appendonly.aof</div>
+<div>268</div>
+<div>&nbsp;appendfilename appendonly.aof指定更新日志文件名，默认为appendonly.aof</div>
+<div>269</div>
+<div># The fsync() call tells the Operating System to actually write data on disk</div>
+<div>270</div>
+<div># instead to wait for more data in the output buffer. Some OS will really flush</div>
+<div>271</div>
+<div># data on disk, some other OS will just try to do it ASAP.</div>
+<div>272</div>
+<div>#</div>
+<div>273</div>
+<div># Redis supports three different modes:</div>
+<div>274</div>
+<div>#</div>
+<div>275</div>
+<div># no: don&#39;t fsync, just let the OS flush the data when it wants. Faster.</div>
+<div>276</div>
+<div># always: fsync after every write to the append only log . Slow, Safest.</div>
+<div>277</div>
+<div># everysec: fsync only if one second passed since the last fsync. Compromise.</div>
+<div>278</div>
+<div>#</div>
+<div>279</div>
+<div># The default is &quot;everysec&quot; that&#39;s usually the right compromise between</div>
+<div>280</div>
+<div># speed and data safety. It&#39;s up to you to understand if you can relax this to</div>
+<div>281</div>
+<div># &quot;no&quot; that will will let the operating system flush the output buffer when</div>
+<div>282</div>
+<div># it wants, for better performances (but if you can live with the idea of</div>
+<div>283</div>
+<div># some data loss consider the default persistence mode that&#39;s snapshotting),</div>
+<div>284</div>
+<div># or on the contrary, use &quot;always&quot; that&#39;s very slow but a bit safer than</div>
+<div>285</div>
+<div># everysec. &nbsp;www.2cto.com &nbsp;</div>
+<div>286</div>
+<div>#</div>
+<div>287</div>
+<div># If unsure, use &quot;everysec&quot;.</div>
+<div>288</div>
+<div>&nbsp;</div>
+<div>289</div>
+<div># appendfsync always</div>
+<div>290</div>
+<div>appendfsync everysec</div>
+<div>291</div>
+<div># appendfsync no</div>
+<div>292</div>
+<div>指定更新日志条件，共有3个可选值：</div>
+<div>293</div>
+<div>no：表示等操作<a href="http://www.2cto.com/os/" target="_blank" class="keylink">系统</a>进行数据缓存同步到磁盘（快）</div>
+<div>294</div>
+<div>always：表示每次更新操作后手动调用fsync()将数据写到磁盘（慢，安全）</div>
+<div>295</div>
+<div>everysec：表示每秒同步一次（折衷，默认值）</div>
+<div>296</div>
+<div># When the AOF fsync policy is set to always or everysec, and a background</div>
+<div>297</div>
+<div># saving process (a background save or AOF log background rewriting) is</div>
+<div>298</div>
+<div># performing a lot of I/O against the disk, in some <a href="http://www.2cto.com/os/linux/" target="_blank" class="keylink">Linux</a> configurations</div>
+<div>299</div>
+<div># Redis may block too long on the fsync() call. Note that there is no fix for</div>
+<div>300</div>
+<div># this currently, as even performing fsync in a different thread will block</div>
+<div>301</div>
+<div># our synchronous write(2) call.</div>
+<div>302</div>
+<div>#</div>
+<div>303</div>
+<div># In order to mitigate this problem it&#39;s possible to use the following option</div>
+<div>304</div>
+<div># that will prevent fsync() from being called in the main process while a</div>
+<div>305</div>
+<div># BGSAVE or BGREWRITEAOF is in progress.</div>
+<div>306</div>
+<div>#</div>
+<div>307</div>
+<div># This means that while another child is saving the durability of Redis is</div>
+<div>308</div>
+<div># the same as &quot;appendfsync none&quot;, that in pratical terms means that it is</div>
+<div>309</div>
+<div># possible to lost up to 30 seconds of log in the worst scenario (with the</div>
+<div>310</div>
+<div># default Linux settings).</div>
+<div>311</div>
+<div>#</div>
+<div>312</div>
+<div># If you have latency problems turn this to &quot;yes&quot;. Otherwise leave it as</div>
+<div>313</div>
+<div># &quot;no&quot; that is the safest pick from the point of view of durability.</div>
+<div>314</div>
+<div>no-appendfsync-on-rewrite no</div>
+<div>315</div>
+<div>&nbsp;</div>
+<div>316</div>
+<div># Automatic rewrite of the append only file.</div>
+<div>317</div>
+<div># Redis is able to automatically rewrite the log file implicitly calling</div>
+<div>318</div>
+<div># BGREWRITEAOF when the AOF log size will growth by the specified percentage.</div>
+<div>319</div>
+<div>#</div>
+<div>320</div>
+<div># This is how it works: Redis remembers the size of the AOF file after the</div>
+<div>321</div>
+<div># latest rewrite (or if no rewrite happened since the restart, the size of</div>
+<div>322</div>
+<div># the AOF at startup is used).</div>
+<div>323</div>
+<div>#</div>
+<div>324</div>
+<div># This base size is compared to the current size. If the current size is</div>
+<div>325</div>
+<div># bigger than the specified percentage, the rewrite is triggered. Also</div>
+<div>326</div>
+<div># you need to specify a minimal size for the AOF file to be rewritten, this</div>
+<div>327</div>
+<div># is useful to avoid rewriting the AOF file even if the percentage increase</div>
+<div>328</div>
+<div># is reached but it is still pretty small.</div>
+<div>329</div>
+<div>#</div>
+<div>330</div>
+<div># Specify a precentage of zero in order to disable the automatic AOF</div>
+<div>331</div>
+<div># rewrite feature. &nbsp;www.2cto.com &nbsp;</div>
+<div>332</div>
+<div>&nbsp;</div>
+<div>333</div>
+<div>auto-aof-rewrite-percentage 100</div>
+<div>334</div>
+<div>auto-aof-rewrite-min-size 64mb</div>
+<div>335</div>
+<div>&nbsp;</div>
+<div>336</div>
+<div>################################## SLOW LOG ###################################</div>
+<div>337</div>
+<div>&nbsp;</div>
+<div>338</div>
+<div># The Redis Slow Log is a system to log queries that exceeded a specified</div>
+<div>339</div>
+<div># execution time. The execution time does not include the I/O operations</div>
+<div>340</div>
+<div># like talking with the client, sending the reply and so forth,</div>
+<div>341</div>
+<div># but just the time needed to actually execute the command (this is the only</div>
+<div>342</div>
+<div># stage of command execution where the thread is blocked and can not serve</div>
+<div>343</div>
+<div># other requests in the meantime).</div>
+<div>344</div>
+<div>#</div>
+<div>345</div>
+<div># You can configure the slow log with two parameters: one tells Redis</div>
+<div>346</div>
+<div># what is the execution time, in microseconds, to exceed in order for the</div>
+<div>347</div>
+<div># command to get logged, and the other parameter is the length of the</div>
+<div>348</div>
+<div># slow log. When a new command is logged the oldest one is removed from the</div>
+<div>349</div>
+<div># queue of logged commands.</div>
+<div>350</div>
+<div>&nbsp;</div>
+<div>351</div>
+<div># The following time is expressed in microseconds, so 1000000 is equivalent</div>
+<div>352</div>
+<div># to one second. Note that a negative number disables the slow log, while</div>
+<div>353</div>
+<div># a value of zero forces the logging of every command.</div>
+<div>354</div>
+<div>slowlog-log-slower-than 10000</div>
+<div>355</div>
+<div>&nbsp;</div>
+<div>356</div>
+<div># There is no limit to this length. Just be aware that it will consume memory.</div>
+<div>357</div>
+<div># You can reclaim memory used by the slow log with SLOWLOG RESET.</div>
+<div>358</div>
+<div>slowlog-max-len 1024</div>
+<div>359</div>
+<div>&nbsp;</div>
+<div>360</div>
+<div>################################ VIRTUAL MEMORY ###############################</div>
+<div>361</div>
+<div>&nbsp;</div>
+<div>362</div>
+<div>### WARNING! Virtual Memory is deprecated in Redis 2.4</div>
+<div>363</div>
+<div>### The use of Virtual Memory is strongly discouraged.</div>
+<div>364</div>
+<div>&nbsp;</div>
+<div>365</div>
+<div>### WARNING! Virtual Memory is deprecated in Redis 2.4</div>
+<div>366</div>
+<div>### The use of Virtual Memory is strongly discouraged.</div>
+<div>367</div>
+<div>&nbsp;</div>
+<div>368</div>
+<div># Virtual Memory allows Redis to work with datasets bigger than the actual</div>
+<div>369</div>
+<div># amount of RAM needed to hold the whole dataset in memory.</div>
+<div>370</div>
+<div># In order to do so very used keys are taken in memory while the other keys</div>
+<div>371</div>
+<div># are swapped into a swap file, similarly to what operating systems do</div>
+<div>372</div>
+<div># with memory pages. &nbsp;www.2cto.com &nbsp;</div>
+<div>373</div>
+<div>#</div>
+<div>374</div>
+<div># To enable VM just set &#39;vm-enabled&#39; to yes, and set the following three</div>
+<div>375</div>
+<div># VM parameters accordingly to your needs.</div>
+<div>376</div>
+<div>&nbsp;</div>
+<div>377</div>
+<div>vm-enabled no</div>
+<div>378</div>
+<div>指定是否启用虚拟内存机制，默认值为no，简单的介绍一下，VM机制将数据分页存放，由Redis将访问量较少的页即冷数据swap到磁盘上，访问多的页面由磁盘自动换出到内存中（在后面的文章我会仔细分析Redis的VM机制）</div>
+<div>379</div>
+<div># vm-enabled yes</div>
+<div>380</div>
+<div>&nbsp;</div>
+<div>381</div>
+<div># This is the path of the Redis swap file. As you can guess, swap files</div>
+<div>382</div>
+<div># can&#39;t be shared by different Redis instances, so make sure to use a swap</div>
+<div>383</div>
+<div># file for every redis process you are running. Redis will complain if the</div>
+<div>384</div>
+<div># swap file is already in use.</div>
+<div>385</div>
+<div>#</div>
+<div>386</div>
+<div># The best kind of storage for the Redis swap file (that&#39;s accessed at random)</div>
+<div>387</div>
+<div># is a Solid State Disk (SSD).</div>
+<div>388</div>
+<div>#</div>
+<div>389</div>
+<div># *** WARNING *** if you are using a shared hosting the default of putting</div>
+<div>390</div>
+<div># the swap file under /tmp is not secure. Create a dir with access granted</div>
+<div>391</div>
+<div># only to Redis user and configure Redis to create the swap file there.</div>
+<div>392</div>
+<div>vm-swap-file /tmp/redis.swap</div>
+<div>393</div>
+<div>虚拟内存文件路径，默认值为/tmp/redis.swap，不可多个Redis实例共享</div>
+<div>394</div>
+<div># vm-max-memory configures the VM to use at max the specified amount of</div>
+<div>395</div>
+<div># RAM. Everything that deos not fit will be swapped on disk *if* possible, that</div>
+<div>396</div>
+<div># is, if there is still enough contiguous space in the swap file.</div>
+<div>397</div>
+<div>#</div>
+<div>398</div>
+<div># With vm-max-memory 0 the system will swap everything it can. Not a good</div>
+<div>399</div>
+<div># default, just specify the max amount of RAM you can in bytes, but it&#39;s</div>
+<div>400</div>
+<div># better to leave some margin. For instance specify an amount of RAM</div>
+<div>401</div>
+<div># that&#39;s more or less between 60 and 80% of your free RAM.</div>
+<div>402</div>
+<div>vm-max-memory 0 &nbsp;www.2cto.com &nbsp;</div>
+<div>403</div>
+<div>将所有大于vm-max-memory的数据存入虚拟内存,无论vm-max-memory设置多小,所有索引数据都是内存存储的(Redis的索引数据 就是keys),也就是说,当vm-max-memory设置为0的时候,其实是所有value都存在于磁盘。默认值为0</div>
+<div>404</div>
+<div># Redis swap files is split into pages. An object can be saved using multiple</div>
+<div>405</div>
+<div># contiguous pages, but pages can&#39;t be shared between different objects.</div>
+<div>406</div>
+<div># So if your page is too big, small objects swapped out on disk will waste</div>
+<div>407</div>
+<div># a lot of space. If you page is too small, there is less space in the swap</div>
+<div>408</div>
+<div># file (assuming you configured the same number of total swap file pages).</div>
+<div>409</div>
+<div>#</div>
+<div>410</div>
+<div># If you use a lot of small objects, use a page size of 64 or 32 bytes.</div>
+<div>411</div>
+<div># If you use a lot of big objects, use a bigger page size.</div>
+<div>412</div>
+<div># If unsure, use the default :)</div>
+<div>413</div>
+<div>vm-page-size 32</div>
+<div>414</div>
+<div>Redis swap文件分成了很多的page，一个对象可以保存在多个page上面，但一个page上不能被多个对象共享，vm-page-size是要根据存储的 数据大小来设定的，作者建议如果存储很多小对象，page大小最好设置为32或者64bytes；如果存储很大大对象，则可以使用更大的page，如果不 确定，就使用默认值</div>
+<div>415</div>
+<div># Number of total memory pages in the swap file.</div>
+<div>416</div>
+<div># Given that the page table (a bitmap of free/used pages) is taken in memory,</div>
+<div>417</div>
+<div># every 8 pages on disk will consume 1 byte of RAM.</div>
+<div>418</div>
+<div>#</div>
+<div>419</div>
+<div># The total swap size is vm-page-size * vm-pages</div>
+<div>420</div>
+<div>#</div>
+<div>421</div>
+<div># With the default of 32-bytes memory pages and 134217728 pages Redis will</div>
+<div>422</div>
+<div># use a 4 GB swap file, that will use 16 MB of RAM for the page table.</div>
+<div>423</div>
+<div>#</div>
+<div>424</div>
+<div># It&#39;s better to use the smallest acceptable value for your application,</div>
+<div>425</div>
+<div># but the default is large in order to work in most conditions.</div>
+<div>426</div>
+<div>vm-pages 134217728</div>
+<div>427</div>
+<div>设置swap文件中的page数量，由于页表（一种表示页面空闲或使用的bitmap）是在放在内存中的，，在磁盘上每8个pages将消耗1byte的内存。</div>
+<div>428</div>
+<div># Max number of VM I/O threads running at the same time.</div>
+<div>429</div>
+<div># This threads are used to read/write data from/to swap file, since they</div>
+<div>430</div>
+<div># also encode and decode objects from disk to memory or the reverse, a bigger</div>
+<div>431</div>
+<div># number of threads can help with big objects even if they can&#39;t help with</div>
+<div>432</div>
+<div># I/O itself as the physical device may not be able to couple with many</div>
+<div>433</div>
+<div># reads/writes operations at the same time. &nbsp;www.2cto.com &nbsp;</div>
+<div>434</div>
+<div>#</div>
+<div>435</div>
+<div># The special value of 0 turn off threaded I/O and enables the blocking</div>
+<div>436</div>
+<div># Virtual Memory implementation.</div>
+<div>437</div>
+<div>vm-max-threads 4</div>
+<div>438</div>
+<div>设置访问swap文件的线程数,最好不要超过机器的核数,如果设置为0,那么所有对swap文件的操作都是串行的，可能会造成比较长时间的延迟。默认值为4</div>
+<div>439</div>
+<div>############################### ADVANCED CONFIG ###############################</div>
+<div>440</div>
+<div>&nbsp;</div>
+<div>441</div>
+<div># Hashes are encoded in a special way (much more memory efficient) when they</div>
+<div>442</div>
+<div># have at max a given numer of elements, and the biggest element does not</div>
+<div>443</div>
+<div># exceed a given threshold. You can configure this limits with the following</div>
+<div>444</div>
+<div># configuration directives.</div>
+<div>445</div>
+<div>hash-max-zipmap-entries 512</div>
+<div>446</div>
+<div>hash-max-zipmap-value 64</div>
+<div>447</div>
+<div>指定在超过一定的数量或者最大的元素超过某一临界值时，采用一种特殊的哈希算法</div>
+<div>448</div>
+<div># Similarly to hashes, small lists are also encoded in a special way in order</div>
+<div>449</div>
+<div># to save a lot of space. The special representation is only used when</div>
+<div>450</div>
+<div># you are under the following limits:</div>
+<div>451</div>
+<div>list-max-ziplist-entries 512</div>
+<div>452</div>
+<div>list-max-ziplist-value 64</div>
+<div>453</div>
+<div>&nbsp;</div>
+<div>454</div>
+<div># Sets have a special encoding in just one case: when a set is composed</div>
+<div>455</div>
+<div># of just strings that happens to be integers in radix 10 in the range</div>
+<div>456</div>
+<div># of 64 bit signed integers.</div>
+<div>457</div>
+<div># The following configuration setting sets the limit in the size of the</div>
+<div>458</div>
+<div># set in order to use this special memory saving encoding.</div>
+<div>459</div>
+<div>set-max-intset-entries 512 &nbsp;www.2cto.com &nbsp;</div>
+<div>460</div>
+<div>&nbsp;</div>
+<div>461</div>
+<div># Similarly to hashes and lists, sorted sets are also specially encoded in</div>
+<div>462</div>
+<div># order to save a lot of space. This encoding is only used when the length and</div>
+<div>463</div>
+<div># elements of a sorted set are below the following limits:</div>
+<div>464</div>
+<div>zset-max-ziplist-entries 128</div>
+<div>465</div>
+<div>zset-max-ziplist-value 64</div>
+<div>466</div>
+<div>&nbsp;</div>
+<div>467</div>
+<div># Active rehashing uses 1 millisecond every 100 milliseconds of CPU time in</div>
+<div>468</div>
+<div># order to help rehashing the main Redis hash table (the one mapping top-level</div>
+<div>469</div>
+<div># keys to values). The hash table implementation redis uses (see dict.c)</div>
+<div>470</div>
+<div># performs a lazy rehashing: the more operation you run into an hash table</div>
+<div>471</div>
+<div># that is rhashing, the more rehashing &quot;steps&quot; are performed, so if the</div>
+<div>472</div>
+<div># server is idle the rehashing is never complete and some more memory is used</div>
+<div>473</div>
+<div># by the hash table.</div>
+<div>474</div>
+<div>#</div>
+<div>475</div>
+<div># The default is to use this millisecond 10 times every second in order to</div>
+<div>476</div>
+<div># active rehashing the main dictionaries, freeing memory when possible.</div>
+<div>477</div>
+<div>#</div>
+<div>478</div>
+<div># If unsure:</div>
+<div>479</div>
+<div># use &quot;activerehashing no&quot; if you have hard latency requirements and it is</div>
+<div>480</div>
+<div># not a good thing in your environment that Redis can reply form time to time</div>
+<div>481</div>
+<div># to queries with 2 milliseconds delay.</div>
+<div>482</div>
+<div>#</div>
+<div>483</div>
+<div># use &quot;activerehashing yes&quot; if you don&#39;t have such hard requirements but</div>
+<div>484</div>
+<div># want to free memory asap when possible.</div>
+<div>485</div>
+<div>activerehashing yes &nbsp;www.2cto.com &nbsp;</div>
+<div>486</div>
+<div>&nbsp;</div>
+<div>487</div>
+<div>################################## INCLUDES ###################################</div>
+<div>488</div>
+<div>&nbsp;</div>
+<div>489</div>
+<div># Include one or more other config files here. &nbsp;This is useful if you</div>
+<div>490</div>
+<div># have a standard template that goes to all redis server but also need</div>
+<div>491</div>
+<div># to customize a few per-server settings. &nbsp;Include files can include</div>
+<div>492</div>
+<div># other files, so use this wisely.</div>
+<div>493</div>
+<div>#</div>
+<div>494</div>
+<div># include /path/to/local.conf</div>
+<div>495</div>
+<div># include /path/to/other.conf</div>
+<div>496</div>
+<div>指定包含其它的配置文件，可以在同一主机上多个Redis实例之间使用同一份配置文件，而同时各个实例又拥有自己的特定配置文件</div>
+<div><br />
+&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>作者 吕秀才</div>
+						</dd></dl>
+		<script type="text/javascript">
+		<!--
+		$(function(){
+		  $('#Article img').LoadImage(true, 630, 560,'http://www.2cto.com/statics/images/s_nopic.gif');    
+		})
+		
+		//-->
+		</script>
+	<div id="pages" class="box_body" id="fontzoom">	</div>
+	<dl style="width:650px;height:100px;padding-top:10px;float:left;padding-left:10px">
+		<dd><script type="text/javascript">BAIDU_CLB_fillSlot("771048");</script></dd>
+	</dl>
+	<dl class="box_Nsc">
+		<dd class="lcopy"><a class="ckcopy" onclick="copyToClipBoard()">点击复制链接 与好友分享!</a><a class="ckhome" href="http://www.2cto.com/">回本站首页</a></dd>
+		<script> 
+		function copyToClipBoard(){ 
+		var clipBoardContent=document.title + '\r\n' + document.location; 
+		clipBoardContent+='\r\n'; 
+		window.clipboardData.setData("Text",clipBoardContent); 
+		alert("恭喜您！复制成功"); 
+		} 
+		</script>
+
+		<div class="Article-Tool">
+                               	  <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare"> <span style="float:left">分享到：</span>
+
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_baidu"></a>
+<a class="bds_renren"></a>
+<a class="bds_kaixin001"></a>
+<a class="bds_tieba"></a>
+<span class="bds_more">更多</span>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&uid=12732" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+var bds_config = {'snsKey':{'tsina':'2386826374','tqq':'5e544a8fdea646c5a5f3967871346eb8'}};
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+                                
+	  </div>
+
+		
+		</dd>
+		<dd class="bbstt">您对本文章有什么意见或着疑问吗？请到<a href="http://bbs.2cto.com/">论坛讨论</a>您的关注和建议是我们前行的参考和动力&nbsp;&nbsp; </dd>
+	</dl>
+	<dl class="box_NPre">
+		<dd class="TLineX"><strong>上一篇：</strong><a href="http://www.2cto.com/os/201204/125934.html">windows共享打印机机器定时清理连接会话的问题</a></dd>
+		<dd><strong>下一篇：</strong><a href="http://www.2cto.com/os/201204/125999.html">解决重装系统后加密文件无法访问的问题</a></dd>
+	</dl>
+	<dl class="linetb"></dl>
+
+	<dl class="about"><dd>相关文章</dd></dl>
+				<div class="alistline"><a href="http://www.2cto.com/os/201110/108679.html" target=blank>CentOS下Redis 2.2.14安装配置详解  </a></div>
+			<dl class="linetb"></dl>
+	<dl style="width:650px;height:70px;padding-top:10px;float:left;padding-left:10px">
+		<dd><script type="text/javascript">BAIDU_CLB_fillSlot("182716");</script></dd>
+	</dl>
+
+	<dl style="width:650px;float:left;padding-left:10px">
+		<dd><script type="text/javascript">BAIDU_CLB_fillSlot("517916");</script></dd>
+	</dl>
+	<dl class="linetb"></dl>
+	<dl class="about"><dd>图文推荐</dd></dl>
+	<div class="picbox">
+						<dl class="wbox">
+			<dd class="npicbox"><a target="_blank" href="http://www.2cto.com/os/201311/256430.html"><img src='http://www.2cto.com/uploadfile/2013/1109/thumb_126_90_20131109032503848.jpg'  width='126' height='90' border='0' /></a></dd>
+			<dd class="npictext"><a href="http://www.2cto.com/os/201311/256430.html">完美杜绝Windows资源</a></dd>
+		</dl>
+				<dl class="wbox">
+			<dd class="npicbox"><a target="_blank" href="http://www.2cto.com/os/201311/255619.html"><img src='http://www.2cto.com/uploadfile/2013/1106/thumb_126_90_20131106100840433.jpeg'  width='126' height='90' border='0' /></a></dd>
+			<dd class="npictext"><a href="http://www.2cto.com/os/201311/255619.html">windows下如何实现磁</a></dd>
+		</dl>
+				<dl class="wbox">
+			<dd class="npicbox"><a target="_blank" href="http://www.2cto.com/os/201311/255364.html"><img src='http://www.2cto.com/uploadfile/2013/1105/thumb_126_90_20131105021601138.png'  width='126' height='90' border='0' /></a></dd>
+			<dd class="npictext"><a href="http://www.2cto.com/os/201311/255364.html">Windows系统破解默认</a></dd>
+		</dl>
+				<dl class="wbox">
+			<dd class="npicbox"><a target="_blank" href="http://www.2cto.com/os/201311/255050.html"><img src='http://www.2cto.com/uploadfile/2013/1104/20131104115205431.gif'  width='126' height='90' border='0' /></a></dd>
+			<dd class="npictext"><a href="http://www.2cto.com/os/201311/255050.html">无线连接提示&ldquo;Windo</a></dd>
+		</dl>
+					</div>
+		<dl class="linetb"></dl>
+		<div id="pl" style="float:left;width:650px;padding:10px 10px 0px 10px;overflow:hidden;background-color:white">
+		<iframe src="http://www.2cto.com/uapi.php?tid=125971&catid=269&title=cmVkaXMgd2luZG93c8/CtcS7t76ztO69qA==&forward=http://www.2cto.com/os/201204/125971.html" width="100%" height="100%" id="comment_iframe" name="comment_iframe" frameborder="0" scrolling="no"></iframe>
+	</div>
+			<dl style="width:650px;float:left;padding-left:10px">
+		<dd><script type="text/javascript">BAIDU_CLB_fillSlot("771057");</script></dd>
+	</dl>
+	</div>
+	<div class="box_right">
+		<div style="float:left;width:300px;background:white;padding-left:10px;height:250px">
+			<a target="_blank" href="http://vip.2cto.com/"><img src="http://www.2cto.com/adv/300-250.gif" width="300" height="250" /></a></div>
+		<div class="box_right_line"><div class="xline"></div></div>
+		<div class="box_right_box">
+			<dl class="bTitle"><dd onmousemove="m_tab(1)" id="indexW" class="tablinkschecked">排行</dd><dd onmousemove="m_tab(2)" id="hotW" class="tablinkscheck">热门</dd></dl>
+		</div>
+		<div class="box_right_box">
+			<div class="paddingbox">
+				<dl class="index" id="index">
+					<dd class="picline"></dd>
+															<dd class="list">4,332 | <a target="_blank" title="Windows无法访问指定设备路径或文件，您可能没有合适的权限访问这个项目" href="http://www.2cto.com/os/201107/97395.html">Windows无法访问指定设备路径或文件，</a></dd>
+										<dd class="list">1,992 | <a target="_blank" title="如何安装WIN7系统过程图解" href="http://www.2cto.com/os/201206/134550.html">如何安装WIN7系统过程图解</a></dd>
+										<dd class="list">1,723 | <a target="_blank" title="win7不能删除文件夹解决(您需要来自administrators的权限才能对此文件夹进行更改）" href="http://www.2cto.com/os/201207/141142.html">win7不能删除文件夹解决(您需要来自ad</a></dd>
+										<dd class="list">1,301 | <a target="_blank" title="windows8系统硬盘分区图文教程" href="http://www.2cto.com/os/201301/187223.html">windows8系统硬盘分区图文教程</a></dd>
+										<dd class="list">1,200 | <a target="_blank" title="WIndows 7 安装.net framework 4.0 失败，错误HRESULT 0xc8000222解决办法  " href="http://www.2cto.com/os/201206/135172.html">WIndows 7 安装.net framework 4.</a></dd>
+										<dd class="list">747 | <a target="_blank" title="win7WIFI共享精灵打不开解决办法" href="http://www.2cto.com/os/201305/214092.html">win7WIFI共享精灵打不开解决办法</a></dd>
+										<dd class="list">727 | <a target="_blank" title="安装Win7时提示“无法安装到这个磁盘，具有MBR分区表”的问题" href="http://www.2cto.com/os/201206/135699.html">安装Win7时提示&ldquo;无法安装到这个磁盘，</a></dd>
+										<dd class="list">715 | <a target="_blank" title="让XP远程支持网络身份验证，解决“远程计算机需要网络级别身份验证，你的系统不支持”难题" href="http://www.2cto.com/os/201202/120533.html">让XP远程支持网络身份验证，解决&ldquo;远程</a></dd>
+														</dl>
+				<dl class="index" id="hot" style="display:none">
+					<dd class="picline"></dd>
+															<dd class="list"><a target="_blank" title="Windows无法访问指定设备路径或文件，您可能没有合适的权限访问这个项目" href="http://www.2cto.com/os/201107/97395.html">Windows无法访问指定设备路径或文件，</a></dd>
+										<dd class="list"><a target="_blank" title="win7不能删除文件夹解决(您需要来自administrators的权限才能对此文件夹进行更改）" href="http://www.2cto.com/os/201207/141142.html">win7不能删除文件夹解决(您需要来自ad</a></dd>
+										<dd class="list"><a target="_blank" title="安装Win7时提示“无法安装到这个磁盘，具有MBR分区表”的问题" href="http://www.2cto.com/os/201206/135699.html">安装Win7时提示&ldquo;无法安装到这个磁盘，</a></dd>
+										<dd class="list"><a target="_blank" title=" windows7修改启动菜单选项" href="http://www.2cto.com/os/201107/97712.html"> windows7修改启动菜单选项</a></dd>
+										<dd class="list"><a target="_blank" title="如何安装WIN7系统过程图解" href="http://www.2cto.com/os/201206/134550.html">如何安装WIN7系统过程图解</a></dd>
+										<dd class="list"><a target="_blank" title="WIndows 7 安装.net framework 4.0 失败，错误HRESULT 0xc8000222解决办法  " href="http://www.2cto.com/os/201206/135172.html">WIndows 7 安装.net framework 4.</a></dd>
+										<dd class="list"><a target="_blank" title="定时开机 命令 自动开机 " href="http://www.2cto.com/os/201110/108404.html">定时开机 命令 自动开机 </a></dd>
+										<dd class="list"><a target="_blank" title="windows2003DNS服务器配置[图文详解]" href="http://www.2cto.com/os/201107/97103.html">windows2003DNS服务器配置[图文详解]</a></dd>
+														</dl>
+			</div>
+			<script type="text/javascript">
+			<!--
+				function m_tab(index)
+				{
+					if (index == 1){
+						document.getElementById("indexW").className = "tablinkschecked";
+						document.getElementById("hotW").className = "tablinkscheck";
+						document.getElementById("index").style.display = "block";
+						document.getElementById("hot").style.display = "none";
+					}
+					else{
+						document.getElementById("hotW").className = "tablinkschecked";
+						document.getElementById("indexW").className = "tablinkscheck";
+						document.getElementById("index").style.display = "none";
+						document.getElementById("hot").style.display = "block";
+					}
+				}
+			//-->
+			</script>
+		</div>
+		<div class="rightlineT"><div class="rxline"></div></div>
+		<div style="float:left;width:300px;background:white;padding-left:10px;height:60px">
+				<!-- 广告位：内容页右侧小广告位 -->
+			<script type="text/javascript">BAIDU_CLB_fillSlot("406189");</script>
+		</div>
+		<div class="rightlineT"><div class="rxline"></div></div>
+		<div style="float:left;width:300px;background:white;padding-left:10px;height:80px">
+				<!-- 广告位：内容页右侧小广告位 -->
+			<script type="text/javascript">BAIDU_CLB_fillSlot("703749");</script>
+		</div>
+		<div class="rightlineNo"></div>
+		<div class="box_right_box">
+			<dl class="bTitle borT"><dd class="newarc"></dd></dl>
+		</div>
+		<div class="box_right_box">
+			<div class="paddingbox">
+				<dl class="index">
+									<iframe frameborder="0" name="Iframe1" src="http://www.2cto.com/bbsdy/index.html" width="100%" height="200">	
+				您的浏览器不支持嵌入式框架，或者当前配置为不显示嵌入式框架。
+			</iframe>
+								</dl>
+			</div>
+		</div>
+                                <div class="rightlineT"><div class="rxline"></div></div>
+
+		<div style="float:left;width:300px;background:white;padding-left:10px;height:250px"><script type="text/javascript">BAIDU_CLB_fillSlot("182692");</script> </div>
+		<div class="box_right_line"><div class="xline"></div></div>
+		<div class="box_right_box">
+			<dl class="bTitle">
+				<dd onmousemove="m_tabs(1)" id="ArticlesW" class="tablinkschecked">文章</dd>
+				<dd onmousemove="m_tabs(2)" id="DownW" class="tablinkscheck">下载</dd>
+				<dd onmousemove="m_tabs(3)" id="BookW" class="tablinkscheck">读书</dd>
+			</dl>
+		</div>
+		<div class="box_right_box">
+			<div class="paddingbox">
+				<dl class="index" id="Articles">
+					<dd class="picline"></dd>
+															<dd class="list">·&nbsp;<a target="_blank" title="Win2000下关闭无用端口" href="http://www.2cto.com/Article/200410/1.html">Win2000下关闭无用端口</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="禁止非法用户登录综合设置 [win9x篇]" href="http://www.2cto.com/Article/200410/2.html">禁止非法用户登录综合设置 [win9x篇]</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="关上可恶的后门——消除NetBIOS隐患" href="http://www.2cto.com/Article/200410/3.html">关上可恶的后门——消除NetBIOS隐患</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="网络入侵检测系统" href="http://www.2cto.com/Article/200410/4.html">网络入侵检测系统</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="潜伏在Windows默认设置中的陷井" href="http://www.2cto.com/Article/200410/5.html">潜伏在Windows默认设置中的陷井</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="调制解调器的不安全" href="http://www.2cto.com/Article/200410/6.html">调制解调器的不安全</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="构建Windows 2000服务器的安全防护林" href="http://www.2cto.com/Article/200410/7.html">构建Windows 2000服务器的安全防护林</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="SQL Server 2000的安全配置" href="http://www.2cto.com/Article/200410/8.html">SQL Server 2000的安全配置</a></dd>
+														</dl>
+				<dl class="index" id="Down" style="display:none">
+					<dd class="picline"></dd>
+															<dd class="list">·&nbsp;<a target="_blank" title="Windows优化大师注册机源码" href="http://www.2cto.com/soft/200409/53.html">Windows优化大师注册机源码</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="Process Viewer 汉化版" href="http://www.2cto.com/soft/200409/62.html">Process Viewer 汉化版</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="Aspcode动画教程" href="http://www.2cto.com/soft/200409/79.html">Aspcode动画教程</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="WIN 2000服务器防止ICMP数据包攻击教程" href="http://www.2cto.com/soft/200409/128.html">WIN 2000服务器防止ICMP数据包攻击教程</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="实现网络隐身的简单方法" href="http://www.2cto.com/soft/200409/129.html">实现网络隐身的简单方法</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="手工进行克隆帐号" href="http://www.2cto.com/soft/200409/130.html">手工进行克隆帐号</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="用W32DASM破解网页合并器的密码" href="http://www.2cto.com/soft/200409/134.html">用W32DASM破解网页合并器的密码</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="注册表操作动画教程" href="http://www.2cto.com/soft/200409/138.html">注册表操作动画教程</a></dd>
+														</dl>
+				<dl class="index" id="Book" style="display:none">
+					<dd class="picline"></dd>
+															<dd class="list">·&nbsp;<a target="_blank" title="黑客攻防技术宝典：Web实战篇（第2版）" href="http://book.2cto.com/201206/20.html">黑客攻防技术宝典：Web实战篇（第2版）</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="超级网管员——网络安全" href="http://book.2cto.com/201207/43.html">超级网管员——网络安全</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="代码大全（第二版）" href="http://book.2cto.com/201207/64.html">代码大全（第二版）</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="软件之道:软件开发争议问题剖析" href="http://book.2cto.com/201207/68.html">软件之道:软件开发争议问题剖析</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="CSS插件工具箱" href="http://book.2cto.com/201207/78.html">CSS插件工具箱</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="CSS入门经典(第3版)" href="http://book.2cto.com/201207/139.html">CSS入门经典(第3版)</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="C#并行编程高级教程：精通.NET 4 Parallel Extension" href="http://book.2cto.com/201207/169.html">C#并行编程高级教程：精通.NET 4 Pa</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="CMMI+敏捷整合开发" href="http://book.2cto.com/201207/190.html">CMMI+敏捷整合开发</a></dd>
+														</dl>
+			</div>
+			<script type="text/javascript">
+			<!--
+				function m_tabs(index)
+				{
+					if (index == 1){
+						document.getElementById("ArticlesW").className = "tablinkschecked";
+						document.getElementById("DownW").className = "tablinkscheck";
+						document.getElementById("BookW").className = "tablinkscheck";
+						document.getElementById("Articles").style.display = "block";
+						document.getElementById("Down").style.display = "none";
+						document.getElementById("Book").style.display = "none";
+					}
+					else if (index == 2){
+						document.getElementById("ArticlesW").className = "tablinkscheck";
+						document.getElementById("DownW").className = "tablinkschecked";
+						document.getElementById("BookW").className = "tablinkscheck";
+						document.getElementById("Articles").style.display = "none";
+						document.getElementById("Down").style.display = "block";
+						document.getElementById("Book").style.display = "none";
+					}
+					else{
+						document.getElementById("ArticlesW").className = "tablinkscheck";
+						document.getElementById("DownW").className = "tablinkscheck";
+						document.getElementById("BookW").className = "tablinkschecked";
+						document.getElementById("Articles").style.display = "none";
+						document.getElementById("Down").style.display = "none";
+						document.getElementById("Book").style.display = "block";
+					}
+				}
+			//-->
+			</script>
+		</div>
+		<div class="rightlineNo"></div>
+		<div class="box_right_box">
+			<dl class="bTitle borT"><dd class="newdown"></dd></dl>
+		</div>
+		<div class="box_right_box">
+			<div class="paddingbox">
+				<dl class="index">
+															<dd class="picbox"><a target="_blank" class="plink" href="http://www.2cto.com/os/201209/155504.html"><img class='pic1' src='http://up.2cto.com/2012/0915/20120915011213765.jpg'  width='126' height='90' border='0' /></a><span><a href="http://www.2cto.com/os/201209/155504.html">关于&quot;U盘给Win7/Win8</a></span></dd>
+										<dd class="picbox"><a target="_blank" class="plink" href="http://www.2cto.com/os/201209/155684.html"><img class='pic1' src='http://up.2cto.com/2012/0917/20120917110701826.jpg'  width='126' height='90' border='0' /></a><span><a href="http://www.2cto.com/os/201209/155684.html">Win8学生开发者账号免</a></span></dd>
+															<dd class="picline"></dd>
+															<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/os/201209/155504.html">关于&quot;U盘给Win7/Win8系统加速是否真的</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/os/201209/155684.html">Win8学生开发者账号免费注册流程</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/os/201209/156170.html">Win7共享打印机出现&quot;无法保存打印机设</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/os/201209/156412.html">保卫系统盘之战-清理过多的Win8应用程</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/os/201209/156807.html">Windows 8系统如何使用家庭组</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/os/201209/156983.html">Win7/Win8双系统开机引导菜单的修复</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/os/201209/157151.html">两行命令让你的win7也能当无线路由使用</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/os/201209/157480.html">Windows 8 CP免输入密钥的安装方法</a></dd>
+														</dl>
+			</div>
+			<div class="xline"></div>
+		</div>
+		<div class="box_right_line"><div class="xline"></div></div>
+		<div style="float:left;width:300px;background:white;padding-left:10px;height:250px">
+			<script type="text/javascript">BAIDU_CLB_fillSlot("771043");</script></div>
+		<div class="box_right_line"><div class="xline"></div></div>
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+function showLogin(){
+	window.art.dialog({id:'Login',iframe:'http://www.2cto.com/index.php?m=member&c=index&a=login&tupe=mini', title:'快捷登陆', width:'450', height:'310', lock:true}, function(){var d = window.art.dialog({id:'Login'}).data.iframe;var form = d.document.getElementById('dosubmit');form.click();return false;}, function(){window.art.dialog({id:'Login'}).close()});void(0);
+}
+function add_favorite(title) {
+		$.getJSON('http://www.2cto.com/api.php?op=add_favorite&title='+encodeURIComponent(title)+'&url='+encodeURIComponent(location.href)+'&'+Math.random()+'&callback=?', function(data){
+			if(data.status==1)	{
+				$("#favorite").html('收藏成功');
+			} else {
+				alert('请登陆');
+				window.location.href='http://home.2cto.com/?forward='+encodeURIComponent(location.href);
+			}
+		});
+	}
+//-->
+</script>
+<script language="JavaScript" src="http://www.2cto.com/api.php?op=count&id=125971&modelid=1"></script>
+<!-- 广告位：右侧漂浮 -->
+<script type="text/javascript">BAIDU_CLB_fillSlot("137946");</script>
+
+<div style="width:980px;padding:8px 0px 8px 0px;margin:auto"><script type="text/javascript">BAIDU_CLB_fillSlot("333829");</script></div>
+<div class="foot">
+<p>
+<a target="_blank" href="http://www.2cto.com/about">关于我们</a> |
+<a target="_blank" href="http://www.2cto.com/about/contact.html">联系我们</a> |
+<a target="_blank" href="http://www.2cto.com/about/ads.html">广告服务</a> |
+<a target="_blank" href="http://www.2cto.com/about/touzi.html">投资合作</a> |
+<a target="_blank" href="http://www.2cto.com/about/Copyright.html">版权申明</a> |
+<a target="_blank" href="http://www.2cto.com/about/faq.html">在线帮助</a> |
+<a target="_blank" href="http://www.2cto.com/about/map.html">网站地图</a> |
+<a target="_blank" href="http://www.2cto.com/about/tg.html">作品发布</a> |
+<a target="_blank" href="http://vip.2cto.com/"><span style="COLOR: red">Vip技术培训</span></a>
+<br />
+<span class="style4">版权所有: <a href="http://www.2cto.com" target="_blank">红黑联盟</a>--致力于做最好的IT技术学习网站<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1898984a3d796e86ad73ad1f4bc9f240' type='text/javascript'%3E%3C/script%3E"));
+</script>    
+</span>
+</div></body>
+
+</html>
