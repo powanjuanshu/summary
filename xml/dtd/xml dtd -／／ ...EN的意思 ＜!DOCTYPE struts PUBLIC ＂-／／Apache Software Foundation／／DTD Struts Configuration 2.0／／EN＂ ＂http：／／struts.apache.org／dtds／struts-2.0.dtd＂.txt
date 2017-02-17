@@ -1,0 +1,32 @@
+struts的配置文件：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+</struts>
+--------------------------------------------
+其中-//Apache Software Foundation//DTD Struts Configuration 2.0//EN的意思是DTD的标识名
+--------------------------------------------
+引用dtd的三种方式：
+1)内部dtd，语法如下：
+	<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<!DOCTYPE 根元素名[
+		元素描述
+	]>
+2)外部dtd，语法如下：
+	<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<!DOCTYPE 根元素名 SYSTEM "外部的DTD的URL地址"
+3)公用dtd，语法如下：
+	<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<!DOCTYPE 根元素名 PUBLIC "DTD的标识名" "公用的DTD的URL地址">
+
+
+
+
+
+
+
+
+

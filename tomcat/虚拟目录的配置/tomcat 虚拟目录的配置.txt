@@ -1,0 +1,7 @@
+在tomcat根目录下的conf\Catalina\localhost创建b.xml文件
+<?xml version="1.0"?>
+<Context path="/b" //上下文名要和文件相同，文件为b，此处必须为b
+         docBase="D:\workspaces\lifeteleweb\trunk\b\WebContent" //项目位置，WEB-INF目录的上一层目录即可
+         workDir="D:\ww"> //jsp生成class的存放位置，如果没配置则默认在tomcat根目录下的work目录下，如果配了，如果没有D:\ww目录，则D:\ww目录会自动生成
+
+</Context>

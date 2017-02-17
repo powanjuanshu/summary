@@ -1,0 +1,68 @@
+﻿* jaxb(Java Architecture for XML Binding)是一个业界的标准,是一项可以根据XML Schema产生Java类的技术.
+* jaxb 2.0是JDK的组成部分
+* JaxbContext类,是应用的入口,用于管理XML/Java绑定信息.
+* Marshaller接口,将Java对象序列化为XML数据.
+* Unmarshaller接口,将XML数据反序列化为Java对象
+
+JDK中jaxb相关的重要Annotation:
+* @XmlType,将Java类或枚举类型映射到XML模式类型
+* @XmlAccessorType(XmlAccessType.FIELD),控制字段或属性的序列化.FIELD表示jaxb将自动绑定Java类中的每个非静态的(static),非瞬态的(由@XmlTransient标注)字段到XML.
+  其他值还有XmlAccessType.PROPERTY和XmlAccessType.NONE.
+* @XmlAccessorOrder,控制jaxb 绑定类中属性和字段的排序.
+* @XmlJavaTypeAdapter,使用定制的适配器(即扩展抽象类XmlAdapter并覆盖marshal()和unmarshal()方法),以序列化Java类为XML.
+* @XmlElementWrapper ,对于数组或集合(即包含多个元素的成员变量),生成一个包装该数组或集合的XML元素(称为包装器).
+* @XmlRootElement,将Java类或枚举类型映射到XML元素.
+* @XmlElement,将Java类的一个属性映射到与属性同名的一个XML元素.
+* @XmlAttribute,将Java类的一个属性映射到与属性同名的一个XML属性.
+
+注意:
+* 对于要序列化(marshal)为XML的Java类,绝不能把成员变量声明为public,否则运行将抛出异常com.sun.xml.internal.bind.v2.runtime.IllegalAnnotationsException.
+* 对于jaxb相关的重要Annotation的声明,如@Xml.....,可以放在成员变量的setter()或getter()方法上,两者中任选其一即可,
+  但决不能放在成员变量上,否则运行将抛出异常com.sun.xml.internal.bind.v2.runtime.IllegalAnnotationsException.
+---------------------------------------------
+Xfire默认的绑定方式是aegis,它将XML映射为POJO,支持代码先行的开发.你开发服务类与POJO,它为你生成XML schema/wsdl 
+默认情况下,你的POJO类被是基于他们的名字与命名空间被序列化.如果你有一个类在"org.codehaus.xfire"包里,名字叫"Employee",
+它会被使用命名空间"http://xfire.codehaus.org"和本地名字"Employee"进行序列化.
+---------------------------------------------
+CXF可以方便地和Spring集成在一起,Axis2不行
+Axis2支持范围更广的数据绑定,包括XMLBeans、JiBX、JaxMe、jaxbRI,以及它自己的数据绑定ADB.在 Axis21.2 版中,
+JaxME和jaxbRI尚处于试验阶段.目前,CXF只支持jaxb和aegis,对XMLBeans、JiBX和Castor的支持将在CXF 2.1版中实现； 
+Axis2支持多语言,除了Java版本,尚有C/C++版本.
+---------------------------------------------
+其中的jaxWsServiceFactoryBean可不配,默认是jaxb绑定,这里替换为aegis的绑定方式,比jaxb更加优化
+applicationContext-webservice: 
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+    <!-- 通过Spring创建数据绑定的类-->
+    <bean id="aegisBean" class="org.apache.cxf.aegis.databinding.aegisDatabinding" />
+    <bean id="jaxWsServiceFactoryBean" class="org.apache.cxf.jaxws.support.JaxWsServiceFactoryBean">
+        <property name="wrapped" value="true" />
+        <property name="dataBinding" ref="aegisBean" />
+    </bean>
+    <bean id="jaxWsServiceFactoryBean2" class="org.apache.cxf.jaxws.support.JaxWsServiceFactoryBean">
+        <property name="wrapped" value="true" />
+        <property name="dataBinding" ref="aegisBean" />
+    </bean>
+    <jaxws:endpoint id="functionFacadeService"
+        implementor="#functionFacade" address="/functionFacadeService" >
+        <jaxws:serviceFactory>
+            <ref bean="jaxWsServiceFactoryBean" />
+        </jaxws:serviceFactory>
+    </jaxws:endpoint>
+    <jaxws:endpoint id="functionHelperService"
+        implementor="#functionHelper" address="/functionHelperService" >
+        <jaxws:serviceFactory>
+            <ref bean="jaxWsServiceFactoryBean2" />
+        </jaxws:serviceFactory>
+    </jaxws:endpoint>
+</beans>

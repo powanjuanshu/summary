@@ -1,0 +1,1068 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>
+    <title>webservice快速入门-使用JAX-WS注解的方式快速搭建ws服务端和客户端（一） - 云淡风轻、仅此一抹
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="WEBSERVICE快速入门的示例：首先定义接口：package com.whaty.platform.ws.server;import javax.jws.WebService;/** * @className:IMyservice.java * @Desc:定义：SEI service endpoint interface * @author:lizhuang *" />
+    <script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+               <link rel="stylesheet" href="http://static.csdn.net/public/common/toolbar/css/index.css">        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/light_blue/css/style.css?v=1.1" />
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/yaerfeng/rss/list" />
+    <link rel="shortcut icon" href="http://csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+</head>
+<body>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://static.csdn.net/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/yaerfeng">云淡风轻、仅此一抹</a></h2>
+            <h3>写东西是用文字来整理你自己的生命、安静下来、好好去写、</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+                <li id="btnContents"><a href="http://blog.csdn.net/yaerfeng?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/yaerfeng?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/yaerfeng/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "yaerfeng";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/yaerfeng";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/25387451"target="_blank">
+<font color=blue>有奖征资源，博文分享有内涵
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/25400391"target="_blank">
+<font color=red>4月推荐博文汇总 
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/26512525"target="_blank">
+<font color=blue>第六届中国云计算大会（大数据读书汇）
+</font></a>
+
+</div>                    <link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+<script language='JavaScript' type='text/javascript' src='http://download.csdn.net/js/jquery.cookie.js'></script>
+<script type="text/javascript" src="http://csdnimg.cn/rabbit/search-service/main.js"></script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/yaerfeng/article/details/8352307">
+        webservice快速入门-使用JAX-WS注解的方式快速搭建ws服务端和客户端（一）
+        </a></span>
+    </h1>
+</div>
+
+    <div class="article_manage">
+        <span class="link_categories">
+        分类：
+            <a href="/yaerfeng/article/category/928617" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">EJB/WS/RMI</a> 
+        </span>
+    <span class="link_postdate">2012-12-21 01:17</span>
+    <span class="link_view" title="阅读次数">1409人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(0)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shoucang']);collectArticle('webservice快速入门-使用JAX-WS注解的方式快速搭建ws服务端和客户端（一）','8352307');return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="#report"  onclick="javascript:_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_jubao']);report(8352307,2);return false;" title="举报">举报</a></span>
+    
+</div>
+
+    
+<div id="article_content" class="article_content">
+
+<p>WEBSERVICE快速入门的示例：</p>
+<p>首先定义接口：</p>
+<p></p>
+<pre name="code" class="java">package com.whaty.platform.ws.server;
+
+import javax.jws.WebService;
+
+/**
+ * @className:IMyservice.java
+ * @Desc:定义：SEI service endpoint interface
+ * @author:lizhuang
+ * @createTime:2012-12-21 上午12:57:18
+ */
+//JAX-WS注解，表示java api xml for webservice。JDK自带API的XML格式的webservice
+@WebService
+public interface IMyservice {
+	
+	int add(int a, int b);
+
+	int minus(int a, int b);
+}
+</pre><br>
+其次编写实现类：
+<p></p>
+<p></p>
+<pre name="code" class="java">package com.whaty.platform.ws.server;
+
+import javax.jws.WebService;
+
+/** 
+ * @className:MyServiceImpl.java
+ * @Desc:定义：SIB service implemention bean
+ * @author:lizhuang
+ * @createTime:2012-12-21 上午01:01:22
+ */</pre><pre name="code" class="java">//endpointInterface指定接入点接口：接口必须存在
+@WebService(endpointInterface=&quot;com.whaty.platform.ws.server.IMyservice&quot;)
+public class MyServiceImpl implements IMyservice {
+
+	public int add(int a, int b) {
+		System.out.println(&quot;a+b=&quot;+(a+b));
+		return a+b;
+	}
+
+	public int minus(int a, int b) {
+		System.out.println(&quot;a-b=&quot;+(a-b));
+		return a-b;
+	}
+
+}
+</pre><br>
+最后发布我们的服务，直接右键运行main方法，如果控制台没报错，多半是发布成功了，否则检查你的代码：
+<p></p>
+<p></p>
+<pre name="code" class="java">package com.whaty.platform.ws.server;
+
+import javax.xml.ws.Endpoint;
+
+/**
+ * @className:MyServer.java
+ * @Desc:发布服务
+ * @author:lizhuang
+ * @createTime:2012-12-21 上午01:02:39
+ */
+public class MyServer {
+	public static void main(String[] args) {
+		//访问方式：http://localhost:7777/tudou?wsdl
+		String address=&quot;http://localhost:7777/tudou&quot;;
+		Endpoint.publish(address, new MyServiceImpl());
+	}
+}
+</pre>
+<p></p>
+<p><br>
+</p>
+浏览器地址栏输入：访问webservice看看是否发布成功【地址后面加上&quot;?wsdl&quot;】：
+<p>http://localhost:7777/tudou?wsdl</p>
+<p><br>
+</p>
+<p>浏览器显示如下：</p>
+<p></p>
+<pre name="code" class="html">This XML file does not appear to have any style information associated with it. The document tree is shown below.
+&lt;!--
+ Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.6 in JDK 6. 
+--&gt;
+&lt;!--
+ Generated by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.6 in JDK 6. 
+--&gt;
+&lt;definitions xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot; xmlns:tns=&quot;http://server.ws.platform.whaty.com/&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot; targetNamespace=&quot;http://server.ws.platform.whaty.com/&quot; name=&quot;MyServiceImplService&quot;&gt;
+&lt;types&gt;
+&lt;xsd:schema&gt;
+&lt;xsd:import namespace=&quot;http://server.ws.platform.whaty.com/&quot; schemaLocation=&quot;http://localhost:7777/tudou?xsd=1&quot;/&gt;
+&lt;/xsd:schema&gt;
+&lt;/types&gt;
+&lt;message name=&quot;minus&quot;&gt;
+&lt;part name=&quot;parameters&quot; element=&quot;tns:minus&quot;/&gt;
+&lt;/message&gt;
+&lt;message name=&quot;minusResponse&quot;&gt;
+&lt;part name=&quot;parameters&quot; element=&quot;tns:minusResponse&quot;/&gt;
+&lt;/message&gt;
+&lt;message name=&quot;add&quot;&gt;
+&lt;part name=&quot;parameters&quot; element=&quot;tns:add&quot;/&gt;
+&lt;/message&gt;
+&lt;message name=&quot;addResponse&quot;&gt;
+&lt;part name=&quot;parameters&quot; element=&quot;tns:addResponse&quot;/&gt;
+&lt;/message&gt;
+&lt;portType name=&quot;IMyservice&quot;&gt;
+&lt;operation name=&quot;minus&quot;&gt;
+&lt;input message=&quot;tns:minus&quot;/&gt;
+&lt;output message=&quot;tns:minusResponse&quot;/&gt;
+&lt;/operation&gt;
+&lt;operation name=&quot;add&quot;&gt;
+&lt;input message=&quot;tns:add&quot;/&gt;
+&lt;output message=&quot;tns:addResponse&quot;/&gt;
+&lt;/operation&gt;
+&lt;/portType&gt;
+&lt;binding name=&quot;MyServiceImplPortBinding&quot; type=&quot;tns:IMyservice&quot;&gt;
+&lt;soap:binding transport=&quot;http://schemas.xmlsoap.org/soap/http&quot; style=&quot;document&quot;/&gt;
+&lt;operation name=&quot;minus&quot;&gt;
+&lt;soap:operation soapAction=&quot;&quot;/&gt;
+&lt;input&gt;
+&lt;soap:body use=&quot;literal&quot;/&gt;
+&lt;/input&gt;
+&lt;output&gt;
+&lt;soap:body use=&quot;literal&quot;/&gt;
+&lt;/output&gt;
+&lt;/operation&gt;
+&lt;operation name=&quot;add&quot;&gt;
+&lt;soap:operation soapAction=&quot;&quot;/&gt;
+&lt;input&gt;
+&lt;soap:body use=&quot;literal&quot;/&gt;
+&lt;/input&gt;
+&lt;output&gt;
+&lt;soap:body use=&quot;literal&quot;/&gt;
+&lt;/output&gt;
+&lt;/operation&gt;
+&lt;/binding&gt;
+&lt;service name=&quot;MyServiceImplService&quot;&gt;
+&lt;port name=&quot;MyServiceImplPort&quot; binding=&quot;tns:MyServiceImplPortBinding&quot;&gt;
+&lt;soap:address location=&quot;http://localhost:7777/tudou&quot;/&gt;
+&lt;/port&gt;
+&lt;/service&gt;
+&lt;/definitions&gt;</pre><br>
+<p><br>
+</p>
+<p>下面我们创建客户端访问：</p>
+<p></p>
+<pre name="code" class="java">package com.whaty.platform.ws.client;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+
+import com.whaty.platform.ws.server.IMyservice;
+
+/**
+ * @className:MyClient.java
+ * @Desc:访问发布的服务
+ * @author:lizhuang
+ * @createTime:2012-12-21 上午01:23:57
+ */
+public class MyClient {
+	public static void main(String[] args) {
+
+		try {
+			//服务WSDL Document的地址
+			URL url = new URL(&quot;http://localhost:7777/tudou?wsdl&quot;);
+			//Qnameqname是qualified name 的简写
+			//2.构成：由名字空间(namespace)前缀(prefix)以及冒号(:),还有一个元素名称构成
+			//由发布的wsdl可知namespace为http://server.ws.platform.whaty.com/，
+			QName qname=new QName(&quot;http://server.ws.platform.whaty.com/&quot;,&quot;MyServiceImplService&quot;);
+			Service service=Service.create(url, qname);
+			IMyservice ms=service.getPort(IMyservice.class);
+			ms.add(1, 4);
+			ms.minus(1, 4);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+}
+</pre><br>
+<br>
+<p></p>
+控制台打印如下：
+<p></p>
+<p>a&#43;b=5<br>
+a-b=-3<br>
+</p>
+<p></p>
+
+</div>
+
+
+
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" style="float: right;">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more">更多</span>
+<a class="shareCount"></a>
+</div>
+<!-- Baidu Button END -->
+
+
+<!--192.168.100.33-->
+<ul class="article_next_prev">
+            <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/yaerfeng/article/details/8363610';">下一篇</span><a href="/yaerfeng/article/details/8363610" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">在Eclipse/MyEclipse中显示JVM当前内存使用量</a></li>
+</ul>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+        <div id="digg" ArticleId="8352307">
+            <dl id="btnDigg" class="digg digg_disable">
+                <dt onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_ding'])">顶</dt>
+                <dd>2</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+                <dt onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_cai'])">踩</dt>
+                <dd>1</dd>
+            </dl>
+        </div>
+</div>
+      <dl class="blog-associat-tag">
+        <dt>主题推荐</dt>
+        <dd>
+                <a href="http://www.csdn.net/tag/webservice" target="_blank" class="blog-tage-red" >webservice</a> 
+                <a href="http://www.csdn.net/tag/interface" target="_blank" class="blog-tage-red" >interface</a> 
+                <a href="http://www.csdn.net/tag/浏览器" target="_blank" class="blog-tage-red" >浏览器</a> 
+                <a href="http://www.csdn.net/tag/控制台" target="_blank" class="blog-tage-red" >控制台</a> 
+                <a href="http://www.csdn.net/tag/发布" target="_blank" class="blog-tage-red" >发布</a> 
+        </dd>
+    </dl> 
+
+
+<dl class="blog-ass-articl tracking-ad"  data-mod="popu_36" id="res-relatived"> 
+     <dt><span>猜你在找</span></dt>    
+</dl>
+
+<script type="text/javascript">
+    var searchtitletags = 'webservice快速入门-使用JAX-WS注解的方式快速搭建ws服务端和客户端（一）' + ',' + 'webservice,interface,浏览器,控制台,发布';
+    searchService({
+        index: 'blog',
+        query: searchtitletags,
+        from: 10,
+        size: 10,
+        appendTo: '#res-relatived',
+        url: 'recommend',
+        his: 2,
+        client: "blog_cf_enhance",
+        tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+    });
+
+ </script>   
+
+    <div id="ad_cen">
+        <script type="text/javascript">            BAIDU_CLB_SLOT_ID = "117306";</script>
+        <script type="text/javascript" src="http://cbjs.baidu.com/js/o.js"></script>
+    </div>
+    <script type="text/javascript">
+        //new Ad(4, 'ad_cen');
+    </script>
+<div id="comment_title" class="panel_head">
+    查看评论<a name="comments"></a></div>
+<div id="comment_list">
+</div>
+<div id="comment_bar">
+</div>
+<div id="comment_form">
+</div>
+<div class="announce">
+    * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+<script type="text/javascript">
+    var fileName = '8352307';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+    <script type="text/javascript">
+    new Ad(5, 'ad_bot');
+    </script>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+      
+
+       <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        if($("#comment_content").length>0)
+        {
+            $("#quick-reply").show();
+
+            $("#quick-reply").click(function(){
+                setEditorFocus();
+            });
+        }       
+     
+        var d_top = $('#d-top-a');
+        document.onscroll = function ()
+        {
+            var scrTop = (document.body.scrollTop || document.documentElement.scrollTop);
+            if (scrTop > 500)
+            {
+                d_top.show();
+            } else
+            {
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function ()
+        {
+            scrollTo(0, 0);
+            this.blur();
+            return false;
+        });
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+<div class="tag_list">
+    <h5>
+        <a href="http://www.csdn.net/tag/" target="_blank">核心技术类目</a></h5>
+    <div class="classify">
+<a title="全部主题" href="http://www.csdn.net/tag" target="_blank" onclick="LogClickCount(this,336);">全部主题</a>
+<a title="Java" href="http://www.csdn.net/tag/Java" target="_blank" onclick="LogClickCount(this,336);">Java</a>
+<a title="VPN" href="http://www.csdn.net/tag/vpn" target="_blank" onclick="LogClickCount(this,336);">VPN</a>
+<a title="Android" href="http://www.csdn.net/tag/android" target="_blank" onclick="LogClickCount(this,336);">Android</a>
+<a title="iOS" href="http://www.csdn.net/tag/ios" target="_blank" onclick="LogClickCount(this,336);">iOS</a>
+<a title="ERP" href="http://www.csdn.net/tag/erp" target="_blank" onclick="LogClickCount(this,336);">ERP</a>
+<a title="IE10" href="http://www.csdn.net/tag/ie10" target="_blank" onclick="LogClickCount(this,336);">IE10</a>
+<a title="Eclipse" href="http://www.csdn.net/tag/eclipse" target="_blank" onclick="LogClickCount(this,336);">Eclipse</a>
+<a title="CRM" href="http://www.csdn.net/tag/crm" target="_blank" onclick="LogClickCount(this,336);">CRM</a>
+<a title="JavaScript" href="http://www.csdn.net/tag/javascript" target="_blank" onclick="LogClickCount(this,336);">JavaScript</a>
+<a title="Ubuntu" href="http://www.csdn.net/tag/ubuntu" target="_blank" onclick="LogClickCount(this,336);">Ubuntu</a>
+<a title="NFC" href="http://www.csdn.net/tag/nfc" target="_blank" onclick="LogClickCount(this,336);">NFC</a>
+<a title="WAP" href="http://www.csdn.net/tag/wap" target="_blank" onclick="LogClickCount(this,336);">WAP</a>
+<a title="jQuery" href="http://www.csdn.net/tag/jquery" target="_blank" onclick="LogClickCount(this,336);">jQuery</a>
+<a title="数据库" href="http://www.csdn.net/tag/数据库" target="_blank" onclick="LogClickCount(this,336);">数据库</a>
+<a title="BI" href="http://www.csdn.net/tag/bi" target="_blank" onclick="LogClickCount(this,336);">BI</a>
+<a title="HTML5" href="http://www.csdn.net/tag/html5" target="_blank" onclick="LogClickCount(this,336);">HTML5</a>
+<a title="Spring" href="http://www.csdn.net/tag/spring" target="_blank" onclick="LogClickCount(this,336);">Spring</a>
+<a title="Apache" href="http://www.csdn.net/tag/apache" target="_blank" onclick="LogClickCount(this,336);">Apache</a>
+<a title="Hadoop" href="http://www.csdn.net/tag/hadoop" target="_blank" onclick="LogClickCount(this,336);">Hadoop</a>
+<a title=".NET" href="http://www.csdn.net/tag/.net" target="_blank" onclick="LogClickCount(this,336);">.NET</a>
+<a title="API" href="http://www.csdn.net/tag/api" target="_blank" onclick="LogClickCount(this,336);">API</a>
+<a title="HTML" href="http://www.csdn.net/tag/html" target="_blank" onclick="LogClickCount(this,336);">HTML</a>
+<a title="SDK" href="http://www.csdn.net/tag/sdk" target="_blank" onclick="LogClickCount(this,336);">SDK</a>
+<a title="IIS" href="http://www.csdn.net/tag/iis" target="_blank" onclick="LogClickCount(this,336);">IIS</a>
+<a title="Fedora" href="http://www.csdn.net/tag/fedora" target="_blank" onclick="LogClickCount(this,336);">Fedora</a>
+<a title="XML" href="http://www.csdn.net/tag/xml" target="_blank" onclick="LogClickCount(this,336);">XML</a>
+<a title="LBS" href="http://www.csdn.net/tag/lbs" target="_blank" onclick="LogClickCount(this,336);">LBS</a>
+<a title="Unity" href="http://www.csdn.net/tag/unity" target="_blank" onclick="LogClickCount(this,336);">Unity</a>
+<a title="Splashtop" href="http://www.csdn.net/tag/splashtop" target="_blank" onclick="LogClickCount(this,336);">Splashtop</a>
+<a title="UML" href="http://www.csdn.net/tag/uml" target="_blank" onclick="LogClickCount(this,336);">UML</a>
+<a title="components" href="http://www.csdn.net/tag/components" target="_blank" onclick="LogClickCount(this,336);">components</a>
+<a title="Windows Mobile" href="http://www.csdn.net/tag/windowsmobile" target="_blank" onclick="LogClickCount(this,336);">Windows Mobile</a>
+<a title="Rails" href="http://www.csdn.net/tag/rails" target="_blank" onclick="LogClickCount(this,336);">Rails</a>
+<a title="QEMU" href="http://www.csdn.net/tag/qemu" target="_blank" onclick="LogClickCount(this,336);">QEMU</a>
+<a title="KDE" href="http://www.csdn.net/tag/kde" target="_blank" onclick="LogClickCount(this,336);">KDE</a>
+<a title="Cassandra" href="http://www.csdn.net/tag/cassandra" target="_blank" onclick="LogClickCount(this,336);">Cassandra</a>
+<a title="CloudStack" href="http://www.csdn.net/tag/cloudstack" target="_blank" onclick="LogClickCount(this,336);">CloudStack</a>
+<a title="FTC" href="http://www.csdn.net/tag/ftc" target="_blank" onclick="LogClickCount(this,336);">FTC</a>
+<a title="coremail" href="http://www.csdn.net/tag/coremail" target="_blank" onclick="LogClickCount(this,336);">coremail</a>
+<a title="OPhone " href="http://www.csdn.net/tag/ophone " target="_blank" onclick="LogClickCount(this,336);">OPhone </a>
+<a title="CouchBase" href="http://www.csdn.net/tag/couchbase" target="_blank" onclick="LogClickCount(this,336);">CouchBase</a>
+<a title="云计算" href="http://www.csdn.net/tag/云计算" target="_blank" onclick="LogClickCount(this,336);">云计算</a>
+<a title="iOS6" href="http://www.csdn.net/tag/iOS6" target="_blank" onclick="LogClickCount(this,336);">iOS6</a>
+<a title="Rackspace " href="http://www.csdn.net/tag/rackspace " target="_blank" onclick="LogClickCount(this,336);">Rackspace </a>
+<a title="Web App" href="http://www.csdn.net/tag/webapp" target="_blank" onclick="LogClickCount(this,336);">Web App</a>
+<a title="SpringSide" href="http://www.csdn.net/tag/springside" target="_blank" onclick="LogClickCount(this,336);">SpringSide</a>
+<a title="Maemo" href="http://www.csdn.net/tag/maemo" target="_blank" onclick="LogClickCount(this,336);">Maemo</a>
+<a title="Compuware" href="http://www.csdn.net/tag/compuware" target="_blank" onclick="LogClickCount(this,336);">Compuware</a>
+<a title="大数据" href="http://www.csdn.net/tag/大数据" target="_blank" onclick="LogClickCount(this,336);">大数据</a>
+<a title="aptech" href="http://www.csdn.net/tag/aptech" target="_blank" onclick="LogClickCount(this,336);">aptech</a>
+<a title="Perl" href="http://www.csdn.net/tag/perl" target="_blank" onclick="LogClickCount(this,336);">Perl</a>
+<a title="Tornado" href="http://www.csdn.net/tag/tornado" target="_blank" onclick="LogClickCount(this,336);">Tornado</a>
+<a title="Ruby" href="http://www.csdn.net/tag/ruby" target="_blank" onclick="LogClickCount(this,336);">Ruby</a>
+<a title="Hibernate" href="http://www.csdn.net/hibernate" target="_blank" onclick="LogClickCount(this,336);">Hibernate</a>
+<a title="ThinkPHP" href="http://www.csdn.net/tag/thinkphp" target="_blank" onclick="LogClickCount(this,336);">ThinkPHP</a>
+<a title="Spark" href="http://www.csdn.net/tag/spark" target="_blank" onclick="LogClickCount(this,336);">Spark</a>
+<a title="HBase" href="http://www.csdn.net/tag/hbase" target="_blank" onclick="LogClickCount(this,336);">HBase</a>
+<a title="Pure" href="http://www.csdn.net/tag/pure" target="_blank" onclick="LogClickCount(this,336);">Pure</a>
+<a title="Solr" href="http://www.csdn.net/tag/solr" target="_blank" onclick="LogClickCount(this,336);">Solr</a>
+<a title="Angular" href="http://www.csdn.net/tag/angular" target="_blank" onclick="LogClickCount(this,336);">Angular</a>
+<a title="Cloud Foundry" href="http://www.csdn.net/tag/cloudfoundry" target="_blank" onclick="LogClickCount(this,336);">Cloud Foundry</a>
+<a title="Redis" href="http://www.csdn.net/tag/redis" target="_blank" onclick="LogClickCount(this,336);">Redis</a>
+<a title="Scala" href="http://www.csdn.net/tag/scala" target="_blank" onclick="LogClickCount(this,336);">Scala</a>
+<a title="Django" href="http://www.csdn.net/tag/django" target="_blank" onclick="LogClickCount(this,336);">Django</a>
+<a title="Bootstrap" href="http://www.csdn.net/tag/bootstrap" target="_blank" onclick="LogClickCount(this,336);">Bootstrap</a>
+    </div>
+</div>
+
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <div id="side">
+    <div class="side">
+<div id="custom_column_21914202" class="panel">
+<ul class="panel_head"><span>About Me</span></ul>
+<ul class="panel_body">
+
+<br>
+<br>
+80后。 <br>
+<br>
+自由、简单、快乐 <br>
+<br>
+JAVA自由人群：197656663 <br>
+<br>
+Email:le.z@foxmail.com
+
+</ul>
+</div><div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/yaerfeng" target="_blank">
+    <img src="http://avatar.csdn.net/B/6/B/1_yaerfeng.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/yaerfeng" class="user_name" target="_blank">yaerfeng</a></span>
+</div>
+<div class="interact">
+<a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_guanzhu'])"></a>
+<a href="javascript:void(0);" class="letter" onclick="loginto(1)" title="[发私信]" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>
+</div>
+<div id="blog_medal">
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>409418次</span></li>
+    <li>积分：<span>8420分</span></li>
+    <li>排名：<span>第505名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>353篇</span></li>
+    <li>转载：<span>88篇</span></li>
+    <li>译文：<span>1篇</span></li>
+    <li>评论：<span>933条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="submit" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div><div id="panel_Category" class="panel">
+    <ul class="panel_head"><span>博客专栏</span></ul>
+    <ul class="panel_body" id="sp_column">
+    <table cellpadding="0" cellspacing="0"><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/webservice-go.html" target="_blank"><img src="http://avatar.csdn.net/blogpic/20121229131115292.jpg" style="width:75px;height:75px;" /></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/webservice-go.html" target="_blank">webservice快速入门</a>
+    <p>文章：5篇</p>
+    <span>阅读：5454</span>
+    </td>
+    </tr></table>
+    </ul>
+</div><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/923565" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">XML/JSON/Html/CSS</a><span>(30)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/956564" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">闲情时分</a><span>(8)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/956565" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">社会百态</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/923571" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle/SQL/MySQL</a><span>(41)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/923579" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Ajax/Jquery/js/ext/dwr</a><span>(28)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/923573" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">struts/jsp/servlet</a><span>(34)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/928617" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">EJB/WS/RMI</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/1061660" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">J2SE</a><span>(101)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/923566" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">J2EE</a><span>(81)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/949644" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">others</a><span>(8)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/923567" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">hibernate</a><span>(40)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/923568" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">spring</a><span>(45)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/923574" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">flex</a><span>(8)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/945671" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">PHP</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/939669" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux/unix</a><span>(18)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/1078120" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">c#/.NET</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/961354" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据结构与算法</a><span>(14)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/959030" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">非技术</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/937723" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">编程技巧</a><span>(35)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/952519" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">设计模式</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/954618" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">程序构架</a><span>(20)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/1081792" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">think in java</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/1253403" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Tools</a><span>(15)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/1294261" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">freemaker</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/1294308" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">maven</a><span>(6)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/1335940" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">lucene</a><span>(0)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/1922785" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">截屏</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/1922787" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Screen</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/1922789" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Robot</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2114399" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">工具</a><span>(7)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2129541" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">图片</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2129543" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">延迟加载</a><span>(0)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2129545" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">scroll-loading</a><span>(0)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2129547" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">jquery插件</a><span>(0)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2134009" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">html5</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2135909" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">htm5</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2138769" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">前端技术</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2138771" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">游戏</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2142187" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">动态hql</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2142189" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">velocity模板</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2142191" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">sql-query</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2145283" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">ioc</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2151039" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">验证码</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2153049" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">ffmpeg</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2153051" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">视频截图</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2158121" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">extjs</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2167633" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">android</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2170657" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">线程</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2177923" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">swing</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2180765" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">定时任务</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2222553" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">计划任务</a><span>(3)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2237033" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">swt</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2238637" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">语言基础</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2240789" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">java</a><span>(11)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2240793" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据源</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2240795" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">data source</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2249425" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">杂记</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2251893" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">单元测试</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2258019" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">struts1</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2268481" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">struts2</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2271551" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">json</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2273987" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">缓冲</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2278727" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">pom</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2278729" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">教程</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2281187" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">properties</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2281189" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">加密解密</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2283715" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">SpringSide</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2283717" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">demo</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yaerfeng/article/category/2283719" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">项目实战</a><span>(1)</span>
+            </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="http://blog.csdn.net/yaerfeng/article/month/2014/05">2014年05月</a><span>(23)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2014/04">2014年04月</a><span>(31)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2014/03">2014年03月</a><span>(33)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2014/02">2014年02月</a><span>(26)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2014/01">2014年01月</a><span>(22)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2013/11">2013年11月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2013/08">2013年08月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2013/07">2013年07月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2013/06">2013年06月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2013/04">2013年04月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2013/03">2013年03月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2013/02">2013年02月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2013/01">2013年01月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/12">2012年12月</a><span>(30)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/11">2012年11月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/10">2012年10月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/09">2012年09月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/08">2012年08月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/07">2012年07月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/06">2012年06月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/05">2012年05月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/04">2012年04月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/03">2012年03月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/02">2012年02月</a><span>(43)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2012/01">2012年01月</a><span>(15)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2011/12">2011年12月</a><span>(71)</span></li><li><a href="http://blog.csdn.net/yaerfeng/article/month/2011/11">2011年11月</a><span>(54)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/yaerfeng/article/details/7189867" title="教你如何秒杀12306，JAVA程序抢票成功！分享~~~[附截图]">教你如何秒杀12306，JAVA程序抢票成功！分享~~~[附截图]</a><span>(48000)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7099730" title="JAVA毕业设计截图[附源码+jar包]">JAVA毕业设计截图[附源码+jar包]</a><span>(36158)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/24622349" title="史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a><span>(22752)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/8497842" title="GO-HOME我要回家JAVA2013版火车票抢票程序">GO-HOME我要回家JAVA2013版火车票抢票程序</a><span>(17282)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7164076" title="生命是一种过程，编程是一种积累。">生命是一种过程，编程是一种积累。</a><span>(13587)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7292000" title="JavaScript对象与JSON字符串的相互转换">JavaScript对象与JSON字符串的相互转换</a><span>(7644)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7253103" title="仿百度，豆瓣读书文库阅读器">仿百度，豆瓣读书文库阅读器</a><span>(6792)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/8102602" title="省市县3级完整SQL及完整民族">省市县3级完整SQL及完整民族</a><span>(5255)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7100086" title="JAVA必看书籍！">JAVA必看书籍！</a><span>(4755)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7253483" title="只有4K大小的3D DOS动画 世界编程大赛头名程序">只有4K大小的3D DOS动画 世界编程大赛头名程序</a><span>(3928)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/yaerfeng/article/details/7099730" title="JAVA毕业设计截图[附源码+jar包]">JAVA毕业设计截图[附源码+jar包]</a><span>(343)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7189867" title="教你如何秒杀12306，JAVA程序抢票成功！分享~~~[附截图]">教你如何秒杀12306，JAVA程序抢票成功！分享~~~[附截图]</a><span>(211)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7164076" title="生命是一种过程，编程是一种积累。">生命是一种过程，编程是一种积累。</a><span>(107)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/24622349" title="史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a><span>(56)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/8497842" title="GO-HOME我要回家JAVA2013版火车票抢票程序">GO-HOME我要回家JAVA2013版火车票抢票程序</a><span>(45)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7100086" title="JAVA必看书籍！">JAVA必看书籍！</a><span>(12)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7253103" title="仿百度，豆瓣读书文库阅读器">仿百度，豆瓣读书文库阅读器</a><span>(10)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7254734" title="JAVA线程安全之synchronized关键字的正确用法">JAVA线程安全之synchronized关键字的正确用法</a><span>(10)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7103397" title="java高级编程－使用反射强制给private字段赋值">java高级编程－使用反射强制给private字段赋值</a><span>(8)</span>
+</li>
+<li>
+<a href="/yaerfeng/article/details/7260352" title="学生时代做的一个非常低级的卡拉OK播放器">学生时代做的一个非常低级的卡拉OK播放器</a><span>(8)</span>
+</li>
+</ul>
+</div>
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/yaerfeng/article/details/24622349#comments">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a>
+    <p style="margin:0px;"><a href="/ningmj00" class="user_name">ningmj00</a>:
+不错，大赞
+    </p>
+    </li>
+    <li>
+   
+         <a href="/yaerfeng/article/details/24622349#comments">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a>
+    <p style="margin:0px;"><a href="/pesile" class="user_name">pesile</a>:
+很强大，牛
+    </p>
+    </li>
+    <li>
+   
+         <a href="/yaerfeng/article/details/24622349#comments">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a>
+    <p style="margin:0px;"><a href="/jxgr057877" class="user_name">jxgr057877</a>:
+强悍，我和小伙伴们都惊呆了。
+    </p>
+    </li>
+    <li>
+   
+         <a href="/yaerfeng/article/details/24622349#comments">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a>
+    <p style="margin:0px;"><a href="/rengfeng" class="user_name">rengfeng</a>:
+貌似很屌的样子
+    </p>
+    </li>
+    <li>
+   
+         <a href="/yaerfeng/article/details/24231531#comments">Spring Security 3.x完整入门配置教程及其代码下载</a>
+    <p style="margin:0px;"><a href="/li346985170" class="user_name">li346985170</a>:
+你好,请问一下下面这两个包是那个jar包里的呀?org.springframework.securi...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/yaerfeng/article/details/24231531#comments">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a>
+    <p style="margin:0px;"><a href="/kent1141" class="user_name">kent1141</a>:
+虽然看不懂，还是觉得赞！
+    </p>
+    </li>
+    <li>
+   
+         <a href="/yaerfeng/article/details/24231531#comments">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a>
+    <p style="margin:0px;"><a href="/luoyeyeyu" class="user_name">luoyeyeyu</a>:
+大赞，掉渣天
+    </p>
+    </li>
+    <li>
+   
+         <a href="/yaerfeng/article/details/24231531#comments">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a>
+    <p style="margin:0px;"><a href="/u011199640" class="user_name">u011199640</a>:
+高手。的确看起有点难
+    </p>
+    </li>
+    <li>
+   
+         <a href="/yaerfeng/article/details/24231531#comments">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a>
+    <p style="margin:0px;"><a href="/jeallan" class="user_name">jeallan</a>:
+试了下，很强大，没有直接降到底的按键。
+    </p>
+    </li>
+    <li>
+   
+         <a href="/yaerfeng/article/details/24231531#comments">史上最短小精悍的javascript编写的俄罗斯方块游戏，仅仅60行代码</a>
+    <p style="margin:0px;"><a href="/eziowayne" class="user_name">eziowayne</a>:
+埃，好多bug阿，在chrome上简直是灾难。
+    </p>
+    </li>
+</ul>
+</div>
+<div id="custom_column_18522878" class="panel">
+<ul class="panel_head"><span>友情链接</span></ul>
+<ul class="panel_body">
+
+<a href="http://www.cppcode.com" target="_blank">草房子</a><br>
+<a href="http://zhedahht.blog.163.com/" target="_blank">算法</a><br>
+<a href="http://www.open-open.com/#" target="_blank">open文档</a><br>
+<a href="http://www.mianwww.com/" target="_blank">IT面试题</a><br>
+<a href="http://www.jarvana.com/jarvana/" target="_blank">jar包下载</a><br>
+
+</ul>
+</div>    </div>
+    <div class="clear">
+    </div>
+</div>
+
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js"></script>
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=1182536"></script>
+<script type="text/javascript">
+    document.write('<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js?' + Math.floor(new Date() / 120000).toString(36) + '="></' + 'script>');
+</script>
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript" src="http://zz.csdn.net/js/count.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a>"
+                    + "<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+    });
+</script>
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://static.csdn.net/public/common/toolbar/js/toolbar.js"></script>     <!--new top-->
+</body>
+</html>

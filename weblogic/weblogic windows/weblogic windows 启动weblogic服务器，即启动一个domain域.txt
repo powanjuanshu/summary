@@ -1,0 +1,1 @@
+双击D:\weblogic domain\1313domain\bin\startWeblogic.cmd，弹出黑屏，等待启动完成

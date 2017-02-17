@@ -1,0 +1,13 @@
+wsdl2java -p com.suirui.core.webservice -d d:\ws\yy -encoding utf-8 -client -frontend jaxws21 http://localhost/xxx/cpic/JackAndRose?wsdl
+参数释义:
+-p:         包名
+-d: 	    源码生成路径，生成文件路径
+-encoding:  编码格式，我们大部分人使用的都是utf-8的编码，这里最好设置一下，不然中文就会乱码
+-client:    生成客户端测试web service的代码
+-server:    生成服务器启动web service的代码
+-frontend:  原因是CXF自带的javax.xml.service 版本高过jdk的javax.xml.service，会报错：Service(URL, QName, WebServiceFeature[]) is undefined，在使用wsdl2java时，加入参数 -frontend jaxws21即可解决
+-末尾：     wsdl文件路径
+
+
+
+

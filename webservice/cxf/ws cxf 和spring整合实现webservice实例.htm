@@ -1,0 +1,562 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>CXF和spring整合实现webservice实例 - Java红 - ITeye技术网站</title>
+    <meta name="description" content="环境：JDK6.0，cxf-2.0.7，spring2.5，tomcat6.0 服务器端： 1.新建Web项目，例如webws，导入cxf-2.0.7/lib下的jar包和spring2.5的包，因为cxf支持spring，因此它自带有sping的一些核心包，为了以后扩展，保险起见都一起导入吧。。 2.新建一个服务接口IHelloWorld.java，该接口是面向客户端，暴露服务： package  ..." />
+    <meta name="keywords" content="WebService, Spring, Java, XML, 应用服务器 CXF和spring整合实现webservice实例" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="Java红" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1393920955" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/red.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">Java红</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://tsinglongwu.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://tsinglongwu.iteye.com" class="p-author" target="_blank">tsinglongwu</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/832704">CXF和spring整合实现webservice实例</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/140779">SOA</a></li> </ul>
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/WebService">WebService</a><a href="http://www.iteye.com/blogs/tag/Spring">Spring</a><a href="http://www.iteye.com/blogs/tag/Java">Java</a><a href="http://www.iteye.com/blogs/tag/XML">XML</a><a href="http://www.iteye.com/blogs/tag/%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8">应用服务器</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    环境：JDK6.0，cxf-2.0.7，spring2.5，tomcat6.0<br /><br /><strong><span style="color: red;">服务器端</span></strong>：<br /><br />1.新建Web项目，例如webws，导入cxf-2.0.7/lib下的jar包和spring2.5的包，因为cxf支持spring，因此它自带有sping的一些核心包，为了以后扩展，保险起见都一起导入吧。。<br /><br />2.新建一个服务接口IHelloWorld.java，该接口是面向客户端，暴露服务：<br /><pre name="code" class="java">package cn.com.service;
+
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+@WebService
+public interface IHelloWorld {
+        //@WebParam(name="arg0")可有可无，为了增强可读性
+	public String sayHello(@WebParam(name="arg0")String text);
+}</pre><br />3.再新建该接口的实现类HelloWorldImpl.java：<br /><pre name="code" class="java">package cn.com.service;
+import javax.jws.WebService;
+
+@WebService(endpointInterface="cn.com.service.IHelloWorld")
+public class HelloWorldImpl implements IHelloWorld {
+	public String sayHello(String text) {	
+		return "Hello" + text ;
+	}
+}</pre><br />4.现在可以进行spring配置了，在eclipse的src文件夹下新建applicationContext.xml：<br /><pre name="code" class="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schemas/jaxws.xsd"&gt;
+	
+	&lt;import resource="classpath:META-INF/cxf/cxf.xml" /&gt;
+	&lt;import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" /&gt;
+	&lt;import resource="classpath:META-INF/cxf/cxf-servlet.xml" /&gt;
+	
+	&lt;bean id="hello" class="cn.com.service.HelloWorldImpl"/&gt;
+	
+	&lt;jaxws:endpoint id="helloWorld" implementor="#hello" address="/HelloWorld" /&gt;
+
+&lt;/beans&gt;</pre><br />注意：1).&lt;beans&gt;元素里面的命名空间一定要正确，特别要增加xmlns:jaxws="http://cxf.apache.org/jaxws"，http://cxf.apache.org/jaxws，http://cxf.apache.org/schemas/jaxws.xsd；<br /> 2).cxf.xml，cxf-extension-soap.xml，cxf-servlet.xml三个文件都在cxf-2.0.7.jar中把它们拷贝到META-INF/目录下。<br /><br />5.配置web.xml：<br /><pre name="code" class="java">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"&gt;
+
+	&lt;context-param&gt;
+		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+		&lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;
+	&lt;/context-param&gt;
+
+	&lt;listener&gt;
+		&lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+	&lt;/listener&gt;
+
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;CXFServlet&lt;/servlet-name&gt;
+		&lt;display-name&gt;CXF Servlet&lt;/display-name&gt;
+		&lt;servlet-class&gt;org.apache.cxf.transport.servlet.CXFServlet&lt;/servlet-class&gt;
+		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+	&lt;/servlet&gt;
+
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;CXFServlet&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;
+
+	&lt;welcome-file-list&gt;
+		&lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;
+	&lt;/welcome-file-list&gt;
+	
+&lt;/web-app&gt;</pre><br />到此服务器端基本上告一段落，可以将应用部署到tomcat，启动并访问http://localhost:8080/webws/HelloWorld?wsdl，如果能正确显示xml文件则说明部署成功。<br /><br /><strong><span style="color: red;">客户端</span></strong>：<br /><br />1.新建一个java项目，例如wsclient，也导入cxf-2.0.7和spring包<br />2.新建客户程序（如果熟悉cxf可以运用cxf的wsdl2java命令直接根据wsdl生成），如Test.java:<br /><pre name="code" class="java">
+package pro.webws.client;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+	public static void main(String[] args) {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-client.xml");
+		IHelloWorld client = (IHelloWorld) ctx.getBean("client");
+		String result = client.sayHello("你好!");
+		System.out.println(result);
+	}
+}</pre><br />根据代码，我们知道还需要新建一个IHelloWorld接口，这是服务器端暴露的服务，我们还需要在客户端再新建一个以利用之，代码和服务器端一致即可，不再赘述。<br /><br />现在可以配置客户端的spring文件了，新建spring-client.xml文件：<br /><pre name="code" class="java">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schema/jaxws.xsd"&gt;
+
+	&lt;bean id="client" class="pro.webws.client.IHelloWorld" factory-bean="clientFactory"
+		factory-method="create" /&gt;
+		
+	&lt;bean id="clientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean"&gt;
+		&lt;property name="serviceClass" value="pro.webws.client.IHelloWorld" /&gt;
+		&lt;property name="address" value="http://localhost:8080/webws/HelloWorld" /&gt;	
+	&lt;/bean&gt;
+&lt;/beans&gt;</pre><br />注意：&lt;property name="address" value="http://localhost:8080/webws/HelloWorld" /&gt;中的/HelloWorld要与服务器端applicationContext.xml中的&lt;jaxws:endpoint id="helloWorld" implementor="#hello" address="/HelloWorld" /&gt;的address属性对应。<br /><br />现在服务器和客户端都已完成，启动tomcat，运行客户程序，将输出结果：<br /><br />Hello你好!<br /><br /><br /><br /><br />
+  </div>
+
+  
+
+
+  
+  
+  <div id="bottoms" class="clearfix">
+    <div id="digg_bottom" class="clearfix"><div class='digged'><strong>4</strong> <br/>顶</div><div class='digged'><strong>0</strong> <br/>踩</div></div>
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/835408" class="next" title="Web Service学习笔记（转载）">Web Service学习笔记（转载）</a>
+      |
+      <a href="/blog/819491" class="pre" title="Axis简介">Axis简介</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2010-12-03 15:51</li>
+      <li>浏览 6481</li>
+      <li><a href="#comments">评论(6)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/architecture">企业架构</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/832704" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc2268366">
+  <div class="comment_title">
+    6 楼
+    <a href='http://dobuy.iteye.com' target='_blank' title='dobuy'>dobuy</a>
+    2012-07-06&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">谢谢啊啊啊</div>
+</div>
+
+<div id="bc2254240">
+  <div class="comment_title">
+    5 楼
+    <a href='http://liuxueping1987.iteye.com' target='_blank' title='liuxueping1987'>liuxueping1987</a>
+    2012-04-20&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">已经解决时项目的大小写问题，弄了半天才解决。。。<br />刚开始我的项目名为SpringAndCXFService 改为 springAndCXFService就ok拉</div>
+</div>
+
+<div id="bc2254228">
+  <div class="comment_title">
+    4 楼
+    <a href='http://liuxueping1987.iteye.com' target='_blank' title='liuxueping1987'>liuxueping1987</a>
+    2012-04-20&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">按照你的步骤做，服务端没有问题，但是客户端在运行，调用服务时报下面的错误，求指导。。多谢！！</div>
+</div>
+
+<div id="bc2254227">
+  <div class="comment_title">
+    3 楼
+    <a href='http://liuxueping1987.iteye.com' target='_blank' title='liuxueping1987'>liuxueping1987</a>
+    2012-04-20&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">log4j:WARN No appenders could be found for logger (org.apache.cxf.bus.spring.BusApplicationContext).<br />log4j:WARN Please initialize the log4j system properly.<br />2012-4-20 14:13:49 org.apache.cxf.bus.spring.BusApplicationContext getConfigResources<br />信息: No cxf.xml configuration file detected, relying on defaults.<br />2012-4-20 14:13:49 org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass<br />信息: Creating Service {http://client.com.cn/}IHelloWorldService from class cn.com.client.IHelloWorld<br />2012-4-20 14:13:50 org.apache.cxf.phase.PhaseInterceptorChain doIntercept<br />信息: Interceptor has thrown exception, unwinding now<br />org.apache.cxf.interceptor.Fault: Could not send Message.<br />	at org.apache.cxf.interceptor.MessageSenderInterceptor$MessageSenderEndingInterceptor.handleMessage(MessageSenderInterceptor.java:64)<br />	at org.apache.cxf.phase.PhaseInterceptorChain.doIntercept(PhaseInterceptorChain.java:221)<br />	at org.apache.cxf.endpoint.ClientImpl.invoke(ClientImpl.java:276)<br />	at org.apache.cxf.endpoint.ClientImpl.invoke(ClientImpl.java:222)<br />	at org.apache.cxf.frontend.ClientProxy.invokeSync(ClientProxy.java:73)<br />	at org.apache.cxf.jaxws.JaxWsClientProxy.invoke(JaxWsClientProxy.java:171)<br />	at $Proxy16.sayHello(Unknown Source)<br />	at cn.com.client.TestCXF.main(TestCXF.java:19)<br />Caused by: java.io.IOException: Not Found<br />	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponse(HTTPConduit.java:1929)<br />	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.close(HTTPConduit.java:1832)<br />	at org.apache.cxf.transport.AbstractConduit.close(AbstractConduit.java:66)<br />	at org.apache.cxf.transport.http.HTTPConduit.close(HTTPConduit.java:591)<br />	at org.apache.cxf.interceptor.MessageSenderInterceptor$MessageSenderEndingInterceptor.handleMessage(MessageSenderInterceptor.java:62)<br />	... 7 more<br />Exception in thread "main" javax.xml.ws.soap.SOAPFaultException: Could not send Message.<br />	at org.apache.cxf.jaxws.JaxWsClientProxy.invoke(JaxWsClientProxy.java:192)<br />	at $Proxy16.sayHello(Unknown Source)</div>
+</div>
+
+<div id="bc2232551">
+  <div class="comment_title">
+    2 楼
+    <a href='http://riapgypm.iteye.com' target='_blank' title='riapgypm'>riapgypm</a>
+    2011-11-30&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">不错，谢谢啦<img src="/images/smiles/icon_biggrin.gif" /> </div>
+</div>
+
+<div id="bc1856135">
+  <div class="comment_title">
+    1 楼
+    <a href='http://youfengkai.iteye.com' target='_blank' title='youfengkai'>youfengkai</a>
+    2011-01-17&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">非常入门级,易懂</div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 832704;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'CXF和spring整合实现webservice实例');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'CXF和spring整合实现webservice实例');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://tsinglongwu.iteye.com'><img alt="tsinglongwu的博客" class="logo" src="http://www.iteye.com/upload/logo/user/369774/b2fcec6e-1a4e-3836-aff2-ba7a9fc9636f.jpg?1292575212" title="tsinglongwu的博客: Java红" /></a></div>
+  <div id="blog_owner_name">tsinglongwu</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 48938 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1324994303" title="男" /></li>
+              <li>来自: 深圳</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://haojiaqi.iteye.com' target='_blank'><img alt="haojiaqi的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="haojiaqi的博客: " /></a></div>
+                <div class="left"><a href='http://haojiaqi.iteye.com' target='_blank' title='haojiaqi'>haojiaqi</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://121059457.iteye.com' target='_blank'><img alt="121059457的博客" class="logo" src="http://www.iteye.com/upload/logo/user/105753/1a3b250f-3652-3037-bb3a-268dbbaa9516-thumb.jpg?1242829168" title="121059457的博客: 学习之地" /></a></div>
+                <div class="left"><a href='http://121059457.iteye.com' target='_blank' title='121059457'>121059457</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://476897338.iteye.com' target='_blank'><img alt="牵小猪看日出的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="牵小猪看日出的博客: " /></a></div>
+                <div class="left"><a href='http://476897338.iteye.com' target='_blank' title='牵小猪看日出'>牵小猪看日出</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://huimeng7.iteye.com' target='_blank'><img alt="huimeng7的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="huimeng7的博客: " /></a></div>
+                <div class="left"><a href='http://huimeng7.iteye.com' target='_blank' title='huimeng7'>huimeng7</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (65)</a></li>
+                
+                  <li><a href="/category/115254">java (21)</a></li>
+                
+                  <li><a href="/category/115260">j2ee (4)</a></li>
+                
+                  <li><a href="/category/115256">hibernate (4)</a></li>
+                
+                  <li><a href="/category/115255">spring (6)</a></li>
+                
+                  <li><a href="/category/115258">js&amp;ajax&amp;jquery (3)</a></li>
+                
+                  <li><a href="/category/115257">oracle (9)</a></li>
+                
+                  <li><a href="/category/115259">linux&amp;Unix (5)</a></li>
+                
+                  <li><a href="/category/115635">正则表达式 (1)</a></li>
+                
+                  <li><a href="/category/131795">ZK (7)</a></li>
+                
+                  <li><a href="/category/136984">mysql (4)</a></li>
+                
+                  <li><a href="/category/140778">eclipse.etc (1)</a></li>
+                
+                  <li><a href="/category/140779">SOA (4)</a></li>
+                
+                  <li><a href="/category/140780">Android (1)</a></li>
+                
+                  <li><a href="/category/144462">tomcat+jboss+weblogic (1)</a></li>
+                
+                  <li><a href="/category/147042">CSS+HTML (1)</a></li>
+                
+                  <li><a href="/category/153747">struts2 (0)</a></li>
+                
+                  <li><a href="/category/153748">职业 (0)</a></li>
+                
+                  <li><a href="/category/167013">log4j (1)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (17)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (2)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2012-03">2012-03</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2011-12">2011-12</a> (4)</li>
+                
+                  <li><a href="/blog/monthblog/2011-11">2011-11</a> (2)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://dobuy.iteye.com' target='_blank' title='dobuy'>dobuy</a>： 
+                  谢谢啊啊啊<br />
+                  <a href="/blog/832704#bc2268366">CXF和spring整合实现webservice实例</a>
+                </li>
+                
+                <li>
+                  <a href='http://fhqllt.iteye.com' target='_blank' title='fhqllt'>fhqllt</a>： 
+                  但是如果类名前两个字母都是大写，则返回的bean名也是大写，即 ...<br />
+                  <a href="/blog/847843#bc2261542">spring注释bean名头字母大小写的问题</a>
+                </li>
+                
+                <li>
+                  <a href='http://liuxueping1987.iteye.com' target='_blank' title='liuxueping1987'>liuxueping1987</a>： 
+                  已经解决时项目的大小写问题，弄了半天才解决。。。刚开始我的项 ...<br />
+                  <a href="/blog/832704#bc2254240">CXF和spring整合实现webservice实例</a>
+                </li>
+                
+                <li>
+                  <a href='http://liuxueping1987.iteye.com' target='_blank' title='liuxueping1987'>liuxueping1987</a>： 
+                  按照你的步骤做，服务端没有问题，但是客户端在运行，调用服务时报 ...<br />
+                  <a href="/blog/832704#bc2254228">CXF和spring整合实现webservice实例</a>
+                </li>
+                
+                <li>
+                  <a href='http://liuxueping1987.iteye.com' target='_blank' title='liuxueping1987'>liuxueping1987</a>： 
+                  log4j:WARN No appenders could b ...<br />
+                  <a href="/blog/832704#bc2254227">CXF和spring整合实现webservice实例</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2014 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20390641-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+      
+    
+  </body>
+</html>

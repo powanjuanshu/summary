@@ -1,0 +1,193 @@
+-------------------------------------------------------服务端：
+package com.neusoft.gazelle.core.webservice;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+@WebService
+public interface Fuck {
+	@WebMethod(operationName="hi") // 可以省略
+	public JackMode hi(@WebParam(name="jackInfo1")String jack1, @WebParam(name="jackInfo2")String jack2); // 可以省略@WebParam(name="jackInfo2"),如果省略了，name=arg0，参数会使用默认的args0
+}
+-------------------------------------------------------
+package com.neusoft.gazelle.core.webservice;
+import javax.jws.WebService;
+@WebService(serviceName="HelloGT",endpointInterface="com.neusoft.gazelle.core.webservice.Fuck")
+public class FuckImpl implements Fuck {
+	@Override
+	public JackMode hi(String jack1, String jack2) {
+		System.out.println("jack1:" + jack1);
+		System.out.println("jack2:" + jack2);
+		JackMode model=new JackMode();
+		model.setPassword("aaa");
+		model.setUsername("bbb");
+		return model;
+	}
+}
+-------------------------------------------------------
+package com.neusoft.gazelle.core.webservice;
+public class JackMode {
+	private String username;
+	private String password;
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+-------------------------------------------------------
+package com.neusoft.gazelle.core.webservice;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
+@SuppressWarnings("rawtypes")
+public class SampleInterceptor extends AbstractPhaseInterceptor {
+	public SampleInterceptor(String sss) {
+		super(Phase.PRE_INVOKE);
+	}
+	public void handleMessage(Message message) throws Fault {
+		System.out.println("xxxxx");
+		System.out.println(message.toString());
+	}
+}
+-------------------------------------------------------
+applicationContext-webservice.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:soap="http://cxf.apache.org/bindings/soap"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+	<!--cxf引用的部分lib在jdk1.6不兼容，需要在jdk/jre/lib，新建文件夹：endorsed 且放置三个lib：jaxb-api-2.x.jar ,jaxb-impl-2.x.jar ,jaxb-xjc-2.x.jar-->
+	<import resource="classpath:META-INF/cxf/cxf.xml"/>
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+	<bean id="inMessageInterceptor" class="com.neusoft.gazelle.core.webservice.SampleInterceptor"> 
+		<constructor-arg value="receive"/> 
+	</bean>
+	<!--发布WebService接口-->
+	<!--id:名称随意配，implementor:指定接口具体实现类，address:随意配-->
+	<jaxws:endpoint id="jackAn" implementor="com.neusoft.gazelle.core.webservice.FuckImpl" address="/JackAndRose">
+		<jaxws:inInterceptors> 
+			<ref bean="inMessageInterceptor"/>
+		</jaxws:inInterceptors>
+	</jaxws:endpoint>
+</beans>
+-------------------------------------------------------
+web.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>AnalysisTool</display-name>
+	<description>Welcome to CPIC Analysis Tool.</description>
+	<!--spring applicationcontext载入-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:/applicationContext-webservice.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!--sessin的超时配置-->
+	<session-config>
+		<session-timeout>180</session-timeout>
+	</session-config>
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/cpic/*</url-pattern>
+	</servlet-mapping>
+</web-app>
+-------------------------------------------------------客户端：
+package aa;
+public class Main {
+	public static void main(String[] args) throws Exception {
+		CxfClient.invoke("http://localhost/xxx/cpic/JackAndRose?wsdl", "hi", "aaa1", "aaa2");
+	}
+}
+-------------------------------------------------------
+package aa;
+import javax.xml.namespace.QName;
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
+import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+/**
+ * 创建CXF客户端类
+ * @author ZH
+ *
+ */
+public class CxfClient {
+	/**
+	 * 调用WS
+	 * @param wsdlUrl WS地址
+	 * @param operationName 方法名
+	 * @param params 参数数组
+	 */
+	public static Object[] invoke(String wsdlUrl, String operationName, Object... params) throws Exception{
+		Client client = getClient(wsdlUrl);
+		if (client == null) {
+			return null;
+		}
+		Object[] results = null;
+		results = client.invoke(operationName, params);
+		return results;
+	}
+	/**
+	 * 调用WS
+	 * @param wsdlUrl WS地址
+	 * @param name	 方法名
+	 * @param params 参数数组
+	 */
+	public static Object[] invoke(String wsdlUrl, QName name, Object... params) throws Exception{
+		Client client = getClient(wsdlUrl);
+		if (client == null) {
+			return null;
+		}
+		Object[] results = null;
+		results = client.invoke(name, params);
+		return results;
+	}
+	/**
+	 * 创建WS客户端
+	 * @param wsdlUrl WS地址
+	 */
+	public static Client getClient(String wsdlUrl) throws Exception{
+		JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
+		Client client = dcf.createClient(wsdlUrl);
+		setTimeOut(client, 20000);
+		return client;
+	}
+	/**
+	 * 设置超时时间，单位MS
+	 */
+	public static void setTimeOut(Client client, int timeOut) {
+		HTTPConduit http = (HTTPConduit) client.getConduit();
+		HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+		httpClientPolicy.setConnectionTimeout(20000); // 连接超时
+		httpClientPolicy.setAllowChunking(false); // 取消分块发送
+		httpClientPolicy.setReceiveTimeout(timeOut); // 响应超时
+		http.setClient(httpClientPolicy);
+	}
+	public static void destroy(Client client) {
+		if (client != null) {
+			client.destroy();
+		}
+	}
+}
+
+
+
+
+

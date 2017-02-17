@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="翼支付账户升级版（准生产环境）" soapui-version="4.5.2" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="IDispatchControlHttpBinding" type="wsdl" bindingName="{http://control.ppcore.haobai.huateng.com}IDispatchControlHttpBinding" soapVersion="1_1" anonymous="optional" definition="http://116.228.55.185:7334/provfront/services/businessService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://116.228.55.185:7334/provfront/services/businessService?wsdl"><con:part><con:url>http://116.228.55.185:7334/provfront/services/businessService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://control.ppcore.haobai.huateng.com" xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding" xmlns:tns="http://control.ppcore.haobai.huateng.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://control.ppcore.haobai.huateng.com">
+      <xsd:element name="dispatchCommand">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="in0" nillable="true" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="1" name="in1" nillable="true" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="dispatchCommandResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="dispatchCommandResponse">
+    <wsdl:part name="parameters" element="tns:dispatchCommandResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="dispatchCommandRequest">
+    <wsdl:part name="parameters" element="tns:dispatchCommand"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IDispatchControlPortType">
+    <wsdl:operation name="dispatchCommand">
+      <wsdl:input name="dispatchCommandRequest" message="tns:dispatchCommandRequest"></wsdl:input>
+      <wsdl:output name="dispatchCommandResponse" message="tns:dispatchCommandResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IDispatchControlHttpBinding" type="tns:IDispatchControlPortType">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="dispatchCommand">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="dispatchCommandRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="dispatchCommandResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IDispatchControl">
+    <wsdl:port name="IDispatchControlHttpPort" binding="tns:IDispatchControlHttpBinding">
+      <wsdlsoap:address location="http://116.228.55.185:7334/provfront/services/businessService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://116.228.55.185:7334/provfront/services/businessService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="dispatchCommand" bindingOperationName="dispatchCommand" type="Request-Response" outputName="dispatchCommandResponse" inputName="dispatchCommandRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="开户"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://116.228.55.185:7334/provfront/services/businessService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="http://control.ppcore.haobai.huateng.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:dispatchCommand>
+         <con:in0>600609|002500000000000-TEST1-127.0.0.1|1.0|127.0.0.1</con:in0>
+         <con:in1><![CDATA[
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<PayPlatRequestParameter>
+        <CTRL-INFO WEBSVRNAME="绑定关系查询" WEBSVRCODE="600609" APPFROM="420000-INAS" KEEP="07201305291348389601"/>
+        <PARAMETERS>
+        <PRODUCTTYPE>3</PRODUCTTYPE>
+        <PRODUCTNO>15343059283</PRODUCTNO>
+                <BINDSTATUS/>
+                <ACCEPTORGCODE>001340100000000</ACCEPTORGCODE>
+                <ACCEPTSEQNO>07201310151348389115</ACCEPTSEQNO>
+                <INPUTTIME>20131018134838</INPUTTIME>
+        </PARAMETERS><MAC>wlbJbPTLGS3Sk40nhlM8qGfZwUNrm/TLifoCe2X/gy4=</MAC></PayPlatRequestParameter>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]]]>><![CDATA[</con:in1>
+      </con:dispatchCommand>
+   </soapenv:Body> 	
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://control.ppcore.haobai.huateng.com/IDispatchControlPortType/dispatchCommandRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>

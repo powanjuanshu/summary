@@ -1,0 +1,8 @@
+测试创建的域
+1浏览目录c：\bea\user_projects\domains\dizzyword，熟悉一下配置向导创建的文件
+2打开一个command窗口，执行下列命令：
+   cd c：\bea\user_projects\domains\dizzyword
+   startWebLogic.cmd
+3当提示输入用户名和密码时，键入weblogic/weblogic
+4当command窗口出现<Server started in RUNNING mode>消息时，WebLogic管理服务器已经启动成功了。
+5当验证WebLogic服务器可以正常启动后，在command窗口中使用快捷键ctrl+c停止服务器。

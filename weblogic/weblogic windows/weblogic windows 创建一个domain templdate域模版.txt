@@ -1,0 +1,2 @@
+双击C:\bea\weblogic92\common\bin\config_builder.cmd，会弹出创建domain templdate向导，
+一步一步跟着向导直到完成

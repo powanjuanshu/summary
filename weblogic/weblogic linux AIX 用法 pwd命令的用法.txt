@@ -1,0 +1,2 @@
+查看当前目录的全路径
+pwd-print name of current/working directory

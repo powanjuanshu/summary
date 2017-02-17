@@ -1,0 +1,1 @@
+单击：开始—Oracle WebLogic—Uninstall Oracle WebLogic后，下一步就可以了。最简便的方式就是直接删除你安装的weblogic目录就可以了。

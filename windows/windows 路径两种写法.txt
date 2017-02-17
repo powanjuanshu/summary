@@ -1,0 +1,2 @@
+c:\\temp\\demo.log
+c:/temp/demo.log

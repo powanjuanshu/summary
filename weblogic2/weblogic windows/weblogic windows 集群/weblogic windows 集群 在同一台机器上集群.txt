@@ -1,0 +1,102 @@
+配置集群应用的必要条件
+1.集群中的所有Server必须位于同一网段,并且必须是IP广播(UDP)可到达的
+2.集群中的所有Server必须使用相同的版本,包括Service Pack
+3.集群中的Server必须使用永久的静态IP地址。动态IP地址分配不能用于集群环境。如果服务器位于防火墙后面,而客户机位于防火墙外面,那么服务器必须有公共的静态IP地址,只有这样,客户端才能访问服务器
+4.要以CLUSTER方式运行,必须有包含CLUSTER许可的LICENSE才行(从Bea网站上下载的试用版本就可以进行Cluster配置)
+---------------------------------------
+配置前的准备工作:
+在配置集群应用前要对集群的配置信息有一个良好的设计,下面就是我们这次配置的集群信息:
+在同一台机器上配置集群
+机器类型	操作系统	硬件配置			角色			备注
+samsung         windows xp	ip:192.168.242.1 port:7080	Administrator Server 	无
+samsung         windows xp	ip:192.168.242.1 port:8080	Proxy Server		无
+samsung         windows xp	ip:192.168.242.1 port:7082	Managed Server		无
+samsung         windows xp	ip:192.168.242.1 port:7084	Managed Server		无
+samsung         windows xp	ip:192.168.242.1 port:7086	Managed Server		无
+---------------------------------------
+使用Domain Configuration Wizard进行配置
+创建新的Domain
+【1】配置Administrator Server的信息
+开始->程序->BEA Products->Tools->Configuration Wizard->勾选 Create a new Weblogic domain->Next->
+勾选 Generate a domain configurated automatically to support the following BEA products->Next->输入用户名和密码为weblogic->Next->勾选 Development Mode->
+勾选 BEA Supplied JDKs 选中Sun SDK 1.5.0_22@C:\bea\jdk150_22->Next->勾选 Yes->Next->输入Listen port:7080->Next
+【2】配置Managed Server的信息
+->点击Add->输入Managed Server的名称,监听地址,监听端口,如果需要SSL支持的话,可以在"SSL enabled"复选框上打钩,配置SSL监听端口.可以配置多个Managed Server
+Name*		Listen address		Listen port	SSL listen port		SSL enabled
+nodeA		192.168.242.1		7082		
+nodeB		192.168.242.1		7084		
+nodeC		192.168.242.1		7086		
+->Next
+【3】配置Cluster的信息
+->点击Add->输入Cluster的名称,Cluster的组播地址和端口,Cluster地址可输可不输
+Name*		Multicast address	Multicast port		Cluster address
+testCluster	237.0.0.1		7777			192.168.242.1:7082,192.168.242.1:7084,192.168.242.1:7086
+【4】将Managed Server添加到Cluster中
+->选择左边的Server->点击向右的箭头->Next
+【5】配置Machine的信息
+在此不对Machine进行配置,单击Next按钮
+【6】->Next->Create->完成
+---------------------------------------
+启动WebLogic服务
+【1】启动Administrator Server
+使用startWebLogic命令启动Administrator Server,或者用控制台启动 开始->程序->BEA Products->User Projects->base_domain->Start Admin Server for Weblogic Server domain
+切换目录 cd C:\bea\user_projects\domains\base_domain\bin
+输入命令 startWebLogic.cmd或者startWeblogic
+【2】启动Managed Server
+使用startManagedWeblogic命令启动Managed Server,它的命令格式是: startManagedWeblogic.cmd Managed Server的名称 Administrator Server地址
+同理可以启动nodeB和nodeC以及Proxy Server
+切换目录 cd C:\bea\user_projects\domains\base_domain\bin
+输入命令 startManagedWebLogic.cmd nodeA http://192.168.242.1:7080 或者 startManagedWebLogic nodeA http://192.168.242.1:7080 或者 start startManagedWebLogic.cmd nodeA http://192.168.242.1:7080
+输入命令 startManagedWebLogic.cmd nodeB http://192.168.242.1:7080 或者 startManagedWebLogic nodeB http://192.168.242.1:7080 或者 start startManagedWebLogic.cmd nodeB http://192.168.242.1:7080
+输入命令 startManagedWebLogic.cmd nodeC http://192.168.242.1:7080 或者 startManagedWebLogic nodeC http://192.168.242.1:7080 或者 start startManagedWebLogic.cmd nodeC http://192.168.242.1:7080
+【3】创建和启动Proxy Server
+创建Proxy Server:登陆控制台->base_domain->Environment->Servers->New->Server Name:proxyServer,Server Listen Address:192.168.242.1,Server Listen Port:8080->Next->Finish
+切换目录 cd C:\bea\user_projects\domains\base_domain\bin
+输入命令 startManagedWebLogic.cmd proxyServer http://192.168.242.1:7080 或者 startManagedWebLogic proxyServer http://192.168.242.1:7080 或者 start startManagedWebLogic.cmd proxyServer http://192.168.242.1:7080
+【4】代理应用
+通过HttpClusterServlet实现请求的自动分发处理
+HttpClusterServlet通过一个WebLogic服务器代理对WebLogic集群中的其他服务器成员的HTTP请求,同时HttpClusterServlet还为代理的HTTP请求提供负载平衡与容错处理。
+实际上实现是很简单的,遵循下面几个步骤就可以轻松实现请求的自动分发功能:
+1.创建一个代理Server(在此我们称这proxyServer)
+2.生成配置文件web.xml
+3.生成配置文件weblogic.xml
+4.打包生成Web应用
+5.在proxyServer上部署应用，并将该应用作为缺省的Web应用
+6.打包WEB应用
+  Temp
+      WEB-INF
+	web.xml
+	weblogic.xml
+7.使用如下的命令操作，就可完成web应用的打包操作: JAR -参数 WEB应用名称 要打包的目录
+切换目录 cd D:\serverlet\Temp
+输入命令 jar -cvf defaultProxy.war .
+当然我们也可以直接部署该目录,而无需打包,这在项目的开发阶段是很有帮助的,便于修改。
+8.登陆控制台将defaultProxy.war包部署到proxyServer上.
+9.测试proxy应用
+修改web.xml文件，加入下面的结点，然后重启服务。
+              <init-param>
+                     <param-name>DebugConfigInfo</param-name>
+                     <param-value>ON</param-value>
+              </init-param>
+访问 http://myserver:port/placeholder.jsp?__WebLogicBridgeConfig(http://192.168.242.1:8080/xxxx.jsp?__WebLogicBridgeConfig)会得到域的信息,说明你的配置是成功的
+myserver为服务地址(在这里是10.16.92.7)
+port为proxy服务的端口(在这里是8080)
+placeholder.jsp(这是一个不存在的JSP文件，您也可以随意指定文件名)
+__WebLogicBridgeConfig(这个可千万不能写错)
+10.同样的方法将应用部署到每个Managed Server上,部署的应用在WEB-INF下必须要加一个weblogic.xml文件,不然群机无法同步session因此也不会轮训请求(好像不写可以)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

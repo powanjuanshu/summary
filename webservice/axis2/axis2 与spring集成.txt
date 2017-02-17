@@ -1,0 +1,131 @@
+服务端:
+web.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>Server</display-name>
+     <listener>
+         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+     </listener>
+     <context-param>
+         <param-name>contextConfigLocation</param-name>
+         <param-value>/WEB-INF/spring-context.xml</param-value>
+     </context-param>
+     <servlet>
+         <servlet-name>AxisServlet</servlet-name>
+         <servlet-class>org.apache.axis2.transport.http.AxisServlet</servlet-class>
+         <load-on-startup>1</load-on-startup>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>AxisServlet</servlet-name>
+         <url-pattern>/services/*</url-pattern>
+     </servlet-mapping>
+ 
+     <welcome-file-list>
+         <welcome-file>index.jsp</welcome-file>
+         <welcome-file>index.html</welcome-file>
+         <welcome-file>/axis2-web/index.jsp</welcome-file>
+     </welcome-file-list>
+</web-app>
+--------------------------------
+spring-context.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<!-- 配置axis2交给spring管理，该配置必须存在 -->
+	<bean id= "applicationContext" class = "org.apache.axis2.extensions.spring.receivers.ApplicationContextHolder"  />
+    <bean id= "springAixsService" class = "com.mipo.Abbc" ></bean>
+</beans>
+--------------------------------
+package com.mipo;
+public class Abbc {
+	public String login(String uname, String pwd){
+		System.out.println("登陆");
+		return "jack";
+	}
+}
+--------------------------------
+在WebRoot/WEB-INF/services/目录下建立目录abc(这个名字可以随便取)/然后建立META-INF目录/然后再在其目录下建立services.xml:
+<serviceGroup>
+	<service name= "SpringAwareService" >
+	    <!-- Service描述 -->
+	    <description>simple spring example</description>
+	    <parameter name= "ServiceObjectSupplier">org.apache.axis2.extensions.spring.receivers.SpringAppContextAwareObjectSupplier</parameter>
+	    <!-- 描绘包与类的关系结构 --><!-- SpringBeanName名字是固定的不能改,springAixsService是spring中注册的实现类的id -->
+	    <parameter name= "SpringBeanName">springAixsService</parameter>
+	    <!-- 定义方法处理器 -->
+	    <messageReceivers>
+	    	<!-- Axis2 针对 In-Only和In-Out操作提供了两个无数据绑定的内置 MessageReceivers:
+		     用于In-Only操作:org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver
+		     用于In-Out 操作:org.apache.axis2.rpc.receivers.RPCMessageReceiver 
+		-->
+	        <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only" class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
+	        <messageReceiver mep= "http://www.w3.org/2004/08/wsdl/in-out" class = "org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	    </messageReceivers>
+	</service>
+</serviceGroup>
+--------------------------------
+客户端:
+package com.mipo;
+import java.util.Iterator;
+import org.apache.axiom.om.OMAbstractFactory;
+import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.OMFactory;
+import org.apache.axiom.om.OMNamespace;
+import org.apache.axiom.soap.SOAP12Constants;
+import org.apache.axis2.Constants;
+import org.apache.axis2.addressing.EndpointReference;
+import org.apache.axis2.client.Options;
+import org.apache.axis2.client.ServiceClient;
+import org.apache.axis2.transport.http.HTTPConstants;
+public class Main2 {
+	public static void main(String[] args) throws Exception {
+		// 请求参数设置 
+		EndpointReference targetEPR = new EndpointReference("http://localhost:9080/hundsun/services/SpringAwareService?wsdl"); // 设置WebService地址 
+		Options options = new Options();
+		options.setTo(targetEPR);
+		options.setTransportInProtocol(Constants.TRANSPORT_HTTP); // 设置传输协议 
+		options.setTimeOutInMilliSeconds(600000L); // 设置1分钟超时
+		options.setProperty(HTTPConstants.CHUNKED, "false"); // 设置不受限制
+		options.setSoapVersionURI(SOAP12Constants.SOAP_ENVELOPE_NAMESPACE_URI); // 设置SOAP版本soap1.2
+		
+		// 客户端绑定参数设置 
+		ServiceClient sender = new ServiceClient();
+		sender.setOptions(options);
+		
+		OMFactory fac = OMAbstractFactory.getOMFactory();
+		OMNamespace omNameSpace = fac.createOMNamespace("http://mipo.com", ""); // 接口命名空间名  // 第一个参数是namespace,若填空会报org.apache.axis2.AxisFault: namespace mismatch require http://mipo.com found none
+		
+		// 设定访问的接口方法
+		OMElement method = fac.createOMElement("login", omNameSpace); // 要调用的接口方法名称
+		OMElement in0 = fac.createOMElement("uname", omNameSpace); // 方法的第一个参数名称 ,填错会报错
+		OMElement in1 = fac.createOMElement("pwd", omNameSpace); // 方法的第二个参数名称,填错会报错
+		
+		in0.addChild(fac.createOMText("haha")); // 设定参数的值
+		in1.addChild(fac.createOMText("nihao")); // 设定参数的值
+		
+		method.addChild(in0);
+		method.addChild(in1);
+		
+		OMElement results = sender.sendReceive(method); // 调用接口方法
+		sender.cleanupTransport(); // 关闭资源 
+		sender.cleanup(); 
+		
+		System.out.println("发送:");
+		Iterator<?> it = results.getChildElements();
+		while (it.hasNext()) {
+			OMElement el = (OMElement) it.next();
+			System.out.println("方法:"+ el.getLocalName());
+			System.out.println("返回:" + el.getText());
+		}
+	}
+}
+--------------------------------
+打印:
+发送:
+方法:return
+返回:jack

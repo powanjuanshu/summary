@@ -1,0 +1,90 @@
+位于C:\Windows\System32\drivers\etc目录中。该文件其实是一个纯文本的文件,用普通的文本编辑软件如记事本等都能打开。
+用记事本打开hosts文件,首先看见了微软对这个文件的说明。这个文件是根据TCP/IPforWindows的标准来工作的,它的作用是包含IP地址和Host name(主机名)的映射关系
+是一个映射IP地址和Hostname(主机名)的规定,规定要求每段只能包括一个映射关系,IP地址要放在每段的最前面,空格后再写上映射的Host name(主机名).
+对于这段的映射说明用"#"分割后用文字说明。
+现在让我们来看看Hosts在Windows中是怎么工作的。
+我们知道在网络上访问网站,要首先通过DNS服务器把网络域名(www.XXXX.com)解析成61.XXX.XXX.XXX的IP地址后,我们的计算机才能访问.
+要是对于每个域名请求我们都要等待域名服务器解析后返回IP信息,这样访问网络的效率就会降低,而Hosts文件就能提高解析效率.
+根据Windows系统规定,在进行DNS请求以前,Windows系统会先检查自己的Hosts文件中是否有这个地址映射关系,如果有则调用这个IP地址映射,如果没有再向已知的DNS服务器提出域名解析。
+也就是说Hosts的请求级别比DNS高。
+知道了Hosts文件的工作方式,那在具体使用中它有哪些作用呢?
+1、加快域名解析
+对于要经常访问的网站,我们可以通过在Hosts中配置域名和IP的映射关系,这样当我们输入域名计算机就能很快解析出IP,而不用请求网络上的DNS服务器.
+2、方便局域网用户
+在很多单位的局域网中,会有服务器提供给用户使用。但由于局域网中一般很少架设DNS服务器,访问这些服务要输入难记的IP地址,对不少人来说相当麻烦.
+现在可以分别给这些服务器取个容易记住的名字,然后在Hosts中建立IP映射,这样以后访问的时候我们输入这个服务器的名字就行了.
+3、屏蔽网站
+现在有很多网站不经过用户同意就将各种各样的插件安装到你的计算机中,有些说不定就是木马或病毒.
+对于这些网站我们可以利用Hosts把该网站的域名映射到错误的IP或自己计算机的IP,这样就不用访问了.我们在Hosts写上以下内容:
+127.0.0.1#屏蔽的网站
+0.0.0.0#屏蔽的网站
+这样计算机解析域名就解析到本机或错误的IP,达到了屏蔽的目的.
+4、顺利连接系统
+对于Lotus的服务器和一些数据库服务器,在访问时如果直接输入IP地址那是不能访问的,只能输入服务器名才能访问。那么我们配置好Hosts文件,这样输入服务器名就能顺利连接了。
+最后要指出的是,Hosts文件配置的映射是静态的,如果网络上的计算机更改了请及时更新IP地址,否则将不能访问.
+----------------------------------------------------------
+春秋的例子：hosts
+# Copyright (c) 1993-2009 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+
+# localhost name resolution is handled within DNS itself.
+#	127.0.0.1       localhost
+#	::1             localhost
+
+192.168.1.28    www.dev.chunqiu.com
+192.168.1.28	beta.dev.chunqiu.com
+192.168.1.28	houtai.dev.chunqiu.com
+192.168.1.28	onlinedatasource.rest.dev.chunqiu.com
+192.168.1.28	onlinedatamining.rest.dev.chunqiu.com
+192.168.1.28	log.rest.dev.chunqiu.com
+192.168.1.28	webresource.dev.chunqiu.com 
+192.168.1.28	booking.dev.chunqiu.com 
+192.168.1.28	my.dev.chunqiu.com 
+192.168.1.28	pay.dev.chunqiu.com 
+192.168.1.28	host.dev.chunqiu.com 
+192.168.1.28	homehost.dev.chunqiu.com 
+192.168.1.28	userhost.dev.chunqiu.com 
+192.168.1.28	payhost.dev.chunqiu.com 
+192.168.1.28	bookinghost.dev.chunqiu.com 
+192.168.1.28	Api.rest.dev.chunqiu.com
+192.168.1.34	logquery.rest.dev.chunqiu.com
+
+192.168.1.28	webresource.dev.chunqiu.com
+192.168.1.43	mongodb.dev.chunqiu.com
+192.168.1.43	mongodb.test.chunqiu.com
+
+192.168.1.29	beta.test.chunqiu.com
+192.168.1.29	houtai.test.chunqiu.com
+192.168.1.29	booking.test.chunqiu.com 
+192.168.1.29	bookinghost.test.chunqiu.com 
+192.168.1.29	onlinedatasource.rest.test.chunqiu.com
+192.168.1.29	onlinedatamining.rest.test.chunqiu.com
+192.168.1.29	log.rest.test.chunqiu.com
+192.168.1.29	webresource.test.chunqiu.com
+192.168.1.29	payhost.test.chunqiu.com 
+192.168.1.29	my.test.chunqiu.com 
+192.168.1.29	userhost.test.chunqiu.com
+192.168.1.29	pay.test.chunqiu.com 
+192.168.1.11    www.test.chunqiu.com
+
+192.168.1.28	MinPriceCalculate.rest.dev.chunqiu.com
+
+#210.51.51.230 sh.springtour.com
+192.168.1.29 Api.rest.test.chunqiu.com
+
+

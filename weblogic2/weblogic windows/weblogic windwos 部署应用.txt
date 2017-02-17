@@ -1,0 +1,7 @@
+1.点击Lock&Edit
+2.点击Install
+3.在Locationz:找到war包的路径,选中war包,Next
+4.选择Install this deployment as an application,Next
+5.Finish
+6.Active Changes
+7.选中该项目,Start->servicing all requests->Yes

@@ -1,0 +1,3 @@
+希望在欢迎屏幕上显示这个帐户，那么可以修改注册表：
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList，
+在右侧的窗口中找到以Administrator命名的DWORD键（如果没有可以自己建立），双击，将键值由0改为1，退出后重新启动计算机。

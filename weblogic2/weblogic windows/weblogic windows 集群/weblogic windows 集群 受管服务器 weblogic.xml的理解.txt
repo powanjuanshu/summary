@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<weblogic-web-app xmlns="http://www.bea.com/ns/weblogic/90"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd
+	http://www.bea.com/ns/weblogic/90
+	http://www.bea.com/ns/weblogic/90/weblogic-web-app.xsd">
+	<!-- 如果没有这个文件,没有这个配置,则session无法同步到其他服务器上,那么weblogic会一直请求一个server,不会轮训,以保证session在一台机器上避免session在不同机器上失败 -->
+	<!-- 好像没有这个文件又可以轮训 -->
+	<session-descriptor>
+		<persistent-store-type>replicated</persistent-store-type>
+		<sharing-enabled>true</sharing-enabled>
+	</session-descriptor>
+	<context-root>/</context-root>
+</weblogic-web-app>

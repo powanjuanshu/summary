@@ -1,0 +1,85 @@
+* xml+xsd,soap和WSDL就是构成WebService平台的三大技术.
+
+* xml+xsd：
+  WebService采用HTTP协议传输数据,采用xml格式封装数据(即xml中说明调用远程服务对象的哪个方法,传递的参数是什么,以及服务对象的返回结果是什么).
+  xml是WebService平台中表示数据的格式. 
+  xml解决了数据表示的问题,但它没有定义一套标准的数据类型,更没有说怎么去扩展这套数据类型.例如,整形数到底代表什么?16位,32位,64位?
+  这些细节对实现互操作性很重要.xml Schema(xsd)就是专门解决这个问题的一套标准.它定义了一套标准的数据类型,并给出了一种语言来扩展这套数据类型.
+  WebService平台就是用xsd来作为其数据类型系统的.当你用某种语言(如VB.NET或C#)来构造一个Web service时,为了符合WebService标准,
+  所有你使用的数据类型都必须被转换为xsd类型.你用的工具可能已经自动帮你完成了这个转换,但你很可能会根据你的需要修改一下转换过程.
+
+* soap协议详解：
+  WebService通过HTTP协议发送请求和接收结果时,发送的请求内容和结果内容都采用xml格式封装,并增加了一些特定的HTTP消息头,以说明HTTP消息的内容格式,
+  这些特定的HTTP消息头和xml内容格式就是soap协议.soap提供了标准的RPC方法来调用Web Service.
+  soap协议 = HTTP协议 + xml数据格式
+  soap协议定义了soap消息的格式,soap协议是基于HTTP协议的,soap也是基于xml和xsd的,xml是soap的数据编码方式.打个比喻：
+  HTTP就是普通公路,xml就是中间的绿色隔离带和两边的防护栏,soap就是普通公路经过加隔离带和防护栏改造过的高速公路.
+
+
+wsdl可以确定SOAP消息是否遵从RPC或文档风格.RPC风格的消息（就是示例中所用的）看起来像是函数调用.
+而文档风格的消息则更普通,嵌套层次更小.下面的XML消息就是示例wsdl文件解析后的发送/接受效果,解析使用的是MS SOAP Toolkit 2.0（MSTK2）中的SoapClient对象.
+
+从客户端调用"foo"函数：
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SOAP-ENV:Envelope
+        SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <m:foo xmlns:m="http://tempuri.org/message/">
+            <arg>5131953</arg>
+        </m:foo>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+从服务器接受的信息：
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SOAP-ENV:Envelope   
+        SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <SOAPSDK1:fooResponse xmlns:SOAPSDK1="http://tempuri.org/message/">
+            <result>5131953</result>
+        </SOAPSDK1:fooResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+SOAP消息由几部分组成,首先是<Envelop>元素,包含一个可选的<Header>元素以及至少一个<body>元素.
+Rpc函数所调用的消息体有一个根据操作"foo"命名的元素,而回应信息体有一个"fooResponse"元素.Foo元素有一个部分<arg>,就和wsdl中描述的一样,是单参数的.
+fooResponse也相应的有一个<result>的部分.注意encodingStyle、envelope和message的namespace和wsdl Bindings栏中的预定义的一致,重复如下：  
+<binding name="SimpleBinding"
+         type="wsdlns:SimplePortType">
+    <stk:binding preferredEncoding="UTF-8" />
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="foo">
+        <soap:operation  soapAction="http://tempuri.org/action/Simple.foo"/>
+        <input>
+            <soap:body use="encoded"
+                       namespace="http://tempuri.org/message/"
+                       encodingStyle=  "http://schemas.xmlsoap.org/soap/encoding/" />
+        </input>
+        <output>
+            <soap:body use="encoded"
+                       namespace="http://tempuri.org/message/"
+                       encodingStyle=  "http://schemas.xmlsoap.org/soap/encoding/" />
+        </output>
+    </operation>
+</binding>
+
+
+
+
+
+* WSDL：
+  好比我们去商店买东西,首先要知道商店里有什么东西可买,然后再来购买,商家的做法就是张贴广告海报. 
+  WebService也一样,WebService客户端要调用一个WebService服务,首先要有知道这个服务的地址在哪,以及这个服务里有什么方法可以调用,
+  所以,WebService务器端首先要通过一个WSDL文件来说明自己家里有啥服务可以对外调用,服务是什么(服务中有哪些方法,方法接受的参数是什么,返回值是什么),
+  服务的网络地址用哪个url地址表示,服务通过什么方式来调用.
+  WSDL(Web Services Description Language)就是这样一个基于xml的语言,用于描述Web Service及其函数、参数和返回值.
+  它是WebService客户端和服务器端都能理解的标准格式.因为是基于xml的,所以WSDL既是机器可阅读的,又是人可阅读的,这将是一个很大的好处.
+  一些最新的开发工具既能根据你的Web service生成WSDL文档,又能导入WSDL文档,生成调用相应WebService的代理类代码.
+  WSDL文件保存在Web服务器上,通过一个url地址就可以访问到它.客户端要调用一个WebService服务之前,要知道该服务的WSDL文件的地址.
+  WebService服务提供商可以通过两种方式来暴露它的WSDL文件地址：1.注册到UDDI服务器,以便被人查找；2.直接告诉给客户端调用者.
+
+
+
+

@@ -1,0 +1,870 @@
+WSDL文档可以分为两部分.顶部分由抽象定义组成，而底部分则由具体描述组成.抽象部分以独立于平台和语言的方式定义SOAP消息，它们并不包含任何随 机器或语言而变的元素.
+这就定义了一系列服务，截然不同的应用都可以实现.具体部分，如数据的序列化则归入底部分，因为它包含具体的定义.
+在上述的文档元 素中，<types>、<message>、<portType>属于抽象定义层，<binding>、<service>属于具体定义层.所有的抽象可以是单独存在于别的文件中，也可以从主文档中导入. 
+
+WSDL文档的结构实例解析 
+下面我们将通过一个实际的WSDL文档例子来详细说明各标签的作用及关系.
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:tns="http://www.jsoso.com/wstest"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        targetNamespace="http://www.jsoso.com/wstest"
+        name="Example">
+    <types>
+        <xsd:schema>
+            <xsd:import
+                    namespace="http://www.jsoso.com/wstest"
+                    schemaLocation="http://localhost:8080/hello?xsd=1"></xsd:import>
+        </xsd:schema>
+    </types>
+    <message name="toSayHello">
+        <part name="userName" type="xsd:string"></part>
+    </message>
+    <message name="toSayHelloResponse">
+        <part name="returnWord" type="xsd:string"></part>
+    </message>
+    <message name="sayHello">
+        <part name="person" type="tns:person"></part>
+        <part name="arg1" type="xsd:string"></part>
+    </message>
+    <message name="sayHelloResponse">
+        <part name="personList" type="tns:personArray"></part>
+    </message>
+    <message name="HelloException">
+        <part name="fault" element="tns:HelloException"></part>
+    </message>
+    <portType name="Example">
+        <operation name="toSayHello" parameterOrder="userName">
+            <input message="tns:toSayHello"></input>
+            <output message="tns:toSayHelloResponse"></output>
+        </operation>
+        <operation name="sayHello" parameterOrder="person arg1">
+            <input message="tns:sayHello"></input>
+            <output message="tns:sayHelloResponse"></output>
+            <fault message="tns:HelloException" name="HelloException"></fault>
+        </operation>
+    </portType>
+    <binding name="ExamplePortBinding" type="tns:Example">
+        <soap:binding
+                transport="http://schemas.xmlsoap.org/soap/http"
+                style="rpc"></soap:binding>
+        <operation name="toSayHello">
+            <soap:operation soapAction="sayHello"></soap:operation>
+            <input>
+                <soap:body use="literal"
+                           namespace="http://www.jsoso.com/wstest"></soap:body>
+            </input>
+            <output>
+                <soap:body use="literal"
+                           namespace="http://www.jsoso.com/wstest"></soap:body>
+            </output>
+        </operation>
+        <operation name="sayHello">
+            <soap:operation soapAction="sayHello"></soap:operation>
+            <input>
+                <soap:body use="literal"
+                           namespace="http://www.jsoso.com/wstest"></soap:body>
+            </input>
+            <output>
+                <soap:body use="literal"
+                           namespace="http://www.jsoso.com/wstest"></soap:body>
+            </output>
+            <fault name="HelloException">
+                <soap:fault name="HelloException" use="literal"></soap:fault>
+            </fault>
+        </operation>
+    </binding>
+    <service name="Example">
+        <port name="ExamplePort" binding="tns:ExamplePortBinding">
+            <soap:address location="http://localhost:8080/hello"></soap:address>
+        </port>
+    </service>
+</definitions>
+WSDL的Types栏和Messages栏中的XML Schema     WSDL数据类型是基于"XML Schema: Datatypes"(XSD)的，现在已经被W3C推荐。这一文档共有三个版本(1999，2000/10,2001),
+因此必须在namespace属性的<definitions>元素中指明所使用的是哪一个版本。
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" 在本文中，我将只考虑2001版本。WSDL标准的推荐者强烈建议使用2001版。在本栏和以后各部分，需使用以下简缩或前缀 
+
+由于上面的事例XML较长，我们将其逐段分解讲解
+WSDL文档的根元素：<definitions>
+<definitions
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:tns="http://www.jsoso.com/wstest"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        targetNamespace="http://www.jsoso.com/wstest"
+        name="Example">
+    ……
+    ……
+</definitions>  
+<definitions>定义了文档中用到的各个xml元素的namespace缩写，也界定了本文档自己的 targetNamespace="http://www.jsoso.com/wstest"，这意味着其它的XML要引用当前XML中的元素时，
+要声 明这个namespace.注意xmlns:tns="http://www.jsoso.com/wstest"这个声明，它标示了使用tns这个前缀 指向自身的命名空间.
+WSDL文档数据类型定义元素：<types>
+<types>
+    <xsd:schema>
+        <xsd:import
+                namespace="http://www.jsoso.com/wstest"
+                schemaLocation="http://localhost:8080/hello?xsd=1"></xsd:import>
+    </xsd:schema>
+</types>  
+<types>标签定义了当前的WSDL文档用到的数据类型.要说明的是，为了最大程度的平台中立性，WSDL 使用 XML Schema 语法来定义数据类型.这些数据类型用来定义web service方法的参数和返回指.
+对于通用的原生数据类型如：integer , boolean , char , float等，在W3C的标准文档http://www.w3.org/2001/XMLSchema中已经做了定义.这里我们要引入的schema定义 schemaLocation="http://localhost:8080/hello?xsd=1"是我们自定义的Java对象类型.
+WSDL文档消息体定义元素：< message >
+<message name="toSayHello">
+    <part name="userName" type="xsd:string"></part>
+</message>
+<message name="toSayHelloResponse">
+    <part name="returnWord" type="xsd:string"></part>
+</message>
+<message name="sayHello">
+    <part name="person" type="tns:person"></part>
+    <part name="arg1" type="xsd:string"></part>
+</message>
+<message name="sayHelloResponse">
+    <part name="personList" type="tns:personArray"></part>
+</message>
+<message name="HelloException">
+    <part name="fault" element="tns:HelloException"></part>
+</message>  
+<message>元素定义了web service函数的参数.<message>元素中的每个<part>子元素都和某个参数相符.输入参数在<message>元素中定义，与输出参数相 隔离，输出参数有自己的<message>元素.兼作输入、输出的参数在输入输出的<message>元素中有它们相应的<part>元素.输出 <message>元素以"Response"结尾，对Java而言方法得返回值就对应一个输出的<message>.每个<part>元素都有名字和类 型属性，就像函数的参数有参数名和参数类型.
+
+        在上面的文档中有两个输入参数、两个输出参数和一个错误参数(对应Java中的Exception）.
+
+        * 输入参数<message>的name属性分别命名为toSayHello，sayHello.
+        toSayHello对应输入参数userName，参数类型为xsd:string，在Java语言中就是String;
+        sayHello对应两个输入参数person和arg1，类型为tns:person和xsd:string.这里tns:person类型就是引用了< types >标签中的类型定义.
+
+    * 输出参数<message>的name属性分别命名为toSayHelloResponse和sayHelloResponse.
+    这个名称和输入参数的<message>标签name属性对应，在其后面加上Response尾缀.
+    toSayHelloResponse对应的返回值是returnWord，参数类型为xsd:string;
+    sayHelloResponse对应的返回值是personList，参数类型为tns:personArray(自定义类型）;
+
+    * 错误参数<message>的name属性为HelloException.
+    它的<part>子标签element而不是type来定义类型.
+
+        以上的message标签的name属性通常使用web service函数方法名作为参照，错误参数标签则使用异常类名为参照.标签中的参数名称，即part子元素的name属性是可自定义的(下一章节详细说 明）.message标签的参数类型将引用types标签的定义.
+WSDL文档函数体定义元素：< portType >
+<portType name="Example">
+    <operation name="toSayHello" parameterOrder="userName">
+        <input message="tns:toSayHello"></input>
+        <output message="tns:toSayHelloResponse"></output>
+    </operation>
+    <operation name="sayHello" parameterOrder="person arg1">
+        <input message="tns:sayHello"></input>
+        <output message="tns:sayHelloResponse"></output>
+        <fault message="tns:HelloException" name="HelloException"></fault>
+    </operation>
+</portType>  
+在<operation>元素中，name属性表示服务方法名，parameterOrder属性表示方法的参数顺序，使用空格符分割多个参 数，如：“parameterOrder="person arg1”。
+<operation>元素的子标签<input>表示输入参数说明，它引用＜message＞标签中的输入参 数。<output>表示输出参数说明，它引用＜message＞标签中的输出参数。
+<fault>标签在Java方法中的特别 用来表示异常（其它语言有对应的错误处理机制），它引用＜message＞标签中的错误参数。 
+WSDL绑定实现定义元素：< binding >
+<binding name="ExamplePortBinding" type="tns:Example">
+    <soap:binding
+            transport="http://schemas.xmlsoap.org/soap/http"
+            style="rpc"></soap:binding>
+    <operation name="toSayHello">
+        <soap:operation soapAction="sayHello"></soap:operation>
+        <input>
+            <soap:body use="literal"
+                       namespace="http://www.jsoso.com/wstest"></soap:body>
+        </input>
+        <output>
+            <soap:body use="literal"
+                       namespace="http://www.jsoso.com/wstest"></soap:body>
+        </output>
+    </operation>
+    <operation name="sayHello">
+        <soap:operation soapAction="sayHello"></soap:operation>
+        <input>
+            <soap:body use="literal"
+                       namespace="http://www.jsoso.com/wstest"></soap:body>
+        </input>
+        <output>
+            <soap:body use="literal"
+                       namespace="http://www.jsoso.com/wstest"></soap:body>
+        </output>
+        <fault name="HelloException">
+            <soap:fault name="HelloException" use="literal"></soap:fault>
+        </fault>
+    </operation>
+</binding>  
+<binding>标签是完整描述协议、序列化和编码的地方，<types>,<message>和<portType>标签处理抽象的数据内容，而<binding>标签是处理数据传输的物理实现。 
+<binding>标签把前三部分的抽象定义具体化。 
+
+首先<binding>标签使用<soap:binding>的transport和style属性定义了Web Service的通讯协议HTTP和SOAP的请求风格RPC。其次<operation>子标签将portType中定义的
+operation同SOAP的请求绑定，定义了操作名称soapAction，输出输入参数和异常的编码方式及命名空间。 
+
+WSDL服务地址绑定元素：< service >
+<service name="Example">
+    <port name="ExamplePort" binding="tns:ExamplePortBinding">
+        <soap:address location="http://localhost:8080/hello"></soap:address>
+    </port>
+</service>  
+service是一套＜port＞元素。在一一对应形式下，每个＜port＞元素都和一个location关联。如果同一个＜binding＞有多个＜port＞元素与之关联，可以使用额外的URL地址作为替换。 
+一个WSDL文档中可以有多个＜service＞元素，而且多个＜service＞元素十分有用，其中之一就是可以根据目标URL来组织端口。在一个 WSDL文档中，＜service＞的name属性用来区分不同的service。
+在同一个service中，不同端口，使用端口的"name"属性区 分。 
+简单的描述了WSDL对SOAP协议的支持，以及在Web Service中的作用。
+
+
+
+WSDL样式详解
+      Web 服务是通过WSDL文档来描述的.WSDL绑定描述了如何把服务绑定到消息传递协议(特别是SOAP消息传递协议）.WSDL 的SOAP绑定style描述了服务调用方式,即远程过程调用rpc
+      (Remote Procedure Call)方式或文档document方式.use定义了类型是编码encoded 方式还是文字literal方式.
+      创建绑定时,可以选择 document 样式或 rpc样式.二者均具有自己的优点和缺点.使用 rpc样式时,要执行的方法的名称同时也是有效负载的根元素的名称.
+      WSDL调用服务提供了6种样式:
+  1．rpc/encoded
+  2．rpc/literal
+  3．document /encoded
+  4．document /literal
+  5．document/literal/wrapped
+  6．document/encoded/wrapped
+
+1. rpc/encoded样式
+   由SOAP消息定义实际类型信息.
+   WSDL 文档样例:
+<wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               targetNamespace="http://org.apache.axis2/xsd"
+               elementFormDefault="unqualified"
+               attributeFormDefault="unqualified">
+        ...
+    </xs:schema>
+</wsdl:types>
+<wsdl:message name="createNewAdRequest">
+<wsdl:part name="content" type="xsd:string" />
+<wsdl:part name="endDate" type="xsd:string" />
+</wsdl:message>
+        ...
+<wsdl:portType name="ClassifiedServicePortType">
+<wsdl:operation name="createNewAd">
+    <wsdl:input message="tns:createNewAdRequest" />
+    <wsdl:output message="tns:createNewAdResponse" />
+</wsdl:operation>
+...
+</wsdl:portType>
+<wsdl:binding name="ClassifiedServiceBinding"
+              type="tns:ClassifiedServicePortType">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+<wsdl:operation name="createNewAd">
+    <soap:operation soapAction="createNewAd" style="rpc"/>
+    <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                   namespace="http://ws.apache.org/axis2"/>
+    </wsdl:input>
+    <wsdl:output>
+        <soap:body use="literal" namespace="http://ws.apache.org/axis2" />
+    </wsdl:output>
+</wsdl:operation>
+...
+</wsdl:binding>
+        ...
+        SOAP请求报文样例:
+<env:Envelope  xmlns:env="http://schemas.xmlSOAP.org/SOAP/envelope/"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<env:Body>
+    <req: createNewAd  xmlns:req="http://daily-moon.com/classifieds/">
+        <req:content xsi:type="xs:string">Vintage 1963 T-Bird...</req:content>
+        <req:endDate xsi:type="xs:string">4/30/07</req:endDate>
+    </req: createNewAd >
+</env:Body>
+</env:Envelope>
+        优点:
+        l        WSDL 基本达到了尽可能地简单易懂的要求.
+        l        操作名出现在消息中,这样接收者就可以很轻松地把消息发送到方法的实现.
+        缺点:
+        l        类型编码信息(比如 xsi:type="xsd:int" ）通常就是降低吞吐量性能的开销.
+        l        不能简单地检验此消息的有效性,因为只有 <req:content xsi:type="xs:string">Vintage 1963 T-Bird...</req:content> 行包含在 Schema 中定义的内容;其余的 soap:body 内容都来自 WSDL 定义.
+
+2. rpc/literal样式
+   WSDL样例:
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://org.apache.axis2/xsd"
+           elementFormDefault="unqualified"
+           attributeFormDefault="unqualified">
+    ...
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="createNewAdRequest">
+<wsdl:part name="content" type="xsd:string"/>
+<wsdl:part name="endDate "type="xsd:string"/>
+</wsdl:message>
+        ...
+<wsdl:portType name="ClassifiedServicePortType">
+<wsdl:operation name="createNewAd">
+    <wsdl:input message="tns:createNewAdRequest" />
+    <wsdl:output message="tns:createNewAdResponseMessage" />
+</wsdl:operation>
+...
+</wsdl:portType>
+        ...
+<wsdl:binding name="ClassifiedServiceBinding" type="tns:ClassifiedServicePortType">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+<wsdl:operation name="createNewAd">
+    <soap:operation soapAction="createNewAd" style="rpc"/>
+    <wsdl:input>
+        <soap:body use="literal" namespace="http://ws.apache.org/axis2"/>
+    </wsdl:input>
+    <wsdl:output>
+        <soap:body use="literal" namespace="http://ws.apache.org/axis2" />
+    </wsdl:output>
+</wsdl:operation>
+...
+</wsdl:binding>
+        ...
+        SOAP请求报文样例:
+<env:Envelope
+xmlns:env="http://schemas.xmlSOAP.org/SOAP/envelope/"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<env:Body>
+    <req: createNewAd  xmlns:req="http://daily-moon.com/classifieds/">
+        <req:content>Vintage 1963 T-Bird</req:content>
+        <req:endDate>4/30/2007</req:endDate>
+    </req: createNewAd >
+</env:Body>
+</env:Envelope>
+        优点:
+        l        WSDL 还是基本达到了尽可能地简单易懂的要求.
+        l        操作名仍然出现在消息中.
+        l        去掉了类型编码.
+        缺点:
+        l        仍然不能简单地检验此消息的有效性.因为只有 < req:content > 和<req:endDate>行中包含定义在 Schema 中的内容;soap:body 内容的其余部分来自于 WSDL 定义.
+3.  document/encoded样式
+    此种方式很少使用.
+    WSDL样例:
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   targetNamespace="http://org.apache.axis2/xsd"
+                   elementFormDefault="unqualified"
+                   attributeFormDefault="unqualified">
+            ...
+            <xs:element type="xs:string" name="content" />
+            <xs:element type="xs:string" name="endDate" />
+            ...
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="createNewAdRequestMessage">
+        <wsdl:part name="part1" element="ns1:content" />
+        <wsdl:part name="part2" element="ns1:endDate" />
+    </wsdl:message>
+    ...
+    <wsdl:portType name="ClassifiedServicePortType">
+        <wsdl:operation name="createNewAd">
+            <wsdl:input message="tns:createNewAdRequestMessage" />
+            <wsdl:output message="tns:createNewAdResponseMessage" />
+        </wsdl:operation>
+        ...
+    </wsdl:portType>
+    ...
+    <wsdl:binding name="ClassifiedServiceBinding" type="tns:ClassifiedServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="createNewAd">
+            <soap:operation soapAction="createNewAd" style="document" />
+            <wsdl:input>
+                <soap:body use="encoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use=" encoded" />
+            </wsdl:output>
+        </wsdl:operation>
+        ...
+    </wsdl:binding>
+    SOAP请求报文样例:
+    <env:Envelope  xmlns:env="http://schemas.xmlSOAP.org/SOAP/envelope/"
+                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <env:Body>
+            <req:content xsi:type="xs:string">Vintage 1963 T-Bird</req:content>
+            <req:endDate xsi:type="xs:string">4/30/07</req:endDate>
+        </env:Body>
+    </env:Envelope>
+4.  document/literal样式
+    WSDL样例:
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   targetNamespace="http://org.apache.axis2/xsd"
+                   elementFormDefault="unqualified"
+                   attributeFormDefault="unqualified">
+            ...
+            <xs:element type="xs:string" name="content" />
+            <xs:element type="xs:string" name="endDate" />
+            ...
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="createNewAdRequestMessage">
+        <wsdl:part name="part1" element="ns1:content" />
+        <wsdl:part name="part2" element="ns1:endDate" />
+    </wsdl:message>
+    ...
+    <wsdl:portType name="ClassifiedServicePortType">
+        <wsdl:operation name="createNewAd">
+            <wsdl:input message="tns:createNewAdRequestMessage" />
+            <wsdl:output message="tns:createNewAdResponseMessage" />
+        </wsdl:operation>
+        ...
+    </wsdl:portType>
+    ...
+    <wsdl:binding name="ClassifiedServiceBinding" type="tns:ClassifiedServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="createNewAd">
+            <soap:operation soapAction="createNewAd" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        ...
+    </wsdl:binding>
+    SOAP请求报文样例:
+    <env:Envelope
+            xmlns:env="http://schemas.xmlSOAP.org/SOAP/envelope/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <env:Body>
+            <req:content>Vintage 1963 T-Bird...</req:content>
+            <req:endDate>4/30/07</req:endDate>
+        </env:Body>
+    </env:Envelope>
+    优点:
+    l        没有编码信息
+    l        可以在最后用任何 XML 检验器检验此消息的有效性. soap:body中每项内容都定义在 Schema 中.
+    缺点:
+    l        SOAP 消息中缺少操作名.而如果没有操作名,发送就可能比较困难,并且有时变得不可能.
+5.  document/literal/wrapped样式
+    WSDL样例:
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   targetNamespace="http://org.apache.axis2/xsd"
+                   elementFormDefault="unqualified"
+                   attributeFormDefault="unqualified">
+            ...
+            <xs:element name="createNewAdRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element type="xs:string" name="content" />
+                        <xs:element type="xs:string" name="endDate" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            ...
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="createNewAdRequestMessage">
+        <wsdl:part name="part1" element="ns1:createNewAdRequest" />
+    </wsdl:message>
+    ...
+    <wsdl:portType name="ClassifiedServicePortType">
+        <wsdl:operation name="createNewAd">
+            <wsdl:input message="tns:createNewAdRequestMessage" />
+            <wsdl:output message="tns:createNewAdResponseMessage" />
+        </wsdl:operation>
+        ...
+    </wsdl:portType>
+    ...
+    <wsdl:binding name="ClassifiedServiceBinding" type="tns:ClassifiedServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="createNewAd">
+            <soap:operation soapAction="createNewAd" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://ws.apache.org/axis2" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://ws.apache.org/axis2" />
+            </wsdl:output>
+        </wsdl:operation>
+        ...
+    </wsdl:binding>
+    ...
+    SOAP请求报文样例:
+    <env:Envelope  xmlns:env="http://schemas.xmlSOAP.org/SOAP/envelope/"
+                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <env:Body>
+            <req:createNewAdRequest  xmlns:req="http://daily-moon.com/classifieds/">
+                <req:content>Vintage 1963 T-Bird...</req:content>
+                <req:endDate>4/30/07</req:endDate>
+            </req:createNewAdRequest>
+        </env:Body>
+    </env:Envelope>
+    注意此时SOAP Body中第一个元素的名称并不是操作的名称,而是Schema中的元素的名称.此时Schema中的元素的名称可以与操作名相同,也可以不同.如果取相同则是一种将操作名放入SOAP消息的巧妙方式.
+    此 SOAP 消息看起来非常类似于 RPC/literal的 SOAP 消息.您可能会说,它看起来与 RPC/literal的 SOAP 消息是完全一样的,不过,这两种消息之间存在着微妙的区别.在 RPC/literal的 SOAP 消息中, <soap:body> 下的< req:createNewAd> 根元素是操作的名称.在document/literal/wrapped的 SOAP 消息中, < req:createNewAdRequest > 子句是单个输入消息的组成部分引用的元素的名称.
+        document/literal/wrapped样式的特征有:
+        l        输入消息只有一个组成部分.
+        l        该部分就是一个元素.
+        l        该元素有与操作相同的名称.
+        l        该元素的复杂类型没有属性.
+        优点:
+        l        没有编码信息.
+        l        出现在 soap:body 中的每项内容都是由 Schema 定义的,可以很容易地检验此消息的有效性.
+        l        方法名又出现在 SOAP 消息中.
+        缺点:
+        l        WSDL 较为复杂.
+6.      document/encoded/wrapped样式
+        此种方式很少使用
+        WSDL样例:
+        <wsdl:types>
+            <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                       targetNamespace="http://org.apache.axis2/xsd"
+                       elementFormDefault="unqualified"
+                       attributeFormDefault="unqualified">
+                ...
+                <xs:element name="createNewAdRequest">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="content" />
+                            <xs:element type="xs:string" name="endDate" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                ...
+            </xs:schema>
+        </wsdl:types>
+        <wsdl:message name="createNewAdRequestMessage">
+            <wsdl:part name="part1" element="ns1:createNewAdRequest" />
+        </wsdl:message>
+        ...
+        <wsdl:portType name="ClassifiedServicePortType">
+            <wsdl:operation name="createNewAd">
+                <wsdl:input message="tns:createNewAdRequestMessage" />
+                <wsdl:output message="tns:createNewAdResponseMessage" />
+            </wsdl:operation>
+            ...
+        </wsdl:portType>
+        ...
+        <wsdl:binding name="ClassifiedServiceBinding" type="tns:ClassifiedServicePortType">
+            <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+            <wsdl:operation name="createNewAd">
+                <soap:operation soapAction="createNewAd" style="document"/>
+                <wsdl:input>
+                    <soap:body use="encoded" namespace="http://ws.apache.org/axis2" />
+                </wsdl:input>
+                <wsdl:output>
+                    <soap:body use="encoded" namespace="http://ws.apache.org/axis2" />
+                </wsdl:output>
+            </wsdl:operation>
+            ...
+        </wsdl:binding>
+        ...
+        SOAP请求报文样例:
+        <env:Envelope  xmlns:env="http://schemas.xmlSOAP.org/SOAP/envelope/"
+                       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <env:Body>
+                <req:createNewAdRequest  xmlns:req="http://daily-moon.com/classifieds/">
+                    <req:content xsi:type="xs:string">Vintage 1963 T-Bird...</req:content>
+                    <req:endDate xsi:type="xs:string">4/30/07</req:endDate>
+                </req:createNewAdRequest>
+            </env:Body>
+        </env:Envelope>
+        附录:WSDL1.1规范中的SOAP Binding 信息( 对其中关键部分进行了中文翻译 )
+        SOAP Binding
+        WSDL includes a binding for SOAP 1.1 endpoints, which supports the specification of the following protocol specific information:
+        An indication that a binding is bound to the SOAP 1.1 protocol
+        A way of specifying an address for a SOAP endpoint.
+        The URI for the SOAPAction HTTP header for the HTTP binding of SOAP
+        A list of definitions for Headers that are transmitted as part of the SOAP Envelope
+        This binding grammar it is not an exhaustive specification since the set of SOAP bindings is evolving. Nothing precludes additional SOAP bindings to be derived from portions of this grammar. For example:
+        SOAP bindings that do not employ a URI addressing scheme may substitute another addressing scheme by replacing the soap:address element defined in section 3.8.
+        SOAP bindings that do not require a SOAPAction omit the soapAction attribute defined in section 3.4.
+        3.1 SOAP Examples
+        In the following example, a SubscribeToQuotes SOAP 1.1 one-way message is sent to a StockQuote service via a SMTP binding. The request takes a ticker symbol of type string, and includes a header defining the subscription URI.
+        Example 3. SOAP binding of one-way operation over SMTP using a SOAP Header
+        <?xml version="1.0"?>
+        <definitions name="StockQuote"
+                     targetNamespace="http://example.com/stockquote.wsdl"
+                     xmlns:tns="http://example.com/stockquote.wsdl"
+                     xmlns:xsd1="http://example.com/stockquote.xsd"
+                     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                     xmlns="http://schemas.xmlsoap.org/wsdl/">
+            <message name="SubscribeToQuotes">
+                <part name="body" element="xsd1:SubscribeToQuotes"/>
+                <part name="subscribeheader" element="xsd1:SubscriptionHeader"/>
+            </message>
+            <portType name="StockQuotePortType">
+                <operation name="SubscribeToQuotes">
+                    <input message="tns:SubscribeToQuotes"/>
+                </operation>
+            </portType>
+            <binding name="StockQuoteSoap" type="tns:StockQuotePortType">
+                <soap:binding style="document" transport="http://example.com/smtp"/>
+                <operation name="SubscribeToQuotes">
+                    <input message="tns:SubscribeToQuotes">
+                        <soap:body parts="body" use="literal"/>
+                        <soap:header message="tns:SubscribeToQuotes" part="subscribeheader" use="literal"/>
+                    </input>
+                </operation>
+            </binding>
+            <service name="StockQuoteService">
+                <port name="StockQuotePort" binding="tns:StockQuoteSoap">
+                    <soap:address location="mailto:subscribe@example.com"/>
+                </port>
+            </service>
+            <types>
+                <schema targetNamespace="http://example.com/stockquote.xsd"
+                        xmlns="http://www.w3.org/2000/10/XMLSchema">
+                    <element name="SubscribeToQuotes">
+                        <complexType>
+                            <all>
+                                <element name="tickerSymbol" type="string"/>
+                            </all>
+                        </complexType>
+                    </element>
+                    <element name="SubscriptionHeader" type="uriReference"/>
+                </schema>
+            </types>
+        </definitions>
+        This example describes that a GetTradePrice SOAP 1.1 request may be sent to a StockQuote service via the SOAP 1.1 HTTP binding. The request takes a ticker symbol of type string, a time of type timeInstant, and returns the price as a float in the SOAP response.
+        Example 4. SOAP binding of request-response RPC operation over HTTP
+        <?xml version="1.0"?>
+        <definitions name="StockQuote"
+                     targetNamespace="http://example.com/stockquote.wsdl"
+                     xmlns:tns="http://example.com/stockquote.wsdl"
+                     xmlns:xsd="http://www.w3.org/2000/10/XMLSchema"
+                     xmlns:xsd1="http://example.com/stockquote.xsd"
+                     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                     xmlns="http://schemas.xmlsoap.org/wsdl/">
+            <message name="GetTradePriceInput">
+                <part name="tickerSymbol" element="xsd:string"/>
+                <part name="time" element="xsd:timeInstant"/>
+            </message>
+            <message name="GetTradePriceOutput">
+                <part name="result" type="xsd:float"/>
+            </message>
+            <portType name="StockQuotePortType">
+                <operation name="GetTradePrice">
+                    <input message="tns:GetTradePriceInput"/>
+                    <output message="tns:GetTradePriceOutput"/>
+                </operation>
+            </portType>
+            <binding name="StockQuoteSoapBinding" type="tns:StockQuotePortType">
+                <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+                <operation name="GetTradePrice">
+                    <soap:operation soapAction="http://example.com/GetTradePrice"/>
+                    <input>
+                        <soap:body use="encoded" namespace="http://example.com/stockquote"
+                                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+                    </input>
+                    <output>
+                        <soap:body use="encoded" namespace="http://example.com/stockquote"
+                                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+                    </output>
+                </operation>>
+            </binding>
+            <service name="StockQuoteService">
+                <documentation>My first service</documentation>
+                <port name="StockQuotePort" binding="tns:StockQuoteBinding">
+                    <soap:address location="http://example.com/stockquote"/>
+                </port>
+            </service>
+        </definitions>
+        This example describes that a GetTradePrices SOAP 1.1 request may be sent to a StockQuote service via the SOAP 1.1 HTTP binding. The request takes a stock quote symbol string, an application defined TimePeriod structure containing a start and end time and returns an array of stock prices recorded by the service within that period of time, as well as the frequency at which they were recorded as the SOAP response.  The RPC signature that corresponds to this service has in parameters tickerSymbol and timePeriod followed by the output parameter frequency, and returns an array of floats.
+        Example 5. SOAP binding of request-response RPC operation over HTTP
+        <?xml version="1.0"?>
+        <definitions name="StockQuote"
+                     targetNamespace="http://example.com/stockquote.wsdl"
+                     xmlns:tns="http://example.com/stockquote.wsdl"
+                     xmlns:xsd="http://www.w3.org/2000/10/XMLSchema"
+                     xmlns:xsd1="http://example.com/stockquote/schema"
+                     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                     xmlns="http://schemas.xmlsoap.org/wsdl/">
+            <types>
+                <schema targetNamespace="http://example.com/stockquote/schema"
+                        xmlns="http://www.w3.org/2000/10/XMLSchema">
+                    <complexType name="TimePeriod">
+                        <all>
+                            <element name="startTime" type="xsd:timeInstant"/>
+                            <element name="endTime" type="xsd:timeInstant"/>
+                        </all>
+                    </complexType>
+                    <complexType name="ArrayOfFloat">
+                        <complexContent>
+                            <restriction base="soapenc:Array">
+                                <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:float[]"/>
+                            </restriction>
+                        </complexContent>
+                    </complexType>
+                </schema>
+            </types>
+            <message name="GetTradePricesInput">
+                <part name="tickerSymbol" element="xsd:string"/>
+                <part name="timePeriod" element="xsd1:TimePeriod"/>
+            </message>
+            <message name="GetTradePricesOutput">
+                <part name="result" type="xsd1:ArrayOfFloat"/>
+                <part name="frequency" type="xsd:float"/>
+            </message>
+            <portType name="StockQuotePortType">
+                <operation name="GetLastTradePrice" parameterOrder="tickerSymbol timePeriod frequency">
+                    <input message="tns:GetTradePricesInput"/>
+                    <output message="tns:GetTradePricesOutput"/>
+                </operation>
+            </portType>
+            <binding name="StockQuoteSoapBinding" type="tns:StockQuotePortType">
+                <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+                <operation name="GetTradePrices">
+                    <soap:operation soapAction="http://example.com/GetTradePrices"/>
+                    <input>
+                        <soap:body use="encoded" namespace="http://example.com/stockquote"
+                                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+                    </input>
+                    <output>
+                        <soap:body use="encoded" namespace="http://example.com/stockquote"
+                                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+                    </output>
+                </operation>>
+            </binding>
+            <service name="StockQuoteService">
+                <documentation>My first service</documentation>
+                <port name="StockQuotePort" binding="tns:StockQuoteBinding">
+                    <soap:address location="http://example.com/stockquote"/>
+                </port>
+            </service>
+        </definitions>
+        3.2 How the SOAP Binding Extends WSDL
+        The SOAP Binding extends WSDL with the following extension elements:
+        <definitions .... >
+        <binding .... >
+        <soap:binding style="rpc|document" transport="uri">
+            <operation .... >
+            <soap:operation soapAction="uri"? style="rpc|document"?>?
+            <input>
+                <soap:body parts="nmtokens"? use="literal|encoded"
+                encodingStyle="uri-list"? namespace="uri"?>
+                <soap:header message="qname" part="nmtoken" use="literal|encoded"
+                             encodingStyle="uri-list"? namespace="uri"?>*
+                <soap:headerfault message="qname" part="nmtoken" use="literal|encoded"
+                                  encodingStyle="uri-list"? namespace="uri"?/>*
+                <soap:header>
+            </input>
+            <output>
+                <soap:body parts="nmtokens"? use="literal|encoded"
+                encodingStyle="uri-list"? namespace="uri"?>
+                <soap:header message="qname" part="nmtoken" use="literal|encoded"
+                             encodingStyle="uri-list"? namespace="uri"?>*
+                <soap:headerfault message="qname" part="nmtoken" use="literal|encoded"
+                                  encodingStyle="uri-list"? namespace="uri"?/>*
+                <soap:header>
+            </output>
+            <fault>*
+                <soap:fault name="nmtoken" use="literal|encoded"
+                            encodingStyle="uri-list"? namespace="uri"?>
+            </fault>
+        </operation>
+    </binding>
+        <port .... >
+        <soap:address location="uri"/>
+    </port>
+    </definitions>
+    Each extension element of the SOAP binding is covered in subsequent sections.
+    3.3 soap:binding
+    The purpose of the SOAP binding element is to signify that the binding is bound to the SOAP protocol format: Envelope, Header and Body. This element makes no claims as to the encoding or format of the message (e.g. that it necessarily follows section 5 of the SOAP 1.1 specification).
+    The soap:binding element MUST be present when using the SOAP binding.
+    <definitions .... >
+    <binding .... >
+    <soap:binding transport="uri"? style="rpc|document"?>
+</binding>
+</definitions>
+        The value of the style attribute is the default for the style attribute for each contained operation. If the style attribute is omitted, it is assumed to be "document". See section 3.4 for more information on the semantics of style.
+        The value of the required transport attribute indicates which transport of SOAP this binding corresponds to. The URI value http://schemas.xmlsoap.org/soap/http corresponds to the HTTP binding in the SOAP specification. Other URIs may be used here to indicate other transports (such as SMTP, FTP, etc.).
+        3.4 soap:operation
+        The soap:operation element provides information for the operation as a whole.
+<definitions .... >
+<binding .... >
+<operation .... >
+<soap:operation soapAction="uri"? style="rpc|document"?>?
+        </operation>
+        </binding>
+        </definitions>
+        The style attribute indicates whether the operation is RPC-oriented (messages containing parameters and return values) or document-oriented (message containing document(s)). This information may be used to select an appropriate programming model. The value of this attribute also affects the way in which the Body of the SOAP message is constructed, as explained in Section 3.5 below. If the attribute is not specified, it defaults to the value specified in the soap:binding element. If the soap:binding element does not specify a style, it is assumed to be "document".
+        The soapAction attribute specifies the value of the SOAPAction header for this operation. This URI value should be used directly as the value for the SOAPAction header; no attempt should be made to make a relative URI value absolute when making the request. For the HTTP protocol binding of SOAP, this is value required (it has no default value). For other SOAP protocol bindings, it MUST NOT be specified, and the soap:operation element MAY be omitted.
+        3.5 soap:body
+        The soap:body element specifies how the message parts appear inside the SOAP Body element.
+        soap:body元素说明了message元素中的part部分如何出现在SOAP Body元素中.
+        The parts of a message may either be abstract type definitions, or concrete schema definitions. If abstract definitions, the types are serialized according to some set of rules defined by an encoding style. Each encoding style is identified using a list of URIs, as in the SOAP specification. Since some encoding styles such as the SOAP Encoding (http://schemas.xmlsoap.org/soap/encoding/) allow variation in the message format for a given set of abstract types, it is up to the reader of the message to understand all the format variations: "reader makes right". To avoid having to support all variations, a message may be defined concretely and then indicate it’s original encoding style (if any) as a hint. In this case, the writer of the message must conform exactly to the specified schema: "writer makes right".
+        Message中的part部分可以是抽象类型定义,也可以是具体的schema定义.如果是抽象定义,那么类型将根据一种encoding style所定义的一些规则进行序列化.每一种encoding style通过一系列的URIs来指定,如SOAP规范中所展示的.由于一些encoding styles,如SOAP Encoding (http://schemas.xmlsoap.org/soap/encoding/),允许variation(变化)出现在给定抽象类型的消息格式中,因此,将由消息的阅读者来理解所有的variation(变化)的格式:"reader makes right".为了避免支持所有的variation(变化),一个消息可以被具体定义,并根据提示指出它的原始encoding style,在这种情况下消息的书写者将将严格遵守schema规范:"writer makes right".
+        The soap:body binding element provides information on how to assemble the different message parts inside the Body element of the SOAP message. The soap:body element is used in both RPC-oriented and document-oriented messages, but the style of the enclosing operation has important effects on how the Body section is structured:
+        If the operation style is rpc each part is a parameter or a return value and appears inside a wrapper element within the body (following Section 7.1 of the SOAP specification). The wrapper element is named identically to the operation name and its namespace is the value of the namespace attribute. Each message part (parameter) appears under the wrapper, represented by an accessor named identically to the corresponding parameter of the call. Parts are arranged in the same order as the parameters of the call.
+        If the operation style is document there are no additional wrappers, and the message parts appear directly under the SOAP Body element.
+        soap:body binding元素提供了信息用于组合不同的message parts到SOAP消息的Body元素中.soap:body元素可以使用RPC-oriented 和document-oriented类型的消息,但不同的封装形式对于Body部分的构造有重要的影响:
+        如果是RPC style,message中的每个part将作为是一个参数或者一个返回值,由一个wrapper element进行封装,放入到SOAP Body中.此wrapper element的名称将同 WSDL中的对应operation的名称一样,其namespace将由绑定信息(soap:body)中的namespace属性决定.每一个出现在wrapper element中的message part同所对应的调用中的参数名称一样.并且Parts将安调用中的参数顺序编排.
+        如果是document style,那么将没有额外的wrapper element,message parts将直接出现在SOAP Body元素中.
+        The same mechanisms are used to define the content of the Body and parameter accessor elements.
+<definitions .... >
+<binding .... >
+<operation .... >
+<input>
+<soap:body parts="nmtokens"? use="literal|encoded"?
+encodingStyle="uri-list"? namespace="uri"?>
+</input>
+<output>
+<soap:body parts="nmtokens"? use="literal|encoded"?
+encodingStyle="uri-list"? namespace="uri"?>
+</output>
+        </operation>
+        </binding>
+        </definitions>
+        The optional parts attribute of type nmtokens indicates which parts appear somewhere within the SOAP Body portion of the message (other parts of a message may appear in other portions of the message such as when SOAP is used in conjunction with the multipart/related MIME binding). If the parts attribute is omitted, then all parts defined by the message are assumed to be included in the SOAP Body portion.
+        The required use attribute indicates whether the message parts are encoded using some encoding rules, or whether the parts define the concrete schema of the message.
+        所必须的use属性指明了message parts是通过某些编码规则进行编码的,或者由消息的具体schema进行定义的.
+        If use is encoded, then each message part references an abstract type using the type attribute. These abstract types are used to produce a concrete message by applying an encoding specified by the encodingStyle attribute. The part names, types and value of the namespace attribute are all inputs to the encoding, although the namespace attribute only applies to content not explicitly defined by the abstract types. If the referenced encoding style allows variations in it’s format (such as the SOAP encoding does), then all variations MUST be supported ("reader makes right").
+        If use is literal, then each part references a concrete schema definition using either the element or type attribute. In the first case, the element referenced by the part will appear directly under the Body element (for document style bindings) or under an accessor element named after the message part (in rpc style). In the second, the type referenced by the part becomes the schema type of the enclosing element (Body for document style or part accessor element for rpc style). For an example that illustrates defining the contents of a composite Body using a type, see section 2.3.1.  The value of the encodingStyle attribute MAY be used when the use is encoded to indicate that the concrete format was derived using a particular encoding (such as the SOAP encoding), but that only the specified variation is supported ("writer makes right").
+        如果use属性值为encoded,那么每个message part将通过type属性指定一个抽象类型.通过encodingStyle属性所表示的编码规范,这些抽象类型将用于构造一个具体的消息.part names, types a以及 value of the namespace attribute将作为编码的输入,其中的namespace attribute仅仅在内容中被应用,没有被abstract types显式定义.如果所指定的encoding style允许variations(变化）它的格式,那么所有的variations(变化）都将被支持.
+        如果use属性值为literal,那么每个message part将通过element或者type属性指向一个具体的schema定义.在第一种情况下,part中的element 所指向的内容将直接位于Body元素下(对于document style bindings）,或者位于Body元素下的wrapper element元素中(对于rpc style）.在第二种情况下,part中的type所指向的内容将作为其所对应元素的schema类型.
+        The value of the encodingStyle attribute is a list of URIs, each separated by a single space. The URI's represent encodings used within the message, in order from most restrictive to least restrictive (exactly like the encodingStyle attribute defined in the SOAP specification).
+        encodingStyle属性的值是一个URIs列表,由单个空格隔开.这些URIs代表着消息的编码类型,按照限制的从强到弱排序.
+        3.6 soap:fault
+        The soap:fault element specifies the contents of the contents of the SOAP Fault Details element. It is patterned after the soap:body element (see section 3.5).
+<definitions .... >
+<binding .... >
+<operation .... >
+<fault>*
+<soap:fault name="nmtoken" use="literal|encoded"
+            encodingStyle="uri-list"? namespace="uri"?>
+</fault>
+        </operation>
+        </binding>
+        </definitions>
+        The name attribute relates the soap:fault to the wsdl:fault defined for the operation.
+        The fault message MUST have a single part. The use, encodingStyle and namespace attributes are all used in the same way as with soap:body (see section 3.5), only style="document" is assumed since faults do not contain parameters.
+        3.7 soap:header and soap:headerfault
+        The soap:header and soap:headerfault elements allows header to be defined that are transmitted inside the Header element of the SOAP Envelope. It is patterned after the soap:body element (see section 3.5).
+        It is not necessary to exhaustively list all headers that appear in the SOAP Envelope using soap:header. For example, extensions (see section 2.1.3) to WSDL may imply specific headers should be added to the actual payload and it is not required to list those headers here.
+<definitions .... >
+<binding .... >
+<operation .... >
+<input>
+<soap:header message="qname" part="nmtoken" use="literal|encoded"
+             encodingStyle="uri-list"? namespace="uri"?>*
+<soap:headerfault message="qname" part="nmtoken" use="literal|encoded"
+                  encodingStyle="uri-list"? namespace="uri"?/>*
+<soap:header>
+</input>
+<output>
+<soap:header message="qname" part="nmtoken" use="literal|encoded"
+             encodingStyle="uri-list"? namespace="uri"?>*
+<soap:headerfault message="qname" part="nmtoken" use="literal|encoded"
+                  encodingStyle="uri-list"? namespace="uri"?/>*
+<soap:header>
+</output>
+        </operation>
+        </binding>
+        </definitions>
+        The use, encodingStyle and namespace attributes are all used in the same way as with soap:body (see section 3.5), only style="document" is assumed since headers do not contain parameters.
+        Together, the message attribute (of type QName) and the part attribute (of type nmtoken) reference the message part that defines the header type. The schema referenced by the part MAY include definitions for the soap:actor and soap:mustUnderstand attributes if use="literal", but MUST NOT if use="encoded". The referenced message need not be the same as the message that defines the SOAP Body.
+        The optional headerfault elements which appear inside soap:header and have the same syntax as soap:header) allows specification of the header type(s) that are used to transmit error information pertaining to the header defined by the soap:header. The SOAP specification states that errors pertaining to headers must be returned in headers, and this mechanism allows specification of the format of such headers.
+        3.8 soap:address
+        The SOAP address binding is used to give a port an address (a URI). A port using the SOAP binding MUST specify exactly one address. The URI scheme specified for the address must correspond to the transport specified by the soap:binding.
+<definitions .... >
+<port .... >
+<binding .... >
+<soap:address location="uri"/>
+        </binding>
+        </port>
+        </definitions>

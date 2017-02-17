@@ -1,0 +1,146 @@
+* jax-ws2.0的全称为java api for xml-Based Web services(jax-ws)2.0.
+* jax-ws2.0是对jax-rpc 1.0规范的扩展,是jax-rpc 1.1的后续版本,jax-rpc 2.0标准发布不久后便被重新命名为jax-ws2.0.
+* jax-ws2.0提供了新的编程模型和对以往的jax-rpc方式的Web services进行了增强.
+
+* WebService框架和技术层出不穷.知名的XFile(新的如CXF),Axis1,Axis2等.
+  而Sun公司也不甘落后,从早期的jax-rpc到现在成熟的,支持rpc调用与消息传递的jax-ws十分成熟,而且使用jax-ws开发WebService的收益是很大的,它是轻量级的.
+  我们使用jax-ws开发WebService只需要很简单的几个步骤:写接口和实现=>发布=>生成客户端.
+
+* 首先是接口的编写(接口中只需要把类注明为@WebService,把要暴露给客户端的方法注明为@WebMethod即可,
+* 其余如@WebResult,@WebParam等都不是必要的,而客户端和服务端的通信用rpc和Message-Oriented两种
+----------------------------------
+package com.spdbccc.account.persistence.ws;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+@WebService
+public interface WsService {
+    @WebMethod
+    void wsTestDefault();
+    @WebMethod
+    void wsTest(@WebParam(name = "name") String name);
+    @WebMethod
+    @WebResult(name = "valid")
+    int checkTime(@WebParam(name = "clientTime") String clientTime);
+}
+----------------------------------
+然后是实现类(注解@WebService及其endpointInterface属性是必要的):
+package com.spdbccc.account.persistence.ws;
+import javax.jws.WebService;
+import java.text.SimpleDateFormat;
+@WebService(endpointInterface = "com.spdbccc.account.persistence.ws.WsService")
+public class WsServiceImp implements WsService {
+    @Override
+    public void wsTestDefault() {
+        System.out.println("John!");
+    }
+    @Override
+    public void wsTest(String name) {
+        System.out.println(name + "!");
+    }
+    @Override
+    public int checkTime(String clientTime) {
+        return  1;
+    }
+}
+
+* 然后是发布(一般有两种方式):
+* 方式一 
+  此方式只能作为调试,有以下bug:
+  jdk1.6u17以下编译器不支持以Endpoint.publish方式发布document方式的soap,必须在service接口和实现类添加"@SOAPBinding(style = SOAPBinding.Style.rpc)"注解;
+  访问受限,似乎只能本机访问(应该会绑定到publish的URL上,如下使用localhost的话就只能本机访问)
+  package com.spdbccc.account.persistence.ws;
+  import javax.xml.ws.Endpoint;
+  public class WsServiceTest {
+      public static void main(String[] args) {
+          Endpoint.publish("http://172.30.64.150:8089/helloService", new WsServiceImp()); // 172.30.64.150为本机ip,局域网能访问http://172.30.64.150:8089/helloService?wsdl
+      }
+  }
+
+* 方式二(基于web服务器Servlet方式):
+  以Tomcat为例,首先编写sun-jaxws.xml文件并放到WEB-INF下:
+  <?xml version="1.0" encoding="UTF-8"?>
+  <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
+    <endpoint name="SayHiService" implementation="serivce.imp.SayHiServiceImp" url-pattern="/sayHi" />
+  </endpoints>
+
+  然后改动web.xml,添加listener和servlet(url-pattern要相同哦):
+  <?xml version="1.0" encoding="UTF-8"?>
+  <web-app xmlns:xsi="http://www.w3.org/2001/xmlSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+    <listener>  
+        <listener-class>
+            com.sun.xml.ws.transport.http.servlet.WSServletContextListener  
+        </listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>SayHiService</servlet-name>  
+        <servlet-class>
+            com.sun.xml.ws.transport.http.servlet.WSServlet  
+        </servlet-class>
+    </servlet>  
+    <servlet-mapping>  
+        <servlet-name>SayHiService</servlet-name>  
+        <url-pattern>/service/sayHi</url-pattern>  
+    </servlet-mapping>
+  </web-app>
+
+
+启动Tomcat
+部署好了之后打开浏览器输入网址:http://localhost/sayhi/service/sayHi?wsdl (如果是使用Tomcat别忘了加端口),可以看到东西就证明发布成功了.
+
+最后是客户端使用
+以下是在Windows平台下使用jdk自带工具wsimport生成客户端的方式:
+"%java_HOME%\bin\wsimport" -keep -d .\src -p org.ahe.webservice.client http://172.30.64.150:8089/helloService?wsdl
+上图我是把客户端文件生成到了桌面src文件中(-d),并保留了源文件(-keep),指定了包名(-p).
+生成使用的jdk和你客户端的jre需要配套
+
+服务端的每个webmethod都被单独解析成为了一个类(如果使用了实体,实体也会被解析到客户端,并且是源码,所以建议使用实体时慎重).
+而我们的service则被生成了一个代理类来调用服务:
+package main;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.xmlGregorianCalendar;
+import org.ahe.webservice.client.SayHiService;
+import org.ahe.webservice.client.SayHiServiceImpService;
+public class Main {
+    public static void main(String[] args) throws DatatypeConfigurationException {
+        // 获取service
+        SayHiService service = new SayHiServiceImpService().getSayHiServiceImpPort();
+        service.sayHiDefault();
+        service.sayHi("Ahe");
+        GregorianCalendar calender = new GregorianCalendar();
+        calender.setTime(new Date(System.currentTimeMillis()));
+        xmlGregorianCalendar xmldate = DatatypeFactory.newInstance().newxmlGregorianCalendar(calender);
+        System.out.println(service.checkTime(xmldate));
+    }
+}
+看看服务器的输出,我们是否调用成功
+
+
+无接口的demo:
+package com.spdbccc.account.persistence.ws;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import javax.xml.ws.Endpoint;
+@WebService
+public class WsServer {
+    @WebMethod
+    public String wsServer2(String name) {
+        return "wsServer." + name;
+    }
+}
+package com.spdbccc.account.persistence.ws;
+import javax.xml.ws.Endpoint;
+public class WsServiceTest {
+    public static void main(String[] args) {
+        Endpoint.publish("http://172.30.64.150:8089/helloService", new WsServer()); // 172.30.64.150为本机ip,局域网能访问http://172.30.64.150:8089/helloService?wsdl
+    }
+}
+
+
+
+
+

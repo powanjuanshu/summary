@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://oaas.creditcard.cmbchina.com" xmlns:impl="http://oaas.creditcard.cmbchina.com" xmlns:intf="http://oaas.creditcard.cmbchina.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsi="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types>
+  <schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://oaas.creditcard.cmbchina.com" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <element name="riskManagementTransResponse">
+    <complexType>
+     <sequence>
+      <element name="riskManagementTransReturn" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="riskManagementTrans">
+    <complexType>
+     <sequence>
+      <element name="transRequest" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="riskManagementTransRequest">
+     <wsdl:part element="impl:riskManagementTrans" name="parameters">
+    </wsdl:part>
+
+  </wsdl:message>
+
+   <wsdl:message name="riskManagementTransResponse">
+     <wsdl:part element="impl:riskManagementTransResponse" name="parameters">
+    </wsdl:part>
+
+  </wsdl:message>
+
+   <wsdl:portType name="RiskManagementOAAS">
+     <wsdl:operation name="riskManagementTrans">
+       <wsdl:input message="impl:riskManagementTransRequest" name="riskManagementTransRequest">
+    </wsdl:input>
+
+       <wsdl:output message="impl:riskManagementTransResponse" name="riskManagementTransResponse">
+    </wsdl:output>
+
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+   <wsdl:binding name="RiskManagementOAASSoapBinding" type="impl:RiskManagementOAAS">
+ <wsaw:UsingAddressing wsdl:required="false" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"/>
+
+     <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+     <wsdl:operation name="riskManagementTrans">
+       <wsdlsoap:operation soapAction="riskManagementTrans"/>
+
+       <wsdl:input name="riskManagementTransRequest">
+         <wsdlsoap:body use="literal"/>
+
+      </wsdl:input>
+
+       <wsdl:output name="riskManagementTransResponse">
+         <wsdlsoap:body use="literal"/>
+
+      </wsdl:output>
+
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+   <wsdl:service name="RiskManagementOAASService">
+     <wsdl:port binding="impl:RiskManagementOAASSoapBinding" name="RiskManagementOAAS">
+       <wsdlsoap:address location="http://localhost:9083/OAASWSDP/services/RiskManagementOAAS"/>
+
+    </wsdl:port>
+
+  </wsdl:service>
+
+</wsdl:definitions>

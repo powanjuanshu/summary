@@ -1,0 +1,5620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://218.18.250.248:8081/kess/services/KessService" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://218.18.250.248:8081/kess/services/KessService" xmlns:intf="http://218.18.250.248:8081/kess/services/KessService" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+
+   <wsdl:message name="queryOpenAccountProgressRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeOpenAccountFlowResponse">
+
+      <wsdl:part name="changeOpenAccountFlowReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="syncAnsAppSurvey2RunResponse">
+
+      <wsdl:part name="syncAnsAppSurvey2RunReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWebBizLogRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMenuAutorityRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryOrderInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cubsbScCloseAcctResponse">
+
+      <wsdl:part name="cubsbScCloseAcctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cubsbScOpenAcctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setTrdacctMdfCuacctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="encryptByAESResponse">
+
+      <wsdl:part name="encryptByAESReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="uploadImgResponse">
+
+      <wsdl:part name="uploadImgReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="uploadImgNoBizRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="apachesoap:DataHandler"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryAppropriteInvestorsInfoResponse">
+
+      <wsdl:part name="queryAppropriteInvestorsInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryAccountInfoResponse">
+
+      <wsdl:part name="queryAccountInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryOperatorOrgListRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCubsbAcctResponse">
+
+      <wsdl:part name="setCubsbAcctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAgreementInfoResponse">
+
+      <wsdl:part name="getAgreementInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDictDataRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="onSearchNewZDRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryAppropriteInvestorsInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="operatorLoginResponse">
+
+      <wsdl:part name="operatorLoginReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveVideoInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openStkTrdAcctResponse">
+
+      <wsdl:part name="openStkTrdAcctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="webImgNoUpRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAgreementInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openCustomerRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="operatorLoginRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRiskSurveyAnswerRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryMenuUserRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="closeCustAcctNewZDResponse">
+
+      <wsdl:part name="closeCustAcctNewZDReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listCuacctResponse">
+
+      <wsdl:part name="listCuacctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCubsPubExtOrgRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryOrderInfoResponse">
+
+      <wsdl:part name="queryOrderInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openCuacctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openUserImgInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listCuacctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="applyAcctFrtBizResponse">
+
+      <wsdl:part name="applyAcctFrtBizReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isPhoneOpenAcctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openYMTAcctByKbssRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openYMTAcctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRiskSurveyResultRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listCustInfoResponse">
+
+      <wsdl:part name="listCustInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="submitStkAcctBizOpReq2NewZDResponse">
+
+      <wsdl:part name="submitStkAcctBizOpReq2NewZDReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="contractActionOrCancelRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfOtherInfoCustResponse">
+
+      <wsdl:part name="mdfOtherInfoCustReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="downloadImgRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCustAgreementResponse">
+
+      <wsdl:part name="setCustAgreementReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="syncSurveyAns2KbssResponse">
+
+      <wsdl:part name="syncSurveyAns2KbssReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateBasicInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openUserImgInfoResponse">
+
+      <wsdl:part name="openUserImgInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchStkAcctBizInfoExResponse">
+
+      <wsdl:part name="searchStkAcctBizInfoExReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPayFeeResponse">
+
+      <wsdl:part name="getPayFeeReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="activateCubsbScRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfOtherInfoCustRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listOfStkTrdAcctResponse">
+
+      <wsdl:part name="listOfStkTrdAcctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listCustInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCubsbContractRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openYMTAcctByKbssResponse">
+
+      <wsdl:part name="openYMTAcctByKbssReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="moneyDeductRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="search2ndBoardMarketAgmtResponse">
+
+      <wsdl:part name="search2ndBoardMarketAgmtReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="uploadImgStringNoBizRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="confirmReslutRiskSurveyResponse">
+
+      <wsdl:part name="confirmReslutRiskSurveyReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listStkPbuOrgRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="decryptByAESResponse">
+
+      <wsdl:part name="decryptByAESReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="querySendOrderRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyFrtBizStatusResponse">
+
+      <wsdl:part name="modifyFrtBizStatusReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateExpandInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="restoreCustomerResponse">
+
+      <wsdl:part name="restoreCustomerReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="downloadImgStringRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="onSearchZDRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="uploadImgNoBizResponse">
+
+      <wsdl:part name="uploadImgNoBizReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openStkAcctByNewZDRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getChargeTemplateResponse">
+
+      <wsdl:part name="getChargeTemplateReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="refuseWitnessRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listOfTrdacctResponse">
+
+      <wsdl:part name="listOfTrdacctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="downloadImgStringByImgClsResponse">
+
+      <wsdl:part name="downloadImgStringByImgClsReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="activateCubsbScResponse">
+
+      <wsdl:part name="activateCubsbScReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryImgQcParaResponse">
+
+      <wsdl:part name="queryImgQcParaReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="uploadImgStringResponse">
+
+      <wsdl:part name="uploadImgStringReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openStkTrdAcctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCustAgreementRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAgreementContentResponse">
+
+      <wsdl:part name="getAgreementContentReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="uploadImgRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="apachesoap:DataHandler"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="syncAnsAppSurvey2RunRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryToConfirmRiskSurveyResultResponse">
+
+      <wsdl:part name="queryToConfirmRiskSurveyResultReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="maintainUserImgInfoResponse">
+
+      <wsdl:part name="maintainUserImgInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="trxCalendarQueryRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryOrgInfoListResponse">
+
+      <wsdl:part name="queryOrgInfoListReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserInfoByIdRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCustAgentAcctBizRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ansRiskSurveyBatchRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="synImgInfo2KbssExResponse">
+
+      <wsdl:part name="synImgInfo2KbssExReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCustAgentCuacctBizResponse">
+
+      <wsdl:part name="setCustAgentCuacctBizReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryScheduleResponse">
+
+      <wsdl:part name="queryScheduleReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCustAgentStkBizRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="downloadImgResponse">
+
+      <wsdl:part name="downloadImgReturn" type="apachesoap:DataHandler"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCustFlagYHZQResponse">
+
+      <wsdl:part name="setCustFlagYHZQReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="syncSurveyAns2KbssRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="closeCuacctResponse">
+
+      <wsdl:part name="closeCuacctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openAgentResponse">
+
+      <wsdl:part name="openAgentReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="maintainUserImgInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listOfStkTrdAcctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openCuacctResponse">
+
+      <wsdl:part name="openCuacctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="synImgInfo2KbssRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAgreementContentRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRiskSurveyAnswerResponse">
+
+      <wsdl:part name="queryRiskSurveyAnswerReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfCustOwnOrgResponse">
+
+      <wsdl:part name="mdfCustOwnOrgReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSurveySetRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfCustRevisitInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ansRiskSurveyBatchResponse">
+
+      <wsdl:part name="ansRiskSurveyBatchReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchUserImgInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchSignAgreementResponse">
+
+      <wsdl:part name="searchSignAgreementReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveRiskSurveyAnswerRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listOfTrdacctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="restoreCustomerRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfOrgExtInfoResponse">
+
+      <wsdl:part name="mdfOrgExtInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCustAgentStkBizResponse">
+
+      <wsdl:part name="setCustAgentStkBizReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getRiskSurveyResultRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryCustBasicInfoListRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="workBoardScZDResponse">
+
+      <wsdl:part name="workBoardScZDReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getChargeTemplateRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSurveySetResponse">
+
+      <wsdl:part name="getSurveySetReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openStkAccRunTimeRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="validateIdCodeResponse">
+
+      <wsdl:part name="validateIdCodeReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getStkTregStatusRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserInfoByIdResponse">
+
+      <wsdl:part name="getUserInfoByIdReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRiskSurveyResultResponse">
+
+      <wsdl:part name="queryRiskSurveyResultReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRiskSurveyRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="search2ndBoardMarketAgmtRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfCustRevisitInfoResponse">
+
+      <wsdl:part name="mdfCustRevisitInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCubsbContractRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="downloadImgStringResponse">
+
+      <wsdl:part name="downloadImgStringReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCubsbLogRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openNewStkAccRunTimeResponse">
+
+      <wsdl:part name="openNewStkAccRunTimeReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cubsbScOpenAcctResponse">
+
+      <wsdl:part name="cubsbScOpenAcctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="webSendSmsRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="synImgInfo2KbssExRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateBasicInfoResponse">
+
+      <wsdl:part name="updateBasicInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="maintainUserImportantInfoResponse">
+
+      <wsdl:part name="maintainUserImportantInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchImgScanConfigResponse">
+
+      <wsdl:part name="searchImgScanConfigReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfUserExtInfoResponse">
+
+      <wsdl:part name="mdfUserExtInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyCustInfoTableResponse">
+
+      <wsdl:part name="modifyCustInfoTableReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listCustRevisitInfoResponse">
+
+      <wsdl:part name="listCustRevisitInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openYMTAcctByNewZDRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="refuseWitnessResponse">
+
+      <wsdl:part name="refuseWitnessReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCustAgentAcctBizResponse">
+
+      <wsdl:part name="setCustAgentAcctBizReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="registSummaryInfoResponse">
+
+      <wsdl:part name="registSummaryInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="webImgNoUpResponse">
+
+      <wsdl:part name="webImgNoUpReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCubsbContractResponse">
+
+      <wsdl:part name="getCubsbContractReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCustFlagYHZQRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCommonParamsRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openAgentRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="validateIdCodeRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateCertInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="signAgreementResponse">
+
+      <wsdl:part name="signAgreementReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="querySendOrderResponse">
+
+      <wsdl:part name="querySendOrderReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryZDImgQcParaRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCuacctClsFeeResponse">
+
+      <wsdl:part name="setCuacctClsFeeReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="activeCustAcctZDResponse">
+
+      <wsdl:part name="activeCustAcctZDReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="encryptByAESRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryToConfirmRiskSurveyResultRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDictDataResponse">
+
+      <wsdl:part name="getDictDataReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getImgScanConfigsResponse">
+
+      <wsdl:part name="getImgScanConfigsReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfUserPasswordRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryCustBasicInfoResponse">
+
+      <wsdl:part name="queryCustBasicInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryOrgInfoListRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryOpenAccountProgressResponse">
+
+      <wsdl:part name="queryOpenAccountProgressReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setTrdacctMdfCuacctResponse">
+
+      <wsdl:part name="setTrdacctMdfCuacctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="operatorLogoutRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openYMTAcctResponse">
+
+      <wsdl:part name="openYMTAcctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="operatorInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateUserImportantInfoResponse">
+
+      <wsdl:part name="updateUserImportantInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCubsbAcctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCuacctClsFeeRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="signAgreementRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="contractActionOrCancelResponse">
+
+      <wsdl:part name="contractActionOrCancelReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="backApptCustInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveRiskSurveyAnswerBatchResponse">
+
+      <wsdl:part name="saveRiskSurveyAnswerBatchReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="stkTrdacctBindResponse">
+
+      <wsdl:part name="stkTrdacctBindReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cubsbScCloseAcctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateUserImportantInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfOrgExtInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="checkCuacctByIdRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryCustExpandInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="querySurveyIndexRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveVideoInfoResponse">
+
+      <wsdl:part name="saveVideoInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="restoreCuacctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchSignAgreementRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openCustomerResponse">
+
+      <wsdl:part name="openCustomerReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="operatorInfoResponse">
+
+      <wsdl:part name="operatorInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveApptCustInfoExResponse">
+
+      <wsdl:part name="saveApptCustInfoExReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateCertInfoResponse">
+
+      <wsdl:part name="updateCertInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfCustOwnOrgRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfUserGenInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="registSummaryInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openOfTrdacctResponse">
+
+      <wsdl:part name="openOfTrdacctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchStkAcctBizInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ansSurveyRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="restoreStkTrdacctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchSubsbScContractResponse">
+
+      <wsdl:part name="searchSubsbScContractReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateExpandInfoResponse">
+
+      <wsdl:part name="updateExpandInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyFrtBizStatusRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserOccuInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfUserExtInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="applyAcctFrtBizRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchAcctFrtBizLogRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openOfTrdacctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryScheduleRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveApptCustInfoExRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openNewStkAccRunTimeRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="synImgInfo2KbssResponse">
+
+      <wsdl:part name="synImgInfo2KbssReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryCustBasicInfoListResponse">
+
+      <wsdl:part name="queryCustBasicInfoListReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="operUserImgReCordInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCommonParamsResponse">
+
+      <wsdl:part name="getCommonParamsReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryMenuUserResponse">
+
+      <wsdl:part name="queryMenuUserReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchDateTimeResponse">
+
+      <wsdl:part name="searchDateTimeReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="custCodeStatusResponse">
+
+      <wsdl:part name="custCodeStatusReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listStkPbuOrgResponse">
+
+      <wsdl:part name="listStkPbuOrgReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openStkAcctByNewZDResponse">
+
+      <wsdl:part name="openStkAcctByNewZDReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="custCodeStatusRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setAppropriteInvestorsInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryOperatorOrgListResponse">
+
+      <wsdl:part name="queryOperatorOrgListReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchDateTimeRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="moneyDeductResponse">
+
+      <wsdl:part name="moneyDeductReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCubsbLogResponse">
+
+      <wsdl:part name="getCubsbLogReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getImgScanConfigsRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeOpenAccountFlowRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchStkAcctBizInfoExRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchImgScanConfigRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserOccuInfoResponse">
+
+      <wsdl:part name="getUserOccuInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="uploadImgStringRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="webSendSmsResponse">
+
+      <wsdl:part name="webSendSmsReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="webCheckApptCustInfoResponse">
+
+      <wsdl:part name="webCheckApptCustInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryImgQcParaRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCubsbContractResponse">
+
+      <wsdl:part name="setCubsbContractReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="closeCustomerResponse">
+
+      <wsdl:part name="closeCustomerReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="checkCuacctByIdResponse">
+
+      <wsdl:part name="checkCuacctByIdReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfUserPasswordResponse">
+
+      <wsdl:part name="mdfUserPasswordReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryOperatorMenuListRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMenuAutorityResponse">
+
+      <wsdl:part name="getMenuAutorityReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyCustInfoTableRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchSubsbScContractRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="stkTrdacctBindRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getGlobalConfigsResponse">
+
+      <wsdl:part name="getGlobalConfigsReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveRiskSurveyAnswerBatchRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="restoreCuacctResponse">
+
+      <wsdl:part name="restoreCuacctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="registerOfTrdacctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="decryptByAESRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ansSurveyBatchRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCubsPubExtOrgResponse">
+
+      <wsdl:part name="getCubsPubExtOrgReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="trxCalendarQueryResponse">
+
+      <wsdl:part name="trxCalendarQueryReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPayFeeRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="mdfUserGenInfoResponse">
+
+      <wsdl:part name="mdfUserGenInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="maintainUserImportantInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveRiskSurveyAnswerResponse">
+
+      <wsdl:part name="saveRiskSurveyAnswerReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="operatorLogoutResponse">
+
+      <wsdl:part name="operatorLogoutReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="uploadImgStringNoBizResponse">
+
+      <wsdl:part name="uploadImgStringNoBizReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchUserImgInfoResponse">
+
+      <wsdl:part name="searchUserImgInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCustAgentCuacctBizRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="webCheckApptCustInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryZDImgQcParaResponse">
+
+      <wsdl:part name="queryZDImgQcParaReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getStkTregStatusResponse">
+
+      <wsdl:part name="getStkTregStatusReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryAccountInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="closeCustAcctNewZDRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openStkAccRunTimeResponse">
+
+      <wsdl:part name="openStkAccRunTimeReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="restoreStkTrdacctResponse">
+
+      <wsdl:part name="restoreStkTrdacctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="onSearchZDResponse">
+
+      <wsdl:part name="onSearchZDReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getRiskSurveyResultResponse">
+
+      <wsdl:part name="getRiskSurveyResultReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setAppropriteInvestorsInfoResponse">
+
+      <wsdl:part name="setAppropriteInvestorsInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="querySurveyIndexResponse">
+
+      <wsdl:part name="querySurveyIndexReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ansSurveyResponse">
+
+      <wsdl:part name="ansSurveyReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWebBizLogResponse">
+
+      <wsdl:part name="getWebBizLogReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchAcctFrtBizLogResponse">
+
+      <wsdl:part name="searchAcctFrtBizLogReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="workBoardScZDRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="onSearchNewZDResponse">
+
+      <wsdl:part name="onSearchNewZDReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="closeCustomerRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="backApptCustInfoResponse">
+
+      <wsdl:part name="backApptCustInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchStkAcctBizInfoResponse">
+
+      <wsdl:part name="searchStkAcctBizInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="submitStkAcctBizOpReq2NewZDRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="registerOfTrdacctResponse">
+
+      <wsdl:part name="registerOfTrdacctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getGlobalConfigsRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="confirmReslutRiskSurveyRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRiskSurveyResponse">
+
+      <wsdl:part name="queryRiskSurveyReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ansSurveyBatchResponse">
+
+      <wsdl:part name="ansSurveyBatchReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="openYMTAcctByNewZDResponse">
+
+      <wsdl:part name="openYMTAcctByNewZDReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="operUserImgReCordInfoResponse">
+
+      <wsdl:part name="operUserImgReCordInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryCustBasicInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryOperatorMenuListResponse">
+
+      <wsdl:part name="queryOperatorMenuListReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryCustExpandInfoResponse">
+
+      <wsdl:part name="queryCustExpandInfoReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="downloadImgStringByImgClsRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isPhoneOpenAcctResponse">
+
+      <wsdl:part name="isPhoneOpenAcctReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="activeCustAcctZDRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="closeCuacctRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listCustRevisitInfoRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="KessService">
+
+      <wsdl:operation name="uploadImg" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:uploadImgRequest" name="uploadImgRequest"/>
+
+         <wsdl:output message="impl:uploadImgResponse" name="uploadImgResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="signAgreement" parameterOrder="in0">
+
+         <wsdl:input message="impl:signAgreementRequest" name="signAgreementRequest"/>
+
+         <wsdl:output message="impl:signAgreementResponse" name="signAgreementResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="encryptByAES" parameterOrder="in0">
+
+         <wsdl:input message="impl:encryptByAESRequest" name="encryptByAESRequest"/>
+
+         <wsdl:output message="impl:encryptByAESResponse" name="encryptByAESResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="decryptByAES" parameterOrder="in0">
+
+         <wsdl:input message="impl:decryptByAESRequest" name="decryptByAESRequest"/>
+
+         <wsdl:output message="impl:decryptByAESResponse" name="decryptByAESResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openYMTAcct" parameterOrder="in0">
+
+         <wsdl:input message="impl:openYMTAcctRequest" name="openYMTAcctRequest"/>
+
+         <wsdl:output message="impl:openYMTAcctResponse" name="openYMTAcctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUserInfoById" parameterOrder="in0">
+
+         <wsdl:input message="impl:getUserInfoByIdRequest" name="getUserInfoByIdRequest"/>
+
+         <wsdl:output message="impl:getUserInfoByIdResponse" name="getUserInfoByIdResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="operatorLogin" parameterOrder="in0">
+
+         <wsdl:input message="impl:operatorLoginRequest" name="operatorLoginRequest"/>
+
+         <wsdl:output message="impl:operatorLoginResponse" name="operatorLoginResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="operatorLogout" parameterOrder="in0">
+
+         <wsdl:input message="impl:operatorLogoutRequest" name="operatorLogoutRequest"/>
+
+         <wsdl:output message="impl:operatorLogoutResponse" name="operatorLogoutResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryOperatorMenuList" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryOperatorMenuListRequest" name="queryOperatorMenuListRequest"/>
+
+         <wsdl:output message="impl:queryOperatorMenuListResponse" name="queryOperatorMenuListResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryOperatorOrgList" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryOperatorOrgListRequest" name="queryOperatorOrgListRequest"/>
+
+         <wsdl:output message="impl:queryOperatorOrgListResponse" name="queryOperatorOrgListResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="querySchedule" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryScheduleRequest" name="queryScheduleRequest"/>
+
+         <wsdl:output message="impl:queryScheduleResponse" name="queryScheduleResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="registSummaryInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:registSummaryInfoRequest" name="registSummaryInfoRequest"/>
+
+         <wsdl:output message="impl:registSummaryInfoResponse" name="registSummaryInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryOrderInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryOrderInfoRequest" name="queryOrderInfoRequest"/>
+
+         <wsdl:output message="impl:queryOrderInfoResponse" name="queryOrderInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="refuseWitness" parameterOrder="in0">
+
+         <wsdl:input message="impl:refuseWitnessRequest" name="refuseWitnessRequest"/>
+
+         <wsdl:output message="impl:refuseWitnessResponse" name="refuseWitnessResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryCustBasicInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryCustBasicInfoRequest" name="queryCustBasicInfoRequest"/>
+
+         <wsdl:output message="impl:queryCustBasicInfoResponse" name="queryCustBasicInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryCustExpandInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryCustExpandInfoRequest" name="queryCustExpandInfoRequest"/>
+
+         <wsdl:output message="impl:queryCustExpandInfoResponse" name="queryCustExpandInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryOpenAccountProgress" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryOpenAccountProgressRequest" name="queryOpenAccountProgressRequest"/>
+
+         <wsdl:output message="impl:queryOpenAccountProgressResponse" name="queryOpenAccountProgressResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryCustBasicInfoList" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryCustBasicInfoListRequest" name="queryCustBasicInfoListRequest"/>
+
+         <wsdl:output message="impl:queryCustBasicInfoListResponse" name="queryCustBasicInfoListResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryAccountInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryAccountInfoRequest" name="queryAccountInfoRequest"/>
+
+         <wsdl:output message="impl:queryAccountInfoResponse" name="queryAccountInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateIdCode" parameterOrder="in0">
+
+         <wsdl:input message="impl:validateIdCodeRequest" name="validateIdCodeRequest"/>
+
+         <wsdl:output message="impl:validateIdCodeResponse" name="validateIdCodeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateBasicInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:updateBasicInfoRequest" name="updateBasicInfoRequest"/>
+
+         <wsdl:output message="impl:updateBasicInfoResponse" name="updateBasicInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateExpandInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:updateExpandInfoRequest" name="updateExpandInfoRequest"/>
+
+         <wsdl:output message="impl:updateExpandInfoResponse" name="updateExpandInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeOpenAccountFlow" parameterOrder="in0">
+
+         <wsdl:input message="impl:changeOpenAccountFlowRequest" name="changeOpenAccountFlowRequest"/>
+
+         <wsdl:output message="impl:changeOpenAccountFlowResponse" name="changeOpenAccountFlowResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRiskSurvey" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryRiskSurveyRequest" name="queryRiskSurveyRequest"/>
+
+         <wsdl:output message="impl:queryRiskSurveyResponse" name="queryRiskSurveyResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveRiskSurveyAnswer" parameterOrder="in0">
+
+         <wsdl:input message="impl:saveRiskSurveyAnswerRequest" name="saveRiskSurveyAnswerRequest"/>
+
+         <wsdl:output message="impl:saveRiskSurveyAnswerResponse" name="saveRiskSurveyAnswerResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRiskSurveyAnswer" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryRiskSurveyAnswerRequest" name="queryRiskSurveyAnswerRequest"/>
+
+         <wsdl:output message="impl:queryRiskSurveyAnswerResponse" name="queryRiskSurveyAnswerResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="onSearchZD" parameterOrder="in0">
+
+         <wsdl:input message="impl:onSearchZDRequest" name="onSearchZDRequest"/>
+
+         <wsdl:output message="impl:onSearchZDResponse" name="onSearchZDResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryOrgInfoList" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryOrgInfoListRequest" name="queryOrgInfoListRequest"/>
+
+         <wsdl:output message="impl:queryOrgInfoListResponse" name="queryOrgInfoListResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryImgQcPara" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryImgQcParaRequest" name="queryImgQcParaRequest"/>
+
+         <wsdl:output message="impl:queryImgQcParaResponse" name="queryImgQcParaResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryZDImgQcPara" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryZDImgQcParaRequest" name="queryZDImgQcParaRequest"/>
+
+         <wsdl:output message="impl:queryZDImgQcParaResponse" name="queryZDImgQcParaResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDictData" parameterOrder="in0">
+
+         <wsdl:input message="impl:getDictDataRequest" name="getDictDataRequest"/>
+
+         <wsdl:output message="impl:getDictDataResponse" name="getDictDataResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="downloadImg" parameterOrder="in0">
+
+         <wsdl:input message="impl:downloadImgRequest" name="downloadImgRequest"/>
+
+         <wsdl:output message="impl:downloadImgResponse" name="downloadImgResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryMenuUser" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryMenuUserRequest" name="queryMenuUserRequest"/>
+
+         <wsdl:output message="impl:queryMenuUserResponse" name="queryMenuUserResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="operatorInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:operatorInfoRequest" name="operatorInfoRequest"/>
+
+         <wsdl:output message="impl:operatorInfoResponse" name="operatorInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="querySurveyIndex" parameterOrder="in0">
+
+         <wsdl:input message="impl:querySurveyIndexRequest" name="querySurveyIndexRequest"/>
+
+         <wsdl:output message="impl:querySurveyIndexResponse" name="querySurveyIndexResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="uploadImgString" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:uploadImgStringRequest" name="uploadImgStringRequest"/>
+
+         <wsdl:output message="impl:uploadImgStringResponse" name="uploadImgStringResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="downloadImgString" parameterOrder="in0">
+
+         <wsdl:input message="impl:downloadImgStringRequest" name="downloadImgStringRequest"/>
+
+         <wsdl:output message="impl:downloadImgStringResponse" name="downloadImgStringResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="downloadImgStringByImgCls" parameterOrder="in0">
+
+         <wsdl:input message="impl:downloadImgStringByImgClsRequest" name="downloadImgStringByImgClsRequest"/>
+
+         <wsdl:output message="impl:downloadImgStringByImgClsResponse" name="downloadImgStringByImgClsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openCustomer" parameterOrder="in0">
+
+         <wsdl:input message="impl:openCustomerRequest" name="openCustomerRequest"/>
+
+         <wsdl:output message="impl:openCustomerResponse" name="openCustomerResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openCuacct" parameterOrder="in0">
+
+         <wsdl:input message="impl:openCuacctRequest" name="openCuacctRequest"/>
+
+         <wsdl:output message="impl:openCuacctResponse" name="openCuacctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="webCheckApptCustInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:webCheckApptCustInfoRequest" name="webCheckApptCustInfoRequest"/>
+
+         <wsdl:output message="impl:webCheckApptCustInfoResponse" name="webCheckApptCustInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfOtherInfoCust" parameterOrder="in0">
+
+         <wsdl:input message="impl:mdfOtherInfoCustRequest" name="mdfOtherInfoCustRequest"/>
+
+         <wsdl:output message="impl:mdfOtherInfoCustResponse" name="mdfOtherInfoCustResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="backApptCustInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:backApptCustInfoRequest" name="backApptCustInfoRequest"/>
+
+         <wsdl:output message="impl:backApptCustInfoResponse" name="backApptCustInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfUserPassword" parameterOrder="in0">
+
+         <wsdl:input message="impl:mdfUserPasswordRequest" name="mdfUserPasswordRequest"/>
+
+         <wsdl:output message="impl:mdfUserPasswordResponse" name="mdfUserPasswordResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openStkAccRunTime" parameterOrder="in0">
+
+         <wsdl:input message="impl:openStkAccRunTimeRequest" name="openStkAccRunTimeRequest"/>
+
+         <wsdl:output message="impl:openStkAccRunTimeResponse" name="openStkAccRunTimeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openStkTrdAcct" parameterOrder="in0">
+
+         <wsdl:input message="impl:openStkTrdAcctRequest" name="openStkTrdAcctRequest"/>
+
+         <wsdl:output message="impl:openStkTrdAcctResponse" name="openStkTrdAcctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="stkTrdacctBind" parameterOrder="in0">
+
+         <wsdl:input message="impl:stkTrdacctBindRequest" name="stkTrdacctBindRequest"/>
+
+         <wsdl:output message="impl:stkTrdacctBindResponse" name="stkTrdacctBindResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openOfTrdacct" parameterOrder="in0">
+
+         <wsdl:input message="impl:openOfTrdacctRequest" name="openOfTrdacctRequest"/>
+
+         <wsdl:output message="impl:openOfTrdacctResponse" name="openOfTrdacctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="registerOfTrdacct" parameterOrder="in0">
+
+         <wsdl:input message="impl:registerOfTrdacctRequest" name="registerOfTrdacctRequest"/>
+
+         <wsdl:output message="impl:registerOfTrdacctResponse" name="registerOfTrdacctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listOfStkTrdAcct" parameterOrder="in0">
+
+         <wsdl:input message="impl:listOfStkTrdAcctRequest" name="listOfStkTrdAcctRequest"/>
+
+         <wsdl:output message="impl:listOfStkTrdAcctResponse" name="listOfStkTrdAcctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listOfTrdacct" parameterOrder="in0">
+
+         <wsdl:input message="impl:listOfTrdacctRequest" name="listOfTrdacctRequest"/>
+
+         <wsdl:output message="impl:listOfTrdacctResponse" name="listOfTrdacctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="moneyDeduct" parameterOrder="in0">
+
+         <wsdl:input message="impl:moneyDeductRequest" name="moneyDeductRequest"/>
+
+         <wsdl:output message="impl:moneyDeductResponse" name="moneyDeductResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyCustInfoTable" parameterOrder="in0">
+
+         <wsdl:input message="impl:modifyCustInfoTableRequest" name="modifyCustInfoTableRequest"/>
+
+         <wsdl:output message="impl:modifyCustInfoTableResponse" name="modifyCustInfoTableResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listStkPbuOrg" parameterOrder="in0">
+
+         <wsdl:input message="impl:listStkPbuOrgRequest" name="listStkPbuOrgRequest"/>
+
+         <wsdl:output message="impl:listStkPbuOrgResponse" name="listStkPbuOrgResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCommonParams" parameterOrder="in0">
+
+         <wsdl:input message="impl:getCommonParamsRequest" name="getCommonParamsRequest"/>
+
+         <wsdl:output message="impl:getCommonParamsResponse" name="getCommonParamsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="webSendSms" parameterOrder="in0">
+
+         <wsdl:input message="impl:webSendSmsRequest" name="webSendSmsRequest"/>
+
+         <wsdl:output message="impl:webSendSmsResponse" name="webSendSmsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveVideoInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:saveVideoInfoRequest" name="saveVideoInfoRequest"/>
+
+         <wsdl:output message="impl:saveVideoInfoResponse" name="saveVideoInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfUserExtInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:mdfUserExtInfoRequest" name="mdfUserExtInfoRequest"/>
+
+         <wsdl:output message="impl:mdfUserExtInfoResponse" name="mdfUserExtInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCustAgreement" parameterOrder="in0">
+
+         <wsdl:input message="impl:setCustAgreementRequest" name="setCustAgreementRequest"/>
+
+         <wsdl:output message="impl:setCustAgreementResponse" name="setCustAgreementResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ansSurvey" parameterOrder="in0">
+
+         <wsdl:input message="impl:ansSurveyRequest" name="ansSurveyRequest"/>
+
+         <wsdl:output message="impl:ansSurveyResponse" name="ansSurveyResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cubsbScOpenAcct" parameterOrder="in0">
+
+         <wsdl:input message="impl:cubsbScOpenAcctRequest" name="cubsbScOpenAcctRequest"/>
+
+         <wsdl:output message="impl:cubsbScOpenAcctResponse" name="cubsbScOpenAcctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openUserImgInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:openUserImgInfoRequest" name="openUserImgInfoRequest"/>
+
+         <wsdl:output message="impl:openUserImgInfoResponse" name="openUserImgInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCustFlagYHZQ" parameterOrder="in0">
+
+         <wsdl:input message="impl:setCustFlagYHZQRequest" name="setCustFlagYHZQRequest"/>
+
+         <wsdl:output message="impl:setCustFlagYHZQResponse" name="setCustFlagYHZQResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWebBizLog" parameterOrder="in0">
+
+         <wsdl:input message="impl:getWebBizLogRequest" name="getWebBizLogRequest"/>
+
+         <wsdl:output message="impl:getWebBizLogResponse" name="getWebBizLogResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCubsPubExtOrg" parameterOrder="in0">
+
+         <wsdl:input message="impl:getCubsPubExtOrgRequest" name="getCubsPubExtOrgRequest"/>
+
+         <wsdl:output message="impl:getCubsPubExtOrgResponse" name="getCubsPubExtOrgResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCubsbContract" parameterOrder="in0">
+
+         <wsdl:input message="impl:getCubsbContractRequest" name="getCubsbContractRequest"/>
+
+         <wsdl:output message="impl:getCubsbContractResponse" name="getCubsbContractResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="custCodeStatus" parameterOrder="in0">
+
+         <wsdl:input message="impl:custCodeStatusRequest" name="custCodeStatusRequest"/>
+
+         <wsdl:output message="impl:custCodeStatusResponse" name="custCodeStatusResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="querySendOrder" parameterOrder="in0">
+
+         <wsdl:input message="impl:querySendOrderRequest" name="querySendOrderRequest"/>
+
+         <wsdl:output message="impl:querySendOrderResponse" name="querySendOrderResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStkTregStatus" parameterOrder="in0">
+
+         <wsdl:input message="impl:getStkTregStatusRequest" name="getStkTregStatusRequest"/>
+
+         <wsdl:output message="impl:getStkTregStatusResponse" name="getStkTregStatusResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cubsbScCloseAcct" parameterOrder="in0">
+
+         <wsdl:input message="impl:cubsbScCloseAcctRequest" name="cubsbScCloseAcctRequest"/>
+
+         <wsdl:output message="impl:cubsbScCloseAcctResponse" name="cubsbScCloseAcctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCubsbLog" parameterOrder="in0">
+
+         <wsdl:input message="impl:getCubsbLogRequest" name="getCubsbLogRequest"/>
+
+         <wsdl:output message="impl:getCubsbLogResponse" name="getCubsbLogResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGlobalConfigs" parameterOrder="in0">
+
+         <wsdl:input message="impl:getGlobalConfigsRequest" name="getGlobalConfigsRequest"/>
+
+         <wsdl:output message="impl:getGlobalConfigsResponse" name="getGlobalConfigsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getImgScanConfigs" parameterOrder="in0">
+
+         <wsdl:input message="impl:getImgScanConfigsRequest" name="getImgScanConfigsRequest"/>
+
+         <wsdl:output message="impl:getImgScanConfigsResponse" name="getImgScanConfigsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="synImgInfo2Kbss" parameterOrder="in0">
+
+         <wsdl:input message="impl:synImgInfo2KbssRequest" name="synImgInfo2KbssRequest"/>
+
+         <wsdl:output message="impl:synImgInfo2KbssResponse" name="synImgInfo2KbssResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyFrtBizStatus" parameterOrder="in0">
+
+         <wsdl:input message="impl:modifyFrtBizStatusRequest" name="modifyFrtBizStatusRequest"/>
+
+         <wsdl:output message="impl:modifyFrtBizStatusResponse" name="modifyFrtBizStatusResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="contractActionOrCancel" parameterOrder="in0">
+
+         <wsdl:input message="impl:contractActionOrCancelRequest" name="contractActionOrCancelRequest"/>
+
+         <wsdl:output message="impl:contractActionOrCancelResponse" name="contractActionOrCancelResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="webImgNoUp" parameterOrder="in0">
+
+         <wsdl:input message="impl:webImgNoUpRequest" name="webImgNoUpRequest"/>
+
+         <wsdl:output message="impl:webImgNoUpResponse" name="webImgNoUpResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="operUserImgReCordInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:operUserImgReCordInfoRequest" name="operUserImgReCordInfoRequest"/>
+
+         <wsdl:output message="impl:operUserImgReCordInfoResponse" name="operUserImgReCordInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCubsbAcct" parameterOrder="in0">
+
+         <wsdl:input message="impl:setCubsbAcctRequest" name="setCubsbAcctRequest"/>
+
+         <wsdl:output message="impl:setCubsbAcctResponse" name="setCubsbAcctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCubsbContract" parameterOrder="in0">
+
+         <wsdl:input message="impl:setCubsbContractRequest" name="setCubsbContractRequest"/>
+
+         <wsdl:output message="impl:setCubsbContractResponse" name="setCubsbContractResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="closeCuacct" parameterOrder="in0">
+
+         <wsdl:input message="impl:closeCuacctRequest" name="closeCuacctRequest"/>
+
+         <wsdl:output message="impl:closeCuacctResponse" name="closeCuacctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="closeCustomer" parameterOrder="in0">
+
+         <wsdl:input message="impl:closeCustomerRequest" name="closeCustomerRequest"/>
+
+         <wsdl:output message="impl:closeCustomerResponse" name="closeCustomerResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listCustInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:listCustInfoRequest" name="listCustInfoRequest"/>
+
+         <wsdl:output message="impl:listCustInfoResponse" name="listCustInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listCuacct" parameterOrder="in0">
+
+         <wsdl:input message="impl:listCuacctRequest" name="listCuacctRequest"/>
+
+         <wsdl:output message="impl:listCuacctResponse" name="listCuacctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfCustOwnOrg" parameterOrder="in0">
+
+         <wsdl:input message="impl:mdfCustOwnOrgRequest" name="mdfCustOwnOrgRequest"/>
+
+         <wsdl:output message="impl:mdfCustOwnOrgResponse" name="mdfCustOwnOrgResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="restoreCuacct" parameterOrder="in0">
+
+         <wsdl:input message="impl:restoreCuacctRequest" name="restoreCuacctRequest"/>
+
+         <wsdl:output message="impl:restoreCuacctResponse" name="restoreCuacctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="restoreCustomer" parameterOrder="in0">
+
+         <wsdl:input message="impl:restoreCustomerRequest" name="restoreCustomerRequest"/>
+
+         <wsdl:output message="impl:restoreCustomerResponse" name="restoreCustomerResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="restoreStkTrdacct" parameterOrder="in0">
+
+         <wsdl:input message="impl:restoreStkTrdacctRequest" name="restoreStkTrdacctRequest"/>
+
+         <wsdl:output message="impl:restoreStkTrdacctResponse" name="restoreStkTrdacctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setTrdacctMdfCuacct" parameterOrder="in0">
+
+         <wsdl:input message="impl:setTrdacctMdfCuacctRequest" name="setTrdacctMdfCuacctRequest"/>
+
+         <wsdl:output message="impl:setTrdacctMdfCuacctResponse" name="setTrdacctMdfCuacctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCuacctClsFee" parameterOrder="in0">
+
+         <wsdl:input message="impl:setCuacctClsFeeRequest" name="setCuacctClsFeeRequest"/>
+
+         <wsdl:output message="impl:setCuacctClsFeeResponse" name="setCuacctClsFeeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfUserGenInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:mdfUserGenInfoRequest" name="mdfUserGenInfoRequest"/>
+
+         <wsdl:output message="impl:mdfUserGenInfoResponse" name="mdfUserGenInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUserOccuInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:getUserOccuInfoRequest" name="getUserOccuInfoRequest"/>
+
+         <wsdl:output message="impl:getUserOccuInfoResponse" name="getUserOccuInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getChargeTemplate" parameterOrder="in0">
+
+         <wsdl:input message="impl:getChargeTemplateRequest" name="getChargeTemplateRequest"/>
+
+         <wsdl:output message="impl:getChargeTemplateResponse" name="getChargeTemplateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveRiskSurveyAnswerBatch" parameterOrder="in0">
+
+         <wsdl:input message="impl:saveRiskSurveyAnswerBatchRequest" name="saveRiskSurveyAnswerBatchRequest"/>
+
+         <wsdl:output message="impl:saveRiskSurveyAnswerBatchResponse" name="saveRiskSurveyAnswerBatchResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ansSurveyBatch" parameterOrder="in0">
+
+         <wsdl:input message="impl:ansSurveyBatchRequest" name="ansSurveyBatchRequest"/>
+
+         <wsdl:output message="impl:ansSurveyBatchResponse" name="ansSurveyBatchResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgreementInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:getAgreementInfoRequest" name="getAgreementInfoRequest"/>
+
+         <wsdl:output message="impl:getAgreementInfoResponse" name="getAgreementInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgreementContent" parameterOrder="in0">
+
+         <wsdl:input message="impl:getAgreementContentRequest" name="getAgreementContentRequest"/>
+
+         <wsdl:output message="impl:getAgreementContentResponse" name="getAgreementContentResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPayFee" parameterOrder="in0">
+
+         <wsdl:input message="impl:getPayFeeRequest" name="getPayFeeRequest"/>
+
+         <wsdl:output message="impl:getPayFeeResponse" name="getPayFeeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMenuAutority" parameterOrder="in0">
+
+         <wsdl:input message="impl:getMenuAutorityRequest" name="getMenuAutorityRequest"/>
+
+         <wsdl:output message="impl:getMenuAutorityResponse" name="getMenuAutorityResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchDateTime" parameterOrder="in0">
+
+         <wsdl:input message="impl:searchDateTimeRequest" name="searchDateTimeRequest"/>
+
+         <wsdl:output message="impl:searchDateTimeResponse" name="searchDateTimeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isPhoneOpenAcct" parameterOrder="in0">
+
+         <wsdl:input message="impl:isPhoneOpenAcctRequest" name="isPhoneOpenAcctRequest"/>
+
+         <wsdl:output message="impl:isPhoneOpenAcctResponse" name="isPhoneOpenAcctResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateCertInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:updateCertInfoRequest" name="updateCertInfoRequest"/>
+
+         <wsdl:output message="impl:updateCertInfoResponse" name="updateCertInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchSignAgreement" parameterOrder="in0">
+
+         <wsdl:input message="impl:searchSignAgreementRequest" name="searchSignAgreementRequest"/>
+
+         <wsdl:output message="impl:searchSignAgreementResponse" name="searchSignAgreementResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="onSearchNewZD" parameterOrder="in0">
+
+         <wsdl:input message="impl:onSearchNewZDRequest" name="onSearchNewZDRequest"/>
+
+         <wsdl:output message="impl:onSearchNewZDResponse" name="onSearchNewZDResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openNewStkAccRunTime" parameterOrder="in0">
+
+         <wsdl:input message="impl:openNewStkAccRunTimeRequest" name="openNewStkAccRunTimeRequest"/>
+
+         <wsdl:output message="impl:openNewStkAccRunTimeResponse" name="openNewStkAccRunTimeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveApptCustInfoEx" parameterOrder="in0">
+
+         <wsdl:input message="impl:saveApptCustInfoExRequest" name="saveApptCustInfoExRequest"/>
+
+         <wsdl:output message="impl:saveApptCustInfoExResponse" name="saveApptCustInfoExResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchSubsbScContract" parameterOrder="in0">
+
+         <wsdl:input message="impl:searchSubsbScContractRequest" name="searchSubsbScContractRequest"/>
+
+         <wsdl:output message="impl:searchSubsbScContractResponse" name="searchSubsbScContractResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="activateCubsbSc" parameterOrder="in0">
+
+         <wsdl:input message="impl:activateCubsbScRequest" name="activateCubsbScRequest"/>
+
+         <wsdl:output message="impl:activateCubsbScResponse" name="activateCubsbScResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSurveySet" parameterOrder="in0">
+
+         <wsdl:input message="impl:getSurveySetRequest" name="getSurveySetRequest"/>
+
+         <wsdl:output message="impl:getSurveySetResponse" name="getSurveySetResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRiskSurveyResult" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryRiskSurveyResultRequest" name="queryRiskSurveyResultRequest"/>
+
+         <wsdl:output message="impl:queryRiskSurveyResultResponse" name="queryRiskSurveyResultResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryAppropriteInvestorsInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryAppropriteInvestorsInfoRequest" name="queryAppropriteInvestorsInfoRequest"/>
+
+         <wsdl:output message="impl:queryAppropriteInvestorsInfoResponse" name="queryAppropriteInvestorsInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setAppropriteInvestorsInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:setAppropriteInvestorsInfoRequest" name="setAppropriteInvestorsInfoRequest"/>
+
+         <wsdl:output message="impl:setAppropriteInvestorsInfoResponse" name="setAppropriteInvestorsInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryToConfirmRiskSurveyResult" parameterOrder="in0">
+
+         <wsdl:input message="impl:queryToConfirmRiskSurveyResultRequest" name="queryToConfirmRiskSurveyResultRequest"/>
+
+         <wsdl:output message="impl:queryToConfirmRiskSurveyResultResponse" name="queryToConfirmRiskSurveyResultResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="confirmReslutRiskSurvey" parameterOrder="in0">
+
+         <wsdl:input message="impl:confirmReslutRiskSurveyRequest" name="confirmReslutRiskSurveyRequest"/>
+
+         <wsdl:output message="impl:confirmReslutRiskSurveyResponse" name="confirmReslutRiskSurveyResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getRiskSurveyResult" parameterOrder="in0">
+
+         <wsdl:input message="impl:getRiskSurveyResultRequest" name="getRiskSurveyResultRequest"/>
+
+         <wsdl:output message="impl:getRiskSurveyResultResponse" name="getRiskSurveyResultResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ansRiskSurveyBatch" parameterOrder="in0">
+
+         <wsdl:input message="impl:ansRiskSurveyBatchRequest" name="ansRiskSurveyBatchRequest"/>
+
+         <wsdl:output message="impl:ansRiskSurveyBatchResponse" name="ansRiskSurveyBatchResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openAgent" parameterOrder="in0">
+
+         <wsdl:input message="impl:openAgentRequest" name="openAgentRequest"/>
+
+         <wsdl:output message="impl:openAgentResponse" name="openAgentResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCustAgentAcctBiz" parameterOrder="in0">
+
+         <wsdl:input message="impl:setCustAgentAcctBizRequest" name="setCustAgentAcctBizRequest"/>
+
+         <wsdl:output message="impl:setCustAgentAcctBizResponse" name="setCustAgentAcctBizResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCustAgentCuacctBiz" parameterOrder="in0">
+
+         <wsdl:input message="impl:setCustAgentCuacctBizRequest" name="setCustAgentCuacctBizRequest"/>
+
+         <wsdl:output message="impl:setCustAgentCuacctBizResponse" name="setCustAgentCuacctBizResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCustAgentStkBiz" parameterOrder="in0">
+
+         <wsdl:input message="impl:setCustAgentStkBizRequest" name="setCustAgentStkBizRequest"/>
+
+         <wsdl:output message="impl:setCustAgentStkBizResponse" name="setCustAgentStkBizResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="checkCuacctById" parameterOrder="in0">
+
+         <wsdl:input message="impl:checkCuacctByIdRequest" name="checkCuacctByIdRequest"/>
+
+         <wsdl:output message="impl:checkCuacctByIdResponse" name="checkCuacctByIdResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfOrgExtInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:mdfOrgExtInfoRequest" name="mdfOrgExtInfoRequest"/>
+
+         <wsdl:output message="impl:mdfOrgExtInfoResponse" name="mdfOrgExtInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="trxCalendarQuery" parameterOrder="in0">
+
+         <wsdl:input message="impl:trxCalendarQueryRequest" name="trxCalendarQueryRequest"/>
+
+         <wsdl:output message="impl:trxCalendarQueryResponse" name="trxCalendarQueryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="syncSurveyAns2Kbss" parameterOrder="in0">
+
+         <wsdl:input message="impl:syncSurveyAns2KbssRequest" name="syncSurveyAns2KbssRequest"/>
+
+         <wsdl:output message="impl:syncSurveyAns2KbssResponse" name="syncSurveyAns2KbssResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="submitStkAcctBizOpReq2NewZD" parameterOrder="in0">
+
+         <wsdl:input message="impl:submitStkAcctBizOpReq2NewZDRequest" name="submitStkAcctBizOpReq2NewZDRequest"/>
+
+         <wsdl:output message="impl:submitStkAcctBizOpReq2NewZDResponse" name="submitStkAcctBizOpReq2NewZDResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchStkAcctBizInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:searchStkAcctBizInfoRequest" name="searchStkAcctBizInfoRequest"/>
+
+         <wsdl:output message="impl:searchStkAcctBizInfoResponse" name="searchStkAcctBizInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openStkAcctByNewZD" parameterOrder="in0">
+
+         <wsdl:input message="impl:openStkAcctByNewZDRequest" name="openStkAcctByNewZDRequest"/>
+
+         <wsdl:output message="impl:openStkAcctByNewZDResponse" name="openStkAcctByNewZDResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openYMTAcctByNewZD" parameterOrder="in0">
+
+         <wsdl:input message="impl:openYMTAcctByNewZDRequest" name="openYMTAcctByNewZDRequest"/>
+
+         <wsdl:output message="impl:openYMTAcctByNewZDResponse" name="openYMTAcctByNewZDResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openYMTAcctByKbss" parameterOrder="in0">
+
+         <wsdl:input message="impl:openYMTAcctByKbssRequest" name="openYMTAcctByKbssRequest"/>
+
+         <wsdl:output message="impl:openYMTAcctByKbssResponse" name="openYMTAcctByKbssResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="uploadImgNoBiz" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:uploadImgNoBizRequest" name="uploadImgNoBizRequest"/>
+
+         <wsdl:output message="impl:uploadImgNoBizResponse" name="uploadImgNoBizResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="uploadImgStringNoBiz" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:uploadImgStringNoBizRequest" name="uploadImgStringNoBizRequest"/>
+
+         <wsdl:output message="impl:uploadImgStringNoBizResponse" name="uploadImgStringNoBizResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchAcctFrtBizLog" parameterOrder="in0">
+
+         <wsdl:input message="impl:searchAcctFrtBizLogRequest" name="searchAcctFrtBizLogRequest"/>
+
+         <wsdl:output message="impl:searchAcctFrtBizLogResponse" name="searchAcctFrtBizLogResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="applyAcctFrtBiz" parameterOrder="in0">
+
+         <wsdl:input message="impl:applyAcctFrtBizRequest" name="applyAcctFrtBizRequest"/>
+
+         <wsdl:output message="impl:applyAcctFrtBizResponse" name="applyAcctFrtBizResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchImgScanConfig" parameterOrder="in0">
+
+         <wsdl:input message="impl:searchImgScanConfigRequest" name="searchImgScanConfigRequest"/>
+
+         <wsdl:output message="impl:searchImgScanConfigResponse" name="searchImgScanConfigResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchUserImgInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:searchUserImgInfoRequest" name="searchUserImgInfoRequest"/>
+
+         <wsdl:output message="impl:searchUserImgInfoResponse" name="searchUserImgInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="maintainUserImgInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:maintainUserImgInfoRequest" name="maintainUserImgInfoRequest"/>
+
+         <wsdl:output message="impl:maintainUserImgInfoResponse" name="maintainUserImgInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="synImgInfo2KbssEx" parameterOrder="in0">
+
+         <wsdl:input message="impl:synImgInfo2KbssExRequest" name="synImgInfo2KbssExRequest"/>
+
+         <wsdl:output message="impl:synImgInfo2KbssExResponse" name="synImgInfo2KbssExResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="workBoardScZD" parameterOrder="in0">
+
+         <wsdl:input message="impl:workBoardScZDRequest" name="workBoardScZDRequest"/>
+
+         <wsdl:output message="impl:workBoardScZDResponse" name="workBoardScZDResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="activeCustAcctZD" parameterOrder="in0">
+
+         <wsdl:input message="impl:activeCustAcctZDRequest" name="activeCustAcctZDRequest"/>
+
+         <wsdl:output message="impl:activeCustAcctZDResponse" name="activeCustAcctZDResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="closeCustAcctNewZD" parameterOrder="in0">
+
+         <wsdl:input message="impl:closeCustAcctNewZDRequest" name="closeCustAcctNewZDRequest"/>
+
+         <wsdl:output message="impl:closeCustAcctNewZDResponse" name="closeCustAcctNewZDResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="search2ndBoardMarketAgmt" parameterOrder="in0">
+
+         <wsdl:input message="impl:search2ndBoardMarketAgmtRequest" name="search2ndBoardMarketAgmtRequest"/>
+
+         <wsdl:output message="impl:search2ndBoardMarketAgmtResponse" name="search2ndBoardMarketAgmtResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchStkAcctBizInfoEx" parameterOrder="in0">
+
+         <wsdl:input message="impl:searchStkAcctBizInfoExRequest" name="searchStkAcctBizInfoExRequest"/>
+
+         <wsdl:output message="impl:searchStkAcctBizInfoExResponse" name="searchStkAcctBizInfoExResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="syncAnsAppSurvey2Run" parameterOrder="in0">
+
+         <wsdl:input message="impl:syncAnsAppSurvey2RunRequest" name="syncAnsAppSurvey2RunRequest"/>
+
+         <wsdl:output message="impl:syncAnsAppSurvey2RunResponse" name="syncAnsAppSurvey2RunResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateUserImportantInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:updateUserImportantInfoRequest" name="updateUserImportantInfoRequest"/>
+
+         <wsdl:output message="impl:updateUserImportantInfoResponse" name="updateUserImportantInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="maintainUserImportantInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:maintainUserImportantInfoRequest" name="maintainUserImportantInfoRequest"/>
+
+         <wsdl:output message="impl:maintainUserImportantInfoResponse" name="maintainUserImportantInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfCustRevisitInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:mdfCustRevisitInfoRequest" name="mdfCustRevisitInfoRequest"/>
+
+         <wsdl:output message="impl:mdfCustRevisitInfoResponse" name="mdfCustRevisitInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listCustRevisitInfo" parameterOrder="in0">
+
+         <wsdl:input message="impl:listCustRevisitInfoRequest" name="listCustRevisitInfoRequest"/>
+
+         <wsdl:output message="impl:listCustRevisitInfoResponse" name="listCustRevisitInfoResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="KessServiceSoapBinding" type="impl:KessService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="uploadImg">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="uploadImgRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="uploadImgResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="signAgreement">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="signAgreementRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="signAgreementResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="encryptByAES">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="encryptByAESRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="encryptByAESResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="decryptByAES">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="decryptByAESRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="decryptByAESResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openYMTAcct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openYMTAcctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openYMTAcctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUserInfoById">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getUserInfoByIdRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getUserInfoByIdResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="operatorLogin">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="operatorLoginRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="operatorLoginResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="operatorLogout">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="operatorLogoutRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="operatorLogoutResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryOperatorMenuList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryOperatorMenuListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryOperatorMenuListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryOperatorOrgList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryOperatorOrgListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryOperatorOrgListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="querySchedule">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryScheduleRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryScheduleResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="registSummaryInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="registSummaryInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="registSummaryInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryOrderInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryOrderInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryOrderInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="refuseWitness">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="refuseWitnessRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="refuseWitnessResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryCustBasicInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryCustBasicInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryCustBasicInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryCustExpandInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryCustExpandInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryCustExpandInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryOpenAccountProgress">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryOpenAccountProgressRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryOpenAccountProgressResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryCustBasicInfoList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryCustBasicInfoListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryCustBasicInfoListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryAccountInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryAccountInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryAccountInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateIdCode">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="validateIdCodeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="validateIdCodeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateBasicInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateBasicInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateBasicInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateExpandInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateExpandInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateExpandInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeOpenAccountFlow">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="changeOpenAccountFlowRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="changeOpenAccountFlowResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRiskSurvey">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRiskSurveyRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRiskSurveyResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveRiskSurveyAnswer">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveRiskSurveyAnswerRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveRiskSurveyAnswerResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRiskSurveyAnswer">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRiskSurveyAnswerRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRiskSurveyAnswerResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="onSearchZD">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="onSearchZDRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="onSearchZDResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryOrgInfoList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryOrgInfoListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryOrgInfoListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryImgQcPara">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryImgQcParaRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryImgQcParaResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryZDImgQcPara">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryZDImgQcParaRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryZDImgQcParaResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDictData">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDictDataRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDictDataResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="downloadImg">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="downloadImgRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="downloadImgResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryMenuUser">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryMenuUserRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryMenuUserResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="operatorInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="operatorInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="operatorInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="querySurveyIndex">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="querySurveyIndexRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="querySurveyIndexResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="uploadImgString">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="uploadImgStringRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="uploadImgStringResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="downloadImgString">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="downloadImgStringRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="downloadImgStringResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="downloadImgStringByImgCls">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="downloadImgStringByImgClsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="downloadImgStringByImgClsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openCustomer">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openCustomerRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openCustomerResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openCuacct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openCuacctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openCuacctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="webCheckApptCustInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="webCheckApptCustInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="webCheckApptCustInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfOtherInfoCust">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="mdfOtherInfoCustRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="mdfOtherInfoCustResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="backApptCustInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="backApptCustInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="backApptCustInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfUserPassword">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="mdfUserPasswordRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="mdfUserPasswordResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openStkAccRunTime">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openStkAccRunTimeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openStkAccRunTimeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openStkTrdAcct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openStkTrdAcctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openStkTrdAcctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="stkTrdacctBind">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="stkTrdacctBindRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="stkTrdacctBindResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openOfTrdacct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openOfTrdacctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openOfTrdacctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="registerOfTrdacct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="registerOfTrdacctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="registerOfTrdacctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listOfStkTrdAcct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listOfStkTrdAcctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listOfStkTrdAcctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listOfTrdacct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listOfTrdacctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listOfTrdacctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="moneyDeduct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="moneyDeductRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="moneyDeductResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyCustInfoTable">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="modifyCustInfoTableRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="modifyCustInfoTableResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listStkPbuOrg">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listStkPbuOrgRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listStkPbuOrgResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCommonParams">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCommonParamsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCommonParamsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="webSendSms">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="webSendSmsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="webSendSmsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveVideoInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveVideoInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveVideoInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfUserExtInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="mdfUserExtInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="mdfUserExtInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCustAgreement">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setCustAgreementRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setCustAgreementResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ansSurvey">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="ansSurveyRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="ansSurveyResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cubsbScOpenAcct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cubsbScOpenAcctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cubsbScOpenAcctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openUserImgInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openUserImgInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openUserImgInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCustFlagYHZQ">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setCustFlagYHZQRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setCustFlagYHZQResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWebBizLog">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getWebBizLogRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getWebBizLogResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCubsPubExtOrg">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCubsPubExtOrgRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCubsPubExtOrgResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCubsbContract">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCubsbContractRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCubsbContractResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="custCodeStatus">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="custCodeStatusRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="custCodeStatusResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="querySendOrder">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="querySendOrderRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="querySendOrderResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStkTregStatus">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getStkTregStatusRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getStkTregStatusResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cubsbScCloseAcct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cubsbScCloseAcctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cubsbScCloseAcctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCubsbLog">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCubsbLogRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCubsbLogResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGlobalConfigs">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getGlobalConfigsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getGlobalConfigsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getImgScanConfigs">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getImgScanConfigsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getImgScanConfigsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="synImgInfo2Kbss">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="synImgInfo2KbssRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="synImgInfo2KbssResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyFrtBizStatus">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="modifyFrtBizStatusRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="modifyFrtBizStatusResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="contractActionOrCancel">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="contractActionOrCancelRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="contractActionOrCancelResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="webImgNoUp">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="webImgNoUpRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="webImgNoUpResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="operUserImgReCordInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="operUserImgReCordInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="operUserImgReCordInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCubsbAcct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setCubsbAcctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setCubsbAcctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCubsbContract">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setCubsbContractRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setCubsbContractResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="closeCuacct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="closeCuacctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="closeCuacctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="closeCustomer">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="closeCustomerRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="closeCustomerResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listCustInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listCustInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listCustInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listCuacct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listCuacctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listCuacctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfCustOwnOrg">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="mdfCustOwnOrgRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="mdfCustOwnOrgResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="restoreCuacct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="restoreCuacctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="restoreCuacctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="restoreCustomer">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="restoreCustomerRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="restoreCustomerResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="restoreStkTrdacct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="restoreStkTrdacctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="restoreStkTrdacctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setTrdacctMdfCuacct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setTrdacctMdfCuacctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setTrdacctMdfCuacctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCuacctClsFee">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setCuacctClsFeeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setCuacctClsFeeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfUserGenInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="mdfUserGenInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="mdfUserGenInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUserOccuInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getUserOccuInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getUserOccuInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getChargeTemplate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getChargeTemplateRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getChargeTemplateResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveRiskSurveyAnswerBatch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveRiskSurveyAnswerBatchRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveRiskSurveyAnswerBatchResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ansSurveyBatch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="ansSurveyBatchRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="ansSurveyBatchResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgreementInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAgreementInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAgreementInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgreementContent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAgreementContentRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAgreementContentResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPayFee">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPayFeeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPayFeeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMenuAutority">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getMenuAutorityRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getMenuAutorityResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchDateTime">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchDateTimeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchDateTimeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isPhoneOpenAcct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="isPhoneOpenAcctRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="isPhoneOpenAcctResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateCertInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateCertInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateCertInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchSignAgreement">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchSignAgreementRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchSignAgreementResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="onSearchNewZD">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="onSearchNewZDRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="onSearchNewZDResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openNewStkAccRunTime">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openNewStkAccRunTimeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openNewStkAccRunTimeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveApptCustInfoEx">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveApptCustInfoExRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveApptCustInfoExResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchSubsbScContract">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchSubsbScContractRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchSubsbScContractResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="activateCubsbSc">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="activateCubsbScRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="activateCubsbScResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSurveySet">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getSurveySetRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getSurveySetResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRiskSurveyResult">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRiskSurveyResultRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRiskSurveyResultResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryAppropriteInvestorsInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryAppropriteInvestorsInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryAppropriteInvestorsInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setAppropriteInvestorsInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setAppropriteInvestorsInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setAppropriteInvestorsInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryToConfirmRiskSurveyResult">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryToConfirmRiskSurveyResultRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryToConfirmRiskSurveyResultResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="confirmReslutRiskSurvey">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="confirmReslutRiskSurveyRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="confirmReslutRiskSurveyResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getRiskSurveyResult">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getRiskSurveyResultRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getRiskSurveyResultResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ansRiskSurveyBatch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="ansRiskSurveyBatchRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="ansRiskSurveyBatchResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openAgent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openAgentRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openAgentResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCustAgentAcctBiz">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setCustAgentAcctBizRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setCustAgentAcctBizResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCustAgentCuacctBiz">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setCustAgentCuacctBizRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setCustAgentCuacctBizResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCustAgentStkBiz">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setCustAgentStkBizRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setCustAgentStkBizResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="checkCuacctById">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="checkCuacctByIdRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="checkCuacctByIdResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfOrgExtInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="mdfOrgExtInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="mdfOrgExtInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="trxCalendarQuery">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="trxCalendarQueryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="trxCalendarQueryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="syncSurveyAns2Kbss">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="syncSurveyAns2KbssRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="syncSurveyAns2KbssResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="submitStkAcctBizOpReq2NewZD">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="submitStkAcctBizOpReq2NewZDRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="submitStkAcctBizOpReq2NewZDResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchStkAcctBizInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchStkAcctBizInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchStkAcctBizInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openStkAcctByNewZD">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openStkAcctByNewZDRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openStkAcctByNewZDResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openYMTAcctByNewZD">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openYMTAcctByNewZDRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openYMTAcctByNewZDResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="openYMTAcctByKbss">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="openYMTAcctByKbssRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="openYMTAcctByKbssResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="uploadImgNoBiz">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="uploadImgNoBizRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="uploadImgNoBizResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="uploadImgStringNoBiz">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="uploadImgStringNoBizRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="uploadImgStringNoBizResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchAcctFrtBizLog">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchAcctFrtBizLogRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchAcctFrtBizLogResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="applyAcctFrtBiz">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="applyAcctFrtBizRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="applyAcctFrtBizResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchImgScanConfig">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchImgScanConfigRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchImgScanConfigResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchUserImgInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchUserImgInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchUserImgInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="maintainUserImgInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="maintainUserImgInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="maintainUserImgInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="synImgInfo2KbssEx">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="synImgInfo2KbssExRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="synImgInfo2KbssExResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="workBoardScZD">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="workBoardScZDRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="workBoardScZDResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="activeCustAcctZD">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="activeCustAcctZDRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="activeCustAcctZDResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="closeCustAcctNewZD">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="closeCustAcctNewZDRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="closeCustAcctNewZDResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="search2ndBoardMarketAgmt">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="search2ndBoardMarketAgmtRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="search2ndBoardMarketAgmtResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchStkAcctBizInfoEx">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchStkAcctBizInfoExRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchStkAcctBizInfoExResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="syncAnsAppSurvey2Run">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="syncAnsAppSurvey2RunRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="syncAnsAppSurvey2RunResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateUserImportantInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateUserImportantInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateUserImportantInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="maintainUserImportantInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="maintainUserImportantInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="maintainUserImportantInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mdfCustRevisitInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="mdfCustRevisitInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="mdfCustRevisitInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listCustRevisitInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listCustRevisitInfoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://impl.service.wsdl.kess.szkingdom.com" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listCustRevisitInfoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://218.18.250.248:8081/kess/services/KessService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="KessServiceService">
+
+      <wsdl:port binding="impl:KessServiceSoapBinding" name="KessService">
+
+         <wsdlsoap:address location="http://113.105.85.101:8081/kess/services/KessService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

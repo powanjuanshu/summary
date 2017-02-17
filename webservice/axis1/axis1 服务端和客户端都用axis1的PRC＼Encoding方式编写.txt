@@ -1,0 +1,83 @@
+------------------------服务端：
+web.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+	<servlet>
+		<servlet-name>axis</servlet-name>
+		<servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>axis</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>  	
+</web-app>
+--------------------------------
+WEB-INF/server-config.wsdd:
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<transport name="http">
+		<requestFlow>
+			<handler type="java:org.apache.axis.handlers.http.URLMapper" />
+		</requestFlow>
+	</transport>
+	<transport name="local">
+		<responseFlow>
+			<handler type="java:org.apache.axis.transport.local.LocalResponder" />
+		</responseFlow>
+	</transport>
+	
+	<service name="version" provider="java:RPC"><!-- 发布内置的测试用的webservice服务 -->
+		<parameter name="allowedMethods" value="getVersion" />
+		<parameter name="className" value="org.apache.axis.Version" />
+	</service>
+	<service name="fuck" provider="java:RPC"><!-- 发布自己写的webservice服务 -->
+		<parameter name="allowedMethods" value="say" /><!-- 如果这个类的所有方法都要发布，那么就写成value="*" -->
+		<parameter name="className" value="com.mipo.FucImpl" />
+	</service>
+</deployment>
+--------------------------------
+package com.mipo;
+public interface IFuc {
+	public String say (String ros1,String ros2);
+}
+--------------------------------
+package com.mipo;
+public class FucImpl implements IFuc {
+	@Override
+	public String say(String ros1, String ros2) {
+		System.out.println("xxx");
+		System.out.println(ros1);
+		System.out.println(ros2);
+		return "world";
+	}
+}
+------------------------客户端：
+package com.mipo;
+import java.net.URL;
+import javax.xml.namespace.QName;
+import org.apache.axis.client.Call;
+import org.apache.axis.client.Service;
+public class Main {
+	private static String namespaceUri = "http://localhost/axis/services/fuck";
+	private static String wsdlUrl = namespaceUri + "?wsdl";
+	public static void main(String[] args) throws Exception {
+		Service service = new Service(); // 创建调用对象
+		Call call = (Call) service.createCall();
+		call.setOperationName(new QName(namespaceUri, "say")); // 调用远程方法
+		call.setTargetEndpointAddress(new URL(wsdlUrl)); // 设置URL
+		String version = (String) call.invoke(new Object[] {"sss","ddd"}); // 执行远程调用，同时获得返回值
+		System.err.println(version); // 打印信息
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

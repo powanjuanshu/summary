@@ -1,0 +1,17 @@
+在开始--运行--中输入cmd，进入命令模式
+>ping www.sina.com.cn 回车
+
+得到
+Pinging taurus.sina.com.cn [61.172.201.226] with 32 bytes of data:
+
+Reply from 61.172.201.226: bytes=32 time=28ms TTL=54
+Reply from 61.172.201.226: bytes=32 time=18ms TTL=54
+Reply from 61.172.201.226: bytes=32 time=39ms TTL=54
+Reply from 61.172.201.226: bytes=32 time=18ms TTL=54
+
+Ping statistics for 61.172.201.226:
+Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+Minimum = 18ms, Maximum = 39ms, Average = 25ms
+
+61.172.201.226 就是SINA的IP

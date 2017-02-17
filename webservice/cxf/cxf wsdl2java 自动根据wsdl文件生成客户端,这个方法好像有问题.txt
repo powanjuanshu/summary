@@ -1,0 +1,8 @@
+wsdl2java -p service.webservice.client.demo -d d:\ws\xx -verbose "d:\ws\RiskManagementOAAS.wsdl"
+解释:
+-verbose "wsdl文件路径"
+-client:    生成客户端测试web service的代码
+-server:    生成服务器启动web service的代码
+
+
+

@@ -1,0 +1,7 @@
+清空终端屏幕命令
+clear
+---------------
+linux  clear命令  清空终端屏幕命令
+clear命令是用来清除终端屏幕的（clear the terminal screen），使用过DOS或者Windows的cmd的人知道有个cls命令，可以用来清除屏幕，但Linux底下没有这个命令，我们可以通过使用alias.html' target='_blank'>别名的方式来使Linux系统也具有这个cls命令。另外，按Ctrl+L也可以达到同样的效果，当我们使用vi/vim编辑文件时，如果发现屏幕显示有些混乱，也可以按Ctrl+L来使屏幕显示恢复正常。
+我一般比较喜欢用ctrl+l
+

@@ -1,0 +1,2 @@
+context-param>listener>filter>servlet
+而同个类型之间的实际程序调用的时候的顺序是根据对应的 mapping 的顺序进行调用的。

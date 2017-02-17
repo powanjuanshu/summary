@@ -1,0 +1,99 @@
+<Context reloadable="true">  
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>  
+    <Resource name="jdbc/oracleds" auth="Container" type="javax.sql.DataSource"    
+    maxActive="100"    
+    maxIdle="30"  
+    maxWait="10000"  
+    username="scott"    
+    password="tiger"  
+    driverClassName="oracle.jdbc.driver.OracleDriver"  
+    url="jdbc:oracle:thin:@localhost:1521:ora9"/>  
+</Context>  
+<Context reloadable="true">
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+ <Resource name="jdbc/oracleds" auth="Container" type="javax.sql.DataSource" 
+ maxActive="100" 
+ maxIdle="30"
+ maxWait="10000"
+ username="scott" 
+ password="tiger"
+ driverClassName="oracle.jdbc.driver.OracleDriver"
+ url="jdbc:oracle:thin:@localhost:1521:ora9"/>
+</Context>
+
+name 为当前数据源JNDI的名字，可以随意设定；
+
+auth 为验证方式；
+
+type 资源类型；
+
+driverClassName 为Oracle驱动引用；
+
+maxActiv 为连接池最大激活的连接数，设为0表示无限制；
+
+maxIdle 为连接池最大空闲的连接数，数据库连接的最大空闲时间。超过空闲时间，
+
+            数据库连接将被标记为不可用，然后被释放。设为0表示无限制；
+
+maxWait 为连接最大的等待时间，单位毫秒，如果超过此时间将接到异常。设为-1
+
+              表示无限制。；
+
+username 为oracle数据库的一个用户名； 
+
+password 为username的密码；
+
+url 为连接oracle的连接地址；
+
+注：本人尝试将代码“driverClassName="oracle.jdbc.driver.OracleDriver"”改为“driverClassName="oracle.jdbc.OracleDriver"”程序依然运行正常，刚开始以为老师的代码有问题
+
+3.在程序中的调用形式为：
+
+view plaincopy to clipboardprint?
+Context context = new InitialContext();   
+DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/oracleds");   
+Connection conn = ds.getConnection();  
+Context context = new InitialContext();
+DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/oracleds");
+Connection conn = ds.getConnection(); 
+
+注：“java:/comp/env/jdbc/oracleds”红色标记文字为步骤1里设置的Resource name
+
+则可以将建立connection的方式以上述形式取代传统方式：
+
+view plaincopy to clipboardprint?
+String driver = "oracle.jdbc.driver.OracleDriver";   
+String url = "jdbc:oracle:thin:@localhost:1521:ora9";   
+String username = "scott";   
+String password = "tiger";   
+Class.forName(driver);   
+Connection conn = DriverManager.getConnection(url, username, password);  
+String driver = "oracle.jdbc.driver.OracleDriver";
+String url = "jdbc:oracle:thin:@localhost:1521:ora9";
+String username = "scott";
+String password = "tiger";
+Class.forName(driver);
+Connection conn = DriverManager.getConnection(url, username, password); 
+
+4.另外还需将用到的jdbc驱动类库导入到%Tomcat_Home%\lib目录下
+
+否则会抛出如下异常：
+org.apache.tomcat.dbcp.dbcp.SQLNestedException: Cannot load JDBC driver class 'oracle.jdbc.driver.OracleDriver'
+
+依上述步骤就能成功的配置Tomcat6.0 连接池，还有网友贴文说需
+
+在web.xml文件中的web-app节点下加入如下代码形式：
+<resource-ref>
+<res-ref-name>jdbc/myoracle</res-ref-name>
+<res-type>javax.sql.DataSource</res-type>
+</resource-ref>
+
+因本人未添加此项，程序依然正确，故本人认为此步骤为非必要项
+
+
+
+ ---------------------------------------------------------------------------
+
+
+今天需要在另一台机器上重新部署系统，重新设置db的连接池。当我把tomcat拷贝到那台机器，并且修改META-INF\context.xml，然后重新启动tomcat，但发现系统连接的仍然是老的db。再次检查了META-INF\context.xml文件，确信了这个文件已经正确设置db连接了，这也说明这个文件并没有真正起作用。查看了tomcat下conf\context.xml也没有设置db的连接池。那是哪个文件在起作用呢？折腾了办法，后来发现tomcat在conf\Catalina\localhost下生成了一个和原来META-INF\context.xml相同内容的文件，怀疑一定是这个文件在起作用？删除conf\Catalina\localhost目录，重启tomcat，问题消失。
+

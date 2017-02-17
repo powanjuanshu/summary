@@ -1,0 +1,2 @@
+ĞŞ¸ÄserverµÄ¶Ë¿Ú£º
+Environment->Servers->AdminServer(admin)->Listen Address->Listen Port->save

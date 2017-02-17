@@ -1,0 +1,109 @@
+--------------------------------服务端
+web.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+	<display-name>xfire</display-name>
+  
+  	<!-- Spring配置 -->        
+  	<context-param> 
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:org/codehaus/xfire/spring/xfire.xml, classpath:applicationContext.xml</param-value>
+	</context-param>
+	
+  	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  	</listener> 
+  	
+  	<!-- XFire 配置 -->
+  	<servlet>
+		<servlet-name>xfireServlet</servlet-name>
+		<servlet-class>org.codehaus.xfire.spring.XFireSpringServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+		<servlet-name>xfireServlet</servlet-name>
+		<!-- 在这个URI下开放Web Service服务 -->
+		<url-pattern>/service/*</url-pattern>
+  	</servlet-mapping>
+  	
+</web-app>
+---------------------------------------------------------------
+applicationContext.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	
+	<bean id="helloService" class="sa.fs121.soap.service.impl.HelloServiceImpl"/>
+  	<bean id="getHelloService" class="org.codehaus.xfire.spring.ServiceBean">
+		<property name="serviceBean" ref="helloService"/>
+   	<property name="serviceClass" value="sa.fs121.soap.service.IHelloService"/>
+		<property name="inHandlers">
+			<list>
+				<ref bean="addressingHandler"/>
+  			</list>
+		</property>
+	</bean>
+  	<bean id="addressingHandler" class="org.codehaus.xfire.addressing.AddressingInHandler"/>
+  	 
+</beans>
+---------------------------------------------------------------
+package sa.fs121.soap.service;
+public interface IHelloService {
+  public String sayHello(String hello);
+}
+---------------------------------------------------------------
+package sa.fs121.soap.service.impl;
+import sa.fs121.soap.service.IHelloService;
+public class HelloServiceImpl implements IHelloService {
+  public String sayHello(String hello) {
+    System.out.println("接收客户端请求：" + hello);
+    return "Hello XFire, " + hello;
+  }
+}
+--------------------------------客户端
+test.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	
+  	<bean id="testWebService" class="org.codehaus.xfire.spring.remoting.XFireClientFactoryBean">
+		<property name="serviceClass" value="sa.fs121.soap.service.IHelloService"/>
+    	<property name="wsdlDocumentUrl" value="http://localhost/xfire/service/IHelloService?wsdl"/>
+	</bean>
+	
+</beans>
+--------------------------------
+package test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import sa.fs121.soap.service.IHelloService;
+
+public class Test {
+	public static void main(String[] args) {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("test.xml"); // 在类路径找
+		IHelloService hs = (IHelloService) ctx.getBean("testWebService");
+		System.out.println("服务器响应：" + hs.sayHello("hello, webservice"));
+	}
+}
+--------------------------------
+导入的jar包：
+commons-codec-1.3.jar
+commons-httpclient-3.0.jar
+commons-logging.jar
+jdom-.10.jar
+spring-2.5.6.jar
+wsdl4j-1.6.1.jar
+xfire-all-1.2.6.jar
+XmlSchema-1.1.jar（此包必须用这个版本，不然会报错：方法找不到）
+

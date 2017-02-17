@@ -1,0 +1,40 @@
+[1]
+  方法一:
+     输入命令:setup -> Network configuration -> Yes -> Configure TCP/IP -> 打空格切换为*号,*号为自动分配ip -> 切换为手动指定ip
+     IP address:   		192.168.242.88
+     Netmask:      		255.255.255.0
+     Default gateway(ip):   	192.168.44.254
+     Primary nameserver:	192.168.44.1
+     -> OK -> 输入命令:/etc/rc.d/init.d/network restart(如果出现绿色的OK表示成功).注意:必须输入这个命令,不然配置的ip不会生效
+     -> ifconfig
+     eth0:表示第一块网卡
+     lo:表示回路
+
+   方法二:
+     ifconfig eth0 x.x.x.x 对网卡设置ip
+     ifconfig eth0 network x.x.x.x 对子网掩码设置
+     注意:这样设置会立即生效,但这种方法重启机器的时候会恢复到原来的ip
+
+   方法三:
+     修改/etc/sysconfig/network-scripts/ifcfg-eth0这个文件里的属性,包括ip,子网掩码,广播地址,默认网关.
+     运行/etc/rc.d/init.d/network restart命令才能生效.或者重启网络: service network restart
+
+[2]
+   在cmd窗口输入:ipconfig,查看虚拟机的VMnet8网卡的ip地址为:192.168.242.1
+   然后按第一步,设置虚拟机linux的ip为192.168.242.88(必须两者为同一网段,即ip前面三位必须相同都为192.168.242.xxx).
+
+[3]
+   虚拟机->设置->网络适配器->自定义:指定虚拟网络(选择:VMnet8(NAT))
+
+[4]
+   即可ping通:ping 192.168.242.88,ping 192.168.242.1
+
+NAT模式是和你的VM8虚拟网卡通信 
+HOSTONLY是和你的VM1虚拟网卡通信 
+桥接是和你的真实物理网卡通信 
+你使用桥接模式把TCP/IP属性设置下，IP地址和你真实网卡处在同一网段因该就能上网了把虚拟机自带的DHCP功能关掉（使用静态IP不要自动获得）
+
+
+
+
+

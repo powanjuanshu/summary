@@ -1,0 +1,1193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head id="Head"><title>
+	[CXF]Spring下设置CXF的WebService客户端超时时长 - Java Blog for Alex Wan - BlogJava
+</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta id="metaKeywords" name="keywords" content="[CXF]Spring下设置CXF的WebService客户端超时时长" /><link type="text/css" rel="stylesheet" href="/css/common.css" /><link id="MainCss" type="text/css" rel="stylesheet" href="http://www.blogjava.net/Skins/marvin3/style.css" /><link id="MainCss2" type="text/css" rel="stylesheet" href="http://www.blogjava.net/Skins/marvin3/green.css" /><link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://www.blogjava.net/alexwan/rss.aspx" /></head>
+<body>
+    <form name="Form1" method="post" action="227009.html" onsubmit="javascript:return WebForm_OnSubmit();" id="Form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="
+__VIEWSTATE" value="" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form1'];
+if (!theForm) {
+    theForm = document.Form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=hCqqcDq62xC48aLO1-oizzph91mftTcpBQYAMmX9y1_MEKckib0uai68YudFFqahbIRj8ZaZB19FpMr30&amp;t=634604713351482412" type="text/javascript"></script>
+
+<script language=JavaScript>
+									function ctlent(evt,id)
+											{
+												if(evt.ctrlKey && evt.keyCode == 13)
+												{	
+													try
+													{
+														TempSave(id);
+													}
+													catch(ex)
+													{
+													}
+													finally
+													{
+													    __doPostBack('AjaxHolder$PostComment$btnSubmit','')
+													}
+												}
+		
+												}</script>
+												<script language=JavaScript>function SetReplyAuhor(author){document.getElementById('AjaxHolder_PostComment_tbComment').value+="@"+author+"\n";document.getElementById('AjaxHolder_PostComment_tbComment').focus();return false}</script>
+<script src="/ScriptResource.axd?d=wzk-1-qhee3khB1LbJ85_5LCkFmgsM9p_4iSSnd1zGlt8OrRFG-Dx56-Kz3hXrSozEIiLhJjZToKtdouQjq5du9pG4UB2l9vFhcdM6NiDQxtK39f8EI9NN3vpAv6Y_9Ibzst0_Y4ab01866A0&amp;t=634604713351482412" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=PtGuClBXaxOQegVLnERn1GeaXjDaRdr4SvMqug5n9S2sUHOz3vjfHKDJkBgmdOF9z8-rTyjw0UThfRWbO4w_JxW_Nj2O6kPCb2Ooiysi9jbHzkCJ2UINFqXRPH41&amp;t=634979389729873750" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=e0iEXzRcbBnCHEoy0bmuKkXOSVQbfWD8XWYhO-hxQZHmMqs4tOO8bLTi8tXA55fP0PDQEQX4Ed-bIcdYOAh32haOnJK2dryIudxTrjFdllSTCGf10u6rJWOyf1rocSmKGLufNA2&amp;t=634979389729873750" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+        
+<div id="top">
+	
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.blogjava.net/alexwan/">Java Blog for Alex Wan</a></h1>
+<p id="tagline">Let life be beautiful like summer flowers and death like autumn leaves.</p>
+</div>
+<div id="leftmenu" style="DISPLAY:none">
+	
+		
+<h3>导航</h3>
+<ul>
+			<li></li>
+			<li><a id="MyLinks1_MyHomeLink" href="http://www.blogjava.net/alexwan/">首页</a></li>
+			<li><a id="MyLinks1_NewPostLink" href="http://www.blogjava.net/alexwan/admin/EditPosts.aspx?opt=1">新随笔</a></li>
+			<li><a id="MyLinks1_ContactLink" accesskey="9" href="http://www.blogjava.net/alexwan/contact.aspx?id=1">联系</a></li>
+			<li><a id="MyLinks1_Syndication" href="http://www.blogjava.net/alexwan/rss">聚合</a><a id="MyLinks1_XMLLink" href="http://www.blogjava.net/alexwan/rss"><img src="http://www.blogjava.net/images/xml.gif" style="border-width:0px;" /></a>
+			<li><a id="MyLinks1_Admin" href="http://www.blogjava.net/alexwan/admin/EditPosts.aspx">管理</a></li>
+</ul>
+		<table id="Calendar1_entryCal" class="Cal" cellspacing="0" cellpadding="0" title="日历" border="0" style="border-width:1px;border-style:solid;border-collapse:collapse;">
+	<tr><td colspan="7" style="background-color:Silver;"><table class="CalTitle" cellspacing="0" border="0" style="width:100%;border-collapse:collapse;">
+		<tr><td class="CalNextPrev" style="width:15%;"><a href="javascript:__doPostBack('Calendar1$entryCal','V3135')" style="color:Black" title="转到上一个月">&lt;</a></td><td align="center" style="width:70%;">2008年9月</td><td class="CalNextPrev" align="right" style="width:15%;"><a href="javascript:__doPostBack('Calendar1$entryCal','V3196')" style="color:Black" title="转到下一个月">&gt;</a></td></tr>
+	</table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center" style="width:14%;">31</td><td align="center" style="width:14%;">1</td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/alexwan/archive/2008/09/02.html"><u>2</u></a></td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/alexwan/archive/2008/09/03.html"><u>3</u></a></td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/alexwan/archive/2008/09/04.html"><u>4</u></a></td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/alexwan/archive/2008/09/05.html"><u>5</u></a></td><td class="CalWeekendDay" align="center" style="width:14%;">6</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">7</td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/alexwan/archive/2008/09/08.html"><u>8</u></a></td><td align="center" style="width:14%;">9</td><td align="center" style="width:14%;">10</td><td align="center" style="width:14%;">11</td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/alexwan/archive/2008/09/12.html"><u>12</u></a></td><td class="CalWeekendDay" align="center" style="width:14%;">13</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">14</td><td align="center" style="width:14%;">15</td><td align="center" style="width:14%;">16</td><td align="center" style="width:14%;">17</td><td align="center" style="width:14%;">18</td><td align="center" style="width:14%;">19</td><td class="CalWeekendDay" align="center" style="width:14%;">20</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">21</td><td align="center" style="width:14%;">22</td><td align="center" style="width:14%;">23</td><td align="center" style="width:14%;"><a href="http://www.blogjava.net/alexwan/archive/2008/09/24.html"><u>24</u></a></td><td align="center" style="width:14%;">25</td><td align="center" style="width:14%;">26</td><td class="CalWeekendDay" align="center" style="width:14%;">27</td></tr><tr><td class="CalWeekendDay" align="center" style="width:14%;">28</td><td align="center" style="width:14%;">29</td><td align="center" style="width:14%;">30</td><td class="CalOtherMonthDay" align="center" style="width:14%;">1</td><td class="CalOtherMonthDay" align="center" style="width:14%;">2</td><td class="CalOtherMonthDay" align="center" style="width:14%;">3</td><td class="CalOtherMonthDay" align="center" style="width:14%;">4</td></tr><tr><td class="CalOtherMonthDay" align="center" style="width:14%;">5</td><td class="CalOtherMonthDay" align="center" style="width:14%;">6</td><td class="CalOtherMonthDay" align="center" style="width:14%;">7</td><td class="CalOtherMonthDay" align="center" style="width:14%;">8</td><td class="CalOtherMonthDay" align="center" style="width:14%;">9</td><td class="CalOtherMonthDay" align="center" style="width:14%;">10</td><td class="CalOtherMonthDay" align="center" style="width:14%;">11</td></tr>
+</table>
+
+		
+<h3>公告</h3>
+	<script type="text/javascript"><!--
+google_ad_client = "ca-pub-2876867208357149";
+/* 160 600 摩天大楼 */
+google_ad_slot = "0423300110";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+		
+		<h3>随笔分类<span style="font-size:11px;font-weight:normal">(153)</span></h3>
+		
+				<ul>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl01_Link" href="http://www.blogjava.net/alexwan/category/32011.html">J2EE(28)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl01_RssLink" title="Subscribe to J2EE(28)" href="http://www.blogjava.net/alexwan/category/32011.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl02_Link" href="http://www.blogjava.net/alexwan/category/32012.html">JavaScript(15)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl02_RssLink" title="Subscribe to JavaScript(15)" href="http://www.blogjava.net/alexwan/category/32012.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl03_Link" href="http://www.blogjava.net/alexwan/category/33816.html">linux(19)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl03_RssLink" title="Subscribe to linux(19)" href="http://www.blogjava.net/alexwan/category/33816.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl04_Link" href="http://www.blogjava.net/alexwan/category/32014.html">好文分享(17)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl04_RssLink" title="Subscribe to 好文分享(17)" href="http://www.blogjava.net/alexwan/category/32014.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl05_Link" href="http://www.blogjava.net/alexwan/category/32013.html">小笔记(50)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl05_RssLink" title="Subscribe to 小笔记(50)" href="http://www.blogjava.net/alexwan/category/32013.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl06_Link" href="http://www.blogjava.net/alexwan/category/32592.html">数据库(19)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl06_RssLink" title="Subscribe to 数据库(19)" href="http://www.blogjava.net/alexwan/category/32592.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl07_Link" href="http://www.blogjava.net/alexwan/category/33956.html">生活调侃(5)</a> <a id="ArchiveLinks1_Categories_CatList_ctl00_LinkList_ctl07_RssLink" title="Subscribe to 生活调侃(5)" href="http://www.blogjava.net/alexwan/category/33956.html/rss">(rss)</a></li>
+			
+				</ul>
+			
+	
+		<h3>文章分类</h3>
+		
+				<ul>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl01_Link" href="http://www.blogjava.net/alexwan/category/32009.html">J2EE</a> <a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl01_RssLink" title="Subscribe to J2EE" href="http://www.blogjava.net/alexwan/category/32009.html/rss">(rss)</a></li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl02_Link" href="http://www.blogjava.net/alexwan/category/32010.html">JavaScript</a> <a id="ArchiveLinks1_Categories_CatList_ctl01_LinkList_ctl02_RssLink" title="Subscribe to JavaScript" href="http://www.blogjava.net/alexwan/category/32010.html/rss">(rss)</a></li>
+			
+				</ul>
+			
+	
+		<h3>随笔档案<span style="font-size:11px;font-weight:normal">(109)</span></h3>
+		
+				<ul>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl01_Link" href="http://www.blogjava.net/alexwan/archive/2009/09.html">2009年9月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl02_Link" href="http://www.blogjava.net/alexwan/archive/2009/07.html">2009年7月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl03_Link" href="http://www.blogjava.net/alexwan/archive/2009/06.html">2009年6月 (3)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl04_Link" href="http://www.blogjava.net/alexwan/archive/2009/05.html">2009年5月 (4)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl05_Link" href="http://www.blogjava.net/alexwan/archive/2009/03.html">2009年3月 (1)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl06_Link" href="http://www.blogjava.net/alexwan/archive/2009/02.html">2009年2月 (6)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl07_Link" href="http://www.blogjava.net/alexwan/archive/2008/12.html">2008年12月 (2)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl08_Link" href="http://www.blogjava.net/alexwan/archive/2008/11.html">2008年11月 (5)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl09_Link" href="http://www.blogjava.net/alexwan/archive/2008/10.html">2008年10月 (6)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl10_Link" href="http://www.blogjava.net/alexwan/archive/2008/09.html">2008年9月 (9)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl11_Link" href="http://www.blogjava.net/alexwan/archive/2008/08.html">2008年8月 (18)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl12_Link" href="http://www.blogjava.net/alexwan/archive/2008/07.html">2008年7月 (15)</a> </li>
+			
+				<li><a id="ArchiveLinks1_Categories_CatList_ctl02_LinkList_ctl13_Link" href="http://www.blogjava.net/alexwan/archive/2008/06.html">2008年6月 (38)</a> </li>
+			
+				</ul>
+			
+	
+
+	
+</div>
+<div id="rightmenu">
+	
+		
+<h3>统计</h3>
+	<ul>
+		<li>随笔 - 100
+		<li>文章 - 12
+		<li>评论 - 146
+		<li>引用 - 0
+	</li>
+</ul>
+		
+<H3>留言簿<span style="font-size:11px;font-weight:normal;">(10)</span></H3>
+<ul>
+	<li>
+		<a id="MyMessages1_lnkMessages" href="http://www.blogjava.net/alexwan/Contact.aspx?id=1">给我留言</a>
+	<li>
+		<a id="MyMessages1_lnkPublicMsgView" href="http://www.blogjava.net/alexwan/default.aspx?opt=msg">查看公开留言</a>
+	<li>
+		<a id="MyMessages1_lnkPrivateMsgView" href="http://www.blogjava.net/alexwan/admin/MyMessages.aspx">查看私人留言</a>
+	</li>
+</ul>
+
+        
+		
+		<h3>BlogJava</h3>
+		
+				<ul>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl00_LinkList_ctl01_Link" href="http://www.blogjava.net/Allbloggers.aspx">博客列表</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl00_LinkList_ctl02_Link" href="http://www.blogjava.net/nokiaguy/" target="_blank">银河使者</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl00_LinkList_ctl03_Link" href="http://www.blogjava.net/">首页</a> </li>
+			
+				</ul>
+			
+	
+		<h3>Blogs</h3>
+		
+				<ul>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl01_LinkList_ctl01_Link" href="http://blog.csdn.net/alexwan" target="_blank">Blog in CSDN</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl01_LinkList_ctl02_Link" href="http://www.cnblogs.com/terrylee/archive/2007/12/09/the-ultimate-jquery-plugin-list.html" target="_blank">JQuery插件列表</a> <a id="CategoryDisplay1_Categories_CatList_ctl01_LinkList_ctl02_RssLink" title="Subscribe to JQuery插件列表" href="http://www.cnblogs.com/terrylee/archive/2007/12/09/the-ultimate-jquery-plugin-list.html">(rss)</a></li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl01_LinkList_ctl03_Link" href="http://blog.csdn.net/sodme" target="_blank">大宝的博客</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl01_LinkList_ctl04_Link" href="http://wilsonwu.blogbus.com/" target="_blank">肥鱼的博客</a> </li>
+			
+				</ul>
+			
+	
+		<h3>DIV+CSS</h3>
+		
+				<ul>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl02_LinkList_ctl01_Link" href="http://alistapart.com/" target="_blank">alistapart</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl02_LinkList_ctl02_Link" href="http://www.simplebits.com/" target="_blank">simplebits</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl02_LinkList_ctl03_Link" href="http://www.zcool.com.cn/" target="_blank">图标库</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl02_LinkList_ctl04_Link" href="http://www.phototravelpages.com/wallpapers.html" target="_blank">风景壁纸</a> </li>
+			
+				</ul>
+			
+	
+		<h3>JQuery相关</h3>
+		
+				<ul>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl03_LinkList_ctl01_Link" href="http://abeautifulsite.net/notebook_files/58/demo/" target="_blank">JQuery Tree demo</a> </li>
+			
+				</ul>
+			
+	
+		<h3>友情链接</h3>
+		
+				<ul>
+			
+				</ul>
+			
+	
+		<h3>常去的地方</h3>
+		
+				<ul>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl05_LinkList_ctl01_Link" href="http://www.csdn.net" target="_blank">CSDN</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl05_LinkList_ctl02_Link" href="http://extjs.com/forum/" target="_blank">EXTJS论坛</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl05_LinkList_ctl03_Link" href="http://www.hadoop.org.cn">hadoop.org.cn</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl05_LinkList_ctl04_Link" href="http://www.w3school.com.cn/" target="_blank">w3cscholl</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl05_LinkList_ctl05_Link" href="http://www.zkoss.org/zkdemo/userguide/" target="_blank">zk demo</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl05_LinkList_ctl06_Link" href="http://www.ifeng.com/" target="_blank">凤凰网</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl05_LinkList_ctl07_Link" href="http://www.csai.cn/" target="_blank">希赛网</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl05_LinkList_ctl08_Link" href="http://tech.sina.com.cn/" target="_blank">新浪科技</a> </li>
+			
+				</ul>
+			
+	
+		<h3>数据供应</h3>
+		
+				<ul>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl06_LinkList_ctl01_Link" href="http://www.webxml.com.cn/zh_cn/web_services.aspx" target="_blank">webxml</a> </li>
+			
+				<li><a id="CategoryDisplay1_Categories_CatList_ctl06_LinkList_ctl02_Link" href="http://air-plane.vicp.net/air-plane/" target="_blank">航班数据</a> </li>
+			
+				</ul>
+			
+	
+
+        
+<h3>阅读排行榜</h3>
+<div class="RecentComment">
+	
+			<ul style="word-break:break-all;width:100%">
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl01_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/06/07/206473.html">1. Velocity语法 (28705)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl02_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/07/21/216328.html">2. [Extjs]基于Extjs2.0日期时间(DateTime)控件的改良版本(16312)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl03_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2009/05/01/268526.html">3. [linux]linux下查看及修改机器名的方法(12086)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl04_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/10/22/235827.html">4. [JQuery]JQuery中获取窗体宽度和高度的通用方法(9352)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl05_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/07/09/213508.html">5. [oracle]ORA-01460: 转换请求无法实现或不合理(5820)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl06_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/06/27/211013.html">6. [ExtJs]基于EXT2的RadioGroup(5320)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl07_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/08/11/221203.html">7. [Extjs]基于Ext2.0的树状选择框(TreeComboBox)(4784)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl08_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/09/04/227009.html">8. [CXF]Spring下设置CXF的WebService客户端超时时长(3494)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl09_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2009/02/18/255275.html">9. [cxf]CXF客户端配置文件之包含文件(3344)</a>
+			</li>
+		
+			<li>
+				<a id="TopViewPosts1_TopList_ctl10_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2009/02/17/255049.html">10. [CXF]CXF下的保护暴露在外的web service的方法及注意事项(3323)</a>
+			</li>
+		
+			</ul>
+		
+</div>
+
+		
+<h3>评论排行榜</h3>
+<div class="RecentComment">
+	
+			<ul style="word-break:break-all;width:100%">
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl01_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/07/21/216328.html">1. [Extjs]基于Extjs2.0日期时间(DateTime)控件的改良版本(31)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl02_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/09/04/227009.html">2. [CXF]Spring下设置CXF的WebService客户端超时时长(26)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl03_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/06/24/210269.html">3. 美国兰德公司对中国人的评价（值得思考）(19)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl04_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/06/07/206473.html">4. Velocity语法 (10)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl05_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/09/02/226316.html">5. [hibernate]hibernate中自定义主键生成器(8)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl06_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/11/19/241262.html">6. [javascript]google map api 与jquery结合使用(3) --图标样式,使用xml和异步请求(5)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl07_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/08/11/221203.html">7. [Extjs]基于Ext2.0的树状选择框(TreeComboBox)(5)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl08_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/08/15/222131.html">8. 吃力不讨好的旧系统数据导入到新系统(4)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl09_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/07/30/218580.html">9. [Extjs]查询字段所在区域时常用的控件(3)</a>
+			</li>
+		
+			<li>
+				<a id="TopFeedbackPosts1_TopList_ctl10_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/06/27/211013.html">10. [ExtJs]基于EXT2的RadioGroup(3)</a>
+			</li>
+		
+			</ul>
+		
+</div>
+
+	
+</div>
+<div id="main">
+	
+					
+	<div class="post">
+		<h2>
+			<a id="viewpost1_TitleUrl" href="http://www.blogjava.net/alexwan/archive/2008/09/04/227009.html">[CXF]Spring下设置CXF的WebService客户端超时时长</a>
+		</h2>
+		<strong>背景</strong>:<br />
+在使用WebService的时候,我们可能需要一个备份的WebService服务器.一旦主服务器down了,我们可以使用备份的服务器.那么这里就需要对客服端连接服务器的时间做一个修改.<br />
+<br />
+在Spring+CXF的WebService环境下,客户端有两个时间属性是可配置的,分别是ConnectionTimeout和ReceiveTimeout.<br />
+ConnectionTimeout--WebService以TCP连接为基础,这个属性可以理解为tcp的握手时的时间设置,超过设置的时间长则认为是连接超时.以毫秒为单位,默认是30000毫秒,即30秒.<br />
+<br />
+ReceiveTimeout&nbsp;-- 这个属性是发送WebService的请求后等待响应的时间,超过设置的时长就认为是响应超时.以毫秒为单位,默认是60000毫秒,即60秒.<br />
+<br />
+<br />
+<strong>设置的例子</strong>:<br />
+<br />
+<div style="border-right: #cccccc 1px solid; padding-right: 5px; border-top: #cccccc 1px solid; padding-left: 4px; font-size: 13px; padding-bottom: 4px; border-left: #cccccc 1px solid; width: 98%; word-break: break-all; padding-top: 4px; border-bottom: #cccccc 1px solid; background-color: #eeeeee"><span style="color: #008080">&nbsp;1</span><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" /><span style="color: #0000ff">&lt;?</span><span style="color: #ff00ff">xml&nbsp;version="1.0"&nbsp;encoding="UTF-8"</span><span style="color: #0000ff">?&gt;</span><span style="color: #000000"><br />
+</span><span style="color: #008080">&nbsp;2</span><span style="color: #000000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff">&lt;</span><span style="color: #800000">beans&nbsp;</span><span style="color: #ff0000">xmlns</span><span style="color: #0000ff">="http://www.springframework.org/schema/beans"</span><span style="color: #ff0000"><br />
+</span><span style="color: #008080">&nbsp;3</span><span style="color: #ff0000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;xmlns:xsi</span><span style="color: #0000ff">="http://www.w3.org/2001/XMLSchema-instance"</span><span style="color: #ff0000"><br />
+</span><span style="color: #008080">&nbsp;4</span><span style="color: #ff0000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;xmlns:jee</span><span style="color: #0000ff">="http://www.springframework.org/schema/jee"</span><span style="color: #ff0000"><br />
+</span><span style="color: #008080">&nbsp;5</span><span style="color: #ff0000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;xmlns:jaxws</span><span style="color: #0000ff">="http://cxf.apache.org/jaxws"</span><span style="color: #ff0000"><br />
+</span><span style="color: #008080">&nbsp;6</span><span style="color: #ff0000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;xmlns:http-conf</span><span style="color: #0000ff">="http://cxf.apache.org/transports/http/configuration"</span><span style="color: #ff0000">&nbsp;<br />
+</span><span style="color: #008080">&nbsp;7</span><span style="color: #ff0000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;xsi:schemaLocation</span><span style="color: #0000ff">="http://www.springframework.org/schema/beans&nbsp;http://www.springframework.org/schema/beans/spring-beans-2.0.xsd<br />
+</span><span style="color: #008080">&nbsp;8</span><span style="color: #0000ff"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://www.springframework.org/schema/jee&nbsp;http://www.springframework.org/schema/jee/spring-jee-2.0.xsd<br />
+</span><span style="color: #008080">&nbsp;9</span><span style="color: #0000ff"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://cxf.apache.org/jaxws&nbsp;http://cxf.apache.org/schemas/jaxws.xsd<br />
+</span><span style="color: #008080">10</span><span style="color: #0000ff"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://cxf.apache.org/transports/http/configuration&nbsp;http://cxf.apache.org/schemas/configuration/http-conf.xsd&nbsp;"</span><span style="color: #0000ff">&gt;</span><span style="color: #000000"><br />
+</span><span style="color: #008080">11</span><span style="color: #000000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">&lt;</span><span style="color: #800000">http-conf:conduit&nbsp;</span><span style="color: #ff0000">name</span><span style="color: #0000ff">="{http://impl.service.product.super.com/}ProjectService.http-conduit"</span><span style="color: #0000ff">&gt;</span><span style="color: #000000">&nbsp;<br />
+</span><span style="color: #008080">12</span><span style="color: #000000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">&lt;</span><span style="color: #800000">http-conf:client&nbsp;</span><span style="color: #ff0000">ConnectionTimeout</span><span style="color: #0000ff">="10000"</span><span style="color: #ff0000">&nbsp;ReceiveTimeout</span><span style="color: #0000ff">="20000"</span><span style="color: #0000ff">/&gt;</span><span style="color: #000000"><br />
+</span><span style="color: #008080">13</span><span style="color: #000000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">http-conf:conduit</span><span style="color: #0000ff">&gt;</span><span style="color: #000000">&nbsp;<br />
+</span><span style="color: #008080">14</span><span style="color: #000000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">beans</span><span style="color: #0000ff">&gt;</span><span style="color: #000000"><br />
+</span><span style="color: #008080">15</span><span style="color: #000000"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" /></span></div>
+<p>&nbsp;</p>
+<p><strong>这里需要注意的有几个地方</strong>:<br />
+1:需要指定http-conf名称空间 xmlns:http-conf=<a href="http://cxf.apache.org/transports/http/configuration">http://cxf.apache.org/transports/http/configuration</a><br />
+2:指定模式位置: http://cxf.apache.org/transports/http/configuration <a href="http://cxf.apache.org/schemas/configuration/http-conf.xsd">http://cxf.apache.org/schemas/configuration/http-conf.xsd</a><br />
+3:http-conf:conduit中的name属性,指定设置生效的服务,如例子中,只对服务名为{http://impl.service.product.sww.com/}ProjectService的服务生效.<br />
+使用下面的设置则会对所有服务生效<br />
+</p>
+<div style="border-right: #cccccc 1px solid; padding-right: 5px; border-top: #cccccc 1px solid; padding-left: 4px; font-size: 13px; padding-bottom: 4px; border-left: #cccccc 1px solid; width: 98%; word-break: break-all; padding-top: 4px; border-bottom: #cccccc 1px solid; background-color: #eeeeee"><img alt="" src="/Images/OutliningIndicators/None.gif" align="top" /><span style="color: #0000ff">&lt;</span><span style="color: #800000">http-conf:conduit&nbsp;</span><span style="color: #ff0000">name</span><span style="color: #0000ff">="*.http-conduit"</span><span style="color: #0000ff">&gt;</span><span style="color: #000000"><br />
+<img alt="" src="/Images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img alt="" src="http://www.blogjava.net/Images/dot.gif" /><br />
+<img alt="" src="/Images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">http-conf:conduit</span><span style="color: #0000ff">&gt;</span><span style="color: #000000"><br />
+<img alt="" src="/Images/OutliningIndicators/None.gif" align="top" /></span></div>
+<p><br />
+更详细的配置请参考CXF官方文档:<br />
+<br />
+<a title="http://cwiki.apache.org/CXF20DOC/client-http-transport-including-ssl-support.html" href="http://cwiki.apache.org/CXF20DOC/client-http-transport-including-ssl-support.html">http://cwiki.apache.org/CXF20DOC/client-http-transport-including-ssl-support.html</a><br />
+</p>
+<p>&nbsp;</p>
+<br><br>Let life be beautiful like summer flowers and death like autumn leaves.
+<br />
+<script type="text/javascript"><!-- 
+google_ad_client = "ca-pub-2876867208357149"; 
+/* blogjava默认,建议保留 */ 
+google_ad_slot = "0418982663"; 
+google_ad_width = 468; 
+google_ad_height = 60; 
+//--> 
+</script> 
+<script type="text/javascript" 
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js"> 
+</script>
+
+		<p class="postfoot">
+			posted on 2008-09-04 16:45 <a href='http://www.blogjava.net/alexwan/'>Alexwan</a> 阅读(3495) <a href='#Post'>评论(26)</a> &nbsp;<a href="http://www.blogjava.net/alexwan/admin/EditPosts.aspx?postid=227009">编辑</a> &nbsp;<a href="http://www.blogjava.net/alexwan/AddToFavorite.aspx?id=227009">收藏</a>  所属分类: <a href='http://www.blogjava.net/alexwan/category/32011.html'>J2EE</a> 
+		</p>
+	</div>
+	<img src ="http://www.blogjava.net/alexwan/aggbug/227009.html?webview=1" width = "1" height = "1" />
+	
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://www.blogjava.net/alexwan/archive/2008/09/04/227009.html"
+dc:identifier="http://www.blogjava.net/alexwan/archive/2008/09/04/227009.html"
+dc:title="[CXF]Spring下设置CXF的WebService客户端超时时长"
+trackback:ping="http://www.blogjava.net/alexwan/services/trackbacks/227009.aspx" />
+</rdf:RDF>
+-->
+
+	<script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('AjaxHolder$scriptmanager1', document.getElementById('Form1'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls(['tAjaxHolder$UpdatePanel1'], [], [], 90);
+//]]>
+</script>
+
+<div id="AjaxHolder_UpdatePanel1">
+	    
+    <a name="pagedcomment"></a>
+<a name = "评论" />
+<div id="comments">
+<h3>评论</h3>
+	
+	
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#308352">#</a>&nbsp;<a name="308352"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2010-01-05 21:47
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl00_NameLink" href="http://www.supremeessays.com" target="_blank">Emily32Av</a>
+			</h4>
+			<p>
+				A kind of good information about this good post. The good accomplished custom written essays and the ability to &lt;a href=&quot; <a href="http://www.supremeessays.com&quot;&gt;buy" target="_new" rel="nofollow">http://www.supremeessays.com&quot;&gt;buy</a> essay&lt;/a&gt; just about this topic is suggested by paper writing services. &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;Emily32Av&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=Emily32Av" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl00_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl00$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl00_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#329047">#</a>&nbsp;<a name="329047"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2010-08-16 23:07
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl01_NameLink" href="http://www.bestfinance-blog.com" target="_blank">credit loans</a>
+			</h4>
+			<p>
+				Every one remembers that life seems to be not cheap, however some people need cash for various issues and not every one gets big sums cash. Thus to receive fast home loans or short term loan would be a correct solution. &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;credit loans&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=credit+loans" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl01_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl01$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl01_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#329607">#</a>&nbsp;<a name="329607"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2010-08-22 23:55
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl02_NameLink" href="http://www.marvelousessays.com" target="_blank">custom research paper</a>
+			</h4>
+			<p>
+				Actually, it's not hard to buy essay writing service when you are pressured by time to write custom paper. Hence, that's a common thing to search for custom company. &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;custom research paper&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=custom+research+paper" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl02_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl02$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl02_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#341962">#</a>&nbsp;<a name="341962"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2010-12-30 10:32
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl03_NameLink" href="http://www.elacewigs.com/" target="_blank">dress</a>
+			</h4>
+			<p>
+				I can't believe how much of this I just wasn't aware of. Thank you for bringing moreinformation to this topic for me. I'm truly grateful and really impressed&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;dress&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=dress" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl03_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl03$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl03_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#342794">#</a>&nbsp;<a name="342794"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2011-01-11 21:30
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl04_NameLink" href="http://www.topthesis.com" target="_blank">dissertation</a>
+			</h4>
+			<p>
+				Very oft to get the dotoral level you should purchase thesis summary about this good post and thesis. &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;dissertation&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=dissertation" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl04_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl04$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl04_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#353811">#</a>&nbsp;<a name="353811"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2011-07-06 17:00
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl05_NameLink" href="http://www.goldessays.com" target="_blank">buy an essay</a>
+			</h4>
+			<p>
+				What are essays writing services? These corporations help university students to cope with papers writing and it ought to be available to buy custom essay papers written by experts. &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;buy an essay&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=buy+an+essay" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl05_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl05$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl05_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#353950">#</a>&nbsp;<a name="353950"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2011-07-08 16:52
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl06_NameLink" href="http://cheap-link-building.com" target="_blank">bookmark service</a>
+			</h4>
+			<p>
+				A lot of business owners say things like: &quot;Whay should I utilize the automatic social bookmarking service?&quot;, or &quot;Which way can it assist me? &quot; The answer is easy! Bookmarking submissions options offered by experts can generate more sales at your internet site. &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;bookmark service&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=bookmark+service" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl06_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl06$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl06_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#354217">#</a>&nbsp;<a name="354217"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2011-07-13 05:04
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl07_NameLink" href="http://www.superdissertations.com" target="_blank">thesis writing service</a>
+			</h4>
+			<p>
+				Want to have high academic grades? Therefore, all you have to do is to complete the English thesis of premium quality or purchase thesis analysis at the dissertation writing service.  &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;thesis writing service&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=thesis+writing+service" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl07_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl07$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl07_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#354219">#</a>&nbsp;<a name="354219"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2011-07-13 08:39
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl08_NameLink" href="http://www.greatdissertation.com" target="_blank">thesis service</a>
+			</h4>
+			<p>
+				The thesis ideas creating deal can be fascinating but time consuming. Therefore, when some people want to take a rest and perform their fantastic story referring to this topic, they should to find the professional thesis writing service, which would help people all the time. &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;thesis service&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=thesis+service" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl08_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl08$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl08_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#354376">#</a>&nbsp;<a name="354376"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2011-07-15 10:47
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl09_NameLink" href="http://www.writingscentre.com" target="_blank">research papers online</a>
+			</h4>
+			<p>
+				Lots of different people in the world are searching for specialized custom writing support. Thence, we can propose to buy college essay and be assured, it's a bright decision.  &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;research papers online&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=research+papers+online" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl09_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl09$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl09_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: cpanel hosting" href="/alexwan/archive/2008/09/04/227009.html#366010">#</a>&nbsp;<a name="366010"></a>cpanel hosting
+					<span>
+						2011-12-10 01:59
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl10_NameLink" href="http://www.cpanelhostings.com" target="_blank">mivpljaipur@gmail.com</a>
+			</h4>
+			<p>
+				,我们可以使用备份的服务器.那么这里就需要对客服端连接服务器的时间做&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;mivpljaipur@gmail.com&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=mivpljaipur%40gmail.com" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl10_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl10$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl10_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: cpanel hosting" href="/alexwan/archive/2008/09/04/227009.html#366011">#</a>&nbsp;<a name="366011"></a>cpanel hosting
+					<span>
+						2011-12-10 02:00
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl11_NameLink" href="http://www.cpanelhostings.com" target="_blank">cpanel hosting</a>
+			</h4>
+			<p>
+				指定设置生效的服务,如例子中,只对服务&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;cpanel hosting&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=cpanel+hosting" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl11_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl11$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl11_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: Latest news" href="/alexwan/archive/2008/09/04/227009.html#366157">#</a>&nbsp;<a name="366157"></a>Latest news
+					<span>
+						2011-12-12 16:00
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl12_NameLink" href="http://www.pulvermedia.com/" target="_blank">Latest news</a>
+			</h4>
+			<p>
+				the world are searching for specialized custom writing support. &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;Latest news&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=Latest+news" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl12_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl12$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl12_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#366303">#</a>&nbsp;<a name="366303"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2011-12-14 01:46
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl13_NameLink" href="http://hostgatorcouponsite.org" target="_blank">hostgator coupon</a>
+			</h4>
+			<p>
+				您出示您的文章，信息和能力，給未知的事實是所有的最令人驚訝的因素，我徹底留下深刻的印象。&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;hostgator coupon&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=hostgator+coupon" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl13_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl13$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl13_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#366447">#</a>&nbsp;<a name="366447"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2011-12-15 15:57
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl14_NameLink" href="http://www.accidentsdirect.com" target="_blank">claim online</a>
+			</h4>
+			<p>
+				A lot of business owners say things like: &nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;claim online&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=claim+online" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl14_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl14$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl14_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#366791">#</a>&nbsp;<a name="366791"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2011-12-19 19:06
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl15_NameLink" href="http://www.cupid.com/" target="_blank">Free online dating</a>
+			</h4>
+			<p>
+				The thesis ideas creating deal can be fascinating but time consuming.&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;Free online dating&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=Free+online+dating" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl15_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl15$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl15_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#367662">#</a>&nbsp;<a name="367662"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2011-12-31 17:02
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl16_NameLink" href="http://www.xoticdreamcars.com/" target="_blank">Exotic Car Rental Miami</a>
+			</h4>
+			<p>
+				TCP连接为基础,这个属性可以理解为tcp的握手时的时间设置,超过设置的时间长则认为是连接超时.以&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;Exotic Car Rental Miami&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=Exotic+Car+Rental+Miami" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl16_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl16$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl16_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#368034">#</a>&nbsp;<a name="368034"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2012-01-06 20:18
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl17_NameLink" href="http://www.logodesignguru.com/" target="_blank">Logo design</a>
+			</h4>
+			<p>
+				Not a big fan of the subject but a good read none the less.<br>&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;Logo design&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=Logo+design" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl17_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl17$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl17_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#369904">#</a>&nbsp;<a name="369904"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2012-02-14 01:20
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl18_NameLink" href="http://www.hostgatorcouponblog.org" target="_blank">hostgator promo code</a>
+			</h4>
+			<p>
+				Web服務是一種可以在許多方面使用的工具集。&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;hostgator promo code&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=hostgator+promo+code" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl18_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl18$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl18_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#369905">#</a>&nbsp;<a name="369905"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2012-02-14 01:21
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl19_NameLink" href="http://bluehostcouponsite.org" target="_blank">bluehost coupon 3.95</a>
+			</h4>
+			<p>
+				Web服務也可以用來實現一個架構，面向服務架構的概念。&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;bluehost coupon 3.95&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=bluehost+coupon+3.95" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl19_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl19$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl19_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#369906">#</a>&nbsp;<a name="369906"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2012-02-14 01:22
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl20_NameLink" href="http://www.cpanelhostings.com" target="_blank">best cpanel hosting</a>
+			</h4>
+			<p>
+				自動化工具，可以幫助創建一個Web服務。&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;best cpanel hosting&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=best+cpanel+hosting" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl20_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl20$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl20_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#378006">#</a>&nbsp;<a name="378006"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2012-05-12 17:57
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl21_NameLink" href="http://www.micrositezdigital.co.uk/" target="_blank">Seo UK</a>
+			</h4>
+			<p>
+				性可以理解为tcp的握手时的时间设置,超过设置的时间长则认为是连接超时.以毫秒为单位,默认是3&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;Seo UK&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=Seo+UK" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl21_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl21$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl21_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#378274">#</a>&nbsp;<a name="378274"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2012-05-16 11:27
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl22_NameLink" href="http://se@nuvodev.com" target="_blank">website design india</a>
+			</h4>
+			<p>
+				This is such a Great resource that you are providing and you give it away for free. It gives in depth information. Thanks for this valuable information.<br><br><br>&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;website design india&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=website+design+india" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl22_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl22$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl22_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#379373">#</a>&nbsp;<a name="379373"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2012-05-28 17:31
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl23_NameLink" href="http://modakram.khan@gmail.com" target="_blank">Digital Marketing Agency</a>
+			</h4>
+			<p>
+				待响应的时间,超过设置的时长就认为是响应超时.以毫秒为单位,默认是60000毫秒,即60秒.&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;Digital Marketing Agency&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=Digital+Marketing+Agency" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl23_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl23$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl23_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#385006">#</a>&nbsp;<a name="385006"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长
+					<span>
+						2012-08-07 19:06
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl24_NameLink" href="http://myvegasgambling.com/" target="_blank">best casino</a>
+			</h4>
+			<p>
+				这个属性是发送WebService的请求后等待响应的时间,超过设置的时长就认为是响应超时.以毫秒为单位,默认是60000毫秒,即60秒.&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;best casino&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=best+casino" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl24_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl24$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl24_EditLink"></a>
+			</p>
+		
+			<h4>
+				<a title="permalink: re: [CXF]Spring下设置CXF的WebService客户端超时时长" href="/alexwan/archive/2008/09/04/227009.html#409219">#</a>&nbsp;<a name="409219"></a>re: [CXF]Spring下设置CXF的WebService客户端超时时长<a name="Post"></a>
+					<span>
+						2014-01-22 13:34
+					</span>
+				<a id="AjaxHolder_Comments_CommentList_ctl25_NameLink" href="http://www.nuvodev.com" target="_blank">Web Design Bangalore</a>
+			</h4>
+			<p>
+				Thank you for this great blog! Really enjoying every little bit of it and I have you bookmarked to check out new stuff you post.&nbsp;&nbsp;<a onclick="return SetReplyAuhor(&quot;Web Design Bangalore&quot;)" href="/alexwan/archive/2008/09/04/227009.html#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.blogjava.net/comment?author=Web+Design+Bangalore" target="_blank">更多评论</a>
+				<a id="AjaxHolder_Comments_CommentList_ctl25_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl25$DeleteLink','')"></a>&nbsp;&nbsp;<a id="AjaxHolder_Comments_CommentList_ctl25_EditLink"></a>
+			</p>
+		
+</div>
+<style>
+td { font-size: 12px }
+.commentTextBox 
+{ 
+    font-family : Verdana; 
+    font-size: 13px;
+ }
+</style>
+<!--Beging Temp Save-->
+<STYLE>.userData { BEHAVIOR: url(#default#userdata) }
+	</STYLE>
+<DIV class="userData" id="CommentsPersistDiv"></DIV>
+
+<script type="text/javascript">
+function pageLoad()
+{
+    Sys.WebForms.PageRequestManager.getInstance().add_initializeRequest(handleInitializeRequest);
+    //Sys.WebForms.PageRequestManager.getInstance().add_endRequest(handleEndRequest);
+}
+
+function handleInitializeRequest(sender, args)
+{
+    var prm = Sys.WebForms.PageRequestManager.getInstance();
+    var eid = args.get_postBackElement().id;
+    if (eid.indexOf("DeleteLink")>0) 
+    {
+       args.get_postBackElement().innerHTML = "<font color='red'>正在删除...</font>";         
+    }    
+    else if (eid.indexOf("btnSubmit")>0) 
+    {
+       document.getElementById("AjaxHolder_PostComment_ltSubmitMsg").innerHTML="正在提交...";
+       document.getElementById("AjaxHolder_PostComment_btnSubmit").disabled = true;       
+    }   
+    else if(eid.indexOf("refreshList")>0)
+    {
+        document.getElementById("AjaxHolder_PostComment_refreshList").innerHTML="<font color='red'>正在刷新...</font>";
+    }
+   
+}	
+
+function TempSave(ElementID)
+{
+	try
+	{
+	CommentsPersistDiv.setAttribute("CommentContent",document.getElementById(ElementID).value);
+	CommentsPersistDiv.save("CommentXMLStore");
+	}
+	catch(ex)
+	{
+	}
+	
+}
+function Restore(ElementID)
+{
+	CommentsPersistDiv.load("CommentXMLStore");
+	document.getElementById(ElementID).value=CommentsPersistDiv.getAttribute("CommentContent");
+}	
+			
+			
+</script>
+<!--Ene TempSave-->
+<div id="divRefreshComments" style="text-align:right;margin-right:10px;margin-bottom:5px;font-size:12px"><a href="/RequireRegister.aspx">新用户注册</a>&nbsp;&nbsp;<a id="AjaxHolder_PostComment_refreshList" href="javascript:__doPostBack('AjaxHolder$PostComment$refreshList','')">刷新评论列表</a>&nbsp;&nbsp;</div>
+<div class="commentform">
+<span id="AjaxHolder_PostComment_ltSubmitMsg" style="color:Red;"></span>
+<br />
+<a name="Feedback"></a>
+	<TABLE cellSpacing="1" cellPadding="1" border="0">	
+		<tr>
+		<td id="AjaxHolder_PostComment_tdOnCommentForm" colspan="3" style="line-height:1.5">
+		<div id="blog_bottom_adtext"></script>
+		<script type="text/javascript">
+		var adHtml = '<a href="http://job.cnblogs.com/" target="_blank">程序员找工作，就在博客园招聘频道</a>';
+		var now = new Date();
+	    if (now < new Date('May 31,2014')) {
+	        adHtml = '<a href="http://www.lagou.com/?_channel_blogjava2" target="_blank">6000+互联网公司高薪职位，等你来投！</a>';
+	    }
+	    document.getElementById('blog_bottom_adtext').innerHTML = adHtml;
+		</script>
+		</td>
+	
+		</tr>
+		<div id="AjaxHolder_PostComment_divCommnentArea">
+		<TR>
+			<TD colSpan="3"></TD>
+		</TR>
+		<TR>
+			<TD width="75"></TD>
+			<TD></TD>
+			<TD></TD>
+		</TR>
+		<TR>
+			<TD></TD>
+			<TD colSpan="2">
+			<a href="http://www.cnblogs.com" target="_blank">博客园</a>&nbsp;  <a href="http://q.cnblogs.com/" target="_blank">博问</a>&nbsp; <a href="http://news.cnblogs.com" target="_blank">IT新闻</a>&nbsp; <a href="http://job.cnblogs.com/cate-java_programmer/" target="_blank">Java程序员招聘</a>
+			</TD>
+		</TR>
+		<TR>
+			<TD width="55">标题</TD>
+			<TD><input name="AjaxHolder$PostComment$tbTitle" type="text" value="re: [CXF]Spring下设置CXF的WebService客户端超时时长" id="AjaxHolder_PostComment_tbTitle" class="commenttb" style="width:320" /></TD>
+			<TD><span id="AjaxHolder_PostComment_RequiredFieldValidator1" style="color:Red;visibility:hidden;">请输入标题</span></TD>
+		</TR>
+		<TR>
+			<TD>姓名</TD>
+			<TD><input name="AjaxHolder$PostComment$tbName" type="text" id="AjaxHolder_PostComment_tbName" class="commenttb" style="width:320" /></TD>
+			<TD><span id="AjaxHolder_PostComment_RequiredFieldValidator2" style="color:Red;visibility:hidden;">请输入你的姓名</span></TD>
+		</TR>
+		<TR>
+			<TD>主页</TD>
+			<TD><input name="AjaxHolder$PostComment$tbUrl" type="text" id="AjaxHolder_PostComment_tbUrl" class="commenttb" style="width:320" /></TD>
+			<TD><FONT face="宋体"></FONT></TD>
+		</TR>
+		<tr>
+			<td align="left" colSpan="3">
+				<table id="AjaxHolder_PostComment_tbCaptchaImage" class="CommentForm" cellspacing="0" cellpadding="0" border="0">
+		<tr>
+			<td colspan="3">
+							<span id="AjaxHolder_PostComment_Requiredfieldvalidator4" style="color:Red;display:none;">请输入验证码</span>
+							<span id="AjaxHolder_PostComment_lblImage" style="color:Red;font-weight:bold;"></span>
+						</td>
+		</tr>
+		<tr>
+			<td width="78">验证码</td>
+			<td><input name="AjaxHolder$PostComment$CodeNumberTextBox" type="text" id="AjaxHolder_PostComment_CodeNumberTextBox" />*&nbsp;&nbsp;<img src="http://www.blogjava.net/Modules/CaptchaImage/JpegImage.aspx?cacheid=20140610140634"/></td>
+			<td align="left"></td>
+		</tr>
+	</table>
+	
+			</td>
+		</tr>
+		<TR>
+			<TD colSpan="3">内容(请不要发表任何与政治相关的内容)
+				<span id="AjaxHolder_PostComment_RequiredFieldValidator3" style="color:Red;visibility:hidden;">请输入评论内容</span><BR>
+				<textarea name="AjaxHolder$PostComment$tbComment" rows="10" cols="50" id="AjaxHolder_PostComment_tbComment" class="commentTextBox" onkeydown="ctlent(event,'AjaxHolder_PostComment_tbComment')" style="Width:480;Height:220"></textarea></TD>
+		</TR>
+		<TR>
+			<TD colSpan="3">
+		<span id="AjaxHolder_PostComment_Message" style="color:Red;"></span>
+		</td>
+		<TR>
+			<TD colSpan="3"><input id="AjaxHolder_PostComment_chkRemember" type="checkbox" name="AjaxHolder$PostComment$chkRemember" checked="checked" tabindex="-1" /><label for="AjaxHolder_PostComment_chkRemember">Remember Me?</label></TD>
+		</TR>
+		<TR>
+			<TD height="23"><input type="submit" name="AjaxHolder$PostComment$btnSubmit" value="提交" onclick="TempSave('AjaxHolder_PostComment_tbComment');WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;AjaxHolder$PostComment$btnSubmit&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="AjaxHolder_PostComment_btnSubmit" class="commentButton" />
+				</TD>
+			<td colSpan="2" height="23">&nbsp;
+				<a id="AjaxHolder_PostComment_lnkLogin" href="http://www.blogjava.net/login.aspx?ReturnURL=http://www.blogjava.net/alexwan/archive/2008/09/04/227009.html&amp;SourceURL=/alexwan/archive/2008/09/04/227009.html">登录</a>&nbsp;&nbsp;<!--<a id="AjaxHolder_PostComment_linkLoginComment" OnClick="if(document.getElementById('AjaxHolder_PostComment_tbComment').value != '') return confirm('未提交的评论内容将会丢失, 你真的要进入高级评论吗?');" href="http://www.blogjava.net/alexwan/archive/2008/09/04/227009.html?login=1#Post">使用高级评论</a>&nbsp;&nbsp;<a href="http://www.blogjava.net/RequireRegister.aspx">新用户注册</a>&nbsp;&nbsp;<A href="#Top">返回页首</A>&nbsp;&nbsp;<a id="AjaxHolder_PostComment_lbRestore" OnClick="Restore('AjaxHolder_PostComment_tbComment'); return false;" href="/alexwan/archive/2008/09/04/227009.html#Post">恢复上次提交</a>&nbsp;&nbsp;-->&nbsp;&nbsp;&nbsp;&nbsp;
+				</td>
+		</TR>
+		<TR>
+			<TD colSpan="3"><label class="CtrlEnter">[使用Ctrl+Enter键可以直接提交]</label></TD>
+		</TR>
+		</div>
+		
+		<TR>
+			<TD colSpan="3"><!----></TD>
+		</TR>
+		<!--
+		<TR>
+			<TD colSpan="3" height="5"></TD>
+		</TR>	
+		-->	
+		<TR>
+		<TD colSpan="3">
+		
+<script type='text/javascript'>
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+(function() {
+var gads = document.createElement('script');
+gads.async = true;
+gads.type = 'text/javascript';
+var useSSL = 'https:' == document.location.protocol;
+gads.src = (useSSL ? 'https:' : 'http:') + 
+'//www.googletagservices.com/tag/js/gpt.js';
+var node = document.getElementsByTagName('script')[0];
+node.parentNode.insertBefore(gads, node);
+})();
+</script>
+
+<script type='text/javascript'>
+googletag.cmd.push(function() {
+googletag.defineSlot('/1090369/blogjava_blogpost_bottom', [300, 250], 'div-gpt-ad-1364133350381-0').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.enableServices();
+});
+</script>
+<!-- blogjava_blogpost_bottom -->
+<div id='div-gpt-ad-1364133350381-0' style='width:300px; height:250px;'>
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1364133350381-0'); });
+</script>
+</div>
+<br/>
+
+		</TD>
+		</TR>
+		<tr>			
+		<td colspan="3">
+		
+		</td>
+		</tr>
+		<TR>
+		<TD colSpan="3"></TD>
+		</TR>
+		<TR>
+			<TD colSpan="3" height="1">网站导航:<div id="blogsite">
+			<a href="http://www.cnblogs.com" title="开发者的网上家园">博客园</a>&nbsp;&nbsp;
+			<a href="http://news.cnblogs.com">IT新闻</a>&nbsp;&nbsp;
+			<a href="http://kb.cnblogs.com">知识库</a>&nbsp;&nbsp;
+			<a href="http://www.cppblog.com">C++博客</a>&nbsp;&nbsp;
+			<a href="http://job.cnblogs.com">程序员招聘</a>&nbsp;&nbsp;
+			<a href="/alexwan/archive/2008/09/04/227009.html?opt=admin">管理</a>
+			</div>
+		</TD>
+		</TR>
+		<TR>
+			<TD colSpan="3" height="5">
+<div id="divRelativePosts">
+相关文章:
+	
+			<ul style="margin-top:0px;padding-left:0px;">
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl01_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2009/05/06/269182.html">[j2ee]linux下Activemq的部署和使用</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl02_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2009/03/16/259964.html">关闭MyEclipse6.0.1的Quick Update的方法</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl03_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2009/02/18/255275.html">[cxf]CXF客户端配置文件之包含文件</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl04_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2009/02/17/255102.html">【Web Harvest】Web harvest获取XML出现乱码的解决办法 </a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl05_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2009/02/17/255049.html">[CXF]CXF下的保护暴露在外的web service的方法及注意事项</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl06_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2009/02/17/255038.html">[爬虫]网页分析的影响因素之专业化程度</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl07_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/12/12/246000.html">[linux]linux下的脚本与java中的相对路径</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl08_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/10/23/236194.html">[freemarcker]Expression JspTaglibs is undefined的解决办法</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl09_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/10/16/234721.html">[eclipse]eclipse svn更换帐号的方法</a>
+			</li>
+		
+			<li style='list-style:none;'>
+				<a id="AjaxHolder_PostComment_ctl07_RelativePostsList_ctl10_Hyperlink1" href="http://www.blogjava.net/alexwan/archive/2008/10/05/232423.html">[linux]linux下集成apache和tomcat时可能用到的命令</a>
+			</li>
+		
+			</ul>
+		
+</div>
+</TD>
+		</TR>	
+		<TR>
+			<TD colSpan="3">&nbsp;</TD>
+		</TR>
+		<TR>
+			<TD colSpan="3" height="5"></TD>
+		</TR>
+		<TR>
+			<TD colSpan="3">
+				</TD>
+		</TR>		
+	</TABLE>	
+</div>
+<div id="AjaxHolder_PostComment_ValidationSummary1" style="color:Red;display:none;">
+
+	</div>
+
+</div>
+
+				
+</div>
+
+<p id="footer">
+	Powered by: 
+	<br />
+	
+	<a id="Footer1_Hyperlink3" NAME="Hyperlink1" href="http://www.blogjava.net/" style="font-family:Verdana;font-size:12px;">BlogJava</a>
+	<br />
+	Copyright &copy; Alexwan
+</p>
+<center><script language="javascript" src="http://count38.51yes.com/click.aspx?id=388375766&logo=11"></script></center>
+    
+<script type="text/javascript">
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("AjaxHolder_PostComment_ValidationSummary1"));
+var Page_Validators =  new Array(document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator1"), document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator2"), document.getElementById("AjaxHolder_PostComment_Requiredfieldvalidator4"), document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator3"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var AjaxHolder_PostComment_RequiredFieldValidator1 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator1"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator1");
+AjaxHolder_PostComment_RequiredFieldValidator1.controltovalidate = "AjaxHolder_PostComment_tbTitle";
+AjaxHolder_PostComment_RequiredFieldValidator1.errormessage = "请输入标题";
+AjaxHolder_PostComment_RequiredFieldValidator1.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator1.initialvalue = "";
+var AjaxHolder_PostComment_RequiredFieldValidator2 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator2"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator2");
+AjaxHolder_PostComment_RequiredFieldValidator2.controltovalidate = "AjaxHolder_PostComment_tbName";
+AjaxHolder_PostComment_RequiredFieldValidator2.errormessage = "请输入你的姓名";
+AjaxHolder_PostComment_RequiredFieldValidator2.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator2.initialvalue = "";
+var AjaxHolder_PostComment_Requiredfieldvalidator4 = document.all ? document.all["AjaxHolder_PostComment_Requiredfieldvalidator4"] : document.getElementById("AjaxHolder_PostComment_Requiredfieldvalidator4");
+AjaxHolder_PostComment_Requiredfieldvalidator4.controltovalidate = "AjaxHolder_PostComment_CodeNumberTextBox";
+AjaxHolder_PostComment_Requiredfieldvalidator4.errormessage = "请输入验证码";
+AjaxHolder_PostComment_Requiredfieldvalidator4.display = "Dynamic";
+AjaxHolder_PostComment_Requiredfieldvalidator4.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_Requiredfieldvalidator4.initialvalue = "";
+var AjaxHolder_PostComment_RequiredFieldValidator3 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator3"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator3");
+AjaxHolder_PostComment_RequiredFieldValidator3.controltovalidate = "AjaxHolder_PostComment_tbComment";
+AjaxHolder_PostComment_RequiredFieldValidator3.errormessage = "请输入评论内容";
+AjaxHolder_PostComment_RequiredFieldValidator3.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator3.initialvalue = "";
+var AjaxHolder_PostComment_ValidationSummary1 = document.all ? document.all["AjaxHolder_PostComment_ValidationSummary1"] : document.getElementById("AjaxHolder_PostComment_ValidationSummary1");
+AjaxHolder_PostComment_ValidationSummary1.showmessagebox = "True";
+AjaxHolder_PostComment_ValidationSummary1.showsummary = "False";
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        
+document.getElementById('AjaxHolder_PostComment_ValidationSummary1').dispose = function() {
+    Array.remove(Page_ValidationSummaries, document.getElementById('AjaxHolder_PostComment_ValidationSummary1'));
+}
+Sys.Application.initialize();
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator1').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator1'));
+}
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator2').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator2'));
+}
+
+document.getElementById('AjaxHolder_PostComment_Requiredfieldvalidator4').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_Requiredfieldvalidator4'));
+}
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator3').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator3'));
+}
+//]]>
+</script>
+</form>
+    <script type="text/javascript" src="/script/ShowHidden.js"></script>
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-476124-3']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+</body>
+</html>

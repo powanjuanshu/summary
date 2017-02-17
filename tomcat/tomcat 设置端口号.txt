@@ -1,0 +1,4 @@
+修改Tomcat服务器的conf目录下的主配置文件server.xml
+找到如下部分: 
+<Connector port="8080" maxHttpHeaderSize="8192" maxThreads="150" minSpareThreads="25" maxSpareThreads="75" enableLookups="false" redirectPort="8443" acceptCount="100" connectionTimeout="20000" disableUploadTimeout="true" /> 
+将其中的port="8080"更改为新的端口号即可

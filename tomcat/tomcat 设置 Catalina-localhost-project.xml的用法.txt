@@ -1,0 +1,9 @@
+Tomcat6设置虚拟目录的方法, 不修改server.xml
+
+在tomcat文件夹的conf\catalina\localhost(对于Tomcat6版本及其以上，需要自己创建catalina和localhost这两个文件夹)
+增加project.xml文件（该文件名的project要和下面的“path=“xxx“”的xxx相同）
+文件内容
+<Context path=“/project“ reloadable=“true“ docBase=“E:\javastudio\oob“ workDir=“E:\javastudio\oob\work“>;//C一定要大写，小写服务器启动会报错，无法启动服务器
+docBase是项目文件夹的web-inf文件夹的上一层目录workDir是指Tomcat解析Jsp转换为Java文件，并编译为class存放的文件夹，设置在项目文件夹里面，
+可以避免移植到其他地方首次读取jsp文件需要重新解析 。一般格式：项目文件夹workreloadable是指可以重新加载，一般设置为true，方便使用，不需要经常重启Tomcat。 
+以后启动Tomcat，在浏览器输入http://localhost:8080/project就能访问该项目的welcome文件。

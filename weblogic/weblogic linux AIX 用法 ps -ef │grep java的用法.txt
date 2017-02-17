@@ -1,0 +1,4 @@
+ps -ef |grep java
+ps查看当前线程
+-ef标准格式查看
+grep java过滤java程序

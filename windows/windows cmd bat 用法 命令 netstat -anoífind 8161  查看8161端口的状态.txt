@@ -1,0 +1,5 @@
+netstat -an|find "8161" 
+------------------------
+C:\Documents and Settings\Administrator>netstat -an|find "8161"
+TCP    0.0.0.0:8161           0.0.0.0:0              LISTENING
+

@@ -1,0 +1,12 @@
+Domain简单定义为:是一个逻辑管理单元,Domain下面包含着weblogic应用服务器中的所有东西,weblogic应用服务器的启动,停止都是以domain为单位进行管理的
+1.运行开始 -> 程序 -> BEA Products -> Tools -> Configuration Wizard (指向C:\bea\weblogic92\common\bin\config.cmd,其实就是运行了config.cmd批处理脚本)
+2.选择 Create a new WebLogic domain，Next
+3.在Select Domain Source 界面保持默认，Next。
+4.在User name 处输入用户名，默认为weblogic,两个password都输入12345678(密码要求8位),Next
+5.在Configure Server Start Mode and JDK 界面中保持默认,即JDK选择的是"Sun SDK 1.5.0_03 @ E:\bea\jdk150_03",注意这里若选择"Other JDK"配置比SDK 1.5.0_03更高的版本,
+  服务器启动时将会出现异常,所以最好保持默认,然后 Next。
+6.在Customize Environment and Services Settings 界面中默认为 No，Next。
+7.在Domain name 处输入 mydomain,点击 Create。
+8.完成后点击 Done 关闭 Configuration Wizard 对话框。
+9.运行开始 -> 程序 -> BEA Products -> User Projects -> mydomain -> Start Admin Server for Weblogic Server Domain，检查服务器是否启动成功。
+  http://localhost:7001/console

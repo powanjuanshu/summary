@@ -1,0 +1,35 @@
+* 打开wsdl页面:http://localhost/ssh/cpic/HelloWord?wsdl
+* 项目反键New -> Other -> Web Services -> Web Service Client -> 在Service definition中写入http://localhost/ssh/cpic/HelloWord?wsdl -> Finish
+  或者将wsdl文件拷入项目然后找到wsdl文件
+* 生成的文件中***Stub.java包含了webservice的所有方法
+* 调用***Stub.java中的方法:
+    ServiceLocator service = new ServiceLocator();
+    java.net.URL url = new java.net.URL(wsdl地址);
+    ServiceStub stub = new ServiceStub(url, service);
+  或者:
+    ServiceStub stub=(ServiceStub) new ServiceLocator().getxxxPort();//或者HelloWorld helloWorld=new HelloWorldImplServiceLocator().getHelloWorldImplPort();
+---------------------------------------------
+调用:
+package test;
+import java.rmi.RemoteException;
+import javax.xml.rpc.ServiceException;
+import com.webservice.Customer;
+import com.webservice.HelloWorld;
+import com.webservice.HelloWorldImplServiceLocator;
+import com.webservice.HelloWorldImplServiceSoapBindingStub;
+public class Main {
+	public static void main(String[] args) throws ServiceException, RemoteException {
+		Customer customer =new Customer();
+		customer.setName("rainbow");
+		//或者HelloWorld helloWorld=new HelloWorldImplServiceLocator().getHelloWorldImplPort();
+		HelloWorldImplServiceSoapBindingStub helloWorld=(HelloWorldImplServiceSoapBindingStub) new HelloWorldImplServiceLocator().getHelloWorldImplPort();
+		String s=helloWorld.sayHello(customer);
+		System.out.println(s);
+	}
+}
+
+
+
+
+
+

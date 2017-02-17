@@ -1,0 +1,3 @@
+<Context path="/bank" reloadable="true" docBase="D:\workspaces\lifeteleweb\trunk\FSS_BANK\WebRoot">
+<Loader delegate="true" />
+</Context>

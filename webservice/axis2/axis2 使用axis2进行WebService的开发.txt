@@ -1,0 +1,308 @@
+Apache Axis2目标是成为Web服务和面向服务的体系结构(Service-Oriented Architecture,SOA)的下一代平台.
+
+* 环境变量
+  AXIS2_HOME	D:\axis2-1.6.2
+  Path		%AXIS2_HOME%\bin
+
+* 服务端编写
+package com.hsinghsu.model;
+public class City {
+    private int cityCode;
+    private String cityName;
+    public int getCityCode() {
+        return cityCode;
+    }
+    public void setCityCode(int cityCode) {
+        this.cityCode = cityCode;
+    }
+    public String getCityName() {
+        return cityName;
+    }
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+}
+
+package com.hsinghsu.model; 
+public class User{
+    private int id;
+    private String name;
+    private String password;
+    private City city;
+    public int getId(){
+        return id;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
+    public String getName(){
+        return name;  
+    }
+    public void setName(String name){
+        this.name = name;  
+    }
+    public String getPassword(){  
+        return password;  
+    }
+    public void setPassword(String password){
+        this.password = password;  
+    }
+    public City getCity(){  
+        return city;  
+    }
+    public void setCity(City city){  
+        this.city = city;  
+    }
+}  
+编写服务类UserService.该服务类即为对外提供的服务,其中对外提供2个服务getUserById与getUserList,代码如下:
+package com.hsinghsu.service;  
+import java.util.ArrayList;  
+import java.util.List;
+import com.hsinghsu.model.User;
+public class UserService{
+    public List<User> getUserList(User user){  
+        List<User> list = new ArrayList<User>();
+        return list;  
+    }
+    public User getUserById(int id){  
+        User user = new User();
+        return user;  
+    }  
+  
+}
+
+2.发布WebService服务
+发布WebService服务方式可使用axis2管理平台发布,本文另添加使用soapUI发布WebService的测试服务.
+
+2.1 axis2管理平台发布
+2.1.1 部署axis2管理平台
+将axis2-1.6.1-war.zip压缩包里面的axis2.war包解压到tomcat的webapps目录下,启动tomcat,访问地址http://127.0.0.1:8080/axis2/ ,即可访问axis2的Welcome!页面.
+访问地址http://127.0.0.1:8080/axis2/services/listServices 另可访问服务列表.
+2.1.2 部署开发服务
+编译服务端项目testAsixServer后,将UserService.class文件放到tomcat\webapps\axis2\WEB-INF\pojo目录中【注:若没有pojo目录,则手动新建该目录】.
+在浏览器地址栏中输入如下的URL:
+http://127.0.0.1:8080/axis2/services/listServices 即可访问刷新后的服务列表.
+【注:POJO类不能使用package关键字声明包,若使用axis2管理平台发布,则需要修改UserService类,去掉package字段.】
+【注:发布WebService的pojo目录只是默认的,如果想在其他的目录发布WebService,可以打开axis2/WEB-INF/conf/axis2.xml文件,并在<axisconfig>元素中添加如下的子元素:
+<deployer extension=".class" directory="mydir" class="org.apache.axis2.deployment.POJODeployer"/>】
+访问http://127.0.0.1:8080/axis2/services/UserService?wsdl即可访问服务UserService的wsdl描述
+【注:另可使用jar cvf命令将服务打成aar包后导入到axis2管理平台上使用】
+
+2.2 使用soapUI生成WAR发布WebService测试服务
+2.2.1 由java生成wsdl文件
+运用Java2wsdl生成wsdl文件
+使用cmd命令,在命令行中输入:
+java2wsdl -cn com.hsinghsu.service.UserService
+【注:在testAsixServer项目的classes根目录下执行】
+输出:
+Using AXIS2_HOME:   D:\axis2-1.6.2
+Using JAVA_HOME:    C:\Program Files\Java\jdk1.6.0_01
+log4j:WARN No appenders could be found for logger (org.apache.axis2.util.Loader).
+log4j:WARN Please initialize the log4j system properly.
+结果:生成UserService.wsdl文件
+2.2.2 soapUI导出war包:
+在soapUI导入UserService.wsdl文件.
+通过soapUI生成MockService.
+启动MockService,测试MockService时,在URL填写http://HSING-PC:8088/mockUserServiceSoap11Binding后点击运行,查看是否有正确报文返回.
+soapUI发送报文如下:
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.hsinghsu.com">  
+   <soapenv:Header/>  
+   <soapenv:Body>  
+      <ser:getUserById>  
+         <!--Optional:-->  
+         <ser:id>2</ser:id>  
+      </ser:getUserById>  
+   </soapenv:Body>  
+</soapenv:Envelope>  
+soapUI接收报文如下:
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.hsinghsu.com" xmlns:xsd="http://model.hsinghsu.com/xsd">  
+   <soapenv:Header/>  
+   <soapenv:Body>  
+      <ser:getUserByIdResponse>  
+         <!--Optional:-->  
+         <ser:return>  
+            <!--Optional:-->  
+            <xsd:city>  
+               <!--Optional:-->  
+               <xsd:cityCode>001</xsd:cityCode>  
+               <!--Optional:-->  
+               <xsd:cityName>wh</xsd:cityName>  
+            </xsd:city>  
+            <!--Optional:-->  
+            <xsd:id>1</xsd:id>  
+            <!--Optional:-->  
+            <xsd:name>hsinghsu</xsd:name>  
+            <!--Optional:-->  
+            <xsd:password>123456</xsd:password>  
+         </ser:return>  
+      </ser:getUserByIdResponse>  
+   </soapenv:Body>  
+</soapenv:Envelope>  
+在soapUI中导出war包,如testUser.war.
+2.2.3 部署war包
+将war包部署到tomcat目录下.【注:需要修改war包里面的WEB-INF/soapui/testUser-soapui-project.xml文件引用wsdl文件的路径】
+启动tomcat,访问在war所在的路径如 http://127.0.0.1:8080/testUser/mockUserServiceSoap11Binding?WSDL ,即可查看wsdl描述文件
+【注:可以使用soapUI测试接口,在soapUI测试中,URL中填写testUser.war的部署地址,如http://ip:port/testUser/mockUserServiceSoap11Binding ,点击运行,查看对应的接口是否有正确报文返回.】
+
+三、客户端编写
+Axis2支持以下4种类型的客户端:
+i.  Block(阻塞式客户端),即传统客户端.一旦服务被启用,客户端的应用程序将被挂起,直到operation被执行完毕(表现为收到一个response或fault),才能重新获得控制权.这是调用Web Service最简单的方式,并且这种方式适用于多数业务情形.
+ii. Non block(非阻塞式客户端),即异步客户端.使用Non-Blocking API来调用这些Web Services.Axis2提供给用户一种基于回叫机制的non-blocking API,一旦服务被起用,客户端应用程序马上得到控制权,通过使用一个callback对象来获得response.这种方式使得客户端应用程序可以很方便的同步启用多个Web Service.
+iii.双工(双向传输).以上的机制都使用单一的连接去发送请求和接收响应.这都明显在性能上落后于使用两条连接(单向或双向)进行进行请求和响应的传输 . 因此以上的机制都不能解决长时间运行的交易, 连接将在操作还没完成就会超时. 一种解决方案是使用分开的两条传输连接来传输请求和响应 . 我们叫这种方案为传输层异步.
+iv. 双工非阻塞(双向且非阻塞传输).
+
+1.传统客户端【阻塞式客户端的编写】
+新建AsixBlockClient类,获取数据,代码如下:
+package com.hsinghsu.asix.client;
+import org.apache.axiom.om.OMAbstractFactory;
+import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.OMFactory;
+import org.apache.axiom.om.OMNamespace;
+import org.apache.axis2.AxisFault;
+import org.apache.axis2.addressing.EndpointReference;
+import org.apache.axis2.client.Options;
+import org.apache.axis2.client.ServiceClient;
+/** 
+ *  
+ * Block(阻塞式客户端),即传统客户端调用WebService Axis2的底层API来调用WebService
+ */  
+public class AsixBlockClient {
+    private static EndpointReference targetEPR = new EndpointReference("http://127.0.0.1:8080/testUser/mockUserServiceSoap11Binding");//接口地址
+    public static void main(String[] args) {
+        Options options = new Options();
+        options.setAction("urn:getUserById");//调用接口方法
+        options.setTo(targetEPR);
+        ServiceClient sender = null;
+        try {
+            sender = new ServiceClient();
+            sender.setOptions(options);
+            OMFactory fac = OMAbstractFactory.getOMFactory();  
+            OMNamespace omNs = fac.createOMNamespace("http://service.hsinghsu.com", "");  
+            OMElement method = fac.createOMElement("getUserById", omNs);  
+            OMElement name = fac.createOMElement("id", omNs);//设置入参名称  
+            name.setText("1");//设置入参值  
+            method.addChild(name);  
+            method.build();  
+            System.out.println("method:" + method.toString());// print:<getUserById xmlns="http://service.hsinghsu.com"><id>1</id></getUserById>  
+            OMElement response = sender.sendReceive(method);  
+            System.out.println("response:" + response);  
+            OMElement elementReturn = response.getFirstElement().getFirstElement().getFirstElement();  
+            System.out.println("cityCode:"+elementReturn.getText());  
+        } catch (AxisFault e) {  
+            System.out.println("Error");  
+            e.printStackTrace();  
+        }
+    }
+}  
+执行结果如下:
+method:<getUserById xmlns="http://service.hsinghsu.com"><id>1</id></getUserById>  
+response:<ser:getUserByIdResponse xmlns:ser="http://service.hsinghsu.com">  
+         <!--Optional:-->  
+         <ser:return>  
+            <!--Optional:-->  
+            <xsd:city xmlns:xsd="http://model.hsinghsu.com/xsd">  
+               <!--Optional:-->  
+               <xsd:cityCode>001</xsd:cityCode>  
+               <!--Optional:-->  
+               <xsd:cityName>wh</xsd:cityName>  
+            </xsd:city>  
+            <!--Optional:-->  
+            <xsd:id xmlns:xsd="http://model.hsinghsu.com/xsd">1</xsd:id>  
+            <!--Optional:-->  
+            <xsd:name xmlns:xsd="http://model.hsinghsu.com/xsd">hsinghsu</xsd:name>  
+            <!--Optional:-->  
+            <xsd:password xmlns:xsd="http://model.hsinghsu.com/xsd">123456</xsd:password>  
+         </ser:return>  
+      </ser:getUserByIdResponse>  
+cityCode:001
+
+2.使用RPC方法调用WebService
+编写AsixRPCClient.java类,获取数据.注:添加User.java、City.java至项目中.
+AsixRPCClient.java代码如下:
+package com.hsinghsu.asix.client;
+import javax.xml.namespace.QName;
+import org.apache.axis2.addressing.EndpointReference;  
+import org.apache.axis2.client.Options;  
+import org.apache.axis2.rpc.client.RPCServiceClient;
+import com.hsinghsu.model.User;
+/** 
+ * 使用RPC方式调用WebService 
+ *  
+ * @author hsinghsu 
+ *  
+ */  
+public class AsixRPCClient{
+    /** 
+     * @param args 
+     */  
+    public static void main(String[] args) throws Exception {
+        // 使用RPC方式调用WebService
+        RPCServiceClient serviceClient = new RPCServiceClient();
+        Options options = serviceClient.getOptions();
+        EndpointReference targetEPR = new EndpointReference("http://127.0.0.1:8080/testUser/mockUserServiceSoap11Binding");// 指定调用WebService的URL
+        options.setTo(targetEPR);
+        Object[] opAddEntryArgs = new Object[]{new Integer(1)};// 指定getGreeting方法的参数值
+        Class[] classes = new Class[]{User.class};// 指定getGreeting方法返回值的数据类型的Class对象
+        QName opAddEntry = new QName("http://service.hsinghsu.com", "getUserById");// 指定要调用的getGreeting方法及WSDL文件的命名空间
+        Object[] objects = serviceClient.invokeBlocking(opAddEntry, opAddEntryArgs, classes);// RPCServiceClient类的invokeBlocking方法调用了WebService中的方法.invokeBlocking方法有三个参数,其中第一个参数的类型是QName对象,表示要调用的方法名；第二个参数表示要调用的WebService方法的参数值,参数类型为Object[]；第三个参数表示WebService方法的返回值类型的Class对象,参数类型为Class[].当方法没有参数时,invokeBlocking方法的第二个参数值不能是null,而要使用new Object[]{}.
+        System.out.println(" objects size-->:" + objects.length);
+        if (objects.length >= 1){
+            User user = new User();  
+            user = (User) objects[0];
+            System.out.println("==" + user.getId() + " ==" + user.getName() + " ==" + user.getCity().getCityName());
+        }
+    }
+}
+运行结果:
+  objects size-->:1[Ljava.lang.Object;@ba5c7a
+  ==1 ==hsinghsu ==wh
+
+3.使用Stub方式调用WebService
+运用wsdl2java简化客户端,使用Stub方式调用WebService
+3.1 生成STUB文件.
+在cmd中用 wsdl2java生成stub文件.注:在wsdl文件目录下执行
+输入:
+wsdl2java -uri UserService.wsdl
+【注:默认adb生成方式,同步生成方式,加参数-a则使用异步生成】
+
+输出:
+Using AXIS2_HOME:   D:\axis2-1.6.2
+Using JAVA_HOME:    C:\Program Files\Java\jdk1.6.0_01
+Retrieving document at 'UserService.wsdl'.
+log4j:WARN No appenders could be found for logger (org.apache.axis2.description.WSDL11ToAllAxisServicesBuilder).
+log4j:WARN Please initialize the log4j system properly.
+
+结果:
+生成build.xml、UserServiceStub.java、UserServiceCallbackHandler.java文件
+
+3.2 编写同步调用函数
+编写AsixServiceStub类,获取数据.
+AsixServiceStub.java代码如下:
+package com.hsinghsu.asix.client;
+import com.hsinghsu.service.UserServiceStub;  
+import com.hsinghsu.service.UserServiceStub.GetUserById;  
+import com.hsinghsu.service.UserServiceStub.User;
+/** 
+ * 利用axis2插件生成客户端方式调用wsdl2java简化客户端的编写
+ */  
+public class AsixServiceStub{
+    public static void main(String[] args) throws Exception{
+        UserServiceStub stub = new UserServiceStub();
+        GetUserById guid = new GetUserById();
+        guid.setId(1);
+        User user = stub.getUserById(guid).get_return();// 同步调用方式
+        if (null != user){
+            System.out.println("==" + user.getId() + " ==" + user.getName() + " ==" + user.getCity().getCityName());  
+        }
+        else{
+            System.out.println("user null");  
+        }
+    }
+}
+运行结果:
+==1 ==hsinghsu ==wh
+
+注:添加UserServiceStub.java、UserServiceCallbackHandler.java文件至项目中,注意修改UserServiceStub.java类中服务的地址.
+注:若需要使用异步调用,则需创建异步回调类AsynCallback,该类需要继承UserServiceCallbackHandler抽象类,实现回调函数receiveResultgetUserById接口.在AsixServiceStub中,只需要使   用stub.startgetUserById(guid, new AsynCallback());执行即可.
+
+

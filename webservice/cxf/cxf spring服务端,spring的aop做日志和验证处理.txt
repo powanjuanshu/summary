@@ -1,0 +1,153 @@
+web.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>AnalysisTool</display-name>
+	<description>Welcome to CPIC Analysis Tool.</description>
+	<!--spring applicationcontext载入-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:/applicationContext-webservice.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!--sessin的超时配置-->
+	<session-config>
+		<session-timeout>180</session-timeout>
+	</session-config>
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/cpic/*</url-pattern>
+	</servlet-mapping>
+</web-app>
+--------------------------------------------------
+applicationContext-webservice.xml:
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:soap="http://cxf.apache.org/bindings/soap"
+	xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+		http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+	
+	<!--cxf引用的部分lib在jdk1.6不兼容，需要在jdk/jre/lib，新建文件夹：endorsed 且放置三个lib：jaxb-api-2.x.jar ,jaxb-impl-2.x.jar ,jaxb-xjc-2.x.jar-->
+	<import resource="classpath:META-INF/cxf/cxf.xml"/>
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+	<!-- 异常订单列表查询 -->
+	<bean id="QueryAbnormalOrderServiceFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="QueryAbnormalOrderServiceFacadeTarget" />
+		<property name="interceptorNames">
+			<list>
+				<!-- 按先后顺序执行 -->
+				<value>app.RemoteFacadeValidator</value>
+				<value>app.LogAndReturnHandler</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="app.LogAndReturnHandler" class="com.springtour.app.logging.LogAndReturnHandler"></bean>
+	<bean id="app.RemoteFacadeValidator" class="com.springtour.app.validation.RemoteFacadeValidator"></bean>
+	
+	<bean id="QueryAbnormalOrderServiceFacadeTarget" class="com.springtour.airswitch.interfaces.ws.soap.impl.QueryAbnormalOrderServiceFacadeImpl"></bean>
+	
+	<jaxws:endpoint id="wsdl.QueryAbnormalOrderServiceFacade" implementor="#QueryAbnormalOrderServiceFacade" address="/abnormaltService">
+		<jaxws:serviceFactory>
+			<ref bean='jaxws-and-aegis-service-factory' />
+		</jaxws:serviceFactory>
+	</jaxws:endpoint>
+	
+	<!-- Configure CXF to use Aegis data binding instead of JAXB -->
+	<bean id="jaxws-and-aegis-service-factory" class="org.apache.cxf.jaxws.support.JaxWsServiceFactoryBean" scope="prototype">
+		<property name="wrapped" value="true"></property>
+		<property name="dataBinding" ref="aegisBean"></property>
+	</bean>
+	<!-- 通过Spring创建数据绑定的类-->
+	<bean id="aegisBean" class="org.apache.cxf.aegis.databinding.AegisDatabinding"></bean>
+	
+</beans>
+--------------------------------------------------
+package com.springtour.airswitch.interfaces.ws.soap;
+
+import javax.jws.WebService;
+
+@WebService
+public interface QueryAbnormalOrderServiceFacade {
+	public String say (String onl);
+
+}
+
+--------------------------------------------------
+package com.springtour.airswitch.interfaces.ws.soap.impl;
+
+import javax.jws.WebService;
+import javax.xml.ws.BindingType;
+import javax.xml.ws.soap.SOAPBinding;
+
+import com.springtour.airswitch.interfaces.ws.soap.QueryAbnormalOrderServiceFacade;
+@WebService(endpointInterface = "com.springtour.airswitch.interfaces.ws.soap.QueryAbnormalOrderServiceFacade", serviceName = "QueryAbnormalOrderServiceFacadeImplWs") // 如果不指定serviceName，那么默认在该类名后面加上Service(QueryAbnormalOrderServiceFacadeImplService)
+@BindingType(value = SOAPBinding.SOAP11HTTP_BINDING)
+public class QueryAbnormalOrderServiceFacadeImpl implements QueryAbnormalOrderServiceFacade {
+	@Override
+	public String say(String onl) {
+		System.out.println("做业务：查询飞机异常列表");
+		System.out.println(onl);
+		return "fanhui";
+	}
+}
+
+--------------------------------------------------
+package com.springtour.app.logging;
+
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
+
+public class LogAndReturnHandler implements MethodInterceptor {
+
+	@Override
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		System.out.println("LLLLLLLLLLLLLLLLL");
+		long time = System.currentTimeMillis();
+		// 开始的时候记日志
+		System.out.println("日志开始："+invocation.getMethod().getDeclaringClass().getName()+invocation.getMethod().getName()+invocation.getArguments()[0]);
+		// 执行业务逻辑程序
+		Object returning = invocation.proceed();
+		// 结束的时候记日志
+		System.out.println("日志结束："+returning);
+		long executionTime = System.currentTimeMillis() - time;
+		// 记录执行时间
+		System.out.println("执行时间："+invocation.getMethod().getDeclaringClass().getName()+invocation.getMethod().getName()+executionTime);
+		return returning;
+	}
+}
+
+--------------------------------------------------
+package com.springtour.app.validation;
+
+import java.util.*;
+import javax.validation.*;
+import org.aopalliance.intercept.*;
+
+public class RemoteFacadeValidator implements MethodInterceptor {
+
+	@Override
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		System.out.println("VVVVVVVVVVVVVVVVV");
+		Set<ConstraintViolation<Object>> constraintViolations = new HashSet<ConstraintViolation<Object>>();
+		Object[] args = invocation.getArguments();
+		// 下面注释的一句是做验证的功能
+		// constraintViolations = validate(args[0]);
+		return invocation.proceed();
+	}
+}
+--------------------------------------------------
+

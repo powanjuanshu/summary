@@ -1,0 +1,60 @@
+package com.bestpay.paycenter.commons.util;
+
+import org.apache.axis.client.Call;
+import org.apache.axis.client.Service;
+
+import javax.xml.namespace.QName;
+
+/**
+ * User: zhangleimin
+ * Date: 13-12-5
+ * Time: 下午8:40
+ */
+public class AxisUtil {
+
+    public static String callWebService(String url, String method, String[] params) throws Exception{
+        Service service = new Service();
+        Call call = (Call)service.createCall();
+        call.setTargetEndpointAddress(url);
+        call.setOperationName(new QName(url, method));
+        return  (String)call.invoke(params);
+    }
+}
+
+---------------------------------
+package test.manual;
+
+import com.bestpay.paycenter.commons.util.AxisUtil;
+import com.bestpay.paycenter.commons.util.CryptTool;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+
+/**
+ * desc:
+ * User: liangyandong
+ * Date: 14-3-11
+ * Time: 下午5:41
+ */
+@Slf4j
+public class ManualClearingTest{
+
+    @Test
+    public void test() throws Exception {
+        String url = "http://telepay.wgtest.bestpay.com.cn/services/jsconfirm";
+        String merId = "043101180050000";
+        String reqNo = "F20131202145717";
+        String orderNo = "2013120214571713";
+        String tranAmt = "1";
+        String key = "344C4FB521F5A52EA28FB7FC79AEA889478D4343E4548C02";
+        StringBuilder source = new StringBuilder();
+        source.append("MERCHANTID=").append(merId);
+        source.append("&ORDERSEQ=").append(orderNo);
+        source.append("&ORDERREQTRANSEQ=").append(reqNo);
+        source.append("&ORDERAMOUNT=").append(tranAmt);
+        source.append("&KEY=").append(key);
+        log.debug("mac明文:{}",source);
+        String mac = CryptTool.md5Digest(source.toString());
+        String[] params = {merId,merId,reqNo,orderNo,tranAmt,mac};
+        log.debug("返回结果:{}", AxisUtil.callWebService(url, "manualBalance", params));
+    }
+}

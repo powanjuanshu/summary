@@ -1,0 +1,2 @@
+mv WebContent WebContent_`date "+%Y%m%d%H%M"`
+移动文件夹，并在后面加时间

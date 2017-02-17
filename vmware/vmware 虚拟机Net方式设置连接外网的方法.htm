@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Language" content="zh-CN" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta http-equiv="mobile-agent" content="format=html5; url=http://m.jb51.net/softjc/62647.html">
+<meta http-equiv="mobile-agent" content="format=xhtml; url=http://m.jb51.net/softjc/62647.html">
+<script type="text/javascript" src="http://siteapp.baidu.com/static/webappservice/uaredirect.js"></script>
+<script type="text/javascript">uaredirect("http://m.jb51.net/softjc/62647.html");</script>
+<title>vmware 虚拟机Net方式设置连接外网的方法_系统工具_软件教程_脚本之家</title>
+<meta name="keywords" content="Net,外网" />
+<meta name="description" content="虚拟机提供了4种网络连接方式,今天搞了一下Net连接方式，介绍一下,方便需要的朋友" />
+<link href="http://img.jb51.net/skin/blue2/css/main.css" rel="stylesheet" type="text/css" />
+<link href="http://img.jb51.net/skin/blue2/css/article.css" rel="stylesheet" type="text/css" />
+<script src="http://img.jb51.net/js/main.js" type="text/javascript"></script>
+</head>
+<body>
+<div id=topnav>
+<div class="pcbody">
+<div id=toptext>脚 本 之 家 www.jb51.net</div>
+<UL id=topnavlist><script type="text/javascript" charset="gb2312">dy("top");</script></UL>
+</div>
+</div>
+
+<!--头部开始-->
+<div class="pcbody">
+
+<div id="dxy_logo">
+<div id="logo_l"><a href="http://www.jb51.net" title="脚本之家" target="_blank"><img src="http://www.jb51.net/images/logo.gif" alt="脚本之家" /></a></div>
+<div id="logo_m"></div>
+<div id="logo_r"></div>
+</div>
+<!--导航栏-->
+<div id="nav_top">
+<ul>
+<li class="current"><a href="http://www.jb51.net">首页</a></li>
+<li><a href="http://www.jb51.net/web/">网页制作</a></li>
+<li><a href="http://www.jb51.net/list/index_96.htm">脚本专栏</a></li>
+<li><a href="http://www.jb51.net/jiaoben/">脚本下载</a></li>
+<li><a href="http://www.jb51.net/list/index_1.htm">网络编程</a></li>
+<li><a href="http://www.jb51.net/list/index_104.htm">数据库</a></li>
+<li><a href="http://www.jb51.net/cms/">CMS教程</a></li>
+<li><a href="http://www.jb51.net/books/">电子书籍</a></li>
+<li><a href="http://www.jb51.net/pingmian/">平面设计</a></li>
+<li><a href="http://www.jb51.net/media/">媒体动画</a></li>
+<li><a href="http://www.jb51.net/os/">操作系统</a></li>
+<li><a href="http://www.jb51.net/yunying/">网站运营</a></li>
+<li class="last"><a href="http://www.jb51.net/hack/">网络安全</a></li>
+</ul>
+</div> 
+<div class="main cbody margintop">
+<div class="search">
+<UL><LI class=search-hot><SPAN>特色栏目：</SPAN>
+<A href="http://www.jb51.net/list/list_114_1.htm" target='_blank'>vbscript</A> 
+<A href="http://www.jb51.net/list/list_6_1.htm" target='_blank'>正则表达式</A> 
+<A href="http://www.jb51.net/list/list_3_1.htm" target='_blank'>javascript</A>
+<A href="http://www.jb51.net/list/list_106_1.htm" target='_blank'>批处理</A>
+<A href="http://s.jb51.net">服务器软件</A> 
+<A href="http://sc.jb51.net/?txt" target="_blank" style="color:red">素材下载</A> 
+</LI><LI class=search-box>
+<div class="sall"><form action="http://so.jb51.net/cse/search" target="_blank">
+    <input type="hidden" name="s" value="10520733385329581432">
+    <input type="hidden" name="ie" value="gbk">
+    <input type="text" name="q" class="keyword_input">
+    <input type="submit" value="搜索" class="s_btn">
+</form></div></LI></UL>
+</div>
+</div>
+<div class="tonglanad">
+<script type="text/javascript">var tougao="1";var downlm="art"; var cpro_id = 'u336546';</script><script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>  
+<div class="main cbody margintop" id="tonglan960"></div>
+<div class="main cbody margintop">
+	<!--左侧-->
+	<div class="pleft">
+		<!--位置导航-->
+		<div class="thisplace">
+			<div class="placenav">
+				<span>当前位置 :</span> 
+				<a href='http://www.jb51.net/'>主页</a> > <a href='/softjc/'>软件教程</a> > <a href='/softjc/list72_1.html'>系统工具</a> > 
+			</div>
+		</div>
+		<!--资讯内容-->
+		<div class="newsview">
+			<!--资讯标题-->
+			<div class="title">
+				<h1>vmware 虚拟机Net方式设置连接外网的方法</h1>
+			</div>
+            
+			<!--相关信息-->
+			<div class="info">
+				<span>来源：互联网</span>
+				<span>作者：佚名</span>
+				<span>时间：10-01 18:25:37</span>
+				<span>【<a href="javascript:setfont(15)">大</a> <a href="javascript:setfont(13)">中</a> <a href="javascript:setfont(12)">小</a>】</span>                
+			</div>
+	    <!--资讯正文-->
+			<div id="content">
+            <div id="art_desc">虚拟机提供了4种网络连接方式,今天搞了一下Net连接方式，介绍一下,方便需要的朋友</div>
+<div id="con_all">
+<div id="con_ad1"><script type="text/javascript">dy("gg_l");</script></div>
+<div id="con_ad8"><script type="text/javascript">dy("gg_r");</script></div>
+</div>
+<p>虚拟机提供了4种网络连接方式，通常情况下我们使用桥连接，把虚拟机想象成一台真实的主机，则虚拟机的网络设置只要和主机的设置一样就可以了，（如果主机是自动获取IP则，虚拟机也设置为自动获取IP，如果主机是手动设置IP，则虚拟机也手动设置IP，虚拟机IP和主机IP不能重复）&nbsp;</p>
+<p>今天搞了一下Net连接方式，介绍一下。</p>
+<p>安装完成虚拟机VMware，在网路连接里可以看到多出来两个虚拟网卡，VMware Network Adapter VMnet1和VMware Network Adapter VMnet8，如图</p>
+<p>&nbsp;</p>
+<p><img alt="" width="504" height="181" src="http://files.jb51.net/file_images/article/201210/201210011821212.jpg" /></p>
+<p>现在开始设置网络，我使用的是无线网络（如果是本地连接，设置方式相同），右键选择无线网络连接，在属性窗口中选择高级，选中允许其他网络用户通过此计算机的Internet连接来连接，并在家庭网络连接处，选择&nbsp;VMware Network Adapter VMnet8，如图，确定</p>
+<p><img alt="" width="373" height="405" src="http://files.jb51.net/file_images/article/201210/201210011821213.jpg" /></p>
+<p>接下来，查看下VMware Network Adapter VMnet8的网络连接属性，被自动设置为 192.168.0.1，255.255.255.0</p>
+<p><img alt="" width="361" height="279" src="http://files.jb51.net/file_images/article/201210/201210011821214.jpg" /></p>
+<p>现在启动虚拟机，进入虚拟机操作系统，设置虚拟机的网络连接，设置IP为192.168.0.2，子网掩码为255.255.255.0，网关为192.168.0.1（网关是VMware Network Adapter VMnet8虚拟网卡的IP地址），DNS设为主机网络连接的DNS，（是我们连接到外网的连接的DNS，我使用的是无线网络连接，所以我找到无线网络连接的DNS就是了，如果是宽带连接，就是本地连接的DNS）</p>
+<p>&nbsp;</p>
+<p>设置好以后，打开虚拟机里的IE，输入www.baidu.com，打开百度主页，恭喜你，成功了！</p>
+</div>
+
+<div class="articlead" id="art580"><script type="text/javascript">dy("art580");</script></div>
+<div class="tag">
+Tag：<b><a href='/do/tag/Net/' target='_blank'>Net</a></b> &nbsp; <b><a href='/do/tag/%CD%E2%CD%F8/' target='_blank'>外网</a></b> &nbsp; 
+</div>
+<!-- Baidu Button BEGIN -->
+<div class="bdsharebuttonbox"><A class=bds_more href="http://share.baidu.com/code#" data-cmd="more"></A><A class=bds_qzone title=分享到QQ空间 href="http://share.baidu.com/code#" data-cmd="qzone"></A><A class=bds_tsina title=分享到新浪微博 href="http://share.baidu.com/code#" data-cmd="tsina"></A><A class=bds_tqq title=分享到腾讯微博 href="http://share.baidu.com/code#" data-cmd="tqq"></A><A class=bds_renren title=分享到人人网 href="http://share.baidu.com/code#" data-cmd="renren"></A><A class=bds_weixin title=分享到微信 href="http://share.baidu.com/code#" data-cmd="weixin"></A></div>
+<!-- Baidu Button END -->
+			<div class="actbar">
+				<span>[<a href="javascript:addBookmark(document.title,document.location.href)" class=button_link>收藏</a>]</span>
+			<span>[<A title=复制本文链接发给你QQ/MSN上的好友 href="javascript: copyUserHomeToClipBoard()" rel=nofollow class=button_link>复制链接发给好友</A>]</span>
+				<span>[<a href="#" onclick="window.print();">打印</a>]</span>
+				<span>[<a href="javascript:closeWindow()" class="button_link">关闭</a>]</span>
+			</div>
+            <!--上下文-->
+            <div class="context">
+                    上一篇：<a href='/softjc/62489.html' target='_blank'>了解lpk.dll是什么病毒以及lpk.dll病毒专杀方法</a> 
+                    <br />
+                    下一篇：<a href='/softjc/62655.html' target='_blank'>一键GHOST还原 v2012.07.12 硬盘版 图文安装教程</a> 
+           </div>
+           <div class="floatclear"><!--清除浮动--></div>
+		</div>
+<div id=relatedarticle>
+<H2>相关文章</H2>
+<ul>
+<li><span>2015-10-26</span><a href="/softjc/392977.html" target="_blank">360软件管家下载不了软件怎么办 360软件管家下载不了软件解决方法</a></li><li><span>2015-10-20</span><a href="/softjc/391215.html" target="_blank">NVIDIA GeForce显卡最新测试版驱动358.70 Beta版64位下载</a></li><li><span>2015-10-11</span><a href="/softjc/387648.html" target="_blank">C盘空间不足怎么办？Windows系统自带清理工具cleanmgr的使用手册</a></li><li><span>2015-10-10</span><a href="/softjc/387186.html" target="_blank">驱动人生如何快速安装网络打印机驱动 网络打印机驱动安装教程</a></li><li><span>2015-10-09</span><a href="/softjc/387096.html" target="_blank">winsdk7.1安装总是出现错误提示该怎么办？</a></li><li><span>2015-10-03</span><a href="/softjc/385680.html" target="_blank">kmsautonet怎么用？好用吗？kmsautonet激活工具使用教程</a></li><li><span>2015-09-29</span><a href="/softjc/384792.html" target="_blank">微软更新Windows设备恢复工具:支持所有Win10手机(附下载)</a></li><li><span>2015-09-24</span><a href="/softjc/383006.html" target="_blank">百度windows 10直通车下载的win10安装文件在哪里？百度win10直通车下载</a></li><li><span>2015-09-24</span><a href="/softjc/382990.html" target="_blank">百度win10直通车提示系统语言须为简体中文现象的解决方法</a></li><li><span>2015-09-23</span><a href="/softjc/382598.html" target="_blank">中秋国庆节购机忙，驱动人生帮你扫障碍</a></li><li><span>2015-09-23</span><a href="/softjc/382482.html" target="_blank">PQmagic软件怎么调整硬盘分区大小？</a></li><li><span>2015-09-23</span><a href="/softjc/382217.html" target="_blank">directx修复工具怎么用 directx修复工具使用图文教程</a></li>
+</ul>
+<div class=clear></div></div>
+<DIV class="art_bot_ad">
+<script type="text/javascript">dy("bdtxt");</script>
+</DIV>
+<div id="baidutj">
+<H2>猜你喜欢</H2>
+<div id="hm_t_11473"></div>
+</div>
+<div class="comment">
+<div class="pltitle"><strong>网友评论</strong></div>
+<div id="SOHUCS" sid="62647"></div>
+		</div>
+	</div>
+	<!--右侧-->
+	<div class="pright">
+<div class="rlist2"><div class="rbox2"><script type="text/javascript">dy("vod250");</script></div></div>
+<div class="classbox margintop">
+			<dl>
+				<dt>相关栏目</dt>
+				<dd>
+					<ul>
+              
+              <li><a href="/softjc/list218_1.html" target="_blank">新手学堂</a></li>
+              
+              <li><a href="/softjc/list940_1.html" target="_blank">MAC教程</a></li>
+              
+              <li><a href="/softjc/list512_1.html" target="_blank">手机软件</a></li>
+              
+              <li><a href="/office/" target="_blank">办公软件</a></li>
+              
+              <li><a href="/softjc/list77_1.html" target="_blank">安全相关</a></li>
+              
+              <li><a href="/softjc/list76_1.html" target="_blank">文件管理</a></li>
+              
+              <li><a href="/softjc/list75_1.html" target="_blank">播放工具</a></li>
+              
+              <li><a href="/softjc/list74_1.html" target="_blank">磁盘光盘</a></li>
+              
+              <li><a href="/softjc/list73_1.html" target="_blank">网络通讯</a></li>
+              
+              <li><a href="/softjc/list72_1.html" target="_blank">系统工具</a></li>
+              
+              <li><a href="/softjc/list579_1.html" target="_blank">媒体工具</a></li>
+              
+              <li><a href="/softjc/list312_1.html" target="_blank">图形图像</a></li>
+              
+              <li><a href="/softjc/list298_1.html" target="_blank">经验技巧</a></li>
+              
+              <li><a href="/softjc/list266_1.html" target="_blank">编程开发</a></li>
+              
+              <li><a href="/softjc/list113_1.html" target="_blank">影音播放</a></li>
+              
+              <li><a href="/softjc/list112_1.html" target="_blank">浏览下载</a></li>
+              
+              <li><a href="/softjc/list848_1.html" target="_blank">U盘教程</a></li>
+              
+              <li><a href="/softjc/list642_1.html" target="_blank">加壳脱壳</a></li>
+              
+              <li><a href="/softjc/list79_1.html" target="_blank">其他工具</a></li>
+              
+					</ul>
+				</dd>
+			</dl>
+	  </div>
+<div class="rlist" id="r_1"><script type="text/javascript">dy("r_1");</script></div>
+<div class="rlist margintop">
+			<div class="title">最近更新</div>
+			<div class="rbox">
+				<ul>
+            <li><a href="/softjc/392977.html" target="_blank">360软件管家下载不了软件怎么办 360软件管家下载不了</a></li><li><a href="/softjc/391215.html" target="_blank">NVIDIA GeForce显卡最新测试版驱动358.70 Beta版64位</a></li><li><a href="/softjc/387648.html" target="_blank">C盘空间不足怎么办？Windows系统自带清理工具cleanmgr</a></li><li><a href="/softjc/387186.html" target="_blank">驱动人生如何快速安装网络打印机驱动 网络打印机驱动</a></li><li><a href="/softjc/387096.html" target="_blank">winsdk7.1安装总是出现错误提示该怎么办？</a></li><li><a href="/softjc/385680.html" target="_blank">kmsautonet怎么用？好用吗？kmsautonet激活工具使用教</a></li><li><a href="/softjc/384792.html" target="_blank">微软更新Windows设备恢复工具:支持所有Win10手机(附下</a></li><li><a href="/softjc/383006.html" target="_blank">百度windows 10直通车下载的win10安装文件在哪里？百</a></li><li><a href="/softjc/382990.html" target="_blank">百度win10直通车提示系统语言须为简体中文现象的解决</a></li><li><a href="/softjc/382598.html" target="_blank">中秋国庆节购机忙，驱动人生帮你扫障碍</a></li><li><a href="/softjc/382482.html" target="_blank">PQmagic软件怎么调整硬盘分区大小？</a></li><li><a href="/softjc/382217.html" target="_blank">directx修复工具怎么用 directx修复工具使用图文教程</a></li>
+				</ul>
+			</div>
+		</div>
+        <div class="rlist margintop">      
+        <div class="rbox" style="padding:0px;border-top:#b1daef 1px solid;" id="bd200"><script type="text/javascript">dy("bd200");</script></div>
+        </div>
+        <div class="rlist margintop">
+			<div class="title">热点关注</div>
+			<div class="rbox">
+				<ul>
+            <li><a href="/softjc/60642.html" target="_blank">chkdsk磁盘修复命令工具怎么用，怎样运行chkdsk工具修</a></li><li><a href="/softjc/103874.html" target="_blank">360随身wifi不能用怎么办 360随身wifi驱动的安装及使</a></li><li><a href="/softjc/62758.html" target="_blank">冰点还原精灵如何卸载，冰点还原精灵卸载方法图文方法</a></li><li><a href="/softjc/55652.html" target="_blank">360安全卫士推出系统重装功能介绍 轻松一键重装电脑</a></li><li><a href="/softjc/42160.html" target="_blank">后缀名.dat是什么文件格式，dat文件用什么打开？</a></li><li><a href="/softjc/40078.html" target="_blank">ntldr是什么意思 ntldr丢失怎么办 ntldr is missing</a></li><li><a href="/softjc/39723.html" target="_blank">如何解决压缩文件打不开的问题</a></li><li><a href="/softjc/241836.html" target="_blank">鲁大师如何检查硬盘坏道？鲁大师检测硬盘坏道方法图文</a></li><li><a href="/softjc/925.html" target="_blank">VMWare注册码大全并附VMWare注册机</a></li><li><a href="/softjc/62489.html" target="_blank">了解lpk.dll是什么病毒以及lpk.dll病毒专杀方法</a></li><li><a href="/softjc/41939.html" target="_blank">任务管理器显示不全 任务管理器没有菜单栏和边框的原</a></li><li><a href="/softjc/169494.html" target="_blank">NVIDIA控制面板设置方法（图解）</a></li>
+				</ul>
+			</div>
+		</div>
+<div class="rlist margintop"><script type="text/javascript">dy("r_2");</script></div>
+	</div>
+<div class="floatclear"></div>
+</div></div>
+<div class="blank3"></div>
+<div id="footer">
+  <div id="footerinfo">
+   <div id="footercontent"><a href="http://www.jb51.net/about.htm" target="_blank">关于我们</a> - <a href="http://www.jb51.net/support.htm" target="_blank">广告合作</a> - <a href="http://www.jb51.net/linkus.htm" target="_blank">联系我们</a> -  <a href="http://www.jb51.net/sm.htm" target="_blank">免责声明</a> -  <a href="http://www.jb51.net/sitemap.htm" target="_blank">网站地图</a> - <a href="tencent://message/?uin=461478385&Site=http://www.jb51.net" target="_blank">投诉建议</a> - <a href="http://www.jb51.net/up.htm" target="_blank">在线投稿</a></div>
+    <div id="footercopyrights">CopyRight &copy; 2006-2015 <a href="http://www.jb51.net">脚本之家</a> JB51.Net , All Rights Reserved</div>
+  </div>
+  <DIV class=ewm><IMG alt="脚本之家官方微信" src="http://img.jb51.net/images/weixin_jb51.gif"></DIV>
+</div>
+<div id="logo_m_tp"><script type="text/javascript">dy("logo_m");</script></div>
+<div id="logo_r_tp"><script type="text/javascript">dy("logo_r");</script></div>
+<div id="tonglan960_tp"><script type="text/javascript">dy("tonglan");</script></div>
+<script type="text/javascript" src="http://img.jb51.net/js/control_ad.js"></script>
+<div class="tongji">
+<script type="text/javascript" src="http://img.jb51.net/inc/tongji2.js"></script>
+<script src="/do/plus/count.php?aid=62647&mid=" language="javascript" type="text/javascript"></script>
+</div>
+
+<script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+window.changyan.api.config({
+        appid: 'cyrHH3dwi',
+        conf: 'prod_1dc5dc80970106099d43fe242b7465fc'
+    });
+</script>
+</body>
+</html>
