@@ -1,0 +1,71 @@
+package xx;
+import java.net.*;
+import java.io.*;
+public class SocketClientTest {
+	public static final int PORT = 5555;
+	public static void main(String[] args) throws Exception {
+		//解析服务器地址和端口号       
+        	InetSocketAddress endpoint = new InetSocketAddress("localhost" , PORT);    
+       	 	Socket socket = null;    
+        	OutputStream out = null;    
+        	InputStream in = null; 
+        	socket = new Socket();    
+        	//设置发送逗留时间2秒    
+        	socket.setSoLinger(true, 2);     
+        	//设置InputStream上调用 read()阻塞超时时间200秒    
+        	socket.setSoTimeout(200000);    
+        	//设置socket发包缓冲为32k；
+        	socket.setSendBufferSize(32*1024);
+        	//设置socket底层接收缓冲为32k    
+        	socket.setReceiveBufferSize(32*1024);    
+        	//关闭Nagle算法.立即发包    
+        	socket.setTcpNoDelay(true);    
+        	//连接服务器    
+        	socket.connect(endpoint);    
+        	//获取输出输入流    
+        	out = socket.getOutputStream();    
+        	in = socket.getInputStream();    
+        	//输出请求              
+        	out.write("ilovethisgame".getBytes());    
+        	out.flush();    
+        	//接收应答
+        	BufferedReader br = new BufferedReader( new InputStreamReader(in,"GB2312"));
+        	ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int len = -1;
+		while ((len = in.read(buffer)) != -1) {
+			outStream.write(buffer, 0 ,len);
+		}
+		byte[] bs = outStream.toByteArray();
+        	in.close();    
+        	socket.close();
+	}
+}
+-----------
+package xx;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+public class SocketServerTest {
+	public static final int PORT = 5555;
+	public static final int BACKLOG = 2;
+	public static void main(String[] args) throws IOException {
+		System.out.println("服务端");
+		ServerSocket server=new ServerSocket(PORT);//创建一个ServerSocket在端口4700监听客户请求
+		Socket socket=server.accept();//使用accept()阻塞等待客户请求，有客户请求到来则产生一个Socket对象，并继续执行
+		System.out.println("xxxx");
+		InputStream is2 = socket.getInputStream();
+		byte[] buff=new byte[1024];
+		is2.read(buff);
+		String s = new String(buff);
+		System.out.println("JJJJJJJ");
+		System.out.println(s);
+		PrintWriter os=new PrintWriter(socket.getOutputStream());//由Socket对象得到输出流，并构造PrintWriter对象
+		os.println("861002");//向客户端输出该字符串
+		os.flush();//刷新输出流，使Client马上收到该字符串
+		os.close();//关闭Socket输出流
+		is2.close();//关闭Socket输入流
+		socket.close();//关闭Socket
+		server.close();//关闭ServerSocket
+	}
+}

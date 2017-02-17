@@ -1,0 +1,189 @@
+    //////////////////////////////////////下载对账文件5
+    @RequestMapping(value ="/cmbDownloadFile6",produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String cmbDownloadFile6 (HttpServletRequest request) {
+        log.debug("#######进入招行借记卡(快捷支付)对账文件下载实现类开始#######----");
+        String filePath = "/bestpayserver/workfile/";
+        Socket socket = null;
+        OutputStream out = null;
+        InputStream in = null;
+        FileOutputStream os = null;
+        try {
+            String keep = String.valueOf(System.nanoTime());
+            //String macKey = "81E8EFB09BE99CC1"; // 生产
+            String macKey = "EFC04F7276E60169"; // 测试
+            StringBuffer mesHead = new StringBuffer(); // 报文头
+            StringBuffer mesBody = new StringBuffer(); // 报文体
+            //mesBody.append("20131219");  // 银行交易日期（YYYYMMDD），8位必填
+            //mesBody.append("20130619");
+            mesBody.append("20131113");
+            String mesBodyStr = mesBody.toString();
+            SignUtil sign = new SignUtil();
+            String mac = sign.ansi99(macKey, mesBodyStr.getBytes("GBK"));
+            byte[] mesBodyBytes = mesBodyStr.getBytes("GBK");
+            mesHead.append("CMBA"); // 包标识，4位
+            mesHead.append(leftPadZero(4, String.valueOf(mesBodyBytes.length))); // 包体长度
+            mesHead.append("CMMX"); // 交易码，4位
+            mesHead.append(rightPadBlankspace(8, "")); // 银行交易日期，交易日期（YYYYMMDD）
+            mesHead.append(rightPadBlankspace(6, "")); // 银行交易时间，交易时间（HHmmSS）
+            mesHead.append(rightPadBlankspace(30, "")); // 银行交易流水
+            mesHead.append(com.bestpay.paycenter.commons.util.DateUtil.getCurrent(com.bestpay.paycenter.commons.util.DateUtil.datePattern)); // 商户交易日期，交易日期（YYYYMMDD），8位
+            mesHead.append(com.bestpay.paycenter.commons.util.DateUtil.getCurrent(com.bestpay.paycenter.commons.util.DateUtil.timePattern)); // 商户交易时间，交易时间（HHmmSS），6位
+            mesHead.append(rightPadBlankspace(30, keep)); // 商户交易流水号
+            mesHead.append(rightPadBlankspace(10, "000842")); // 请求机构号，商户号
+            mesHead.append(rightPadBlankspace(16, mac)); // 校验码
+            String mesHeadStr = mesHead.toString();
+            log.info("进入招行借记卡(快捷支付)对账文件发送给银行的报文为：" + mesHeadStr + mesBodyStr);
+            byte[] mesBytes = (mesHeadStr + mesBodyStr).getBytes("GBK");
+            //String ipAddr = "8-8.50.32.137:8842"; // 生产
+            String ipAddr = "58.61.30.97:8842"; // 测试
+            //解析服务器地址和端口号
+            int dotPos = ipAddr.indexOf(':');
+            String ip = ipAddr.substring(0, dotPos).trim();
+            int port = Integer.parseInt(ipAddr.substring(dotPos+1).trim());
+            InetSocketAddress endpoint = new InetSocketAddress(ip , port);
+            socket = new Socket();
+	    //socket.setSoLinger(true, 2); // 设置发送逗留时间2秒
+            socket.setSoTimeout(200000); // 设置InputStream上调用 read()阻塞超时时间200秒
+	    //socket.setSendBufferSize(32 * 1024); // 设置socket发包缓冲为32k；
+	    //socket.setReceiveBufferSize(32 * 1024); // 设置socket底层接收缓冲为32k
+	    //socket.setTcpNoDelay(true); // 关闭Nagle算法.立即发包
+            socket.connect(endpoint); // 连接服务器
+            out = socket.getOutputStream(); // 获取输出输入流
+            in = socket.getInputStream(); // 获取输入流
+            log.info("招行快捷借记对账文件下载----1");
+            byte[] bs = getResponseBytes5(out, in, mesBytes);
+            log.info("招行快捷借记对账文件下载----2");
+            String resp = new String(bs, "GBK");
+            log.info("进入招行借记卡(快捷支付)对账文件返回的报文为：" + resp);
+            String headStr = resp.substring(0, 126); // 报文头
+            String bodyStr = resp.substring(126); // 报文体
+            String resCode = bodyStr.substring(0, 7); // 银行返回码
+            String fileName = bodyStr.substring(7, 27); // 对账文件名
+            filePath = filePath + fileName;
+            File file = new File(filePath);
+            file.createNewFile();
+            os = new FileOutputStream(file);
+            if ("CMBMB99".equals(resCode)) {
+                try {
+                    log.info("招行快捷借记对账文件下载----3--");
+                    byte[] bs2 = getResponseBytes6(out, in, "000800000000".getBytes("GBK"));
+                    log.info("招行快捷借记对账文件下载----4--");
+                    String resp2 = new String(bs2 , "GBK");
+                    log.info("进入招行借记卡(快捷支付)对账文件准备好接受文件--返回为：" + resp2);
+
+                    long headLength = Long.parseLong(resp2.substring(0,4)); // 后面的长度
+                    System.out.println(headLength);
+                    long fileSize = Long.parseLong(resp2.substring(4)); // 文件大小，字节
+                    System.out.println(fileSize);
+
+                    log.info("招行快捷借记对账文件下载----5--长度："+fileSize);
+                    long fileSizeTemp = 0;
+                    log.info("招行快捷借记对账文件下载----6--");
+                    int pack = 1; // 发送第几包
+                    while (fileSizeTemp < fileSize) {
+                        log.info("招行快捷借记对账文件下载----9--");
+                        String packCommand = "0008" + leftPadZero(8, String.valueOf(pack));
+                        log.info("招行快捷借记对账文件下载----10--：发送的包内容：" + packCommand);
+                        byte[] bs3 = getResponseBytes6(out, in, packCommand.getBytes("GBK"));
+                        os.write(bs3); // 写入文件
+                        String resp3 = new String(bs3, "GBK");
+                        log.info("进入招行借记卡(快捷支付)对账文件返回第【" + pack + "】包整体报文为：" + resp3);
+                        if ("0007CMBMBXX".equals(resp3)) {
+                            log.info("进入招行借记卡(快捷支付)对账文件第【" + pack + "】包出现异常：" + resp3);
+                            throw new RuntimeException();
+                        }
+                        int size = Integer.parseInt(resp3.substring(0, 4)); // 文件大小，字节
+                        log.info("第"+pack+"包长度："+size);
+                        fileSizeTemp = fileSizeTemp + size;
+                        String content = resp2.substring(4); // 文件内容
+                        log.info("进入招行借记卡(快捷支付)对账文件返回第【" + pack + "】包的去除文件长度头的文件内容为：" + content);
+                        pack ++ ;
+                    }
+                    log.info("招行快捷借记对账文件下载1");
+                    out.write("0007CMBMB99".getBytes("GBK")); // 输出请求
+                    log.info("招行快捷借记对账文件下载2----向银行发送完成报文的请求，没有返回:0007CMBMB99");
+                    out.flush();
+                    log.info("进入招行借记卡(快捷支付)对账文件返回完成");
+                } catch (Exception e) {
+                    byte[] bs3 = getResponseBytes6(out, in, "0007CMBMBXX".getBytes("GBK")); // 向招商发送错误消息
+                    String error = new String(bs3 , "GBK");
+                    log.info("进入招行借记卡(快捷支付)对账文件第包出现异常：" + error);
+                    e.printStackTrace();
+                    log.info("进入招行借记卡(快捷支付)对账文件第包出现异常：" + "end");
+                }
+            }
+        } catch (Exception e) {
+            log.info("招行快捷借记对账文件下载异常", e);
+        } finally {
+            try {
+                if(in != null){
+                    in.close();
+                }
+                if(out != null){
+                    out.close();
+                }
+                if(socket != null){
+                    socket.close();
+                }
+                if(os != null){
+                    os.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+    public byte[] getResponseBytes5(OutputStream out, InputStream in, byte[] mesBytes) throws IOException {
+        log.info("招行快捷借记对账文件下载1");
+        out.write(mesBytes); // 输出请求
+        log.info("招行快捷借记对账文件下载2");
+        out.flush();
+        log.info("招行快捷借记对账文件下载3");
+        byte[] head = new byte[126];
+        log.info("招行快捷借记对账文件下载6");
+        in.read(head);
+        String headStr = new String(head,"GBK");
+        log.info("招行快捷借记对账文件报文头为：" + headStr);
+        String bodySize = headStr.substring(4, 8);
+        log.info("招行快捷借记对账文件报文体长度为：" + headStr);
+        int bodySizeLength = Integer.parseInt(bodySize);
+        byte[] body = new byte[bodySizeLength];
+        in.read(body);
+        String bodyStr = new String(body,"GBK");
+        log.info("招行快捷借记对账文件报文体为：" + bodyStr);
+        log.info("招行快捷借记对账文件报文为：" + headStr + bodyStr);
+        return (headStr + bodyStr).getBytes("GBK");
+    }
+    public byte[] getResponseBytes6(OutputStream out, InputStream in, byte[] mesBytes) throws IOException {
+        log.info("招行快捷借记对账文件下载1");
+        out.write(mesBytes); // 输出请求
+        log.info("招行快捷借记对账文件下载2");
+        out.flush();
+        log.info("招行快捷借记对账文件下载3");
+        byte[] head = new byte[4];
+        int a1 = in.read(head);
+        log.info("长度a1=" + a1);
+        String headSize = new String(head, "GBK");
+        log.info("招行快捷借记对账文件下载3报文头长度：" + headSize);
+        int headSizeLength = Integer.parseInt(headSize);
+        byte[] body = new byte[headSizeLength];
+        int nIdx = 0;
+        int nTotalLen = body.length;
+        int nReadLen = 0;
+        while (nIdx < nTotalLen) {
+            nReadLen = in.read(body, nIdx, nTotalLen - nIdx);
+            log.info("招行："+nReadLen);
+            if (nReadLen > 0){
+                nIdx = nIdx + nReadLen;
+            }
+            else {
+                break;
+            }
+        }
+        String bodyStr = new String(body, "GBK");
+        log.info("招行快捷借记对账文件下载3报文体：" + bodyStr);
+        log.info("招行快捷借记对账文件下载3报文：" + headSize + bodyStr);
+        return (headSize + bodyStr).getBytes("GBK");
+    }

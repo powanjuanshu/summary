@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	.cl01{
+		width:100px;
+		height:100px;
+		border:1px solid red;
+	}
+</style>
+</head>
+<body>
+	<div class="cl01" id="cl01">
+		
+	</div>
+</body>
+<script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+<script>
+$(function(){
+	alert($("#cl01").css("width"));//打出:100px,返回width的值,css()必须带参数,不然会报错
+	var styleProps = $("#cl01").css(["width", "border", "height"]);//好像border打来是value是空的如 border:,
+	$.each(styleProps, function(prop, value) {
+		alert(prop+":"+value);
+	});
+	$("#cl01").css("width", "150px").css("height", "150");//会覆盖原来的width值,但不会删除其他的css属性值;设置宽带为150px,value不可加;号否则无效果,value可不带px,默认为px;可以连续链式编程,
+	alert($("#cl01").css("width"));//打出:150px
+	var styles = {
+		"width":"200px",
+		"background-color":"#abc" // 若key不加引号如:background-color:"#abc"则报错,若不加引号须写成:backgroundColor:"#abc",若加引号两种都可以,标准应该是都加引号
+	};
+	$("#cl01").css(styles); // 设置多个css属性,也可以写成$("#cl01").css({"width":"200px", "background-color":"#abc"});
+});
+</script>
+</html>
+---------------------------
+API: http://api.jquery.com/css/
+读操作: 获取匹配元素集合中第一个元素的指定样式值(一个或多个).
+注:读取多个样式值的操作是在jQuery v1.9才加入的.
+写操作: 为匹配元素集合中的每一个元素设置一个或多个CSS属性的值.
+传入的参数可以是单个的键值对,也可以是PlainObject指定的多个值,还可以是function.(v1.4).
+jQuery会处理各个浏览器中不太相同的一些具体情况,比如W3C的cssFloat在IE中是styleFloat,在jQuery中,你可以使用float,然后jQuery会帮你把它翻译成每个浏览器中应该有的正确名称.
+还有,jQuery会合理解读CSS和DOM格式的多词属性,比如.css(“background-color”)和.css(“backgroundColor”),它都是可以处理的.
+---------------------------
+css() 方法设置或返回被选元素的一个或多个样式属性。
+
+如需返回指定的 CSS 属性的值，请使用如下语法：
+css("propertyname");
+下面的例子将返回首个匹配元素的 background-color 值：
+实例
+$("p").css("background-color");
+
+设置 CSS 属性
+如需设置指定的 CSS 属性，请使用如下语法：
+css("propertyname","value");
+下面的例子将为所有匹配元素设置 background-color 值：
+实例
+$("p").css("background-color","yellow");
+
+设置多个 CSS 属性
+如需设置多个 CSS 属性，请使用如下语法：
+css({"propertyname":"value","propertyname":"value",...});
+下面的例子将为所有匹配元素设置 background-color 和 font-size：
+实例
+$("p").css({"background-color":"yellow","font-size":"200%"});

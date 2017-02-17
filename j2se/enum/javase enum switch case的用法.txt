@@ -1,0 +1,81 @@
+case后面的枚举，不能使用BankResCode.BF_CNCT_REQUESTOUT:，语法如此
+--------------------------------------------
+switch (bankException.getCode()) {
+                case BF_CNCT_REQUESTOUT:
+                    result = new Response(BankResponse.getAcceptResult(params.getPayReqNO(), StringUtils.EMPTY, StringUtils.EMPTY,
+                            bankException.getResCode(), bankException.getResDescription(), TranStatusConst.REQ,
+                            String.valueOf(params.getTransAmt()))) ;
+                    break;
+                case BF_CNCT_READOUT: // 连接读取超时支付返回请求状态
+                    result = new Response(BankResponse.getAcceptResult(params.getPayReqNO(), StringUtils.EMPTY, StringUtils.EMPTY,
+                            bankException.getResCode(), bankException.getResDescription(), TranStatusConst.REQ,
+                            String.valueOf(params.getTransAmt()))) ;
+                    break;
+                case BF_CNCT_OPENFAIL:
+                    result = new Response(BankResponse.getAcceptResult(params.getPayReqNO(), StringUtils.EMPTY, StringUtils.EMPTY,
+                            bankException.getResCode(), bankException.getResDescription(), TranStatusConst.REQ,
+                            String.valueOf(params.getTransAmt()))) ;
+                    break;
+                case BF_CNCT_SENDFAIL:
+                    result = new Response(BankResponse.getAcceptResult(params.getPayReqNO(), StringUtils.EMPTY, StringUtils.EMPTY,
+                            bankException.getResCode(), bankException.getResDescription(), TranStatusConst.REQ,
+                            String.valueOf(params.getTransAmt()))) ;
+                    break;
+                case BF_CNCT_RESVFAIL:
+                    result = new Response(BankResponse.getAcceptResult(params.getPayReqNO(), StringUtils.EMPTY, StringUtils.EMPTY,
+                            bankException.getResCode(), bankException.getResDescription(), TranStatusConst.REQ,
+                            String.valueOf(params.getTransAmt()))) ;
+                    break;
+                case BF_SIGN_REVFFAIL:
+                    result = new Response(BankResponse.getAcceptResult(params.getPayReqNO(), StringUtils.EMPTY, StringUtils.EMPTY,
+                            bankException.getResCode(), bankException.getResDescription(), TranStatusConst.REQ,
+                            String.valueOf(params.getTransAmt()))) ;
+                    break;
+                case BF_CNCT_ERROR:
+                    result = new Response(BankResponse.getAcceptResult(params.getPayReqNO(), StringUtils.EMPTY, StringUtils.EMPTY,
+                            bankException.getResCode(), bankException.getResDescription(), TranStatusConst.REQ,
+                            String.valueOf(params.getTransAmt()))) ;
+                    break;
+                default:
+                    result = new Response(bankException.getResCode(), bankException.getResDescription());
+--------------------------------------------
+package com.bestpay.paycenter.commons.constants;
+
+public enum BankResCode {
+    /**
+     * ********************************支付响应 ****************************************
+     */
+    SUCCESS("00000000", "成功"),
+    BF_CNCT_REQUESTOUT("BF999901", "请求超时"),
+    BF_CNCT_READOUT("BF999902", "读取超时"),
+    BF_CNCT_OPENFAIL("BF999903", "创建连接失败"),
+    BF_CNCT_SENDFAIL("BF999904", "发送信息失败"),
+    BF_CNCT_RESVFAIL("BF999905", "接收信息失败"),
+    BF_SIGN_REVFFAIL("BF990101", "验证签名失败"),
+    BF_ERROR_BEFORE("BF999906", "交互前发生异常"),
+    BF_ERROR_AFTER("BF999907", "交互后发生异常");
+
+    /**
+     * ****************************** Sp积分扣减接口 响应************************
+     */
+
+    private final String resCode;        //响应码
+    private final String resDescription;//响应解释
+
+    private BankResCode(String resCode, String resDescription) {
+        this.resCode = resCode;
+        this.resDescription = resDescription;
+    }
+
+    public String getResCode() {
+        return resCode;
+    }
+
+    public String getResDescription() {
+        return resDescription;
+    }
+
+}
+
+
+

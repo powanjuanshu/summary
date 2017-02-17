@@ -1,0 +1,15 @@
+package resourceBundle;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+public class ResourceBundl {
+	public static void main(String[] args) {	
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal=Calendar.getInstance();
+		cal.setFirstDayOfWeek(Calendar.MONDAY);设置一周的第一天是星期几，默认为星期天
+		cal.set(Calendar.YEAR, 2013);
+		cal.set(Calendar.WEEK_OF_YEAR, 1);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);//设置为星期五，MONDAY=2,TUESDAY=3，WEDNESDAY=4,THURSDAY=5,FRIDAY=6,SATURDAY=7,SUNDAY=1,如果为8的话，则会变为这个星期的第一天（setFirstDayOfWeek设置的第一天，默认为周日，一般可以设置为周一）
+		System.out.println(df.format(cal.getTime()));
+	}
+}

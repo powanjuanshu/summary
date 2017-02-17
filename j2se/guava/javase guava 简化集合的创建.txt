@@ -1,0 +1,14 @@
+集合创建	
+原来的写法：
+Map<String, Map<String, String>> map = new HashMap<String, Map<String,String>>();
+List<List<Map<String, String>>> list = new ArrayList<List<Map<String,String>>>();	
+
+guava的写法：
+Map<String, Map<String, String>> map = Maps.newHashMap();
+List<List<Map<String, String>>> list = Lists.newArrayList();
+
+//简化集合的创建
+List<Person> personList= Lists.newLinkedList();
+Set<Person> personSet= Sets.newHashSet();
+Map<String,Person> personMap= Maps.newHashMap();
+Integer[] intArrays= ObjectArrays.newArray(Integer.class,10);

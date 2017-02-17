@@ -1,0 +1,15 @@
+package com.ccbsh;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
+public class Test2 {
+	public static void main(String[] args) throws Exception {
+		Robot ro = new Robot();
+		Process p = Runtime.getRuntime().exec("cmd.exe /C start iexplore http://101.231.211.230:8096/check1.1.0/signin/index.jsp"); // ªÚ’ﬂString ss = "C:\\Program Files\\Internet Explorer\\iexplore.exe http://101.231.211.230:8096/check1.1.0/signin/index.jsp";Process p = Runtime.getRuntime().exec(ss);
+		Thread.sleep(60*1000);
+		ro.mouseMove(313,203); // «©µΩ ro.mouseMove(395,200);//«©ÕÀ  // 
+		ro.mousePress(InputEvent.BUTTON1_MASK);
+		ro.mouseRelease(InputEvent.BUTTON1_MASK);
+		Thread.sleep(30*1000);
+		p.destroy(); 
+	}
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<SCRIPT LANGUAGE="JavaScript">
+ function show(){
+    for(var i=0;i<t.length;i++){
+    	if(t.options[i].selected==true){
+    		alert(t.options[i].value);
+    		alert(t.options[i].text);
+    	}
+    }
+ }
+</SCRIPT>
+<BODY>
+<select id="t" size="10" multiple="multiple">
+	<option value="s0">david</option>
+	<option value="s1">jack</option>
+	<option value="s2">rose</option>
+	<option value="s3">lucy</option>
+</select>
+<input type="button" value="choose" onclick="show()" />
+</BODY>
+</HTML>

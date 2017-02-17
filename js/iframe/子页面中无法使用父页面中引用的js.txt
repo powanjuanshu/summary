@@ -1,0 +1,41 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>center</title>
+	<script type="text/javascript" src="content/jquery/jquery-1.9.1.js"></script>
+	
+  </head>
+  
+  <body>
+  	<input type="button" value="send" onclick="partake.getPartakeList()"/>
+  	<iframe src="test_iframe.jsp" id="ifra" width="100px" height="100px"></iframe>
+  </body>
+</html>
+--------------------------
+test_iframe.jsp:
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>page</title>
+    <!-- <script type="text/javascript" src="jq.js"></script> -->
+    
+	<script type="text/javascript">
+		window.onload=function(){
+			alert($("#username").val());//±¨´í:ReferenceError: $ is not defined
+		}
+	</script>
+  </head>
+  <body>
+  	<div id="content"></div>
+  	<input type="text" value="cai" id="username" >
+  </body>
+</html>
+
+
+
+
+
+
+

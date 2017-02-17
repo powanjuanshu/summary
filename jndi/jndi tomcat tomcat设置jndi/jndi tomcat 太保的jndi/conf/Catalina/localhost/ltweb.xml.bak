@@ -1,0 +1,7 @@
+<Context path="/ldata" reloadable="true" docBase="D:\workspaces\lifeteleweb\trunk\ssh\WebContent">
+
+	<Resource name="jdbc/ldata" auth="Container" type="javax.sql.DataSource"
+		maxActive="50" maxIdel="5" maxWait="-1" url="jdbc:oracle:thin:@localhost:1521:1314"
+		username="sxdxsj" password="dxe38rdx" driverClassName="oracle.jdbc.driver.OracleDriver"/>
+
+</Context>

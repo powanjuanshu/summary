@@ -1,0 +1,10 @@
+修改session时间（默认存在30分钟）：
+第一种方法：config->web.xml->
+<session-timeout>30<session-timeout></session-config>
+第二种方法：
+session.setMaxInactiveInterval(30)
+第三种方法：
+在项目的web.xml中修改：WEB-INF->web.xml
+<session-config>
+	<session-timeout>180</session-timeout>
+</session-config>

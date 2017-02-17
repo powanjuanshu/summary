@@ -1,0 +1,39 @@
+package com.bestpay.paycenter.entry.http.cache;
+
+import com.bestpay.paycenter.entry.http.utils.RankBankUtil;
+import com.bestpay.paycenter.persistence.model.config.MerchantBank;
+import com.google.common.base.Splitter;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.collect.Lists;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * User: hum_jacky
+ * Date: 14-5-12
+ * Time: 上午10:45
+ */
+public class Main {
+    public static void main(String[] args) throws Exception {
+        LoadingCache<String,String> cache = CacheBuilder.newBuilder().build(new CacheLoader<String, String>() {
+            @Override
+            public String load(String key) throws Exception {
+                System.out.println("chushihua:"+key);
+                // 这里可以通过key来查找数据库，获取信息，装载到cache缓冲（类似于HashMap）中
+                return "xxx";
+            }
+        });
+        String ss1 = cache.getUnchecked("aaaa$bbbb"); // 类似于HashMap的put方法，不过调用一次和getUnchecked就会调用上面的load方法，并将数据存在缓存中，如果下次再取这个key那么不会再去执行上面的load方法，这个方法和get()方法功能一样，还有一个apply方法功能也一样，但apply已不建议被使用
+        String ss2 = cache.getUnchecked("aaaa$bbbb");
+        String ss3 = cache.getUnchecked("aaaa$bbbb");
+        System.out.println(ss1);
+        String ss4 = cache.getUnchecked("aaaa$bbbb");
+        cache.invalidateAll(); // 清除缓冲所有的数据
+        long size = cache.size();
+        System.out.println(size); // 打印0
+    }
+}

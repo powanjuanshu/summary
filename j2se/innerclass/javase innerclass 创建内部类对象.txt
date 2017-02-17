@@ -1,0 +1,40 @@
+package com;
+public class InnerClass{
+	private String s="abc";
+	class Inn{
+		Inn(){
+			System.out.println(s);
+		}
+		Inn getInstance(){
+			return new Inn();
+		}
+	}
+	public static void main(String[] args){
+		InnerClass bb=new InnerClass();
+		InnerClass.Inn a=bb.new Inn();
+		a=a.getInstance();
+		//如果上面没有创建外部类对象，那么就不能这样
+		//Inn a=new Inn();
+		//这是因为在没有创建外部类对象的时候，不能创建内部类对象（这个情况除了嵌套类之外），构建内部类的对象时，需要指向一个外部类对象的引用。
+	}
+}
+--------------------------------------------
+package com;
+public class Inner{
+	public static void main(String[] args){
+		new Inne().bb();
+	}
+}
+
+class Inne{
+	private String s="abc";
+	public void bb(){
+		new AA().a();
+	}
+	public class AA{
+		private String st="jack";
+		public void a(){
+			System.out.println(st);
+		}
+	}
+}

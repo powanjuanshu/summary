@@ -1,0 +1,14 @@
+jetty运行时默认端口为8080，如何修改，有以下方式：
+
+外置Jetty 
+如果使用独立的jetty server，则到JETTY_HOME/etc/jetty.xml搜索"Set connectors”，定位到之后，修改jetty.port后面的default值即可。 
+
+
+使用内置maven的jetty插件：maven-jetty-plugin，这种方式下可以用以下两种方式来修改。
+
+A.pom配置方式：在pom.xml中build属性之间增加port配置
+
+![在此输入图片描述][2]
+B.命令行方式：在run-edit configure-Parameters-Command line中增加-Djetty.port，如下图
+
+![命令行方式端口][3]

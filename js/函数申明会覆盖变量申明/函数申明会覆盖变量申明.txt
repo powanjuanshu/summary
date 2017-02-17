@@ -1,0 +1,16 @@
+原题目第二行代码中，b和a同时指向一个地方也就是函数的入口，但是a和b唯一不同的地方在于函数定义结束也就是};后，a就引用不到了，也就是说a的作用域只在函数体内，而b的作用域却在整个全局范围内。
+看图说话这里面还有一个重要的概念就是：函数声明会覆盖变量声明，但不会覆盖变量赋值。
+看下面的例子：
+function value(){  
+return 1;
+}
+var value;
+alert(typeof value);  //"function"
+尽快变量声明在下面定义，但是变量value依然是function，也就是说这种情况下，函数声明的优先级高于变量声明的优先级，
+但如果该变量value赋值了，
+那结果就完全不一样了：
+function value(){
+  return 1;
+}
+var value = 1;
+alert(typeof value);  //"number"

@@ -1,0 +1,15 @@
+package json;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+public class ParseJson {
+	public static void main(String[] args) {
+		//把json对象转换成字符串
+		JSONObject json=new JSONObject();
+		json.element("jack", "jack01");
+		json.element("rose", "rose01");
+		String jsonToString=json.toString();
+		System.out.println(jsonToString);
+	}
+}
+--------
+需要引入json-lib-2.4-jdk15.jar包

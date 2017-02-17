@@ -1,0 +1,94 @@
+package com;
+public class Ti {
+	public static void main(String[] args) {
+		Thread newThread = new Thread(new Runn());
+		newThread.start();
+		try {
+			Thread.sleep(500);// 主线程等待0.5秒，确保新线程已经启动
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// 调用Interrupt
+		newThread.interrupt();
+	}
+	public static class Runn implements Runnable {
+		@Override
+		public void run() {
+			int i = 0;
+			while (i < 3) {
+				i++;
+				System.out.println("线程准备休眠");
+				try {
+					Thread.sleep(3000);
+				} catch (Exception ex) {
+					System.out.println(ex.toString());
+				}
+				System.out.println("线程结束休眠");
+			}
+		}
+	}
+}
+---------------------------------
+可以看出，第一次休眠时，因为新线程被执行了Interrupt方法，所以并没有经过3秒钟的休眠时间，而是进入了ThreadInterruptedException异常处理过程，而得到提前醒来的效果。
+第二次，第三次都休眠3秒后恢复运行。
+这是一个非常好的现象，它意味着我可以在一个线程中等待某个事件发生时，并设置一个时间限制，如果事件发生了，那么执行过程可以立即得到恢复，或者在超过了这个时间限制后，
+继续运行下去。通过这个简单的sleep()就可以实现繁杂的超时处理。
+
+-------------------注意：
+如果此线程当前未阻塞，在等待、休眠或联接状态中，则下次开始阻塞时它将被中断。
+也就是说如果你对一个处于运行状态的线程执行了Interrupt操作，那么它将会在你下次执行sleep()时，产生ThreadInterruptedException异常，而跳过休眠时间.
+-----------------------------------------------------
+第二个例子：
+package com;
+public class Ts {
+	static void printThreadMessage(String message){
+		String threadName=Thread.currentThread().getName();
+		System.out.format("%s:%s%n",threadName,message);
+	}
+	private static class MessageLoop implements Runnable{
+		@Override
+		public void run() {
+			String info[]={"消息1","消息2","消息3","消息4"};
+			try {
+				for(int i=0;i<info.length;i++){
+					Thread.sleep(4000);
+					printThreadMessage(info[i]);
+				}
+			} catch (Exception e) {
+				printThreadMessage("不能正常工作");
+			}
+		}
+	}
+	public static void main(String[] args) throws InterruptedException {
+		long delay=1000*60*60;
+		if(args.length>0){
+			try {
+				delay=Long.parseLong(args[0])*1000;
+			} catch (Exception e) {
+				System.err.println("参数必须是整数");
+				System.exit(1);
+			}
+		}
+		printThreadMessage("启动MessageLoop线程...");
+		long startTime=System.currentTimeMillis();
+		Thread t=new Thread(new MessageLoop());
+		t.start();
+		printThreadMessage("等待MessageLoop线程结束...");
+		while(t.isAlive()){
+			printThreadMessage("继续等待...");
+			t.join(1000);//终止当前线程一秒钟，等待t线程执行为止，最多等待1秒钟
+			if(((System.currentTimeMillis()-startTime)>delay)&&t.isAlive()){
+				printThreadMessage("时间太久，不再等待");
+				t.interrupt();//线程中断
+				t.join();//等待t线程结束为止
+			}
+		}
+		printThreadMessage("MessageLoop线程结束!");
+	}
+}
+
+
+
+
+
+

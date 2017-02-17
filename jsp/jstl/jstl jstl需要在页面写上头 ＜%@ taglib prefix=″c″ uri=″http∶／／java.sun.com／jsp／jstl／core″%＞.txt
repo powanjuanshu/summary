@@ -1,0 +1,15 @@
+需要导入以下两个包：
+jstl-api-1.2.jar
+jstl-impl-1.2.jar
+--------------------------
+实践证明貌似只需要导入一个包：standard.jar包即可或者一个jstl-1.2.jar包即可
+然后在jsp页面中加入：
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>即可
+-----------------------例如
+cc.jsp:
+-------------
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}"></c:set>
+${ctx}
+------------------------
+打出/zzz，与预期相符

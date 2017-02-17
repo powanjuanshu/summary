@@ -1,0 +1,129 @@
+使用 void marshal(java.lang.Object obj, HierarchicalStreamWriter writer)方法。
+延续上面的例子，在这里可以这样写：xstream.marshal(pu,ppw);
+需要注意的是，和toXML不同的是参数，一个是PrintWriter对象一个则是PrettyPrintWriter对象。因为marshal中需要
+HierarchicalStreamWriter，而PrettyPrintWriter则是实现了HierarchicalStreamWriter接口的实现类。
+结果和toXML是相同的。
+------------------------------------------
+package xml;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.CompactWriter;
+import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
+public class Xstream {
+	public static void main(String[] args) {
+		test();
+	}
+	//转换的时候是严格区分大小写的
+	public static void test(){
+		Address address1 = new Address("郑州市经三路", "450001");
+		Address address2 = new Address("西安市雁塔路", "710002");
+		List<Address> addList = new ArrayList<Address>();
+		addList.add(address1);
+		addList.add(address2);
+		Profile profile = new Profile("软件工程师", "13512129933", "备注说明");
+		Person person = new Person("熔岩","27",profile,addList);
+		XStream xStream = new XStream();
+		//设置类别名
+		xStream.alias("PERSONX", Person.class);
+		xStream.alias("PROFILEX", Profile.class);
+		xStream.alias("ADDRESSX", Address.class);
+		//aliasFied是设置类的属性，同时是节点（元素）
+		xStream.aliasField("PROFILEX", Person.class, "profile");
+		xStream.aliasField("ADDLISTX", Person.class, "addlist");
+		xStream.aliasField("NAMEX", Person.class,"name");
+		xStream.aliasField("AGEX", Person.class,"age");//age写错了写成agex(书写也分大小写)，不会报错但xml节点不会变成大写，默认是属性名
+		xStream.aliasField("ADDX", Address.class, "add");
+		xStream.aliasField("JOBX", Profile.class, "job");
+		//设置类成员为xml一个元素上的属性
+		xStream.useAttributeFor(Address.class,"zipcode");//设置类Adrress的属性zipcode作为xml中ADDRESS这个节点的属性
+		xStream.aliasAttribute(Address.class,"zipcode","ZIPCODEX");//设置xml属性的别名
+		StringWriter sw=new StringWriter();
+		CompactWriter cw=new CompactWriter(sw);//压缩的格式
+		xStream.marshal(person, cw);
+		String xml=sw.toString();
+		System.out.println(xml);
+		System.out.println("----------------------");
+		StringWriter sw2=new StringWriter();
+		PrettyPrintWriter cw2=new PrettyPrintWriter(sw2);//格式美好的
+		xStream.marshal(person, cw2);
+		String xml2=sw2.toString();
+		System.out.println(xml2);
+	}
+}
+---------------
+package com;
+import java.util.List;
+public class Person {
+	private String name;
+	private String age;
+	private Profile profile;
+	private List<Address> addlist;
+	public Person(String name, String age, Profile profile,List<Address> addlist) {
+		this.name = name;
+		this.age = age;
+		this.profile = profile;
+		this.addlist = addlist;
+	}
+	public String toString() {
+		return "Person{" +
+		"name='" + name + '\'' +
+		", age='" + age + '\'' +
+		", profile=" + profile +
+		", addlist=" + addlist +
+		'}';
+	}
+}
+-----------------
+package com;
+public class Address {
+	private String add;
+	private String zipcode;
+	public Address(String add, String zipcode) {
+		this.add = add;
+		this.zipcode = zipcode;
+	}
+	public String toString() {
+		return "Address{" +
+		"add='" + add + '\'' +
+		", zipcode='" + zipcode + '\'' +
+		'}';
+	}
+}
+--------------------
+package com;
+public class Profile {
+	private String job;
+	private String tel;
+	private String remark;
+	public Profile(String job, String tel, String remark) {
+		this.job = job;
+		this.tel = tel;
+		this.remark = remark;
+	}
+	public String toString() {
+		return "Profile{" +
+		"job='" + job + '\'' +
+		", tel='" + tel + '\'' +
+		", remark='" + remark + '\'' +
+		'}';
+	}
+}
+------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

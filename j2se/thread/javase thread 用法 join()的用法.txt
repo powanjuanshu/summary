@@ -1,0 +1,81 @@
+package com;
+public class Ta {
+	public static void main(String[] args) {
+		for (int i = 0; i < 100; i++) {
+			System.out.println(Thread.currentThread().getName() + "  " + i);
+			if (i == 20) {
+				JoinThread jt = new JoinThread();
+				jt.start();
+				try {
+					jt.join();// 主线程调用JT的JOIN方法，主线程必须等待JT线程执行完才能继续执行
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+}
+class JoinThread extends Thread {
+	@Override
+	public void run() {
+		for (int i = 0; i < 100; i++) {
+			System.out.println(this.getName() + "  " + i);
+		}
+	}
+}
+----------------------------------------------
+线程有join方法，当线程1调用线程2的join方法时，线程1必须等待线程2执行完毕，线程1才能继续往下执行。
+join方法主要用来将大问题分解成小问题，当小问题计算完成时，大问题才能继续往下执行，这时候我们就可以利用join方法了。
+-------------------第二个例子
+package com;
+public class Ts {
+	static void printThreadMessage(String message){
+		String threadName=Thread.currentThread().getName();
+		System.out.format("%s:%s%n",threadName,message);
+	}
+	private static class MessageLoop implements Runnable{
+		@Override
+		public void run() {
+			String info[]={"消息1","消息2","消息3","消息4"};
+			try {
+				for(int i=0;i<info.length;i++){
+					Thread.sleep(4000);
+					printThreadMessage(info[i]);
+				}
+			} catch (Exception e) {
+				printThreadMessage("不能正常工作");
+			}
+		}
+	}
+	public static void main(String[] args) throws InterruptedException {
+		long delay=1000*60*60;
+		if(args.length>0){
+			try {
+				delay=Long.parseLong(args[0])*1000;
+			} catch (Exception e) {
+				System.err.println("参数必须是整数");
+				System.exit(1);
+			}
+		}
+		printThreadMessage("启动MessageLoop线程...");
+		long startTime=System.currentTimeMillis();
+		Thread t=new Thread(new MessageLoop());
+		t.start();
+		printThreadMessage("等待MessageLoop线程结束...");
+		while(t.isAlive()){
+			printThreadMessage("继续等待...");
+			t.join(1000);//终止当前线程一秒钟，最多等待1秒钟，一秒过后t线程没执行完也会重新恢复主线程，如果没到一秒中t线程执行完了，则在t线程执行完后立马恢复主线程
+			if(((System.currentTimeMillis()-startTime)>delay)&&t.isAlive()){
+				printThreadMessage("时间太久，不再等待");
+				t.interrupt();//线程中断
+				t.join();//等待t线程结束为止
+			}
+		}
+		printThreadMessage("MessageLoop线程结束!");
+	}
+}
+
+
+
+
+

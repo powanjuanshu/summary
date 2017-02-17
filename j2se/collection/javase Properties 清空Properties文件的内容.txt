@@ -1,0 +1,2 @@
+p.clear();
+p.store(new FileOutputStream("d:/app.properties"), "haha");

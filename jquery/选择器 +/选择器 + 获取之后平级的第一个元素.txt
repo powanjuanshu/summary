@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="jquery.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<div id="aaa" class="bbb">
+	<button onclick="quit()" id="code1">退出1</button><br>
+	<button onclick="quit()" id="xcode2">退出2</button><br>
+	<button onclick="quit()" id="scode3">退出3</button><br>
+	<div id="ccc">
+		<input id="orgId2" value="orgId2" onclick="quit()" type="text" class="iport">
+		<button onclick="quit()" id="scode4">退出4</button><br>
+	</div>
+</div>
+<button onclick="quit()" id="code5">退出5</button><br>
+<script type="text/javascript">
+function quit(){
+	var doo = $("#aaa + button");//获取id为aaa后的平级的第一个button元素
+	alert(doo.length);//打印:1
+	doo.css("background","red");//id为code5的button变红
+}
+</script>
+</body>
+</html>

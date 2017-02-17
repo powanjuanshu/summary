@@ -1,0 +1,16 @@
+package com;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+public class A1{
+	public static void main(String[] args){
+		Calendar c=Calendar.getInstance();
+		Date date=new Date();//20121025
+		c.setTime(date);
+		int day=c.get(Calendar.DATE);
+		c.set(Calendar.DATE,day-1);
+		System.out.println(new SimpleDateFormat("yyyyMMdd").format(c.getTime()));//打出20121024
+		c.set(Calendar.DATE,day-2);
+		System.out.println(new SimpleDateFormat("yyyyMMdd").format(c.getTime()));//打出20121023
+	}
+}

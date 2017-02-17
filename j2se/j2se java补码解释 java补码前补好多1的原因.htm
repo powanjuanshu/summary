@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<META NAME="Keywords" CONTENT="Java,java 补码解释">
+<meta name="description" content="文章标题：java 补码解释。中国IT实验室JAVA频道是一个专业的JAVA技术平台，着眼于业界尖端技术，提供及时全面的JAVA技术和资讯文章，为广大的JAVA爱好者提供一个技术学习共享的资源库。">
+<meta name="classification" content="Information Technology and Scientice">
+<meta name="robots" content="ALL">
+<meta name="distribution" content="Global">
+<meta name="rating" content="General">
+<meta name="author" content="http://www.chinaitlab.com/">
+<meta name="language" content="chinese">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta name="resource-type" content="document">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="SUN,09 JAN 1998 00:00:01 GMT">
+<link rel="SHORTCUT ICON" href="http://www.chinaitlab.com/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="http://java.chinaitlab.com/style_new.css">
+<title>java 补码解释-Java频道-中国IT实验室</title>
+<style type="text/css">
+a.channel_keylink:link,a.channel_keylink:visited{	FONT-SIZE: 14px;COLOR: #0000FF;	line-height: 22px;}
+a.channel_keylink:hover,a.channel_keylink:active{	FONT-SIZE: 14px;COLOR: #FF3333;	TEXT-DECORATION: underline;line-height: 22px;}
+.STYLE1 a:link,.STYLE1 a:visited,.STYLE1 a:active{
+	COLOR: #ff0000; TEXT-DECORATION: none; font-family: "宋体"; font-size: 15px; font-weight:bold; padding-left:12px; padding-top:5px;
+}
+.STYLE1 a:hover{
+	COLOR: #000000; TEXT-DECORATION: underline; font-family: "宋体"; font-size: 15px; font-weight:bold;padding-left:12px; padding-top:5px;
+}
+.STYLE1 {
+	color: #000000;
+	font-weight: bold;padding-left:12px;
+	 padding-top:7px;
+}
+.STYLE11 {	color: #000000;
+	font-weight: bold;padding-left:12px;
+	 padding-top:7px;
+}
+</style>
+<script language="JavaScript">
+<!--
+//改变图片大小
+function resizepic(thispic)
+{
+if(thispic.width>700) thispic.width=700;
+}
+//无级缩放图片大小
+function bbimg(o)
+{
+  //var zoom=parseInt(o.style.zoom, 10)||100;
+  //zoom+=event.wheelDelta/12;
+  //if (zoom>0) o.style.zoom=zoom+'%';
+  return true;
+}
+-->
+</script>
+</head>
+<body>
+<!--顶端导航部分代码-->
+<div class="tong" style=" line-height: 23px; border:0px">
+<div style="TEXT-ALIGN: left; LINE-HEIGHT: 23px; WIDTH: 100%; FONT-FAMILY: 宋体; BACKGROUND: #fafafa; FONT-SIZE: 12px"><A title=中国IT实验室LOGO href="http://www.chinaitlab.com/" target=_blank><IMG style="FLOAT: left; MARGIN-RIGHT: 5px" border=0 alt=中国IT实验室LOGO src="http://www.chinaitlab.com/cms/images/logo_top.gif" width=145 height=42></A> <A title=中国IT实验室首页 href="http://www.chinaitlab.com/" target=_blank>首页</A> | <A title=互联网频道首页 href="http://internet.chinaitlab.com/" target=_blank>互联网</A> | <A title=IT动态频道首页 href="http://news.chinaitlab.com/" target=_blank>IT动态</A> | <A title=IT培训频道首页 href="http://edu.chinaitlab.com/" target=_blank><FONT color=#ff0000>IT培训</FONT></A> | <A title=Cisco频道首页 href="http://cisco.chinaitlab.com/" target=_blank>Cisco</A> | <A title=Windows频道首页 href="http://windows.chinaitlab.com/" target=_blank>Windows</A> | <A title=Linux频道首页 href="http://linux.chinaitlab.com/" target=_blank>Linux</A> | <A title=Java频道首页 href="http://java.chinaitlab.com/" target=_blank>Java</A> | <A title=.Net频道首页 href="http://dotnet.chinaitlab.com/" target=_blank>.Net</A> | <A title=Oracle频道首页 href="http://oracle.chinaitlab.com/" target=_blank>Oracle</A> | <A title=软件测试频道首页 href="http://softtest.chinaitlab.com/" target=_blank>软件测试</A> | <A title=C/C++频道首页 href="http://c.chinaitlab.com/" target=_blank>C/C++</A> | <A title=嵌入式开发频道首页 href="http://embed.chinaitlab.com/" target=_blank><FONT color=#ff0000>嵌入式</FONT></A> | <A title=存储世界频道首页 href="http://www.storworld.com/" target=_blank>存储世界</A><A title=服务器频道首页 href="http://www.idcquan.com/" target=_blank><FONT color=#ff0000></FONT></A><A href="http://server.chinaitlab.com/" target=_blank>服务器</A> | <A title=华为频道首页 href="http://huawei.chinaitlab.com/" target=_blank>华为</A> | <A title=网络设备频道首页 href="http://network.chinaitlab.com/" target=_blank>网络设备</A> | <A title=IDC频道首页 href="http://www.idcquan.com/" target=_blank>IDC</A> | <A title=安全频道首页 href="http://live.chinaitlab.com/" target=_blank></A><A href="http://security.chinaitlab.com/" target=_blank>安全</A> | <A title=21世纪人才网首页 href="http://www.21itjob.com/" target=_blank><FONT color=#ff0000>求职招聘</FONT></A> | <A title=数字网校首页 href="http://school.chinaitlab.com/" target=_blank>数字网校</A> | <A title=北大青鸟首页 href="http://edu.chinaitlab.com/special/bdqn/Index.html" target=_blank>北大青鸟</A> | <A title=技术专题首页 href="http://special.chinaitlab.com/" target=_blank>技术专题</A> | <A title=电子书下载频道首页 href="http://download.chinaitlab.com/" target=_blank>电子书下载</A> | <A title=视频教学首页 href="http://download.chinaitlab.com/video.html" target=_blank>教学视频</A> | <A title=源码下载首页 href="http://down.idcquan.com/" target=_blank><FONT color=#ff0000>源码下载</FONT></A> | <A title=中国IT实验室技术文章搜索 href="http://search.chinaitlab.com/" target=_blank>搜索</A> | <A title=中国IT实验室技术博客 href="http://blog.chinaitlab.com/" target=_blank>博客</A> | <A title=活动沙龙首页 href="http://salon.chinaitlab.com/" target=_blank>活动沙龙</A> | <A title=中国IT实验室技术论谈 href="http://bbs.chinaitlab.com/" target=_blank>论坛</A></div>
+</div>
+<div class="blank"></div>
+<div class="tong">
+	<!-- 广告位：JAVA文章页第一通栏 -->
+<script type="text/javascript" >BAIDU_CLB_SLOT_ID = "55152";</script>
+<script type="text/javascript" src="http://cbjs.baidu.com/js/o.js"></script>
+</div>
+<!--页面顶端通栏广告代码段-->
+<div class="blank"></div>
+<div class="tong"><span id="udtop"></span></div>
+<div class="blank"></div>
+<!--频道导航代码段-->
+<div class="tong">
+	<table cellSpacing=0 cellPadding=0 width=960 align=center border=0>
+    <tr>
+      <td width=223><A title=欢迎光临中国IT实验室Java频道 href="http://java.chinaitlab.com/" target=_blank><IMG height=49 alt=中国IT实验室Linux频道 src="http://java.chinaitlab.com/images/00.gif" width=224 border=0></A></td>
+      <td vAlign=bottom width=724 background=http://java.chinaitlab.com/images/02.gif>
+        <table height=38 cellSpacing=0 cellPadding=0 width=712 align=center border=0>
+          <tr>
+            <td class=zhi12 width=461 height=29><SCRIPT LANGUAGE="JavaScript" src=http://float2006.tq.cn/floatcard?adminid=8369877&sort=0></SCRIPT><IMG id="tq_kefu_main" version="20100823" style="background:transparent none repeat scroll 0% 0%;cursor:pointer" onclick="TQKF.kefuimg.Distrabute()" /></td>
+            <td width=251>
+              <table cellSpacing=0 cellPadding=0 width=220 align=center border=0>
+<form action="http://www.google.com.hk/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-8985212780093870:x1p2o758mwk" />
+    <input type="hidden" name="ie" value="GB2312" />
+    <input type="text" name="q" size="24" />
+    <input type="submit" name="sa" value="&#x641c;&#x7d22;" />
+  </div>
+</form>
+<script type="text/javascript
+" ></script>
+
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td width=13><IMG height=49 src="http://java.chinaitlab.com/images/01.gif" width=13></td>
+    </tr>
+  </table>
+  <table cellSpacing=0 cellPadding=0 width=960 align=center border=0>
+    <tr>
+      <td width=11><IMG height=38 src="http://java.chinaitlab.com/images/03.gif" width=12></td>
+      <td width=935 background=http://java.chinaitlab.com/images/04.gif>
+        <table height=24 cellSpacing=0 cellPadding=0 width="100%" border=0>
+          <tr align=middle>
+            <td height=24><A class=DHbnr title=中国IT实验室Linux频道首页 href="http://java.chinaitlab.com/" target=_blank>首页</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=资讯动态 href="http://java.chinaitlab.com/List_171.html" target=_blank>资讯动态</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=认证考试 href="http://java.chinaitlab.com/List_172.html" target=_blank>认证考试</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=新手入门 href="http://java.chinaitlab.com/List_173.html" target=_blank>新手入门</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=核心技术 href="http://java.chinaitlab.com/List_174.html" target=_blank>核心技术</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=高级技术 href="http://java.chinaitlab.com/List_175.html" target=_blank>高级技术</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=J2EE href="http://java.chinaitlab.com/List_176.html" target=_blank>J2EE</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=J2ME href="http://java.chinaitlab.com/List_177.html" target=_blank>J2ME</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=Java&XML href="http://java.chinaitlab.com/List_178.html" target=_blank>Java&XML</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=开源技术 href="http://java.chinaitlab.com/List_179.html" target=_blank>开源技术</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=其他技术 href="http://java.chinaitlab.com/List_180.html" target=_blank>其他技术</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=欢迎订阅Java频道文章 href="http://java.chinaitlab.com/rss.xml" target=_blank>RSS订阅</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=Java论坛 href="http://bbs.chinaitlab.com/forum-201-1.html" target=_blank>论坛</A></td>
+            <td><IMG height=38 src="http://java.chinaitlab.com/images/07.gif" width=3></td>
+            <td><A class=DHbnr title=Java专题 href="http://special.chinaitlab.com/List_1934.html" target=_blank>专题</A></td>
+          </tr>
+        </table>
+      </td>
+      <td width=13><IMG height=38 src="http://java.chinaitlab.com/images/05.gif" width=13></td>
+    </tr>
+  </table>
+</div>
+<div class="blank"></div>
+<div class="tong">
+  <div class="Prt_left border_kuang">
+    <div class="WeiZhi"> <img src="images/f02.gif" width="9" height="30" border="0" />您现在的位置：&nbsp;<a class='LinkPath' href='http://www.chinaitlab.com'>中国IT实验室</a>&nbsp;>>&nbsp;<a class='LinkPath' href='http://java.chinaitlab.com/Index.html'>Java</a>&nbsp;>>&nbsp;<a class='LinkPath' href='http://java.chinaitlab.com/List_173.html'>新手入门</a>&nbsp;>>&nbsp;<a class='LinkPath' href='http://java.chinaitlab.com/List_186.html'>基础入门</a>&nbsp;>>&nbsp;正文 </div>
+    <h1 class="Article_tle">java&nbsp;补码解释 </h1>
+    <div class="Ud_tle"> <span style="float:left; border-right:1px dashed #cccccc; width:50%">
+      <script language='javascript' src='http://java.chinaitlab.com/JS/und_title_left.js'></script>
+      <script language='javascript' src='http://java.chinaitlab.com/JS/tech_title_rencai.js'></script>
+      </span> <span style="float:right; width:48%">
+        <script language='javascript' src='http://java.chinaitlab.com/JS/und_title_right.js'></script>
+        <script language='javascript' src='http://java.chinaitlab.com/JS/tech_title_school.js'></script>
+      </span> </div>
+    <div class="infor"> <img src="http://cisco.chinaitlab.com/images/source.gif" width="15" height="16" alt="文章来源" /><a href='http://www.chinaitlab.com/ShowCopyFrom.asp?ChannelID=1004&SourceName=中国IT实验室收集整理'>中国IT实验室收集整理</a> <img src="http://cisco.chinaitlab.com/images/author.gif" width="14" height="15"  alt="作者"/>佚名 <img src="http://cisco.chinaitlab.com/images/time.gif" width="14" height="16"  alt="更新时间"/>2012-7-7 12:13:25 <img src="http://cisco.chinaitlab.com/images/save.gif" width="16" height="16" alt="保存本文" /><a href="javascript:window.external.AddFavorite('http://cisco.chinaitlab.com/base/890869.html','java 补码解释|中国IT实验室')" target=_top>保存本文</a> <img src="http://cisco.chinaitlab.com/images/tuijian.gif" width="20" height="16" alt="推荐给好友" /><a onclick="javascript:window.open('http://www.chinaitlab.com/www/news/sendfriend.asp?id1=32580&location1='+document.all.location1.value)" href="http://cisco.chinaitlab.com/base/890869.html">推荐给好友</a> <img src="http://cisco.chinaitlab.com/images/faver.gif" width="14" height="15"  alt="收藏本页"/><a href="javascript:window.external.AddFavorite('http://www.chinaitlab.com','中国IT实验室')" target=_top>收藏本页</a> </div>
+    <div class="Article_content">
+      <div class="STYLE11"><a href="http://bbs.chinaitlab.com/" target="_blank" class="STYLE11">欢迎进入Java社区论坛，与200万技术人员互动交流  >>进入</a></div>
+      &nbsp;&nbsp;&nbsp; 1.byte的大小为8bits而int的大小为32bits<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 2.java的二进制采用的是补码形式<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 在这里先温习下计算机基础理论<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; byte是一个字节保存的，有8个位，即8个0、1.<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 8位的第一个位是符号位，<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 也就是说0000 0001代表的是数字1<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 1000 0000代表的就是-1<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 所以正数最大位0111 1111,也就是数字127<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 负数最大为1111 1111,也就是数字-128<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 上面说的是二进制原码，但是在java中采用的是补码的形式，下面介绍下什么是补码<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 1、反码：<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 一个数如果是正，则它的反码与原码相同；<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 一个数如果是负，则符号位为1,其余各位是对原码取反；<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 2、补码：利用溢出，我们可以将减法变成加法<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 对于十进制数，从9得到5可用减法：<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 9-4=5 因为4+6=10,我们可以将6作为4的补数<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 改写为加法：<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 9+6=15（去掉高位1,也就是减10）得到5.<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 对于十六进制数，从c到5可用减法：<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; c-7=5 因为7+9=16 将9作为7的补数<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 改写为加法：<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; c+9=21（去掉高位1,也就是减16）得到5.<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 在计算机中，如果我们用1个字节表示一个数，一个字节有8位，超过8位就进1,在内存中情况为（100000000），进位1被丢弃。<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; ⑴一个数为正，则它的原码、反码、补码相同<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; ⑵一个数为负，刚符号位为1,其余各位是对原码取反，然后整个数加1<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; - 1的原码为 10000001<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; - 1的反码为 11111110<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; + 1<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; - 1的补码为 11111111<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 0的原码为 00000000<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 0的反码为 11111111（正零和负零的反码相同）<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; +1<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 0的补码为 100000000（舍掉打头的1,正零和负零的补码相同）<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; Integer.toHexString的参数是int,如果不进行&amp;0xff,那么当一个byte会转换成int时，由于int是32位，而byte只有8位这时会进行补位，<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 例如补码11111111的十进制数为-1转换为int时变为11111111111111111111111111111111好多1啊，呵呵！即0xffffffff但是这个数是不对的，这种补位就会造成误差。<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 和0xff相与后，高24比特就会被清0了，结果就对了。<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; ----<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; <a class="channel_keylink" href="http://java.chinaitlab.com/" target="_blank">Java</a>中的一个byte,其范围是-128~127的，而Integer.toHexString的参数本来是int,如果不进行&amp;0xff,那么当一个byte会转换成int时，对于负数，会做位扩展，举例来说，一个byte的-1（即0xff），会被转换成int的-1（即0xffffffff），那么转化出的结果就不是我们想要的了。<BR>&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 而0xff默认是整形，所以，一个byte跟0xff相与会先将那个byte转化成整形运算，这样，结果中的高的24个比特就
+      <div align=right style="margin:3px 0;"> <span style="border:1px dashed #cccccc; margin:3px;">
+        <script type="text/javascript"><!--
+google_ad_client = "pub-8985212780093870";
+/* 468x60, 创建于 10-9-21 */
+google_ad_slot = "4499687408";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+        <script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+        </span> <a title="Java频道
+中国IT实验室" href="http://Java.chinaitlab.com/" target=_blank><img 
+height=14 src="http://www.chinaitlab.com/cms/images/logo14.gif" width=14 
+border=0 /></a>【责编:peter】
+        <script language='javascript' src='http://www.chinaitlab.com/adjs/200605/88.js'></script>
+    </div>
+  </div>
+  <br />
+  <p></p>
+  <div class="Fushu" style="border:0;">
+    <div class="F_lst" style="float:left">
+      <div class="F_tle"><img src="http://cisco.chinaitlab.com/images/f06.gif" width="9" height="7" border="0" />相关文章</div>
+      <div style="margin: 5px 10px; width:90%;"><a class='LinkArticleCorrelative' href='http://java.chinaitlab.com/dynamic/890694.html' title='文章标题：JAVA将在“云”下迅速升温
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2012-7-6 20:45:34' target="_self">JAVA将在“云”下迅速升温</a><br><a class='LinkArticleCorrelative' href='http://java.chinaitlab.com/advance/890693.html' title='文章标题：Java与模式之单例模式
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2012-7-6 20:37:33' target="_self">Java与模式之单例模式</a><br><a class='LinkArticleCorrelative' href='http://java.chinaitlab.com/net/890552.html' title='文章标题：Struts应用详解：三大组成部分
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2012-7-6 7:48:52' target="_self">Struts应用详解：三大组成部分</a><br><a class='LinkArticleCorrelative' href='http://java.chinaitlab.com/base/890489.html' title='文章标题：Java集合框架的总结
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2012-7-7 12:11:56' target="_self">Java集合框架的总结</a><br><a class='LinkArticleCorrelative' href='http://java.chinaitlab.com/configure/890488.html' title='文章标题：Java的Set接口的应用方法
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2012-7-6 20:42:54' target="_self">Java的Set接口的应用方法</a><br><a class='LinkArticleCorrelative' href='http://java.chinaitlab.com/base/890486.html' title='文章标题：Java的声明和访问介绍
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2012-7-5 10:16:51' target="_self">Java的声明和访问介绍</a><br><a class='LinkArticleCorrelative' href='http://java.chinaitlab.com/advance/890476.html' title='文章标题：java高级技术总结&nbsp;3
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2012-7-6 7:59:17' target="_self">java高级技术总结&nbsp;3</a><br><a class='LinkArticleCorrelative' href='http://java.chinaitlab.com/advance/890475.html' title='文章标题：java高级技术总结&nbsp;2
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2012-7-5 6:56:58' target="_self">java高级技术总结&nbsp;2</a><br><a class='LinkArticleCorrelative' href='http://java.chinaitlab.com/advance/890474.html' title='文章标题：java高级技术总结&nbsp;1
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2012-7-5 15:51:32' target="_self">java高级技术总结&nbsp;1</a><br><a class='LinkArticleCorrelative' href='http://java.chinaitlab.com/base/890379.html' title='文章标题：Java的线程介绍
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2012-7-5 10:15:52' target="_self">Java的线程介绍</a><br></div>
+    </div>
+    <div class="F_lst" style="float:right">
+      <div class="F_tle"><img src="http://cisco.chinaitlab.com/images/f06.gif" width="9" height="7" border="0" />编辑推荐</div>
+      ·&nbsp;[<a class="" href="http://java.chinaitlab.com/List_171.html">资讯动态</a>]<a class="" href="http://java.chinaitlab.com/dynamic/880415.html" title="雅虎开源其JavaScript&nbsp;框架Mojito" target="_blank">雅虎开源其JavaScript&nbsp;框架Mojito</a><br />·&nbsp;[<a class="" href="http://java.chinaitlab.com/List_186.html">基础入门</a>]<a class="" href="http://java.chinaitlab.com/base/880217.html" title="Java编程中“为了性能”要做的几点" target="_blank">Java编程中“为了性能”要做的几点</a><br />·&nbsp;[<a class="" href="http://java.chinaitlab.com/List_171.html">资讯动态</a>]<a class="" href="http://java.chinaitlab.com/dynamic/879700.html" title="一名开发者从技工父亲那里学到的5&nbsp;堂课" target="_blank">一名开发者从技工父亲那里学到的5&nbsp;堂课</a><br />·&nbsp;[<a class="" href="http://java.chinaitlab.com/List_186.html">基础入门</a>]<a class="" href="http://java.chinaitlab.com/base/879646.html" title="进行Java&nbsp;EE性能测试与调优" target="_blank">进行Java&nbsp;EE性能测试与调优</a><br />·&nbsp;[<a class="" href="http://java.chinaitlab.com/List_191.html">高级编程</a>]<a class="" href="http://java.chinaitlab.com/advance/867131.html" title="JAVA多线程模式之Balking" target="_blank">JAVA多线程模式之Balking</a><br />·&nbsp;[<a class="" href="http://java.chinaitlab.com/List_186.html">基础入门</a>]<a class="" href="http://java.chinaitlab.com/base/839656.html" title="利用字符串连接巧妙解决问题" target="_blank">利用字符串连接巧妙解决问题</a><br />·&nbsp;[<a class="" href="http://java.chinaitlab.com/List_191.html">高级编程</a>]<a class="" href="http://java.chinaitlab.com/advance/839653.html" title="实现Java调用.net&nbsp;DLL的方法" target="_blank">实现Java调用.net&nbsp;DLL的方法</a><br />·&nbsp;[<a class="" href="http://java.chinaitlab.com/List_192.html">网络编程</a>]<a class="" href="http://java.chinaitlab.com/net/839204.html" title="Java设置与读取Cookie属性" target="_blank">Java设置与读取Cookie属性</a><br />·&nbsp;[<a class="" href="http://java.chinaitlab.com/List_186.html">基础入门</a>]<a class="" href="http://java.chinaitlab.com/base/826410.html" title="和我共同了解Java是什么" target="_blank">和我共同了解Java是什么</a><br />·&nbsp;[<a class="" href="http://java.chinaitlab.com/List_186.html">基础入门</a>]<a class="" href="http://java.chinaitlab.com/base/823200.html" title="Java语言与C++语言在作用域上的差异" target="_blank">Java语言与C++语言在作用域上的差异</a><br />
+    </div>
+  </div>
+  <div class="blank"></div>
+  <div class="Fushu" style="border:0;">
+    <iframe src="http://java.chinaitlab.com/cio_new.html" width="660"  height="300" frameborder="0" scrolling="no"  marginheight="0" marginwidth="0"></iframe>
+  </div>
+  <div class="blank"></div>
+  <div class="Fushu">
+    <div class="title_line2 font14"> <img src="http://windows.chinaitlab.com/images/f04.gif" width="7" height="29" />相关产品和培训 </div>
+    <iframe src="http://java.chinaitlab.com/peixun_new.htm" width="660"  height="159" frameborder="0" scrolling="no"  marginheight="0" marginwidth="0"></iframe>
+  </div>
+  <div class="blank"></div>
+  <div class="Fushu">
+    <div class="title_line2 font14"> <img src="http://cisco.chinaitlab.com/images/f04.gif" width="7" height="29" />文章评论 </div>
+    <iframe src="http://www.chinaitlab.com/CMS2006_Comment/Comment/ArticleComment.asp?ID=890869" width="100%" height="330" frameborder="0"scrolling="yes"></iframe>
+  </div>
+  <div class=blank></div>
+<div class=tjtitle>　友情推荐链接</div>
+<div class=yqtj>
+<div class=yqtj_lf>·<A title=Asp源码 href="http://down.idcquan.com/download/asp/asp-1-1.html" target=_blank>Asp源码</A> <A title=PHP源码 href="http://down.idcquan.com/download/php/php-2-1.html" target=_blank>PHP源码</A><BR>·<A title=CGI源码 href="http://down.idcquan.com/download/cgi/cgi-5-1.html" target=_blank>CGI源码</A> <A title=JSP源码 href="http://down.idcquan.com/download/jsp/jsp-3-1.html" target=_blank>JSP源码</A><BR>·<A title=书籍教程 href="http://down.idcquan.com/download/book/book-6-1.html" target=_blank>建站书籍教程</A><BR>·<A title=服务器软件 href="http://down.idcquan.com/download/soft/soft-8-1.html" target=_blank>服务器软件</A> <A title=.net源码 href="http://down.idcquan.com/download/dotnet/dotnet-4-1.html" target=_blank>.net源码</A><BR>·<A title=工具软件 href="http://down.idcquan.com/download/tool/tool-9-1.html" target=_blank>建站工具软件</A><BR></div>
+<div class=yqtj_rt>·<A href="http://www.idcquan.com/2007idcpages" target=_blank>IDC资讯大全</A><BR>·<A href="http://www.idcquan.com/2007idcsurvey/" target=_blank>机房品质万里行</A><BR>·<A href="http://www.idcquan.com/" target=_blank>IDC托管必备知识</A><BR>·<A href="http://www.idcquan.com/" target=_blank>网站推广优化</A><BR>·<A href="http://www.idcquan.com/" target=_blank>全国IDC报价</A><BR></div></div>
+  <div class="blank"></div>
+</div>
+<div class="Prt_right" style="height:220px;">
+	<!-- 广告位：JAVA文章页右侧画中画 -->
+<script type="text/javascript" >BAIDU_CLB_SLOT_ID = "55155";</script>
+<script type="text/javascript" src="http://cbjs.baidu.com/js/o.js"></script>
+</div>
+<table width="270" border="0" align="right">
+  <tr>
+    <td><table border=0 cellSpacing=0 cellPadding=0 width=265 height=180>
+    <tr>
+      <td height=5></td>
+    </tr>
+    <tr>
+      <td height=180><IFRAME height=195 marginHeight=0 src="http://edu.chinaitlab.com/extend/7.html" frameBorder=0 width=265 marginWidth=0 scrolling=no></IFRAME></td>
+    </tr>
+  </table></td>
+  </tr>
+</table>
+	<div class="Prt_right border_kuang">
+		<div class="title_line"><img src="http://cisco.chinaitlab.com/images/f06.gif" width="9" height="7" border="0" />　认证培训</div>
+		<div class=right_lst><script language="javascript" src="http://java.chinaitlab.com/JS/java_peixun.js"></script></div>
+	</div>
+	<div class="Prt_right border_kuang">
+		<div class="title_line"><img src="http://cisco.chinaitlab.com/images/f06.gif" width="9" height="7" border="0" />　专题推荐</div>
+		<a href="http://oracle.chinaitlab.com/Special/Oracle_OCP/index.htm" title="Oracle&nbsp;10g&nbsp;OCP考证秘笈" target=_blank><img class='pic1' src='http://oracle.chinaitlab.com/Special/Oracle_OCP/images/3010042012090.jpg'  width='120' height='90' border='0'></a><a href="http://java.chinaitlab.com/Special/javajm/Index.html" title="开发必备&nbsp;漫谈Java加密保护" target=_blank><img class='pic1' src='http://java.chinaitlab.com/Special/javajm/images/javajm.jpg'  width='120' height='90' border='0'></a><br>
+		　·<a href="汇编语言和CPU以及内存,端口等硬件知识是连在一起的. 这也是为什么汇编语言没有通用性的原因. 下面简单讲讲基本知识(针对INTEL x86及其兼容机)　　============================　　x86汇编语言的指令,其操作对象是CPU上的寄存器,系统内存,或者立即数. 有些指令表面上没有操作数, 或者看上去缺少操作数, 其实该指令有内定的操作对象, 比如push指令, 一定是对SS:ESP指定的内存操作, 而cdq的操作对象一定是eax / edx. 　　在汇编语言中,寄存器用名字来访问. CPU 寄存器有好几类, 分别有不同的用处:　　1. 通用寄存器:　　EAX,EBX,ECX,EDX,ESI,EDI,EBP,ESP(这个虽然通用,但很少被用做除了堆栈指针外的用途)　　　　这些32位可以被用作多种用途,但每一个都有专长. EAX 是累加器(accumulator)" target=_blank title="汇编语言的准备知识(1)">汇编语言的准备知识(1)</a><br>　·<a href="http://java.chinaitlab.com/Special/java_ee/index.html" target=_blank title="Java&nbsp;EE&nbsp;6规范中文版">Java&nbsp;EE&nbsp;6规范中文版</a><br>　·<a href="http://oracle.chinaitlab.com/Special/Oracle_OCP/index.htm" target=_blank title="Oracle&nbsp;10g&nbsp;OCP考证秘笈">Oracle&nbsp;10g&nbsp;OCP考证秘笈</a><br>　·<a href="http://c.chinaitlab.com/special/algorithm/Index.html" target=_blank title="算法分析与设计之五大常用算法">算法分析与设计之五大常用算法</a><br>　·<a href="http://java.chinaitlab.com/Special/javajm/Index.html" target=_blank title="开发必备&nbsp;漫谈Java加密保护">开发必备&nbsp;漫谈Java加密保护</a><br>　·<a href="http://embed.chinaitlab.com/special/arm/Index.html" target=_blank title="嵌入式开发--ARM技术专题">嵌入式开发--ARM技术专题</a><br>　·<a href="http://c.chinaitlab.com/special/pointer/Index.html" target=_blank title="C/C++指针，认真了解，灵活运用">C/C++指针，认真了解，灵活运用</a><br>　·<a href="http://dotnet.chinaitlab.com/special/c/Index.html" target=_blank title=".NET开发：C#实用基础教程">.NET开发：C#实用基础教程</a><br>　·<a href="http://softtest.chinaitlab.com/special/qtp/Index.html" target=_blank title="软件测试工具QTP学习专题">软件测试工具QTP学习专题</a><br>　·<a href="http://embed.chinaitlab.com/special/fan/Index.html" target=_blank title="嵌入式开发单片机解决方案专题">嵌入式开发单片机解决方案专题</a><br>
+	</div>
+<div class=Prt_right style="HEIGHT: 250px"><script language="javascript" src="http://www.chinaitlab.com/adjs/201105/274.js"></script>
+</div>
+	<div class="Prt_right border_kuang">
+		<div class="title_line"><img src="http://cisco.chinaitlab.com/images/f06.gif" width="9" height="7" border="0" />　今日更新</div>
+		<div class=right_lst>·&nbsp;<a class="" href="http://java.chinaitlab.com/base/890869.html" title="java&nbsp;补码解释" target="_blank">java&nbsp;补码解释</a><br />·&nbsp;<a class="" href="http://java.chinaitlab.com/base/890489.html" title="Java集合框架的总结" target="_blank">Java集合框架的总结</a><br />·&nbsp;<a class="" href="http://java.chinaitlab.com/dynamic/890694.html" title="JAVA将在“云”下迅速升温" target="_blank">JAVA将在“云”下迅速升温</a><br />·&nbsp;<a class="" href="http://java.chinaitlab.com/configure/890488.html" title="Java的Set接口的应用方法" target="_blank">Java的Set接口的应用方法</a><br />·&nbsp;<a class="" href="http://java.chinaitlab.com/advance/890693.html" title="Java与模式之单例模式" target="_blank">Java与模式之单例模式</a><br />·&nbsp;<a class="" href="http://java.chinaitlab.com/advance/890476.html" title="java高级技术总结&nbsp;3" target="_blank">java高级技术总结&nbsp;3</a><br />·&nbsp;<a class="" href="http://java.chinaitlab.com/net/890552.html" title="Struts应用详解：三大组成部分" target="_blank">Struts应用详解：三大组成部分</a><br />·&nbsp;<a class="" href="http://java.chinaitlab.com/advance/890474.html" title="java高级技术总结&nbsp;1" target="_blank">java高级技术总结&nbsp;1</a><br />·&nbsp;<a class="" href="http://java.chinaitlab.com/base/890486.html" title="Java的声明和访问介绍" target="_blank">Java的声明和访问介绍</a><br />·&nbsp;<a class="" href="http://java.chinaitlab.com/base/890379.html" title="Java的线程介绍" target="_blank">Java的线程介绍</a><br /></div>
+	</div>
+	<div class="Prt_right border_kuang">
+		<div class="title_line"><img src="http://cisco.chinaitlab.com/images/f06.gif" width="9" height="7" border="0" />　社区讨论</div>
+		<div class=right_lst><iframe src="http://java.chinaitlab.com/bbs.html" width="265"  height="188" frameborder="0" scrolling="no"  marginheight="0" marginwidth="0"></iframe></div>
+	</div>
+	<div class="Prt_right border_kuang">
+		<div class="title_line"><img src="http://cisco.chinaitlab.com/images/f06.gif" width="9" height="7" border="0" />　博客论点</div>
+		<div class=right_lst><iframe src="http://java.chinaitlab.com/blog.html" width="265"  height="188" frameborder="0" scrolling="no"  marginheight="0" marginwidth="0"></iframe></div>
+	</div>
+	<div class="Prt_right border_kuang">
+		<div class="title_line"><img src="http://cisco.chinaitlab.com/images/f06.gif" width="9" height="7" border="0" />　频道精选</div>
+		<div class=right_lst>· <a href=http://cisco.chinaitlab.com/CCNACCDA/725394.html target=_blank title="新版CCNA考试大纲 07年8月1日生效">新版CCNA考试大纲 07年8月1日生效</a><br \>
+· <a href=http://linux.chinaitlab.com/special/linuxcom/Index.html target=_blank title="新手学习宝典：Linux常用命令全集">新手学习宝典：Linux常用命令全集</a><br \>
+· <a href=http://windows.chinaitlab.com/Special/systemsafety/Index.html target=_blank title="知已知彼，深入了解系统安全知识">知已知彼，深入了解系统安全知识</a><br \>
+· <a href=http://java.chinaitlab.com/Special/shijian/Index.html target=_blank title="从入门到精通 java初学者实践系列教程">从入门到精通 java初学者实践系列教程</a><br \>
+· <a href=http://www.chinaitlab.com/www/techspecial/OracleBasic/ target=_blank title="共同学习——Oracle入门基础专题">共同学习——Oracle入门基础专题</a><br \>
+· <a href=http://dotnet.chinaitlab.com/ADONET/727687.html target=_blank title="ADO.net与PowerBuilder的综合比">ADO.net与PowerBuilder的综合比较</a><br \>
+· <a href=http://internet.chinaitlab.com/observe/729460.html target=_blank title="评论：中国互联网“钱”途何在？">评论：中国互联网“钱”途何在？</a><br \>
+· <a href=http://news.chinaitlab.com/ityw/729103.html target=_blank title="中科院：龙芯要成“中国奔腾” 能卖1亿颗">中科院：龙芯要成"中国奔腾" 能卖1亿颗</a><br \></div>
+	</div>
+	<div class="Prt_right border_kuang">
+		<div class="title_line"><img src="http://cisco.chinaitlab.com/images/f06.gif" width="9" height="7" border="0" />　Java	频道导航</div>
+		<div class=right_lst><STRONG><A href="http://java.chinaitlab.com/List_173.html" target=_blank>新手入门</A>：</STRONG> <BR><A href="http://java.chinaitlab.com/List_185.html" target=_blank>安装配置</A> | <A href="http://java.chinaitlab.com/List_187.html" target=_blank>开发工具</A> | <A href="http://java.chinaitlab.com/List_188.html" target=_blank>JDK</A> | <A href="http://java.chinaitlab.com/List_189.html" target=_blank>oop面向对象</A><BR><STRONG><A href="http://java.chinaitlab.com/List_174.html" target=_blank>核心技术</A>：</STRONG> <BR><A href="http://java.chinaitlab.com/List_190.html" target=_parent>SwingAwtApplet</A> | <A href="http://java.chinaitlab.com/List_191.html" target=_blank>高级编程</A> | <A href="http://java.chinaitlab.com/List_192.html" target=_blank>网络编程</A><A href="http://java.chinaitlab.com/List_193.html" target=_blank>Jvm技术</A> | <A href="http://java.chinaitlab.com/List_194.html" target=_blank>JavaMedia</A><BR><STRONG><A href="http://java.chinaitlab.com/List_175.html" target=_blank>高级技术</A>：</STRONG> <BR><A href="http://java.chinaitlab.com/List_195.html" target=_blank>设计模式</A> | <A href="http://java.chinaitlab.com/List_196.html" target=_blank>UML／OO</A> | <A href="http://java.chinaitlab.com/List_197.html" target=_blank>p2p／Jxta</A> | <A href="http://java.chinaitlab.com/List_198.html" target=_blank>多线程</A> | <A href="http://java.chinaitlab.com/List_199.html">JavaSecurity</A><BR><STRONG><A href="http://java.chinaitlab.com/List_176.html" target=_blank>J2EE</A>：</STRONG> <BR><A href="http://java.chinaitlab.com/List_200.html" target=_blank>J2ee核心</A> | <A href="http://java.chinaitlab.com/List_201.html" target=_blank>Servlet／Jsp</A> | <A href="http://java.chinaitlab.com/List_202.html" target=_blank>EJB</A><BR>| <A href="http://java.chinaitlab.com/List_203.html" target=_blank>JDBC／JDO</A> | <A href="http://java.chinaitlab.com/List_204.html" target=_blank>Rmi／Corba／Jini</A> | <A href="http://java.chinaitlab.com/List_206.html" target=_blank>Mvcwea</A> | <A href="http://java.chinaitlab.com/List_205.html" target=_blank>应用服务器</A><BR><STRONG><A href="http://java.chinaitlab.com/List_177.html" target=_blank>J2ME</A>：</STRONG> <BR><A href="http://java.chinaitlab.com/List_207.html" target=_blank>核心技术</A> | <A href="http://java.chinaitlab.com/List_208.html" target=_blank>嵌入式</A> | <A href="http://java.chinaitlab.com/List_209.html" target=_blank>无线开发</A><BR><STRONG><A href="http://java.chinaitlab.com/List_178.html" target=_blank>Java&XML</A>：</STRONG> <BR><A href="http://java.chinaitlab.com/List_210.html" target=_blank>XMLBeans</A> | <A href="http://java.chinaitlab.com/List_211.html" target=_blank>WebServices</A><BR><STRONG><A href="http://java.chinaitlab.com/List_179.html" target=_blank>开源技术</A>：</STRONG> <BR><A href="http://java.chinaitlab.com/List_212.html" target=_blank>ANT</A> | <A href="http://java.chinaitlab.com/List_213.html" target=_blank>Struts</A> | <A href="http://java.chinaitlab.com/List_214.html" target=_blank>Hibernate</A> | <A href="http://java.chinaitlab.com/List_215.html" target=_blank>Spring</A><BR><A href="http://java.chinaitlab.com/List_216.html" target=_blank>Eclipse</A> | <A href="http://java.chinaitlab.com/List_218.html" target=_blank>JBoss</A> | <A href="http://java.chinaitlab.com/List_219.html" target=_blank>Tomcat</A> | <A href="http://java.chinaitlab.com/List_220.html" target=_blank>JUnit</A><BR><STRONG><A href="http://java.chinaitlab.com/List_180.html" target=_blank>其他技术</A></STRONG><BR></div>
+	</div>
+	
+</div>
+<div class="blank"></div>
+<div class="tong"><iframe src="http://www.chinaitlab.com/down.htm" width="100%"  height="200" frameborder="0" scrolling="no"  marginheight="0" marginwidth="0"></iframe></div>
+
+<!-- 广告位：A专家级频道通用漂浮右下 -->
+<script type="text/javascript" >BAIDU_CLB_SLOT_ID = "136211";</script>
+<script type="text/javascript" src="http://cbjs.baidu.com/js/o.js"></script>
+<!-- tj -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F5039d1ba7ab33da6b0c51675b4deb8f0' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</body>
+</html>

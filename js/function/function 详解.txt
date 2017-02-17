@@ -1,0 +1,496 @@
+ JavaScript中的new-面向对象实现原理
+标签： javascriptprototypeobjectfunctionclass
+2011-04-07 15:54 3025人阅读 评论(1) 收藏 举报
+ 分类：  DHTML（132）  
+javascript的new只是对class的一种模拟，这个也是业界说javascript的类根本不是类的原因——因为它是模拟的。
+
+ 
+
+ 
+
+其实javascript的new关键字只不过做了五件事情。
+
+1.创建Object
+2.查找class的prototype上的所有方法、属性，复制一份给创建的Object（注意，如果prototype上有属性是function或者数组或者Object，那么只复制指针）
+3.将构造函数classA内部的this指向创建的Object
+
+4.创建的Object的__proto__指向class的prototype
+5.执行构造函数class
+
+ 
+
+请看示例：
+
+ 
+
+[javascript] view plain copy
+// 定义类 类名字是 classA  
+function classA(){  
+    this.b=1;  
+}  
+classA.prototype.b=44;  
+classA.prototype.show = function(){  
+    alert(this.b);  
+};  
+// 用new实例化  
+var b = new classA();  
+b.show();  
+// 用函数实例化  
+function newClass(cls,args){  
+    var obj = {};  
+    for(var p in cls.prototype)  
+        obj[p] = cls.prototype[p];  
+    obj.__proto__ = cls.prototype;  
+    cls.apply(obj,args||[]);  
+    return obj;  
+};  
+var k = newClass(classA);  
+k.show();  
+-----------------------
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <script type="text/javascript" src="jquery-1.10.2.js"></script>
+	<script type="text/javascript">
+	function testArg(a, b) {
+	    console.log("期望输出参数数量:" + testArg.length);//2
+	    console.log("实际输出参数数量:" + arguments.length);//1
+	    for (var i = 0; i < arguments.length; i++) {
+	    	console.log(arguments[i]);//1
+	    }
+	    if (arguments instanceof Array) {
+	    	console.log("arguments is an Array instance.");
+	    } else if (arguments instanceof Object) {
+	    	console.log("arguments is an Object instance.");//输出:arguments is an Object instance. 
+	    }
+	}
+	testArg(1);
+	</script>
+  </head>
+  
+  <body>
+  	<div id="content"></div>
+  	<input type="text" value="cai" id="username" >
+  </body>
+</html>
+----------
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <script type="text/javascript" src="jquery-1.10.2.js"></script>
+	<script type="text/javascript">	
+	function checkVarCount(a, b) {
+		console.log(checkVarCount.length);
+		console.log(arguments.length);
+	}
+	checkVarCount(1, 2);//2,2
+	checkVarCount(1);//2,1
+	</script>
+  </head>
+  
+  <body>
+  	<div id="content"></div>
+  	<input type="text" value="cai" id="username" >
+  </body>
+</html>
+----------
+全面理解Javascript中Function对象的属性和方法
+函数是 JavaScript 中的基本数据类型，在函数这个对象上定义了一些属性和方法，下面我们逐一来介绍这些属性和方法，这对于理解Javascript的继承机制具有一定的帮助。
+
+属性(Properties)
+arguments
+获取当前正在执行的 Function 对象的所有参数，是一个类似数组但不是数组的对象，说它类似数组是因为其具有数组一样的访问性质及方式，可以由arguments[n]来访问对应的单个参数的值，并拥有数组长度属性length。还有就是arguments对象存储的是实际传递给函数的参数，而不局限于函数声明所定义的参数列表（length)，而且不能显式创建 arguments 对象。下面的Sample说明了这些性质。
+
+复制代码
+function testArg(a, b) {
+    var actCount = arguments.length,
+        expCount = testArg.length,
+        result;
+
+    result = "Expected arguments' count is " + expCount + ";<br/>";
+    result += "Actual arguments' count is " + actCount + ".<br/>";
+    result += "They are:<br/>";
+    for (var i = 0; i < actCount; i++) {
+        result += arguments[i] + ";<br/>";
+    }
+    if (arguments instanceof Array) {
+        result += "arguments is an Array instance."
+    } else if (arguments instanceof Object) {
+        result += "arguments is an Object instance."
+    }
+    document.write(result);
+}
+testArg(1);
+//output result is:
+Expected arguments' count is 2;
+Actual arguments' count is 1.
+They are:
+1;
+arguments is an Object instance.
+复制代码
+length
+获取函数定义的参数个数，
+
+functionName.length
+
+不同于arguments.length，这点我们在上面有介绍。因为Javascript调用函数时候对函数参数不作任何个数和类型检查，也就没有函数调用错误概念。但是我们可以利用functionName.length和arguments.length的不同，在函数调用内部来检测参数个数检测。
+
+按 Ctrl+C 复制代码
+
+按 Ctrl+C 复制代码
+caller
+获取调用当前函数的函数。caller属性只有当函数正在执行时才被定义。
+
+functionName.caller
+
+如果函数是从 JavaScript 程序的顶层调用的，则caller包含null。如果在字符串上下文中使用 caller 属性，则其结果和 functionName.toString 相同，也就是说，将显示函数的反编译文本。
+
+复制代码
+function test() {
+    if (test.caller == null) {
+        document.write("test is called from the toppest level");
+    } else {
+        document.write("test is called from the function:<br/>");
+        document.writeln(test.caller.toString());
+    }
+    document.write("<br />");
+}
+//call from the top level
+test();
+//output: test is called from the toppest level
+
+function testOuter() {
+    test();
+}
+
+//call from the function testOuter
+testOuter();
+//output:
+//test is called from the function:
+//function testOuter() { test(); }
+复制代码
+callee
+返回正被执行的 Function 对象，即指定的 Function 对象的正文。
+
+[functionName.]arguments.callee
+
+callee 属性是 arguments 对象的一个成员，该属性仅当相关函数正在执行时才可用。通常这个属性被用来递归调用匿名函数。
+
+复制代码
+var fac = function(n){
+  if (n <= 0)
+     return 1;
+  else
+     return n * arguments.callee(n - 1);
+}(4);
+document.write(fac);//24
+复制代码
+constructor
+获取创建某个对象的函数。constructor 属性是每个具有原型的对象的原型成员。 这包括除 Global 和 Math 对象之外的所有内部 JavaScript 对象。 constructor 属性就是用来构造对象实例的函数引用。
+
+复制代码
+// A constructor function.
+function MyObj() {
+    this.number = 1;
+}
+
+var x = new String("Hi");
+
+if (x.constructor == String)
+    document.write("Object is a String.");
+document.write ("<br />");
+
+var y = new MyObj;
+if (y.constructor == MyObj)
+    document.write("Object constructor is MyObj.");
+
+// Output:
+// Object is a String.
+// Object constructor is MyObj.
+复制代码
+prototype
+获取对象的原型。每一个构造函数都有一个prototype属性，指向另一个对象。这个对象的所有属性和方法，都会被构造函数的实例继承。这意味着，我们可以把那些不变的属性和方法，直接定义在prototype对象上。
+
+复制代码
+function Man(name, age) {
+    this.name = name;
+    this.age = age;
+}
+Man.prototype.sex = "M";
+Man.prototype.struggle = function () {
+    alert("day day up!!!!");
+}
+var li = new Man("Leo", 10);
+alert(li.sex);//M
+li.struggle();//day day up
+Man.prototype.isStrong = true;
+alert(li.isStrong);//true
+复制代码
+这样我们也可以向已定义好的对象（包括javascript提供的原生对象）中追加方法和属性，
+
+复制代码
+var aa = new Number(2);
+alert(typeof (aa.add)); //undefined
+Number.prototype.add = function (add1) {
+    return this + add1;
+}
+alert(aa.add(1)); // 3
+复制代码
+方法
+apply
+调用函数，并用指定对象替换函数的this值，同时用指定数组替换函数的参数。
+
+functionName.apply([thisObj[,argArray]])
+
+如果argArray为无效值，则会抛出"Object expected"错误；如果thisObj和argArray都没有提供，则会使用当前this作为thisObj
+
+复制代码
+function callMe(arg1, arg2) {
+    var s = "";
+
+    s += "this value: " + this;
+    s += "<br />";
+    for (i in callMe.arguments) {
+        s += "arguments: " + callMe.arguments[i];
+        s += "<br />";
+    }
+    return s;
+}
+
+document.write("Original function: <br/>");
+document.write(callMe(1, 2));
+document.write("<br/>");
+
+document.write("Function called with apply: <br/>");
+document.write(callMe.apply(3, [4, 5]));
+document.write("<br/>");
+
+document.write("Function called with apply with invalid array: <br/>");
+try{
+    document.write(callMe.apply(3,2));
+} catch (e) {
+    document.write(e.message);
+}
+document.write("<br/><br/>");
+
+document.write("Function called with apply without any argument: <br/>");
+document.write(callMe.apply());
+//Output result:
+//Original function: 
+//this value: [object Window]
+//    arguments: 1
+//    arguments: 2
+
+//Function called with apply: 
+//this value: 3
+//    arguments: 4
+//    arguments: 5
+
+//Function called with apply with invalid array: 
+//Function.prototype.apply: Arguments list has wrong type
+
+//Function called with apply without any argument: 
+//this value: [object Window]
+复制代码
+call
+调用一个对象的方法，用另一个对象替换当前对象。
+
+call([thisObj[, arg1[, arg2[, [, argN]]]]])
+
+它允许您将函数的 this 对象从初始上下文变为由 thisObj 指定的新对象。 如果没有提供 thisObj 参数，则 global 对象被用作 thisObj。与apply方法唯一不同的地方是，apply的第二个参数类型必须是Array，而call方法是将所有的参数列举出来，用逗号分隔。
+
+复制代码
+function callMe(arg1, arg2){
+    var s = "";
+
+    s += "this value: " + this;
+    s += "<br />";
+    for (i in callMe.arguments) {
+        s += "arguments: " + callMe.arguments[i];
+        s += "<br />";
+    }
+    return s;
+}
+
+document.write("Original function: <br/>");
+document.write(callMe(1, 2));
+document.write("<br/>");
+
+document.write("Function called with call: <br/>");
+document.write(callMe.call(3, 4, 5));
+
+// Output: 
+// Original function: 
+// this value: [object Window]
+// arguments: 1
+// arguments: 2
+
+// Function called with call: 
+// this value: 3
+// arguments: 4
+// arguments: 5
+复制代码
+ 
+
+bind
+对于给定函数，创建具有与原始函数相同的主体的绑定函数。 在绑定功能中，this对象解析为传入的对象。 该绑定函数具有指定的初始参数。
+
+function.bind(thisArg[,arg1[,arg2[,argN]]])
+
+其中function, thisArg为必选项。返回一个与 function 函数相同的新函数，只不过函数中的this对象和参数不同。
+
+复制代码
+// Define the original function.
+var checkNumericRange = function (value) {
+    if (typeof value !== 'number')
+        return false;
+    else
+        return value >= this.minimum && value <= this.maximum;
+}
+
+// The range object will become the this value in the callback function.
+var range = { minimum: 10, maximum: 20 };
+
+// Bind the checkNumericRange function.
+var boundCheckNumericRange = checkNumericRange.bind(range);
+
+// Use the new function to check whether 12 is in the numeric range.
+var result = boundCheckNumericRange (12);
+document.write(result);
+
+// Output: true
+复制代码
+以下代码演示如何使用 arg1[,arg2[,argN]]] 参数。 该绑定函数将 bind 方法中指定的参数用作第一个参数和第二个参数。 在调用该绑定函数时，指定的任何参数将用作第三个、第四个参数（依此类推）。
+
+复制代码
+// Define the original function with four parameters.
+var displayArgs = function (val1, val2, val3, val4) {
+    document.write(val1 + " " + val2 + " " + val3 + " " + val4);
+}
+
+var emptyObject = {};
+
+// Create a new function that uses the 12 and "a" parameters
+// as the first and second parameters.
+var displayArgs2 = displayArgs.bind(emptyObject, 12, "a");
+
+// Call the new function. The "b" and "c" parameters are used
+// as the third and fourth parameters.
+displayArgs2("b", "c");
+// Output: 12 a b c 
+复制代码
+在对象定义内部使用bind方法可以将某个事件绑定到对象内部的某个方法，
+复制代码
+<input type="button" id="start" value="Start" />
+<input type="button" id="stop" value="Stop" />
+<script type="text/javascript">
+    function Car(owner) {
+        this.owner = owner;
+        this.start = function () {
+            //start the car
+            console.log(this);
+            //output: Car {owner: "Mike", start: function, stop: function} check.html:14
+            console.log(this.owner + "'s car is starting.");
+            //output: Mike's car is starting. 
+        };
+        this.stop = function () {
+            console.log(this);
+            //output: <input type="button" id="stop" value="Stop" />
+            console.log(this.owner + "'s car is starting.");
+            //output: undefined's car is stopping.
+        };
+    }
+    var btnStart = document.getElementById("start"),
+        btnStop = document.getElementById("stop"),
+        someCar = new Car("Mike");
+
+    if (document.attachEvent) {
+        btnStart.attachEvent("onClick", someCar.start.bind(someCar));
+        btnStop.attachEvent("onClick", someCar.stop);
+    } else if (document.addEventListener) {
+        btnStart.addEventListener("click", someCar.start.bind(someCar), false);
+        btnStop.addEventListener("click", someCar.stop, false);
+    }
+</script>
+复制代码
+从上面Sample我们发现，当不使用bind方法的时候，事件里面的this指向的触发click事件dom元素input，它当然没有owner属性；如果利用bind指定事件里面的this对象，就能达到我们想要的效果。
+
+toString
+返回对象的字符串表示形式。
+
+objectname.toString([radix])
+
+objectname必需，指定需要获取字符串表示形式的对象。radix可选，为将数字值转换为字符串指定一个基数，此值仅用于数字。
+
+toString 方法是一个所有内置的 JavaScript 对象的成员。 它的行为取决于对象的类型：
+
+Object	Behavior
+Array	将 Array 的元素转换为字符串。 结果字符串被连接起来，用逗号分隔。
+Boolean	如果布尔值为 true，则返回“true”。 否则返回“false”。
+Date	返回日期的文本表示形式。
+Error	返回一个包含相关错误信息的字符串。
+Function	返回如下格式的字符串，其中 functionname 是一个函数的名称，此函数的 toString 方法被调用：
+function functionname( ) { [native code] }
+
+Number	返回数字的文字表示形式。
+String	返回 String 对象的值。
+Default	返回 "[object objectname]"，其中 objectname 为对象类型的名称。
+valueOf
+返回对象的原生值。
+
+object.valueOf( )
+
+Javascript内部各个对象定义的valueOf不同：
+
+Object	Return value
+Array	 返回数组实例。
+ Boolean	 布尔值。
+ Date	 从 UTC 1970 年 1 月 1 日午夜开始的存储的时间值（以毫秒为单位）。
+ Function	 函数本身。
+ Number	 数字值。
+ Object	 对象本身。 这是默认值。
+ String	 字符串值。
+Math 和 Error 对象都没有 valueOf 方法。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

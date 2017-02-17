@@ -1,0 +1,25 @@
+package com;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+public class Te {
+	public static void main(String[] args) throws ParseException{
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date d=sdf.parse("2012-6-19 23:40:00");
+		System.out.println(d.toLocaleString());
+	}
+}
+--------------------------------------------------------------
+package com;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+public class Te {
+	public static void main(String[] args) throws ParseException{
+		Date d=new Date();
+		Calendar c=Calendar.getInstance();
+		c.set(2012, 6, 19, 23, 50, 00);
+		d.setTime(c.getTimeInMillis());
+		System.out.println(d.toLocaleString());
+	}
+}

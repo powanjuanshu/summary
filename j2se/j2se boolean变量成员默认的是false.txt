@@ -1,0 +1,10 @@
+package com.service.tree;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.neusoft.gazelle.core.service.BaseService;
+public class TreService extends BaseService{
+	private static boolean a;
+	public static void main(String[] args) {
+		System.out.println(a);//´ò³öÎªfalse
+	}
+}

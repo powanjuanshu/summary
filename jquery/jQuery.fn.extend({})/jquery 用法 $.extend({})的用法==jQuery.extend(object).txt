@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="js/jquery-1.6.2.js" type="text/javascript"></script>
+<script>
+function check(){
+	alert($.add(1,2));
+}
+$.extend({
+	add:function(a,b){return a+b;}
+});
+</script>
+</head>
+<input type="button" onclick="check()" value="dd">
+------
+便为　jQuery　添加一个为 add　的　“静态方法”，之后便可以在引入 jQuery　的地方，使用这个方法了，
+
+$.add(3,4);  //return 7
+

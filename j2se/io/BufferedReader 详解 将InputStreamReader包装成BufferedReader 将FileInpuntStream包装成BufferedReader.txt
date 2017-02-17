@@ -1,0 +1,25 @@
+package com;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+public class Tt {
+	public static void main(String[] args) throws IOException {
+		InputStreamReader isr=new InputStreamReader(new FileInputStream("d:/abc.txt"),"UTF-8");
+		BufferedReader br=new BufferedReader(isr);
+		String s=br.readLine();
+		while(true){
+			System.out.println(s);
+			s=br.readLine();
+			if(s==null){
+				break;
+			}
+		}
+	}
+}
+-------------------------------------------------------
+java输入输出流，使用了装饰模式
+InputStream是最原始的，专注了核心功能
+而InputStreamReader是核心功能的装饰，是字节流通向字符流的桥梁：它使用指定的charset读取字节并将其解码为char字符
+InputStream只能读字节，而InputStreamReader可以读char字符
+如果在InputStreamReader上再装饰一层buffered，即BufferedReader，那么就可以读取字符串string，方法是readLine() 

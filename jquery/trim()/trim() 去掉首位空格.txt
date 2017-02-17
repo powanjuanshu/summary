@@ -1,0 +1,37 @@
+$.trim(str)的作用是去掉字符串首尾空格，下面为大家介绍下其具体的使用$.trim(str)
+返回：string；
+说明：去掉字符串首尾空格。
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="jquery.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<div id="aaa" class="bbb">
+	<button onclick="quit()" id="code1">退出1</button><br>
+	<button onclick="quit()" id="xcode2">退出2</button><br>
+	<button onclick="quit()" id="scode3">退出3</button><br>
+	<div id="ccc">
+		<input id="orgId2" value=" jigou " onclick="quit()">
+		<input id="orgId3" value="jigou2">
+		<input id="orgId4" value="jigou3">
+	</div>
+	<input id="branch" value="001">
+</div>
+<script type="text/javascript">
+function quit(){
+	var buttons = $("#orgId2").val();
+	alert("x"+ buttons +"x");//打印:x 机构 x
+	if($.trim(buttons) == "") {
+		alert("空");
+	} else {
+		alert("x" + $.trim(buttons) + "x");//打印:xjigoux
+	}
+}
+</script>
+</body>
+</html>
+

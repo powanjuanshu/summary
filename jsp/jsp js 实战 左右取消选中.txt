@@ -1,0 +1,99 @@
+<%@page import="com.Emp"%>
+<%@page import="com.B"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%
+ArrayList<Emp> list=new ArrayList<Emp>();
+list.add(new Emp("aaa","jack"));
+list.add(new Emp("bbb","rose"));
+list.add(new Emp("ccc","lucy"));
+String bbb=B.listToJson(list);
+%>
+<html>
+<head>
+<title>页面</title>
+<meta http-equiv="content" content="text/html;charset=utf-8">
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<script type="text/javascript">
+function init(){
+	$("#leftemp").empty();
+	var v=<%=bbb%>;
+	for(var i=0;i<v.length;i++){
+		leftemp.options.add(new Option(v[i].no,v[i].no));
+	}
+	$("#b").show();
+}
+function selectOK(){
+	var length=rightemp.options.length;
+	if(length==0){
+		$("#a").empty();
+		a.options.add(new Option("请选择","-111"));
+		$("#b").hide();
+		return;
+	}
+	$("#a").empty();
+	for(var i=0;i<length;i++){
+		var val=rightemp.options(i).value;
+		var tex=rightemp.options(i).text;
+		a.options.add(new Option(val,tex));
+	}
+	$("#rightemp").empty();
+	$("#b").hide();
+}
+function oneLeftToRight(){
+	var leftIndex=leftemp.selectedIndex;
+	var val=leftemp.options(leftIndex).value;
+	var tex=leftemp.options(leftIndex).text;
+	leftemp.options.remove(leftIndex);
+	rightemp.options.add(new Option(val,tex));
+}
+function oneRightToLeft(){
+	var rightIndex=rightemp.selectedIndex;
+	var val=rightemp.options(rightIndex).value;
+	var tex=rightemp.options(rightIndex).text;
+	rightemp.options.remove(rightIndex);
+	leftemp.options.add(new Option(val,tex));
+}
+</script>
+</head>
+<body>
+<input type="button" value="请选择" onclick='init()'>
+<select id="a" style="width: 100px;">
+<option value="-111">请选择</option>
+</select>
+<div id="b" style="border:1px solid red;display:none;width:300px;height:200px;">
+<table width="41%" border="1" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="3">
+    	<select id="dept" onchange="showleftEmp(this.value);">
+    		<option>请选择部门</option>
+        	<option value="学术部">学术部</option>
+        	<option value="市场部">市场部</option>
+        	<option value="人事部">人事部</option>
+    	</select>
+    </td>
+  </tr>
+  <tr>
+    <td width="46%">
+    	<select id="leftemp" size="10" id="leftemp" style="width:140px;">
+    	</select>
+    </td>
+    <td width="8%">
+    	<input type="button" value="&gt;"  onclick="oneLeftToRight()"/>
+    	<input type="button" value="&lt;" onclick="oneRightToLeft();"/>
+    </td>
+    <td width="46%">
+    	<select id="rightemp" size="10" id="rightemp" style="width: 140px;">
+    	</select>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" align="center"><input type="button" value="确认" onclick="selectOK();">
+    <input type="button" value="取消" onclick='$("#b").hide()'></td>
+  </tr>
+</table>
+</div>
+</body>
+</html>
+

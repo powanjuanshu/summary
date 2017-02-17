@@ -1,0 +1,17 @@
+<Context path="/ssh" reloadable="true" docBase="D:\workspaces\lifeteleweb\trunk\ssh\WebContent" workDir="D:\apache-tomcat-6.0.32\work\lifeteledata">
+	
+	<Resource name="jdbc/ldata" auth="Container" type="javax.sql.DataSource"
+		maxActive="50" maxIdel="5" maxWait="-1" url="jdbc:mysql://localhost:3306/test"
+		username="root" password="root" driverClassName="com.mysql.jdbc.Driver"/>
+
+	<!--
+	<Resource name="jdbc/ldata" auth="Container" type="javax.sql.DataSource"
+		maxActive="50" maxIdel="5" maxWait="-1" url="jdbc:oracle:thin:@localhost:1521:1314"
+		username="sxdxsj" password="dxe38rdx" driverClassName="oracle.jdbc.driver.OracleDriver"/>
+
+	<Resource name="jdbc/life" auth="Container" type="javax.sql.DataSource"
+		maxActive="20" maxIdel="5" maxWait="-1" url="jdbc:oracle:thin:@10.192.30.6:1521:dmdb"
+		username="UNICALL" password="Cpic1234" driverClassName="oracle.jdbc.driver.OracleDriver"/>
+	-->
+
+</Context>

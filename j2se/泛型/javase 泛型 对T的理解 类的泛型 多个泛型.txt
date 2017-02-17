@@ -1,0 +1,16 @@
+package com.abc;
+import java.util.HashMap;
+import java.util.Map;
+public class Main2 <T, S extends T> { // 可以贴着写Main2<T, S extends T>,定义完类型参数后,可以在定义位置之后的类的几乎任意地方(静态块，静态属性，静态方法除外)使用类型参数,就像使用普通的类型一样).注意，父类定义的类型参数不能被子类继承
+	public static void main(String[] args) {
+		Main2<String, String> m = new Main2<String, String>(); // 如果是Main2<String, Date> m = new Main2<String, Date>()那么会报错 :Bound mismatch: The type Date is not a valid substitute for the bounded parameter <S extends T> of the type Main2<T,S>
+		m.add("aaa", "bbb");
+	}
+	public Map<T, S> add (T t, S s) {
+		System.out.println(t);
+		System.out.println(s);
+		Map<T, S> m = new HashMap<T, S>();
+		m.put(t, s);
+		return m;
+	}
+}

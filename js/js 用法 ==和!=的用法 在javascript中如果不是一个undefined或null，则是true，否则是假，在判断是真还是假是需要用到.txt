@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+window.onload=function(){
+	var v1="abc";
+	if(v1=="abc"){
+		alert(1);
+	}
+	if(v1!="abcd"){ //没有v1<>"abc"的写法，会报错
+		alert('a');//不能写成a，要加单引号'，否则会报错'a'未定义，a会被当作一个变量，而不是字符串
+	}
+}
+</script>
+</head>
+</html>

@@ -1,0 +1,14 @@
+package com;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+public class I{
+	public static void main(String[] args) throws Exception {
+		PrintWriter writer=null;
+		writer=new PrintWriter(new OutputStreamWriter(new FileOutputStream("D:/abcd.xml"),"GBK"));
+		String xmlHeader="<?xml version=\"1.0\" encoding=\"GBK\"?>";
+		writer.println(xmlHeader);
+		writer.flush();
+		writer.close();
+	}
+}

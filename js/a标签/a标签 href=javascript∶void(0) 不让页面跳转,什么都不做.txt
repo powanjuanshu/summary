@@ -1,0 +1,53 @@
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content" content="text/html;charset=utf-8">
+<script type="text/javascript">
+function show(){
+	alert(22);
+}
+</script>
+</head>
+<body>
+<a href="javascript:void(0)" onclick="show()">跳转</a><!--页面原地不变，没有跳转，相当于a连接href没效果-->
+</body>
+</html>
+-------------------------------
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content" content="text/html;charset=utf-8">
+<script type="text/javascript">
+function show(){
+	alert(22);
+}
+</script>
+</head>
+<body>
+<a href="" onclick="show()">跳转</a><!--href为空的情况：会跳转到本项目根目录下的默认页面，即index.jsp欢迎页面，在状态栏会有显示：href=“http://localhost/zzz/”-->
+</body>
+</html>
+
+------------------------------------------
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content" content="text/html;charset=utf-8">
+<script type="text/javascript">
+function show(){
+	alert(22);
+}
+</script>
+</head>
+<body>
+<a href="#" onclick="show()">跳转</a><!--锚连接到本页面，但会锚连接到本页面的顶端，状态栏会显示:http://localhost/zzz/aa.jsp#-->
+#包含了一个位置信息默认的锚是#top 也就是网页的上端而javascript:void(0)   仅仅表示一个死链接
+</body>
+</html>
+------------------------------------------------
+在开发过程中经常使用<a href="#"/>，可是在点击这个链接的时候，总是跳到页面的顶端，如果滚动条很长的话，并且已经阅览的页面底部的时候，给用户带来很大的困扰。 
+为什么会出现这种情况呢，查阅资料发现，#代表一个锚点，并且这个锚点是在页面的顶部，所以每次点击这个链接都会跳到页面顶部。 
+如果我们不想让页面跳动的话可以使用javascript:void(0)代替#，页面就不会发生跳动了。增强了用户的体验度。

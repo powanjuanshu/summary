@@ -1,0 +1,14 @@
+获得类路径（绝对路径）
+--------------------------
+package resourceBundle;
+public class ResourceBundl {
+	public static void main(String[] args) {
+		Atest a=new Atest();
+		System.out.println(a.getClass().getClassLoader());
+		String realPath=a.getClass().getClassLoader().getResource("").getPath();//就是获得类路径（绝对路径）
+		System.out.println(realPath);
+	}
+}
+---打印结果
+sun.misc.Launcher$AppClassLoader@19821f
+/D:/workspaces/lifeteleweb/trunk/test/bin/

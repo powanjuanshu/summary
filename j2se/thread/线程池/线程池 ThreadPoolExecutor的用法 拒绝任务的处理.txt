@@ -1,0 +1,167 @@
+package threadpool3;
+import java.io.Serializable;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+public class TestThreadPool {
+	public static void main(String[] args) {
+		// 构造一个线程池
+		ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 3, 3,
+				TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2),
+				new ThreadPoolExecutor.DiscardOldestPolicy());
+		for (int i = 1; i <= 9; i++) {
+			try {
+				// 产生一个任务，并将其加入到线程池
+				String task = "task@ " + i;
+				System.out.println("put " + task);
+				threadPool.execute(new ThreadPoolTask(task));
+				// 便于观察，等待一段时间
+				Thread.sleep(2);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public static class ThreadPoolTask implements Runnable, Serializable {
+		private static final long serialVersionUID = 0;
+		// 保存任务所需要的数据
+		private Object threadPoolTaskData;
+		ThreadPoolTask(Object tasks) {
+			this.threadPoolTaskData = tasks;
+		}
+		public void run() {
+			// 处理一个任务，这里的处理方式太简单了，仅仅是一个打印语句
+			System.out.println("start .." + threadPoolTaskData);
+			try {
+				// 便于观察，等待一段时间
+				Thread.sleep(2000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			threadPoolTaskData = null;
+		}
+		public Object getTask() {
+			return this.threadPoolTaskData;
+		}
+	}
+}
+------------------------------------
+上面代码定义了一个corePoolSize为2，maximumPoolSize为3，workerQuene容量为2的线程池，也就是说在饱和状态下，只能容纳5个线程，3个是运行状态，2个在队列里面。
+同时代码又往线程池里面添加了9个线程，每个线程会运行2秒，这样必然会到达饱和状态。而饱和状态就涉及到对拒绝任务的处理策略，
+本处采用了ThreadPoolExecutor.DiscardOldestPolicy()的运行结果如下： 
+put task@ 1
+start ..task@ 1
+put task@ 2
+start ..task@ 2
+put task@ 3
+put task@ 4
+put task@ 5
+start ..task@ 5
+put task@ 6
+put task@ 7
+put task@ 8
+put task@ 9
+start ..task@ 8
+start ..task@ 9
+----------------------------
+采用ThreadPoolExecutor.AbortPolicy()的运行结果如下：
+put task@ 1
+start ..task@ 1
+put task@ 2
+start ..task@ 2
+put task@ 3
+put task@ 4
+put task@ 5
+start ..task@ 5
+put task@ 6
+java.util.concurrent.RejectedExecutionException
+	at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:1759)
+	at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:767)
+	at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:658)
+	at threadpool3.TestThreadPool.main(TestThreadPool.java:17)
+java.util.concurrent.RejectedExecutionException
+	at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:1759)
+	at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:767)
+	at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:658)
+	at threadpool3.TestThreadPool.main(TestThreadPool.java:17)
+put task@ 7
+put task@ 8
+put task@ 9
+java.util.concurrent.RejectedExecutionException
+	at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:1759)
+	at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:767)
+	at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:658)
+	at threadpool3.TestThreadPool.main(TestThreadPool.java:17)
+java.util.concurrent.RejectedExecutionException
+	at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:1759)
+	at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:767)
+	at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:658)
+	at threadpool3.TestThreadPool.main(TestThreadPool.java:17)
+start ..task@ 3
+start ..task@ 4
+----------------------------------------
+采用 ThreadPoolExecutor.DiscardPolicy() 的 运行结果如下： 
+put task@ 1
+start ..task@ 1
+put task@ 2
+start ..task@ 2
+put task@ 3
+put task@ 4
+put task@ 5
+start ..task@ 5
+put task@ 6
+put task@ 7
+put task@ 8
+put task@ 9
+start ..task@ 3
+start ..task@ 4
+-----------------------------------------
+拒绝任务：拒绝任务是指当线程池里面的线程数量达到 maximumPoolSize 且 workQueue 队列已满的情况下被尝试添加进来的任务。 
+
+handler ：线程池对拒绝任务的处理策略。在 ThreadPoolExecutor 里面定义了 4 种 handler 策略，分别是 
+
+1. CallerRunsPolicy ：这个策略重试添加当前的任务，他会自动重复调用 execute() 方法，直到成功。 
+
+2. AbortPolicy ：对拒绝任务抛弃处理，并且抛出异常。 
+
+3. DiscardPolicy ：对拒绝任务直接无声抛弃，没有异常信息。 
+
+4. DiscardOldestPolicy ：对拒绝任务不抛弃，而是抛弃队列里面等待最久的一个线程，然后把拒绝任务加到队列。 
+ 
+
+一个任务通过 execute(Runnable) 方法被添加到线程池，任务就是一个 Runnable 类型的对象，任务的执行方法就是 Runnable 类型对象的 run() 方法。 
+
+当一个任务通过 execute(Runnable) 方法欲添加到线程池时，线程池采用的策略如下： 
+
+1. 如果此时线程池中的数量小于 corePoolSize ，即使线程池中的线程都处于空闲状态，也要创建新的线程来处理被添加的任务。 
+
+2. 如果此时线程池中的数量等于 corePoolSize ，但是缓冲队列 workQueue 未满，那么任务被放入缓冲队列。 
+
+3. 如果此时线程池中的数量大于 corePoolSize ，缓冲队列 workQueue 满，并且线程池中的数量小于 maximumPoolSize ，建新的线程来处理被添加的任务。 
+
+4. 如果此时线程池中的数量大于 corePoolSize ，缓冲队列 workQueue 满，并且线程池中的数量等于 maximumPoolSize ，那么通过 handler 所指定的策略来处理此任务。 
+
+处理任务的优先级为： 
+
+核心线程 corePoolSize 、任务队列 workQueue 、最大线程 maximumPoolSize ，如果三者都满了，使用 handler 处理被拒绝的任务。当线程池中的线程数量大于 corePoolSize 时，
+如果某线程空闲时间超过 keepAliveTime ，线程将被终止。这样，线程池可以动态的调整池中的线程数。 
+
+理解了上面关于 ThreadPoolExecutord 的介绍，应该就基本能了解它的一些使用，不过在 ThreadPoolExocutor 里面有个关键的 Worker 类，所有的线程都要经过 Worker 的包装。
+这样才能够做到线程可以复用而无需重新创建线程。 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

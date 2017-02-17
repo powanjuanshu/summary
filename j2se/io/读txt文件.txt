@@ -1,0 +1,21 @@
+package com;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+public class Tt {
+	public static void main(String[] args) {
+		try {
+			FileInputStream in=new FileInputStream("d:/abc.txt");	//创建文件输入流对象
+			int n=512;						//设定读取的字节数
+			byte[] b=new byte[n];					//读取输入流
+			for(int i=in.read(b, 0, n);i!=-1;i=in.read(b, 0, n)){	//读取n个字节，放置到以下标0开始字节数组b中，返回值为实际读取的字节的数量
+				System.out.println(new String(b, 0, i));
+			}
+			in.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

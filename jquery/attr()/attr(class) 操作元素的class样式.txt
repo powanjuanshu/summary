@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+ 		<script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+ 		<style type="text/css">
+ 			.cls01{
+				font-style:italic;
+			}
+			.cls02{
+				background:red;
+			}
+ 		</style>
+ 		
+		<script type="text/javascript">
+			$(function(){
+				init();
+			})
+			function init(){
+				$("#title").on("click", add_class);
+				$("#btn").on("click", show_class);
+			}
+			function add_class(){
+				$("#title").attr("class", "cls02");//设置类为cls02,会将原来的cls01替换为新的cls02,而不是在原来的基础上追加新的class
+			}
+			function show_class(){
+				alert($("#title").attr("class"));//获取所有的类如:cls01 cls02
+			}
+		</script>
+
+	</head>
+	<body>
+		<p class="cls01" id="title">积分商城</p>
+		<button id="btn">按钮</button>
+	</body>
+
+</html>
+--------------------------------------------------
+jquery 如何动态添加、删除class样式
+
+使用attr()方法来获取p元素的class,jquery代码如下: 
+var p_class = $("p").attr("class"); //获取p元素的class 
+ 
+使用attr()方法来设置p元素的class,JQuery代码如下: 
+$("p").attr("class", "high"); //设置p元素的class为 "high" 
+它会将原来的class替换为新的class,而不是在原来的基础上追加新的class。 
+
+追加样式:假如p元素原本的class为myClass,那么追加一个名叫high的class后,class属性变为myClass high,即myClass和high两种样式的叠加。JQuery提供了专门的addClass()方法来追加样式。
+为了使例子更容易理解,首先在 style标签里添加另一组样式: 
+.high{ color:red; } 
+.another{ font-style:italic; color:blue; } 
+后在网页中添加一个"追加class类"的按钮,按钮的事件代码如下: 
+$("#btn_3").click(function(){ 
+	$("#nm_p").addClass("another"); // 追加样式 
+}); 
+
+后当单击"追加class类"按钮时,p元素样式就会变为斜体,而先前的红色字体也会变为蓝色。此时p元素同时拥有两个class值,即"high"和"another"。在CSS中有以下两条规定。 
+1.如果给一个元素添加了多个class值,那么就相当于合并了它们的样式。 
+
+2.如果有不同的class设定了同一样式属性,则后者覆盖前者。 在上例中,相当于给p元素添加了如下样式: 
+color : red; /* 字体颜色设置红色*/ 
+font-style:italic; 
+color:blue; 
+
+以上的样式中,存在两个color属性,而后面的color属性会覆盖前面的color属性,因此最终的color属性的值为blue,而不是red。
+
+移除样式,如果用户单击某个按钮时,要删除class的某个值,那么可以使用与addClass()方法相反的removeClass()方法来完成,它的作用是从匹配的元素中删除全部或者指定的class。例如可以使用如下的JQuery代码来删除p元素中值为"high"的class: 
+$("p").removeClass("high"); //移除p元素中值为"high"的class 
+
+果要把p元素的两个class都删除,就要使用两次removeClass()方法,代码如下: 
+$("p").removeClass("high").removeClass("another"); 
+
+Query提供了更简单的方法。可以以空格的方式删除多个class名,代码如下: 
+$("p").removeClass("high another"); 
+
+当它不带参数时,就会将class的值全部删除,JQuery代码如下:
+$("p").removeClass(); //移除p元素的所有class 
+
+换样式JQuery中有一个方法toggle(),JQuery代码如下: 
+toggleBtn.toggle(function(){ 
+	//元素显示 代码③ 
+	}, function(){
+	//元素隐藏 代码④ 
+}) 
+
+toggle()方法此处的作用是交替执行代码③和代码④两个函数,如果元素原来是显示的,则隐藏它:如果元素原来是隐藏的,则显示它。此时,toggle()方法主要是控制行为上的重复切换。 
+
+另外JQuery还提供了一个toggleClass()方法控制样式上的重复切换。如果类名存在则删除它,如果类名不存在则添加它。例如对p元素进行toggleClass()方法操作。 
+$("p").toggleClass("another"); //重复切换类名"another" 
+不断单击"切换样式"按钮时,p元素的class的值就会在"myClass"和"myClass another"之间重复切换。 
+
+判断是否含有某个样式 hasClass()可以用来判断元素中是否含有某个class,如果有,则返回true,否则返回false。例如可以使用下面的代码来判断p元素中是否含有"another"的class: 
+$("p").hasClass("another"); 
+
+个方法是为了增强代码可读性面产生的。在JQuery内部实际上是调用了is()方法来完成这个功能的．该方法等价于如下代码: 
+view sourceprint? 1 $("p").is(".another"); //is("."+class); 
+
+
+
+
+
+
+
+

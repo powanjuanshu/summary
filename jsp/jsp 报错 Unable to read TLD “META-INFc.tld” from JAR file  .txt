@@ -1,0 +1,6 @@
+Unable to read TLD “META-INF/c.tld” from JAR file
+最近在运行项目时遇到了这样一个错误：
+org.apache.jasper.JasperException: /login.jsp(8,0) Unable to read TLD "META-INF/c.tld" from JAR file "file:/D:/compny_work/MOXA01/trunk/apps/webUI/src/main/webapp/WEB-INF/lib/standard-1.1.2.jar": org.apache.jasper.JasperException: Failed to load or instantiate TagLibraryValidator class: org.apache.taglibs.standard.tlv.JstlCoreTLV 
+出现这个问题的原因就是之前用tomcat5.5，后来改用6.0了 
+上网搜了一下，解决方案如下： 
+删除 WEB-INF/lib下jsp-api.jar就行了 

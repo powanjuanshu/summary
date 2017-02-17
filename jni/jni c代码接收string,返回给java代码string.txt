@@ -1,0 +1,37 @@
+public class HelloJNI {
+	static {
+		System.loadLibrary("Hello");
+	}
+	public native String hello(String message);
+	public static void main(String[] args){
+		HelloJNI h = new HelloJNI();
+		String str = h.hello("bankclient");
+		System.out.println("返回数据:" + str);
+	}
+}
+------------------
+#include "jni.h"
+#include <stdio.h>
+#include "HelloJNI.h"
+JNIEXPORT jstring JNICALL Java_HelloJNI_hello
+  (JNIEnv *env, jobject obj, jstring jmessage)
+{
+	char *data = (*env)->GetStringUTFChars(env, jmessage, 0); // 将jstring转换成c的char数组,使用GetStringUTFChars()将传进来的message(jstring类型)转换成为UTF-8的格式, 就能够在本地方法中使用了.
+	printf("接收数据:[%s]\n", data); // 打印
+	(*env)->ReleaseStringUTFChars(env, jmessage, data); // 注意:在使用完你所转换之后的对象之后,需要显示调用ReleaseStringUTFChars方法,让JVM释放转换成UTF-8的string的对象的空间,如果不显示的调用的话,JVM中会一直保存该对象,不会被垃圾回收器回收,因此就会导致内存溢出
+	char* tmpstr = "retrun string succeeded"; // 定义一个c的char数组
+	jstring rtstr = (*env)->NewStringUTF(env, tmpstr); // 将c的char数组转换成jstring
+	return rtstr; // 返回jstring
+}
+------------------
+gcc -shared -Wl,--kill-at -o hello.dll HelloJNI.c
+------------------
+输出:
+接收数据:[bankclient]
+返回数据:retrun string succeeded
+
+
+
+
+
+

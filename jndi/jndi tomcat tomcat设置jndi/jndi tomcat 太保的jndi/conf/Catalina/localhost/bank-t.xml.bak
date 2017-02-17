@@ -1,0 +1,3 @@
+<Context path="/bank-t" reloadable="true" docBase="E:\webgate\FSS_BANK_T\WebRoot">
+<Loader delegate="true" />
+</Context>

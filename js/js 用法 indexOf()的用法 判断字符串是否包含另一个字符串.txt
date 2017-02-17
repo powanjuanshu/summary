@@ -1,0 +1,11 @@
+c<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<script type="text/javascript">
+var v="请选择,";
+alert(v.indexOf("请选择"));//得到索引，此处为0，索引从0开始 
+alert(v.indexOf("abc"));//一定不能将O小写，js区分大小写的，不然会报错：对象不支持此属性或方法，如果找不到则返回-1，此处为-1
+alert(!(v.indexOf("请选择")>-1));//取反不能掉了()号，不然永远打出true，如果有则返回假，没有则返回真
+</script>
+<body>
+</body>

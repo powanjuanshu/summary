@@ -1,0 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html>
+<body>
+<select size="1" id="aa" onmousemove="aa.size=8" onmouseout="aa.size=1">
+	<option value="">颜色</option>
+	<option style="COLOR: #000000" value=#000000>默认</option>
+	<option style="COLOR: #808080" value=#808080>灰度</option>
+	<option style="COLOR: #808000" value=#808000>橄榄色</option>
+	<option style="COLOR: #008000" value=#008000>绿色</option>
+	<option style="COLOR: #0000ff" value=#0000FF>蓝色</option>
+	<option style="COLOR: #800000" value=#800000>褐色</option>
+	<option style="COLOR: #ff0000" value=#FF0000>红色</option>
+</select>
+</body>
+</html>

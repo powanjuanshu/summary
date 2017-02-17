@@ -1,0 +1,16 @@
+package com;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+public class Tt {
+	public static void main(String[] args) throws IOException {
+		FileReader fr=new FileReader("d:/abc.txt");
+		BufferedReader br=new BufferedReader(fr);
+		String s=br.readLine();	//创建变量s用于存储从文件中读取的第一行数据
+		while(s!=null){			//判断s变量是否接收到数据
+			System.out.println(s);
+			s=br.readLine();
+		}
+		br.close();
+	}
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="jquery.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<div id="aaa" class="bbb">
+	<button onclick="quit()" id="code1">退出1</button><br>
+	<button onclick="quit()" id="xcode2">退出2</button><br>
+	<button onclick="quit()" id="code3">退出3</button><br>
+	<div id="ccc">
+		<input id="orgId2" value="jigou">
+		<input id="orgId3" value="jigou2">
+		<input id="orgId4" value="jigou3">
+	</div>
+	<input id="branch" value="001">
+</div>
+<script type="text/javascript">
+function quit(){
+	var buttons = $("#orgId2").nextAll();//获取后面紧邻的所有元素
+	alert(buttons.length);//打印：2
+	buttons.each(function(){
+
+		alert($(this).prop("outerHTML"));//打印：<input id="orgId" value="jigou2">
+		alert(this.outerHTML);//打印：<input id="orgId" value="jigou2">
+	});
+}
+</script>
+</body>
+</html>

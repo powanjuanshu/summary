@@ -1,0 +1,737 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>堆和堆栈的区别 - ITeye问答</title>
+    <meta name="description" content="小弟一直对堆和堆栈不是很明白，能不能给我解释一下堆和堆栈的区别啊" />
+    <meta name="keywords" content="入门技术 New" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link href="/rss/ask" rel="alternate" title="ITeye问答" type="application/rss+xml" />
+    <script src="http://www.iteye.com/javascripts/application.js?1448702469" type="text/javascript"></script>
+    <link href="http://www.iteye.com/stylesheets/ask.css?1451979451" media="screen" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1448702469" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1448702469" type="text/javascript"></script>
+  <script type="text/javascript">
+    window.recommend_tags = {"44":"","55":"Ruby, Python, PHP, Flash, C++, .net","39":"Hibernate, Spring, Struts, iBATIS, \u4f01\u4e1a\u5e94\u7528, Lucene, SOA","45":"","46":"","41":"JavaScript, HTML5, jQuery, CSS, ","48":"Android, iOS, wp7","43":"Linux, \u6570\u636e\u5e93, \u654f\u6377\u7f16\u7a0b, \u6570\u636e\u7ed3\u6784, \u8f6f\u4ef6\u6d4b\u8bd5, \u9879\u76ee\u7ba1\u7406"};
+  </script>
+  </head>
+  <body>
+    <div id="page">
+      <div id="header">
+        <div class="clearfix"><div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+</div>
+        <div class="clearfix">
+          <div id="branding">
+            <a href="http://www.iteye.com"><img alt="ITeye3.0" src="http://www.iteye.com/images/logo.gif?1448702469" title="ITeye-最棒的软件开发交流社区" /></a>
+          </div>
+          <div id="gg"><!--AdForward Begin:-->
+<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=iteye|ask|banner1&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+<!--AdForward End--></div>
+        </div>
+      </div>
+
+      <div id="content" class="clearfix ask_action_handler">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://qinyong1216-163-com.iteye.com" class="p-author" target="_blank">神经网络</a>
+</div>
+
+
+<div class="crumbs">
+  <a href="/problems">问答首页</a> <span class="arrow">→</span> <a href="/problems/forums/New">入门技术</a>
+</div>
+
+<div class="problem problem_g">
+  <dl>
+    <dt>
+      <div class="vote" id="vote_problem_34966">
+  <span>0</span><a class="vote_up_off" href="#" onclick="this.disabled = true; new Ajax.Request('/problems/34966/votes?type=up', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="支持：这是一个描述清晰的有价值的好问题"></a>
+  <a class="vote_down_off" href="#" onclick="this.disabled = true; new Ajax.Request('/problems/34966/votes?type=down', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="反对：这个问题没有价值或描述不清"></a><span>0</span>
+</div>
+
+    </dt>
+    <dd>
+      <div class="sproblem_right">
+        <h3 class="close"><a href="/problems/34966">堆和堆栈的区别</a><span class="score">5</span></h3>
+
+        <div class="new_content"> 
+          小弟一直对堆和堆栈不是很明白，能不能给我解释一下堆和堆栈的区别啊
+          
+        </div>
+
+        <div class="ask_label">
+          <div class='tags'><a href="http://www.iteye.com/problems/tags/%E5%85%A5%E9%97%A8%E6%8A%80%E6%9C%AF">入门技术</a>&nbsp;</div>
+          <span class="gray">2010年1月24日 10:32</span>
+        </div>
+        <div class="user_info fr">
+          <a href="http://qinyong1216-163-com.iteye.com/blog/answered_problems"><img alt="神经网络" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="神经网络" /></a>
+<span class="user_blog"><a href="http://qinyong1216-163-com.iteye.com/blog/answered_problems" title="神经网络">神经网络</a></span>
+<br />
+<span class="score gray" title="问答积分">25</span>
+<br />
+<span class="gold gray" title="金牌">0</span>
+<span class="silver gray" title="银牌">0</span>
+<span class="bronze gray" title="铜牌">0</span>
+
+        </div>
+      </div>
+
+      <div class="clear"></div>
+	  <div id="ask_recommended_q2"><IFRAME SRC="/iframe_ggbd/186" SCROLLING=no WIDTH=468 HEIGHT=60 FRAMEBORDER=0></IFRAME></div>
+      
+
+
+      <div id="problem_action" class="action">
+        <ul>
+          <li class="comment"><a href="javascript:void(0);" class="ask_click_action" data_action_sub_type="comment" data_action_type="dropdown" data_comments_count="0" data_parent_id="problem_34966" data_url="/problems/34966/comments"><img alt="Comment" src="http://www.iteye.com/images/ask/comment.gif?1448702469" />添加评论</a></li>
+
+          
+            <li id="follow_34966"><a href="#" onclick="if($(this).next()){return false;}; $(this).insert({after: '&lt;img src=&quot;/images/spinner.gif&quot; /&gt;'});; new Ajax.Request('/problems/34966/follows', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;"><img src="/images/ask/collect.gif">关注(0)</a></li>
+          
+
+          
+
+          
+            
+          
+        </ul>
+      </div>
+
+    </dd>
+  </dl>
+  <div class="clear"></div>
+</div>
+
+
+<div class="clearfix"></div>
+<div id="solutions" class="solutions">
+  
+    <h3 id="num">7个答案
+      <span style="float:right;margin-left:10px;"><a href="javascript:void(0);" id="sort_time_link" onclick="sortSolutionsByTime()" style="color:#069;font-weight:normal;">按时间排序</a></span>
+      <span style="float:right;margin-left:10px;"><a href="javascript:void(0);" id="sort_vote_link" onclick="sortSolutionsByVote();" style="color:black;font-weight:normal;">按投票排序</a></span>
+    </h3>
+    
+      <dl time="1264301112" votes="0" class="for_sort">
+  <dt>
+  <div class="vote" id="vote_solution_78573">
+  <span>0</span><a class="vote_up_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78573/votes?type=up', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="支持：好答案"></a>
+  <a class="vote_down_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78573/votes?type=down', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="反对：没有价值的答案"></a><span>0</span>
+</div>
+  </dt>
+  <dd>
+  <div class="sproblem_right">
+    <div class="accept_solution">
+      <h3>采纳的答案</h3>
+      <div class="solution solution_dd" id="s_78573">
+          <p>1. 栈(stack)与堆(heap)都是Java用来在Ram中存放数据的地方。与C++不同，Java自动管理栈和堆，程序员不能直接地设置栈或堆。 <br /><br />　 　2. 栈的优势是，存取速度比堆要快，仅次于直接位于CPU中的寄存器。但缺点是，存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。另外，栈数据可以共 享，详见第3点。堆的优势是可以动态地分配内存大小，生存期也不必事先告诉编译器，Java的垃圾收集器会自动收走这些不再使用的数据。但缺点是，由于要 在运行时动态分配内存，存取速度较慢。<br /><br />　　3. Java中的数据类型有两种。<br /><br />　　一种是基本类型(primitive types), 共有8种，即int, short, long, byte, float, double, boolean, char(注意，并没有string的基本类型)。这种类型的定义是通过诸如int a = 3; long b = 255L;的形式来定义的，称为自动变量。值得注意的是，自动变量存的是字面值，不是类的实例，即不是类的引用，这里并没有类的存在。如int a = 3; 这里的a是一个指向int类型的引用，指向3这个字面值。这些字面值的数据，由于大小可知，生存期可知(这些字面值固定定义在某个程序块里面，程序块退出 后，字段值就消失了)，出于追求速度的原因，就存在于栈中。<br /><br />　　另外，栈有一个很重要的特殊性，就是存在栈中的数据可以共享。假设我们同时定义：<br /><br />int a = 3; <br />int b = 3； <br /><br />　 　编译器先处理int a = 3；首先它会在栈中创建一个变量为a的引用，然后查找有没有字面值为3的地址，没找到，就开辟一个存放3这个字面值的地址，然后将a指向3的地址。接着处 理int b = 3；在创建完b的引用变量后，由于在栈中已经有3这个字面值，便将b直接指向3的地址。这样，就出现了a与b同时均指向3的情况。<br /><br />　 　特别注意的是，这种字面值的引用与类对象的引用不同。假定两个类对象的引用同时指向一个对象，如果一个对象引用变量修改了这个对象的内部状态，那么另一 个对象引用变量也即刻反映出这个变化。相反，通过字面值的引用来修改其值，不会导致另一个指向此字面值的引用的值也跟着改变的情况。如上例，我们定义完a 与b的值后，再令a=4；那么，b不会等于4，还是等于3。在编译器内部，遇到a=4；时，它就会重新搜索栈中是否有4的字面值，如果没有，重新开辟地址 存放4的值；如果已经有了，则直接将a指向这个地址。因此a值的改变不会影响到b的值。<br /><br />　　另一种是包装类数据，如Integer, String, Double等将相应的基本数据类型包装起来的类。这些类数据全部存在于堆中，Java用new()语句来显示地告诉编译器，在运行时才根据需要动态创 建，因此比较灵活，但缺点是要占用更多的时间。 4. String是一个特殊的包装类数据。即可以用String str = new String("abc");的形式来创建，也可以用String str = "abc"；的形式来创建(作为对比，在JDK 5.0之前，你从未见过Integer i = 3;的表达式，因为类与字面值是不能通用的，除了String。而在JDK 5.0中，这种表达式是可以的！因为编译器在后台进行Integer i = new Integer(3)的转换)。前者是规范的类的创建过程，即在Java中，一切都是对象，而对象是类的实例，全部通过new()的形式来创建。Java 中的有些类，如DateFormat类，可以通过该类的getInstance()方法来返回一个新创建的类，似乎违反了此原则。其实不然。该类运用了单 例模式来返回类的实例，只不过这个实例是在该类内部通过new()来创建的，而getInstance()向外部隐藏了此细节。那为什么在String str = "abc"；中，并没有通过new()来创建实例，是不是违反了上述原则？其实没有。<br /><br />　　5. 关于String str = "abc"的内部工作。Java内部将此语句转化为以下几个步骤：<br /><br />　　(1)先定义一个名为str的对String类的对象引用变量：String str；<br /><br />　 　(2)在栈中查找有没有存放值为"abc"的地址，如果没有，则开辟一个存放字面值为"abc"的地址，接着创建一个新的String类的对象o，并将 o的字符串值指向这个地址，而且在栈中这个地址旁边记下这个引用的对象o。如果已经有了值为"abc"的地址，则查找对象o，并返回o的地址。<br /><br />　　(3)将str指向对象o的地址。<br /><br />　　值得注意的是，一般String类中字符串值都是直接存值的。但像String str = "abc"；这种场合下，其字符串值却是保存了一个指向存在栈中数据的引用！<br /><br />　　为了更好地说明这个问题，我们可以通过以下的几个代码进行验证。<br /><br />String str1 = "abc";<br />String str2 = "abc";<br />System.out.println(str1==str2); //true <br /><br />　　注意，我们这里并不用str1.equals(str2)；的方式，因为这将比较两个字符串的值是否相等。==号，根据JDK的说明，只有在两个引用都指向了同一个对象时才返回真值。而我们在这里要看的是，str1与str2是否都指向了同一个对象。<br />结果说明，JVM创建了两个引用str1和str2，但只创建了一个对象，而且两个引用都指向了这个对象。<br /><br />　　我们再来更进一步，将以上代码改成：<br /><br />String str1 = "abc";<br />String str2 = "abc";<br />str1 = "bcd";<br />System.out.println(str1 + "," + str2); //bcd, abc<br />System.out.println(str1==str2); //false <br /><br />　　这就是说，赋值的变化导致了类对象引用的变化，str1指向了另外一个新对象！而str2仍旧指向原来的对象。上例中，当我们将str1的值改为"bcd"时，JVM发现在栈中没有存放该值的地址，便开辟了这个地址，并创建了一个新的对象，其字符串的值指向这个地址。<br /><br />　 　事实上，String类被设计成为不可改变(immutable)的类。如果你要改变其值，可以，但JVM在运行时根据新值悄悄创建了一个新对象，然后 将这个对象的地址返回给原来类的引用。这个创建过程虽说是完全自动进行的，但它毕竟占用了更多的时间。在对时间要求比较敏感的环境中，会带有一定的不良影 响。<br /><br />　　再修改原来代码：<br /><br />String str1 = "abc";<br />String str2 = "abc";<br /><br />str1 = "bcd";<br /><br />String str3 = str1;<br />System.out.println(str3); //bcd<br /><br />String str4 = "bcd";<br />System.out.println(str1 == str4); //true <br /><br />　 　str3这个对象的引用直接指向str1所指向的对象(注意，str3并没有创建新对象)。当str1改完其值后，再创建一个String的引用 str4，并指向因str1修改值而创建的新的对象。可以发现，这回str4也没有创建新的对象，从而再次实现栈中数据的共享。<br /><br />　　我们再接着看以下的代码。<br /><br />String str1 = new String("abc");<br />String str2 = "abc";<br />System.out.println(str1==str2); //false <br /><br />　　创建了两个引用。创建了两个对象。两个引用分别指向不同的两个对象。<br /><br />String str1 = "abc";<br />String str2 = new String("abc");<br />System.out.println(str1==str2); //false <br /><br />　　创建了两个引用。创建了两个对象。两个引用分别指向不同的两个对象。<br /><br />　　以上两段代码说明，只要是用new()来新建对象的，都会在堆中创建，而且其字符串是单独存值的，即使与栈中的数据相同，也不会与栈中的数据共享。<br /><br />　　6. 数据类型包装类的值不可修改。不仅仅是String类的值不可修改，所有的数据类型包装类都不能更改其内部的值。 7. 结论与建议：<br /><br />　 　(1)我们在使用诸如String str = "abc"；的格式定义类时，总是想当然地认为，我们创建了String类的对象str。担心陷阱！对象可能并没有被创建！唯一可以肯定的是，指向 String类的引用被创建了。至于这个引用到底是否指向了一个新的对象，必须根据上下文来考虑，除非你通过new()方法来显要地创建一个新的对象。因 此，更为准确的说法是，我们创建了一个指向String类的对象的引用变量str，这个对象引用变量指向了某个值为"abc"的String类。清醒地认 识到这一点对排除程序中难以发现的bug是很有帮助的。<br /><br />　　(2)使用String str = "abc"；的方式，可以在一定程度上提高程序的运行速度，因为JVM会自动根据栈中数据的实际情况来决定是否有必要创建新对象。而对于String str = new String("abc")；的代码，则一概在堆中创建新对象，而不管其字符串值是否相等，是否有必要创建新对象，从而加重了程序的负担。这个思想应该是 享元模式的思想，但JDK的内部在这里实现是否应用了这个模式，不得而知。<br /><br />　　(3)当比较包装类里面的数值是否相等时，用equals()方法；当测试两个包装类的引用是否指向同一个对象时，用==。<br /><br />　　(4)由于String类的immutable性质，当String变量需要经常变换其值时，应该考虑使用StringBuffer类，以提高程序效率。 <br /><br />////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////<br /><br />栈(stack):是一个先进后出的数据结构,通常用于保存方法(函数)中的参数,局部变量.<br />在java中,所有基本类型和引用类型都在栈中存储.栈中数据的生存空间一般在当前scopes内(就是由{...}括起来的区域).<br /><br />堆(heap):是一个可动态申请的内存空间(其记录空闲内存空间的链表由操作系统维护),C中的malloc语句所产生的内存空间就在堆中.<br />在java中,所有使用new xxx()构造出来的对象都在堆中存储,当垃圾回收器检测到某对象未被引用,则自动销毁该对象.所以,理论上说java中对象的生存空间是没有限制的,只要有引用类型指向它,则它就可以在任意地方被使用.</p>
+      </div>
+    </div>  
+    <div class="ask_label"><span class="gray">2010年1月24日 10:45</span></div>
+    <div class="user_info fr">
+      <a href="http://yqin.iteye.com/blog/answered_problems"><img alt="yqin" class="logo" src="http://www.iteye.com/upload/logo/user/383265/8d975f4f-7f00-3683-8a6b-0d04715e1cbe-thumb.gif?1294235220" title="yqin" /></a>
+<span class="user_blog"><a href="http://yqin.iteye.com/blog/answered_problems" title="yqin">yqin</a></span>
+<br />
+<span class="score gray" title="问答积分">1328</span>
+<br />
+<span class="gold gray" title="金牌">0</span>
+<span class="silver gray" title="银牌">0</span>
+<span class="bronze gray" title="铜牌">0</span>
+
+    </div>  
+  </div>
+  <div class="clear"></div>
+  <div class="action">
+    <ul>
+      <li class="comment"><a href="javascript:void(0);" class="ask_click_action" data_action_sub_type="comment" data_action_type="dropdown" data_comments_count="0" data_parent_id="solution_78573" data_url="/solutions/78573/comments"><img alt="Comment" src="http://www.iteye.com/images/ask/comment.gif?1448702469" />添加评论</a></li>
+    </ul>
+  </div>
+  </dd>
+</dl>
+
+    
+    <dl time="1264389017" votes="0" class="for_sort">
+  <dt>
+    <div class="vote" id="vote_solution_78786">
+  <span>0</span><a class="vote_up_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78786/votes?type=up', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="支持：好答案"></a>
+  <a class="vote_down_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78786/votes?type=down', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="反对：没有价值的答案"></a><span>0</span>
+</div>
+  </dt>
+  <dd id="s_78786" class="solution_dd">
+    <div class="sproblem_right">
+      <p><span style="color: green;">heap(堆) :<br />JVM 的内存数据区. 用来保存对象的实例.<br />在堆中分配一定的内存来保存对象实例, 实际上是保存对象实例的属性值<br />属性的类型和对象本身的类型标记等, 并不保存对象的方法(方法是指令, 保存在 栈 中).<br />对象实例在堆中分配好以后, 会在 栈 中保存一个 4 字节的堆内存地址<br />用来定位该对象实例在堆中的位置, 便于找到该对象实例.<br /><br />&nbsp; stack(栈) :<br />JVM 的内存指令区: Java 基本数据类型, Java 指令代码, 常量都保存在 栈 中.<br /><br />&nbsp; 栈 的内存管理不存在内存回收问题(而 堆 则是随机分配内存, 存在内存分配和回收的问题<br />GC 会不定期扫描堆, 根据栈中保存的 4 字节对象地址扫描堆, 定位堆中这些对象, <br />进行一些优化(例如合并空闲内存块什么的), 并且假设堆中没有扫描到的区域都是空闲的, 统统垃圾收集.</span></p>
+
+      <div class="ask_label"><span class="gray">2010年1月25日 11:10</span></div>
+
+      <div class="user_info fr">
+        <a href="http://yhailj.iteye.com/blog/answered_problems"><img alt="yhailj" class="logo" src="http://www.iteye.com/upload/logo/user/439981/f6ad2c9f-0bd7-3fd4-847e-9a0fe6b1dce9-thumb.jpg?1300419052" title="yhailj" /></a>
+<span class="user_blog"><a href="http://yhailj.iteye.com/blog/answered_problems" title="yhailj">yhailj</a></span>
+<br />
+<span class="score gray" title="问答积分">54</span>
+<br />
+<span class="gold gray" title="金牌">0</span>
+<span class="silver gray" title="银牌">0</span>
+<span class="bronze gray" title="铜牌">0</span>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class="action">
+      <ul>
+        <li class="comment"><a href="javascript:void(0);" class="ask_click_action" data_action_sub_type="comment" data_action_type="dropdown" data_comments_count="0" data_parent_id="solution_78786" data_url="/solutions/78786/comments"><img alt="Comment" src="http://www.iteye.com/images/ask/comment.gif?1448702469" />添加评论</a></li>
+        
+        
+      </ul>
+    </div>
+
+  </dd>
+</dl>
+<dl time="1264383140" votes="0" class="for_sort">
+  <dt>
+    <div class="vote" id="vote_solution_78745">
+  <span>0</span><a class="vote_up_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78745/votes?type=up', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="支持：好答案"></a>
+  <a class="vote_down_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78745/votes?type=down', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="反对：没有价值的答案"></a><span>0</span>
+</div>
+  </dt>
+  <dd id="s_78745" class="solution_dd">
+    <div class="sproblem_right">
+      <p>问题的引入：<br /><br />问题一：<br /><br />String str1 = "abc"; <br />String str2 = "abc"; <br />System.out.println(str1==str2); //true <br /><br />问题二：<br /><br />String str1 =new String ("abc"); <br />String str2 =new String ("abc"); <br />System.out.println(str1==str2); // false <br /><br />问题三：<br /><br />String s1 = "ja";<br />String s2 = "va";<br />String s3 = "java";<br />String s4 = s1 + s2;<br />System.out.println(s3 == s4);//false<br />System.out.println(s3.equals(s4));//true<br /><br />由于以上问题让我含糊不清，于是特地搜集了一些有关java内存分配的资料,以下是网摘：<br /><br />Java 中的堆和栈<br />Java把内存划分成两种：一种是栈内存，一种是堆内存。 <br /><br />在函数中定义的一些基本类型的变量和对象的引用变量都在函数的栈内存中分配。 <br /><br />&nbsp;&nbsp; 当在一段代码块定义一个变量时，Java就在栈中为这个变量分配内存空间，当超过变量的作用域后，Java会自动释放掉为该变量所分配的内存空间，该内存空间可以立即被另作他用。 <br /><br />&nbsp;&nbsp; 堆内存用来存放由new创建的对象和数组。 <br /><br />&nbsp;&nbsp; 在堆中分配的内存，由Java虚拟机的自动垃圾回收器来管理。 <br /><br />&nbsp;&nbsp; 在堆中产生了一个数组或对象后，还可以在栈中定义一个特殊的变量，让栈中这个变量的取值等于数组或对象在堆内存中的首地址，栈中的这个变量就成了数组或对象的引用变量。 <br /><br />&nbsp;&nbsp; 引用变量就相当于是为数组或对象起的一个名称，以后就可以在程序中使用栈中的引用变量来访问堆中的数组或对象。 <br />&nbsp; <br />具体的说：<br />栈与堆都是Java用来在Ram中存放数据的地方。与C++不同，Java自动管理栈和堆，程序员不能直接地设置栈或堆。 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Java的堆是一个运行时数据区,类的(对象从中分配空间。这些对象通过new、newarray、anewarray和multianewarray等指令建立，它们不需要程序代码来显式的释放。堆是由垃圾回收来负责的，堆的优势是可以动态地分配内存大小，生存期也不必事先告诉编译器，因为它是在运行时动态分配内存的，Java的垃圾收集器会自动收走这些不再使用的数据。但缺点是，由于要在运行时动态分配内存，存取速度较慢。 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 栈的优势是，存取速度比堆要快，仅次于寄存器，栈数据可以共享。但缺点是，存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。栈中主要存放一些基本类型的变量（,int, short, long, byte, float, double, boolean, char）和对象句柄。 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 栈有一个很重要的特殊性，就是存在栈中的数据可以共享。假设我们同时定义： <br />int a = 3; <br />int b = 3； <br />编译器先处理int a = 3；首先它会在栈中创建一个变量为a的引用，然后查找栈中是否有3这个值，如果没找到，就将3存放进来，然后将a指向3。接着处理int b = 3；在创建完b的引用变量后，因为在栈中已经有3这个值，便将b直接指向3。这样，就出现了a与b同时均指向3的情况。这时，如果再令a=4；那么编译器会重新搜索栈中是否有4值，如果没有，则将4存放进来，并令a指向4；如果已经有了，则直接将a指向这个地址。因此a值的改变不会影响到b的值。要注意这种数据的共享与两个对象的引用同时指向一个对象的这种共享是不同的，因为这种情况a的修改并不会影响到b, 它是由编译器完成的，它有利于节省空间。而一个对象引用变量修改了这个对象的内部状态，会影响到另一个对象引用变量。 <br /><br />String是一个特殊的包装类数据。可以用： <br />String str = new String("abc"); <br />String str = "abc"; <br />两种的形式来创建，第一种是用new()来新建对象的，它会在存放于堆中。每调用一次就会创建一个新的对象。 <br />而第二种是先在栈中创建一个对String类的对象引用变量str，然后查找栈中有没有存放"abc"，如果没有，则将"abc"存放进栈，并令str指向”abc”，如果已经有”abc” 则直接令str指向“abc”。 <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 比较类里面的数值是否相等时，用equals()方法；当测试两个包装类的引用是否指向同一个对象时，用==，下面用例子说明上面的理论。 <br />String str1 = "abc"; <br />String str2 = "abc"; <br />System.out.println(str1==str2); //true <br />可以看出str1和str2是指向同一个对象的。 <br /><br />String str1 =new String ("abc"); <br />String str2 =new String ("abc"); <br />System.out.println(str1==str2); // false <br />用new的方式是生成不同的对象。每一次生成一个。 <br />&nbsp;&nbsp; 因此用第二种方式创建多个”abc”字符串,在内存中其实只存在一个对象而已. 这种写法有利与节省内存空间. 同时它可以在一定程度上提高程序的运行速度，因为JVM会自动根据栈中数据的实际情况来决定是否有必要创建新对象。而对于String str = new String("abc")；的代码，则一概在堆中创建新对象，而不管其字符串值是否相等，是否有必要创建新对象，从而加重了程序的负担。 <br />&nbsp;&nbsp; 另一方面, 要注意: 我们在使用诸如String str = "abc"；的格式定义类时，总是想当然地认为，创建了String类的对象str。担心陷阱！对象可能并没有被创建！而可能只是指向一个先前已经创建的对象。只有通过new()方法才能保证每次都创建一个新的对象。由于String类的immutable性质，当String变量需要经常变换其值时，应该考虑使用StringBuffer类，以提高程序效率。<br /><br /><br />java中内存分配策略及堆和栈的比较 <br />2.1 内存分配策略 <br />按照编译原理的观点,程序运行时的内存分配有三种策略,分别是静态的,栈式的,和堆式的. <br />静态存储分配是指在编译时就能确定每个数据目标在运行时刻的存储空间需求,因而在编译时就可以给他们分配固定的内存空间.这种分配策略要求程序代码中不允许有可变数据结构(比如可变数组)的存在,也不允许有嵌套或者递归的结构出现,因为它们都会导致编译程序无法计算准确的存储空间需求. <br />栈式存储分配也可称为动态存储分配,是由一个类似于堆栈的运行栈来实现的.和静态存储分配相反,在栈式存储方案中,程序对数据区的需求在编译时是完全未知的,只有到运行的时候才能够知道,但是规定在运行中进入一个程序模块时,必须知道该程序模块所需的数据区大小才能够为其分配内存.和我们在数据结构所熟知的栈一样,栈式存储分配按照先进后出的原则进行分配。 <br />静态存储分配要求在编译时能知道所有变量的存储要求,栈式存储分配要求在过程的入口处必须知道所有的存储要求,而堆式存储分配则专门负责在编译时或运行时模块入口处都无法确定存储要求的数据结构的内存分配,比如可变长度串和对象实例.堆由大片的可利用块或空闲块组成,堆中的内存可以按照任意顺序分配和释放. <br /><br />2.2 堆和栈的比较 <br />上面的定义从编译原理的教材中总结而来,除静态存储分配之外,都显得很呆板和难以理解,下面撇开静态存储分配,集中比较堆和栈: <br />从堆和栈的功能和作用来通俗的比较,堆主要用来存放对象的，栈主要是用来执行程序的.而这种不同又主要是由于堆和栈的特点决定的: <br />在编程中，例如C/C++中，所有的方法调用都是通过栈来进行的,所有的局部变量,形式参数都是从栈中分配内存空间的。实际上也不是什么分配,只是从栈顶向上用就行,就好像工厂中的传送带(conveyor belt)一样,Stack Pointer会自动指引你到放东西的位置,你所要做的只是把东西放下来就行.退出函数的时候，修改栈指针就可以把栈中的内容销毁.这样的模式速度最快, 当然要用来运行程序了.需要注意的是,在分配的时候,比如为一个即将要调用的程序模块分配数据区时,应事先知道这个数据区的大小,也就说是虽然分配是在程序运行时进行的,但是分配的大小多少是确定的,不变的,而这个"大小多少"是在编译时确定的,不是在运行时. <br />堆是应用程序在运行的时候请求操作系统分配给自己内存，由于从操作系统管理的内存分配,所以在分配和销毁时都要占用时间，因此用堆的效率非常低.但是堆的优点在于,编译器不必知道要从堆里分配多少存储空间，也不必知道存储的数据要在堆里停留多长的时间,因此,用堆保存数据时会得到更大的灵活性。事实上,面向对象的多态性,堆内存分配是必不可少的,因为多态变量所需的存储空间只有在运行时创建了对象之后才能确定.在C++中，要求创建一个对象时，只需用 new命令编制相关的代码即可。执行这些代码时，会在堆里自动进行数据的保存.当然，为达到这种灵活性，必然会付出一定的代价:在堆里分配存储空间时会花掉更长的时间！这也正是导致我们刚才所说的效率低的原因,看来列宁同志说的好,人的优点往往也是人的缺点,人的缺点往往也是人的优点(晕~). <br /><br />2.3 JVM中的堆和栈 <br />JVM是基于堆栈的虚拟机.JVM为每个新创建的线程都分配一个堆栈.也就是说,对于一个Java程序来说，它的运行就是通过对堆栈的操作来完成的。堆栈以帧为单位保存线程的状态。JVM对堆栈只进行两种操作:以帧为单位的压栈和出栈操作。 <br />我们知道,某个线程正在执行的方法称为此线程的当前方法.我们可能不知道,当前方法使用的帧称为当前帧。当线程激活一个Java方法,JVM就会在线程的 Java堆栈里新压入一个帧。这个帧自然成为了当前帧.在此方法执行期间,这个帧将用来保存参数,局部变量,中间计算过程和其他数据.这个帧在这里和编译原理中的活动纪录的概念是差不多的. <br />从Java的这种分配机制来看,堆栈又可以这样理解:堆栈(Stack)是操作系统在建立某个进程时或者线程(在支持多线程的操作系统中是线程)为这个线程建立的存储区域，该区域具有先进后出的特性。 <br />每一个Java应用都唯一对应一个JVM实例，每一个实例唯一对应一个堆。应用程序在运行中所创建的所有类实例或数组都放在这个堆中,并由应用所有的线程共享.跟C/C++不同，Java中分配堆内存是自动初始化的。Java中所有对象的存储空间都是在堆中分配的，但是这个对象的引用却是在堆栈中分配,也就是说在建立一个对象时从两个地方都分配内存，在堆中分配的内存实际建立这个对象，而在堆栈中分配的内存只是一个指向这个堆对象的指针(引用)而已。<br /></p>
+
+      <div class="ask_label"><span class="gray">2010年1月25日 09:32</span></div>
+
+      <div class="user_info fr">
+        <a href="http://lovewhzlq.iteye.com/blog/answered_problems"><img alt="lovewhzlq" class="logo" src="http://www.iteye.com/upload/logo/user/93841/680e45b7-ce64-375b-9bc8-31a33e5637ab-thumb.jpg?1239624327" title="lovewhzlq" /></a>
+<span class="user_blog"><a href="http://lovewhzlq.iteye.com/blog/answered_problems" title="lovewhzlq">lovewhzlq</a></span>
+<br />
+<span class="score gray" title="问答积分">13934</span>
+<br />
+<span class="gold gray" title="金牌">0</span>
+<span class="silver gray" title="银牌">0</span>
+<span class="bronze gray" title="铜牌">0</span>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class="action">
+      <ul>
+        <li class="comment"><a href="javascript:void(0);" class="ask_click_action" data_action_sub_type="comment" data_action_type="dropdown" data_comments_count="0" data_parent_id="solution_78745" data_url="/solutions/78745/comments"><img alt="Comment" src="http://www.iteye.com/images/ask/comment.gif?1448702469" />添加评论</a></li>
+        
+        
+      </ul>
+    </div>
+
+  </dd>
+</dl>
+<dl time="1264323641" votes="0" class="for_sort">
+  <dt>
+    <div class="vote" id="vote_solution_78638">
+  <span>0</span><a class="vote_up_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78638/votes?type=up', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="支持：好答案"></a>
+  <a class="vote_down_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78638/votes?type=down', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="反对：没有价值的答案"></a><span>0</span>
+</div>
+  </dt>
+  <dd id="s_78638" class="solution_dd">
+    <div class="sproblem_right">
+      <p>简单的说：<br /><br />栈是一种数据结构，先进后出，实现可以看jdk源码 java.util.Stack<br /><br />堆: 有两种解释<br />&nbsp; 1 数据结构里面有堆的数据结构，具体可以参数数据结构的书，jdk源码实现java.util.PriorityQueue<br /><br />&nbsp; 2 内存的一种， 和栈相对，java里有栈内存和堆内存两种，通常定义一个对象<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Object o = new Oject();<br />&nbsp;&nbsp;&nbsp; 时，会现在栈内存中分配一个引用，然后在堆内存中分配实际的空间，如果堆中内存没有任何引用，这块内存就会被垃圾回收器回收。</p>
+
+      <div class="ask_label"><span class="gray">2010年1月24日 17:00</span></div>
+
+      <div class="user_info fr">
+        <a href="http://robblog.iteye.com/blog/answered_problems"><img alt="robertliudeqiang" class="logo" src="http://www.iteye.com/upload/logo/user/920299/f64fc182-3615-3f96-ac44-3fef154c4780-thumb.jpg?1386665616" title="robertliudeqiang" /></a>
+<span class="user_blog"><a href="http://robblog.iteye.com/blog/answered_problems" title="robertliudeqiang">robertliudeqiang</a></span>
+<br />
+<span class="score gray" title="问答积分">2195</span>
+<br />
+<span class="gold gray" title="金牌">0</span>
+<span class="silver gray" title="银牌">0</span>
+<span class="bronze gray" title="铜牌">0</span>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class="action">
+      <ul>
+        <li class="comment"><a href="javascript:void(0);" class="ask_click_action" data_action_sub_type="comment" data_action_type="dropdown" data_comments_count="0" data_parent_id="solution_78638" data_url="/solutions/78638/comments"><img alt="Comment" src="http://www.iteye.com/images/ask/comment.gif?1448702469" />添加评论</a></li>
+        
+        
+      </ul>
+    </div>
+
+  </dd>
+</dl>
+<dl time="1264302186" votes="0" class="for_sort">
+  <dt>
+    <div class="vote" id="vote_solution_78582">
+  <span>0</span><a class="vote_up_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78582/votes?type=up', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="支持：好答案"></a>
+  <a class="vote_down_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78582/votes?type=down', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="反对：没有价值的答案"></a><span>0</span>
+</div>
+  </dt>
+  <dd id="s_78582" class="solution_dd">
+    <div class="sproblem_right">
+      <p><span style="color: indigo;">http://blog.csdn.net/baobeiSimple/archive/2007/09/08/1777260.aspx<br />http://www.blogjava.net/beansoft/archive/2007/09/08/143551.html<br />介绍的都很不错 先看这两个<br />然后还有我博客上的一遍文章 我觉的很好 就转载过来了<br />http://wocsok.iteye.com/admin/blogs/549837<br />希望对你有所帮助</span></p>
+
+      <div class="ask_label"><span class="gray">2010年1月24日 11:03</span></div>
+
+      <div class="user_info fr">
+        <a href="http://wocsok.iteye.com/blog/answered_problems"><img alt="wocsok" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="wocsok" /></a>
+<span class="user_blog"><a href="http://wocsok.iteye.com/blog/answered_problems" title="wocsok">wocsok</a></span>
+<br />
+<span class="score gray" title="问答积分">1130</span>
+<br />
+<span class="gold gray" title="金牌">0</span>
+<span class="silver gray" title="银牌">0</span>
+<span class="bronze gray" title="铜牌">0</span>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class="action">
+      <ul>
+        <li class="comment"><a href="javascript:void(0);" class="ask_click_action" data_action_sub_type="comment" data_action_type="dropdown" data_comments_count="0" data_parent_id="solution_78582" data_url="/solutions/78582/comments"><img alt="Comment" src="http://www.iteye.com/images/ask/comment.gif?1448702469" />添加评论</a></li>
+        
+        
+      </ul>
+    </div>
+
+  </dd>
+</dl>
+<dl time="1264301407" votes="0" class="for_sort">
+  <dt>
+    <div class="vote" id="vote_solution_78577">
+  <span>0</span><a class="vote_up_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78577/votes?type=up', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="支持：好答案"></a>
+  <a class="vote_down_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78577/votes?type=down', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="反对：没有价值的答案"></a><span>0</span>
+</div>
+  </dt>
+  <dd id="s_78577" class="solution_dd">
+    <div class="sproblem_right">
+      <p>Java的<span style="color: red;">堆</span>是一个运行时数据区,类的(对象从中分配空间。这些对象通过new、newarray、anewarray和multianewarray等指令建立，它们不需要程序代码来显式的释放。堆是由垃圾回收来负责的，堆的优势是可以动态地分配内存大小，生存期也不必事先告诉编译器，因为它是在运行时动态分配内存的，Java的垃圾收集器会自动收走这些不再使用的数据。但缺点是，由于要在运行时动态分配内存，存取速度较慢。<br /><br />Java的<span style="color: red;">栈</span>是机器系统提供的数据结构，计算机会在底层对栈提供支持：分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，这就决定了栈的效率比较高。<span style="color: blue;">栈有2种分配方式：静态分配和动态分配。</span>静态分配是编译器完成的，比如局部变量的分配。动态分配由alloca函数进行分配，但是栈的动态分配和堆是不同的，他的动态分配是由编译器进行释放，无需我们手工实现。[color=red][/color]动态分配的栈就是堆栈。<br /><br />通俗地讲，堆是用来存储new出来的数据对象。栈是用来存储数据基本类型和堆的引用的。<br /><br /><a target="_blank" href="http://hi.bccn.net/space-100217-do-blog-id-14341.html">http://hi.bccn.net/space-100217-do-blog-id-14341.html</a><br /><a target="_blank" href="http://blog.csdn.net/hairetz/archive/2009/04/30/4141043.aspx">http://blog.csdn.net/hairetz/archive/2009/04/30/4141043.aspx</a><br /><a target="_blank" href="http://www.blogjava.net/xcp/archive/2008/08/10/stack.html">http://www.blogjava.net/xcp/archive/2008/08/10/stack.html</a></p>
+
+      <div class="ask_label"><span class="gray">2010年1月24日 10:50</span></div>
+
+      <div class="user_info fr">
+        <a href="http://huajiang.iteye.com/blog/answered_problems"><img alt="蔡华江" class="logo" src="http://www.iteye.com/upload/logo/user/146183/10e6539d-6396-3f98-8e17-539c16dd4fd8-thumb.jpg?1252914829" title="蔡华江" /></a>
+<span class="user_blog"><a href="http://huajiang.iteye.com/blog/answered_problems" title="蔡华江">蔡华江</a></span>
+<br />
+<span class="score gray" title="问答积分">3392</span>
+<br />
+<span class="gold gray" title="金牌">0</span>
+<span class="silver gray" title="银牌">0</span>
+<span class="bronze gray" title="铜牌">0</span>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class="action">
+      <ul>
+        <li class="comment"><a href="javascript:void(0);" class="ask_click_action" data_action_sub_type="comment" data_action_type="dropdown" data_comments_count="0" data_parent_id="solution_78577" data_url="/solutions/78577/comments"><img alt="Comment" src="http://www.iteye.com/images/ask/comment.gif?1448702469" />添加评论</a></li>
+        
+        
+      </ul>
+    </div>
+
+  </dd>
+</dl>
+<dl time="1264300963" votes="0" class="for_sort">
+  <dt>
+    <div class="vote" id="vote_solution_78571">
+  <span>0</span><a class="vote_up_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78571/votes?type=up', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="支持：好答案"></a>
+  <a class="vote_down_off" href="#" onclick="this.disabled = true; new Ajax.Request('/solutions/78571/votes?type=down', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=')}); return false;" title="反对：没有价值的答案"></a><span>0</span>
+</div>
+  </dt>
+  <dd id="s_78571" class="solution_dd">
+    <div class="sproblem_right">
+      <p>一、预备知识—程序的内存分配 <br />一个由c/C++编译的程序占用的内存分为以下几个部分 <br />1、栈区（stack）— 由编译器自动分配释放 ，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。 <br />2、堆区（heap） — 一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收 。注意它与数据结构中的堆是两回事，分配方式倒是类似于链表，呵呵。 <br />3、全局区（静态区）（static）—，全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域， 未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。 - 程序结束后有系统释放 <br />4、文字常量区 —常量字符串就是放在这里的。 程序结束后由系统释放 <br />5、程序代码区—存放函数体的二进制代码。 <br /><br />二、例子程序 <br />这是一个前辈写的，非常详细 <br />//main.cpp <br />int a = 0; 全局初始化区 <br />char *p1; 全局未初始化区 <br />main() <br />{ <br />int b; 栈 <br />char s[] = "abc"; 栈 <br />char *p2; 栈 <br />char *p3 = "123456"; 123456\0在常量区，p3在栈上。 <br />static int c =0； 全局（静态）初始化区 <br />p1 = (char *)malloc(10); <br />p2 = (char *)malloc(20); <br />分配得来得10和20字节的区域就在堆区。 <br />strcpy(p1, "123456"); 123456\0放在常量区，编译器可能会将它与p3所指向的"123456"优化成一个地方。 <br />} <br />二、堆和栈的理论知识 <br />2.1申请方式 <br />stack: <br />由系统自动分配。 例如，声明在函数中一个局部变量 int b; 系统自动在栈中为b开辟空间 <br />heap: <br />需要程序员自己申请，并指明大小，在c中malloc函数 <br />如p1 = (char *)malloc(10); <br />在C++中用new运算符 <br />如p2 = (char *)malloc(10); <br />但是注意p1、p2本身是在栈中的。 <br />2.2 <br />申请后系统的响应 <br />栈：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。 <br />堆：首先应该知道操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时， <br />会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序，另外，对于大多数系统，会在这块内存空间中的首地址处记录本次分配的大小，这样，代码中的delete语句才能正确的释放本内存空间。另外，由于找到的堆结点的大小不一定正好等于申请的大小，系统会自动的将多余的那部分重新放入空闲链表中。 <br />2.3申请大小的限制 <br />栈：在Windows下,栈是向低地址扩展的数据结构，是一块连续的内存的区域。这句话的意思是栈顶的地址和栈的最大容量是系统预先规定好的，在 WINDOWS下，栈的大小是2M（也有的说是1M，总之是一个编译时就确定的常数），如果申请的空间超过栈的剩余空间时，将提示overflow。因此，能从栈获得的空间较小。 <br />堆：堆是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。堆的大小受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。 <br />2.4申请效率的比较： <br />栈由系统自动分配，速度较快。但程序员是无法控制的。 <br />堆是由new分配的内存，一般速度比较慢，而且容易产生内存碎片,不过用起来最方便. <br />另外，在WINDOWS下，最好的方式是用VirtualAlloc分配内存，他不是在堆，也不是在栈是直接在进程的地址空间中保留一快内存，虽然用起来最不方便。但是速度快，也最灵活 <br />2.5堆和栈中的存储内容 <br />栈： 在函数调用时，第一个进栈的是主函数中后的下一条指令（函数调用语句的下一条可执行语句）的地址，然后是函数的各个参数，在大多数的C编译器中，参数是由右往左入栈的，然后是函数中的局部变量。注意静态变量是不入栈的。 <br />当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，也就是主函数中的下一条指令，程序由该点继续运行。 <br />堆：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容有程序员安排。 <br />2.6存取效率的比较 <br /><br />char s1[] = "aaaaaaaaaaaaaaa"; <br />char *s2 = "bbbbbbbbbbbbbbbbb"; <br />aaaaaaaaaaa是在运行时刻赋值的； <br />而bbbbbbbbbbb是在编译时就确定的； <br />但是，在以后的存取中，在栈上的数组比指针所指向的字符串(例如堆)快。 <br />比如： <br />#include <br />void main() <br />{ <br />char a = 1; <br />char c[] = "1234567890"; <br />char *p ="1234567890"; <br />a = c[1]; <br />a = p[1]; <br />return; <br />} <br />对应的汇编代码 <br />10: a = c[1]; <br />00401067 8A 4D F1 mov cl,byte ptr [ebp-0Fh] <br />0040106A 88 4D FC mov byte ptr [ebp-4],cl <br />11: a = p[1]; <br />0040106D 8B 55 EC mov edx,dword ptr [ebp-14h] <br />00401070 8A 42 01 mov al,byte ptr [edx+1] <br />00401073 88 45 FC mov byte ptr [ebp-4],al <br />第一种在读取时直接就把字符串中的元素读到寄存器cl中，而第二种则要先把指针值读到edx中，在根据edx读取字符，显然慢了。 <br />? <br /><br />2.7小结： <br />堆和栈的区别可以用如下的比喻来看出： <br />使用栈就象我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。 <br />使用堆就象是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。 <br /><br />堆和栈的区别主要分： <br />操作系统方面的堆和栈，如上面说的那些，不多说了。 <br />还有就是数据结构方面的堆和栈，这些都是不同的概念。这里的堆实际上指的就是（满足堆性质的）优先队列的一种数据结构，第1个元素有最高的优先权；栈实际上就是满足先进后出的性质的数学或数据结构。 <br />虽然堆栈，堆栈的说法是连起来叫，但是他们还是有很大区别的，连着叫只是由于历史的原因。 </p>
+
+      <div class="ask_label"><span class="gray">2010年1月24日 10:42</span></div>
+
+      <div class="user_info fr">
+        <a href="http://honglove.iteye.com/blog/answered_problems"><img alt="honglove" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="honglove" /></a>
+<span class="user_blog"><a href="http://honglove.iteye.com/blog/answered_problems" title="honglove">honglove</a></span>
+<br />
+<span class="score gray" title="问答积分">489</span>
+<br />
+<span class="gold gray" title="金牌">0</span>
+<span class="silver gray" title="银牌">0</span>
+<span class="bronze gray" title="铜牌">0</span>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class="action">
+      <ul>
+        <li class="comment"><a href="javascript:void(0);" class="ask_click_action" data_action_sub_type="comment" data_action_type="dropdown" data_comments_count="0" data_parent_id="solution_78571" data_url="/solutions/78571/comments"><img alt="Comment" src="http://www.iteye.com/images/ask/comment.gif?1448702469" />添加评论</a></li>
+        
+        
+      </ul>
+    </div>
+
+  </dd>
+</dl>
+
+  
+</div>
+
+<div class="clearfix"></div>
+
+
+
+
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+//<![CDATA[
+ window.html_codes = new Hash();
+
+
+
+
+ window.html_codes.set('problem_popup_notice', '<div class=\"#{class_name}\" id=\'problem_popupbox\'>\n  <h2>#{title}<\/h2>\n  #{content}\n<\/div>\n');
+
+ window.check_comment_time = Prototype.emptyFunction;
+ window.check_solution_time = Prototype.emptyFunction;
+
+//]]>
+</script>
+
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+//<![CDATA[
+    dp.SyntaxHighlighter.HighlightAll('code', true, true);
+    
+    $$('#main .problem .sproblem_right pre[name=code]').each(function(pre, index){ // blog content
+      var location = window.location;
+      source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+      pre.writeAttribute('codeable_id', 34966);
+      pre.writeAttribute('codeable_type', "Problem");
+      pre.writeAttribute('source_url', source_url);
+      pre.writeAttribute('pre_index', index);
+      pre.writeAttribute('title', '堆和堆栈的区别');
+    });
+    $$('#main .solution_dd').each(function(solution){// comment
+      var solution_id = solution.id.substr(2);
+      $$("#"+solution.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + solution.id;
+        pre.writeAttribute('codeable_id', solution_id);
+        pre.writeAttribute('codeable_type', "Solution");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', '堆和堆栈的区别');
+      });
+    });
+    code_favorites_init();
+    
+    fix_image_size($$('div.content img'), 650);
+    function quote_comment(id) {
+      new Ajax.Request('/editor/quote', {
+        parameters: {'id':id, 'type':'Solution'},
+        onSuccess:function(response){
+        $('problem_body_form').show();
+        $('editor_body').value += response.responseText;
+        $('editor_body').focus();
+        Element.scrollTo($('editor_body'));
+        }
+      });
+    }
+//]]>
+</script>
+
+
+
+        </div>
+        <div id="local">
+          
+  <div class="search column">
+  <form action="/problems/search" method="get">
+    <input class="text" id="query" name="query" style="width: 135px;" type="text" value="" />
+    <input class="submit" type="submit" value="搜索问题" />
+  </form> 
+</div>
+
+  <div id="guild">
+  <div class="guild">
+    <ul>
+      <li class="open"><span>  -47 </span><a href="/problems/active">待解决问题</a></li>
+      <li class="close"><span> 26185 </span><a href="/problems/solved">已解决问题</a></li>
+      <li class="hot"><span> 95955 </span> <a href="/problems/hot">热门问题</a></li>
+    </ul>
+  </div>
+</div>
+  <div class="my">
+  <a href="http://ask.csdn.net/" alt="我要提问" target="_blank" title="我要提问"><img alt="Ask-but" src="http://www.iteye.com/images/ask/ask-but.gif?1448702469" /></a>
+  <br />
+  <div class="ask_but">
+    
+      <span class="my_ask"><a href="/login">我的问答</a></span>
+    
+    <span class="help"> <a href="/problems/faq" title="FAQ">FAQ</a> | <a href="/problems/medals">勋章</a></span>
+  </div>
+</div>
+
+  <div class="column">
+  <h3>已解决问题</h3>
+  <ul class="close_ask">
+    
+      <li>
+        <a href="/problems/141596">使用Mybatis执行sql时如何统一校验输入参数?</a>
+      </li>
+    
+      <li>
+        <a href="/problems/141271">js里这种表述式是啥意思？return (y1 - y2 &gt; 0 ? &quot;Up&quot; : &quot;Down&quot;);</a>
+      </li>
+    
+      <li>
+        <a href="/problems/140382">请问基于云架构的J2EE架构应该怎么做？</a>
+      </li>
+    
+      <li>
+        <a href="/problems/137504">spring ,hibernate 都是用到了asm字节码技术，请问它们具体都拿ASM来实现了什么功能？或者说在哪个功能上用到的</a>
+      </li>
+    
+      <li>
+        <a href="/problems/136747">如何判断操作系统是32位还是64位？</a>
+      </li>
+    
+      <li>
+        <a href="/problems/136730">DBA_OBJECTS + ROWNUM 和 DUAL + ROWNUM 一个结果比较的疑问</a>
+      </li>
+    
+      <li>
+        <a href="/problems/136690">ajax缺点？</a>
+      </li>
+    
+      <li>
+        <a href="/problems/134845">判断字符串是否是数字开头</a>
+      </li>
+    
+      <li>
+        <a href="/problems/133335">用java程序监视mysql的变化。求方法</a>
+      </li>
+    
+      <li>
+        <a href="/problems/133330">如何对URL地址栏传参的信息进行加密或保护</a>
+      </li>
+    
+  </ul>
+</div>
+  <div class="column">
+  <h3>未解决问题</h3>
+  <ul class="new_ask">
+    
+  </ul>
+</div>
+  <div class="column">
+  <h3>排行榜</h3>
+  <ul class="blogs_tab">
+    <li class="tab selected" id="blog_hot_tab_week"><a href="javascript:void(0);" onclick="show_hot_blog('week')">周榜</a></li>
+    <li class="tab" id="blog_hot_tab_month"><a href="javascript:void(0);" onclick="show_hot_blog('month')">月榜</a></li>
+    <li class="tab" id="blog_hot_tab_all"><a href="javascript:void(0);" onclick="show_hot_blog('all')">总榜</a></li>
+  </ul>
+
+  <ul class="ask_top" id="blog_hot_week" >
+    
+    <a href="/problems/week_top_users" style="margin: -5px 5px 5px 130px;display:block;">查看全部排名>></a>
+  </ul>
+  <ul class="ask_top" id="blog_hot_month" style="display:none;">
+    
+    <a href="/problems/month_top_users" style="margin: -5px 5px 5px 130px;display:block;">查看全部排名>></a>
+  </ul>
+  <ul class="ask_top" id="blog_hot_all" style="display:none;">
+    
+  <li class="top_1" >
+    <span class="ranking"></span>
+    <div class="user_top">
+      <a href="http://lovewhzlq.iteye.com/blog/answered_problems"><img alt="lovewhzlq" class="logo" src="http://www.iteye.com/upload/logo/user/93841/680e45b7-ce64-375b-9bc8-31a33e5637ab-thumb.jpg?1239624327" title="lovewhzlq" /></a>
+      <span><a href="http://lovewhzlq.iteye.com/blog/answered_problems" title="lovewhzlq">lovewhzlq</a></span>
+      <br />
+      <span class="score" title="问答积分">13934</span>
+      <span style="display:none"  class="growth_text" title="周增长积分"><img class="growth" src="/images/ask/growth.gif" alt="月增长积分" /></span>
+    </div>
+  </li>
+
+  <li class="top_2" >
+    <span class="ranking"></span>
+    <div class="user_top">
+      <a href="http://jinnianshilongnian.iteye.com/blog/answered_problems"><img alt="jinnianshilongnian" class="logo" src="http://www.iteye.com/upload/logo/user/1122108/c7dd3e08-f305-3aa7-a0ee-888e606701d4-thumb.jpg?1444401766" title="jinnianshilongnian" /></a>
+      <span><a href="http://jinnianshilongnian.iteye.com/blog/answered_problems" title="jinnianshilongnian">jinnianshilongnian</a></span>
+      <br />
+      <span class="score" title="问答积分">7280</span>
+      <span style="display:none"  class="growth_text" title="周增长积分"><img class="growth" src="/images/ask/growth.gif" alt="月增长积分" /></span>
+    </div>
+  </li>
+
+  <li class="top_3" >
+    <span class="ranking"></span>
+    <div class="user_top">
+      <a href="http://yourgame.iteye.com/blog/answered_problems"><img alt="yourgame" class="logo" src="http://www.iteye.com/upload/logo/user/104021/f5d00197-09d2-34ed-aced-da6281a0699e-thumb.jpg?1242401105" title="yourgame" /></a>
+      <span><a href="http://yourgame.iteye.com/blog/answered_problems" title="yourgame">yourgame</a></span>
+      <br />
+      <span class="score" title="问答积分">5183</span>
+      <span style="display:none"  class="growth_text" title="周增长积分"><img class="growth" src="/images/ask/growth.gif" alt="月增长积分" /></span>
+    </div>
+  </li>
+
+  <li class="top_4" >
+    <span class="ranking"></span>
+    <div class="user_top">
+      
+      <span><a href="http://huajiang.iteye.com/blog/answered_problems" title="蔡华江">蔡华江</a></span>
+      
+      <span class="score" title="问答积分">3392</span>
+      <span style="display:none"  class="growth_text" title="周增长积分"><img class="growth" src="/images/ask/growth.gif" alt="月增长积分" /></span>
+    </div>
+  </li>
+
+  <li class="top_5" >
+    <span class="ranking"></span>
+    <div class="user_top">
+      
+      <span><a href="http://suziwen.iteye.com/blog/answered_problems" title="suziwen">suziwen</a></span>
+      
+      <span class="score" title="问答积分">3226</span>
+      <span style="display:none"  class="growth_text" title="周增长积分"><img class="growth" src="/images/ask/growth.gif" alt="月增长积分" /></span>
+    </div>
+  </li>
+
+  <li class="top_6" >
+    <span class="ranking"></span>
+    <div class="user_top">
+      
+      <span><a href="http://ulinkwo.iteye.com/blog/answered_problems" title="myali88">myali88</a></span>
+      
+      <span class="score" title="问答积分">3108</span>
+      <span style="display:none"  class="growth_text" title="周增长积分"><img class="growth" src="/images/ask/growth.gif" alt="月增长积分" /></span>
+    </div>
+  </li>
+
+  <li class="top_7" >
+    <span class="ranking"></span>
+    <div class="user_top">
+      
+      <span><a href="http://xiaolongfeixiang.iteye.com/blog/answered_problems" title="xiaolongfeixiang">xiaolongfeixiang</a></span>
+      
+      <span class="score" title="问答积分">3000</span>
+      <span style="display:none"  class="growth_text" title="周增长积分"><img class="growth" src="/images/ask/growth.gif" alt="月增长积分" /></span>
+    </div>
+  </li>
+
+  <li class="top_8" >
+    <span class="ranking"></span>
+    <div class="user_top">
+      
+      <span><a href="http://lewhwa.iteye.com/blog/answered_problems" title="lewhwa">lewhwa</a></span>
+      
+      <span class="score" title="问答积分">2963</span>
+      <span style="display:none"  class="growth_text" title="周增长积分"><img class="growth" src="/images/ask/growth.gif" alt="月增长积分" /></span>
+    </div>
+  </li>
+
+  <li class="top_9" >
+    <span class="ranking"></span>
+    <div class="user_top">
+      
+      <span><a href="http://zyn010101.iteye.com/blog/answered_problems" title="zyn010101">zyn010101</a></span>
+      
+      <span class="score" title="问答积分">2795</span>
+      <span style="display:none"  class="growth_text" title="周增长积分"><img class="growth" src="/images/ask/growth.gif" alt="月增长积分" /></span>
+    </div>
+  </li>
+
+  <li class="top_10" >
+    <span class="ranking"></span>
+    <div class="user_top">
+      
+      <span><a href="http://duyunfei.iteye.com/blog/answered_problems" title="AngelAndAngel">AngelAndAngel</a></span>
+      
+      <span class="score" title="问答积分">2641</span>
+      <span style="display:none"  class="growth_text" title="周增长积分"><img class="growth" src="/images/ask/growth.gif" alt="月增长积分" /></span>
+    </div>
+  </li>
+
+    <a href="/problems/top_users" style="margin: -5px 5px 5px 130px;display:block;">查看全部排名>></a>
+  </ul>
+  
+</div>
+
+<script type="text/javascript">
+  function show_hot_blog(type) {
+    ["week", "month", "all"].each(function(t){
+      $('blog_hot_' + t).hide();
+      $('blog_hot_tab_' + t).removeClassName("selected");
+    });
+    $('blog_hot_' + type).show();
+    $('blog_hot_tab_' + type).addClassName("selected");
+  }
+</script> 
+
+        </div>
+        <div id="nav">
+  <div class="wrapper">
+    <ul>
+            <li><a href="http://www.iteye.com/">首页</a></li>
+      <li><a href="http://www.iteye.com/news">资讯</a></li>
+      <li><a href="http://www.iteye.com/magazines">精华</a></li>
+      <li><a href="http://www.iteye.com/forums">论坛</a></li>
+      <li><a href="http://www.iteye.com/ask" class='selected'>问答</a></li>
+      <li><a href="http://www.iteye.com/blogs">博客</a></li>
+      <li><a href="http://www.iteye.com/blogs/subjects">专栏</a></li>
+      <li><a href="http://www.iteye.com/groups">群组</a></li>
+      <!-- <li><a target="_blank" href="http://job.iteye.com/iteye">招聘</a></li>-->
+      <li><a target="_blank" href="http://job.csdn.net/">招聘</a></li>
+      <li class="last"><a href="http://www.iteye.com/search">搜索</a></li>
+    </ul>
+  </div>
+</div>
+      </div>
+      <div id="footer">
+  <div id="site_nav">
+    <ul>
+      <li><a href="/index/service">广告服务</a></li>
+      <li><a href="http://webmaster.iteye.com">ITeye黑板报</a></li>
+      <li><a href="/index/contactus">联系我们</a></li>
+      <li class="last"><a href="/index/friend_links">友情链接</a></li>
+    </ul>
+  </div>
+  <div id="copyright">
+    &copy; 2003-2016 ITeye.com.    [ <a href="http://www.miibeian.gov.cn">京ICP证070598号</a>  京公网安备11010502027441 ]<br/>
+    北京创新乐知信息技术有限公司 版权所有<br />
+  </div>
+</div>
+
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+  </body>
+</html>

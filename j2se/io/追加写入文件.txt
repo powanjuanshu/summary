@@ -1,0 +1,16 @@
+package ce;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+public class Main {
+	public static void main(String[] args) throws Exception{
+		String filePath = "D:/shoplist.txt";
+		File file = new File(filePath);
+		OutputStream os = new FileOutputStream(file, true);
+		os.write("ilovethisgame".getBytes("UTF-8"));
+		os.write("\r\n".getBytes("UTF-8"));
+		os.write("jackandrose".getBytes("UTF-8"));
+		os.flush();
+		os.close();
+	}
+}

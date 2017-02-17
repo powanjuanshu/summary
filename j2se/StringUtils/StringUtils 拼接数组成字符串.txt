@@ -1,0 +1,13 @@
+package com.iflytek.epdcloud.ercsvc.service;
+import org.apache.commons.lang.StringUtils;
+public class Main2 {
+	public static void main(String[] args) {
+		String[] array = new String[3];
+		array[0] = "propertis";
+		array[1] = "system";
+		array[2] = "grade";
+		String str = StringUtils.join(array,",");
+		System.out.println(str);//propertis,system,grade
+		
+	}
+}

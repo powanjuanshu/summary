@@ -1,0 +1,54 @@
+1
+jQuery.parseJSON(json)接受一个JSON字符串,返回解析后的对象.
+传入一个畸形的JSON字符串会抛出一个异常.比如下面的都是畸形的JSON字符串:
+{test:1}(test 没有包围双引号)
+{'test':1}(使用了单引号而不是双引号)
+另外,如果你什么都不传入,或者一个空字符串,null或undefined,parseJSON都会返回null.
+示例
+var obj = jQuery.parseJSON('{"name":"John"}');
+alert( obj.name === "John" );
+---------------------------------------
+2
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+%>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="<%=path%>/js/jquery-1.8.3.min.js"></script>
+    <script>
+        $(function() {
+            $("#btn").click(function(){
+                $.ajax({ // 所有选项都是可选的
+                    async : true, // true为异步,false为同步,默认为异步,设置为异步,超时设置就没用了
+                    url : "<%=path%>/fast/hello.do",
+                    type : "post", // 默认为get
+                    contentType : "application/json", // 这里设置发往服务端的数据类型
+                    data : {uaername:123,password:321}, // data为空时也要带空参数,即data:{}
+                    dataType : 'text', // 传回来的数据类型,可以为json,text
+                    success : function(data, textStatus) {
+                        alert(textStatus); // 打印:success
+                        alert(data); // 打印:{"respCode":"0000","respDesc":"success"}
+                        alert(data.respCode); // 打印:undefined
+                        var json = $.parseJSON(data); // {"respCode":"0000","respDesc":"success"}可以解析,无法解析{'respCode':'0000','respDesc':'success'},报错:Uncaught SyntaxError: Unexpected token '
+                        alert(json.respCode); // 打印:0000
+                    },
+                    cache : false,
+                    timeout : 5000,
+                    error : function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("发送失败");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="button" value="dianj" id="btn">
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,457 @@
+<html>
+<head>
+<title>Java 中带包的类的编译与执行 -Java教程</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta name="description" content="Java中带包的类的编译与执行,以HelloWorld.java为例假设该文件的位置是/home/HelloWorld.java:viewplaincopytoclipboardPRint?packagea.b;nbsp;nbsp;nbsp;publicclassHelloWorld{nbsp;nbsp;nbsp;publicstaticvoidmainString[]args{nbsp;nbsp;nbsp;nbsp;nbsp;System.out.printlnquot;HelloWorld!quo..">
+<link rel="alternate" type="application/rss+xml" title="Java教程_RSS订阅" href="http://www.knowsky.com/rss.asp?id=160"/>
+<link rel="canonical" href="http://www.knowsky.com/540173.html"/>
+<style>
+.tb{table-layout:fixed}
+</style>
+<base onmouseover="window.status='正在浏览:Java 中带包的类的编译与执行   QQ：1783983';return true">
+<link href="style.css" rel="stylesheet" type="text/css">
+<base target="_blank" />
+</head>
+<body topmargin="0">
+<table width="860" border="0" cellpadding="0" cellspacing="0" background="http://img.knowsky.com/img/list/topbg1.jpg" height="26" class="t5" align="center">
+  <tr> 
+    <td><a href="http://www.knowsky.com">首页</a><a href="http://www.knowsky.com/school.asp">学院</a><a href="http://code.knowsky.com/">源码</a><a href="http://font.knowsky.com/" target="_blank">字体下载</a><a href="http://soft.knowsky.com/">软件</a><a href="http://book.knowsky.com/">电脑书</a> 
+      | <b>素材</b><a href="http://sucai.knowsky.com">素材</a><a href="http://moban.knowsky.com">模板</a><a href="http://psd.knowsky.com" target="_blank">PSD</a><a href="http://PPT.knowsky.com">PPT</a><a href="http://bizhi.knowsky.com">壁纸</a><a href="http://tupian.knowsky.com" target="_blank">图片</a><a href="http://shiliang.knowsky.com/">矢量</a><a href="http://pages.knowsky.com/">酷站</a><a href="http://tubiao.knowsky.com/" target="_blank">图标</a><a href="http://design.knowsky.com/">设计</a><a href="http://www.knowsky.com/bishua.asp">笔刷</a><a href="http://www.knowsky.com/tools/Wallpaper/">纹理</a><a href="http://mm.knowsky.com/">美图</a>|<a href="http://xiaoyouxi.knowsky.com/" target="_blank">小游戏</a><a href="http://blog.knowsky.com/">博客</a><a href="http://qqface.knowsky.com">QQ表情</a><a href="http://vote.knowsky.com/" target="_blank">投票</a><a href="http://count.knowsky.com/">计数器</a></td>
+  </tr>
+</table>
+<table width="860" border="0" cellpadding="5" align="center" cellspacing="0" height="70">
+  <tr> 
+    <td width="10"><a href="http://www.knowsky.com"><img src="http://img.knowsky.com/img/logo.jpg" alt="动态网站制作指南" border="0"></a></td>
+    <td colspan="2">
+      <script src="http://img.knowsky.com/ad/top.js"></script>
+    </td>
+  </tr>
+</table>
+<table width="860" border="0" cellpadding="0" cellspacing="0" align="center">
+  <tr> 
+    <td height="34" background="http://img.knowsky.com/img/topbg.jpg" class="t3"><a href="http://www.knowsky.com">首页</a>|<a href="http://www.knowsky.com/developer.asp">网络编程</a>|<a href="http://www.knowsky.com/zhanzhang.asp">站长之家</a>|<a href="http://www.knowsky.com/web.asp">网页制作</a>|<a href="http://www.knowsky.com/photo.asp">图形图象</a>|<a href="http://www.knowsky.com/system.asp">操作系统</a>|<a href="http://www.knowsky.com/internet.asp">冲浪宝典</a>|<a href="http://www.knowsky.com/soft.asp">软件教学</a>|<a href="http://www.knowsky.com/office.asp">网络办公</a>|<a href="http://www.knowsky.com/shoujixueyuan.asp">手机学院</a>|<a href="http://www.knowsky.com/mailserver.asp">邮件系统</a>|<a href="http://www.knowsky.com/networksecurity.asp">网络安全</a>|<a href="http://www.knowsky.com/exam.asp">认证考试</a></td>
+  </tr>
+</table>
+<table width="860" border="0" cellpadding="0" cellspacing="0" align="center" style="BORDER:#666 1px solid;">
+  <tr align="center"> 
+    <td  class="t25" height="25"><a href="http://code.knowsky.com/down.asp?typeid=1">ASP源码</a> 
+      | <a href="http://code.knowsky.com/down.asp?typeid=2">.Net源码</a> | <a href="http://code.knowsky.com/down.asp?typeid=3">PHP源码</a> 
+      | <a href="http://code.knowsky.com/down.asp?typeid=4">JSP源码</a> | <a href="http://code.knowsky.com/down.asp?typeid=13">JAVA源码</a> 
+      | <a href="http://code.knowsky.com/down.asp?typeid=5">CGI源码</a> | <a href="http://code.knowsky.com/down.asp?typeid=8">VB源码</a> 
+      | <a href="http://code.knowsky.com/down.asp?typeid=9">C++源码</a> | <a href="http://code.knowsky.com/down.asp?typeid=10">Delphi源码</a> 
+      | <a href="http://code.knowsky.com/down.asp?typeid=12">PB源码</a> | <a href="http://code.knowsky.com/down.asp?typeid=14">VF源码</a> 
+      | <a href="http://code.knowsky.com/down.asp?typeid=11">汇编</a> | <a href="http://code.knowsky.com/down.asp?typeid=6">服务器</a></td>
+  </tr>
+  <tr align="center"> 
+    <td height="25"><a href="http://www.knowsky.com/article.asp?typeid=145">迅雷</a> 
+      | <a href="http://www.knowsky.com/article.asp?typeid=146">电驴</a> | <a href="http://www.knowsky.com/article.asp?typeid=180">Win7</a> 
+      | <a href="http://www.knowsky.com/article.asp?typeid=128">QQ空间</a> | <a href="http://www.knowsky.com/article.asp?typeid=179">输入法</a> 
+      | <a href="http://www.knowsky.com/article.asp?typeid=166">Ghost</a> | <a href="http://www.knowsky.com/article.asp?typeid=117">Word</a> 
+      | <a href="http://www.knowsky.com/article.asp?typeid=118">Excel</a> 
+      | <a href="http://www.knowsky.com/asp.asp">asp</a> | <a href="http://www.knowsky.com/php.asp">php</a> 
+      | <a href="http://www.knowsky.com/sql.asp">Sql</a> | <a href="http://www.knowsky.com/article.asp?typeid=34">Dreamweaver</a> 
+      | <a href="http://www.knowsky.com/article.asp?typeid=36">Javascript</a> 
+      | <a href="http://www.knowsky.com/article.asp?typeid=38">css</a> | <a href="http://www.knowsky.com/article.asp?typeid=42">photoshop</a> 
+      | <a href="http://www.knowsky.com/article.asp?typeid=43">fireworks</a> | 
+      <a href="http://www.knowsky.com/article.asp?typeid=45">Flash</a></td>
+  </tr>
+</table>
+<br>
+<div align="center"><span id=ad_02></span><br>
+<script type="text/javascript"> /*学院栏目通栏 760*90*/ var cpro_id = 'u14467';</script>
+<script type="text/javascript" src="http://cpro.baidu.com/cpro/ui/c.js"></script></div><br><br>
+  
+<table width="860" border="0" cellpadding="6" cellspacing="1" align="center" bgcolor="#0072BD">
+  <tr bgcolor="#FFFFFF"> 
+    <td> 
+      <script type="text/javascript">
+/*教学文字链 通栏*/
+var cpro_id = "u1147323";
+</script>
+        <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+    </td>
+    </tr>
+  </table>
+ 
+<table width="860" border="0" cellpadding="0" cellspacing="0" align="center" class="t25">
+  <tr> 
+    <td height="35"><b>当前位置 &gt; <a href="school.asp">网站建设学院</a> &gt; <a href="developer.asp">网络编程</a> 
+      &gt; <a href="article.asp?typeid=160">Java教程</a></b> <a href="http://list.qq.com/cgi-bin/qf_invite?id=" target="_blank"><img src="http://rescdn.list.qq.com/zh_CN/htmledition/images/qunfa/manage/picMode_light_s.png" border="0" alt="Rss"></a> 
+      <a href="rss.asp?id=160" target="_blank"><img src="images/rss.jpg" border="0"></a> 
+    </td>
+  </tr>
+</table>
+<table width="860" border="0" cellpadding="0" cellspacing="0" align="center">
+  <tr> 
+    <td class="t25"><b>Tag:</b><a href="tag-1.html">注入</a>,<a href="tag-2.html">存储过程</a>,<a href="tag-3.html">分页</a>,<a href="tag-4.html">安全</a>,<a href="tag-5.html">优化</a>,<a href="tag-6.html">xmlhttp</a>,<a href="tag-7.html">fso</a>,<a href="tag-8.html">jmail</a>,<a href="tag-9.html">application</a>,<a href="tag-10.html">session</a>,<a href="tag-11.html">防盗链</a>,<a href="tag-12.html">stream</a>,<a href="tag-13.html">无组件</a>,<a href="tag-14.html">组件</a>,<a href="tag-15.html">md5</a>,<a href="tag-64.html">乱码</a>,<a href="tag-65.html">缓存</a>,<a href="tag-16.html">加密</a>,<a href="tag-17.html">验证码</a>,<a href="tag-18.html">算法</a>,<a href="tag-19.html">cookies</a>,<a href="tag-20.html">ubb</a>,<a href="tag-21.html">正则表达式</a>,<a href="tag-22.html">水印</a>,<a href="tag-23.html">索引</a>,<a href="tag-24.html">日志</a>,<a href="tag-25.html">压缩</a>,<a href="tag-58.html">base64</a>,<a href="tag-59.html">url重写</a>,<a href="tag-60.html">上传</a>,<a href="tag-61.html">控件</a>,<a href="tag-62.html">Web.config</a>,<a href="tag-63.html">JDBC</a>,<a href="tag-70.html">函数</a>,<a href="tag-71.html">内存</a>,<a href="tag-72.html">PDF</a>,<a href="tag-73.html">迁移</a>,<a href="tag-74.html">结构</a>,<a href="tag-75.html">破解</a>,<a href="tag-76.html">编译</a>,<a href="tag-77.html">配置</a>,<a href="tag-78.html">进程</a>,<a href="tag-105.html">分词</a>,<a href="tag-106.html">IIS</a>,<a href="tag-107.html">Apache</a>,<a href="tag-108.html">Tomcat</a>,<a href="tag-109.html">phpmyadmin</a>,<a href="tag-110.html">Gzip</a>,<a href="tag-111.html">触发器</a>,<a href="tag-112.html">socket</a></td>
+  </tr>
+</table> 
+<table width="860" border="0" align="center" cellpadding="0" cellspacing="9">
+  <tr> 
+    <td width="610" valign="top" height="506"> 
+      <table width="605" border="0" cellpadding="6" cellspacing="1" bgcolor="#0072BD">
+        <tr bgcolor="#FFFFFF" class="title"> 
+          <td colspan="3" height="4" align="center"> 
+            <h1>Java 中带包的类的编译与执行 </h1>
+            <br>
+            发表日期：2009-11-24<br>
+            <br>
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">QQ微博</a>
+<a class="bds_baidu">百度搜藏</a>
+<a class="bds_tqf">腾讯朋友</a>
+<a class="bds_qq">QQ收藏</a>
+<a class="bds_hi">百度空间</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_kaixin001">开心网</a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=11824" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script>
+<!-- Baidu Button END -->
+          </td>
+        </tr>
+      </table>
+      <br>
+      <table width="605" border="0" cellpadding="6" cellspacing="1" class="tb" bgcolor="#0072BD">
+        <tr bgcolor="#FFFFFF"> 
+          <td> 
+            <div style="float:left;padding: 9px;margin:9px;clear: both;">
+<script type="text/javascript"> /*文章页内容左上角*/ var cpro_id = 'u14495';</script>
+<script type="text/javascript" src="http://cpro.baidu.com/cpro/ui/c.js"></script></div>
+<div id="bd_neiwen_div"><span class="t18">以HelloWorld.<a href="http://www.knowsky.com/article.asp?typeid=160">java</a> 为例( 假设该文件的位置是/home/HelloWorld.java):<br>
+view plaincopy to cl<a href="http://ip.knowsky.com/">ip</a>board<a href="http://pr.knowsky.com/">PR</a>int?<br>
+package a.b;&nbsp;&nbsp;&nbsp;<br>
+public class HelloWorld{&nbsp;&nbsp;&nbsp;<br>
+ public static void main(String[] args){&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;System.out.println(&quot;Hello World!&quot;);&nbsp;&nbsp;&nbsp;<br>
+ }&nbsp;&nbsp;&nbsp;<br>
+}&nbsp;&nbsp;<br>
+package a.b;<br>
+public class HelloWorld{<br>
+ public static void main(String[] args){<br>
+&nbsp;&nbsp;System.out.println(&quot;Hello World!&quot;);<br>
+ }<br>
+} <br>
+<br>
+下面根据不同的编译方法来讨论：<br>
+<br>
+<br>
+第一种编译方法( 编译直接生成class 文件，执行需先创建包的路径)<br>
+假设当前目录为/src/java/ ，则编译命令为：javac HelloWorld.java<br>
+假设当前目录为/src/ ，则编译命令为：javac /src/java/HelloWorld.java 或者使用相对路径:javac java/HelloWorld.java 执行完该命令后, 在/src/java/ 目录下生成一个HelloWorld.class 文件。执行文件（在java 目录下新建目录a ，在a 目录下新建目录b 将HelloWorld.class 至于b 目录下；执行java a.b.HelloWorld ），必须要按照包的结构先创建目录。<br>
+<br>
+ <br>
+<br>
+第二种编译方法( 编译直接生成包的路径)<br>
+假设当前目录为/src/java/ ，则编译命令为：javac -d . HelloWorld.java<br>
+说明：&quot;.&quot; 为指定编译路径为当前目录；生成的HelloWorld.class 所有目录为/src/java/a/b/HelloWorld.class 。<br>
+javac -d c/d HelloWorld.java<br>
+说明：c/d 为指定编译路径为/src/java/c/d ，同样也可以写成绝对路径如javac -d d:/ HelloWorld.java ，前提是路径必须先存在；生成的HelloWorld.class 所有目录为/src/java/c/d/a/b /HelloWorld.class 。<br>
+假设当前目录为/src/ ，则编译命令为：javac -d . java/HelloWorld.java<br>
+说明：生成的HelloWorld.class 所有目录为/src/a/b/HelloWorld.class 。<br>
+javac -d java/c/d java/HelloWorld.java <br>
+说明：生成的HelloWorld.class 所有目录为/src/java/a/b/HelloWorld.class 。<br>
+<br>
+ <br>
+<br>
+第三种编译方法(先把源文件按照包结构放到指定的目录中，然后执行编译命令)<br>
+假设当前目录为/src/java/，先在目录中创建目录/a/b，然后编译命令：<br>
+javac a/b/HelloWorld.java<br>
+<br>
+ <br>
+<br>
+下面总结一下对于带包的类进行编译和执行时的一些要点：<br>
+1、编译时可以不考虑包结构的问题，不论用哪种方法,其实本质都是一样的，只需要让javac命令找到所需要编译的原文件(*.java)即可。编译时可以用相对或者绝对路径来为javac命令提供源文件的位置信息。<br>
+2、初学者易混淆classpath的作用,对于java命令的-cp选项和javac命令的-classpath选项，以及配置环境变量时的 CLASSPATH.其作用是不变的：都是指定所需要的class文件的位置。所不同的是,执行javac编译时的-classpath选项用于指定被编译的源文件需要调用另外的用户自定义类的位置.。执行java命令是根据classpath来寻找所需要执行的class文件的位置；而javac命令不能根据classpath来找源文件,只能根据classpath来寻找所需要用到的类。&nbsp;&nbsp;<br>
+<br>
+下面举例来说明该问题：<br>
+假设以下代码(位置:/src/java/code/a/b/TestT.java):<br>
+view plaincopy to clipboardprint?<br>
+package a.b;&nbsp;&nbsp;&nbsp;<br>
+import c.d.T;&nbsp;&nbsp;&nbsp;<br>
+public class TestT {&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;public static void main(String[] args) {&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;T t = new T();&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;t.p();&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;<br>
+}&nbsp;&nbsp;<br>
+package a.b;<br>
+import c.d.T;<br>
+public class TestT {<br>
+&nbsp;&nbsp;&nbsp;public static void main(String[] args) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;T t = new T();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;t.p();<br>
+&nbsp;&nbsp;}<br>
+} <br>
+引入的文件(位置:/src/java/code/tmp/c/d/T.java)<br>
+view plaincopy to clipboardprint?<br>
+package c.d;&nbsp;&nbsp;&nbsp;<br>
+public class T {&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;public void p(){&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(&quot;class：T&quot;);&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;<br>
+}&nbsp;&nbsp;<br>
+package c.d;<br>
+public class T {<br>
+&nbsp;&nbsp;&nbsp;public void p(){<br>
+&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(&quot;class：T&quot;);<br>
+&nbsp;&nbsp;&nbsp;}<br>
+} <br>
+假设现在编译两个文件(目录：/src/java/)，则编译命令为：javac -classpath code/tmp code/a/b/TestT.java 执行命令为：java -cp code;code/tmp a/b/TestT <br>
+ <br>
+如果当前目录为：/src/java/code/，则编译命令为：javac -classpath tmp a/b/TestT.java执行命令为：java -cp .;tmp a/b/TestT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<br>
+ <br>
+假设现在编译不同磁盘的三个文件(目录：e:/src/java/)，则编译命令为：<br>
+假设以下代码(位置:e:/src/java/code/a/b/TestT.java):<br>
+view plaincopy to clipboardprint?<br>
+package a.b;&nbsp;&nbsp;&nbsp;<br>
+import c.d.T;&nbsp;&nbsp;&nbsp;<br>
+import e.f.T1;&nbsp;&nbsp;&nbsp;<br>
+public class TestT {&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;public static void main(String[] args) {&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;T t = new T();&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;t.p();&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;T1 t1 = new T1();&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;t1.p();&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;<br>
+}&nbsp;&nbsp;<br>
+package a.b;<br>
+import c.d.T;<br>
+import e.f.T1;<br>
+public class TestT {<br>
+&nbsp;&nbsp;public static void main(String[] args) {<br>
+&nbsp;&nbsp;&nbsp;T t = new T();<br>
+&nbsp;&nbsp;&nbsp;t.p();<br>
+&nbsp;&nbsp;&nbsp;T1 t1 = new T1();<br>
+&nbsp;&nbsp;&nbsp;t1.p();<br>
+&nbsp;&nbsp;}<br>
+} <br>
+引入的文件1(位置:d:/java/code/tmp/c/d/T.java)<br>
+<br>
+view plaincopy to clipboardprint?<br>
+package c.d;&nbsp;&nbsp;&nbsp;<br>
+public class T {&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;public void p(){&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;System.out.println(&quot;class：T&quot;);&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;<br>
+}&nbsp;&nbsp;<br>
+package c.d;<br>
+public class T {<br>
+&nbsp;&nbsp;public void p(){<br>
+&nbsp;&nbsp;&nbsp;System.out.println(&quot;class：T&quot;);<br>
+&nbsp;&nbsp;}<br>
+} <br>
+引入的文件2(位置:c:/code/tmp/e/f/T1.java)<br>
+view plaincopy to clipboardprint?<br>
+package e.f;&nbsp;&nbsp;&nbsp;<br>
+ public class T1 {&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;public void p(){&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;System.out.println(&quot;class：T1&quot;);&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;<br>
+}&nbsp;&nbsp;<br>
+package e.f;<br>
+ public class T1 {<br>
+&nbsp;&nbsp;public void p(){<br>
+&nbsp;&nbsp;&nbsp;System.out.println(&quot;class：T1&quot;);<br>
+&nbsp;&nbsp;}<br>
+} <br>
+如果当前目录为：e:/src/java/<br>
+编译命令为：javac -classpath d:/java/code/tmp;c:/code/tmp code/a/b/TestT.java执行命令为：java -cp code;d:/java/code/tmp;c:/code/tmp a/b/TestT<br>
+<br>
+ <br>
+<br>
+说明：javac命令中的classpath必须指定引入类的路径；同样java命令中的cp必须引入引入类的class的路径也需指定执行类的路径</span></div><br>
+<script type="text/javascript"> /*文章页内容下面*/ var cpro_id = 'u14497';</script>
+<script type="text/javascript" src="http://cpro.baidu.com/cpro/ui/c.js"></script><br><br>
+             
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="t25">
+              <tr> 
+                <td>上一篇：<a href="540172.html">java代码大全和java23种设计方式</a> （人气：2670）<br>
+                  下一篇：<a href="540203.html">深析Java中抽象类与接口的区别</a>（人气：1430）<br><div align="center"><div id="hm_t_3781"></div><script type="text/javascript">
+/*文章页 下面*/
+var cpro_id = "u1413488";
+</script><script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script></div></td>
+              </tr>
+            </table><br>
+            <script src="http://img.knowsky.com/img/list/ad.js"></script>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td width="250" align="center" valign="top" class="t26" bgcolor="#F5F5F5"> 
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" height="30" background="http://www.knowsky.com/images/bg2.jpg">
+        <tr align="center"> 
+          <td class="t17"><b>教程搜索服务</b></td>
+        </tr>
+      </table>
+<div align="center"><form action="http://zhannei.knowsky.com/cse/search"  target="_blank">
+<input name="s" type="hidden" value="17551336237943259582"><br>
+          <input type="text" name="q" size="20" style="border:1px solid #C21029;font-weight:900;font-size:16px;line-height:25px; height:25px;" baiduSug="2"/>
+      <br><br>
+      <input type="submit" name="sa" value="教 程 搜 索" style="font-weight:900;font-size:16px;line-height:25px; height:31px;"/>
+</form></div>
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" height="30" background="http://www.knowsky.com/images/bg2.jpg">
+        <tr align="center"> 
+          <td width="207" class="t17" height="30"> <b>本月文章推荐</b></td>
+        </tr>
+      </table>
+      <table border="0" cellpadding="4" cellspacing="0" width="100%"  class="t23">
+        <tr>
+          <td>·<a href="364038.html" title="JUnit实战篇 (一)">JUnit实战篇 (一)</a>.<br>
+            ·<a href="363175.html" title="一个计算质数的Java程序">一个计算质数的Java程序</a>.<br>
+            ·<a href="364502.html" title="用 正则表达式 判断一个简单的用户登陆的例子">用 正则表达式 判断一个简单</a>.<br>
+            ·<a href="368961.html" title="特殊字符">特殊字符</a>.<br>
+            ·<a href="368222.html" title="采用POI和ANTLR提取WORD文档数据">采用POI和ANTLR提取WORD文档</a>.<br>
+            ·<a href="367875.html" title="详细解析抽象类和接口的区别">详细解析抽象类和接口的区别</a>.<br>
+            ·<a href="367256.html" title="Swing的历史">Swing的历史</a>.<br>
+            ·<a href="371100.html" title="setUTCSeconds 方法">setUTCSeconds 方法</a>.<br>
+            ·<a href="363505.html" title="Java对Internet为什么重要">Java对Internet为什么重要</a>.<br>
+            ·<a href="362308.html" title="Hibernate的关联关系映射">Hibernate的关联关系映射</a>.<br>
+            ·<a href="371096.html" title="除法赋值运算符 (/=)">除法赋值运算符 (/=)</a>.<br>
+            ·<a href="369630.html" title="利用Socket进行Java网络编程（三）">利用Socket进行Java网络编程</a>.<br>
+            ·<a href="364337.html" title="用Springframework实现定时器功能">用Springframework实现定时器</a>.<br>
+            ·<a href="363680.html" title="Mini Java编译器（三）">Mini Java编译器（三）</a>.<br>
+            ·<a href="370327.html" title="用J2SE 5.0创建定制的泛型集合">用J2SE 5.0创建定制的泛型集</a>.<br>
+            </td>
+        </tr>
+      </table>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" height="30" background="http://www.knowsky.com/images/bg2.jpg">
+        <tr align="center"> 
+          <td class="t17"><b>项目外包信息</b></td>
+        </tr>
+      </table>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+        <tr> 
+          <td>·<a href="http://www.knowsky.com/project/projlist.asp?id=7972" target="_blank">视频网站制作</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7971" target="_blank">网站设计</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7970" target="_blank">二线城市专业技术团队 承接各种</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7968" target="_blank">股指俱乐部创业计划</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7967" target="_blank">6年div网页制作经验承接相关业务</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7966" target="_blank">logo设计 2000元</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7965" target="_blank">想找个有棋牌设计经验的网页美工</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7964" target="_blank">公司网站改版</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7963" target="_blank">网络公司网站设计(静态页面)</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7962" target="_blank">地方门户首页模板设计与系统整合</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7961" target="_blank">金融类网站</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7960" target="_blank">淘宝店铺装修</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7958" target="_blank">长期承接WEB应用、数据库外包项</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7957" target="_blank">游戏UI外包公司承接游戏UI美术外</a><br>
+·<a href="http://www.knowsky.com/project/projlist.asp?id=7956" target="_blank">一共3个页面切图</a><br>
+</td>
+        </tr>
+      </table>
+      <table width="100%" border="0" align="center" cellpadding="5" cellspacing="2" bgcolor="#FFFFFF">
+        <tr align="center" bgcolor="#E0E0E0"> 
+          <td><a href="http://www.knowsky.com/project/projadd.asp" target="_blank">发布信息</a></td>
+          <td><a href="http://www.knowsky.com/project/" target="_blank">浏览信息</a></td>
+        </tr>
+      </table>
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" height="30" background="http://www.knowsky.com/images/bg2.jpg">
+        <tr align="center"> 
+          <td class="t17"><b>网络编程文章分类</b></td>
+        </tr>
+      </table>
+      <a href="article.asp?typeid=1">ASP教程</a><br>
+      <a href="article.asp?typeid=4">ASP实例</a><br>
+      <a href="article.asp?typeid=2">ASP技巧</a><br>
+      <a href="article.asp?typeid=5">ASP文摘</a><br>
+      <a href="article.asp?typeid=7">PHP教程</a><br>
+      <a href="article.asp?typeid=9">PHP技巧</a><br>
+      <a href="article.asp?typeid=8">PHP实例</a><br>
+      <a href="article.asp?typeid=10">PHP文摘</a><br>
+      <a href="article.asp?typeid=13">JSP教程</a><br>
+      <a href="article.asp?typeid=15">JSP技巧</a><br>
+      <a href="article.asp?typeid=14">JSP实例</a><br>
+      <a href="article.asp?typeid=16">JSP文摘</a><br>
+      <a href="article.asp?typeid=28">ASP.NET教程</a><br>
+      <a href="article.asp?typeid=30">ASP.NET技巧</a><br>
+      <a href="article.asp?typeid=29">ASP.NET实例</a><br>
+      <a href="article.asp?typeid=31">ASP.NET应用</a><br>
+      <a href="article.asp?typeid=25">xml教程</a><br>
+      <a href="article.asp?typeid=26">xsl教程</a><br>
+      <a href="article.asp?typeid=27">xml技巧</a><br>
+      <a href="article.asp?typeid=32">C#教程</a><br>
+      <a href="article.asp?typeid=33">C#应用</a><br>
+      <a href="article.asp?typeid=105">Delphi教程</a><br>
+      <a href="article.asp?typeid=107">Perl教程</a><br>
+      <a href="article.asp?typeid=108">Shell教程</a><br>
+      <a href="article.asp?typeid=119">Ajax教程</a><br>
+      <a href="article.asp?typeid=106">Visual Basic教程</a><br>
+      <a href="article.asp?typeid=160">Java教程</a><br>
+      <a href="article.asp?typeid=155">J2EE/J2ME教程</a><br>
+      <a href="article.asp?typeid=177">C/C++教程</a><br>
+      <a href="article.asp?typeid=23">移动解决方案</a><br>
+      <a href="article.asp?typeid=22">移动短信技术</a><br>
+      <a href="article.asp?typeid=24">移动行业动态</a><br>
+      <a href="article.asp?typeid=178">软件工程</a><br>
+      <a href="article.asp?typeid=3">WordPress</a><br>
+      <a href="article.asp?typeid=6">Android开发</a><br>
+       </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+var cpro_id = "u1366390";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={
+tn:"baiduTlinkNeiwen",
+adn:10
+}
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/cnw.js" type="text/javascript"></script>
+
+<script language="JavaScript" src="copy.js"></script>
+<table width="860" border="0" cellpadding="6" cellspacing="0" align="center" bgcolor="#FAFAFA">
+  <tr> 
+    <td class="t26">站长工具：<a href="http://pr.knowsky.com/">Google PR查询</a> <a href="http://alexa.knowsky.com">Alexa排名查询</a> <a href="http://www.knowsky.com/tools/wangzhansuduceshi.asp">网站速度测试</a> <a href="http://www.knowsky.com/tools/css.asp">CSS在线编辑器</a> <a href="http://www.knowsky.com/tools/OpenWeb.asp">OPEN参数生成器</a> <a href="http://www.knowsky.com/tools/OpenWindows.asp">弹出式窗口代码产生器</a> <a href="http://www.knowsky.com/tools/PWDLogin.asp">密码登录生成器</a> <a href="http://www.knowsky.com/tools/ButtonGenerator.asp">在线按钮生成器</a> <a href="http://www.knowsky.com/tools/MetaTag.asp">Meta标签生成器</a> <a href="http://www.knowsky.com/tools/youxiangtubiao.asp">邮箱图标在线生成</a> <a href="http://www.knowsky.com/tools/EffectWord.asp">多色彩特效字代码生成器</a> <a href="http://www.knowsky.com/tools/WebDebugger.asp">网页代码调试器</a> <a href="http://www.knowsky.com/tools/OnLineFTP.asp">在线FTP登陆</a> <a href="http://www.knowsky.com/tools/ColorPicker.asp">Flash取色器</a> <a href="http://www.knowsky.com/tools/ColorComparison.asp">配色代码对照表</a> <a href="http://www.knowsky.com/tools/ColorThesaurus.asp">配色辞典</a> <a href="http://www.knowsky.com/tools/cssgenerator.asp">CSS生成器</a> <a href="http://www.knowsky.com/tools/cssyouhua.asp">CSS在线压缩</a> <a href="http://www.knowsky.com/tools/ad/">广告代码</a> <a href="http://www.knowsky.com/tools/iframe.asp">框架网页代码生成器</a> <a href="http://www.knowsky.com/tools/Encode.asp">js/vbs加密</a> <a href="http://www.knowsky.com/tools/md5.asp">md5加密</a> <a href="http://www.knowsky.com/tools/ToolJinzhi.asp">进制转换</a> <a href="http://www.knowsky.com/tools/utf8.asp">UTF-8 转换工具</a> <a href="http://www.knowsky.com/tools/yanse.asp">在线调色板</a> <a href="http://www.knowsky.com/html2js.htm">Html转换js</a> <a href="http://www.knowsky.com/tools/html2asp.htm">Html转换asp</a> <a href="http://www.knowsky.com/tools/html2php.htm">Html转换php</a> <a href="http://www.knowsky.com/tools/html2perl.htm">Html转换perl</a> <a href="http://www.knowsky.com/tools/JsFormat.asp">HTML/JS格式化</a> <a href="http://www.knowsky.com/tools/asciigraphemic.asp">ASCII字形生成器</a> <a href="http://www.knowsky.com/tools/ymzhxg.asp">页面转换效果生成器</a> <a href="http://www.knowsky.com/process/" target="_blank">系统进程</a><br>实用工具：<a href="http://www.knowsky.com/tools/ToolHan_Pin.asp">汉字翻译拼音</a> <a href="http://www.knowsky.com/tools/pinyinzidian.asp">拼音字典</a> <a href="http://www.knowsky.com/tools/zaixianfanyi.asp">在线翻译</a> <a href="http://www.knowsky.com/tools/tianqiyubao.asp">天气预报</a> <a href="http://www.knowsky.com/tools/huoxingwen.asp">火星文</a> <a href="http://www.knowsky.com/tools/wangsuceshi.asp">在线网速测试</a> <a href="http://www.knowsky.com/tools/ToolSign.asp">符号对照表</a> <a href="http://www.knowsky.com/tools/ToolTax.asp">个税计算</a> <a href="http://iphone.knowsky.com/">苹果壁纸</a> <a href="http://www.knowsky.com/tools/licaigongju.asp">理财工具</a> <a href="http://huangjinjiage.knowsky.com/">黄金价格</a> <a href="http://www.knowsky.com/tools/baiyinjiage.asp">白银价格</a> <a href="http://www.knowsky.com/tools/goufangyinhanganjie.asp">购房银行按揭利率计算</a> <a href="http://huilvchaxun.knowsky.com">汇率查询</a> <a href="http://finnav.knowsky.com/">金融导航</a> <a href="http://www.knowsky.com/tools/ToolClassic.asp">经典小工具</a> <a href="http://www.knowsky.com/tools/ToolGb_Big.asp">汉字简繁转换</a> <a href="http://www.knowsky.com/tools/ToolUnit.asp">普通单位换算</a> <a href="http://www.knowsky.com/tools/ToolUnitGB.asp">公制单位换算</a> <a href="http://www.knowsky.com/tools/toolslaohuangli.asp">生辰老黄历</a> <a href="http://www.knowsky.com/tools/toolsdianhuaquhaoduizhaobiao.asp">国内电话区号</a> <a href="http://www.knowsky.com/tools/ToolDName.asp">国家代码与域名缩写</a> <a href="http://www.knowsky.com/tools/ToolPassword.asp">文字加密解密</a> <a href="http://www.knowsky.com/tools/yuansu.asp">元素周期表</a> <a href="http://www.knowsky.com/tools/ToolHealth.asp">健康查询</a> <a href="http://www.knowsky.com/tools/WorldTime.asp">世界时间</a> <a href="http://www.knowsky.com/tools/quanguogedichepaichaxunbiao.asp">全国各地车牌查询</a> <a href="http://www.knowsky.com/tools/quanguocheliangjiaotongweizhangchaxunbiao.asp">全国车辆交通违章查询</a> <a href="http://www.knowsky.com/tools/wannianli.asp">万年历</a> <a href="http://www.knowsky.com/tools/jieqi.asp">二十四节气</a> <a href="http://www.knowsky.com/tools/hanzihengshupaiban.asp">汉字横竖排版</a> <a href="http://www.knowsky.com/tools/mobile.asp">手机号码查询</a> <a href="http://www.knowsky.com/tools/jisuanqi.asp">计算器</a> <a href="http://ip.knowsky.com/">ip搜索</a> <a href="http://www.knowsky.com/tools/shjiudian.asp">酒店预订</a> <a href="http://www.knowsky.com/tools/shjipiao.asp">机票预订</a></td>
+  </tr>
+</table>
+<table width="860" border="0" cellpadding="2" cellspacing="0" align="center" bgcolor="#F6F6F6">
+  <tr> 
+    <td align="center" height="33"><a href="http://www.knowsky.com/ad.asp" target="_blank">广告刊登</a> 
+| <a href="http://www.knowsky.com/privacy.asp" target="_blank">版权声明</a> 
+| <a href="http://www.knowsky.com/contactus.asp" target="_blank">联系我们</a> 
+| <a href="javascript:window.external.AddFavorite('http://www.knowsky.com/','动态网站制作指南(www.knowsky.com)')">加入收藏</a> 
+| <a href="http://www.knowsky.com/aboutrss.asp" target="_blank">RSS订阅</a></td>
+  </tr>
+  <tr> 
+    <td align="center">Copyright &copy; 2000-2014 <a href="http://www.knowsky.com">www.knowsky.com</a> All rights reserved | 沪ICP备05001343号</td>
+  </tr>
+</table>
+<div align="center"><img src="http://img.knowsky.com/img/bottom.jpg" width="860" height="15"></div>
+
+
+<SPAN id=span_ad_02> 
+<div align="center"> 
+  <script src="http://img.knowsky.com/ad/ad.js"></script>
+</div>
+</SPAN>
+<SCRIPT>ad_02.innerHTML=span_ad_02.innerHTML;span_ad_02.innerHTML="";</SCRIPT>
+
+
+
+<script type="text/javascript"> /*学院悬浮*/ var cpro_id = 'u95852';</script>
+<script type="text/javascript" src="http://cpro.baidu.com/cpro/ui/f.js"></script>
+
+<!-- 请置于所有广告位代码之前 -->
+<script type="text/javascript" src="http://cbjs.baidu.com/js/m.js"></script>
+<!-- 广告位：鸿媒体 右下角浮层 2011-03-30 17:31:33 -->
+<script type="text/javascript">BAIDU_CLB_fillSlot("135333");</script>
+<div id="Layer1" style="position:absolute; width:0px; height:0px; z-index:1; left: 0; top: 0; visibility: hidden">
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa89960924c54901de40c2bead6702d5c' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</div>
+</body>
+</html>

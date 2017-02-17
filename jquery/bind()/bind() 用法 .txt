@@ -1,0 +1,198 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <style type="text/css">
+		p {
+			background:yellow;
+			font-weight:bold;
+			cursor:pointer;
+			3 padding:5px;
+		}
+		p.over {
+			background:#bbddcc;
+		}
+		span {
+			color:red;
+		}
+    </style>
+    </head>
+    <body>
+       	<input id="open_pop_win" type="button" value="Show"></input>
+       	<p>click or double click here.</p>
+		<span></span>
+    </body>
+    <script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+   	<script type="text/javascript">
+	$(function(){
+		init();
+	})
+	function init(){
+		$("#open_pop_win").bind("click", open).bind("mouseout", out);;
+		var message='把该信息传递给Fn函数';
+		$("p").bind("click", {msg:message}, function(event){//在参数bind()方法中,第二个参数data很少用到,用途是通过该参数把一些附加的信息传递给事件处理函数fn中,参数data是作为event.data属性值传递给事件对象额外的数据对象
+			alert(event.data.msg);
+			var str = event.pageX + ", " + event.pageY; // 鼠标点击的坐标
+			$("span").text("单击:" + str);
+		});
+		
+		$("p").bind("dblclick", function(){
+			$("span").text("双击:" + this.nodeName);
+		});
+		
+		$("p").bind("mouseenter mouseleave", function(event){
+			$(this).toggleClass("over");
+		});
+	}
+	/*打开弹出框 */
+	function open(event){
+		alert($(this).prop("outerHTML"));//打印:<input id="open_pop_win" value="Show" type="button">,获得点击的元素本身
+	}
+	function out(){
+		alert("234");//移出去弹出234
+	}
+   	</script> 
+</html>
+---------------------
+Jquery之Bind方法参数传递与接收的三种方法
+方法一、
+function GetCode(event) { alert(event.data.foo); } 
+$(document).ready(function() { $("#summary").bind("click", {foo:'abc'} ,GetCode); }); 
+
+方法二、
+函数句柄
+$("#summary").bind("click", function() { GetCode("abc") }); 
+function GetCode(str) { } 
+
+方法三、
+函数闭包
+function GetCode(str) { return function() { alert(str) }} 
+$("#summary").bind("click", GetCode("abc")); 
+---------------------
+bind 方法为每个选择的元素事件绑定函数
+语法格式：bind(type,[data],fn)
+其中参数type为一个或多个类型字符串参数，type参数选择范围如下：
+blur,focus,load,scroll,unload,click,
+dbclick,mousedown,mouseup,mousemove,mouseover,
+mouseout,mouseenter,mouseleave,change,select,submit,
+keydowm,keypress,keyup,error
+参数data是作为event.data属性值传递给事件对象额外的数据对象
+参数fn是绑定到每个选择元素的事件中的处理函数
+简单事例：
+   点击” />
+JQUERY Code:
+   $(function(){
+      $(“#button1”).bind(“click”,function(){
+$(this).attr(“disabled”,”disabled”);
+})//按钮不可用
+})
+
+如需绑定多个事件，可以将事件用空格隔开，下面我们添加一个click 一个mouseout时间
+$(function(){
+     $("body ,div ,#button1").bind("click mouseout",function(){
+         $(this).attr("disabled","disabled");
+     })
+   })
+用映射方式绑定不同的事件
+ 
+   
+      Name:  class=”txt”/>//绑定change ,focus这2个事件
+  
+    
+ 
+ 
+ 
+ 
+JQUERY Code:
+   $(function(){
+       $(“.txt”).bind({
+       focus:function(){$(“#idTip”).show().html(“执行的是focus事件”);},change:function(){$(“#idTip”).show().html(“执行的是change事件”);}
+})
+})
+在参数bind()方法中，第二个参数data很少用到，用途是通过该参数把一些附加的信息传递给事件处理函数fn中
+  JQUERY Code:
+   $(function(){
+      var message=”把该信息传递给Fn函数”;
+       $(“.txt”).bind(“focus”,{msg:message},function(event){$(“#idTip”).show().html(even.data.msg);});//设置文本
+})
+---------------------
+JQuery中Bind()事件用法分析
+
+定义:
+bind(eventType, eventData, handler(eventObject))
+它的三个参数的意义如下:
+eventType是一个字符串类型的事件类型,就是你所需要绑定的事件.
+这类类型可以包括如下:blur,focus,focusin,focusout,load,resize,scroll,unload,click,dblclick,mousedown,mouseup,mousemove,mouseover,mouseout,mouseenter,mouseleave,change,select,submit,keydown,keypress,keyup,error.
+
+这里需要注意的是,这里用的都是javascript里面的事件方法,而不是JQuery里面的,JQuery里面的事件方法均在JavaScript前面多了一个on,比如onclick,onblur等等.
+eventData参数是一个可选参数,不过它在平时用的比较少.如果提供了这个参数,那么我们就能把一些附加信息传递给事件处理函数了.这个参数有个很好的用处,就是处理闭包带来的问题.待会在给大家举实例.
+Handler是用来绑定的处理数,其实也也就是回调函数,处理完数据之后相应的方法.
+
+1.第一个简单的bind()事件
+<input id="BtnFirst"type="button"value="click me"/>
+<script>
+$(function () {
+	$("#BtnFirst").bind("click",function(){
+		alert("Hello World");
+	});
+})
+</script>
+
+打开页面之后,点击按钮Click Me,就会弹出Hello World.这算是我们最简单的绑定事件吧.很简单吧.
+
+2.绑定多个事件
+我们可以通过bind()来绑定多个事件(其实,这也就是JQuery以及Linq中非常有名的链式编程).实现的主要功能就是当我们点击的时候,弹出“Hello World”,当离开button的时候,显示出一个div.
+<div>
+	<input id="BtnFirst"type="button"value="Click Me"/></div>
+	<div id="TestDiv"style=" width:200px; height:200px; display:none; ">
+</div>
+<script>
+$(function () {
+	$("#BtnFirst").bind("click", function () {
+		alert("Hello World");
+	}).bind("mouseout", function () {
+		$("#TestDiv").show("slow");
+	});
+})
+</script>
+
+这段代码页很容易理解,就是当button被点击的时候,弹出一个Hello World,在离开的时候,在把div给显示出来.JQuery里的动画,均可以用slow、fast和normal,当然你还可以设置相关的毫秒数.
+
+3.bind()事件的对象
+Handler这个回调函数可以接受一个参数,当这个函数被调用时,一个JavaScript事件对象会作为一个参数传进来.
+这个事件对象通常是没有必要且可以省略的参数,因为当这个事件处理函数绑定的时候就能够明确知道他在触发的时候应该做些什么,通常就已经可以获得充分的信息了.然而在有些时候,在事件初始化的时候需要获取更多关于用户环境的信息.
+给一个JQuery官网上面的例子:
+
+<style>
+p {
+	background:yellow;font-weight:bold;cursor:pointer;3 padding:5px;
+}
+p.over {
+	background:#ccc;
+}
+span {
+	color:red;
+}
+</style>
+
+<p>click or double click here.</p>
+<span></span>
+<script>
+$("p").bind("click", function(event){
+	var str = "( " + event.pageX + ", " + event.pageY + " )";
+	$("span").text("Click happened! " + str);
+});
+$("p").bind("dblclick", function(){
+	$("span").text("Double-click happened in " + this.nodeName);
+});
+$("p").bind("mouseenter mouseleave", function(event){
+	$(this).toggleClass("over");
+});
+</script>
+
+这里的主要功能是为了实现当用户点击p这个对象的时候,把当前相对于页面的坐标显示在span标签里面,这里就用到了event这个事件.把参数传进去.
+
+4.unbind()事件
+unbind([type],[data],Handler) 是 bind()的反向操作,从每一个匹配的元素中删除绑定的事件.如果没有参数,则删除所有绑定的事件.你可以将你用bind()注册的自定义事件取消绑定.
+如果提供了事件类型作为参数,则只删除该类型的绑定事件.如果把在绑定时传递的处理函数作为第二个参数,则只有这个特定的事件处理函数会被删除.
+
+最后,简单的了解一下one()事件的使用,其实one和bind是一样,都是为了绑定事件而产生的.One与bind基本上差不多,不同的在调用jQuery.event.add时,把注册的事件处理的函数做了一个小小的调整.
+One调用了jQuery.event.proxy进行了代理传入的事件处理函数.在事件触发调用这个代理的函数时,先把事件从cache中删除,再执行注册的事件函数.这里就是闭包的应用,通过闭包得到fn注册的事件函数的引用.

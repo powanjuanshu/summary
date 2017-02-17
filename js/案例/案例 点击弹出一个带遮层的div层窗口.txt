@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>  
+        <title>点击文字弹出一个DIV层窗口代码</title>  
+        <style>  
+        .black_overlay{
+            position:absolute; 
+			left:0; 
+			top:0px; 
+			width:100%; 
+			height:100%; 
+			background:black;
+			z-index: 1000; 
+			opacity : 0.5
+        }
+        .show {
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 55%;
+            height: 55%;
+            padding: 20px;
+            border: 10px solid orange;
+            background-color: white;
+            z-index:1002;
+            overflow: auto;
+        }
+    </style>
+    
+    </head>
+    <body>
+       	<input id="open_pop_win" type="button" value="Show"></input>
+       	<br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+       	<br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+       	
+        <div class="show" id="pop_win">
+        	<input id="close_pop_win" type="button" value="Close"></input>
+        </div>
+        
+        <div class="black_overlay" style="display:none" id="black_overlay"></div>
+    </body>
+    
+    <script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+   	<script type="text/javascript">
+	$(function(){
+		init();
+	})
+	function init(){
+		set_overlay_height();
+		$("#close_pop_win").bind("click", close);
+		$("#open_pop_win").bind("click", open);
+	}
+	/*调整遮罩的宽高与body一致 */
+	function set_overlay_height(){
+		$("#black_overlay").css({ "width": $(document).width(), "height": $(document).height() });//你这个设置的height:100%意思就是浏览器窗口的一个高度,也就是你设置的body:100%的高度,如果你页面里面的内容超过了浏览器窗口显示的范围,也就是出现了滚动条的话，那你拉动滚动条的话下面就会出现没有被遮罩的部分。你可以先判定你页面内容的高度跟浏览器窗口大小比较，取最大值赋值给这个遮罩层高度就可以了
+	}
+	/*关闭弹出框 */
+	function close(){
+		$("#black_overlay").hide();
+		document.getElementById('pop_win').style.display='none';
+	}
+	/*打开弹出框 */
+	function open(event, data, fuc){
+		$("#black_overlay").show();
+		document.getElementById('pop_win').style.display='block';
+	}
+   	</script> 
+</html>

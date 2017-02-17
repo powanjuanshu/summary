@@ -1,0 +1,33 @@
+如果无法根据指定的 index 参数找到元素，则该方法构造带有空集的 jQuery 对象，length 属性为 0。
+:eq(索引序号)/:gt(索引序号)/:lt(索引序号)，选取等于索引号/大于索引号/小于索引号的元素，比如$("div:lt(3)"),选取索引号小于3的所有div元素 
+注意： 
+
+过滤选择器的混合使用时要记住后面的过滤条件是以前面的过滤选择器过滤后的重新序号为基础，即过滤的逐级性，比如 
+
+$("#t1 tr:gt(0):lt(3)").css("fontSize", "28"); //lt(3)是从gt(0)出的新序列中的序号，不要写成lt(4) 
+------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="jquery.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<div id="aaa" class="bbb">
+	<button onclick="quit()" id="code1">退出1</button><br>
+	<button onclick="quit()" id="xcode2">退出2</button><br>
+	<button onclick="quit()" id="scode3">退出3</button><br>
+	<div id="ccc">
+		<input id="orgId2" value="orgId2" onclick="quit()" type="text">
+		<button onclick="quit()" id="scode4">退出4</button><br>
+	</div>
+</div>
+<script type="text/javascript">
+function quit(){
+	var button = $("button:eq(3)");
+	alert(button.prop("outerHTML"));//打印:<button onclick="quit()" id="scode4">退出4</button>
+}
+</script>
+</body>
+</html>

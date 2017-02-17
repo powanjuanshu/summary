@@ -1,0 +1,375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>使用MinGW编写JNI程序 - 从零开始 - ITeye技术网站</title>
+    <meta name="description" content="编写JNI程序有时不想安装VC之类的IDE，安装GCC还不错，所以使用MinGW是个不错的选择。 安装MinGW之后在命令窗口下切换到MinGW安装目录的bin目录下，需要java安装目录下的include下面的jni.h,jawt_md.h,jni_md.h拷贝到MInGW安装目录的include目录下，这样编译时就不用指定这些文件的目录。 具体步骤如下： 一：编写java文件   public  ..." />
+    <meta name="keywords" content="java, jni, mingw 使用MinGW编写JNI程序" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="从零开始" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1406686577" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/green.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">从零开始</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://qifan.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://qifan.iteye.com" class="p-author" target="_blank">qifan.yang</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1540609">使用MinGW编写JNI程序</a>
+      <em class="actions">      </em>
+    </h3>
+    
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/java">java</a><a href="http://www.iteye.com/blogs/tag/jni">jni</a><a href="http://www.iteye.com/blogs/tag/mingw">mingw</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    编写JNI程序有时不想安装VC之类的IDE，安装GCC还不错，所以使用MinGW是个不错的选择。<br /><br />安装MinGW之后在命令窗口下切换到MinGW安装目录的bin目录下，需要java安装目录下的include下面的jni.h,jawt_md.h,jni_md.h拷贝到MInGW安装目录的include目录下，这样编译时就不用指定这些文件的目录。<br /><br />具体步骤如下：<br /><br />一：编写java文件<br /><pre class="java" name="code">
+public class HelloJNI {
+    static {
+        System.loadLibrary("Hello");
+    }
+
+    public static native void hello(String msg);
+
+    public static void main(String[] args) {
+	HelloJNI hh=new HelloJNI();
+       hh.hello("Hello,Kimm!");
+    }
+}
+</pre><br /><br />二：编译java文件 javac HelloJNI.java<br /><br />三：生成HelloJNI.h文件<br /><br /><pre class="c" name="code">
+/* DO NOT EDIT THIS FILE - it is machine generated */
+#include &lt;jni.h&gt;
+/* Header for class HelloJNI */
+
+#ifndef _Included_HelloJNI
+#define _Included_HelloJNI
+#ifdef __cplusplus
+extern "C" {
+#endif
+/*
+ * Class:     HelloJNI
+ * Method:    hello
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_HelloJNI_hello
+  (JNIEnv *, jclass, jstring);
+
+#ifdef __cplusplus
+}
+#endif
+#endif
+</pre><br />方法生命中需注意：jclass表示HelloJNI那个类，jstring表示hello方法参数类型<br /><br />四：编写C文件<br /><br /><pre class="c" name="code">
+#include "jni.h"
+#include &lt;stdio.h&gt;
+#include "HelloJNI.h"
+
+
+JNIEXPORT void JNICALL 
+Java_HelloJNI_hello(JNIEnv *env, jclass aa, jstring bb)
+{
+	printf("hello,world\n");
+	return;
+}
+</pre><br /><br />五：生成dll：gcc -shared -Wl,--kill-at -o hello.dll HelloJNI.c<br /><br /> System.loadLibrary("Hello");就是加载生成的dll文件，注意名字一样<br /><br />六：运行 java HelloJNI,调用c文件中的Java_HelloJNI_hello方法<br /><br />参考<a href="http://blogger.org.cn/blog/more.asp?name=jkit&amp;id=12794" target="_blank">http://blogger.org.cn/blog/more.asp?name=jkit&amp;id=12794</a><br /><br />
+  </div>
+
+  
+
+
+  
+  
+  <div id="bottoms" class="clearfix">
+    <div id="digg_bottom" class="clearfix"><div class='digged'><strong>0</strong> <br/>顶</div><div class='digged'><strong>1</strong> <br/>踩</div></div>
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/1545999" class="next" title="C调用dll小结">C调用dll小结</a>
+      |
+      <a href="/blog/1535609" class="pre" title="java位运算">java位运算</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2012-05-25 14:11</li>
+      <li>浏览 409</li>
+      <li><a href="#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/1540609" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1540609;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', '使用MinGW编写JNI程序');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', '使用MinGW编写JNI程序');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://qifan.iteye.com'><img alt="qifan.yang的博客" class="logo" src="http://www.iteye.com/upload/logo/user/826736/fd1b148f-b1ff-361b-a164-ad100c4f3b9b.png?1365078662" title="qifan.yang的博客: 从零开始" width="" /></a></div>
+  <div id="blog_owner_name">qifan.yang</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 8808 次</li>
+              
+              
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://dylinshi126.iteye.com' target='_blank'><img alt="dylinshi126的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="dylinshi126的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://dylinshi126.iteye.com' target='_blank' title='dylinshi126'>dylinshi126</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://cosmic-dust.iteye.com' target='_blank'><img alt="cosmic_dust的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="cosmic_dust的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://cosmic-dust.iteye.com' target='_blank' title='cosmic_dust'>cosmic_dust</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://ssy-vip201205232139.iteye.com' target='_blank'><img alt="SSY_VIP的博客" class="logo" src="http://www.iteye.com/upload/logo/user/723585/96fdc356-c7ec-3459-ac1f-f0e6f4ef1d4a-thumb.gif?1345023957" title="SSY_VIP的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://ssy-vip201205232139.iteye.com' target='_blank' title='SSY_VIP'>SSY_VIP</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://pansaipansai.iteye.com' target='_blank'><img alt="pansaipansai的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="pansaipansai的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://pansaipansai.iteye.com' target='_blank' title='pansaipansai'>pansaipansai</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (13)</a></li>
+                
+                  <li><a href="/category/273229">java (5)</a></li>
+                
+                  <li><a href="/category/273294">数学知识 (2)</a></li>
+                
+                  <li><a href="/category/273359">JAVA线程 (0)</a></li>
+                
+                  <li><a href="/category/293603">server (0)</a></li>
+                
+                  <li><a href="/category/315126">maven (2)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (2)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2014-06">2014-06</a> (2)</li>
+                
+                  <li><a href="/blog/monthblog/2013-09">2013-09</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2013-04">2013-04</a> (1)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2014 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+    
+  </body>
+</html>

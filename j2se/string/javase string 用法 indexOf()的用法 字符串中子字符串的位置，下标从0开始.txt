@@ -1,0 +1,7 @@
+package com.cpic.action;
+public class LoginxAction extends ActionSupport{
+	public static void main(String[] args) {
+		System.out.println("SXDXSJFX001".indexOf("SXDXSJFX"));
+	}
+}
+-----打出0，如果没有返回-1

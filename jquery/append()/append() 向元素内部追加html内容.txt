@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="jquery.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<div id="aaa" class="bbb">
+	<p>This is a paragraph.</p>
+	<p>This is another paragraph.</p>
+	<ol>
+		<li>List item 1</li>
+		<li>List item 2</li>
+		<li>List item 3</li>
+	</ol>
+</div>
+<script type="text/javascript">
+function quit(){
+	$("p").append("<b>nihao</b>");//两个p标签内容后面追加:nihao
+	$("ol").append("<li>nihao</li>");//ol多了一个列表:nihao
+}
+</script>
+</body>
+</html>

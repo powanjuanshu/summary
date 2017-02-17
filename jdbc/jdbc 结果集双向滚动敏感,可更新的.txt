@@ -1,0 +1,15 @@
+Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)
+
+第一个参数:
+
+* TYPE_FORWARD_ONLY : 缺省类型,只允许向前访问一次,不会受到其他用户对该数据库所作更改的影响.
+
+* TYPE_SCROLL_INSENSITIVE : 允许向前或向后移动,甚至可以进行特定定位,不会受到其他用户对该数据库所做更改影响.
+
+* TYPE_SCROLL_SENSITIVE : 允许向前或向后移动,甚至可以进行特定定位,受其他用户对该数据库所做更改影响.
+
+第二个参数设置ResultSet的并发性,该参数确定是否可以更新ResultSet,该常量指示可以更新的ResultSet对象的并发模式.
+
+* CONCUR_READ_ONLY : 缺省类型,不可以更新ResultSet
+
+* CONCUR_UPDATABLE : 可以更新ResultSet,注:ResultSet.CONCUR_UPDATABLE意思可能是对于同一个resultset对象如果该对象被锁定（如只读锁），依然能进行更新操作

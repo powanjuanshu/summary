@@ -1,0 +1,85 @@
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<body>
+<script>
+	var dragenable=false;
+	var x;
+	var y;
+	var w;
+	var h;
+	var obj;
+	function init(){
+		x=event.clientX;
+		obj=event.srcElement;
+		w=event.srcElement.offsetWidth;
+		obj.setCapture();
+		if(x>event.srcElement.offsetLeft+w-5&&x<event.srcElement.offsetLeft+w){
+			dragenable=true;
+			obj.style.cursor='e-resize';
+		}
+	}
+	function drag(){
+		if(event.clientX>event.srcElement.offsetLeft+event.srcElement.offsetWidth-5&&event.clientX<event.srcElement.offsetLeft+event.srcElement.offsetWidth){
+			event.srcElement.style.cursor='e-resize';
+		}else
+			event.srcElement.style.cursor='default';
+		if(dragenable==true){
+			if(event.clientX-x+w>0){
+				var i=obj.cellIndex;
+				var j;
+				for(j=0;j<obj.parentNode.parentNode.rows.length;j++){
+					obj.parentNode.parentNode.rows[j].cells[i].width=event.clientX-x+w;
+				}
+			}else{
+				var i=obj.cellIndex;
+				var j;
+				for(j=0;j<obj.parentNode.parentNode.rows.length;j++){
+					obj.parentNode.parentNode.rows[j].cells[i].width=1;
+				}
+			}
+		}
+	}
+	function end(){
+		dragenable=false;
+		obj.releaseCapture();
+		obj.style.cursor='default';
+	}
+</script>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" leftmargin=0 topmargin=0>
+<table border=1 cellpadding=0 cellspacing=0 onmousedown=init() onmousemove=drag() onmouseup=end() id=table1 style="table-layout:fixed">
+	<tr>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+	</tr>
+	<tr>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+	</tr>
+	<tr>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+	</tr>
+	<tr>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+	</tr>
+	<tr>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+		<td>ÊÔµã·¶Î§¹ã</td>
+	</tr>
+</table>
+</body>
+</html>
+

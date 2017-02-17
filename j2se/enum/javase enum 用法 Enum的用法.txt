@@ -1,0 +1,122 @@
+package com;
+class WeekDayTest {
+	public static void main(String args[]) {
+		for (Enumm day : Enumm.values()) {
+			System.out.println(day + "====>" + day.getDay());
+		}
+		Enumm.printDay(5);
+	}
+}
+enum Enumm {
+	Mon("Monday"),
+	Tue("Tuesday"),
+	Wed("Wednesday"),
+	Thu("Thursday"),
+	Fri("Friday"),
+	Sat("Saturday"),
+	Sun("Sunday");
+	private final String day; //不能写在第一行，否则会报错，只能只在这里
+	private Enumm(String day) {
+		this.day = day;
+	}
+	public static void printDay(int i) {
+		switch (i) {
+		case 1:
+			System.out.println(Enumm.Mon);
+			break;
+		case 2:
+			System.out.println(Enumm.Tue);
+			break;
+		case 3:
+			System.out.println(Enumm.Wed);
+			break;
+		case 4:
+			System.out.println(Enumm.Thu);
+			break;
+		case 5:
+			System.out.println(Enumm.Fri);
+			break;
+		case 6:
+			System.out.println(Enumm.Sat);
+			break;
+		case 7:
+			System.out.println(Enumm.Sun);
+			break;
+		default:
+			System.out.println("wrong number!");
+		}
+	}
+	public String getDay() {
+		return day;
+	}
+}
+----------------------------------------------------------------
+关于Java Enum:
+学过C/C++等语言的人，应该都对Enum类型略知一二。Enum一般用来表示一组相同类型的常量。如性别、日期、月份、颜色等。对这些属性用常量的好处是显而易见的，不仅可以保证单例，
+且比较时候可以用”==”来替换equals。是一种好的习惯。JDK1.5之前没有Enum这个类型，那时候一般用接口常量来替代。有了JavaEnum之后，可以更贴近的表示这种常量。
+2. 如何使用Java Enum
+简单的用法：JavaEnum简单的用法一般用于代表一组常用常量，可用来代表一类相同类型的常量值。如：
+性别：
+public enum SexEnum {
+  male, female;
+}
+颜色：
+public enum Color {
+  RED, BLUE,GREEN,BLACK;
+}
+枚举对象里面的值都必须是唯一的。
+可以通过Enum类型名直接引用该常量，如SexEnum.male,Color.RED.
+复杂用法：Java为枚举类型提供了一些内置的方法，同事枚举常量还可以有自己的方法。可以很方便的遍历枚举对象.
+----------------------------------------
+Java Enum原理
+Java Enum类型的语法结构尽管和java类的语法不一样，应该说差别比较大。但是经过编译器编译之后产生的是一个class文件。
+该class文件经过反编译可以看到实际上是生成了一个类，该类继承了java.lang.Enum<E>.
+WeekDay经过反编译(javap WeekDay命令)之后得到的内容如下(去掉了汇编代码)：
+public final class WeekDay extends java.lang.Enum{
+    public static final WeekDay Mon;
+    public static final WeekDay Tue;
+    public static final WeekDay Wed;
+    public static final WeekDay Thu;
+    public static final WeekDay Fri;
+    public static final WeekDay Sat;
+    public static final WeekDay Sun;
+    static {};
+    public static void printDay(int);
+    public java.lang.String getDay();
+    public static WeekDay[] values();
+    public static WeekDay valueOf(java.lang.String);
+}
+
+所以实际上Enum类型就是以Java类来实现的，没有什么新的特点，只不过java编译器帮我们做了语法的解析和编译。完全也可以自己实现。但是既然有这样方便一个东西，当然会去用了。
+package com.dao.contant;
+public enum StatusEnum {
+	WAITING,
+	PROCESS,
+	COMPLETE,	
+	PAUSE,
+	FAILURE;	
+	public int value(){
+	    switch(this) {
+	         case WAITING: return 0;
+	         case PROCESS: return 1;
+	         case COMPLETE: return 2;
+	         case PAUSE: return 4;
+	         default: return 3;
+	       }
+	 }
+	public String Name(){
+	    switch(this) {	        
+	         case WAITING: return "等待中";
+	         case PROCESS: return "处理中";
+	         case PAUSE: return "暂停中";
+	         case COMPLETE: return "处理完成";
+	         default: return "处理失败";
+	       }
+	 }
+}
+
+
+
+
+
+

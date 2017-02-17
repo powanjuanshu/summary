@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="css/jquery.fullPage.css">
+	<script type="text/javascript" src="app_js/jquery.min.js"></script>
+	<script type="text/javascript" src="app_js/jquery.fullPage.js"></script>
+	
+</head>
+<style>
+	.section { text-align: center; font: 50px "Microsoft Yahei"; color: #fff;}
+</style>
+<body>
+<div id="fullpage">
+	<div class="section">
+		<h3>第一屏</h3>
+		<div class="slide-wrap">
+            <div class="month-title"></div>
+        </div>
+		<p>fullPage.js — 基本演示</p>
+	</div>
+	<div class="section">第二屏</div>
+	<div class="section">
+	    <div class="slide">第三屏的第一屏</div>
+	    <div class="slide">第三屏的第二屏</div>
+	    <div class="slide">第三屏的第三屏</div>
+	    <div class="slide">第三屏的第四屏</div>
+	</div>
+	<div class="section">第四屏</div>
+</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var fullpage = $("#fullpage");
+		fullpage.show();
+		fullpage.fullpage({
+	        anchors: ['page1', 'page2', 'page3', 'page4'],//定义锚链接,上下滑动的时候浏览器地址栏会在后面加上屏对应的#page2,如:http://localhost:5080/waiwang/main.html#page2,可带上anchor直接访问相应屏
+	        sectionsColor: ['#1bbc9b', '#4BBFC3', '#7BAABE', '#f90'],//设置背景颜色
+	        navigation: true,//是否显示项目导航,右边有个类似滚动条的导航
+	        navigationPosition: 'right',//项目导航的位置,可选left或right
+	        navigationColor: '#000',//项目导航的颜色,好像没效果
+	        navigationTooltips: ['12','23','34'],//项目导航的 tip
+	        slidesColor: ['#bbc9b1', '#5CCFA3', '#bbc9b1', '#bbc9b1'],//设置左右滑块颜色,好像没效果
+	        slidesNavigation: true,//是否显示左右滑块的项目导航
+	        controlArrowColor: '#4BBFC3',//左右滑块的箭头的背景颜色
+        	loopTop: true,//滚动到最顶部后是否滚底部
+        	loopBottom: true,//滚动到最底部后是否滚回顶部
+        	autoScrolling : true,//是否使用插件的滚动方式,如果选择 false,则会出现浏览器自带的滚动条,就是在左边会有个原始的丑的滚动条可以上下滚动
+        	loopHorizontal:	false,//左右滑块是否循环滑动
+        	afterLoad: function(anchorLink, index){//滚动到某一屏后的回调函数,接收 anchorLink和index两个参数,anchorLink是锚链接的名称,index是序号,从1开始计算
+        		if(!bills.distribute.isInit){
+        			bills.distribute.isInit = true;
+        			bills.distribute.init();
+        		}
+        	},
+        	onLeave: function(index, nextIndex, direction){//滚动前的回调函数,接收 index,nextIndex和direction3个参数:index是离开的“页面”的序号,从1开始计算;nextIndex是滚动到的“页面”的序号,从1开始计算;direction判断往上滚动还是往下滚动,值是 up或 down.
+        		//alert("yyy:"+index+"yyy:"+nextIndex+"yyy:"+direction);//打印:yyy:3yyy:4yyy:down
+        	}
+	    });
+	});
+	
+	var bills = {};
+	bills.distribute = {
+			isInit : false,
+			adjust : function(){
+				alert("ajust");
+			},
+			monthEle : [],
+			initEle : function(){
+				alert("initEle");
+				var _that = this;
+				for(var p in _that){
+					alert(p+"xxx"+_that[p]);
+				}
+				
+			},
+			getMonthPosition : function(){
+				alert("getMonthPosition");
+			},
+			bindTouch: function() {
+				alert("bindTouch");
+			},
+			moveToRight : function(){
+				alert("moveToRight");
+			},
+			moveToLeft : function(){
+				alert("moveToLeft");
+			},
+			changeMonth : function(){
+				alert("changeMonth");
+			},
+			
+			init : function() {
+				this.initEle();
+				this.adjust();
+				//percentRank.rank();
+				this.bindTouch();
+			}
+			
+		}
+	
+	
+</script>
+</html>

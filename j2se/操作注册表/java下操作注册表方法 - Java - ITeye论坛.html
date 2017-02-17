@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>java下操作注册表方法 - Java - ITeye论坛</title>
+    <meta name="description" content="由于java程序是“write once, run everywhere”，用java读写注册表，那程序的跨平台性就差了。java对注册表的操作，在jdk1.4以前的版本中,那是不可能的,只能用JNI来实现；然而jdk1.4之后提供的prefs包可以操作windows注册表，不过定死了root只在SOFTWARE/JavaSoft/prefs下，估计也是出于这种两难吧，又要保证所谓平台无关，还要照顾 ..." />
+    <meta name="keywords" content=" Java" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link href="/rss/board/Java" rel="alternate" title="ITeye论坛" type="application/rss+xml" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="http://www.iteye.com/stylesheets/forum.css?1451979451" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1448702469" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1448702469" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1448702469" type="text/javascript"></script>
+          <script src="http://www.iteye.com/javascripts/dragdrop.js?1448702469" type="text/javascript"></script>
+          </head>
+  <body>
+    <div id="page">
+      <div id="header">
+        <div class="clearfix"><div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+</div>
+        <div class="clearfix">
+          <div id="branding">
+            <a href="http://www.iteye.com"><img alt="ITeye-最棒的软件开发交流社区" src="http://www.iteye.com/images/logo.gif?1448702469" title="ITeye-最棒的软件开发交流社区" /></a>
+          </div>
+          <div id="gg"><script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=iteye|forums|banner4&db=csdnim&border=0&local=yes&js=ie" src=" http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script></div>
+        </div>
+      </div>
+
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+<div class="h-entry" style='display:none'>
+  <a href="http://ldjsyl.iteye.com" class="p-author" target="_blank">ldjsyl</a>
+</div>
+
+
+<div class="clearfix">
+  <div class="crumbs">
+    <a href="/forums">论坛首页</a> <span class="arrow">&rarr;</span>
+    <a href="/forums/board/Java">Java企业应用论坛</a> <span class="arrow">&rarr;</span>
+    <h1>java下操作注册表方法</h1>
+  </div>
+</div>
+
+
+  <div id="forum_tag_list">
+    <a href="/forums/board/Java">全部</a>
+          <a href='/forums/tag/Hibernate'>Hibernate</a>
+          <a href='/forums/tag/Spring'>Spring</a>
+          <a href='/forums/tag/Struts'>Struts</a>
+          <a href='/forums/tag/iBATIS'>iBATIS</a>
+          <a href='/forums/tag/企业应用'>企业应用</a>
+          <a href='/forums/tag/Lucene'>Lucene</a>
+          <a href='/forums/tag/SOA'>SOA</a>
+              <a href="/forums/tag/Java%E7%BB%BC%E5%90%88">Java综合</a>
+          <a href="/forums/tag/Tomcat">Tomcat</a>
+          <a href="/forums/tag/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">设计模式</a>
+          <a href="/forums/tag/OO">OO</a>
+          <a href="/forums/tag/JBoss">JBoss</a>
+      </div>
+
+
+<div class="actions">
+  <div class="buttons"></div>
+  <div class="wrapper">
+    <div id="forum_recommended_f4"></div>
+    
+    <div class="info">浏览 11936 次</div>
+  </div>
+</div>
+
+
+
+<table id="forum_main" cellspacing="1">
+  <thead>
+    <tr>
+      <th colspan="2" class="topic_title">
+        <div class="wrapper"><span class='locked'>锁定老帖子</span> <a href="/topic/82291">主题：java下操作注册表方法</a></div>
+        <div id='topic_rate_box'>精华帖 (0) :: 良好帖 (0) :: 新手帖 (0) :: 隐藏帖 (0)</div>
+      </th>
+    </tr>
+    <tr>
+      <td class="first_col">作者</td>
+      <td class="last_col">正文
+      
+      </td>
+    </tr>
+  </thead>
+  <tbody id="posts">
+    <tr id="294162">
+  <td class="postauthor">
+    <ul>
+      <li class="name">ldjsyl</li>
+      <li>等级: 初级会员</li>
+      <li><a href='http://ldjsyl.iteye.com' target='_blank'><img alt="ldjsyl的博客" class="logo" src="http://www.iteye.com/upload/logo/user/13457/8531be10-6f42-3a7d-83cd-6941a878c7f7.jpg?1236832188" title="ldjsyl的博客: 阿德涂鸦" width="" /></a></li>
+      <li>性别: <img src="/images/icon_minigender_1.gif" title="男"/></li>      <li>文章: 26</li>
+      <li>积分: 0</li>
+      <li>来自: 成都</li>
+      <li><img src='/images/status/offline.gif'/></li>
+    </ul>
+  </td>
+  <td class="postcontent">
+    <div class="postactions">
+      <div class="description">
+        &nbsp;&nbsp;
+        发表时间：2007-05-23&nbsp;&nbsp;
+        
+      </div>
+      <div class="links">
+        
+        
+          
+          
+        
+      </div>
+    </div>
+    <div class="postbody clearfix">
+      
+        
+              <script type="text/javascript">
+      var hunters = ["\u003Ca href='/jobs/2508' target='_blank' style='color:#000;'\u003E\u003Cspan style='font-weight:bold;'\u003E\u4e0a\u6d77: \u003C/span\u003E Senior Software Engineer\u003C/a\u003E","\u003Ca href='/jobs/2509' target='_blank' style='color:#000;'\u003E\u003Cspan style='font-weight:bold;'\u003E\u4e0a\u6d77: \u003C/span\u003E Junior Product Manager\u003C/a\u003E"]
+      var hunter_id = Math.ceil(Math.random() * hunters.length) - 1;
+      if(hunter_id == -1) hunter_id = 0;
+    </script>
+    <div id="hunter_recommended" style="background:#fff;border: 1px solid #ccc; padding: 4px;margin-bottom: 10px;">
+      <span id="hunters_nav" style="margin-right:5px;">
+        <a href="#" onclick="hunter_id <= 0 ? hunter_id = hunters.length - 1 : hunter_id--; $('hunters').update(hunters[hunter_id]);return false;" style="border:1px solid #ccc;padding: 0 3px;size: 13px;text-decoration: none;">&lt;</a>
+        <a href="#" onclick="hunter_id >= hunters.length - 1 ? hunter_id = 0 : hunter_id++; $('hunters').update(hunters[hunter_id]);return false;" style="border:1px solid #ccc;padding: 0 3px;size :13px;text-decoration: none;">&gt;</a>
+      </span>
+      猎头职位: <span id="hunters"></span>
+      <script type="text/javascript">$('hunters').update(hunters[hunter_id]);</script>
+    </div>
+
+        
+      
+                                            <div id="related_topics">相关文章: <span class="close"><a href="#" onclick="$('related_topics').hide();if($('hunter_recommended')){$('hunter_recommended').style.width='780px'};if($('topic_tags')){$('topic_tags').style.width='790px'};return false;" title="关闭">&nbsp;</a></span>
+              <ul>
+                                  <li><a href='http://www.iteye.com/topic/605433' title='java 修改 Windows 注册表' target='_blank'>java 修改 Windows 注册表</a></li>
+                                  <li><a href='http://www.iteye.com/topic/383598' title='使用Javascript修改客户端注册表(IE下有效)' target='_blank'>使用Javascript修改客户端注册表(IE下有效)</a></li>
+                                  <li><a href='http://www.iteye.com/topic/1061033' title='修改打开方式右键菜单' target='_blank'>修改打开方式右键菜单</a></li>
+                              </ul>
+              <br/><span>推荐群组: <a href="http://pcdiy.group.iteye.com" target="_blank">电脑DIY</a></span>
+              <br/><a href="/wiki/topic/82291" target="_blank">更多相关推荐</a>
+            </div>
+            <script type="text/javascript">
+              document.observe("dom:loaded", function() {
+                if($('hunter_recommended')) {
+                  $('hunter_recommended').setStyle({cssFloat: 'left', width: '557px'})
+                }
+                if($('topic_tags')) {
+                  $('topic_tags').setStyle({width: '567px'})
+                }
+                new Draggable("related_topics");
+              });
+            </script>
+                          
+      
+      <p>由于java程序是“write once, run everywhere”，用java读写注册表，那程序的跨平台性就差了。java对注册表的操作，在jdk1.4以前的版本中,那是不可能的,只能用JNI来实现；然而jdk1.4之后提供的prefs包可以操作windows注册表，不过定死了root只在SOFTWARE/JavaSoft/prefs下，估计也是出于这种两难吧，又要保证所谓平台无关，还要照顾大家对windows的依赖。下面将从两方面来介绍对注册表的操作。<br />一、 使用JDK提供的Preferences类<br /> 首先得到Preferences的一个对象,这个对象就规定了你要在注册表的哪个位置写入信息,即节点.然后再用put(String key,String value)或者putInt(),tDouble()...等来给有关项赋值。下面是Demo程序。</p>
+<pre class="java" name="code">import java.util.prefs.*;
+public class Registery {
+    String[] keys = {"version", "initial", "creator"};
+    String[] values = {"1.3", "ini.mp3", "caokai1818@sina.com"};
+ //把相应的值储存到变量中去
+    public void writeValue() {
+ // HKEY_LOCAL_MACHINE\Software\JavaSoft\prefs下写入注册表值.
+        Preferences pre = Preferences.systemRoot().node("/javaplayer");
+        for (int i = 0; i &lt; keys.length; i++) {
+            pre.put(keys, values);
+        }
+    }
+    public static void main(String[] args) {
+        Registery reg = new Registery();
+        reg.writeValue();
+    }
+}
+</pre>
+<p> </p>
+<p>执行上面的代码则在注册表的HKEY_LOCAL_MACHINE\Software\JavaSoft\prefs\javaplayer项下写入了有关值.<br />最后再说明几点：<br />1：你的节点的首字母不要大写,不然在注册表中的项前就加了一个“/”;<br />2：注册表中的值也可以导入到一个XML文件中,具体方法见有关文档.<br />3：如果把代码中的Preferences pre = Preferences.systemRoot().node("/javaplayer"); 换成Preferences pre = Preferences.userRoot().node("/javaplayer");则相应的 HKEY_LOCAL_MACHINE就成为HKEY_LOCAL_USER。<br />二、 用jRegistry 来操作注册表<br /> jRegistry它是用JNI来封装WINDOWS注册表API，方便了java开发者访问windows注册表。首先介绍一下jRegistryKey.jar和jRegistryKey.dll，这两个文件是使用jRegistry来操作注册表所必需的文件：一个是jar包，是一个包括了java类的文件；一个是动态链接库文件，提供了访问注册表所需的本地代码(即C/C++)。<br />下面详细介绍一下使用流程：<br />1、 在JBuilder的菜单Project-&gt;Project Properties-&gt;Required Libraries中添加jRegistryKey.jar或在环境变量classpath中添加该jar文件；<br />2、 将jRegistryKey.dll放在工程的当前目录下；<br />3、 在访问注册表类中import该语句：import ca.beq.util.win32.registry.*；       该包中有两个类：RegistryKey和RegistryValue。其中RegistryKey是注册表键的java表示，它提供了creat()和delete()方法创建和删除key，枚举子键和值，set和get键的值等；RegistryValue is the Java? representation of a registry value (defined as a name, a type, and data).<br />4、 创建一个新key：  </p>
+<pre class="java" name="code">RegistryKey r = new RegistryKey(RootKey.HKEY_CURRENT_USER,  "Software\\BEQ Technologies");
+r.create();</pre>
+<p><br />5、创建一个子键：</p>
+<pre class="java" name="code">RegistryKey r = new RegistryKey(RootKey.HKEY_CURRENT_USER, "Software");
+r.createSubkey("BEQ Technologies");</pre>
+<p><br />6、删除一个已存在的键值：<br />try {<br />   RegistryKey r = new RegistryKey(RootKey.HKEY_CURRENT_USER,  "Software\\BEQ Technologies");<br />   r.delete();<br />} // try<br />catch(RegistryException re) {<br />   re.printStackTrace();<br />} // catch<br />7、枚举子键：</p>
+<pre class="java" name="code">RegistryKey r = new RegistryKey(RootKey.HKEY_CURRENT_USER, "Software");
+if(r.hasSubkeys()) {
+   Iterator i = r.subkeys();
+   while(i.hasNext()) {
+      RegistryKey x = (RegistryKey)i.next();
+      System.out.println(x.toString());
+   } // while
+} // if</pre>
+<p><br />8、读注册表中键的值：</p>
+<pre class="java" name="code">RegistryKey r = new RegistryKey(RootKey.HKEY_CURRENT_USER,  "Software\\BEQ Technologies");
+if(r.hasValue("myValue")) {
+   RegistryValue v = r.getValue("myValue");
+   System.out.println(v.toString());//
+} // if</pre>
+<p><br />注：v.toString()仅是键myValue对应的键值，若要得到myValue键对应的值数据，则需要String str = v.getDate().toSting();<br />9、设置注册表中键的值：</p>
+<pre class="java" name="code">RegistryKey r = new RegistryKey(RootKey.HKEY_CURRENT_USER, "Software\\BEQ Technologies");
+RegistryValue v = new RegistryValue("myVal", ValueType.REG_SZ, "data");
+r.setValue(v);
+</pre>
+<p><br />10、枚举某键的所有值：</p>
+<pre class="java" name="code">RegistryKey r = new RegistryKey(RootKey.HKEY_CURRENT_USER, "Software");
+if(r.hasValues()) {
+   Iterator i = r.values();
+   while(i.hasNext()) {
+      RegistryValue v = (RegistryValue)i.next();
+      System.out.println(v.toString());
+   } // while
+} // if</pre>
+<p><br />下面是一个demo程序，仅供参考。<br /> </p>
+<pre class="java" name="code">// create a new key, "Test", under HKLM
+RegistryKey r = new RegistryKey(RootKey.HKEY_LOCAL_MACHINE, "Test");
+if(!r.exists()) {
+r.create();
+} // if 
+
+// create value entries
+RegistryValue v = new RegistryValue("aString", ValueType.REG_SZ, "test");
+r.setValue(v);
+
+v.setName("aDword");
+v.setType(ValueType.REG_DWORD);
+v.setData(new Integer(0x1001001));
+r.setValue(v);
+
+// read value entries
+Iterator i = r.values();
+while(i.hasNext()) {
+v = (RegistryValue)i.next();
+System.out.println(v.toString());
+} // while
+
+// delete registry key
+r.delete();
+</pre>
+<p>三、参照<a href="http://wangunix.iteye.com/blog/197983">http://wangunix.iteye.com/blog/197983</a></p>
+    </div>
+    
+
+          <div id="topic_copyright">声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。 </div>
+      <div id="forum_recommended_f5"><span>推荐链接</span><ul></ul></div>
+              <div id="forum_recommended_f0"></div>
+        </td>
+  </tr>
+  <tr>
+    <td class="postauthor"><a href="#">返回顶楼</a></td>
+    <td class="postcontent">
+      <div class="icons">
+        <a href='http://ldjsyl.iteye.com' class='icon_www' title='浏览作者的博客'>&nbsp;</a>
+        <a href='http://ldjsyl.iteye.com/blog/profile' class='icon_profile' title='浏览作者资料'>&nbsp;</a>
+        <a href="http://my.iteye.com/messages/new?message%5Breceiver_name%5D=ldjsyl" class="icon_pm" title="发送站内短信">&nbsp;</a>
+        <a href='http://ldjsyl.iteye.com/blog/guest_book' class='icon_guestbook' title='给作者留言'>&nbsp;</a>
+        <a href="http://my.iteye.com/feed?subscription%5Bsubscribed_user_name%5D=ldjsyl" class="icon_rss" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', 'authenticity_token'); s.setAttribute('value', 'k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E='); f.appendChild(s);f.submit();return false;" title="关注作者">&nbsp</a>
+              </div>
+                    </td>
+</tr>
+<tr class="sep2"><td colspan="2"></td></tr>
+
+  </tbody>
+</table>
+
+
+<div class="actions">
+  <div class="buttons"></div>
+  <div class="wrapper"></div>
+</div>
+
+<div>
+  <div class="crumbs">
+    <a href="/forums">论坛首页</a> <span class="arrow">&rarr;</span>
+    <a href="/forums/board/Java">Java企业应用版</a>
+    <br/><br/>跳转论坛:<select id="forum_urlname" name="forum[urlname]" onchange="window.location='/forums/board/'+this.value"><option value="mobile">移动开发技术</option>
+<option value="web">Web前端技术</option>
+<option value="Java" selected="selected">Java企业应用</option>
+<option value="language">编程语言技术</option>
+<option value="Tech">综合技术</option>
+<option value="New">入门技术</option>
+<option value="Job">招聘求职</option>
+<option value="Life">海阔天空</option></select>
+    
+  </div>
+
+  
+</div>
+
+<div style="display:none">
+  <form action="/posts/rate" id="post_rate_form" method="post" onsubmit="new Ajax.Request('/posts/rate', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="k91gaFrpC+x92hASauFauBhHLpTqdQi+EjjR/jglW0E=" /></div>
+    <input type="hidden" id="post_rate_id" name="id"/>
+    <input type="hidden" id="post_rate_type" name="type"/>
+  </form></div>
+
+<script type="text/javascript">
+  function processComment() {
+    fix_image_size($$('div.postbody img'), 760);
+    
+    $$('#forum_main > #posts > tr[id]').each(function(tr){
+      var post_id = tr.id;
+      $$("#"+post_id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + post_id;
+        pre.writeAttribute('codeable_type', 'Post');
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'java下操作注册表方法');
+      });
+    });
+  }
+
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+  processComment();
+  code_favorites_init();
+
+  function rate_post(id, type) {
+    Element.update('post_rate_box_' + id, '提交中...');
+    new Ajax.Request('/posts/rate', {asynchronous:true, evalScripts:true, parameters:{"id":id, "type":type}});
+  }
+
+  function rate_topic(type) {
+    Element.update('topic_rate_box', '提交中...');
+    new Ajax.Request('/topics/rate', {asynchronous:true, evalScripts:true, parameters:{"id":82291, "type":type}});
+  }
+</script>
+
+
+
+        </div>
+        <div id="nav">
+  <div class="wrapper">
+    <ul>
+            <li><a href="http://www.iteye.com/">首页</a></li>
+      <li><a href="http://www.iteye.com/news">资讯</a></li>
+      <li><a href="http://www.iteye.com/magazines">精华</a></li>
+      <li><a href="http://www.iteye.com/forums" class='selected'>论坛</a></li>
+      <li><a href="http://www.iteye.com/ask">问答</a></li>
+      <li><a href="http://www.iteye.com/blogs">博客</a></li>
+      <li><a href="http://www.iteye.com/blogs/subjects">专栏</a></li>
+      <li><a href="http://www.iteye.com/groups">群组</a></li>
+      <!-- <li><a target="_blank" href="http://job.iteye.com/iteye">招聘</a></li>-->
+      <li><a target="_blank" href="http://job.csdn.net/">招聘</a></li>
+      <li class="last"><a href="http://www.iteye.com/search">搜索</a></li>
+    </ul>
+  </div>
+</div>
+      </div>
+      <div id="footer">
+  <div id="site_nav">
+    <ul>
+      <li><a href="/index/service">广告服务</a></li>
+      <li><a href="http://webmaster.iteye.com">ITeye黑板报</a></li>
+      <li><a href="/index/contactus">联系我们</a></li>
+      <li class="last"><a href="/index/friend_links">友情链接</a></li>
+    </ul>
+  </div>
+  <div id="copyright">
+    &copy; 2003-2016 ITeye.com.    [ <a href="http://www.miibeian.gov.cn">京ICP证070598号</a>  京公网安备11010502027441 ]<br/>
+    北京创新乐知信息技术有限公司 版权所有<br />
+  </div>
+</div>
+
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+  </body>
+</html>

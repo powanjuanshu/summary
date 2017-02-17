@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>我晕的测试正则</title>
+</head>
+<script language="javascript">
+function change()
+{
+var text=document.getElementById("a").value;
+var pattern=/"([^"]*)"/g;
+text=text.replace(pattern,"$1");//$1就是对([^"]*)里的内容的引用,整个代码的功能就是把双引号里的内容取出来
+document.getElementById("a").value=text;
+}
+</script>
+  <textarea name="a" cols="100" rows="25" id="a"></textarea>
+  <input type="button" name="Submit" value="替换" onClick="change()" />
+
+</body>
+</html>

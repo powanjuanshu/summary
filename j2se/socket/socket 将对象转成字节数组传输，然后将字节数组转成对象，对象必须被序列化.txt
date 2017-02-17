@@ -1,0 +1,93 @@
+package cob;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+public class JabberServer {
+    public static void main(String[] agrs) {
+        ServerSocket s = null;
+        Socket socket = null;
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            s = new ServerSocket(8080);
+            socket = s.accept();
+            is = socket.getInputStream();
+            os = socket.getOutputStream();
+            ObjectInputStream oi =new ObjectInputStream(is);
+			Object object = oi.readObject();
+			ArrayList<String> s1 = (ArrayList<String>) object; // 或者将字节读出来直接调用下面的方法转成对象
+			System.out.println(s1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+                os.close();
+                socket.close();
+            } catch (Exception e2) {
+            	e2.printStackTrace();
+            }
+        }
+    }
+    // 字节数组 转成对象
+	public static Object convertToObject(byte[] by) throws Exception {
+		ByteArrayInputStream byteStream = new ByteArrayInputStream(by);
+		ObjectInputStream ois = new ObjectInputStream(byteStream);
+		Object obj= ois.readObject();
+		return obj;
+	}
+}
+----------------------------------
+package cob;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.ArrayList;
+public class JabberClient {
+	public static void main(String[] args) {
+		Socket socket = null;
+		OutputStream os = null;
+		InputStream is = null;
+		try {
+			socket = new Socket("127.0.0.1", 8080);
+			os = socket.getOutputStream();
+			is = socket.getInputStream();
+			ArrayList<String> s = new ArrayList<String>();
+			s.add("jack");
+			s.add("rose");
+			byte[] by = convertToByteArray(s);
+			os.write(by);
+			os.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				os.close();
+				is.close();
+				socket.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	// 对象转成字节数组
+	public static byte[] convertToByteArray(Object obj) throws Exception {
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream(5000);
+		ObjectOutputStream os = new ObjectOutputStream(new BufferedOutputStream(byteStream));
+		os.writeObject(obj);
+		os.flush();
+		byte[] sendBuf = byteStream.toByteArray();
+		return sendBuf;
+	}
+}
+

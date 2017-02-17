@@ -1,0 +1,41 @@
+package cb;
+public class Main {
+	public static void main(String args[]) {
+        	byte[] bs = {(byte) 0xEE,0x11};
+        	System.out.println(bytesToBinaryString(bs));
+    	}
+
+	/**
+	 * 将字节数组转换成二进制字符串
+	 */
+	public static String bytesToBinaryString (byte[] byteArray){
+		StringBuffer sb = new StringBuffer();
+		final String ZERO = "00000000";
+        for (int i = 0; i < byteArray.length; i++) {
+            String s = Integer.toBinaryString(byteArray[i]);
+            if (s.length() > 8) {
+                s = s.substring(s.length() - 8);
+            } else if (s.length() < 8) {
+                s = ZERO.substring(s.length()) + s;
+            }
+            sb.append(s);
+        }
+        return sb.toString();
+	}
+
+	/**
+	 * 将字节转换成二进制字符串
+	 */
+	public static String byteToBinaryString(byte byt) {
+		StringBuffer sb = new StringBuffer();
+		final String ZERO = "00000000";
+		String s = Integer.toBinaryString(byt);
+		if (s.length() > 8) {
+			s = s.substring(s.length() - 8);
+		} else if (s.length() < 8) {
+			s = ZERO.substring(s.length()) + s;
+		}
+		sb.append(s);
+		return sb.toString();
+	}
+}

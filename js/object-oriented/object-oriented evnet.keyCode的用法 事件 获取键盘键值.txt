@@ -1,0 +1,38 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html>
+<head>
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="no-cache" />
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<script language="javascript">
+	function a(e) {
+		var a1=event.keyCode;
+		var a2 = String.fromCharCode(event.keyCode);
+		if (event.keyCode == 32) {
+			a2 = '\'空格\'';
+		}
+		if (event.keyCode == 13) {
+			a2 = '\' 回车\'';
+		}
+		if (event.keyCode == 27) {
+			a2 = '\' Esc\'';
+		}
+		if (event.keyCode == 16) {
+			a2 = '\' Shift\'';
+		}
+		if (event.keyCode == 17) {
+			a2 = '\' Ctrl\'';
+		}
+		if (event.keyCode == 18) {
+			a2 = '\' Alt\'';
+		}
+		alert('键值:'+a1+'\n'+'实际键:'+a2);
+	}
+	document.onkeydown=a;
+</script>
+</head>
+<body>
+请按任意一个键。。。。
+</body>
+</html>

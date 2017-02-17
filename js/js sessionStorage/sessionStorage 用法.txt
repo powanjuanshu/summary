@@ -1,0 +1,4 @@
+var sessionStorage = window.sessionStorage;
+sessionStorage.setItem("p", $("#addStudentSingal").attr("data-p"));
+var p = sessionStorage.getItem("p");
+sessionStorage.removeItem("p");

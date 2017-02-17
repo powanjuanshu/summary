@@ -1,0 +1,9 @@
+
+如果用记事本编辑Fuck.java,另存为编码改成UTF-8或者Unicode
+如果直接javac Fuck.java,那么会编译不通过,会报错,需要指定编译的编码
+javac -encoding unicode Fuck.java
+设置编译时的编码为UTF-8或Unicode编码
+
+记事本默认编码是ANSI或gbk,
+javac Fuck.java 默认编译编码是gbk的
+所以javac Fuck.java 和 javac -encoding gbk Fuck.java相等的

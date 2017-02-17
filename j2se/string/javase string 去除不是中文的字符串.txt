@@ -1,0 +1,20 @@
+package com;
+import java.io.IOException;
+import java.util.regex.Pattern;
+public class Tt {
+	public static void main(String[] args) throws IOException {
+		StringBuffer sb=new StringBuffer("");
+		String s="我是中文，i'm not chines!";
+		for(int i=0;i<s.length();i++){
+			String bb=s.substring(i,i+1);
+			String reg="[\u4E00-\u9FA5]";
+			if(Pattern.matches(reg, bb)){
+				sb.append(bb);
+			}
+		}
+		System.out.println(sb.toString());
+	}
+}
+----------------------------------
+unicode编码，一种全世界语言都包括的一种编码。（国际化功能中常常用到）
+\u4e00-\u9fa5可能是用来判断是不是中文的一个条件。这个没什么介绍就是去找找哪个国家的语言在哪个范围就是了。

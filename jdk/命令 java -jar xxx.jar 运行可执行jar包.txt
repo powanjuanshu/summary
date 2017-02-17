@@ -1,0 +1,1 @@
+cmd->切换到jar包目录->java -jar xxx.jar->回车即可

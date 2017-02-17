@@ -1,0 +1,159 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='zh-CN' xml:lang='zh-CN' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>一张图让你看懂JAVA线程间的状态转换 - OPEN 开发经验库</title>
+<meta content="text/html; charset=utf-8" http-equiv=content-type>
+<meta name=robots content=index,follow>
+<meta name=keywords content="JAVA,Java开发">
+<meta name=description content="1. 新建(new)：新创建了一个线程对象。 
+
+2. 可运行(runnable)：线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。 
+
+">
+<link rel="shortcut icon" href="/lib/favicon.ico">
+<link rel=copyright href="http://www.open-open.com/">
+
+
+
+<link type="text/css" rel="stylesheet" href="/lib/syntaxhighlighter_2.1.382/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="/lib/syntaxhighlighter_2.1.382/styles/shThemeEclipse.css"/>
+ 
+<style type="text/css" media="screen, projection">
+		/*<![CDATA[*/
+			@import "/lib/css/common.css";
+			@import "/lib/css/main.css";
+			@import "/lib/css/thickbox.css";
+			@import "/lib/css/jquery.ui.css";
+		/*]]>*/
+</style> 
+
+
+
+<script type="text/javascript">
+	var rooturl="/lib";
+	var wgDocKey='1371818439463';
+	var wgDocTitle='一张图让你看懂JAVA线程间的状态转换';
+	var wgDocStatusFlag='';
+	var wgUserFolders=null;
+	var wgDownFrame=null;
+	var wgCostByUser=null;
+	var wgDocFavoriteByUser=false;
+	var wgDocScoreByUser=null;
+	var wgUserLogined=0;
+	var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+
+
+</script>
+</head>
+<body id=view>
+<!--end top nav-->
+<!-- end head -->
+<div id=content>
+  <div id=view-main>
+    <div id=readercontainer>
+      <!-- google_ad_section_start -->
+<div class="BlogContent">
+<p><img style="cursor:pointer;" alt="一张图让你看懂JAVA线程间的状态转换" src="http://static.open-open.com/lib/uploadImg/20130621/20130621204021_343.jpg" width="640" height="449" /> </p>
+<p><br />
+</p>
+<p><span style="line-height:17px;font-family:'Microsoft YaHei';font-size:24px;"><strong>线程间的状态转换：</strong></span><strong><span style="font-family:Microsoft YaHei;">&nbsp;</span></strong> </p>
+<p></p>
+<p><span style="line-height:1.5;font-size:10pt;"><span style="font-family:Microsoft YaHei;"><strong>1. </strong></span><span style="font-family:Microsoft YaHei;"><strong>新建(new)</strong></span><span style="font-family:Microsoft YaHei;">：新创建了一个线程对象。</span></span> </p>
+<p><span style="line-height:1.5;font-size:10pt;"><span style="font-family:Microsoft YaHei;"><strong>2. </strong></span><span style="font-family:Microsoft YaHei;"><strong>可运行(runnable)</strong></span><span style="font-family:Microsoft YaHei;">：线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。</span></span> </p>
+<p><span style="line-height:1.5;font-size:10pt;"><span style="font-family:Microsoft YaHei;"><strong>3. </strong></span><span style="font-family:Microsoft YaHei;"><strong>运行(running)</strong></span><span style="font-family:Microsoft YaHei;">：可运行状态(</span></span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">runnable)</span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">的线程获得了cpu 时间片（timeslice） ，执行程序代码。</span> </p>
+<p><span style="line-height:1.5;font-size:10pt;"><span style="font-family:Microsoft YaHei;"><strong>4. </strong></span><span style="font-family:Microsoft YaHei;"><strong>阻塞(block)</strong></span><span style="font-family:Microsoft YaHei;">：阻塞状态是指线程因为某种原因放弃了cpu 使用权，也即让出了cpu timeslice，暂时停止运行。直到线程进入</span></span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">可运行(runnable)</span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">状态，才有机会再次获得cpu timeslice 转到</span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">运行(running)</span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">状态。阻塞的情况分三种：&nbsp;</span> </p>
+<p><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">(一). 等待阻塞：</span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">运行(running)</span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">的线程执行o.wait()方法，JVM会把该线程放入等待队列(waitting queue)中。</span> </p>
+<p><span style="line-height:1.5;font-size:10pt;"><span style="font-family:Microsoft YaHei;">(二). 同步阻塞：</span><span style="font-family:'Microsoft YaHei';">运行(running)</span><span style="font-family:Microsoft YaHei;">的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池(lock pool)中。</span></span> </p>
+<p><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">(三). 其他阻塞：</span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">运行(running)</span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">的线程执行Thread.sleep(long ms)或t.join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入</span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">可运行(runnable)</span><span style="line-height:1.5;font-family:'Microsoft YaHei';font-size:10pt;">状态。</span> </p>
+<p><span style="line-height:1.5;font-size:10pt;"><span style="font-family:Microsoft YaHei;"><strong>5. </strong></span><span style="font-family:Microsoft YaHei;"><strong>死亡(dead)</strong></span><span style="font-family:Microsoft YaHei;">：线程run()、main() 方法执行结束，或者因异常退出了run()方法，则该线程结束生命周期。死亡的线程不可再次复生。</span></span> </p>
+</div>
+
+
+</div>
+
+<div style="margin-top: 10px;margin-bottom: 2px;">
+<script type="text/javascript"><!--
+google_ad_client = "pub-7963911354665843";
+/* 728x90, 创建于 11-1-27 */
+google_ad_slot = "5890482646";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+			<div style="margin-top: 10px;margin-bottom: 10px;">
+<div id="baiduad1" style="margin-bottom: 5px;">
+</div>	
+
+</div>
+
+<div id="baiduad">
+</div>
+<div style="margin-top: 10px;margin-bottom: 10px;">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7963911354665843";
+/* 横向单元 */
+google_ad_slot = "6546082871";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>	
+	
+</div>
+
+</div>
+
+
+
+
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.3.2/jquery.min.js"></script>
+
+<script type="text/javascript" src="/lib/js/thickbox.patch.js"></script>
+
+<script type="text/javascript" src="/lib/js/app.js"></script>
+<script type="text/javascript" src="/lib/js/scrolltopcontrol.js"></script>
+<script type="text/javascript">
+	var rooturl="/lib";
+	var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+	
+  	
+</script>
+<script type="text/javascript" src="http://libs.baidu.com/jqueryui/1.8.22/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/lib/js/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="/lib/js/view.js"></script>
+<script type="text/javascript" src="/lib/syntaxhighlighter_2.1.382/scripts/shCore.js"></script>
+<script type="text/javascript" src="/lib/syntaxhighlighter_2.1.382/scripts/shBrush.js"></script>
+<script type="text/javascript">
+  	scrolltotop.offset(95,165);
+	scrolltotop.init();
+  </script>
+<script type="text/javascript">
+	SyntaxHighlighter.config.clipboardSwf = '/lib/syntaxhighlighter_2.1.382/scripts/clipboard.swf';
+	//SyntaxHighlighter.defaults['collapse'] = true; 
+	SyntaxHighlighter.config.strings.expandSource = "展开代码";
+	SyntaxHighlighter.config.strings.copyToClipboard = "复制到剪切板";
+	SyntaxHighlighter.config.strings.copyToClipboardConfirmation = "代码已经复制到剪切板";
+	SyntaxHighlighter.config.strings.viewSource = "查看源码";
+	SyntaxHighlighter.config.strings.print = "打印";
+	SyntaxHighlighter.all();
+</script>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=slide&amp;img=0&amp;pos=right&amp;uid=6734290" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+var bds_config={"bdTop":256};
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+</script>
+<!-- Baidu Button END --></body>
+</html>

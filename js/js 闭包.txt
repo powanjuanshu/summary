@@ -1,0 +1,109 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript" src="/demo/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+var max = 10,
+	fn = function(x) {
+		if (x > max) {
+			console.log(x);
+		}
+	};
+
+(function(f) {
+	var max = 100;
+	f(15);
+})(fn)
+</script>
+</head>
+<body>
+<input onclick="sya()" value="click" id="cli">
+</body>
+</html>
+
+
+
+
+
+
+--------
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript" src="/demo/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+/*var ÉùÃ÷µÄ±äÁ¿,×÷ÓÃÓòÊÇµ±Ç° functionÃ»ÓÐÉùÃ÷µÄ±äÁ¿,Ö±½Ó¸³ÖµµÄ»°,»á×Ô¶¯´´½¨±äÁ¿µ«×÷ÓÃÓòÊÇÈ«¾ÖµÄ.*/
+var name = "The Window";
+var object = {
+	name : "My Object",
+	getNameFunc : function() {
+		return function() {
+			return this.name;
+		};
+	}
+};
+//alert(object.getNameFunc()()); // The Window // µÈ¼ÛÓÚ var f = object.getNameFunc(); f();
+
+
+var name = "The Window";
+var object = {
+	name : "My Object",
+	getNameFunc : function(){
+		var that = this;
+		return function(){
+			return that.name;
+		};
+	}
+};
+//alert(object.getNameFunc()()); // My Object // µÈ¼ÛÓÚ var f = object.getNameFunc(); f();
+var f = object.getNameFunc();
+
+f();
+
+
+
+/*
+Äã·Ö¿ªÀ´¿´¾Í¿´µÃÇåÁË£º
+object.getNameFunc()();
+°ÑËü²ð½â¿ª
+var f = object.getNameFunc();
+f();
+Äã¿´£¬·¢ÏÖÃ»£¬µ÷ÓÃf()ÊÇÖ±½Óµ÷ÓÃµÄ£¡ÐÎÏóÒ»µãËµ¾ÍÊÇÂãµ÷ÓÃ¡£ÕâÑùµ÷ÓÃfÃ»ÓÐºÍÈÎºÎ¶ÔÏó°ó¶¨£¬Òò´Ëf()ÄÚ²¿Ä¬ÈÏ°ó¶¨µ½È«¾Ö¶ÔÏó£¬ËùÒÔÀïÃæµÄthisÖ¸ÏòµÄ¾ÍÊÇÈ«¾Ö¶ÔÏó¡£
+Èç¹ûÎÒÃÇ¸Ä³ÉÏÂÃæÕâÑù£º
+var f = object.getNameFunc();
+f.apply(object); // °ó¶¨ÁËÓ´£¡
+ÄÇÃ´ f ÀïÃæµÄthis¾Í»áÖ¸ÏòobjectÁË¡£
+¹Ø¼üÊÇÀí½â Javascript ÖÐº¯Êýµ÷ÓÃÊ±µÄ this °ó¶¨¸ÅÄî¡£ÕâÊÇ Javascript ·Ç³£ÌØ±ðµÄÒ»µã£¬ºÜÈÝÒ×³ö´í¡£
+*/
+/* var name = "The Window";
+var object = {
+	name : "My Object",
+	getNameFunc : function() {
+		alert(this.name);
+		return function() {
+			alert(this.name);
+			return this.name;
+		};
+	}
+}; */
+//alert(object.getNameFunc()()); // ÒÀ´ÎÊÇ:My Object,The Window
+/* 
+ µÈ¼ÛÓÚ
+var f = object.getNameFunc(); //My Object
+alert("----");
+f(); //The Window
+*/
+
+
+</script>
+</head>
+<body>
+<input onclick="sya()" value="click" id="cli">
+</body>
+</html>

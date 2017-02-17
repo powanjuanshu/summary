@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="css/jquery.fullPage.css">
+	<script type="text/javascript" src="app_js/jquery.min.js"></script>
+	<script type="text/javascript" src="app_js/jquery.fullPage.js"></script>
+</head>
+<style>
+	.section { text-align: center; font: 50px "Microsoft Yahei"; color: #fff;}
+</style>
+<body>
+<div id="fullpage">
+	<div class="section">
+		<h3>第一屏</h3>
+		<p>fullPage.js — 基本演示</p>
+	</div>
+	<div class="section">第二屏</div>
+	<div class="section">
+	    <div class="slide">第三屏的第一屏</div>
+	    <div class="slide">第三屏的第二屏</div>
+	    <div class="slide">第三屏的第三屏</div>
+	    <div class="slide">第三屏的第四屏</div>
+	</div>
+	<div class="section">第四屏</div>
+</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var fullpage = $("#fullpage");
+		fullpage.show();
+		fullpage.fullpage({
+	        anchors: ['page1', 'page2', 'page3', 'page4'],//定义锚链接,上下滑动的时候浏览器地址栏会在后面加上屏对应的#page2,如:http://localhost:5080/waiwang/main.html#page2,可带上anchor直接访问相应屏
+	        sectionsColor: ['#1bbc9b', '#4BBFC3', '#7BAABE', '#f90'],//设置背景颜色
+	        navigation: true,//是否显示项目导航,右边有个类似滚动条的导航
+	        navigationPosition: 'right',//项目导航的位置,可选left或right
+	        navigationColor: '#000',//项目导航的颜色,好像没效果
+	        navigationTooltips: ['12','23','34'],//项目导航的 tip
+	        slidesColor: ['#bbc9b1', '#5CCFA3', '#bbc9b1', '#bbc9b1'],//设置左右滑块颜色,好像没效果
+	        slidesNavigation: true,//是否显示左右滑块的项目导航
+	        controlArrowColor: '#4BBFC3',//左右滑块的箭头的背景颜色
+        	loopTop: true,//滚动到最顶部后是否滚底部
+        	loopBottom: true,//滚动到最底部后是否滚回顶部
+        	autoScrolling : true,//是否使用插件的滚动方式,如果选择 false,则会出现浏览器自带的滚动条,就是在左边会有个原始的丑的滚动条可以上下滚动
+        	loopHorizontal:	false,//左右滑块是否循环滑动
+        	afterLoad: function(anchorLink, index){//滚动到某一屏后的回调函数,接收 anchorLink和index两个参数,anchorLink是锚链接的名称,index是序号,从1开始计算
+        		alert("xxx:"+anchorLink+"xxx:"+index);//进入第一屏后打印:xxx:page1xxx:1
+        	},
+        	onLeave: function(index, nextIndex, direction){//滚动前的回调函数,接收 index,nextIndex和direction3个参数:index是离开的“页面”的序号,从1开始计算;nextIndex是滚动到的“页面”的序号,从1开始计算;direction判断往上滚动还是往下滚动,值是 up或 down.
+        		alert("yyy:"+index+"yyy:"+nextIndex+"yyy:"+direction);//打印:yyy:3yyy:4yyy:down
+        	}
+	    });
+	});
+</script>
+</html>
+--------------------------------------------------------
+jQuery全屏滚动插件fullPage.js
+简介
+如今我们经常能见到全屏网站,尤其是国外网站。这些网站用几幅很大的图片或色块做背景,再添加一些简单的内容,显得格外的高端大气上档次。比如 iPhone 5C 的介绍页面（查看）,QQ浏览器的官网站。如果你也希望你的网站能设计成全屏的,显得更上档次,你可以试试 fullPage.js。
+
+fullPage.js 是一个基于 jQuery 的插件,它能够很方便、很轻松的制作出全屏网站,主要功能有：
+
+支持鼠标滚动
+支持前进后退和键盘控制
+多个回调函数
+支持手机、平板触摸事件
+支持 CSS3 动画
+支持窗口缩放
+窗口缩放时自动调整
+
+兼容性
+fullPage.js 支持 IE8+ 及其他现代浏览器。
+
+使用方法
+1、引入文件
+<link rel="stylesheet" href="css/jquery.fullPage.css">
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/jquery.fullPage.js"></script>
+2、HTML
+<div id="fullpage">
+    <div class="section">第一屏</div>
+    <div class="section">第二屏</div>
+    <div class="section">
+        <div class="slide">第三屏的第一屏</div>
+        <div class="slide">第三屏的第二屏</div>
+        <div class="slide">第三屏的第三屏</div>
+        <div class="slide">第三屏的第四屏</div>
+    </div>
+    <div class="section">第四屏</div>
+</div>
+3、JavaScript
+$(function(){
+    $('#fullpage').fullpage({
+        'verticalCentered': false,
+        'css3': true,
+        'sectionsColor': ['#254875', '#00FF00', '#254587', '#695684'],
+        anchors: ['page1', 'page2', 'page3', 'page4'],
+        'navigation': true,
+        'navigationPosition': 'right',
+        'navigationTooltips': ['fullPage.js', 'Powerful', 'Amazing', 'Simple']
+    })
+})
+经测试,最好至少有 anchors 这个参数,否则在火狐浏览器中,第一次滚动会直接滚到底部。
+
+配置
+
+1、选项
+
+选项	类型	默认值	说明
+verticalCentered	字符串	true	内容是否垂直居中
+resize	布尔值	false	字体是否随着窗口缩放而缩放
+slidesColor	函数	无	设置背景颜色
+anchors	数组	无	定义锚链接
+scrollingSpeed	整数	700	滚动速度,单位为毫秒
+easing	字符串	easeInQuart	滚动动画方式
+menu	布尔值	false	绑定菜单,设定的相关属性与 anchors 的值对应后,菜单可以控制滚动
+navigation	布尔值	false	是否显示项目导航
+navigationPosition	字符串	right	项目导航的位置,可选 left 或 right
+navigationColor	字符串	#000	项目导航的颜色
+navigationTooltips	数组	空	项目导航的 tip
+slidesNavigation	布尔值	false	是否显示左右滑块的项目导航
+slidesNavPosition	字符串	bottom	左右滑块的项目导航的位置,可选 top 或 bottom
+controlArrowColor	字符串	#fff	左右滑块的箭头的背景颜色
+loopBottom	布尔值	false	滚动到最底部后是否滚回顶部
+loopTop	布尔值	false	滚动到最顶部后是否滚底部
+loopHorizontal	布尔值	true	左右滑块是否循环滑动
+autoScrolling	布尔值	true	是否使用插件的滚动方式,如果选择 false,则会出现浏览器自带的滚动条
+scrollOverflow	布尔值	false	内容超过满屏后是否显示滚动条
+css3	布尔值	false	是否使用 CSS3 transforms 滚动
+paddingTop	字符串	0	与顶部的距离
+paddingBottom	字符串	0	与底部距离
+fixedElements	字符串	无	
+normalScrollElements		无	
+keyboardScrolling	布尔值	true	是否使用键盘方向键导航
+touchSensitivity	整数	5	
+continuousVertical	布尔值	false	是否循环滚动,与 loopTop 及 loopBottom 不兼容
+animateAnchor	布尔值	true	
+normalScrollElementTouchThreshold	整数	5	
+2、方法
+名称	说明
+moveSectionUp()	向上滚动
+moveSectionDown()	向下滚动
+moveTo(section, slide)	滚动到
+moveSlideRight()	slide 向右滚动
+moveSlideLeft()	slide 向左滚动
+setAutoScrolling()	设置页面滚动方式,设置为 true 时自动滚动
+setAllowScrolling()	添加或删除鼠标滚轮/触控板控制
+setKeyboardScrolling()	添加或删除键盘方向键控制
+setScrollingSpeed()	定义以毫秒为单位的滚动速度
+
+3、回调函数
+名称	说明
+afterLoad	滚动到某一屏后的回调函数,接收 anchorLink 和 index 两个参数,anchorLink是锚链接的名称,index 是序号,从1开始计算
+onLeave	滚动前的回调函数,接收 index、nextIndex 和 direction 3个参数：
+index 是离开的“页面”的序号,从1开始计算；
+nextIndex 是滚动到的“页面”的序号,从1开始计算；
+direction 判断往上滚动还是往下滚动,值是 up 或 down。
+afterRender	页面结构生成后的回调函数,或者说页面初始化完成后的回调函数
+afterSlideLoad	滚动到某一水平滑块后的回调函数,与 afterLoad 类似,接收 anchorLink、index、slideIndex、direction 4个参数
+onSlideLeave	某一水平滑块滚动前的回调函数,与 onLeave 类似,接收 anchorLink、index、slideIndex、direction 4个参数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

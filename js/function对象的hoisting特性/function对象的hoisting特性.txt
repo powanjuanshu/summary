@@ -1,0 +1,435 @@
+函数定义 
+在javaScript中，function的定义有3种： 
+
+1、匿名定义 function(){} 
+
+2、非匿名定义  function fn(){} 
+               fn = new Function("some code"); 
+
+               这里说明一下： 
+               function 是一个关键字，而 Function 是一个对象。 
+
+
+触发函数执行 
+对于匿名函数： 
+                       (function(){})();       //执行一个匿名函数 
+                       var f = function(){}(); //执行一个匿名函数，并将匿名函数的返回值，赋值给f 
+                       !function(){}();        //执行一个匿名函数 
+                  
+以上三种写法， 无非就是要把 匿名函数 作为一个表达式块 然后执行。 
+
+
+对于非匿名函数：函数名();       //如： fn(); 
+
+
+用法示例 
+例子 1 
+function add(x, y){ 
+   return(x + y);  
+} 
+例子 2 
+var add = new Function("x", "y", "return(x+y)"); 
+
+例子 3 
+var fn = function(){ }  
+将匿名函数的引用赋值给一个变量。（最常用的写法）如： 
+
+var add = function(x, y){ 
+   return(x + y);  
+} 
+---------------------------------------------------------------- 
+可以用如下代码行调用以上函数： 
+add(2, 3); 
+
+注意 : 在调用函数时，请确保包含了括号和必需的参数。调用函数时不用括号导致返回函数的文本而不是函数执行的结果。 
+add(2, 3);// return  "5" 
+add;      // renturn  " function add(x, y){return(x + y);} 
+
+
+
+
+1、用法剖析 
+
+Html代码  收藏代码
+<html>  
+        <head>  
+            <style type="text/css">  
+            p{  
+                background-color: #CCCCCC;  
+                height:20px;  
+                width:100px;  
+                  
+              
+            }  
+            </style>  
+        </head>  
+    <body >  
+  
+        <p>test</p>  
+        <p>test</p>  
+        <p>test</p>  
+        <p>test</p>  
+        <p>test</p>  
+        <p>test</p>  
+  
+        <script type="text/javascript">  
+        /********************Method 1********************************/  
+        //常规的写法（正确的写法）  
+        /*  
+        var item=document.getElementsByTagName('p');  
+        for(var i=0;i<item.length;i++){  
+            item[i].onclick=(function(i){  
+                                return function(){  
+                                           alert(i);  
+                                        }  
+                            })(i);  
+        }  
+  
+        */  
+        /********************Method 2********************************/  
+        //所有的 p 都 alert() 最后一个 i 的值(错误的写法)  
+        /*  
+        var item=document.getElementsByTagName('p');  
+        for(var i=0;i<item.length;i++){  
+            item[i].onclick=function(){  
+                alert(i);  
+            };  
+        }  
+        */  
+          
+        /*  
+        说明：  
+        item[i].onclick=(function(){})(); 匿名函数与立即执行 ，然后把结果给item[i].onclick  
+        */  
+          
+        /********************Method 3********************************/  
+        //最能表达含义的写法（正确的写法）  
+        function createFunction(index){  
+            return function(){  
+                        alert(index);  
+                    }  
+        }  
+         
+        var elems = document.getElementsByTagName('p');  
+        for(var i=0,len=elems.length; i<len; i++){  
+            elems[i].onclick = createFunction(i);  
+        }  
+          
+          
+        /*说明：  
+        return function(){  
+                            alert(letter);  
+                        }  
+                          
+         =  
+           
+         return var fn = new Function(){  
+                            alert(letter);  
+                         }  
+                           
+           调用 function ，生成（定义）function.  
+           renturn 的 时候其实是 new 了一个function 出来。  
+     
+        */  
+  
+        </script>  
+    </body>  
+</html>  
+
+
+2、运行效果图 
+
+3、深入理解js的dom机制 
+
+
+js的一切对象（包括函数）都是依赖于 html的dom而存在的。 
+
+默认对象是window，所有的方法、属性，默认都是window对象的属性和方法 
+--------------------------- 
+alert() = window.alert() 
+--------------------------- 
+var x = window.x 
+var x = 10; 
+alert(window.x ); //10 
+
+我们猜测所有js函数运行时的环境，也是基于某个对象的（该对象的属性就是其运行环境）。 
+
+请看下面的例子： 
+
+例子一 
+Html代码  收藏代码
+<html>  
+    <head>  
+        <style type="text/css">  
+        p{  
+            width:200px;  
+            height:30px;  
+            background-color:#F0F0F0;  
+        }  
+        </style>  
+    </head>  
+    <body>  
+        <p>test </p>  
+        <p>test </p>  
+        <p>test </p>  
+        <p>test </p>  
+        <p>test </p>  
+        <p>test </p>  
+        <script type="text/javascript">  
+        window.onload=function(){  
+            var adiv=document.getElementsByTagName('p');  
+            for(var i=0;i<adiv.length;i++){  
+                adiv[i].onclick=function(){  
+                    alert(i);  
+                }  
+            }  
+        }  
+        </script>  
+    </body>  
+</html>  
+
+结果：（无论点那个都alert 6） 
+
+ 
+
+
+
+
+例子二 
+Html代码  收藏代码
+<html>  
+    <head>  
+        <style type="text/css">  
+        p{  
+            width:200px;  
+            height:30px;  
+            background-color:#F0F0F0;  
+        }  
+        </style>  
+    </head>  
+    <body>  
+        <p>test </p>  
+        <p>test </p>  
+        <p>test </p>  
+        <p>test </p>  
+        <p>test </p>  
+        <p>test </p>  
+        <script type="text/javascript">  
+        window.onload=function(){  
+            var adiv=document.getElementsByTagName('p');  
+            for(var i=0;i<adiv.length;i++){  
+                adiv[i].onclick=(function(i){  
+                    return function(){ alert(i);};  
+                })(i);  
+            }  
+        }  
+        </script>  
+    </body>  
+</html>  
+
+结果：（正常） 
+
+ 
+
+
+
+
+原因： 
+
+在例子二中， 
+改变了onclick事件的function的作用域范围。 
+(function(){ 
+    return fuction(){}; 
+})(); 
+新new了一个function作用域，赋值给onclick事件。 
+
+
+
+分析： 
+
+
+
+例子一： 
+当onclick触发时，它实际（引用）运行的环境是 window.onload ， 
+window.onload是一个function，而它又有自己的属性： 
+window.onload.adiv 
+window.onload.i 
+window.onload.adiv[0].onclick 
+window.onload.adiv[1].onclick 
+window.onload.adiv[2].onclick 
+window.onload.adiv[3].onclick 
+... 
+
+onclick 会在当前作用域中找adiv（找到了） ，也会去找 i ，但是此时 i 的值 是 adiv.leng-1 
+所以会一直 alert 一个值 
+
+
+
+而如下方式（例子二）： 
+window.onload=function(){ 
+    var adiv=document.getElementsByTagName('p'); 
+    for(i=0;i<adiv.length;i++){ 
+        adiv[i].onclick=(function(i){ 
+            return function(){alert(i)}; 
+        })(i); 
+        } 
+    } 
+} 
+是采用匿名函数立即执行，利用立即执行为匿名函数，window.onload为自身创建属性（一个匿名函数） 
+此匿名又有2个属性（一个参数i，一个funcion） 
+并把执行后的结果赋值给 adiv[i].onclick 
+此时window.onload的结构大致是： 
+window.onload.adiv 
+window.onload.i 
+window.onload.adiv[0].onclick 
+window.onload.(function(0){}) 
+window.onload.(function(0){}).i 
+window.onload.(function(0){}).function 
+
+window.onload.adiv[1].onclick 
+window.onload.(function(1){}) 
+window.onload.(function(1){}).i 
+window.onload.(function(1){}).function 
+
+... 
+
+赋值后 
+window.onload.adiv[0].onclick = 
+window.onload.(function(0){}).function 
+
+此时adiv[0].onclick的作用域是：window.onload.(function(0){}) 
+                 不再是原来的：window.onload 
+
+                 
+在新的作用域中是有 i 的，而 i 的值，就是当初传进来的值。 
+
+再看下面的例子： 
+Html代码  收藏代码
+<html>  
+    <head>  
+        <style type="text/css"></style>  
+    </head>  
+    <body>  
+        <script type="text/javascript">  
+        /*  
+        //1.  
+        function Wen(){  
+            this.name = "taobao";  
+            this.waitMes=function(){  
+                setTimeout(function(){this.fn(this.name);},1000);                   
+            };  
+            this.fn=function(name){  
+                alert(name);  
+            }  
+        }  
+        var foo=new Wen();  
+        foo.waitMes();  
+          
+        //**运行结果：空。  
+        // *因为setTimeout 运行时的上下文环境是window  
+        // *而 window 没有 fn 和 name 属性  
+        //**故alert值为空  
+          
+        //2.  
+        var name = "taobao";         
+        function fn (name){  
+            alert(name);  
+        }         
+        function Wen(){  
+            this.waitMes=function(){  
+                setTimeout(function(){this.fn(this.name);},1000);   
+            };  
+        }  
+        var foo=new Wen();  
+        foo.waitMes();  
+          
+        //**运行结果：非空。         
+        // *将 fn 和 name 放在 window 对象下
+        //3.  
+        function Wen(){  
+            this.name = "taobao";  
+            this.waitMes=function(){  
+                var that = this;  
+                setTimeout(function(){that.fn(that.name);},1000);   
+            };  
+            this.fn=function(name){  
+                alert(name);  
+            }  
+        }  
+        var foo=new Wen();  
+        foo.waitMes();  
+          
+        //**运行结果：非空。         
+        // *that作为参数传递到this中  
+        */  
+          
+       //4.   
+       function Wen(){  
+            this.name = "taobao";  
+            this.waitMes=function(){  
+                var that = this;  
+                setTimeout(that.fn,1000);   
+            };  
+            this.fn=function(){                 
+                alert(this.name);  
+            };  
+             
+        }  
+        var foo=new Wen();  
+        foo.waitMes();  
+          
+        //**运行结果：非空。         
+        // *that作为参数传递到this中  
+          
+             
+        </script>  
+    </body>  
+</html>
+4、变量作用域之变量覆盖 
+原理： 
+由于js function对象的 hoisting 特性（函数内的所有变量都相当于自动在函数头部声明，赋值部分位置不变）， 
+可能会导致访问变量时出现 undefined。 
+
+例子： 
+ <script type="text/javascript">  
+            //1.  
+            var foo = 'This is foo.';  
+            (function(){  
+               alert(foo);//This is foo.  
+            })();  
+              
+            //2.  
+            var foo = 'This is foo.';  
+            (function(){  
+               alert(foo);//undefined  
+               var foo = 2;  
+            })();  
+              
+            /** 
+            function对象的 hoisting 特性：函数内的所有变量都相当于自动在函数头部声明 
+            故 2 等价于这种写法： 
+             
+            var foo = 'This is foo.'; 
+            (function(){ 
+               var foo; 
+               alert(foo); 
+               foo = 2; 
+            })(); 
+            
+            在2中，又定义了一个局部变量foo，（覆盖了上级范围的foo），但是没有给赋初值， 
+            故访问foo时，出现 undefined 提示。 
+            */  
+</script>
+所以，在函数定义时，其所有用到的变量，要写在函数体前。 
+补录： 
+--- 
+匿名函数自动执行，只是一种简便的写法而已，并无新奇或创意。 
+(function(){})(); 
+等价于 
+var fn = function(){}; 
+fn();//执行 
+在任何使用过程中，完全可以用后一种方式替代。 
+
+
+
+

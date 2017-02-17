@@ -1,0 +1,92 @@
+<html>
+<body>
+</body>
+<script type="text/javascript">
+	var arr = ['php','mysql','apache'];
+	var aa = 15;
+	var bb = true;
+    	alert("a2:" + arr.toString()); // 返回值与没有参数的jion()方法即arr.join()返回的字符串相同
+	alert(aa+1);//打出:16
+	alert(aa.toString()+1);//打出:151
+	alert(bb);//打出:true,这是字符串类型的
+	alert(aa.toString(16));//打出:f,将数字转换为字符串.用它的参数指定的基数或底数(底数范围为2-36).如果省略参数，则使用基数10.当参数值为2时，返回二进制数
+</script>
+</html>
+-------------------------------------------
+javascript中的toString()方法，主要用于Array、Boolean、Date、Error、Function、Number等对象.下面是这些方法的一些解析和简单应用，做个纪律，以作备忘.
+
+(1)Array.toString()：将数组转换成一个字符串，并且返回这个字符串.
+描述：当数组用于字符串环境中时，javascript会调用这一方法将数组自动转换成一个字符串.toString()在把数组转换成字符串时，首先要将数组的每个元素都转换成字符串(通过调用这些元素的toString方法).当每个元素都被转换成字符串时，它就以列表的形式输出这些字符串，字符串之间用逗号分隔.返回值与没有参数的jion()方法返回的字符串相同.
+示例代码一：
+结果：浏览器中显示：php,mysql,apache
+                    php,mysql,apache
+
+<script type="text/javascript">
+    var arr = ['php','mysql','apache'];
+    document.write("使用join方法的结果" + arr.join() + "<br />")
+    document.write("使用toString方法的结果" + arr.toString());
+</script> 
+(2)Boolean.toString()：将布尔值转换为字符串.
+描述：根据原始布尔值或者Boolean对象的值返回字符串“true”或“false”.
+示例代码二：
+结果：弹出两个对话框，值为false和true
+
+<script type="text/javascript">
+    var b = new Boolean();//boolean对象默认值为false
+    alert(b.toString());
+    alert(("chia" == "chia").toString());
+</script>
+(3)Date.toString()：将Date对象转换成一个字符串，采用本地时间.
+示例代码四：
+结果：浏览器中显示：
+Sat Jul 19 2008 23:27:14 GMT+0800
+Sat Jul 19 2008 23:27:14 GMT+0800
+2008年7月19日 23:27:14
+
+<script type="text/javascript">
+    var today = new Date();
+    document.write(today + "<br />");
+    document.write(today.toString() + "<br />");
+    document.write(today.toLocaleString());
+</script>
+
+注意：toLocaleString()是返回采用地方日期使用地方日期格式的规范的字符串.
+
+(4)Error.toString()：将Error对象转换成字符串
+描述：实现定义的字符串.ECMAScript标准除了规定该方法的返回值是字符串外，没有再做其他规定.尤其是，它不要求返回的字符传包含错误名和错误信息.
+
+(5)Function.toString()：把函数转换成字符串
+描述：可以以一种与实现相关的方法将函数转换成字符串.在大多数的实现中，例如ie和firefox，它返回Function关键字、参数列表、函数体部分.
+示例代码三：
+结果：浏览器中显示：
+function add(a, b) { var a, b, c; c = a + b; return c; }
+
+<script type="text/javascript">
+function add(a,b){
+    var a,b,c;
+    c = a + b;
+    return c;
+}
+document.write(add.toString());    
+</script>
+
+(6)Number.toString()：将数字转换为字符串.用它的参数指定的基数或底数(底数范围为2-36).如果省略参数，则使用基数10.当参数值为2时，返回二进制数.
+示例代码四：
+结果：浏览器中显示：
+34
+100010
+42
+22
+
+<script type="text/javascript">
+    var a = 34;
+    document.write(a.toString() + "<br />");
+    document.write(a.toString(2) + "<br />");
+    document.write(a.toString(8) + "<br />");
+    document.write(a.toString(16) + "<br />"); 
+</script>
+
+
+
+
+

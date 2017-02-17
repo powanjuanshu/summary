@@ -1,0 +1,12 @@
+package com;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+public class I {
+	public static void main(String[] args) throws IOException {
+		InputStream is=new I().getClass().getResourceAsStream("/a.properties");
+		Properties p=new Properties();
+		p.load(is);
+		System.out.println(p.getProperty("b","oooooooooooooo"));//如果在a.properties中找不到b，则返回oooooooooooooo
+	}
+}

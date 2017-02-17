@@ -1,0 +1,37 @@
+Runnable接口和Thread类是java中实现多线程的两中方法。
+Thread类的构造方法有8个，但常用的只有4个，分别为：
+Thread类中的两个最主要的方法：
+（1）run()—包含线程运行时所执行的代码，即线程需要完成的任务，是线程执行体。
+（2）start()—用于启动线程。
+实现Runnable接口的类必须使用Thread类的实例才能创建线程。通过实现Runnable接口来创建并启动多线程的步骤：
+
+
+
+
+这俩的区别讨论很多。我总结了大概有以下几点。
+实现 Runnable 大多数情况下是比继承 Thread 更好的方法。
+Java 只支持单继承，所以你继承了 Thread 的话，其他的类你就不能继承了。
+ 如果实现 Runnable 接口，多线程可以直接将你的工作并发处理（直接使用 start）。而继承 Thread 不能直接进行多线程工作，你得为你的每一部分工作都定义一个线程。
+其他的一些API，接口都是 Runnable 类型的。比如 Java 内置的线程池 API ExcutorService 等。
+其实 Thread 只是实现 Runnable 接口，并增加了一些常用方法而已。不信你看源码。
+
+public
+class Thread implements Runnable {
+    /* Make sure registerNatives is the first thing <clinit> does. */
+    private static native void registerNatives();
+    static {
+        registerNatives();
+    }
+
+线程的起动并不是简单的调用了你的RUN方法,而是由一个线程调度器来分别调用你的所有线程的RUN方法,
+我们普通的RUN方法如果没有执行完是不会返回的,也就是会一直执行下去,这样RUN方法下面的方法就不可能会执行了,可是线程里的RUN方法却不一样,它只有一定的CPU时间,执行过后就给别的线程了,这样反复的把CPU的时间切来切去,因为切换的速度很快,所以我们就感觉是很多线程在同时运行一样.
+
+你简单的调用run方法是没有这样效果的,所以你必须调用Thread类的start方法来启动你的线程.所以你启动线程有两种方法
+一是写一个类继承自Thread类,然后重写里面的run方法,用start方法启动线程
+二是写一个类实现Runnable接口,实现里面的run方法,用new Thread(Runnable target).start()方法来启动
+
+这两种方法都必须实现RUN方法,这样线程起动的时候,线程管理器好去调用你的RUN方法.
+
+在程序开发中只要是多线程肯定永远以实现Runnable接口为主，因为实现Runnable接口相比继承Thread类有如下好处：
+避免点继承的局限，一个类可以继承多个接口。
+适合于资源的共享

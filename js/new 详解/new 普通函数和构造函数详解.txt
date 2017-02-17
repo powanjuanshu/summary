@@ -1,0 +1,305 @@
+javascript的new只是对class的一种模拟,这个也是业界说javascript的类根本不是类的原因——因为它是模拟的。
+
+其实javascript的new关键字只不过做了五件事情。
+
+1.创建Object
+2.查找class的prototype上的所有方法、属性,复制一份给创建的Object(注意,如果prototype上有属性是function或者数组或者Object,那么只复制指针)
+3.将构造函数classA内部的this指向创建的Object
+
+4.创建的Object的__proto__指向class的prototype
+5.执行构造函数class
+
+ 
+
+请看示例:
+
+// 定义类 类名字是 classA  
+function classA(){  
+    this.b=1;  
+}  
+classA.prototype.b=44;  
+classA.prototype.show = function(){  
+    alert(this.b);  
+};  
+// 用new实例化  
+var b = new classA();  
+b.show();  
+// 用函数实例化  
+function newClass(cls,args){  
+    var obj = {};  
+    for(var p in cls.prototype)  
+        obj[p] = cls.prototype[p];  
+    obj.__proto__ = cls.prototype;  
+    cls.apply(obj,args||[]);  
+    return obj;  
+};  
+var k = newClass(classA);  
+k.show();
+-------------------------------------------
+new关键字做了什么
+在JavaScript中,使用new关键字后,意味着做了如下四件事情:
+
+创建一个新的对象,这个对象的类型是object；
+设置这个新的对象的内部、可访问性和[[prototype]]属性为构造函数(指prototype.construtor所指向的构造函数)中设置的；
+执行构造函数,当this关键字被提及的时候,使用新创建的对象的属性；
+返回新创建的对象(除非构造方法中返回的是‘无原型’)。
+在创建新对象成功之后,如果调用一个新对象没有的属性的时候,JavaScript会延原型链向止逐层查找对应的内容。这类似于传统的‘类继承’。
+
+注意:在第二点中所说的有关[[prototype]]属性,只有在一个对象被创建的时候起作用,比如使用new关键字、使用Object.create、基于字面意义的(函数默认为Function.prototype,数字默认为Number.prototype等)。它只能被Object.getPrototypeOf(someObject)所读取。没有其他任何方式来设置或读取这个值。
+
+样例说明
+ObjMaker = function() {this.a = 'first';};
+ObjMaker只是一个用于作为构造器的方法,没有其他意义。
+
+ObjMaker.prototype.b = 'second';
+与其他函数类似, ObjMaker拥有一个可被我们修改的prototype属性. 我们添加一个属性b给它。与所有对象一样,ObjMaker也拥有一个不可访问的[[prototype]]属性,我们无法对其进行改变。
+
+obj1 = new ObjMaker();
+这里发生了三件事情:
+
+一个叫obj1的空对象被创建,首先obj1与{}一致；
+obj1的[[prototype]]属性被设置为ObjMaker的原型属性的拷贝；
+ObjMaker方法被执行,所以obj1.a被设置为‘first‘。
+
+obj1.a;
+
+返回'first'。
+
+obj1.b;
+obj1没有'b'属性,所以JavaScript在它的[[prototype]]中查找。它的[[prototype]]与ObjMaker.prototype属性一致。而ObjMaker.prototype属性有一个叫'b'的属性,其值为'second',所以返回'second'。
+
+模仿继承
+你可以使用如下的方式实例化ObjMaker类的子类:
+
+SubObjMaker = function () {};
+SubObjMaker.prototype = new ObjMaker(); 
+由于这里使用了new关键字,所以SubObjMaker的[[prototype]]属性被设置为ObjMaker.prototype的一个拷贝。
+
+SubObjMaker.prototype.c = 'third';  
+obj2 = new SubObjMaker();
+obj2的[[prototype]]属性被设置为SubObjMaker的prototype属性的一个拷贝。
+
+obj2.c;
+返回'third'。来自SubObjMaker.prototype
+
+obj2.b;
+返回‘second’。来自ObjMaker.prototype
+
+obj2.a;
+返回‘first’。来自SubObjMaker.prototype,这是因为SubObjMaker是使用ObjMaker的构造方法创建的,这个构造方法赋值给a。
+
+
+------------------------
+Javascript中调用一个函数(对象),使用new或者直接调用有什么区别？
+
+如果是最典型的构造函数模式,必须加上new:
+function Man(age){
+	this.sex="male";
+	this.age=age;
+}
+m1=Man(20);
+m2=new Man(21);
+m1就是函数Man()执行的返回值,也就是undefined. 在函数执行过程中,属性被加到全局作用域或者Man方法所属的对象上了。执行之后window.sex=="male"
+而m2是Man的实例,Man {sex:"male",age:21}
+
+function Man(age) {
+	var obj = new Object();
+	obj.sex = "mail";
+	obj.age = age;
+	return obj;
+}
+m3=Man(22);
+这个就不需要加new,m3是一个Object,不是Man的实例。
+
+native code中,加new就是返回这个构造函数的实例；不加作为函数就返回一个基本数据类型,或者会报错 “ DOM object constructor cannot be called as a function ”。
+
+Date(),不加new返回当前时间,是一个字符串。加new的话,返回当前时间或者把参数格式化得到的时间,是一个Date对象。
+
+String(),不加new将参数格式化为字符串,加new则返回的是String对象。它们的区别如下:
+var s1=new String(2);
+//如果把s1 log到控制台中,输出 String{0:"2"}
+var s2=String(2);
+//如果把s2 log到控制台中,输出 '2'
+console.log(typeof s1);
+//"object"
+console.log(typeof s2);
+//"string"
+s1.pro = 1;
+console.log(s1.pro);
+//1
+s2.pro = 1;
+console.log(s2.pro);
+//undefined
+Number和String类似。
+Array,Object加不加new貌似是一样的？
+Image,XMLHttprequest等不能作为函数使用。
+
+
+
+使用new则是将之当做构造函数来调用,会创建一个该类的实例对象,这个对象的type是这个函数名,中间使用this.propertyname=value会对该实例对象的属性赋值,并且无论有没有return,都会返回这个对象。
+
+而如果是直接调用就是简单执行里面的代码,不会创建实例对象,this指向的调用环境下的this对象,如果是在全局中直接调用,就是window,没有默认返回值。
+
+想要创建类,一般用前者(构造器模式),当然也可以使用后者,例如工厂模式和寄生构造器模式。
+构造器模式:
+function Person(name,age,job){
+this.name=name;
+this.age=age;
+this.job=job;
+this.introduce=function(){
+alert("My name is "+this.name+", I am"+age+"year(s) old, I am a "+job+".");
+}
+}
+工厂模式:
+function createPerson(name,age,job){
+var o=new Object();
+o.name=name;
+o.age=age;
+o.job=job;
+return o;
+}
+寄生构造器模式:
+function SpecialArray(){
+var values=new Array();
+values.push.apply(values,arguments);
+values.toPipedString=function(){
+return this.join("|");
+};
+return values;
+}
+后两种方法的缺点在于因为返回的还是object类型,所以不能通过instanceof来检测实际类型。
+
+2
+赞同反对,不会显示你的姓名
+苏云,走在JS水平从初级到高级的路上。
+巫镇泉、知乎用户 赞同
+1. 直接调用的时候它叫“普通函数”,此时用全局对象window做上下文。
+2. 用new操作符调用的时候它叫“构造函数”,此时用这个新生的对象做上下文。
+3. 用某个对象拽着它调用的时候,它叫做“方法”,此时用拽它的那个对象做上下文。
+
+-------------------------------
+Js New一个函数和直接调用的区别
+
+事情的起因:首先我要说的是上一篇博客中我写到的一句话:如果使用new关键字调用,那么函数的return语句不再起作用,因为这时还回的是this对象。
+博客发表以后有网友评论中提到,当使用工厂方法的时候,最后return的是一个对象,而且也确实能够使用这个返回的对象并访问它的属性。
+这就正好和上面说的有冲突了。当然我承认上面的那句话是我在搜集资料的时候看到的这么一句话。首先大家看一下这个工厂模式创建js对象。
+function Person(name,age){
+    var o =new Object();
+    o.name=name;
+    o.age=age;
+    o.getName=function(){
+        alert(this.name);
+    }
+    return o;
+}
+var person1=new Person("hanyi",22);
+alert(person1.name);//打印:hanyi
+
+首先讨论一下第10行代码中new的必要性,这时候我们想要的结果应该是使person1为Person(name,age)函数的返回结果,即对象O(Object)。当然为了保证正确性我们也做了验证把这行代码改为 :
+
+var person1=Person("hanyi1",22);//打印:hanyi1(为了区别把字符串稍微改动)
+
+为了进一步验证:我们做以下修改:
+function Person(name,age){
+    this.a="123";
+    var o =new Object();
+    o.name=name;
+    o.age=age;
+    o.getName=function(){
+        alert(this.name);
+    }
+    return o;
+}
+var person1=new Person("hanyi",22);
+alert(person1.name +":"+ person1.a);//打印:hanyi:undefined
+
+即在函数Person(name,age)中添加this.name=name;然后运行看结果。
+
+这个例子可以清楚的看到,这里即使使用了new关键字,但是Person(name,age)中的return还是起了作用。而且返回的明显不是this对象,因为其中不包括a属性的任何信息。
+
+通过以上例子完全可以说明了上一篇博客对于new关键字调用函数与普通方法调用函数的区别的解释的错误性,到现在为止就证明了个错误的观点,那什么事正确的观点呢。
+是不是如果一个函数中存在return语句,调用这个函数的时候使用new和不使用new返回的结果是一样的呢？下面我们再来看看这个例子:
+
+function Test() {  
+　　this.name = 'Test';  
+　　return function() { return true; }  
+}  
+   
+var test = new Test(); // 这里的 test 是什么？ 
+
+在浏览器运行时监控test的结果:
+
+\
+var test = Test(); // 这里的 test 是什么？(new去掉)。
+在浏览器运行时监控test的结果:
+
+\
+
+如果在上面的代码变为:
+function Test() {  
+　　this.name = 'Test';  
+　　return function() { return true; }  
+} 
+alert(new Test() == Test() );
+
+运行结果:
+
+\
+
+以上结果会让人很迷惑。两个最后的结果明显相同,但是为什么真正比较的时候返回的是false呢。因为 Javascript 对于 Object 和 Function 的比较是基于引用的。
+
+　　为了更清晰的分辨在上述情形下两者间的区别,请继续看以下代码:
+
+function Test() {  
+　　this.name = 'Test';  
+　　return 'Test';  
+}  
+   
+var fnT = Test();  
+var newT = new Test();  
+
+在浏览器运行时监控fnT和newT的结果:
+
+这次终于有了明显的区别。显然,fnT是字符串 Test,那 newT呢？呵呵,是不是被第一个样例迷惑了？其实,此时 newT是一个 Test对象——有一个名为 name的属性,其值为字符串 Test。
+
+通过上面两段代码,我们可以得出一个猜测,如果函数返回值为常规意义上的值类型(Number、String、Boolean)时,new函数将会返回一个该函数的实例对象,而如果函数返回一个引用类型(Object、Array、Function),
+则new函数与直接调用函数产生的结果等同。通过在 Test函数中返回不同类型的值进行测试,可以证实这一点。　　
+
+分清这一点,其实还是蛮重要的,至少在看一些面向对象的框架类库代码时,会少一些疑惑。(再次感谢网友“咲臣 ”让我从思考中又一次收获了很多,当然也感谢其他朋友对我的博客给出意见和建议。).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

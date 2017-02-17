@@ -1,0 +1,105 @@
+package mina2;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.charset.Charset;
+
+import org.apache.mina.core.service.IoAcceptor;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
+import org.apache.mina.filter.logging.LoggingFilter;
+import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
+public class MinaServer{
+    private static final int PORT = 8901;// 定义监听端口
+    public static void main(String[] args) throws IOException{
+        // 创建服务端监控线程
+        IoAcceptor acceptor = new NioSocketAcceptor();
+        // 设置日志记录器
+        acceptor.getFilterChain().addLast("logger", new LoggingFilter());
+        // 设置编码过滤器
+        acceptor.getFilterChain().addLast("codec",new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
+        // 指定业务逻辑处理器
+        acceptor.setHandler(new ServerHandler());
+        // 设置端口号
+        acceptor.setDefaultLocalAddress(new InetSocketAddress(PORT));
+        // 启动监听线程
+        acceptor.bind();
+    }
+}
+-----------------------
+package mina2;
+import org.apache.mina.core.service.IoHandlerAdapter;
+import org.apache.mina.core.session.IoSession;
+public class ServerHandler extends IoHandlerAdapter{
+    @Override
+    public void sessionCreated(IoSession session){
+        // 显示客户端的ip和端口
+        System.out.println(session.getRemoteAddress().toString());
+    }
+    @Override
+    public void messageReceived(IoSession session, Object message) throws Exception{
+        String str = message.toString();
+        if (str.trim().equalsIgnoreCase("quit")){
+            // 结束会话
+            session.close(true);
+            return;
+        }
+        // 返回消息字符串
+        session.write("Hi Client!");
+        // 打印客户端传来的消息内容
+        System.out.println("Message written..." + str);
+    }
+}
+------------------------
+package mina2;
+import java.net.InetSocketAddress;
+import java.nio.charset.Charset;
+import org.apache.mina.core.future.ConnectFuture;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
+import org.apache.mina.filter.logging.LoggingFilter;
+import org.apache.mina.transport.socket.nio.NioSocketConnector;
+public class MinaClient{
+    public static void main(String[] args){
+        // 创建客户端连接器.
+        NioSocketConnector connector = new NioSocketConnector();
+        // 设置日志记录器
+        connector.getFilterChain().addLast("logger", new LoggingFilter());
+        // 设置编码过滤器
+        connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8")))); 
+        // 设置连接超时检查时间
+        connector.setConnectTimeoutCheckInterval(30);
+        // 设置事件处理器
+        connector.setHandler(new ClientHandler());
+        // 建立连接
+        ConnectFuture cf = connector.connect(new InetSocketAddress("192.168.1.111", 8901));
+        // 等待连接创建完成
+        cf.awaitUninterruptibly();
+        // 发送消息
+        cf.getSession().write("Hi Server!");
+        // 发送消息
+        cf.getSession().write("quit");
+        // 等待连接断开
+        cf.getSession().getCloseFuture().awaitUninterruptibly();
+        // 释放连接
+        connector.dispose();
+    }
+}
+--------------------
+package mina2;
+import org.apache.mina.core.service.IoHandlerAdapter;
+import org.apache.mina.core.session.IoSession;
+public class ClientHandler extends IoHandlerAdapter{
+    @Override
+    public void messageReceived(IoSession session, Object message) throws Exception{
+        System.out.println("server message:"+message.toString());// 显示接收到的消息
+    }
+}
+----------------------------
+mina主要实现server和client的socket通信,速度可以和c/c++编写的网络通信程序差不多。减少对消息监控线程和编码处理的重复开发，大大提高了java网络编程的代码开发速度。
+使用起来省心省力，不过在期间遇到了一个异常，提示slf4j-jdk中的一个变量找不到，修改源代码中的一个私有变量为public重新编译打包就可以了，
+具体修改可以根据异常提示的路径找到。
+
+
+
+
+

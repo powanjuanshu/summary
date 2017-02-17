@@ -1,0 +1,10 @@
+package aa;
+import org.apache.commons.lang.ArrayUtils;
+public class Main2 {
+	public static void main(String[] args) {
+		byte[] temp = {0x01,0x02};
+        	byte d = 0x03;
+        	temp = ArrayUtils.add(temp,d);
+        	System.out.println(ConvertUtil.bytesToHexString(temp));
+	}
+}

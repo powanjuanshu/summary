@@ -1,0 +1,92 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+%>
+<html>
+<head>
+    <script type="text/javascript" src="<%=path%>/js/jquery-1.8.3.min.js"></script>
+    <script>
+        $(function() {
+            $("#btn").click(function(){
+                $.ajax({
+                    async : true,
+                    url : "<%=path%>/fast/hello.do",
+                    type : "post",
+                    data : {uaername:123,password:321},
+                    dataType : 'text',
+                    success : function(data, textStatus) {
+                        alert(data); // 打印:{"respCode":"0000","respDesc":"success"}
+                        alert(data.respCode); // 打印undefined
+                        var pars = eval("("+data+")"); // 解析json,经过测试所有的浏览器都可以试用这里为什么要写()括号,不加会报错:缺少;的错
+                        alert(pars); // 打印:[object Object]
+                        alert(pars.respCode); // 打印:0000
+                    },
+                    cache : false,
+                    timeout : 5000,
+                    error : function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("发送失败");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="button" value="dianj" id="btn">
+</body>
+</html>
+
+package com.spdbccc.account.entry.action;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+@Controller
+@RequestMapping(value = "fast")
+@Scope("prototype")
+public class FastPayAction {
+    public FastPayAction() {
+        System.out.println("fast pay action...");
+    }
+    @RequestMapping(value="hello.do",produces="text/html;charset=UTF-8")
+    @ResponseBody
+    public String helloWorld (@RequestParam Map<String,String> params, HttpServletRequest request, Map<String,Object> context) {
+        String username = request.getParameter("username");
+	/*
+        下午,调试jquery遇到了一个很奇葩的错误:JSON.parse expected property name or '}',就是jquery解析json的时候,不识别单引号,个人觉得这个错误其实应该在jquery中自己能够解决掉,不一定非得需要我们程序员自己解决.像extjs,easyUi等前台框架都已经开始识别单引号了.好了,不多说了,把错误贴出来,少让大家走点弯路.
+        用jquery1.7.2时报JSON.parse expected property name or '}'的错误
+        再仔细看了一下,哦,原来是json里的属性缺少了双引号.正确的写法应该是这样的{"success":true,"msg":"修改成功"}.
+        最后在后台把参数添加上引号(注意java里在字符串中加双引号需要用到转义字符"\")
+         */
+        return "{\"respCode\":\"0000\",\"respDesc\":\"success\"}"; // 必须用双引号,原因如上
+    }
+}
+
+后台通过response.getWrite.write(jsonObj.toString);把json转换成String类型传递给前台,前台如何使用Javascript将String转换回Json类型
+* var d = eval('('+s+')'); 
+* s 是输入的String型的值 
+* d 是json对象
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+  function strToJson(str){   
+    var json = eval('('+str+')'); // 这里为什么要写()括号,不加会报错:缺少;的错
+    return json;   
+  }
+  var onepiece = strToJson("{name:'marine',role:[{name:'lufei',skills:{skill:['gun','empire']}},{name:'longsuo',skills:{skill:['sandaoliu','ylbflf']}}]}");   
+  alert(onepiece); // json对象,object Object
+  alert(onepiece.name); // marine
+  alert(onepiece.role[0].name); // lufei
+  alert(onepiece.role[0].skills.skill[0]); // gun
+</script>
+</head>
+</html>
+
+说明:eval转换时必须用()括号将字符串括起来,不然会报错

@@ -1,0 +1,2 @@
+p.setProperty("jb", "jiba");
+p.store(new FileOutputStream(new File("d:/app.properties")), "haha");

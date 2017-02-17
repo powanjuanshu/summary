@@ -1,0 +1,16 @@
+package com;
+import java.io.File;
+import java.io.IOException;
+public class Tes {
+	public static void main(String[] args) {
+		File file=new File("d:/zzz");//创建一个文件夹，必须存在
+		File file2=new File(file,"xyz/jiba.txt");//这种写法也可以，但zzz下xyz文件夹也必须存在
+		File file3=new File("d:/lib", "xyz/hello.txt");
+		try {
+			file2.createNewFile();
+			file3.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

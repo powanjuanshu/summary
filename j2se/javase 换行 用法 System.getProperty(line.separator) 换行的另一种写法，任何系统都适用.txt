@@ -1,0 +1,8 @@
+package com;
+public class C {
+	public static void main(String[] args) {
+		System.out.print("abc\nefg\n");//第一行为abc，第二行为efg，这种写法只使用windows系统
+		String newLine=System.getProperty("line.separator");
+		System.out.print("abc"+newLine+"efg");//这种写法在任务系统都适用
+	}
+}

@@ -1,0 +1,30 @@
+<%@ page contentType="text/html;charset=BG2312" isELIgnored="false"%>
+	<%request.setAttribute("n1",50)%>
+	${requestScope.n1+30}
+	${n1>100} ${n1 gt 100}  (返回boolean类型的值false而不是字符串false,用途和<%=(Integer)request.getAttribute("n1")>100%>一样) 可用在标签里面做判断
+	${n1/3} ${n1 div 3}
+	${n1%3} ${n1 mod 3}
+	${n1==3} ${n1 eq 3}
+	${1==1} ${1 eq 1}
+<% 
+	List<User> users=new ArrayList<User>();
+	users.add(new User(1,"张飒飒","123456"));
+	users.add(new User(2,"张思思","123456"));
+	pageContext.setAttribute("ss",users);
+%>
+     	${empty ss}   (判断集合是不是空的,返回boolean类型的值true而不是字符串false)
+     	${not empty ss}
+     	${ss[0].name} (集合第一个对象的姓名属性)
+	<a href="list.jsp?num=10">重定向</a>
+	${param.num}    (等价于<%=request.getParameter(num)%>)
+	${param.num+1}	(异同<%=request.getParameter(num)+1%>)
+${pageScope.xxx}  (pageContext)
+
+
+
+
+
+
+
+
+

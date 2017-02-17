@@ -1,0 +1,13 @@
+package com;
+import java.io.FileReader;
+import java.io.IOException;
+public class Tt {
+	public static void main(String[] args) throws IOException {
+		FileReader f=new FileReader("d:/abc.txt");
+		char[] c=new char[1024*1024];
+		int len=f.read(c);
+		f.close();
+		String s=new String(c, 0, len);
+		System.out.println(s);
+	}
+}

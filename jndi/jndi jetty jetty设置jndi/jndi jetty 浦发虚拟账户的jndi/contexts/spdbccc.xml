@@ -1,0 +1,31 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <Set name="contextPath">/spdbccc</Set>
+    <Set name="resourceBase">./</Set> 
+    
+    <!-- Êý¾ÝÔ´ -->
+		<New id="ds" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+			<Set name="driverClass">oracle.jdbc.driver.OracleDriver</Set> 
+	    <Set name="jdbcUrl">jdbc:oracle:thin:@172.30.112.163:1521:MBANK</Set> 
+	    <Set name="user">mbank</Set> 
+	    <Set name="password">mbank</Set>
+			<Set name="minPoolSize" type="int">3</Set>
+			<Set name="maxPoolSize" type="int">100</Set>
+			<Set name="maxIdleTime" type="int">1800</Set>
+			<Set name="acquireIncrement" type="int">5</Set>
+			<Set name="maxStatements" type="int">0</Set>
+			<Set name="initialPoolSize" type="int">3</Set>
+			<Set name="idleConnectionTestPeriod" type="int">30</Set>
+			<Set name="acquireRetryAttempts" type="int">30</Set>
+			<Set name="breakAfterAcquireFailure" type="boolean">false</Set>
+			<Set name="testConnectionOnCheckout" type="boolean">false</Set>
+		</New>
+    
+    <!-- jndiÅäÖÃ -->
+    <New id="spdbccc" class="org.eclipse.jetty.plus.jndi.Resource">
+    	<!-- jndiÃû -->
+			<Arg>MBANK</Arg>
+			<Arg><Ref id="ds"/></Arg>
+		</New>
+</Configure>

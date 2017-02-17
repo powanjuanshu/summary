@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html;charset=utf-8"%>
+<html>
+<body>
+aaa
+<%
+out.write("kkk");
+out.write("jjj");//整个页面输出为aaakkkjjjxxx
+%>
+xxx
+</body>
+</html>

@@ -1,0 +1,24 @@
+对于UTF-8编码格式的文本文件，其前3个字节的值就是-17、-69、-65，所以，判定是否是UTF-8编码格式的代码片段如下：
+----------------------------------------------------------------
+package com;
+public class A {
+	public static void main(String[] args) {
+		java.io.File f = new java.io.File("D:/a.txt");
+		try {
+			java.io.InputStream ios = new java.io.FileInputStream(f);
+			byte[] b = new byte[3];
+			ios.read(b);
+			ios.close();
+			if (b[0] == -17 && b[1] == -69 && b[2] == -65)
+				System.out.println(f.getName() + "编码为UTF-8");
+			else {
+				System.out.println(f.getName() + "可能是GBK");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+------------------------------------------------------------------
+
+

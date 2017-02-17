@@ -1,0 +1,12 @@
+<%@ page language="java" contentType="text/html;charset=utf-8"%>
+<html>
+<body>
+aaa
+<%
+out.write("kkk");
+out.clear();//这句话的意思是清除当前的所有内容输出，所以前面的aaa和kkk页面上没有了，后面的jjj和xxx页面还是有的
+out.write("jjj");
+%>
+xxx
+</body>
+</html>

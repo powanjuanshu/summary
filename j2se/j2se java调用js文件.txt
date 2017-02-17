@@ -1,0 +1,26 @@
+package com.ccbsh;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+public class Test2 {
+	public static void main(String[] args) throws Exception {
+		ScriptEngineManager mgr = new ScriptEngineManager();
+		ScriptEngine engine = mgr.getEngineByName("JavaScript");
+		// 加载一个文件
+		File f = new File("D:\\javaja.js");
+		Reader r = new InputStreamReader(new FileInputStream(f));
+		// 把Reader放入eval中(读者可以去API看一下,重载了很多的eval()方法)
+		engine.eval(r);
+		Invocable inv = (Invocable) engine;
+		String value = (String) inv.invokeFunction("config", "我是一个参数");
+		System.out.println(value);
+	}
+}
+-------------
+function config (str) {
+	return "configxxx";
+}

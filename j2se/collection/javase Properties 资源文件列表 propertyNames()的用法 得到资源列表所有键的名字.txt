@@ -1,0 +1,20 @@
+package com;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Properties;
+public class I {
+	public static void main(String[] args) throws IOException {
+		InputStream is=new I().getClass().getResourceAsStream("/a.properties");
+		Properties p=new Properties();
+		p.load(is);
+		//资源列表键枚举
+        Enumeration<?> propNames=p.propertyNames();
+        //遍历资源列表键
+        while(propNames.hasMoreElements()){
+        	//得到资源列表键名
+            String name=(String)propNames.nextElement();
+            System.out.println(name);//按资源文件的顺序打出来
+        }
+	}
+}

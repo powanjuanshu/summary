@@ -1,0 +1,17 @@
+1.<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+1.日期:	<jsp:useBean id="a" class="java.util.Date"></jsp:useBean>  (Date a=new Date(); pageContext.setAttribute("a",a);)
+	${a}
+	<fmt:formatDate value="${a}" pattern="yyyy年MM月dd日HH:mm:ss">
+2.货币: <%request.setAttribute("a",58810);%>
+	<fmt:formatNumber value="${a}" type="currency" currencySymbol="$" maxIntegerDigits="10" minFractionDigits="5"></fmt:formatNumber>
+
+
+
+
+
+
+
+
+
+
+

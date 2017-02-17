@@ -1,0 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<body>
+<div id="a">
+	<div>
+		<div>aaa</div>
+		<div>ccc</div>
+	</div>
+	<input type="text" value="bbb"/></div>
+<script language="javascript" type="text/javascript">
+window.onload=function(){
+	var obj=document.getElementById("a");
+	var arr=obj.childNodes;
+	alert(arr.length);//只打出2，说明childNodes只取得第一级的子元素，如果最后一个</div>换行就是3，因为他会把最后的换行空格当成文本元素来看待，得到指定的子元素可用item(index)方法;
+};
+</script>
+</body>

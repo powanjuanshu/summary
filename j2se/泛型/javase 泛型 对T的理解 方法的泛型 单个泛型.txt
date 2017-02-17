@@ -1,0 +1,30 @@
+package com.abc;
+import java.util.ArrayList;
+import java.util.List;
+public class Main {
+	public static void main(String[] args) {
+		String a = new String("1");
+		String[] b = {"a" , "b"}; 
+		write(a, b);
+		/**
+		        现在List<Object>, List<String>是两种不同的类型，
+			他们之间没有继承关系，即使String继承了Object。下面的代码是非法的
+    		List<String> ls = new ArrayList<String>();
+    		List<Object> lo = ls;
+			这样设计的原因在于，根据lo的声明，编译器允许你向lo中添加任意对象（例如Integer），但是此对象是
+			List<String>，破坏了数据类型的完整性。
+		 */
+		List<String> d = add(new String("c")); // 泛型返回必须是List<String>,不能是 List<Object>,上面的注释部分已经解释原因
+		System.out.println(d);
+	}
+	public static <T> void write (T t, T[] ia) { // 方法的泛型,在返回类型前必须加上<T>,而且位置必须在返回类型的前面,不然不符合语法报错
+		System.out.println(t);
+		System.out.println(ia[1]);
+	}
+	public static <T>List<T> add (T bean) { // 这里的方法里面的T表示传进的T泛型的参数,第一个<T>是和方法参数里面的T一起的,语法规定的,可以隔开写public static <T> List<T> add (T bean).第二个List<T>表示这个方法返回的也是T泛型的集合.
+		System.out.println(bean);
+		List<T> l = new ArrayList<T>();
+		l.add(bean);
+		return l;
+	}
+}

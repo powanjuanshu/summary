@@ -1,0 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="cache-control" content="no-cache"/>
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<script type="text/javascript" src="jquery.easyui.min.js"></script>
+<script  type="text/javascript">
+function a(){
+	return false;
+}
+</script>
+<input onkeypress="return false"/>//不能在里面写a()，否则a方法里的return false没用,此处用onkeydown也可以

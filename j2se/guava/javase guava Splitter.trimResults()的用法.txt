@@ -1,0 +1,18 @@
+package test;
+
+import java.util.List;
+
+import com.google.common.base.Splitter;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
+public class Main {
+	public static void main(String[] args) {
+		String str = ",1, 2 2 ,3,a,b,c,";
+		List<String> list = Splitter.on(',').trimResults().splitToList(str); // 按,切割并得到集合，并且去掉左右空格
+		System.out.println(list.size()); // 打印8
+		String s = list.get(0);
+		System.out.println(s); // 打印空字符串
+	}
+}

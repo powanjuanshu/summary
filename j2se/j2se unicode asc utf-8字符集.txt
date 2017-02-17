@@ -1,0 +1,8 @@
+1.java中native修饰的方法表示此方法是由本体语言实现的，比如:System.arraycopy(),此方法是由C++或其他语言实现的，利用native修饰的，也可以叫做JNI实现(java本地接口)
+2.java源代码使用的是Unicode码，而不是Ascii码，Unicode码用16位二进制表示一个字符，因此Unicode字符集的字符数可达到65535个，比通常使用的Ascii码字符集(通常最多只有225个)
+大得多，英文字母，数字，标点符号在Unicode和Ascii字符集有相同的值
+
+
+
+
+

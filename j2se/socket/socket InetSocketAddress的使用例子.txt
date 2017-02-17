@@ -1,0 +1,48 @@
+使用NIO的InetSocketAddress建立网络通信非常方便，包括服务端和客户端：
+服务端创建一个ServerSocketChannel，等待客户端发起链接请求，下面的例子比较简单，开启服务端等待客户端请求，接收到客户端的连接后，给客户端发送数据。
+----------------
+package nio;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+public class Server2 {
+	public static void main(String[] args) throws IOException {
+		InetSocketAddress socketAddress = new InetSocketAddress("localhost",5555);
+		ServerSocketChannel server = ServerSocketChannel.open();
+		server.socket().bind(socketAddress);
+		SocketChannel channel = null;
+		while ((channel = server.accept()) != null) {
+			System.out.println("xxxx");
+			OutputStream out = channel.socket().getOutputStream();
+			while (true) {
+				out.write("hello world !!".getBytes());
+				out.flush();
+				out.close();//out必须close，只有这样数据才能传到客户端那边  ???
+
+			}
+		}
+	}
+}
+-----------------------------------------
+package nio;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
+public class Client2 {
+	public static void main(String[] args) throws IOException,InterruptedException {
+		InetSocketAddress socketAddress = new InetSocketAddress("localhost",5555);
+		SocketChannel channel = SocketChannel.open(socketAddress);
+		channel.configureBlocking(false);
+		ByteBuffer buffer = ByteBuffer.allocate(20);
+		while (true) {
+			int n = channel.read(buffer);
+			System.out.println(n);
+			System.out.println("receive data : "+new String(buffer.array(), 0, n));
+			Thread.sleep(1000);
+			buffer.flip();
+		}
+	}
+}

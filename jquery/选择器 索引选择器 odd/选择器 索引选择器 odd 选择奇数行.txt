@@ -1,0 +1,32 @@
+：even/：odd，选取索引为偶数/奇数的元素，比如$("div:even"),选取索引号为偶数的所有div元素
+--------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="jquery.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<div>
+	<button onclick="quit()" id="code1">退出1</button><br>
+	<button onclick="quit()" id="xcode2">退出2</button><br>
+	<button onclick="quit()" id="code3">退出3</button><br>
+	<button onclick="quit()" id="scode4">退出4</button><br>
+	<button onclick="quit()" id="scode">退出5</button><br>
+</div>
+<script type="text/javascript">
+function quit(){
+	var buttons = $("div button:odd");//选择索引为奇数的所有button标签,索引从0开始
+	alert(buttons.length);//打印：2
+	buttons.each(function(){
+		alert(this);//打印：[objectHTMLButtonElement]
+		alert($(this).html());//打印：退出2
+		alert($(this).text());//打印：退出2
+		alert($(this).prop("outerHTML"));//打印：<button onclick="quit()" id="code1">退出2</button><br>
+		alert(this.outerHTML);//打印：<button onclick="quit()" id="code1">退出2</button><br>
+	});
+}
+</script>
+</body>
+</html>

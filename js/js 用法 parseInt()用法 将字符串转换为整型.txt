@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content" content="text/html;charset=utf-8">
+<script type="text/javascript">
+var v="100";
+alert(parseInt(v)+1);//打出101
+</script>
+</head>
+<body>
+</body>
+</html>
+---------------------
+parseInt("009600",10);
+下面的内容来自微软的JScript手册
+parseInt 方法
+返回由字符串转换得到的整数。
+parseInt(numString, [radix])
+参数
+numString
+必选项。要转换为数字的字符串。
+radix
+可选项。在2和36之间的表示numString所保存数字的进制的值。如果没有提供，则前缀为'0x'的字符串被当作十六进制，前缀为'0'的字符串被当作八进制。
+所有其它字符串都被当作是十进制的。

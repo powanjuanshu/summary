@@ -1,0 +1,47 @@
+<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%!
+	int a=88888888;
+%>
+
+
+<%
+	int b=99999999;
+%>
+
+<%=a+b%>
+------------------------------
+<%! int a=88888888; %>   a定义的是成员变量
+<%  int b=99999999; %>   b定义的是局部变量，在service方法里面
+<%=a+b%>   里面只能是表达式
+在jsp中定义一个方法，只能用<%! %>，用其他的下面会有红波浪线报错
+<%!
+   public String toUtf8String(String s){
+      StringBuffer sb=new StringBuffer();
+      for (int i=0;i<s.length();i++){
+         char c = s.charAt(i);
+         if(c >= 0&&c<=255){
+            sb.append(c);
+         }
+         else{
+            byte[] b;
+            try{
+               b = Character.toString(c).getBytes("utf-8");
+            }
+            catch(Exception ex){
+               System.out.println(ex);
+               b = new byte[0];
+            }
+            for(int j=0; j<b.length;j++){
+               int k=b[j];
+               if(k<0)
+                  k+=256;
+               sb.append("%"+Integer.toHexString(k).toUpperCase());
+            }
+         }
+      }
+      return sb.toString();
+   }
+%>
+
+

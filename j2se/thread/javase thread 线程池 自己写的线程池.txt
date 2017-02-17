@@ -1,0 +1,174 @@
+在现代的操作系统中，有一个很重要的概念――线程，几乎所有目前流行的操作系统都支持线程，线程来源于操作系统中进程的概念，进程有自己的虚拟地址空间
+以及正文段、数据段及堆栈，而且各自占有不同的系统资源（例如文件、环境变量等等）。与此不同，线程不能单独存在，它依附于进程，只能由进程派生。如果一
+个进程派生出了两个线程，那这两个线程共享此进程的全局变量和代码段，但每个线程各拥有各自的堆栈，因此它们拥有各自的局部变量，线程在UNIX系统中还
+被进一步分为用户级线程（由进程自已来管理）和系统级线程（由操作系统的调度程序来管理）。 
+
+既然有了进程，为什么还要提出线程的
+概念呢？因为与创建一个新的进程相比，创建一个线程将会耗费小得多的系统资源，对于一些小型的应用，可能感觉不到这点，但对于那些并发进程数特别多的应
+用，使用线程会比使用进程获得更好的性能，从而降低操作系统的负担。另外，线程共享创建它的进程的全局变量，因此线程间的通讯编程会更将简单，完全可以抛
+弃传统的进程间通讯的IPC编程，而采用共享全局变量来进行线程间通讯。 
+
+有了上面这个概念，我们下面就进入正题，来看一下线程池
+究竟是怎么一回事？其实线程池的原理很简单，类似于操作系统中的缓冲区的概念，它的流程如下：先启动若干数量的线程，并让这些线程都处于睡眠状态，当客户
+端有一个新请求时，就会唤醒线程池中的某一个睡眠线程，让它来处理客户端的这个请求，当处理完这个请求后，线程又处于睡眠状态。可能你也许会问：为什么要
+搞得这么麻烦，如果每当客户端有新的请求时，我就创建一个新的线程不就完了？这也许是个不错的方法，因为它能使得你编写代码相对容易一些，但你却忽略了一
+个重要的问题――性能！就拿我所在的单位来说，我的单位是一个省级数据大集中的银行网络中心，高峰期每秒的客户端请求并发数超过100，如果为每个客户端
+请求创建一个新线程的话，那耗费的CPU时间和内存将是惊人的，如果采用一个拥有200个线程的线程池，那将会节约大量的的系统资源，使得更多的CPU时
+间和内存用来处理实际的商业应用，而不是频繁的线程创建与销毁。 
+
+
+既然一切都明白了，那我们就开始着手实现一个真正的线程池吧，线
+程编程可以有多种语言来实现，例如C、C＋＋、java等等，但不同的操作系统提供不同的线程API接口，为了让你能更明白线程池的原理而避免陷入烦琐的
+API调用之中，我采用了JAVA语言来实现它，由于JAVA语言是一种跨平台的语言，因此你不必为使用不同的操作系统而无法编译运行本程序而苦恼，只要
+你安装了JDK1.2以上的版本，都能正确地编译运行本程序。另外JAVA语言本身就内置了线程对象，而且JAVA语言是完全面像对象的，因此能够让你更
+清晰地了解线程池的原理，如果你注意看一下本文的标题，你会发现整个示例程序的代码只有大约100行。 
+
+
+
+
+本示例程序由三个类构成:
+
+第一个类是
+TestThreadPool类,它是一个测试程序,用来模拟客户端的请求,当你运行它时,系统首先会显示线程池的初始化信息,然后提示你从键盘上输入字符串,
+并按下回车键,这时你会发现屏幕上显示信息,告诉你某个线程正在处理你的请求,如果你快速地输入一行行字符串,那么你会发现线程池中不断有线程被唤醒,来处理你的请求.
+在本例中,我创建了一个拥有10个线程的线程池,如果线程池中没有可用线程了,系统会提示你相应的警告信息,但如果你稍等片刻,
+那你会发现屏幕上会陆陆续续提示有线程进入了睡眠状态,这时你又可以发送新的请求了.
+
+第二个类是
+ThreadPoolManager类,顾名思义,它是一个用于管理线程池的类,它的主要职责是初始化线程池,并为客户端的请求分配不同的线程来进行处理,如果线程池满了,它会对你发出警告信息.
+
+最后一个类是
+SimpleThread类,它是Thread类的一个子类,它才真正对客户端的请求进行处理,SimpleThread在示例程序初始化时都处于睡眠状态,但如果它接受到了ThreadPoolManager
+类发过来的调度信息,则会将自己唤醒,并对请求进行处理
+--------------------------------
+package thread2;
+import java.io.*;
+public class TestThreadPool {
+	public static void main(String[] args) {
+		try{
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			String s;
+			ThreadPoolManager manager = new ThreadPoolManager(10);
+			while ((s = br.readLine()) != null){
+				manager.process(s);
+			}
+		}
+		catch (IOException e) {
+		}
+	}
+}
+------------------------------------
+package thread2;
+import java.util.*;
+public class ThreadPoolManager {
+	private int maxThread;
+	public Vector vector=new Vector();
+	public ThreadPoolManager(int threadCount){
+		this.maxThread=threadCount;
+		System.out.println("Starting thread pool...");
+		for (int i = 1; i <= 10; i++){
+			SimpleThread thread = new SimpleThread(i);
+			vector.addElement(thread);
+			thread.start();
+		}
+	}
+	public void process(String argument){
+		int i;
+		for (i = 0; i < vector.size(); i++){
+			SimpleThread currentThread = (SimpleThread) vector.elementAt(i);
+			if (!currentThread.isRunning()){
+				System.out.println("Thread " + (i + 1) + " is processing:"+argument);
+				currentThread.setArgument(argument);
+				currentThread.setRunning(true);
+				return;
+			}
+		}
+		if (i == vector.size()){
+			System.out.println("pool is full,try in another time.");
+		}
+	}
+}
+----------------------------
+package com.cairh.xpe.products.bills.backend.action;
+public class SimpleThread extends Thread {
+	private boolean runningFlag;
+	private String argument;
+	public boolean isRunning() {
+		return runningFlag;
+	}
+	public synchronized void setRunning(boolean flag) {
+		runningFlag = flag;
+		if (flag) this.notify();
+	}
+	public String getArgument() {
+		return this.argument;
+	}
+	public void setArgument(String string) {
+		argument = string;
+	}
+	public SimpleThread(int threadNumber) {
+		runningFlag = false;
+		System.out.println("thread " + threadNumber + "started.");
+	}
+	public synchronized void run() {
+		try {
+			while (true) {
+				if (!runningFlag) {
+					this.wait();
+				} else {
+					System.out.println("processing " + getArgument() + "... done.");
+					sleep(5000);
+					System.out.println("Thread is sleeping...");
+					setRunning(false);
+				}
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+我们先关注一下这个类的构造函数，然后再看它的process()方法。第16－24行是它的构造函数，首先它给ThreadPoolManager类
+的成员变量maxThread赋值，maxThread表示用于控制线程池中最大线程的数量。第18行初始化一个数组vector，它用来存放所有的
+SimpleThread类，这时候就充分体现了JAVA语言的优越性与艺术性：如果你用C语言的话，至少要写100行以上的代码来完成vector的功
+能，而且C语言数组只能容纳类型统一的基本数据类型，无法容纳对象。好了，闲话少说，第19－24行的循环完成这样一个功能：先创建一个新的
+SimpleThread类，然后将它放入vector中去，最后用thread.start()来启动这个线程，为什么要用start()方法来启动线
+程呢？因为这是JAVA语言中所规定的，如果你不用的话，那这些线程将永远得不到激活，从而导致本示例程序根本无法运行。
+
+　　
+下面我们再来看一下process()方法，第30－40行的循环依次从vector数组中选取SimpleThread线程，并检查它是否处于激活状态
+（所谓激活状态是指此线程是否正在处理客户端的请求），如果处于激活状态的话，那继续查找vector数组的下一项，如果vector数组中所有的线程都
+处于激活状态的话，那它会打印出一条信息，提示用户稍候再试。相反如果找到了一个睡眠线程的话，那第35－38行会对此进行处理，它先告诉客户端是哪一个
+线程来处理这个请求，然后将客户端的请求，即字符串argument转发给SimpleThread类的setArgument()方法进行处理，并调用
+SimpleThread类的setRunning()方法来唤醒当前线程，来对客户端请求进行处理。
+
+可能你还对setRunning()方法是怎样唤醒线程的有些不明白，那我们现在就进入最后一个类：SimpleThread
+如果你对JAVA的线程编程有些不太明白的话，那我先在这里简单地讲解一下，JAVA有一个名为Thread的类，如果你要创建一个线程，则必须要从
+Thread类中继承，并且还要实现Thread类的run()接口，要激活一个线程，必须调用它的start()方法，start()方法会自动调用
+run()接口，因此用户必须在run()接口中写入自己的应用处理逻辑。那么我们怎么来控制线程的睡眠与唤醒呢？其实很简单，JAVA语言为所有的对象
+都内置了wait()和notify()方法，当一个线程调用wait()方法时，则线程进入睡眠状态，就像停在了当前代码上了，也不会继续执行它以下的
+代码了，当调用notify()方法时，则会从调用wait()方法的那行代码继续执行以下的代码，这个过程有点像编译器中的断点调试的概念。以本程序为
+例，第38行调用了wait()方法，则这个线程就像凝固了一样停在了38行上了，如果我们在第13行进行一个notify()调用的话，那线程会从第
+38行上唤醒，继续从第39行开始执行以下的代码了。
+
+过以上的讲述，我们现在就不难理解SimpleThread类了，第
+9－14行通过设置一个标志runningFlag激活当前线程，第25－29行是SimpleThread类的构造函数，它用来告诉客户端启动的是第几
+号进程。第31－50行则是我实现的run()接口，它实际上是一个无限循环，在循环中首先判断一下标志runningFlag，如果没有
+runningFlag为false的话，那线程处理睡眠状态，否则第42－45行会进行真正的处理：先打印用户键入的字符串，然后睡眠5秒钟，为什么要
+睡眠5秒钟呢？如果你不加上这句代码的话，由于计算机处理速度远远超过你的键盘输入速度，因此你看到的总是第1号线程来处理你的请求，从而达不到演示效
+果。最后第45行调用setRunning()方法又将线程置于睡眠状态，等待新请求的到来。
+
+最后还有一点要注意的是，如果你在
+一个方法中调用了wait()和notify()函数，那你一定要将此方法置为同步的，即synchronized，否则在编译时会报错，并得到一个莫名
+其妙的消息：&ldquo;current thread not owner&rdquo;（当前线程不是拥有者）。
+
+至此为止，我们完整地实现了一个线
+程池，当然，这个线程池只是简单地将客户端输入的字符串打印到了屏幕上，而没有做任何处理，对于一个真正的企业级运用，本例还是远远不够的，例如错误处
+理、线程的动态调整、性能优化、临界区的处理、客户端报文的定义等等都是值得考虑的问题，但本文的目的仅仅只是让你了解线程池的概念以及它的简单实现，如 
+
+
+
+
+
+

@@ -1,0 +1,64 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>center</title>
+	<script type="text/javascript" src="content/jquery/jquery-1.9.1.js"></script>
+	
+	
+  </head>
+  
+  <body>
+  	<input type="button" value="send" onclick="partake.getPartakeList()"/>
+  	<iframe src="test_iframe.jsp" id="ifra" width="100px" height="100px"></iframe>
+  </body>
+  
+  <script type="text/javascript">
+	
+	//jquery在父窗口中获取iframe中的元素
+	//格式：$("#iframe的ID").contents().find("#iframe中的控件ID").click();//jquery 方法1  
+	//实例：$("#ifm").contents().find("#btnOk").click();//jquery 方法1
+	window.onload=function(){ // 或者$(window).onload(funciton(){});
+		alert($("#ifra").contents().find("#username").val());
+	}
+
+	/* 这种方法无法获取,这也是onload和$.ready()两种方式的区别 
+	$(function(){
+		alert($("#ifra").contents().find("#username").val());
+	}); */
+
+	</script>
+</html>
+-----------------------
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>page</title>
+    <!-- <script type="text/javascript" src="jq.js"></script> -->
+    <script type="text/javascript" src="content/jquery/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){
+			alert(123);//会在父页面打印之前打印123
+		}
+		
+	</script>
+  </head>
+  
+  <body>
+  	<div id="content"></div>
+  	<input type="text" value="cai" id="username" >
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

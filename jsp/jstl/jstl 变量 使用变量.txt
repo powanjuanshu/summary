@@ -1,0 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="aaa"></c:set>
+${ctx}
+------打出为aaa
+-----------------等价于
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="aaa"></c:set>
+<c:out value="${ctx}"></c:out>
+

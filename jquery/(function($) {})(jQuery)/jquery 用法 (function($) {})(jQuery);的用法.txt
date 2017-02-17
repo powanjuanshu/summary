@@ -1,0 +1,16 @@
+jquery(function(){})与(function(){}(jQuery)的区别
+1.
+jQuery(function(){});
+全写为
+jQuery(docunemt).ready(function(){});
+简写为
+$(function(){});
+意义为在DOM加载完毕后执行ready()方法
+
+2.
+(funtion(){}(jQuery);
+实际执行()(para)匿名方法,只不过传递了jQuery对象。
+
+总结：
+jQuery(funtion(){});用于存放DOM对象的代码,执行其中代码时DOM对象已经存在,不可用于存放开发插件代码.因为jQuery对象没有得到传递,外部通过jQuery.method调用不来其中方法.
+(funtion(){}(jQuery);用于存放开发插件的代码,执行其中代码dom不一定存在,直接自动执行dom操作代码请小心使用.

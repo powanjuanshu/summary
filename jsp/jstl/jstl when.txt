@@ -1,0 +1,19 @@
+<select id="listType" name="filter_listType">
+	<c:choose>
+		<c:when test="${listHelper.param['listType']=='1'}">
+			<option value="">--</opiton>
+			<option value="1" selected="selected">车险成功客户</opiton>
+			<option value="2">车险失败客户</opiton>
+		</c:when>
+		<c:when test="${listHelper.param['listType']=='2'}">
+			<option value="">--</opiton>
+			<option value="1">车险成功客户</opiton>
+			<option value="2" selected="selected">车险失败客户</opiton>
+		</c:when>
+		<c:otherwise>
+			<option value="" selected="selected">--</opiton>
+			<option value="1">车险成功客户</opiton>
+			<option value="2">车险失败客户</opiton>
+		</c:when>
+	</c:choose>
+</select>

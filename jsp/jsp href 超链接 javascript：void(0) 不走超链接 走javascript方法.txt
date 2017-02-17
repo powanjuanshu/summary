@@ -1,0 +1,17 @@
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content" content="text/html;charset=utf-8">
+<script type="text/javascript">
+function show(){
+	var c=window.showModalDialog("AA?id=110&random="+Math.random(),null,"center:yes;help:no;resizable:yes;dialogWidth:700px;dialogHeight:320px;location:no;");
+	document.getElementById("b").innerHTML=c;
+}
+</script>
+</head>
+<body>
+<a href="javascript:void(0)" onclick="show()">Ìø×ª</a>
+<div id="b"></div>
+</body>
+</html>

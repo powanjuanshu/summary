@@ -1,0 +1,10 @@
+package com;
+import java.io.File;
+public class A{
+	public static void main(String[] args){
+		File file=new File("d:/zzz/a/b/");//最后可以带/也可以不带，但最好最后加一个/
+		file.mkdir();//只有在父目录a存在才能建立b目录，否则不创建，也不报错，如果存在了，则不创建，也不报已存在异常
+		File file2=new File("d:/xyz//abc/");//最后可以带/也可以不带，但最好最后加一个/,d:/xyz//abc/这样写也正确
+		file2.mkdirs();//能创建各个子目录，不存在则创建，存在则不创建，也不报已存在异常
+	}
+}

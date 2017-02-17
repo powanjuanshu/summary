@@ -1,0 +1,13 @@
+package com;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+public class Te {
+	public static void main(String[] args) throws ParseException {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String s="时间2012-05-13 21:06:22";
+		Date t=sdf.parse(s,new ParsePosition(2)); //从第二个字符开始解析，包括第二个字符
+		System.out.println(t);
+	}
+}

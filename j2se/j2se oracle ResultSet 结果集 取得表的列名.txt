@@ -1,0 +1,21 @@
+package com;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+public class Ti {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL","scott","tiger");
+		PreparedStatement ps=conn.prepareStatement("SELECT * FROM emp");
+		ResultSet rs=ps.executeQuery();
+		ResultSetMetaData rsm=rs.getMetaData();
+		for(int i=1;i<=rsm.getColumnCount();i++){
+			String name=rsm.getColumnName(i);
+			System.out.println(name);
+		}
+	}
+}
+------------------------

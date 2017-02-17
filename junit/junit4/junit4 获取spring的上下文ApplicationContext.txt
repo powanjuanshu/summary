@@ -1,0 +1,37 @@
+package com.spdbccc.account.entry.bizfront;
+import com.spdbccc.account.entry.bizfront.dao.TFastPayBindMapper;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+@RunWith(SpringJUnit4ClassRunner.class) // junit与spring集成,作为spring3.0，SpringJunit4classRunner需要Junit4.5以上,只有有这句下面的注解才起作用
+@ContextConfiguration(locations = {"classpath:spring/spring-common.xml"}) // 如果没有上面的@RunWith(SpringJUnit4ClassRunner.class),那么这句话不起作用
+public class BastTest {
+    @Autowired
+    public ApplicationContext context; // 获取spring的上下文applicationContext
+    @Test
+    public void test () {
+        System.out.println("SpringJUnit4ClassRunner....");
+	// ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"classpath:spring/spring-common.xml"});
+        String[] a = context.getBeanDefinitionNames();
+        System.out.println("xxx"+a.length);
+        System.out.println("xxx"+a[0]);
+        System.out.println("xxx"+a[1]);
+        System.out.println("xxx"+a[2]);
+        System.out.println("xxx"+a[3]);
+        System.out.println("xxx"+a[4]);
+        System.out.println("xxx"+a[5]);
+        System.out.println("xxx"+a[6]);
+        System.out.println("xxx"+a[7]);
+        System.out.println("xxx"+a[8]);
+        System.out.println("xxx"+a[9]);
+        TFastPayBindMapper t = (TFastPayBindMapper) context.getBean("TFastPayBindMapper");
+        System.out.println("SpringJUnit4ClassRunner end....");
+    }
+}

@@ -1,0 +1,17 @@
+package com;
+import java.util.regex.Pattern;
+public class A {
+	public static void main(String[] args){
+		String s="1520ÖÐ¹úd¡ñ¡ñ¡øf2125382";
+		StringBuffer sb=new StringBuffer();
+		String regex="\\d";
+		Pattern pattern=Pattern.compile(regex);
+		char[] chs=s.toCharArray();
+		for(char ch:chs){
+			if(pattern.matcher(String.valueOf(ch)).matches()){
+				sb.append(ch);
+			}
+		}
+		System.out.println(sb);
+	}
+}

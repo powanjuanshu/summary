@@ -1,0 +1,7 @@
+第一种方法：
+Properties p=new Properties();
+p.load(new FileInputStream(new File("d:/app.properties")));
+第二种方法：
+Properties p=new Properties();
+InputStream in=this.getClass().getResourceAsStream("/app.properties");//在类根目录下找
+p.load(in);

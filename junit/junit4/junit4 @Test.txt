@@ -1,0 +1,23 @@
+package com.spdbccc.account.entry.bizfront.test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+public class BastTestExa {
+    @Test
+    // 采用Annotation的JUnit已经不会霸道的要求你必须继承自TestCase了,而且测试方法也不必以test开头了,只要以@Test元数据来描述即可
+    public void test () {
+        System.out.println("BastTestExa");
+    }
+    @Before
+    // 使用了该元数据的方法在每个测试方法执行之前都要执行一次,@Before和@After标示的方法只能各有一个
+    // 这个相当于取代了JUnit以前版本中的setUp和tearDown方法,当然你还可以继续叫这个名字,不过JUnit不会霸道的要求你这么做了
+    public void init () {
+        System.out.println("BastTestExa init...");
+    }
+    @After
+    // 使用了该元数据的方法在每个测试方法执行之后要执行一次,@Before和@After标示的方法只能各有一个
+    // 这个相当于取代了JUnit以前版本中的setUp和tearDown方法,当然你还可以继续叫这个名字,不过JUnit不会霸道的要求你这么做了
+    public void destroy () {
+        System.out.println("BastTestExa destroy...");
+    }
+}

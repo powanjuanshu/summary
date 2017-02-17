@@ -1,0 +1,38 @@
+<html>
+<head>
+	<script type="text/javascript" src="/integral_market/static/theme1/script/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+<div id="a">
+	<div>
+		<ul>
+			<li>aaa</li>
+			<li>bbb</li>
+		</ul>
+	</div>
+	<div id="c">ccc</div>
+	<select name="select" size="1" style="font-family:Verdana,Arial; font-size: 9pt; color: #FF0000">
+		<option value="2" selected="selected">yesky.com</option>
+		<option value="1">redidea.net</option>
+	</select>
+</div> 
+</body>
+
+<script type="text/javascript">
+	$(function(){
+		$("#c").click(function(){
+			var v = $("#a").children();//得到的是jquery对象数组
+			alert(v.jquery);//打出:1.10.2,判断是jquery对象还是dom对象,jQuery对象都有一个版本信息属性:jquery.你可以判断js对象是否有该属性来判断.
+			var dom_obj = document.getElementById("a");
+			alert(dom_obj.jquery);//打出:undefined,说明这不是jquery对象,是dom对象,如果打出:1.10.2说明是jquery对象
+			alert(v.length);//打出:3,说明只得到第一级子元素
+			v.each(function(){
+				alert($(this).prop("outerHTML"));
+				alert(this.outerHTML);
+			});
+		});
+	});
+</script>
+
+
+</html>

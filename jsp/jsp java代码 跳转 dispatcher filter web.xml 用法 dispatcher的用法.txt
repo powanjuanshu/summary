@@ -1,0 +1,29 @@
+<filter-mapping>
+	<dispatcher>request</dispatcher>
+	<dispatcher>forward</dispatcher>
+	<dispatcher>include</dispatcher>
+	<dispatcher>error</dispatcher>
+</filter-mapping>
+可以在一个<filter-mapping>元素中参加随便率性数量标<dispatcher>，使得filter将会感化于直接客户端过来的request，经由过程forward过来的request，经由过程include过来的request
+和经由过程<error-page>过来的request。若是没有指定任何<dispatcher>元素，默认值是request。
+<filter-mapping>
+	<filter-name>LoggingFilter</filter-name>
+	<url-pattern>/products/*</url-pattern>
+</filter-mapping>
+这种景象下，过滤器将会感化于直接从客户端发过来的以/products/...开端的恳求。因为这里没有制订任何的<dispatcher>元素，默认值是request。
+<filter-mapping>
+	<filter-name>LoggingFilter</filter-name>
+	<servlet-name>ProductServlet</servlet-name>
+	<dispatcher>include</dispatcher>
+</filter-mapping>
+这种景象下，若是恳求是经由过程request dispatcher的include办法传递过来的对ProductServlet的恳求，则要经过这个过滤器的过滤。其他的诸如从客户端直接过来的对ProductServlet的
+恳求等都不须要经过这个过滤器。
+指定filter的匹配体格式有两种办法：直接指定url-pattern和指定servlet，后者相当于指定的servlet对应的url-pattern作为filter的匹配模式
+filter的路径匹配和servlet是一样的
+<filter-mapping>
+	<filter-name>LoggingFilter</filter-name>
+	<url-pattern>/products/*</url-pattern>
+	<dispatcher>FORWARD</dispatcher>
+	<dispatcher>REQUEST</dispatcher>
+</filter-mapping>
+在这种景象下，若是恳求是以/products/...开首的，并且是经由过程request dispatcher的forward办法传递过来或者直接从客户端传递过来的，则必须经过这个过滤器。

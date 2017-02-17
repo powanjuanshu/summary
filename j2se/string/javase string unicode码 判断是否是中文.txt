@@ -1,0 +1,49 @@
+package com.cmbc.payagent;
+
+import java.net.URLEncoder;
+
+public class Test2 {
+	public static void main(String[] args) throws Exception {
+		System.out.println("\u8bf7\u628a\u4f60\u9700\u8981\u8f6c\u6362\u7684\u5185\u5bb9\u7c98\u8d34\u5728\u8fd9\u91cc");
+		System.out.println(URLEncoder.encode("天翼支付", "UTF-8"));
+		System.out.println(chinaToUnicode("请把你需要转换的内容粘贴在这里"));
+		System.out.println(isChinese('我'));
+	}
+
+	/** 
+    	* 把中文转成Unicode码
+    	* @param str
+    	* @return
+    	*/  
+	public static String chinaToUnicode(String str) {
+		String result = "";
+		for (int i = 0; i < str.length(); i++) {
+			char cha = str.charAt(i);
+			int chr1 = (char) cha;
+			if (chr1 >= 19968 && chr1 <= 171941) { // 汉字范围 \u4e00-\u9fa5 (中文)
+				result += "\\u" + Integer.toHexString(chr1);
+			} else {
+				result += str.charAt(i);
+			}
+		}
+		return result;
+	}
+
+    /** 
+    * 判断是否为中文字符 
+    * @param c 
+    * @return 
+    */  
+   public static boolean isChinese(char c) {
+       Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+       if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+               || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+               || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+               || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+               || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+               || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+           return true;
+       }
+       return false;
+   }
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>你应该更新的Java知识之集合初始化 - 梦想风暴 - 博客大巴</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="keywords" content="博客中国,中国博客,我的博客,私人日志,博客大巴,图片博客,社会热点,观点,生活,旅行,影像,自由,表达,城客,记录,分享,看法自由报,新媒体,博客研究,播客,BSP,个人门户,免费博客,空间,博客申请,中文博客,Blog,Blogger,网络日志,自媒体,社交网络,小清新,文艺范儿" />
+<meta name='description' content='你应该更新的Java知识之常用程序库（一）你应该更新的Java知识之常用程序库（二）你应该更新的Java知识之构建工具你应该更新的Java知识之Observer
+在Java里，如何初始化一个List呢？
+我知道，你可以毫不费力地写出这样的代码：
+List&lt;String&gt; names = new ArrayList&lt;String&gt;();names.add(&quot;dreamhead&quot;);
+这几乎是在Java 5/...' />
+<link rel='alternate' type='application/rss+xml' title='RSS 2.0' href='http://dreamhead.blogbus.com/index.rdf' />
+<link href='http://public.blogbus.com/blogbus/skin_css/sys/50004.css' rel='stylesheet' type='text/css' />
+<script>if (top.location != self.location) {top.location=self.location;}</script><script src="http://public.blogbus.com/imgs/jquery.js"></script><script type="text/javascript" src="http://cbjs.baidu.com/js/m.js"></script><script type="text/javascript" src="http://public.blogbus.com/checkSpam.js"></script><script type="text/javascript">
+var content_img_width = 500;
+</script><base href='http://dreamhead.blogbus.com' /></head><body>
+<div id="index">
+	<div id="container">
+		<div id="header">
+			<h1 class="blogName"><a href="http://dreamhead.blogbus.com" title="http://dreamhead.blogbus.com">梦想风暴</a></h1>
+			<div class="description">一个小程序员的信口开河</div>
+			<div class="clear"></div>
+		</div>
+       <div id="innerContainer">
+           <div class="innerTop"></div>
+            <div id="outerContent">
+                <div id="content">
+                    <div class="contentTop"></div>
+                        <ul id="posts">
+                            <div class="postsTop"></div>
+                            <div class="context"><span class="pre"><a href='http://www.blogbus.com/dreamhead-logs/232802744.html'>&lt;&lt;&nbsp;&nbsp;Moco 0.7发布</a></span> | <span class="top"><a href="http://dreamhead.blogbus.com">首页</a></span> | <span class="next"><a href='http://www.blogbus.com/dreamhead-logs/233345752.html'>六年思想工作者&nbsp;&nbsp;&gt;&gt;</a></span></div>
+                            <!--list-->
+                            <li>
+                                <div class="postHeader">
+                                    <h3>2013-05-02</h3>
+                                    <h2>你应该更新的Java知识之集合初始化</h2>
+                                    <div class="tags">Tag：<a href="/tag/你应该更新的Java知识/">你应该更新的Java知识</a> <a href="/tag/Java/">Java</a> <a href="/tag/Guava/">Guava</a> <a href="/tag/集合/">集合</a> </div>
+                                </div>
+                                <div class="postBody">
+                                    <p class="cc-lisence" style="line-height:180%;">
+<a href="http://creativecommons.org/licenses/by/3.0/deed.zh" target="_blank" rel="external nofollow" >版权声明</a>：转载时请以超链接形式标明文章原始出处和作者信息及<a
+href="http://www.blogbus.com/bangzhuzhongxin-logs/11205960.html"
+target="_blank">本声明</a><br /><a href="http://www.blogbus.com/dreamhead-logs/232899025.html">http://www.blogbus.com/dreamhead-logs/232899025.html</a><br /><br />
+</p><p><a href="http://www.blogbus.com/dreamhead-logs/226738702.html">你应该更新的Java知识之常用程序库（一）<br /></a><a href="http://www.blogbus.com/dreamhead-logs/226738756.html">你应该更新的Java知识之常用程序库（二）<br /></a><a href="http://www.blogbus.com/dreamhead-logs/227427912.html">你应该更新的Java知识之构建工具<br /></a><a href="http://www.blogbus.com/dreamhead-logs/231594181.html">你应该更新的Java知识之Observer</a></p>
+<p>在Java里，如何初始化一个List呢？</p>
+<p>我知道，你可以毫不费力地写出这样的代码：</p>
+<p>List&lt;String&gt; names = new ArrayList&lt;String&gt;();<br />names.add("dreamhead");</p>
+<p>这几乎是在Java 5/6风格的代码中随处可见的，但不知道你怎么想，反正这样的代码让我觉得很不爽。</p>
+<p>首先，变量声明里存在重复，明明我已经知道它是一个String的List，还要再后面再说一次。如果你尝试过一些具有类型推演功能的语言，你就会知道，这种重复完全是可以由编译器处理掉的。Java 7也认为这样的代码不好，所以，它给我们提供了一个新的语法：</p>
+<p>List&lt;String&gt; names = new ArrayList&lt;&gt;();</p>
+<p>其实，即便是Java 5/6，我们也是有办法写出不那么冗余的代码。Guava已经为我们提供了一个解决方案，所以，同样的代码如果用Guava来写，它会是这样：</p>
+<p>List&lt;String&gt; names = newArrayList();</p>
+<p>这里，它利用了编译器的类型推演功能保证了类型的正确性。从代码上看，它甚至要比Java 7提供的解决方案键入的字符还少。</p>
+<p>这只是第一步，再有我还要在List里面放入内容，让我们继续来看在Guava里面怎么做。</p>
+<p>List&lt;String&gt; names = newArrayList("dreamhead");</p>
+<p>一行代码搞定，因为支持变参，所以，我们甚至可以一次放入很多元素。但是，这不是终点。</p>
+<p>在很多数情况下，使用List时，我们并不关心其具体的类型，只是把它当做一组数据来用，而并不是为了动态添加一些东西。这个时候，我们只要有一个不变的List就可以了。Guava里的ImmutableList就可以很好地把我们的意图表现出来。一方面，它实现了List接口，你可以把它当做一个List来用，另一方面，如果试图改变其中的内容，它会抛出异常。</p>
+<p>就我们这里讨论的内容而言，它的初始化方法更为简单：</p>
+<p>List&lt;String&gt; names = of("dreamhead");</p>
+<p>这里讨论的只是List，但大多数内容同样适用于Set和Map，另外两种我们最常用的数据结构。</p>
+<p>需要额外加以解释的是，of其实是为少量元素初始化打开的方便之门。所以，如果查看of的实现，你会发现List最多支持12个元素的处理，而Set只有6个，只是因为可变参数的存在，它可以支持到很多。但是，Map的则不同，它只有5对，因为它的键值对必须成对出现。如果你需要元素很大的ImmutableMap，一个更好的解决方法是采用Builder，下面是一个例子：</p>
+<p>ImmutableMap&lt;String, String&gt; contentTypeMap = ImmutableMap.&lt;String, String&gt;builder()<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("png", "image/png")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("gif", "image/gif")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("jpg", "image/jpeg")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("jpeg", "image/jpeg")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("tiff", "image/tiff")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("css", "text/css")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("html", "text/html")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("txt", "text/plain")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("js", "application/x-javascript")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("json", "application/json")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("pdf", "application/pdf")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("zip", "application/zip")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.put("xml", "text/xml")<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.build();</p>
+<p>在程序设计领域，有一个经典的说法，语言设计就是程序库设计，程序库设计就是语言设计。像List、Map这样的集合类型，有些语言把它放进了语法，使得它用起来更简单。像Java这样做起事来一板一眼的程序设计语言，如果有了好的程序库支撑，也可以让它相对方便，Guava在这方面做了一个很好的尝试。</p>
+<p>对普通的Java程序员而言，是时候抛弃繁重的Java旧语法，拥抱新时代的Java了。</p>
+<style>.relpost{clear:both}</style>
+<!-- Baidu Button BEGIN -->
+<div class="" style="clear:both;width:100%;height:30px;padding:40px 0 20px">
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" style="float:left;width:260px;">
+<span class="bds_more">分享到：</span>
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<a class="shareCount"></a>
+</div>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6785502" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="tb_url">引用地址：<input type="text" value="http://www.blogbus.com/public/tb.php/4212/232899025/edb2b7e0042d9c2b58635a7ff7172621"/></div>
+                                <div class="postFooter">
+                                    <div class="menubar"><span class="author"><a href="http://home.blogbus.com/profile/dreamhead">dreamhead</a></span> 发表于<span class="time">18:12</span> | <a href='http://blog.home.blogbus.com/4212/posts/232899025/form' class='edit'>编辑</a> | <a href='javascript:;' class='dig' target='_blank' onclick="share_click('share_6a427e23ee4f2f31e4a0fc66ad7c1471'); Picobox.showIFrameBox('分享文章','http://app.home.blogbus.com/share?url=http%3A%2F%2Fwww.blogbus.com%2Flogs%2F232899025.html&from=blogbus&back=http%3A%2F%2Fwww.blogbus.com',{width:400,height:260}); return false;">分享<span id='share_6a427e23ee4f2f31e4a0fc66ad7c1471'>　0</span></a></div>
+                                </div>
+                            </li>
+                            <!--/list-->
+                            <div class="postsBottom"></div>
+                        </ul><link rel="stylesheet" href="http://public.blogbus.com/imgs/picobox/picobox.css" type="text/css"  />
+			<link rel="stylesheet" href="http://public.blogbus.com/imgs/picobox/picobox_beauty/picobox_beauty.css" type="text/css"  />
+			<script type="text/javascript" src="http://public.blogbus.com/imgs/picobox/picobox.js"></script>
+			<script type="text/javascript" src="http://public.blogbus.com/imgs/picobox/picobox_beauty/picobox_beauty.js"></script>
+<div id="commentForm"></div>
+<script type="text/javascript" src="http://blog.home.blogbus.com/front/4212/comments/232899025/cmt_form"></script>
+<script type='text/javascript'>var post_ids='232899025';</script><script type='text/javascript' src='http://app.home.blogbus.com/share/number?id=232899025'></script><script>function share_click(id){var num = parseInt(document.getElementById(id).innerHTML);	num++;document.getElementById(id).innerHTML= ' '+num;}</script><script type='text/javascript' src='http://public.blogbus.com/blogbus/skin/common/helper1.js?v1024'></script>
+                    <div class="contentBottom"></div>                    
+                </div>
+            </div>
+            <div id="outerSidebar">
+                <div id="sidebar">
+                    <div class="sideTop"></div>
+                    <div id="search" class="module">
+	<div class="modTop"></div>
+	<h2>搜索</h2>
+	<div class="modBody">
+	    <form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+		<input type="hidden" name="cx" value="000579218792228101724:tvuzu9tzfs0" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="textField" />
+		<input type="submit" class="button" value="搜索" />
+		<div class="clear"></div>
+	    </form>
+	</div>
+	<div class="modBottom"></div>
+</div><div id="nPosts" class="module">
+	<div class="modTop"></div>
+	<h2>最新日志</h2>
+	<div class="modBody">
+		<ul><li><a href='/logs/270264199.html'>当开发遇到运维</a></li>
+<li><a href='/logs/270174350.html'>Jackson雕虫技（四）</a></li>
+<li><a href='/logs/258185547.html'>Jackson雕虫技（三）</a></li>
+<li><a href='/logs/255406345.html'>Moco 0.9.1发布</a></li>
+<li><a href='/logs/246564745.html'>回望2013</a></li>
+<li><a href='/logs/242009297.html'>十年</a></li>
+<li><a href='/logs/239426524.html'>译《Clojure编程乐趣》</a></li>
+<li><a href='/logs/239188397.html'>战斗HTTP（下）</a></li>
+<li><a href='/logs/239188391.html'>战斗HTTP（上）</a></li>
+<li><a href='/logs/236841024.html'>QCon上海随想</a></li>
+</ul>
+		<div class="more"><a href="/logs/">全部日志>></a></div>
+	</div>
+	<div class="modBottom"></div>
+</div><div id="nComments" class="module">
+	<div class="modTop"></div>
+	<h2>最新评论</h2>
+	<div class="modBody">
+		<ul><li><span class='author'>Voeire</span>：<a href='/logs/246564745.html#cmt'>出奥林巴斯epm2、epl5、em5、ep5、cs230...</a></li><li><span class='author'><a href="http://fsdfsdffdsfsd.blogbus.com" target="_blank">zgedouyou</a></span>：<a href='/logs/246564745.html#cmt'>sdfs</a></li><li><span class='author'><a href="http://hayley.blogbus.com" target="_blank">hayley</a></span>：<a href='/logs/242009297.html#cmt'>啥时送我书啊？</a></li><li><span class='author'><a href="http://hayley.blogbus.com" target="_blank">hayley</a></span>：<a href='/logs/242009297.html#cmt'>感动十年</a></li><li><span class='author'>cackling</span>：<a href='/logs/226738756.html#cmt'>现在有log4j2，所以Logback也可以不用了...</a></li><li><span class='author'>cackling</span>：<a href='/logs/236028457.html#cmt'>居然不用泛型；set应该改名为 add；clone 是不...</a></li><li><span class='author'>cackling</span>：<a href='/logs/236028457.html#cmt'>可以评论了没有？</a></li><li><span class='author'>tw_freewind</span>：<a href='/logs/234741366.html#cmt'>Guava提供的这些工具看起来真不错，等java8流行的...</a></li><li><span class='author'>tw_freewind</span>：<a href='/logs/234113759.html#cmt'>每定义一个Function或者Predicate的时候，...</a></li><li><span class='author'><a href="http://hayley.blogbus.com" target="_blank">hayley</a></span>：<a href='/logs/235971911.html#cmt'>我觉得他说得极是，坚持的毅力是让人佩服之极！不知道你的这...</a></li></ul>
+	</div>
+	<div class="modBottom"></div>
+</div>
+<div id='custom'><script type="text/javascript" src="http://www.douban.com/service/badge/dreamhead/?show=collection&amp;n=8&amp;columns=2&amp;cat=book" ></script>
+
+<iframe id="sina_widget_2192241300" style="width:100%; height:500px;" frameborder="0" scrolling="no" src="http://v.t.sina.com.cn/widget/widget_blog.php?uid=2192241300&height=500&skin=wd_02&showpic=1"></iframe></div>
+                    <div id="meta" class="module">
+                        <div class="modTop"></div>
+                            <div class="modBody">
+                                <ul>
+ <li class="subscribe" style="line-height:180%;"><div><a href="http://dreamhead.blogbus.com/index.rdf"><img src="http://www.blogbus.com/images/site-v3/rss.gif" alt="RSS" /></a> <a href="http://bangzhuzhongxin.blogbus.com/logs/5452786.html" target="_blank">什么是RSS？</a></div><div class="inezha" style="margin:.5em 0"><a href="http://inezha.com/add2?hid=2320&url=http://dreamhead.blogbus.com/index.rdf" title="此博客内容更新用IM提醒我" target="_blank"><img src="http://public.blogbus.com/rss/anothr.gif" alt="用IM提醒我内容更新"/></a></div><div class="qqmail" style="margin:.5em 0"><a href="http://mail.qq.com/cgi-bin/feed?u=http://dreamhead.blogbus.com/index.rdf" title="订阅到QQ邮箱" target="_blank"><img src="http://public.blogbus.com/rss/qqmail.png" alt="订阅到QQ邮箱"/></a></div><div class="xiangguo" style="margin:.5em 0"><a href="http://www.xianguo.com/subscribe.php?url=http://dreamhead.blogbus.com/index.rdf" title="订阅到鲜果阅读器" target="_blank"><img src="http://public.blogbus.com/rss/xianguo.png" alt="订阅到鲜果阅读器"/></a></div><div class="g-reader" style ="margin:.5em 0"><a href="http://fusion.google.com/add?feedurl=http://dreamhead.blogbus.com/index.rdf" title="订阅到Google阅读器" target="_blank"><img src="http://public.blogbus.com/rss/google.png" alt="订阅到Google阅读器"/></a></div><div class="zhuaxia" style ="margin:.5em 0"><a href="http://www.zhuaxia.com/add_channel.php?url=http://dreamhead.blogbus.com/index.rdf" title="订阅到抓虾阅读器" target="_blank"><img src="http://public.blogbus.com/rss/zhuaxia.png" alt="订阅到抓虾阅读器"/></a></div></li>
+                                   <li class="poweredBy">
+                                        <a href="http://www.blogbus.com/" target="_blank"><img src="http://www.blogbus.com/images/site-v3/link_blogbus.gif" alt="博客大巴" /></a><div><a href="http://bangzhuzhongxin.blogbus.com" target="_blank" title="博客大巴使用指南">博客大巴使用指南</a></div><div><a href="http://www.blogbus.com/skin/" target="_blank" title="博客大巴模板中心">博客大巴模板中心</a></div><div><a href="http://passport.blogbus.com/register_form" target="_blank" title="免费注册博客大巴">免费注册博客大巴</a></div><div><a href="http://banjia.blogbus.com/" target="_blank" title="一键博客搬家工具">一键博客搬家工具</a></div><div><a href="http://www.icity.cn/" target="_blank" title="中文互动杂志城客">中文互动杂志城客</a></div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="modBottom"></div>
+                        </div>
+                    <div class="sideBottom"></div>
+                </div>
+            </div>
+            <div class="innerBottom"></div>
+        </div>
+		<div class="clear"></div>
+		<div id="footer">
+			<div class="copyright">Copyright &copy; 2002-2014 BlogBus.com, All Rights Reserved. <a href="http://www.blogbus.com" target="_blank">博客大巴</a> 版权所有</div>
+		</div>
+	</div>
+</div></body></html><script type="text/javascript" src="http://public.blogbus.com/blogbus/skin/common/helper1.js?v1023"></script><div style="display:none;"><script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd4239f766d48e2a32f646e0807114bc' type='text/javascript'%3E%3C/script%3E"));
+</script></div>		<div style="display:none;"><script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F8452dbf205b0f6608661b0fdea22c741' type='text/javascript'%3E%3C/script%3E"));
+	</script></div><script type="text/javascript" src="http://counter.blogbus.com/counter.js.php"></script>

@@ -1,0 +1,19 @@
+记得有JS高级设计上有说，document.location和window.location是一样的
+
+alert(document.location === window.location); // true
+
+document.location和window.location有什么区别就是
+document你可以理解为文档，就是你的网页
+window理解为窗口，就是你的ie浏览器包含的
+
+无框架：简单的说，没有框架的情况下，是等同的
+有框架：在有框架的情况下，最外层是相同的，在iframe里面的document.location和window.location不同的。
+iframe里面的document.location 你看不ie地址变化，只改变iframe部分，
+此时的window.location和top.location效果一致
+
+JavaScript原文摘录：
+  不要混淆Window对象的location属性和Document对象的location属性。前者引用一个Location对象，而后者只是一个只读字符串，并不具有Location对象的任何特性。
+document.location与document.URL是同义的，后者在JavaScript1.1中是该属性的首选名称（因为这样避免了潜在的混淆）。在大多数情况下，document.location和location.href是相同的。
+但是，当存在服务器重定向时，document.location包含的是已经装载的URL，而location.href包含的则是原始请求的文档的URL。
+
+我没有用框架，但是用window.location不跳转，用document.location可以 

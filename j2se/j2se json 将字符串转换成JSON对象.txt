@@ -1,0 +1,15 @@
+package json;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+public class ParseJson {
+	public static void main(String[] args) {
+		//把字符串转换成json对象
+		JSONObject jsonObject=JSONObject.fromObject("{\"jack\":\"aaa\",\"rose\":\"bbb\"}");
+		System.out.println(jsonObject.get("jack"));
+		JSONArray jsonArray=JSONArray.fromObject("[{\"jack\":\"aaa\",\"rose\":\"bbb\"},{\"jack01\":\"aaa01\",\"rose01\":\"bbb01\"}]");
+		JSONObject jsonObject1=(JSONObject)jsonArray.get(0);
+		System.out.println(jsonObject.get("jack"));
+	}
+}
+--------
+需要引入json-lib-2.4-jdk15.jar包

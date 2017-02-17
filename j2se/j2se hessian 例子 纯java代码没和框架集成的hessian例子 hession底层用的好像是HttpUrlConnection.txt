@@ -1,0 +1,117 @@
+服务器端：
+-----------
+package com.hessian;
+import java.net.MalformedURLException;
+import com.caucho.hessian.client.HessianProxyFactory;
+public class Client {
+	public static void main(String[] args) throws MalformedURLException, ClassNotFoundException {
+		String url="http://localhost:80/ssh/helloworld";
+		HessianProxyFactory factory=new HessianProxyFactory();
+		DemoApi api=(DemoApi) factory.create(url);//这个接口的包名和类名要和服务器端接口的包名和类名相同，否则会报错
+		api.setName("jack");
+		System.out.println(api.sayHello());
+		System.out.println(api.getUser().getName());
+		System.out.println(api.getUser().getPassword());
+	}
+}
+----------
+package com.hessian;
+public class DemoService implements DemoApi{
+	private String name;
+	public void setName(String name) {
+		this.name=name;
+		System.out.println("xxx"+name);
+	}
+	public String sayHello() {
+		return "fuck"+name;
+	}
+	public User getUser() {
+		User user=new User();
+		user.setName("lingling");
+		user.setPassword("pass");
+		return user;
+	}
+}
+----------
+package com.hessian;
+import java.io.Serializable;
+public class User implements Serializable{ //必须要继承Serializable
+	String name="kitty";
+	String password="nopass";
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+-----------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<servlet>
+		<servlet-name>first</servlet-name>
+		<servlet-class>com.caucho.hessian.server.HessianServlet</servlet-class>
+		<init-param>
+			<param-name>service-class</param-name>
+			<param-value>com.hessian.DemoService</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>first</servlet-name>
+		<url-pattern>/helloworld</url-pattern>
+	</servlet-mapping>
+</web-app>
+--------------------
+客户端：
+package com.hessian;
+import java.net.MalformedURLException;
+import com.caucho.hessian.client.HessianProxyFactory;
+public class Client {
+	public static void main(String[] args) throws MalformedURLException, ClassNotFoundException {
+		String url="http://localhost:80/ssh/helloworld";
+		HessianProxyFactory factory=new HessianProxyFactory();
+		DemoApi api=(DemoApi) factory.create(url);//这个接口的包名和类名要和服务器端接口的包名和类名相同，否则会报错
+		api.setName("jack");
+		System.out.println(api.sayHello());
+		System.out.println(api.getUser().getName());
+		System.out.println(api.getUser().getPassword());
+	}
+}
+----------
+package com.hessian;
+public interface DemoApi {
+	public void setName(String name);
+	public String sayHello();
+	public User getUser();
+}
+---------
+package com.hessian;
+import java.io.Serializable;
+public class User implements Serializable{ //必须要继承Serializable
+	String name="kitty";
+	String password="nopass";
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+
+
+
+
+
+

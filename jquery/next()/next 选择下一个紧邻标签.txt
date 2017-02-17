@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="jquery.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<div id="aaa" class="bbb">
+	<button onclick="quit()" id="code1">退出1</button><br>
+	<button onclick="quit()" id="xcode2">退出2</button><br>
+	<button onclick="quit()" id="code3">退出3</button><br>
+	<div id="ccc">
+		<input id="orgId" value="jigou">
+	</div>
+	<input id="branch" value="001">
+</div>
+<script type="text/javascript">
+function quit(){
+	var buttons = $("#ccc").next();//获取jqueryObj标签的后面紧邻的一个input，
+	alert(buttons.length);//打印：1
+	buttons.each(function(){
+
+		alert($(this).prop("outerHTML"));//打印：<input id="branch" value="001">
+		alert(this.outerHTML);//打印：<input id="branch" value="001">
+	});
+}
+</script>
+</body>
+</html>

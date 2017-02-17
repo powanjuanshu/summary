@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<script type="text/javascript">
+window.onload=function(){
+	var node=document.getElementById("li2");
+	var a=node.previousSibling;
+	alert(a);//µ¯³ö[Object HTMLLIELEMENT]
+	alert(a.id);
+	alert(a.innerText);
+};
+</script>
+<body>
+<ul id="u1">
+	<li id="li1">jack</li>
+	<li id="li2">rose</li>
+	<li id="li3">lucy</li>
+</ul>
+</body>
+-----------------------------------------------------------------------------
+
+
+

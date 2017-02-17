@@ -1,0 +1,21 @@
+如题，比如我有一个js文件为A.js，另一个为B.js。这是完全的JS编程，而A.js中定义了很多的方法，我想在B.js中来用，
+所以我想问下，在js中有没有类似Java中的Import命令，可以把a.js文件引入b.js中来呢？
+
+没有import,只有document.write('<script src="B.js"><\/script>')
+a.js里调用b.js在a.js中写document.write("<script src='b.js'></script>");
+
+
+加入以下js代码 
+function include(path){ 
+    var a=document.createElement("script");
+    a.type = "text/javascript"; 
+    a.src=path; 
+    var head=document.getElementsByTagName("head")[0];
+    head.appendChild(a);
+    }
+可以在任何地方以
+include("A.js");
+include("http://hcl0208.cnblogs.com/test.js");
+等等来包含外部的js
+
+a.js b.js都导入在同一页面，而且b.js到如在a.js后面就可以直接使用

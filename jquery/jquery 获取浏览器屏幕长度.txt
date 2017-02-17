@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<script type="text/javascript" src="app_js/jquery.min.js"></script>
+</head>
+<body>
+<div class="month-title"></div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		bills.distribute.init();
+	});
+	
+	var bills = {};
+	bills.distribute = {
+			isInit : false,
+			adjust : function(){
+				alert("ajust");
+			},
+			monthEle : [],
+			initEle : function(){
+				var windowWidth = $(window).width();//浏览器屏幕的长度,单位好像是px
+				alert(windowWidth);//打印:1366
+			},
+			getMonthPosition : function(){
+				alert("getMonthPosition");
+			},
+			bindTouch: function() {
+				alert("bindTouch");
+			},
+			moveToRight : function(){
+				alert("moveToRight");
+			},
+			moveToLeft : function(){
+				alert("moveToLeft");
+			},
+			changeMonth : function(){
+				alert("changeMonth");
+			},
+			init : function() {
+				this.initEle();
+				this.adjust();
+				//percentRank.rank();
+				this.bindTouch();
+			}
+		}
+	
+</script>
+</html>

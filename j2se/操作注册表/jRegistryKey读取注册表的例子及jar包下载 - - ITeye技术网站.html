@@ -1,0 +1,415 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>jRegistryKey读取注册表的例子及jar包下载 -  - ITeye技术网站</title>
+    <meta name="description" content="    出于跨平台的考虑，java在当初设计的时候，并没有考虑用java读取windows的注册表。但是其后，开发者经常遇到处理注册表的情况，所以java在后续的jdk中新增了一个折中的设计。即可以让那些实际需要处理注册表的开发者可以满足心愿，又避免开发者过度使用操作注册表的类库，而影响java的跨平台性。     Java的jdk提供的处理注册表的类,只能在HKEY_LOCAL_MACHINE.S ..." />
+    <meta name="keywords" content="jRegistryKey例子, jRegistryKey.jar, jRegistryKey.dll, jRegistryKey 注册表 jRegistryKey读取注册表的例子及jar包下载" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1451979484" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1448702469" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1448702469" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1448702469" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">xiaohuafyle</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://xiaohuafyle.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://xiaohuafyle.iteye.com" class="p-author" target="_blank">xiaohuafyle</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1606538">jRegistryKey读取注册表的例子及jar包下载</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/322517">Core Java</a></li> </ul>
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/jRegistryKey%E4%BE%8B%E5%AD%90">jRegistryKey例子</a><a href="http://www.iteye.com/blogs/tag/jRegistryKey.jar">jRegistryKey.jar</a><a href="http://www.iteye.com/blogs/tag/jRegistryKey.dll">jRegistryKey.dll</a><a href="http://www.iteye.com/blogs/tag/jRegistryKey%20%E6%B3%A8%E5%86%8C%E8%A1%A8">jRegistryKey 注册表</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <span style="font-size: medium;">&nbsp;&nbsp;&nbsp; 出于跨平台的考虑，java在当初设计的时候，并没有考虑用java读取windows的注册表。但是其后，开发者经常遇到处理注册表的情况，所以java在后续的jdk中新增了一个折中的设计。即可以让那些实际需要处理注册表的开发者可以满足心愿，又避免开发者过度使用操作注册表的类库，而影响java的跨平台性。<br />&nbsp;&nbsp;&nbsp; Java的jdk提供的处理注册表的类,只能在HKEY_LOCAL_MACHINE.SOFTWARE.JavaSoft.Prefs对注册表做增删改查的操作.</span><br /><br /><span style="font-size: medium;">例如:</span><br /><pre class="java" name="code">
+// save regist flag to regedit
+Preferences pre = Preferences.systemRoot().node("/jedmp");
+pre.put("regist", "regist的信息");
+//read and print regist flag
+System.out.print(pref.get("regist","regist not found"));
+</pre><br /><span style="font-size: medium;">&nbsp;&nbsp;&nbsp; 实际开发者可能希望,java不要有这样的限制,而可以直接操作windows的所有注册表.java虽然没有直接满足我们的要求,但是第三方的jRegistryKey却可以帮助我们.<br />首先,从附件中将jRegistryKey.jar和jRegistryKey.dll下载下来.注意,jRegistryKey.dll文件要放在项目的根目录下.然后即可直接操作windows的全部注册表内容了.</span><br /><br /><span style="font-size: medium;">例如:</span><br /><pre class="java" name="code">
+// create a new key, "Test", under HKLM
+RegistryKey r = new RegistryKey(RootKey.HKEY_LOCAL_MACHINE, "Test");
+if(!r.exists()) {
+r.create();
+} // if 
+
+// create value entries
+RegistryValue v = new RegistryValue("aString", ValueType.REG_SZ, "test");
+r.setValue(v);
+
+v.setName("aDword");
+v.setType(ValueType.REG_DWORD);
+v.setData(new Integer(0x1001001));
+r.setValue(v);
+
+// read value entries
+Iterator i = r.values();
+while(i.hasNext()) {
+v = (RegistryValue)i.next();
+System.out.println(v.toString());
+} // while
+
+// delete registry key
+r.delete();
+</pre><br /><span style="font-size: medium;">对于java操作注册表更详细的说明,请见</span><br /><a target="_blank" href="http://www.iteye.com/topic/82291">http://www.iteye.com/topic/82291</a>
+  </div>
+
+  
+  <div class="attachments">
+    
+      
+        <ul>
+          <li><a href="http://dl.iteye.com/topics/download/53f9d5ce-9afd-33fe-b46d-0773dc5cbecf">jRegistryKey.rar</a> (28.2 KB)</li>
+          
+          <li>下载次数: 132</li>
+        </ul>
+      
+    
+    
+  </div>
+
+
+  
+  
+  <IFRAME SRC="/iframe_ggbd/794" SCROLLING=no WIDTH=680 HEIGHT=90 FRAMEBORDER=0></IFRAME>
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/1607258" class="next" title="newInstance() 的参数版本与无参数版本详解">newInstance() 的参数版本与无参数版本详解</a>
+      |
+      <a href="/blog/1605528" class="pre" title="SWT table 中加入事件监听处理">SWT table 中加入事件监听处理</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2012-07-25 10:13</li>
+      <li>浏览 1999</li>
+      <li><a href="#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/1606538" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1606538;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'jRegistryKey读取注册表的例子及jar包下载');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'jRegistryKey读取注册表的例子及jar包下载');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://xiaohuafyle.iteye.com'><img alt="xiaohuafyle的博客" class="logo" src="http://www.iteye.com/upload/logo/user/922761/6469a61a-d56f-3cf1-a684-bb613af73072.jpg?1387356321" title="xiaohuafyle的博客: " width="" /></a></div>
+  <div id="blog_owner_name">xiaohuafyle</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 124503 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1448702469" title="男" /></li>
+              <li>来自: 上海</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://yanyilin224.iteye.com' target='_blank'><img alt="yanyilin224的博客" class="logo" src="http://www.iteye.com/upload/logo/user/620940/767770d3-8c47-3e93-a619-c789580b6441-thumb.jpg?1326434872" title="yanyilin224的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://yanyilin224.iteye.com' target='_blank' title='yanyilin224'>yanyilin224</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://lg2e503.iteye.com' target='_blank'><img alt="六世轮回的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="六世轮回的博客: 六世轮回" width="48px" /></a></div>
+                <div class="left"><a href='http://lg2e503.iteye.com' target='_blank' title='六世轮回'>六世轮回</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://musanmusan.iteye.com' target='_blank'><img alt="天天来注册的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="天天来注册的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://musanmusan.iteye.com' target='_blank' title='天天来注册'>天天来注册</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://scdhao.iteye.com' target='_blank'><img alt="scdhao的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="scdhao的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://scdhao.iteye.com' target='_blank' title='scdhao'>scdhao</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (68)</a></li>
+                
+                  <li><a href="/category/267776">Linux Shell (13)</a></li>
+                
+                  <li><a href="/category/308646">金融 (2)</a></li>
+                
+                  <li><a href="/category/322435">各种故障 (4)</a></li>
+                
+                  <li><a href="/category/322517">Core Java (24)</a></li>
+                
+                  <li><a href="/category/322518">DB (8)</a></li>
+                
+                  <li><a href="/category/322520">Framework (5)</a></li>
+                
+                  <li><a href="/category/322521">Design Pattern (1)</a></li>
+                
+                  <li><a href="/category/322522">Development Tools (7)</a></li>
+                
+                  <li><a href="/category/322523">生涯 (3)</a></li>
+                
+                  <li><a href="/category/322526">算法 (4)</a></li>
+                
+                  <li><a href="/category/322529">Server configuration (3)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (5)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (25)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2014-10">2014-10</a> (4)</li>
+                
+                  <li><a href="/blog/monthblog/2014-09">2014-09</a> (9)</li>
+                
+                  <li><a href="/blog/monthblog/2014-08">2014-08</a> (1)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://xander.iteye.com' target='_blank' title='xander'>xander</a>： 
+                  不错，不错 <br />
+                  <a href="/blog/1473335#bc2363461">java String 缓冲池概念的举例说明(面试题)</a>
+                </li>
+                
+                <li>
+                  <a href='http://xiaohuafyle.iteye.com' target='_blank' title='xiaohuafyle'>xiaohuafyle</a>： 
+                  fzfz_902 写道在windows sever 2008上 ...<br />
+                  <a href="/blog/1560777#bc2361879">java 读取CD-ROM 光驱中文件</a>
+                </li>
+                
+                <li>
+                  <a href='http://fzfz-902.iteye.com' target='_blank' title='fzfz_902'>fzfz_902</a>： 
+                  在windows sever 2008上报错！<br />
+                  <a href="/blog/1560777#bc2361829">java 读取CD-ROM 光驱中文件</a>
+                </li>
+                
+                <li>
+                  <a href='http://xiaohuafyle.iteye.com' target='_blank' title='xiaohuafyle'>xiaohuafyle</a>： 
+                  &lt;div class=&quot;quote_title ...<br />
+                  <a href="/blog/2142894#bc2360727">Mybatis-3动态代理来映射配置文件原理</a>
+                </li>
+                
+                <li>
+                  <a href='http://thc1987.iteye.com' target='_blank' title='thc1987'>thc1987</a>： 
+                  不错,是不是可以理解成在实现动态代理过程中,没有调用metho ...<br />
+                  <a href="/blog/2142894#bc2360710">Mybatis-3动态代理来映射配置文件原理</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2016 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+    
+  </body>
+</html>

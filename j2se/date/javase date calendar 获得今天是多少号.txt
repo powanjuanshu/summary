@@ -1,0 +1,11 @@
+package com;
+import java.util.Calendar;
+import java.util.Date;
+public class Br {
+	public static void main(String[] args) {
+		Calendar c=Calendar.getInstance();
+		Date date=new Date();
+		c.setTime(date);
+		System.out.println(c.get(Calendar.DATE));
+	}
+}

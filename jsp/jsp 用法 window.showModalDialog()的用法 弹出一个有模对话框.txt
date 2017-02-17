@@ -1,0 +1,55 @@
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content" content="text/html;charset=utf-8">
+<script type="text/javascript">
+function show(){
+	var c=window.showModalDialog("AA?id=110&random="+Math.random(),null,"center:yes;help:no;resizable:yes;dialogWidth:700px;dialogHeight:320px;location:no;");//必须后面加上一个随机数，不然会有缓存，页面不会更新
+	document.getElementById("b").innerHTML=c;
+}
+</script>
+</head>
+<body>
+<a href="javascript:void(0)" onclick="show()">跳转</a>110
+<div id="b"></div>
+</body>
+</html>
+------------------------------------------------------
+package com;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class AA extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	public void service(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException{
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String id=request.getParameter("id");
+		request.getSession().setAttribute("id",id);
+		request.getRequestDispatcher("/aaa.jsp").forward(request,response);
+	}
+}
+------------------------------------------------------
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content" content="text/html;charset=utf-8">
+<script type="text/javascript">
+function s(){
+	var s="";
+	window.returnValue=document.getElementById("a").value;
+	window.close();
+}
+</script>
+</head>
+<body>
+${id}
+<input id="a" value="bbb">
+<input type="button" value="确定" onclick="s()">
+</body>
+</html>
+-----------------------------------------------------

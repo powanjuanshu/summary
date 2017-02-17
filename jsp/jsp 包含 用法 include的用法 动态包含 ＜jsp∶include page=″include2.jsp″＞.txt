@@ -1,0 +1,32 @@
+include.jsp:
+-------------------------
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <body>
+    <%
+    	String name="襄樊学院";
+    %>
+    <%@ include file="nav.jsp"%>
+    <jsp:include page="include2.jsp"></jsp:include>
+  </body>
+</html>
+-------------------------
+nav.jsp:
+-------------------------
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+首页 NBA 新闻
+------------------------
+include2.jsp:
+------------------------
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+	out.println(name);//这里name变量是没有声明的，在eclipse中会有红线说明此变量在include2.jsp中没声明，动态包含会先编译include2.jsp，然后再将编译后的文件包含进来，所以显示include.jsp时会报错：include2.jsp，name cannot be resolved
+%>
+------------------------
+动态INCLUDE,<jsp:include page="include.jsp">是先编译一下include.jsp文件，然后再包含，先编译，后包含
+静态INCLUDE,<%@include file="include.jsp"%>是先把文件包含就来，然后统一编译，先包含，后编译
+
+
+
+

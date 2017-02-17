@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html>
+<head><script type="text/javascript" src="jquery-1.7.1.js"></script></head>
+<body>
+<select style="width:125px;" onmousedown="javascript:this.style.width='auto';" onblur="javascript:this.style.width=125;" onchange="javascript:this.style.width=125;">
+<option selected="selected">select One</option>
+<option value="1">select显示不全的问题解决</option>
+<option value="2">select显示不全的问题解决select显示不全的问题解决select显示不全的问题解决</option>
+<option value="3">select显示不全的问题解决</option>
+<option value="4">select显示不全的问题解决select显示不全的问题解决</option>
+<option value="5">select显示不全的问题解决</option>
+</select>  
+</body>
+</html>

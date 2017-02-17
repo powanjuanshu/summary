@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>java命令执行jar包的方式 - adolfmc - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=RFWbSMVn474Meo5c6rKa1DH_M4ldFPuI9Jah-EA-L5Q1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/sea/bundle-sea.css?v=PPe3jt1rcXPno6kucw0iQU2MWF3DbrvubQHRM0FEMas1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/adolfmc/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/adolfmc/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/adolfmc/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'adolfmc', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=NRIlPIHMlVEgoqJZIuk9OQtjtZjNFcz_ov8kYhFFdoM1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="header">
+	
+<!--done-->
+<div class="header">
+	<div class="headerText">
+		<a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/adolfmc/">adolfmc</a><br>
+		
+	</div>
+</div>
+
+</div>
+
+<div id="mytopmenu" >
+	
+		<div id="mylinks">
+<!--done-->
+<a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a> &nbsp;
+<a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/adolfmc/">首页</a> &nbsp;
+<a href="http://q.cnblogs.com" class="menu">博问</a> &nbsp;
+<a href="http://home.cnblogs.com/ing/" class="menu">闪存</a> &nbsp;
+<a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a> &nbsp;
+<a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/adolfmc">联系</a> &nbsp;
+<a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/adolfmc/rss">订阅</a><a id="MyLinks1_XMLLink" href="http://www.cnblogs.com/adolfmc/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>&nbsp;
+<a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a>
+</div>
+		<DIV id="mystats">
+<!--done-->
+随笔-270&nbsp;
+评论-8&nbsp;
+文章-0&nbsp;
+trackbacks-0
+</DIV>
+	
+</div>
+<div id="centercontent" >
+	
+
+<div class = "post">
+	<h1 class = "postTitle"><a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/adolfmc/archive/2012/10/07/2713562.html">java命令执行jar包的方式</a></h1>
+	<div id="cnblogs_post_body"><p><span style="color: #000000;">大家都知道一个<span>java</span>应用项目可以打包成一个<span>jar</span>，当然你必须指定一个拥有main函数的main class作为你这个<span>jar</span>包的程序入口。</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">具体的方法是修改<span>jar</span>包内目录META-INF下的MANIFEST.MF文件。</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">比如有个叫做test.<span>jar</span>的<span>jar</span>包，里面有一个拥有main函数的main class：test.someClassName</span></p>
+<p><span style="color: #000000;">我们就只要在MANIFEST.MF里面添加如下一句话：</span></p>
+<p><span style="color: #000000;">Main-Class: test.someClassName</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">然后我们可以在控制台里输入<span>java</span>&nbsp;-<span>jar</span>&nbsp;test.<span>jar</span>即可以运行这个<span>jar</span>。</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">但是我们这个项目需要引用其他第三方的<span>jar</span>包，在eclipse里面以项目<span>jar</span>包的形式引用了这个叫做some.<span>jar</span>的包，当时放在项目的lib子目录下，最后项目打包时把这个some.<span>jar</span>也打进来了，但是用<span>java</span>&nbsp;-<span>jar</span>执行这个test.<span>jar</span>的时候报找不到Class异常，原因就是<span>jar</span>引用不到放在自己内部的<span>jar</span>包。</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">那怎么办？</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">运行时将其加入classpath的方式行不行？就是在运行<span>jar</span>的同时加入classpath参数：</span></p>
+<p><span style="color: #000000;">java&nbsp;-classpath some.jar&nbsp;-jar&nbsp;test.jar</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">这种方式是不行的，因为使用classpath指定的<span>jar</span>是由AppClassloader来加载，<span>java</span>&nbsp;命令 加了-<span>jar</span>&nbsp;参数以后，AppClassloader就只关注test.<span>jar</span>范围内的class了，classpath参数失效。</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">那该怎么引用其他的<span>jar</span>包呢？</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;"><strong>方法一、使用Bootstrap Classloader来加载这些类</strong></span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">我们可以在运行时使用如下参数：</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">-Xbootclasspath:完全取代系统<span>Java</span>&nbsp;classpath.最好不用。<br />-Xbootclasspath/a: 在系统class加载后加载。一般用这个。<br />-Xbootclasspath/p: 在系统class加载前加载,注意使用，和系统类冲突就不好了.</span></p>
+<div><span style="color: #000000;"><span><span>win32&nbsp;<span>java</span>&nbsp;<span>-Xbootclasspath/a:</span>&nbsp;some.<span>jar</span>;some2.<span>jar</span>; -<span>jar</span>&nbsp;test.<span>jar</span></span></span></span></div>
+<div><span style="color: #000000;">unix &nbsp;&nbsp;&nbsp;<span><span>java</span>&nbsp;<span>-Xbootclasspath/a:</span>&nbsp;some.<span>jar</span>:some2.<span>jar</span>: -<span>jar</span>&nbsp;test.<span>jar</span></span></span></div>
+<div><span style="color: #000000;">win32系统每个<span>jar</span>用分号隔开，unix系统下用冒号隔开</span></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;"><strong>方法二、使用<span>Extension Classloader来加载</span></strong></span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">你可以把需要加载的<span>jar</span>都扔到%JRE_HOME%/lib/ext下面，这个目录下的<span>jar</span>包会在Bootstrap Classloader工作完后由Extension Classloader来加载。非常方便，非常省心。:)</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;"><strong>方法三、还是用AppClassloader来加载，不过不需要classpath参数了</strong></span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">我们在MANIFEST.MF中添加如下代码：</span></p>
+<p><span style="color: #000000;">Class-Path: lib/some.jar</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">lib是和test.<span>jar</span>同目录的一个子目录，test.<span>jar</span>要引用的some.<span>jar</span>包就在这里面。</span></p>
+<p><span style="color: #000000;">然后测试运行，一切正常！</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">如果有多个<span>jar</span>包需要引用的情况：</span></p>
+<p><span style="color: #000000;">Class-Path: lib/some.jar&nbsp;lib/some2.jar</span></p>
+<p><span style="color: #000000;">每个单独的<span>jar</span>用空格隔开就可以了。注意使用相对路径。</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">另：如果META-INF 下包含INDEX.LIST文件的话，可能会使Class-Path配置失效。INDEX.LIST是<span>Jar</span>打包工具打包时生成的索引文件，删除对运行不产生影响。</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;"><strong>方法四、自定义Classloader来加载</strong></span></p>
+<p><span style="color: #000000;">这种方法是终极解决方案，基本上那些知名<span>java</span>应用都是那么干的，如tomcat、jboss等等。</span></p>
+<p><span style="color: #000000;">这种方式有点复杂，需要专门开贴讨论。关于ClassLoader的原理和自定义ClassLoader可以参考</span><a href="http://cuixiaodong214.blog.163.com/blog/static/951639820099135859761" target="_blank"><span style="color: #000000;">这篇</span></a><a href="http://cuixiaodong214.blog.163.com/blog/static/951639820099135859761"><span style="color: #000000;">http://cuixiaodong214.blog.163.com/blog/static/951639820099135859761</span></a></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">总结：</span></p>
+<p><span style="color: #000000;">以上四种方法都可以用，特别是程序运行在非常单纯的环境中时。但是，如果是运行在多任务，多应用的环境中时，最好每个应用都能相互独立，第一种和第二种方案都有可能对其他应用产生影响，因此最好就是选择第三种和第四种。</span></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+	<div class = "postDesc">posted on <span id="post-date">2012-10-07 09:48</span> <a href='http://www.cnblogs.com/adolfmc/'>adolfmc</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=2713562" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2713562);return false;">收藏</a></div>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=108447,cb_entryId=2713562,cb_blogApp=currentBlogApp,cb_blogUserGuid='7dd45df1-6454-e111-aa3f-842b2b196315',cb_entryCreatedDate='2012/10/7 9:48:00';loadViewCount(cb_entryId);</script>
+
+<a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="开发者的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    var enableGoogleAd = canShowAdsense(); var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</script>
+<div id="ad_under_post_holder">
+<script type='text/javascript'>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        if (enableGoogleAd) {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        }
+    })();
+</script>
+<script type='text/javascript'>
+    try {
+        if (enableGoogleAd) {
+            googletag.cmd.push(function () {
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C2', [468, 60], 'div-gpt-ad-1410860226396-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        };
+    } catch (e) { }
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+    <div id='div-gpt-ad-1346480159711-0' style='width:300px; height:250px;'>
+    <script type='text/javascript'>
+        try {
+            if (enableGoogleAd) {
+                googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });            
+            } else {
+                $('#div-gpt-ad-1346480159711-0').hide();
+            }
+    } catch (e) { }
+    </script>
+    </div>
+</div>
+</div>
+<div id="under_post_news"></div>
+<div id="google_ad_c2" class="c_ad_block">
+<div id='div-gpt-ad-1410860226396-0' style='width:468px; height:60px;'>
+<script type='text/javascript'>
+try {
+    if (enableGoogleAd) {
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1410860226396-0'); });
+    } else {
+        $('#div-gpt-ad-1346480159711-0').hide();
+    }
+} catch (e) { }
+</script>
+</div>
+</div>
+<div id="under_post_kb"></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</script>
+</div>
+
+</div>
+<div id="leftcontent">
+	
+		<DIV id="leftcontentcontainer">
+			
+<!--done-->
+<div class="newsItem">
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script><br>
+			<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script></DIV>
+	
+</div>
+
+<!--done-->
+<div class="footer">
+	Powered by: <a href="http://www.cnblogs.com">博客园</a>	模板提供：<a href="http://blog.hjenglish.com">沪江博客</a>
+	Copyright &copy;2015 adolfmc
+</div>
+
+
+
+</body>
+</html>

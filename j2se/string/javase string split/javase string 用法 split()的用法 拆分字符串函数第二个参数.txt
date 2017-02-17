@@ -1,0 +1,39 @@
+package com;
+public class Tes {
+	public static void main(String[] args) {
+		String s=".jack.23.武汉市.430200.";
+		String[] st=s.split("\\.",-1);	   //-1（负数）表示不限制数组长度，不会截掉最后的空字符串
+		System.out.println(st.length);	   //打出6
+		System.out.println(st[0]);
+		System.out.println(st[1]);
+		System.out.println(st[2]);
+		System.out.println(st[3]);
+		System.out.println(st[4]);
+		System.out.println(st[5]);
+	}
+}
+--------------------------------------------
+package com;
+public class Tes {
+	public static void main(String[] args) {
+		String s=".jack.23.武汉市.430200.";
+		String[] st=s.split("\\.");	   //默认为0，会截掉最后的空字符串
+		System.out.println(st.length);	   //打出5
+		System.out.println(st[0]);
+		System.out.println(st[1]);
+		System.out.println(st[2]);
+		System.out.println(st[3]);
+		System.out.println(st[4]);
+	}
+}
+-------------------------------------------
+package com;
+public class Tes {
+	public static void main(String[] args) {
+		String s="jack.23.武汉市.430200.";
+		String[] st=s.split("\\.",2);	   //字符串数组长度为2，会拆分第一个点
+		System.out.println(st.length);	  //打出2
+		System.out.println(st[0]);
+		System.out.println(st[1]);
+	}
+}

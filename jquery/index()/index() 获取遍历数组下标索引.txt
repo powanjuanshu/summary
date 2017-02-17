@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+ 		<script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+ 		<style type="text/css">
+ 			.cls01{
+				font-style:italic;
+			}
+			.cls02{
+				background:red;
+			}
+ 		</style>
+ 		
+		<script type="text/javascript">
+			$(function(){
+				init();
+			})
+			function init(){
+				$(".cls01").on("click", do_class);
+			}
+			function do_class(){
+				alert($(this).prop("outerHTML"));//打出<p class="cls01 cls02" id="title">积分商城</p>;
+				alert($(this).index());//打出点击的p的下标索引,小标从0开始
+				
+			}
+		</script>
+
+	</head>
+
+	<body>
+		<p class="cls01 cls02" id="title">积分商城</p>
+		<p class="cls01 cls02">积分商城2</p>
+	</body>
+
+</html>
+----------------------------------------------
+jquery获取当前点击事件的元素，并且获取下标
+<div class="select-type">
+					<b>按游戏类型：</b>
+					<a href="javascript:void(0)" class="selected">角色扮演</a>
+					<a href="javascript:void(0)">战争策略</a>
+					<a href="javascript:void(0)">所有游戏</a>					
+				</div>
+				<div class="select-games">
+					<ul class="mod-pic">
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑1</em& gt;</a></li>
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑1</em& gt;</a></li>
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑1</em& gt;</a></li>
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑1</em& gt;</a></li>
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑1</em& gt;</a></li>
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑1</em& gt;</a></li>						
+					</ul>
+					<ul class="mod-pic" style="display:none">
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑2</em& gt;</a></li>
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑2</em& gt;</a></li>
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑2</em& gt;</a></li>
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑2</em& gt;</a></li>
+						<li><a href="#"><img alt="" src="/home/201306/img/user-center/pic_02.jpg"><em>刀剑2</em& gt;</a></li>						
+					</ul>
+					
+				</div>
+<script>
+$(function(){
+	$(".select-type a").click(function(){
+		$(".select-type a").removeClass();
+		$(this).addClass("selected");
+		index_div = $(this).index() - 1;
+		if(index_div == 2){
+			$(".select-games .mod-pic").show();
+		} else {
+			$(".select-games .mod-pic").hide();
+			$(".select-games .mod-pic:eq("+index_div+")").show();
+		}		
+	});
+});
+</script>
+$('#foo').bind('click', function() {
+  alert('User clicked on "foo."');
+});
+
+
+

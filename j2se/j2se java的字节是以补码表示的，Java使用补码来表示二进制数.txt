@@ -1,0 +1,10 @@
+package com;
+import java.io.UnsupportedEncodingException;
+public class Test {
+	public static void main(String[] args){
+		byte bb=(byte) 0x88;//如果是byte，则这里表示的是补码，需求出原码//10001000，用byte这里就是反码，求原码
+		System.out.println(bb);//根据补码10001000求出原码（符号位不变，取反加一）为1111 1000（-120），即打出-120
+		int pp=0x88;//如果是int，则表示是正整数，是原码，也没符号位，算出来为136
+		System.out.println(pp);//所以打出来的是136
+	}
+}

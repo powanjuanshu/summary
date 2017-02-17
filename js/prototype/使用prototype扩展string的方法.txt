@@ -1,0 +1,20 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>center</title>
+	<script type="text/javascript" src="content/jquery/jquery-1.9.1.js"></script>
+  </head>
+	<script type="text/javascript">
+	String.prototype.capitalize = function() {//扩展String的方法
+		return this.replace( /(^|\s)([a-z])/g, 
+				function(m,p1,p2){
+					return p1+p2.toUpperCase();
+				})
+	};
+	alert("i am a boy !".capitalize());//打印:I Am A boy !
+	</script>
+</html>
+
+
+

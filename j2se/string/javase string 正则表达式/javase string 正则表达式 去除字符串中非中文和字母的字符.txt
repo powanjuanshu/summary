@@ -1,0 +1,16 @@
+package com;
+import java.util.regex.Pattern;
+public class A {
+	public static void main(String[] args){
+		StringBuffer sb=new StringBuffer();
+		String name="a876*&^dfÖÐ¹úd¡ñ¡ñ¡øf";
+		for(int i=0;i<name.length();i++){
+			String bb=name.substring(i,i+1);
+			String regex="[\u4E00-\u9FA5]|[a-z]|[A-Z]";
+			if(Pattern.matches(regex,bb)){
+				sb.append(bb);
+			}
+		}
+		System.out.println(sb);
+	}
+}

@@ -1,0 +1,17 @@
+package com;
+
+public class Main3 {
+	public static void main(String[] args) {
+		String[] arr = new String[2];
+		arr[0] = "old_0";
+		arr[1] = "old_1";
+		method(arr);
+		System.out.println(arr[0]);
+		System.out.println(arr[1]);
+	}
+
+	static void method(String[] a) {
+		a[0] = "new_0"; // new_0
+		a[1] = "new_1"; // new_1
+	}
+}

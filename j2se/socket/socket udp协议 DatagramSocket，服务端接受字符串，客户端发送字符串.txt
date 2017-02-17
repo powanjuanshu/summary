@@ -1,0 +1,95 @@
+package socket;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
+public class UdpServerSocket {
+	private byte[] buffer = new byte[1024];
+	private DatagramSocket ds = null;
+	private DatagramPacket packet = null;
+	private InetSocketAddress socketAddress = null;
+	private String orgIp;
+	public static void main(String[] args) throws Exception {
+		UdpServerSocket udpServerSocket = new UdpServerSocket("127.0.0.1",3344);
+		while (true) {
+			udpServerSocket.receive();
+			udpServerSocket.response("你好,sterning!");
+		}
+	}
+	public UdpServerSocket(String host, int port) throws Exception {
+		socketAddress = new InetSocketAddress(host, port);
+		ds = new DatagramSocket(socketAddress);
+		System.out.println("服务端启动!");
+	}
+	public final void setSoTimeout(int timeout) throws Exception {
+		ds.setSoTimeout(timeout);
+	}
+	public final int getSoTimeout() throws Exception {
+		return ds.getSoTimeout();
+	}
+	public final String receive() throws IOException {
+		packet = new DatagramPacket(buffer, buffer.length);
+		ds.receive(packet);
+		orgIp = packet.getAddress().getHostAddress();
+		String info = new String(packet.getData(), 0, packet.getLength());
+		System.out.println("接收信息：" + info);
+		return info;
+	}
+	public final void response(String info) throws IOException {
+		System.out.println("客户端地址 : "+packet.getAddress().getHostAddress()+",端口："+packet.getPort());
+		DatagramPacket dp=new DatagramPacket(buffer,buffer.length,packet.getAddress(),packet.getPort());
+		dp.setData(info.getBytes());
+		ds.send(dp);
+	}
+	public final void close() {
+		try {
+			ds.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+}
+---------------------------------------------------
+package socket;
+import java.io.*;
+import java.net.*;
+public class UdpClientSocket {
+	private byte[] buffer = new byte[1024];
+	private DatagramSocket ds = null;
+	public UdpClientSocket() throws Exception {
+		ds = new DatagramSocket();
+	}
+	public final void setSoTimeout(final int timeout) throws Exception {
+		ds.setSoTimeout(timeout);
+	}
+	public final int getSoTimeout() throws Exception {
+		return ds.getSoTimeout();
+	}
+	public final DatagramPacket send(final String host,final int port,final byte[] bytes) throws IOException {
+		DatagramPacket dp=new DatagramPacket(bytes,bytes.length,InetAddress.getByName(host),port);
+		ds.send(dp);
+		return dp;
+	}
+	public final String receive(final String lhost, final int lport)throws Exception {
+		DatagramPacket dp = new DatagramPacket(buffer,buffer.length);
+		ds.receive(dp);
+		String info = new String(dp.getData(),0,dp.getLength());
+		return info;
+	}
+	public final void close() {
+		try {
+			ds.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	public static void main(String[] args) throws Exception {
+		UdpClientSocket client = new UdpClientSocket();
+		client.send("127.0.0.1",3344,("你好，阿蜜果!").getBytes());
+		String info = client.receive("127.0.0.1",3344);
+		System.out.println("服务端回应数据：" + info);
+	}
+}
+
+
+

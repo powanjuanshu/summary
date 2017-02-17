@@ -1,0 +1,11 @@
+package com;
+import java.util.Random;
+public class I {
+	public static void main(String[] args) {
+		Random random=new Random();
+		int choice=random.nextInt(2)%2==0?65:97; 
+		char ch=(char)(choice+random.nextInt(26));
+		System.out.println(ch);
+	}
+}
+-------------´ò³öÎªF

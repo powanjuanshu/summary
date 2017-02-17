@@ -1,0 +1,7 @@
+${pageContext.request.contextPath}
+等价于<%=request.getContextPath()%>
+-----------------------------
+ccc.jsp：
+${pageContext.request.contextPath}
+----------------------------
+页面显示为：/ldata，服务器配置文件ldata.xml的配置名

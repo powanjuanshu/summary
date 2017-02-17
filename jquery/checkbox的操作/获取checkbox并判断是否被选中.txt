@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+ 		<script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				init();
+			})
+			function init(){
+				$("#sub").on("click", do_sub);
+				$("#set_val").on("click", set_val);
+				$("#can_val").on("click", can_val);
+			}
+			function do_sub(){
+				var arr_all = $("#wrapper").find("input[type='checkbox']");//获取所有的checkbox
+				var arr_sel = $("#wrapper").find("input[type='checkbox']:checked");//获取所有选中的checkbox
+				alert(arr_all.size());//打出:3
+				alert(arr_sel.size());//选中几个打几个
+				$.each(arr_all, function(n, value){//n是下标索引,value是遍历的dom对象
+					alert(n+","+value);//打出:0,[object HTMLInputElement]
+					alert($(value).is(':checked'));//是否选中,若选中输出true,若未选中输出false;也可以写成alert(value.checked);也可以写成$(value).is('checked');但是不能写成$(this).attr('checked'),一直是undefined
+					
+				});
+			}
+			function set_val(){
+				$("input")[0].checked = true;//选中第一个input的checkbox
+			}
+			function can_val(){
+				$("input")[0].checked = false;//取消第一个input的checkbox
+			}
+			
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			爱好:<input type="checkbox" name="hobby" value="501">足球
+			<input type="checkbox" name="hobby" value="502">篮球
+			<input type="checkbox" name="hobby" value="503">台球
+			<button id="sub">提交</button>
+			<button id="set_val">选中</button>
+			<button id="can_val">取消</button>
+		</div>
+	</body>
+</html>

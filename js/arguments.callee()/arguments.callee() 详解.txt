@@ -1,0 +1,117 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>center</title>
+	<script type="text/javascript" src="content/jquery/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+	
+	
+	//----------------------
+	var loca_tem = "city";
+	//实际上创建一个Function实例并不一定要赋值给具体的指针,可以直接执行
+	//这种写法的作用:
+	//1.使这段代码被载入时候自动执行
+	//2.避免污染全局变量
+	//因为js是函数作用域,所以如果想实现某个功能又不想污染全局变量的时候,会用这个自执行的匿名函数,常见于jquery插件
+	//用(function(){xxx})()是利用匿名函数和闭包用来执行xxx里面的代码,同时所有的定义比如变量的作用域都在闭包里,不会污染到外部命名空间
+	//使用括号包裹定义函数体,解析器将会以函数表达式的方式去调用定义函数
+	(function(x,y){
+		var loca_tem = "school";
+		alert(x+y);//打印:3
+		alert("loc:"+loca_tem);//打印:school,闭包不会污染闭包外的变量
+	})(1, 2);
+	alert("glob:"+loca_tem);//打印:city
+	//----------------------
+	
+	
+	
+	//----------------------
+	//1.  
+	var foo = 'This is foo.';  
+	(function(){
+	   alert(foo);//打印:This is foo. 说明闭包外面的变量在包里可以使用
+	})();
+	  
+	//2.  
+	var foo = 'This is foo.';  
+	(function(){  
+	   alert(foo);//undefined  
+	   var foo = 2;  
+	})();
+    /** 
+    function对象的hoisting特性：函数内的所有变量都相当于自动在函数头部声明 
+          故 2 等价于这种写法： 
+    var foo = 'This is foo.'; 
+    (function(){ 
+       	var foo; 
+        alert(foo); 
+        foo = 2; 
+    })();
+          在2中，又定义了一个局部变量foo，（覆盖了上级范围的foo），但是没有给赋初值， 
+          故访问foo时，出现 undefined 提示。
+          所以，在函数定义时，其所有用到的变量，要写在函数体前*/
+	//----------------------
+	
+	
+	
+	
+	
+	//----------------------
+	//之所以用圆括号把function(){}括起来是因为js解释器会将function解释为函数声明，而函数声明不能直接跟着(x,y)，我们需要将其转换为函数表达式
+	//(2, 3)表示要传递跟函数的参数
+	//上面的例子也可以写成:(好像无法直接执行)
+	function fool(x, y){
+		alert(arguments.length);
+		alert(x+y);//打印:5
+	}(2, 3);
+	//函数声明的方式无法定义匿名函数，因此如果想使用匿名函数，则必须用函数表达式的定义方式
+	//----------------------
+	
+	
+	//----------------------
+	function test_arguments() {//js可以不写参数,调用的时候再传参数,取参数的时候使用内置变量arguments即可
+		alert(arguments.length);//打印4
+		alert(arguments[0]);//打印8
+		//arguments.callee()主要用在递归函数中调用函数自身的情境中。js和别的语言不同在于函数名只是一个指针，可以随时变化，函数中利用函数名来调用自身属于高耦合，可能会出现问题，而arguments.callee()调用自身就会规避掉这个问题
+		//arguments.callee(4, 5);
+	}(6, 4, 9)
+	test_arguments(8, 5, 3, 9);
+	//----------------------
+	
+	</script>
+	
+  </head>
+  
+  <body>
+  	<input type="button" value="send" onclick="partake.getPartakeList()"/>
+  </body>
+</html>
+--------------------------
+题目四
+（callee和caller及函数参数的一些关系）
+function b(x, y, a) {
+  arguments[2] = 10;
+  alert(a);}b(1, 2, 3);//结果是10其实arguments跟数组类似，
+可以通过方括号语法访问它的每一个元素，另外arguments和命名参数可以一起使用，它们是共享的，但是这个共享其实不是真正的共享一个内存地址，而是2个不同的内存地址，
+使用JavaScript引擎来保证2个值是随时一样的，所以修改了arguments的值同时也会体现在命名参数上，当然这也有一个前提，那就是这个索引值要小于你传入的参数个数，
+也就是说如果你只传入2个参数，而还继续使用arguments[2]赋值的话，就会不一致，看如下代码：
+function b(x, y, a) {
+  arguments[2] = 10;
+  alert(a);
+}
+b(1, 2);//这时候因为没传递第三个参数a，所以赋值10以后，alert(a)的结果依然是undefined，而不是10，
+但如下代码弹出的结果依然是10，因为和a没有关系。
+function b(x, y, a) {
+  arguments[2] = 10;
+  alert(arguments[2]);
+}
+b(1, 2);//结果依然是10不过在严格模式下是不允许修改arguments的值
+
+
+
+
+
+
+
+

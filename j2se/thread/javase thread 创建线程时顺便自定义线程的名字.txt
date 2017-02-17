@@ -1,0 +1,13 @@
+package com;
+public class Tt {
+	public static void main(String[] args) {
+		Thread t=new Thread(new Runn() , "Thread_1");
+		System.out.println(t.getName());
+	}
+}
+class Runn implements Runnable{
+	@Override
+	public void run() {
+		System.out.println("1111");
+	}	
+}

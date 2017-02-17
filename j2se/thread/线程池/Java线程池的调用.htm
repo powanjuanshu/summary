@@ -1,0 +1,1070 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>   
+    
+     
+    <script type="text/javascript" src="http://c.csdnimg.cn/pubfooter/js/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script>
+
+     <script id="allmobilize" charset="utf-8" src="http://a.yunshipei.com/46aae4d1e2371e4aa769798941cef698/allmobilize.min.js"></script>
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <title>Java线程池的调用 - hustpzb的专栏
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="这里演示了加密文本，利用特定字符来定位位置sockdata=PHIDOHBBNIEFMNDIBJLENNEBBODILAEAPMIHHKMKBOKILJOJHGPDDBEOPMCEMLAPJNFDLOJCPHEAMEDNPINODFMBMLFPFHLLGBNPPHEEMNFMNMCGNFEJFKIDOGBECBFJEBICBBLPMNHJAHJPCLNHKKEJMBLLNKFFKMPJJH" />
+    <script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+               <link rel="stylesheet" href="http://static.csdn.net/public/common/toolbar/css/index.css">        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/default/css/style.css?v=1.1" />
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/hustpzb/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+</head>
+<body>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://static.csdn.net/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/hustpzb">hustpzb的专栏</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+            
+                <li id="btnContents"><a href="http://blog.csdn.net/hustpzb?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/hustpzb?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/hustpzb/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "hustpzb";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/hustpzb";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+<a href="http://bbs.csdn.net/topics/391857175">
+<font color=red>想听课？来发话题吧
+</font></a>
+&nbsp;&nbsp;&nbsp;
+
+<a href="http://www.csdn.net/app/">
+<font color=blue>CSDN APP 博客上线
+</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://bbs.csdn.net/topics/391856835">
+<font color=red>双11赚“双喜“，奖励多多
+</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://blog.csdn.net/blogdevteam/article/details/49612641">
+<font color=blue>有奖征文：云服务器使用初体验 
+</font></a>
+</div>                        </div>
+                        
+
+<!--AdForward Begin:-->
+<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=csdn|blog|fumeiti&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+<!--AdForward End-->
+
+  
+<link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+<script language='JavaScript' type='text/javascript' src='http://download.csdn.net/js/jquery.cookie.js'></script>
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/search-service/main.js"></script>
+<link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=1.0" />
+<script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+          
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/hustpzb/article/details/8308874">
+        Java线程池的调用            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+    <div class="article_manage">
+    <span class="link_postdate">2012-12-17 19:02</span>
+    <span class="link_view" title="阅读次数">2213人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(1)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:collectArticle('Java线程池的调用','8308874');return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="#report"  onclick="javascript:report(8308874,2);return false;" title="举报">举报</a></span>
+    
+</div>
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+
+<p><span style="font-family:Microsoft YaHei; font-size:14px">有两个途径可以实现线程池，一个途径是自己实现，另一个途径是使用系统自带的<span style="color:rgb(70,70,70); line-height:21px">ExecutorService类来实现。</span></span></p>
+<p><span style="font-family:Microsoft YaHei; font-size:14px"><span style="color:rgb(70,70,70); line-height:21px"><br>
+</span></span></p>
+<p><span style="color:rgb(70,70,70)"><span style="line-height:21px"><strong><span style="font-family:Microsoft YaHei; font-size:18px">一、首先是自己来实现，主要的知识点是线程的唤醒和休眠，直接上代码：</span></strong></span></span></p>
+<p><span style="color:rgb(70,70,70)"><span style="line-height:21px"><span style="font-family:Microsoft YaHei; font-size:14px">先定义一个抽象任务，包含Run方法，具体的任务执行必须继承该类。</span></span></span></p>
+<p><span style="color:rgb(70,70,70)"><span style="font-size:14px; line-height:21px"><span style="font-family:Microsoft YaHei"></span></span></span></p>
+<pre name="code" class="java">public abstract class TaskRunnable {
+
+	public abstract void run();
+
+}</pre><br>
+<p></p>
+<p><span style="font-family:Microsoft YaHei; font-size:14px">以下是线程池管理的主要核心ThreadManager：</span></p>
+<p></p>
+<p></p>
+<pre name="code" class="java"><span style="font-family:Microsoft YaHei;">public class ThreadPoolManager {
+    private static ThreadPoolManager instance = null;
+    private final List&lt;TaskRunnable&gt; taskQueue = Collections.synchronizedList(new LinkedList&lt;TaskRunnable&gt;());//任务队列
+    private final WorkThread[] workThreads ;  //工作线程（真正执行任务的线程）
+    private static final int DEFAULT_WORKER_NUM = 5 ;  //工作线程数量（默认工作线程数量是5）
+
+    private ThreadPoolManager(){
+        this(DEFAULT_WORKER_NUM);
+    }
+    private ThreadPoolManager(int num){
+        workThreads = new WorkThread[num];
+        for(int i = 0;i &lt; num; i++){
+            workThreads[i] = new WorkThread(i);
+        }
+    }
+
+    public static synchronized ThreadPoolManager getInstance(){
+        if(null == instance){
+            instance = new ThreadPoolManager();
+        }
+        return instance;
+    }
+
+    public void addTask(TaskRunnable task){
+        //对任务队列的操作要上锁
+        synchronized (taskQueue) {
+            if(null != task){
+                taskQueue.add(task);
+                taskQueue.notifyAll();
+            }
+        }
+    }
+
+    public void BatchAddTask(TaskRunnable[] tasks){
+        //对任务队列的修改操作要上锁
+        synchronized (taskQueue) {
+            for(TaskRunnable e:tasks){
+                if(null != e){
+                    taskQueue.add(e);
+                    taskQueue.notifyAll();
+                }
+            }
+        }
+    }
+
+    public void destory(){
+        System.out.println(&quot;pool begins to destory ...&quot;);
+        for(int i = 0;i &lt; workThreads.length;i++){
+        	WorkThread current = workThreads[i];
+        	if(null != current){
+        		try {
+        			current.stopThread();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+        	}
+        	workThreads[i] = null;
+        }
+        //对任务队列的操作要上锁
+        synchronized (taskQueue) {
+            taskQueue.clear();
+        }
+
+        System.out.println(&quot;pool ends to destory ...&quot;);
+    }
+
+    private class WorkThread extends Thread{
+        private boolean isRuning = true;
+        private boolean isWaiting = false;
+
+        public WorkThread(int taskId){
+            this.start();
+        }
+
+        public boolean isWaiting(){
+            return isWaiting;
+        }
+
+        // 如果任务进行中时，不能立刻终止线程，需要等待任务完成之后检测到isRuning为false的时候，退出run()方法
+        public void stopThread(){
+            isRuning = false;
+        }
+
+        @Override
+        public void run() {
+            while(isRuning){
+                TaskRunnable temp = null;
+                //对任务队列的操作要上锁
+                synchronized (taskQueue) {
+                    //任务队列为空，等待新的任务加入
+                    while(isRuning &amp;&amp; taskQueue.isEmpty()){
+                        try {
+                            taskQueue.wait(20);
+                        } catch (InterruptedException e) {
+                            System.out.println(&quot;InterruptedException occre...&quot;);
+                            e.printStackTrace();
+                        }
+                    }
+                    if(isRuning){
+                        temp = taskQueue.remove(0);
+                    }
+                }
+                //当等待新任务加入时候，终止线程(调用stopThread函数)造成 temp ＝ null
+                if(temp != null){
+                    isWaiting = false;
+                    temp.run();
+                    isWaiting = true;
+                }
+            }
+        }
+    }
+
+}</span></pre><span style="font-family:Microsoft YaHei"><br>
+<span style="font-size:14px">相关实例工程下载地址：<a href="http://download.csdn.net/detail/hustpzb/4957783">http://download.csdn.net/detail/hustpzb/4957783</a></span><br>
+</span>
+<p><br>
+</p>
+<p><span style="word-wrap:normal; word-break:normal; line-height:21px; color:rgb(70,70,70)"><span style="background-color:rgb(255,255,255)"><strong><span style="font-family:Microsoft YaHei; font-size:18px">二、使用<span style="color:rgb(70,70,70); line-height:21px">ExecutorService
+ 建立线程池，这种方法就方便多了，开发者可以很轻松地建立自己的线程池。</span></span></strong></span></span></p>
+<p><span style="font-family:Microsoft YaHei"><br>
+</span></p>
+<p><span style="font-family:Microsoft YaHei; font-size:14px"><strong>（1）</strong><span style="color:rgb(70,70,70); font-family:'Microsoft YaHei'; font-size:14px; line-height:21px"><strong>使用Executor的缺省线程工厂建立线程</strong></span></span></p>
+<p><span style="font-family:Microsoft YaHei; font-size:14px">建立线程池的步骤如下：</span></p>
+<table border="1" cellpadding="3" cellspacing="1" style="margin:0px; padding:0px; color:rgb(70,70,70); font-size:14px; text-align:left; background-color:rgb(248,236,216); width:688px">
+<tbody>
+<tr>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">1.定义线程类</span></td>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">class Handler implements Runnable{<br>
+}</span></td>
+</tr>
+<tr>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">2.建立ExecutorService线程池</span></td>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">ExecutorService executorService = Executors.newCachedThreadPool();<br>
+<br>
+或者<br>
+<br>
+int cpuNums = Runtime.getRuntime().availableProcessors();&nbsp;//获取当前系统的CPU 数目<br>
+ExecutorService executorService =Executors.newFixedThreadPool(cpuNums * POOL_SIZE); &nbsp;&nbsp;&nbsp;//ExecutorService通常根据系统资源情况灵活定义线程池大小</span></td>
+</tr>
+<tr>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">3.调用线程池操作</span></td>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">循环操作，成为daemon,把新实例放入Executor池中<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;while(true){<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;executorService.execute(new Handler(socket));&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;// class Handler implements Runnable{<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;或者<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;executorService.execute(createTask(i));<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;//private static Runnable createTask(final int taskID)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;}<br>
+<br>
+execute(Runnable对象)方法<br>
+其实就是对Runnable对象调用start()方法<br>
+（当然还有一些其他后台动作，比如队列，优先级，IDLE timeout，active激活等）</span></td>
+</tr>
+</tbody>
+</table>
+<span style="font-family:Microsoft YaHei"><br style="color:rgb(70,70,70); font-size:14px; line-height:21px; background-color:rgb(248,236,216)">
+<br style="color:rgb(70,70,70); font-size:14px; line-height:21px; background-color:rgb(248,236,216)">
+<span style="word-wrap:normal; word-break:normal; line-height:21px; color:rgb(70,70,70); background-color:rgb(255,255,255)"><span style="font-size:14px">在上面，我们使用<span style="color:rgb(70,70,70); line-height:18px">newFixedThreadPool来创建线程池，但是还有其他方法可以创建，我们来看看其他</span>的ExecutorService线程池对象之间有什么不同。</span></span><br style="color:rgb(70,70,70); font-size:14px; line-height:21px; background-color:rgb(248,236,216)">
+</span>
+<table border="1" cellpadding="3" cellspacing="1" style="margin:0px; padding:0px; color:rgb(70,70,70); font-size:14px; text-align:left; background-color:rgb(248,236,216); width:688px">
+<tbody>
+<tr>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">1.newCachedThreadPool()&nbsp;<wbr></span></td>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">-缓存型池子，先查看池中有没有以前建立的线程，如果有，就reuse.如果没有，就建一个新的线程加入池中<br>
+-缓存型池子通常用于执行一些<span style="word-wrap:normal; word-break:normal; font-weight:bold">生存期很短的异步型任务</span><br>
+&nbsp;<wbr>因此在一些面向连接的daemon型SERVER中用得不多。<br>
+-能reuse的线程，必须是timeout IDLE内的池中线程，<span style="word-wrap:normal; word-break:normal; font-weight:bold">缺省timeout是60s</span>,超过这个IDLE时长，线程实例将被终止及移出池。<br>
+&nbsp;<wbr>&nbsp;注意，放入CachedThreadPool的线程不必担心其结束，<span style="word-wrap:normal; word-break:normal; font-weight:bold">超过TIMEOUT不活动，其会自动被终止。</span></span></td>
+</tr>
+<tr>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">2. newFixedThreadPool</span></td>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">-newFixedThreadPool与cacheThreadPool差不多，也是能reuse就用，但不能随时建新的线程<br>
+-其独特之处:任意时间点，最多只能有固定数目的活动线程存在，<span style="word-wrap:normal; word-break:normal; font-weight:bold">此时如果有新的线程要建立，只能放在另外的队列中等待</span>，<span style="word-wrap:normal; word-break:normal; font-weight:bold">直到当前的线程中某个线程终止直接被移出池子</span><br>
+-和cacheThreadPool不同，FixedThreadPool没有IDLE机制（可能也有，但既然文档没提，肯定非常长，类&#20284;依赖上层的TCP或UDP IDLE机制之类的），所以<span style="word-wrap:normal; word-break:normal; font-weight:bold">FixedThreadPool多数针对一些很稳定很固定的正规并发线程，多用于服务器</span><br>
+-<span style="word-wrap:normal; word-break:normal; color:rgb(255,0,0)">从方法的源代码看，cache池和fixed 池调用的是同一个底层池，只不过参数不同:</span><br style="color:rgb(255,0,0)">
+<span style="word-wrap:normal; word-break:normal; color:rgb(255,0,0)"><strong>fixed池线程数固定，并且是0秒IDLE（无IDLE）</strong></span><br style="color:rgb(255,0,0)">
+<span style="word-wrap:normal; word-break:normal; font-weight:bold"><span style="word-wrap:normal; word-break:normal; color:rgb(255,0,0)">cache池线程数支持0-Integer.MAX_VALUE(显然完全没考虑主机的资源承受能力），60秒IDLE</span>&nbsp;<wbr></span>&nbsp;<wbr></span></td>
+</tr>
+<tr>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">3.ScheduledThreadPool</span></td>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">-调度型线程池<br>
+-这个池子里的线程可以按schedule依次delay执行，或周期执行</span></td>
+</tr>
+<tr>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">4.SingleThreadExecutor</span></td>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">-单例线程，任意时间池中只能有一个线程<br>
+-<span style="word-wrap:normal; word-break:normal; font-weight:bold">用的是和cache池和fixed池相同的底层池，但线程数目是1-1,0秒IDLE（无IDLE）</span></span></td>
+</tr>
+</tbody>
+</table>
+<span style="font-family:Microsoft YaHei"><br style="color:rgb(70,70,70); font-size:14px; line-height:21px; background-color:rgb(248,236,216)">
+<br style="color:rgb(70,70,70); font-size:14px; line-height:21px; background-color:rgb(248,236,216)">
+<span style="background-color:rgb(255,255,255)"><span style="font-size:14px"><span style="word-wrap:normal; word-break:normal; line-height:21px; color:rgb(70,70,70)"><strong>（2）单独定义自己的线程工厂</strong></span><br style="color:rgb(70,70,70); line-height:21px">
+<span style="color:rgb(70,70,70); line-height:21px">下面是缺省线程工厂代码:</span></span></span><br style="color:rgb(70,70,70); font-size:14px; line-height:21px; background-color:rgb(248,236,216)">
+</span>
+<table border="1" cellpadding="3" cellspacing="1" style="margin:0px; padding:0px; color:rgb(70,70,70); font-size:14px; text-align:left; background-color:rgb(248,236,216); width:688px">
+<tbody>
+<tr>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;static class DefaultThreadFactory implements ThreadFactory&nbsp;{<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;static final AtomicInteger poolNumber = new AtomicInteger(1);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;final ThreadGroup group;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;final AtomicInteger threadNumber = new AtomicInteger(1);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;final String namePrefix;<br>
+<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;DefaultThreadFactory() {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;SecurityManager s = System.getSecurityManager();<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;group = (s != null)? s.getThreadGroup() :Thread.currentThread().getThreadGroup();<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;namePrefix = &quot;pool-&quot; &#43; poolNumber.getAndIncrement() &#43; &quot;-thread-&quot;;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;}<br>
+<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;public Thread newThread(Runnable r) {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;Thread t = new Thread(group, r,namePrefix &#43; threadNumber.getAndIncrement(),0);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;if (t.isDaemon())<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;t.setDaemon(false);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;if (t.getPriority() != Thread.NORM_PRIORITY)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;t.setPriority(Thread.NORM_PRIORITY);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;return t;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;}<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;}</span></td>
+</tr>
+</tbody>
+</table>
+<span style="color:rgb(70,70,70)"><span style="font-size:14px; line-height:21px"><span style="font-family:Microsoft YaHei"><br>
+</span></span></span>
+<p><span style="color:rgb(70,70,70); line-height:21px; background-color:rgb(255,255,255)"><span style="font-family:Microsoft YaHei; font-size:14px">也可自己定义ThreadFactory，加入建立池的参数中</span></span></p>
+<table border="1" cellpadding="3" cellspacing="1" style="margin:0px; padding:0px; color:rgb(70,70,70); font-size:14px; text-align:left; background-color:rgb(248,236,216); width:688px">
+<tbody>
+<tr>
+<td style="margin:0px; padding:0px; line-height:18px"><span style="font-family:Microsoft YaHei">&nbsp;<wbr>public static ExecutorService newCachedThreadPool<span style="word-wrap:normal; word-break:normal; font-weight:bold">(ThreadFactory threadFactory</span>) {</span></td>
+</tr>
+</tbody>
+</table>
+<span style="font-family:Microsoft YaHei"><br style="color:rgb(70,70,70); font-size:14px; line-height:21px; background-color:rgb(248,236,216)">
+<br style="color:rgb(70,70,70); font-size:14px; line-height:21px; background-color:rgb(248,236,216)">
+<span style="background-color:rgb(255,255,255)"><span style="font-size:14px"><span style="word-wrap:normal; word-break:normal; line-height:21px; color:rgb(70,70,70)"><strong>Executor的execute()方法</strong></span><br style="color:rgb(70,70,70); line-height:21px">
+<span style="color:rgb(70,70,70); line-height:21px">execute() 方法将Runnable实例加入pool中,并进行一些pool size计算和优先级处理</span><br style="color:rgb(70,70,70); line-height:21px">
+<span style="color:rgb(70,70,70); line-height:21px">execute() 方法本身在Executor接口中定义,有多个实现类都定义了不同的execute()方法</span><br style="color:rgb(70,70,70); line-height:21px">
+<span style="color:rgb(70,70,70); line-height:21px">如ThreadPoolExecutor类（cache,fiexed,single三种池子都是调用它）的execute方法如下：</span></span></span><br style="color:rgb(70,70,70); font-size:14px; line-height:21px; background-color:rgb(248,236,216)">
+</span>
+<table border="1" cellpadding="3" cellspacing="1" style="margin:0px; padding:0px; color:rgb(70,70,70); font-size:14px; text-align:left; background-color:rgb(248,236,216); width:688px">
+<tbody>
+<tr>
+<td style="margin:0px; padding:0px; font-family:Verdana,宋体,sans-serif; line-height:18px">
+<span style="color:rgb(0,0,0)"><span style="line-height:normal"><span style="font-family:Microsoft YaHei">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;public void execute(Runnable command) {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;if (command == null)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;throw new NullPointerException();<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;if (poolSize &gt;= corePoolSize || !addIfUnderCorePoolSize(command)) {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;if (runState == RUNNING &amp;&amp; workQueue.offer(command)) {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;if (runState != RUNNING || poolSize == 0)<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;ensureQueuedTaskHandled(command);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;}<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;else if (!addIfUnderMaximumPoolSiz<wbr>e(command))<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;reject(command); // is shutdown or saturated<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;}</span></span></span></td>
+</tr>
+</tbody>
+</table>
+    
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox" style="float: right;">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_detail.css" />
+
+    
+<!--172.16.140.13-->
+<ul class="article_next_prev">
+            <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/hustpzb/article/details/8230887';">上一篇</span><a href="/hustpzb/article/details/8230887" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">setXfermode方法实现图片遮罩 （PorterDuff.Mode的各种实现效果）</a></li>
+            <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/hustpzb/article/details/8332074';">下一篇</span><a href="/hustpzb/article/details/8332074" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">Java输出流对UTF-8编码的处理</a></li>
+</ul>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+        <div id="digg" ArticleId="8308874">
+            <dl id="btnDigg" class="digg digg_disable">
+               
+                 <dt>顶</dt>
+                <dd>0</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+      
+</div>
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/hustpzb/svc/GetSuggestContent/8308874",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+<dl class="blog-ass-articl" id="res-relatived" > 
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "8308874",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    </div>  
+
+    
+     <div id="res"  data-mod="popu_36"  class="tracking-ad" style="width: 42%;float: left;margin-right: 30px;"></div>
+   
+</dl>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'Java线程池的调用' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>   
+
+    <div id="ad_cen">        
+<!--AdForward Begin:-->
+<script type="text/javascript" src="http://csdnim.qtmojo.com/main/s?user=csdn|blog|banner2&db=csdnim&border=0&local=yes&js=ie" charset="gbk"></script>
+<!--AdForward End-->    </div>  
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '8308874';
+    var commentscount = 1;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="display:none"></div>
+  <script  language="javascript" type='text/javascript'>     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/hustpzb/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });
+        },200);  
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }    
+
+</script>
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/hustpzb" target="_blank">
+    <img src="http://avatar.csdn.net/1/E/1/1_hustpzb.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/hustpzb" class="user_name" target="_blank">hustpzb</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=hustpzb','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>539677次</span></li>
+    <li>积分：<span>4964</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog5.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：4964 </div>
+        </span>  </li>
+    <li>排名：<span>第2837名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>53篇</span></li>
+    <li>转载：<span>82篇</span></li>
+    <li>译文：<span>1篇</span></li>
+    <li>评论：<span>117条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/hustpzb/article/category/749610" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Android</a><span>(58)</span>
+                </li>
+                 <li>
+                    <a href="/hustpzb/article/category/1334167" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Ubuntu</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/hustpzb/article/category/2417617" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Web</a><span>(2)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/hustpzb/article/month/2015/09">2015年09月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2015/04">2015年04月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2014/10">2014年10月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2014/08">2014年08月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2014/07">2014年07月</a><span>(2)</span></li><li><a href="/hustpzb/article/month/2014/06">2014年06月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2014/02">2014年02月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2014/01">2014年01月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2013/11">2013年11月</a><span>(8)</span></li><li><a href="/hustpzb/article/month/2013/09">2013年09月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2013/07">2013年07月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2013/04">2013年04月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2013/03">2013年03月</a><span>(4)</span></li><li><a href="/hustpzb/article/month/2013/01">2013年01月</a><span>(8)</span></li><li><a href="/hustpzb/article/month/2012/12">2012年12月</a><span>(6)</span></li><li><a href="/hustpzb/article/month/2012/11">2012年11月</a><span>(4)</span></li><li><a href="/hustpzb/article/month/2012/10">2012年10月</a><span>(4)</span></li><li><a href="/hustpzb/article/month/2012/09">2012年09月</a><span>(2)</span></li><li><a href="/hustpzb/article/month/2012/08">2012年08月</a><span>(8)</span></li><li><a href="/hustpzb/article/month/2012/07">2012年07月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2012/06">2012年06月</a><span>(9)</span></li><li><a href="/hustpzb/article/month/2012/05">2012年05月</a><span>(3)</span></li><li><a href="/hustpzb/article/month/2012/04">2012年04月</a><span>(2)</span></li><li><a href="/hustpzb/article/month/2012/02">2012年02月</a><span>(19)</span></li><li><a href="/hustpzb/article/month/2011/12">2011年12月</a><span>(4)</span></li><li><a href="/hustpzb/article/month/2011/11">2011年11月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2011/10">2011年10月</a><span>(6)</span></li><li><a href="/hustpzb/article/month/2011/09">2011年09月</a><span>(2)</span></li><li><a href="/hustpzb/article/month/2011/08">2011年08月</a><span>(2)</span></li><li><a href="/hustpzb/article/month/2011/07">2011年07月</a><span>(2)</span></li><li><a href="/hustpzb/article/month/2011/06">2011年06月</a><span>(5)</span></li><li><a href="/hustpzb/article/month/2011/05">2011年05月</a><span>(2)</span></li><li><a href="/hustpzb/article/month/2011/04">2011年04月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2011/03">2011年03月</a><span>(3)</span></li><li><a href="/hustpzb/article/month/2011/02">2011年02月</a><span>(7)</span></li><li><a href="/hustpzb/article/month/2010/12">2010年12月</a><span>(1)</span></li><li><a href="/hustpzb/article/month/2010/11">2010年11月</a><span>(10)</span></li><li><a href="/hustpzb/article/month/2008/01">2008年01月</a><span>(1)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/hustpzb/article/details/8230454" title="Git SSH Key 生成步骤">Git SSH Key 生成步骤</a><span>(123953)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/5997085" title="在Android手机上实现阅读器的翻页效果">在Android手机上实现阅读器的翻页效果</a><span>(24640)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/8363372" title="BitmapFactory.Options.inSampleSize 的用法">BitmapFactory.Options.inSampleSize 的用法</a><span>(20239)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/18667851" title="Android Support v4 支持包中 Fragment用法">Android Support v4 支持包中 Fragment用法</a><span>(15945)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/8525324" title="通过Android系统日志监听程序启动事件">通过Android系统日志监听程序启动事件</a><span>(14697)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/7287948" title="Git详解之三 Git分支">Git详解之三 Git分支</a><span>(12431)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/7681875" title="武汉地铁规划图">武汉地铁规划图</a><span>(12259)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/8649545" title="Git 过滤文件，控制上传">Git 过滤文件，控制上传</a><span>(11688)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/6870817" title="&lt;xliff:g&gt;标签介绍：">&lt;xliff:g&gt;标签介绍：</a><span>(11473)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/8163112" title="Android与PC通过USB通讯">Android与PC通过USB通讯</a><span>(11226)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/hustpzb/article/details/5997085" title="在Android手机上实现阅读器的翻页效果">在Android手机上实现阅读器的翻页效果</a><span>(39)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/8525324" title="通过Android系统日志监听程序启动事件">通过Android系统日志监听程序启动事件</a><span>(16)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/6870817" title="&lt;xliff:g&gt;标签介绍：">&lt;xliff:g&gt;标签介绍：</a><span>(7)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/7688993" title="LBS中从数据库查询某经纬度2KM范围内的数据 - 针对大数据量的性能优化">LBS中从数据库查询某经纬度2KM范围内的数据 - 针对大数据量的性能优化</a><span>(5)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/6600591" title="Android数据库的批处理操作（以添加联系人为例）">Android数据库的批处理操作（以添加联系人为例）</a><span>(4)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/6913877" title="java.lang.IllegalStateException: ActionBarContextView can only be used with android:layout_width=&quot;">java.lang.IllegalStateException: ActionBarContextView can only be used with android:layout_width=&quot;</a><span>(4)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/7837022" title="关于Android软件检测心跳的实现原理">关于Android软件检测心跳的实现原理</a><span>(4)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/8230454" title="Git SSH Key 生成步骤">Git SSH Key 生成步骤</a><span>(4)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/6023145" title="Android的计量单位px,in,mm,pt,dp,dip,sp">Android的计量单位px,in,mm,pt,dp,dip,sp</a><span>(3)</span>
+</li>
+<li>
+<a href="/hustpzb/article/details/5985063" title="TextView总是显示跑马灯效果">TextView总是显示跑马灯效果</a><span>(3)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/lovehuangjiaju/article/details/49747437" target="_blank">*Spark源码阅读：第十节 Standalone运行模式解析</a></li>
+<li><a href="http://blog.csdn.net/coder_pig/article/details/49745363" target="_blank">* Android基础入门教程——8.3.16 Canvas API详解(Part 1)</a></li>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/49734867"target="_blank">*Android 一个改善的okHttp封装库</a></li>
+<li><a href="http://blog.csdn.net/offbye/article/details/49612919" target="_blank">* 美团Android DEX自动拆包及动态加载简介</a></li>
+
+<li><a href="http://blog.csdn.net/lincyang/article/details/49613015"  target="_blank">*Android实战技巧之四十四：Hello,Native!</a></li>
+<li><a href="http://blog.csdn.net/yueguanghaidao/article/details/49638261" target="_blank">* 如何面试Python后端工程师？</a></li>
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/hustpzb/article/details/7903287#comments">Android放大镜实现的两种方式</a>
+    <p style="margin:0px;"><a href="/paddyy" class="user_name">paddyy</a>:
+不错，学习了
+    </p>
+    </li>
+    <li>
+   
+         <a href="/hustpzb/article/details/8056518#comments">Git把Tag推送到远程仓库</a>
+    <p style="margin:0px;"><a href="/u013921245" class="user_name">u013921245</a>:
+请问一下如何查看自己账号是否有权限推送Tag？如果没有，该如何设置呢，谢谢
+    </p>
+    </li>
+    <li>
+   
+         <a href="/hustpzb/article/details/8443336#comments">Android2.2 结束进程forceStopPackage()</a>
+    <p style="margin:0px;"><a href="/kd_pp1987" class="user_name">kd_pp1987</a>:
+method.invoke(sd, &quot;com.h3c.ServiceAuto&quot;);我运行到这里就抛了...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/hustpzb/article/details/8230454#comments">Git SSH Key 生成步骤</a>
+    <p style="margin:0px;"><a href="/sinat_21607571" class="user_name">sinat_21607571</a>:
+敢不敢再详细一点
+    </p>
+    </li>
+    <li>
+   
+         <a href="/hustpzb/article/details/8072630#comments">如何去掉ListView底部的ListDivider</a>
+    <p style="margin:0px;"><a href="/u013226053" class="user_name">u013226053</a>:
+楼主说的不错，看得出你对源码有所研究，谢谢分享了。
+    </p>
+    </li>
+    <li>
+   
+         <a href="/hustpzb/article/details/8472929#comments">Thread Join()的用法</a>
+    <p style="margin:0px;"><a href="/tracyliang223" class="user_name">tracyliang223</a>:
+最后一句，t2.join() 为什么不起作用？
+    </p>
+    </li>
+    <li>
+   
+         <a href="/hustpzb/article/details/11927877#comments">VS2010报错无法编译：LINK : fatal error LNK1123: failure during conversion to COFF: file invalid</a>
+    <p style="margin:0px;"><a href="/u012484273" class="user_name">u012484273</a>:
+LZ厉害，果然好使！
+    </p>
+    </li>
+    <li>
+   
+         <a href="/hustpzb/article/details/7688993#comments">LBS中从数据库查询某经纬度2KM范围内的数据 - 针对大数据量的性能优化</a>
+    <p style="margin:0px;"><a href="/fengshizty" class="user_name">fengshizty</a>:
+天下文章一大抄 千率一篇
+    </p>
+    </li>
+    <li>
+   
+         <a href="/hustpzb/article/details/35232467#comments">使用Eclipse默认证书签名APK</a>
+    <p style="margin:0px;"><a href="/aa51513" class="user_name">aa51513</a>:
+说的很有道理
+    </p>
+    </li>
+    <li>
+   
+         <a href="/hustpzb/article/details/8363372#comments">BitmapFactory.Options.inSampleSize 的用法</a>
+    <p style="margin:0px;"><a href="/zhangwude2301" class="user_name">zhangwude2301</a>:
+棒棒哒~
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+ </div>   
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/cnick/cnick.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=274298"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/JavaScript1.js"></script>
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a>"
+                    + "<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+    });
+</script>
+
+
+
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://static.csdn.net/public/common/toolbar/js/toolbar.js"></script>     <!--new top-->
+   
+    <link href="http://c.csdnimg.cn/comm_ask/css/ask_float_block.css" type="text/css" rel="stylesheet" />
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/wmd.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/showdown.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/prettify.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/apps/ask_float_block.js'></script>
+   
+</body>
+</html>   
+ 

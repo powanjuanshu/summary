@@ -1,0 +1,6 @@
+项目根路径的写法
+-----------------
+<a href="./main.jsp">返回主页</a>
+
+会跳转到http://localhost/shgt_ec/main.jsp这个路径
+即会找到WebContent下的main.jsp

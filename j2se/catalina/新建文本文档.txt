@@ -1,0 +1,100 @@
+og4j 产生的日志位置设置　和　catalina.home、catalina.base
+
+方法一、 解决的办法自然是用相对路径代替绝对路径，其实log4j的FileAppender本身就有这样的机制，如：log4j.appender.logfile.File=${WORKDIR}/logs/app.log 
+其中“${WORKDIR}/”是个变量，会被System Property中的“WORKDIR”的值代替。这样，我们就可以在log4j加载配置文件之前，先用System.setProperty ("WORKDIR", WORKDIR);设置好根路径，此操作可通过一初始的servlet进行。 
+
+方法二、可以使用服务器环境变量 
+log4j的配置文件支持服务器的vm的环境变量，格式类似${catalina.home} 
+log4j.appender.R=org.apache.log4j.RollingFileAppender 
+log4j.appender.R.File=${catalina.home}/logs/logs_tomcat.log 
+log4j.appender.R.MaxFileSize=10KB 
+其中的${catalina.home}并非windows系统的环境变量，这个环境变量就不需要在Windows系统的环境变量中设置。之所以这样，你可以看看tomcat\bin\catalina.bat(startup,shutdown都是调用这个)里面自带有-Dcatalina.home= "%CATALINA_HOME%" 。继承这个思想，所以你也可以自己设定一个参数-Dmylog.home="D:/abc/log"到对应的服务器java启动的vm参数中 
+
+方法三、通过servlet初始化init()方法中加载file属性实现相对路径 
+具体实现:做一个servlet,在系统加载的时候,就把properties的文件读到一个properties文件中.那个file的属性值(我使用的是相对目录)改掉(前面加上系统的根目录),让后把这个properties对象设置到propertyConfig中去,这样就初始化了log的设置.
+在后面的使用中就用不着再配置了 
+一般在我们开发项目过程中,log4j日志输出路径固定到某个文件夹,这样如果我换一个环境,日志路径又需要重新修改,比较不方便,目前我采用了动态改变日志路径方法来实现相对路径保存日志文件
+
+
+
+catalina.home和catalina.base这两个属性仅在你需要安装多个Tomcat实 例而不想安装多个软件备份的时候使用，这样能节省磁盘空间。
+以Tomcat6.0为例，其Tomcat目 录结构如下：
+
+bin (运行脚本）
+conf (配置文件）
+lib (核心库文件）
+logs (日志目录)
+temp (临时目录)
+webapps (自动装载的应用程序的目录）
+work (JVM临时文件目录[java.io.tmpdir])
+
+让我们看看这些目录那些可以被多个Tomcat实例公用，其实只有 bin 和 lib 目录,其它目录conf、logs、temp、webapps和work每个Tomcat实例必须拥有其自己独立的备份。
+明白了上述关系就容易理解catalina.home和catalina.base的用途了。
+catalina.home指向公用信息的位置，就是bin和lib的父目录。
+catalina.base指向每个Tomcat目录私有信息的位置，就是conf、logs、temp、webapps和work的父目录。
+仅运行一个Tomcat实例时，这两个属性指向的位置是相同的。
+
+tomcat CATALINA_BASE环境变量配置
+
+环境变量中
+classpath
+D:\apache-tomcat-7.0.16\bin\servlet-api.jar;
+D:\apache-tomcat-7.0.16\lib;
+D:\apache-tomcat-7.0.16\lib\tomcat-api.jar
+ 
+ 
+系统变量中
+CATALINA_BASE
+D:\apache-tomcat-7.0.16
+CATALINA_HOME
+D:\apache-tomcat-7.0.16
+CATALINA_TMPDIR
+D:\apache-tomcat-7.0.16
+path
+D:\apache-tomcat-7.0.16\bin
+
+
+
+CATALINA_BASE与CATALINA_HOME的区别
+
+TomcatApache配置管理Bash脚本 
+到底CATALINA_HOME和CATALINA_BASE有什么区别呢，之前因为都是小打小闹的在服务器上安装一个tomcat，然后根据前人的配置，将CATALINA_HOME和CATALINA_BASE两个值设为tomcat的目录，今天无意间看到了公司的安装文档说明，
+里面提到了多个tomcat实例运行的配置，才弄明白到底这两者之间有什么区别。
+
+我们可以从Tomcat 5.5的配置文档（http://tomcat.apache.org/tomcat-5.5-doc/config/host.html） 中找到答案：
+
+The description below uses the variable name $CATALINA_HOME to refer to the directory into which you have installed Tomcat 5, and is the base directory against which most relative paths are resolved. 
+However, if you have configured Tomcat 5 for multiple instances by setting a CATALINA_BASE directory, you should use $CATALINA_BASE instead of $CATALINA_HOME for each of these references.
+
+从这段描述可以看出CATALINA_HOME和CATALINA_BASE的区别。简单的说，CATALINA_HOME是Tomcat的安装目录，CATALINA_BASE是Tomcat的工作目录。如果我们想要运行Tomcat的多个实例，但是不想安装多个Tomcat软件副本。
+那么我们可以配置多个工作目录，每个运行实例独占一个工作目录，但是共享同一个安装目录。
+
+Tomcat每个运行实例需要使用自己的conf、logs、temp、webapps、work和shared目录，因此CATALINA_BASE就指向这些目录。 而其他目录主要包括了Tomcat的二进制文件和脚本，CATALINA_HOME就指向这些目录。
+
+如果我们希望再运行另一个Tomcat实例，那么我们可以建立一个目录，把conf、logs、temp、webapps、work和shared拷贝到该目录下，然后让CATALINA_BASE指向该目录即可。
+ 
+在一台服务器上，可以运行多个tomcat实例，不需要安装多个tomcat，可以采用不同的用户，以test用户为例，拷贝/usr/local/apache-tomcat-6.0.18目录到/home/test下，删除/home/test/apache-tomcat-6.0.18/bin子目录（此目录不需要），编辑/home/test/.bash_profile文件,设置CATALINA_HOME指向刚才的安装目录/usr/local/apache-tomcat-6.0.18,设置JAVA_HOME指向刚才的安装目录/usr/java/jdk1.6.0_11。设置CATALINA_BASE指向/home/test/apache-tomcat-6.0.18，设置CATALINA_OPTS跟/root/.bash_profile的一致（jmx管理端口用不同的端口号）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

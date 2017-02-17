@@ -1,0 +1,82 @@
+package com.bestpay.paycenter.manager.cmb.fastpay.credit;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+public class TestServer {
+    ServerSocket server = null;
+    Socket client;
+    OutputStream out = null;
+    InputStream in = null;
+    int port = 5555;
+    public static void main(String[] args) {
+        TestServer t = new TestServer();
+        t.start();
+    }
+    public void start () {
+        try {
+            server = new ServerSocket(port);
+            client = server.accept();
+            client.setSoTimeout(10000);
+            out = client.getOutputStream();
+            in = client.getInputStream();
+            System.out.println("服务器已启动，正在监听" + port + "端口。。。");
+            while (true) {
+                byte[] packageSize = new byte[4];
+                in.read(packageSize);
+                String packageSizeStr = new String(packageSize, "GBK");
+                System.out.println("报文长度：" + packageSizeStr);
+                int len = Integer.parseInt(packageSizeStr);
+                System.out.println(len);
+                byte[] packageData = new byte[len];
+                in.read(packageData);
+                String s = new String(packageData);
+                System.out.println("end---------------"+s);
+            }
+        } catch (Exception e) {
+            try {
+                in.close();
+                out.close();;
+                client.close();
+                server.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
+}
+-------------------------------------------
+package cox;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+public class SocketClient {
+	public static void main(String[] args) throws Exception{
+        InetSocketAddress endpoint = new InetSocketAddress("127.0.0.1" , 5555);
+        Socket socket = null;
+        OutputStream out = null;
+        InputStream in = null;
+        socket = new Socket();
+        socket.setSoLinger(true, 2); // 设置发送逗留时间2秒
+        socket.setSoTimeout(200000); // 设置InputStream上调用 read()阻塞超时时间200秒
+        socket.setSendBufferSize(32 * 1024); // 设置socket发包缓冲为32k；
+        socket.setReceiveBufferSize(32 * 1024); // 设置socket底层接收缓冲为32k
+        socket.setTcpNoDelay(true); // 关闭Nagle算法.立即发包
+        socket.connect(endpoint); // 连接服务器
+        out = socket.getOutputStream(); // 获取输出输入流
+        in = socket.getInputStream(); // 获取输入流
+        
+        out.write("0010jackadrose".getBytes("GBK"));
+        out.flush();
+        
+        Thread.sleep(6000);
+        
+        out.write("0010helloworld".getBytes("GBK")); 
+        out.flush();
+        Thread.sleep(100000000);//最后可以挂起，或做别的操作//最后可以挂起，或做别的操作
+	}
+}
+

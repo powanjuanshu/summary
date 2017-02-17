@@ -1,0 +1,4 @@
+Toolkit toolkit=Toolkit.getDefaultToolkit(); //获取默认工具包
+Dimension dimension=toolkit.getScreenSize(); //获取屏幕的大小
+int widht=(int)dimension.getWidth();         //返回dimension的宽度，也即屏幕的宽度
+int height=(int)dimension.getHeight();       //返回dimension的高度，也即屏幕的高度

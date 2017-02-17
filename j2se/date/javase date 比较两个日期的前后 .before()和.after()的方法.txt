@@ -1,0 +1,21 @@
+package com;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Main {
+	public static void main(String[] args) throws Exception {		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
+		Date d1 = sdf.parse("2013-10-11 11:11:11");
+		Date d2 = sdf.parse("2013-10-11 11:11:12");
+		System.out.println(d1.after(d2));;
+		
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+		Date d3 = sdf2.parse("2013-10-11");
+		Date d4 = sdf2.parse("2013-10-11");
+		System.out.println(d3.after(d4));;
+	}
+}
+----------
+false
+false

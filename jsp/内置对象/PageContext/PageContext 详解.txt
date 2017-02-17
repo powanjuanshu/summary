@@ -1,0 +1,117 @@
+pageContext对象提供了对JSP页面内所有的对象及名字空间的访问,也就是说他可以访问到本页所在的SESSION,也可以取本页面所在的application的某一属性值,
+他相当于页面中所有功能的集大成者,它的本类名也叫PageContext
+
+
+
+pageContext隐含物件对对于javax.servlet.jsp.PageContext型态之物件,隐含物件都自动的被加入至pageContext中,您可以由它来取得与JSP相关的隐含物件对应之Servlet物件,
+像是getRequest()可以取得ServletRequest, getServletConfig()可以取得ServletConfig,getSession()可以取得HttpSession等等.
+提供取得隐含物件对应之Servlet物件并不是pageContext的主要作用,它的主要功能在提供一个单一个介面,以管理各种的公开物件
+(像是 HttpSession、ServletContext、ServletConfig、ServletRequest、ServletResponse等等),提供一个单一的API来管理属性作用范围等等.
+我们之前曾经使用过session的setAttribute()等方法设定一个进程可以共用的属性物件,使用session设定的属性在同一个进程中可以共用,除了session之外,
+还有pageContext、 request、application也都可以使用setAttribute()之类的方法(详请查阅API文件)来设定可以共用的属性物件,只不过这四个物件所设定的属性其共用范围各不相同.
+使用pageContext所设定的属性物件,其共用范围限於同一个 JSP页面,使用request所设定的属性物件,其在同一个request处理期间可以共用(包括forward给其它JSP页面),
+session物件所设定的属性物件则限於同一个进程作用期间可以共用,而application物件所设定的属性,则在整个Web应用程式中的JSP页面都可以共用.
+
+以下举application为例,您可以将一些物件当作属性设定给application,则另一个JSP页面就可以在适当的时候取得这个属性物件,例如：
+
+<%
+ String attr = "字串物件";
+ out.println("设定属性给application：" + attr);
+ application.setAttribute("str", attr);
+%>
+
+我们先连上这个JSP网页以执行属性设定,然后我们再连上这个JSP网页：
+
+<%
+ String attr = (String) application.getAttribute("str");
+ out.println("取得application属性：" + attr);
+%>
+
+由於我们之前已经将字串物件设定在application中作为属性,所以我们可以在上面这个页面中取得之前设定的物件,同样的道理,您也可以用相同的方式设定属性给pageContext、request、session等物件,只要在允许的作用范围中,就可以取得所设定的属性物件.
+
+您可以使用pageContext物件来设定属性,并指定属性的作用范围,而不用使用个别的pageContext、request、session、 application来进行设定,这就是之前所提的,以pageContext提供一个单一的API来管理属性作用范围,您可以使用以下的方法来进行设定：
+
+getAttribute(String name, int scope)
+setAttribute(String name, Object value, int scope)
+removeAttribute(String name, int scope)
+
+其中的scope可以使用以下的常数来进行指定：pageContext.PAGE_SCOPE、pageContext.REQUEST_SCOPE、 pageContext.SESSION_SCOPE、pageContext.APPLICATION_SCOPE,常数的名称已经直接指明属性范围,我们可以将上面的两个JSP页面改为以下的形式：
+
+<%
+ String attr = "字串物件";
+ out.println("设定属性给application：" + attr);
+ pageContext.setAttribute("str", attr, pageContext.APPLICATION_SCOPE);
+%>
+
+<%
+ String attr = (String) pageContext.getAttribute("str", pageContext.APPLICATION_SCOPE);
+ out.println("取得application属性：" + attr);
+%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pageContext javax.servlet.jsp.PageContext的实例,该对象代表该JSP页面上下文,使用该对象可以访问页面中的共享数据.常用的方法有getServletContext和getServletConfig等.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//使用pageContext 设置属性,该属性默认在page 范围内   
+pageContext. setAttribute ("page" , "hello") ;   
+  
+//使用request 设置属性,该属性默认在request 范围内   
+request. setAttribute ("request" , "hello");   
+
+//使用pageContext将属性设置在request 范围中   
+pageContext.setAttribute("request2″ , "hello" , pageContext.REQUEST_SCOPE);   
+
+//使用session将属性设置在session 范围中   
+session.setAttribute("session" , "hello");   
+
+//使用pageContext将属性设置在session范围中   
+pageContext.setAttribute("session2″ , "hello" , pageContext.SESSION_SCOPE);   
+
+//使用application将属性设置在application范围中   
+application. setAttribute ("app" , "hello") ;   
+
+//使用pageContext 将属性设置在application 范围中   
+pageContext.setAttribute("app2″ , "hello" , pageContext.APPLICATION_SCOPE) ;

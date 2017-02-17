@@ -1,0 +1,16 @@
+package test;
+import java.util.List;
+import com.google.common.base.Splitter;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
+public class Main {
+	public static void main(String[] args) {
+		String str = ",1,2,3,a,b,c,";
+		List<String> list = Splitter.on(',').omitEmptyStrings().splitToList(str); // 按,切割并得到集合，并且去掉空的字符串，但是空格不用去掉
+		System.out.println(list.size()); // 打印6，如果没有omitEmptyStrings()，那么会是8
+		String s = list.get(2);
+		System.out.println(s); // 打印3
+	}
+}

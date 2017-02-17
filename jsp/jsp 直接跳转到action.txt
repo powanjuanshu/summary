@@ -1,0 +1,4 @@
+function add(){
+	window.location.href="agent-company!aa.action";
+}
+<input type="button" vlaue"µã»÷" onclick="add()">

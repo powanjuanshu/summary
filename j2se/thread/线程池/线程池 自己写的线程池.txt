@@ -1,0 +1,87 @@
+本示例程序由三个类构成:
+
+第一个类是
+TestThreadPool类，它是一个测试程序，用来模拟客户端的请求，当你运行它时，系统首先会显示线程池的初始化信息，然后提示你从键盘上输入字符串，
+并按下回车键，这时你会发现屏幕上显示信息，告诉你某个线程正在处理你的请求，如果你快速地输入一行行字符串，那么你会发现线程池中不断有线程被唤醒，来处理你的请求，在本例中，我创建了一个拥有
+10个线程的线程池，如果线程池中没有可用线程了，系统会提示你相应的警告信息，但如果你稍等片刻，那你会发现屏幕上会陆陆续续提示有线程进入了睡眠状态，
+这时你又可以发送新的请求了。
+
+第二个类是
+ThreadPoolManager类，顾名思义，它是一个用于管理线程池的类，它的主要职责是初始化线程池，并为客户端的请求分配不同的线程来进行处理，如果线程池满了，它会对你发出警告信息。
+
+最后一个类是
+SimpleThread类，它是Thread类的一个子类，它才真正对客户端的请求进行处理，SimpleThread在示例程序初始化时都处于睡眠状态，但如果它接受到了ThreadPoolManager
+类发过来的调度信息，则会将自己唤醒，并对请求进行处理
+--------------------------------
+package thread2;
+import java.io.*;
+public class TestThreadPool {
+	public static void main(String[] args) {
+		try{
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			String s;
+			ThreadPoolManager manager = new ThreadPoolManager(10);
+			while ((s = br.readLine()) != null){
+				manager.process(s);
+			}
+		}
+		catch (IOException e) {
+		}
+	}
+}
+------------------------------------
+package thread2;
+import java.util.*;
+public class ThreadPoolManager {
+	private int maxThread;
+	public Vector vector=new Vector();
+	public ThreadPoolManager(int threadCount){
+		this.maxThread=threadCount;
+		System.out.println("Starting thread pool...");
+		for (int i = 1; i <= 10; i++){
+			SimpleThread thread = new SimpleThread(i);
+			vector.addElement(thread);
+			thread.start();
+		}
+	}
+	public void process(String argument){
+		int i;
+		for (i = 0; i < vector.size(); i++){
+			SimpleThread currentThread = (SimpleThread) vector.elementAt(i);
+			if (!currentThread.isRunning()){
+				System.out.println("Thread " + (i + 1) + " is processing:"+argument);
+				currentThread.setArgument(argument);
+				currentThread.setRunning(true);
+				return;
+			}
+		}
+		if (i == vector.size()){
+			System.out.println("pool is full,try in another time.");
+		}
+	}
+}
+----------------------------
+package thread2;
+import java.io.*;
+public class TestThreadPool {
+	public static void main(String[] args) {
+		try{
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			String s;
+			ThreadPoolManager manager = new ThreadPoolManager(10);
+			while ((s = br.readLine()) != null){
+				manager.process(s);
+			}
+		}
+		catch (IOException e) {
+		}
+	}
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+window.onload=function(){
+	var v1="abc";
+	if(v1=="abc"){
+		alert(1);
+	}else{
+		alert(2);
+	}
+	if(v1!="abcd"){ //没有v1<>"abc"的写法，会报错
+		alert('a');//不能写成a，要加单引号'，否则会报错'a'未定义，a会被当作一个变量，而不是字符串
+	}else{
+		alert('b');
+	}
+}
+</script>
+</head>
+<body>
+test
+</body>
+</html>
+-------------------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+var a=function(){
+	var v1="abc";
+	if(v1=="abc"){
+		alert(1);
+	}else{
+		alert(2);
+	}
+	if(v1!="abcd"){ //没有v1<>"abc"的写法，会报错
+		alert('a');//不能写成a，要加单引号'，否则会报错'a'未定义，a会被当作一个变量，而不是字符串
+	}else{
+		alert('b');
+	}
+}
+</script>
+</head>
+<body onload="a();">
+test<!--会先显示body里的文字，在执行js代码，说明会先加载网页内容，等网页内容加载完成后再执行js代码-->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

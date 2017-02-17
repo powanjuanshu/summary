@@ -1,0 +1,6 @@
+map的作用是点击图片上的某个区域
+<img src="planets.jpg" border="0" usemap="#a" alt="aaa"/>
+<map name="a" id="a">
+	<area shape="circle" coords="180,137,14" href="venus.html" alt="bbb"/>
+	<area shape="rect" coords="0,0,110,260" href="sun.html" alt="ccc"/>
+</map>

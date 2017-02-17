@@ -1,0 +1,26 @@
+package csocket;
+public class Main {
+	public static void main(String[] args) {
+		new Main2();
+		new Main2();
+		new Main2();
+	}
+}
+---------------------
+package csocket;
+public class Main2 {
+	static {
+		System.out.println("xxxx");
+	}
+	public Main2(){
+		System.out.println("kkkk");
+	}
+}
+------------
+½á¹û£º
+xxxx
+kkkk
+kkkk
+kkkk
+
+

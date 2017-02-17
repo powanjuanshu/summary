@@ -1,0 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="aaa"></c:set>
+${ctx}
+<%
+	out.println(ctx);//ctx下面会有红线，会报错，jstl定义的变量在java代码中不能使用
+%>
+-------

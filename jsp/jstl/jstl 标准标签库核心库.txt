@@ -1,0 +1,74 @@
+1.导入两个jar包:jstl-api-1.2.jar,jstl-impl-1.2.jar
+1.<%@ tablib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+2.<c:set var="num" value="80" scope="pageContext"/>   <%pageContext.setAttribute("num",80);%>此处值存放在pageContext中,用el表达式可以取到num的值${num}或${pageScope.num} ${num+1}运算结果为81
+2.<c:set var="dept" value="研发部" scope="request"></c:set>  <%requestContext.setAttribute("dept","研发部");%> ${requestScope.dept+1}默认的会把dept转换为int类型的值然后加1,这时会报类型转换异常
+3.<c:out value="asdfsdfsdf"></c:out> 表示输出里面的内容
+3.<c:out value="${num}"></c:out>   (${num})
+4.	<c:set var="sum" value="0"></c:set>  此处值存放在pageContext中
+	<c:forEach var="i" begin="1" end="100">  此处变量i存放在pageContext中
+		<c:set var="sum" value="${sum+i}"></c:set>
+	</c:forEach>
+	${sum}
+5. <c:forTokens var="i" items="1-2-3" delims="-"> 此处变量i存放在pageContent中
+     ${i}  (这里的变量i的值也存放在pageContext中)
+   </c:forTokens> 
+
+6.	<table>
+		<c:forEach var="i" begin="1" end="100">
+			<tr
+				<c:choose>
+					<c:when test="${i%2==0}">
+						bgcolor="orange"
+					</c:when>
+					<c:otherwise>
+						bgcolor="pink"
+					</c:otherwise>
+				</c:choose>
+			>
+				<td>&nbsp;</td>
+			</tr>
+		</c:forEach>
+	</table>
+7. <table>
+     <c:forEach var="i" begin="1" end="100">
+	<tr
+		<c:if test="${t%2==0}">
+			bgcolor="orange"
+		</c:if>
+		<c:if test="${t%2!=0}">
+			bgcolor="yellow"
+		</c:if>
+	>
+		<td>&nbsp;<td>
+	</tr>
+     </c:forEach>
+   </table>
+8.<%session.setAttribute("user","王维")%>
+  ${user}
+  <c:remove var="user">
+  ${user}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

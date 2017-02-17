@@ -1,0 +1,28 @@
+后台通过response.getWrite.write(jsonObj.toString);把json转换成String类型传递给前台，前台如何使用Javascript将String转换回Json类型
+var d=eval('('+s+')'); 
+s 是输入的String型的值 
+d 是json对象
+eval函数的强大! 
+---------------------------
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function strToJson(str){   
+    var json=eval('('+str+')');//这里为什么要写()括号，不加会报错：缺少;的错，？
+    return json;   
+}
+var onepiece=strToJson("{name:'海贼王',role:[{name:'路飞',skills:{skill:['乱枪打','霸气']}},{name:'索隆',skills:{skill:['三刀流','一零八烦恼风']}}]}");   
+alert(onepiece);//json对象,object Object
+alert(onepiece.name);//海贼王
+alert(onepiece.role[0].name);//路飞
+alert(onepiece.role[0].skills.skill[0]);//乱枪打
+</script>
+</head>
+<body>
+</body>
+</html>
+-----------------------------------------------------eval转换时必须用()括号将字符串括起来，不然会报错

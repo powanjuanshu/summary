@@ -1,0 +1,21 @@
+package cn;
+import java.util.Locale;
+import java.util.ResourceBundle;
+public class ResourceBundl {
+	public static void main(String[] args) {
+		ResourceBundle cache=ResourceBundle.getBundle("cn/netsignserver");//默认会找类路径下的merchantInfo_zh_CN.properties,如果没有则找类路径下的merchantInfo.properties
+		System.out.println(cache);
+		System.out.println(Locale.getDefault());//zh_CN
+		String s=cache.getString("passwordpfx0");//bbb
+		System.out.println(s);
+	}
+}
+-------------------
+merchantInfo.properties:
+aa=bbb
+-------------------
+merchantInfo_zh_CN_.properties:
+aa=ccc
+
+
+

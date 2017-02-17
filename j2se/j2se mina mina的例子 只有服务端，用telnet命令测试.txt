@@ -1,0 +1,58 @@
+package mina;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
+import org.apache.mina.core.service.IoAcceptor;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
+import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
+public class MinaServer {
+    public static void main(String[] args) throws IOException {
+        //创建一个非阻塞的Server端socket，用NIO
+        IoAcceptor acceptor = new NioSocketAcceptor();
+        //创建接受数据的过滤器 
+        DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();
+        //设定这个过滤器将一行一行的读取数据   
+        chain.addLast("codec",new ProtocolCodecFilter(new TextLineCodecFactory()));// 指定编码过滤器   
+        // 指定业务逻辑处理器   
+        acceptor.setHandler(new Handler());   
+        // 设置端口号   
+        acceptor.setDefaultLocalAddress(new InetSocketAddress(22222));   
+        acceptor.bind(); //启动监听   
+        System.out.println("Mina Server is Listen on:"+22222);   
+    }   
+}
+-----------------------
+package mina;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.apache.mina.core.service.IoHandlerAdapter;
+import org.apache.mina.core.session.IoSession;
+public class Handler extends IoHandlerAdapter {
+	@Override
+	public void sessionOpened(IoSession session) throws Exception {
+		System.out.println("incoming client:" + session.getRemoteAddress());
+	}
+	// 当客户端发送消息到达时
+	@Override
+	public void messageReceived(IoSession session, Object message)throws Exception {
+		String s = message.toString();
+		System.out.println("client send message is:" + s);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd mm:hh:ss");
+		Date date = new Date();
+		session.write(sdf.format(date));// 返回当前时间的字符串
+		System.out.println("message written...");
+	}
+
+	// 当一个客户端连接关闭时
+	@Override
+	public void sessionClosed(IoSession session) throws Exception {
+		System.out.println("one client closed");
+	}
+}
+---------------------------
+然后是测试下。在命令行运行“telnet 127.0.0.1 22222”，当服务器端出现“incoming client:/127.0.0.1:2333”，表示你连接成功了
+
+然后你随便写个字符，然后回车。如果可以看到由服务器返回来的时间串就OK了。
+
+

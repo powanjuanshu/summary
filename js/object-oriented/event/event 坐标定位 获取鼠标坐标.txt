@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>JavaScript获取鼠标坐标</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<script type="text/javascript"> 
+function mousePos(e){
+	var x,y;
+	var e = e||window.event;
+	return {
+		x:e.clientX+document.body.scrollLeft+document.documentElement.scrollLeft,
+		y:e.clientY+document.body.scrollTop+document.documentElement.scrollTop
+	};
+};
+function test(e){
+	document.getElementById("mjs").innerHTML = mousePos(e).x+','+mousePos(e).y;    
+};
+</script>
+</head>
+<body>
+<div id="mjs">源码爱好者</div>
+<div id="test" style="width:1000px;height:1000px;background:#ccc;" onmousemove="test(event)"></div>
+</body>
+</html>

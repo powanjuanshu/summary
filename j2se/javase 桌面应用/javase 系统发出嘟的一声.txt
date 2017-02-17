@@ -1,0 +1,8 @@
+package com;
+import java.awt.Toolkit;
+public class Ta {
+	public static void main(String[] args) {
+		Toolkit t=Toolkit.getDefaultToolkit();
+		t.beep();
+	}
+}

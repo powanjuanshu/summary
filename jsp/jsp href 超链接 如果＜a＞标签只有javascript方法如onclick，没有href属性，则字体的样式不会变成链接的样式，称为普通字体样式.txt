@@ -1,0 +1,84 @@
+超链接 href=“#”链接到网页顶部 相当于 href=“#top” 同时也走javascript方法（先走）
+----
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<script type="text/javascript">
+	function a(){
+		alert("aaa");
+	}
+</script>
+<body>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+xx<br>
+<a href="#" onclick="a()">aaa</a>
+</body>
+</html>

@@ -1,0 +1,34 @@
+package com;
+import java.awt.Toolkit;
+import java.util.Timer;
+import java.util.TimerTask;
+public class Ta {
+	public static void main(String[] args) {
+		final Timer timer=new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				System.out.println("任务开始");
+				Toolkit.getDefaultToolkit().beep();
+				timer.cancel();	//会等到后面的执行完，然后结束线程，如果不cancel则此线程一直开着
+				for(int t=0;t<=20;t++){
+					System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjj");
+					try {
+						Thread.sleep((long) (100*Math.random()));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				System.out.println("任务结束");
+			}
+		},1*1000);
+		while(true){
+			System.out.println("主线程");
+			try {
+				Thread.sleep((long) (100*Math.random()));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}

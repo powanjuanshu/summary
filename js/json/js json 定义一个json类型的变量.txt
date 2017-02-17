@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content" content="text/html;charset=utf-8">
+<script type="text/javascript">
+	var values={};//声明一个空json对象，外面不加引号就是json对象，如果加了引号就是字符串
+	values.token="真的";//添加一个键值对
+	alert(values);//打出object Object
+	alert(values.token);//打出真的
+</script>
+</head>
+</html>
+---------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+window.onload=function(){
+	var s1={'a':'b',c:false};//定义了一个json对象
+	alert(s1);//打出objec Object	
+};
+</script>
+</head>
+</html>
+-------------------------------------
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+var data='[{"id":"1","name":"a"},{"id":"2","name":"b"}]';
+alert(eval(data));//会弹出json对象数组，[object Object],[object Object],[object Object]
+alert(eval(data).length);//json对象数组长度，3
+</script>
+</head>
+</html>
+---------------------------------------------------------------------------------------------上面用eval把符合json格式的字符串转换成json对象
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+var data={
+		"code":1,
+		"message":"信息",
+		"persons":[{"id":1,"name":"张三","sex":"女"},{"id":2,"name":"李四","sex":"女"},{"id":3,"name":"王五","sex":"男"}],
+		"mather":{"mathername":"刘一","matherage":"50"}
+};
+alert(data);//直接就是一个json对象，不需要用eval把符合json格式的字符串转换成json对象，外面不加引号就是json对象，如果加了引号就是字符串
+</script>
+</head>
+</html>
+--------------------------------------------------------------------------------------------直接定义一个json对象，确定不能用length得到其长度

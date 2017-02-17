@@ -1,0 +1,16 @@
+package com;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+public class Tt {
+	public static void main(String[] args) throws IOException {
+		FileReader fr=new FileReader("d:/abc.txt");
+		FileWriter fw=new FileWriter("d:/def.txt");
+		char[] c=new char[1024*1024];
+		int len=fr.read(c);
+		fw.write(c, 0, len);
+		fw.flush();
+		fw.close();
+		fr.close();
+	}
+}

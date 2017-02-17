@@ -1,0 +1,54 @@
+java语言的关键字，变量修饰符，如果用transient声明一个实例变量，当对象存储时，它的值不需要维持。   
+Java的serialization提供了一种持久化对象实例的机制。当持久化对象时，可能有一个特殊的对象数据成员，我们不想用serialization机制来保存它。
+为了在一个特定对象的一个域上关闭serialization，可以在这个域前加上关键字transient。当一个对象被串行化的时候，transient型变量的值不包括在串行化的表示中，
+然而非transient型的变量是被包括进去的。
+------------------------------------------------
+package cb;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+public class Main {
+	public static void main(String[] args) throws Exception {
+		FileOutputStream os =new FileOutputStream("D:/xxx/tem");
+		ObjectOutputStream s =new ObjectOutputStream(os);
+		Sec se = new Sec("jack","rose");
+		s.writeObject(se);
+		
+		FileInputStream is = new FileInputStream("D:/xxx/tem");
+		ObjectInputStream so =new ObjectInputStream(is);
+		Object o = so.readObject();
+		Sec sec = (Sec)o;
+		System.out.println(sec.getName());
+		System.out.println(sec.getPassword());
+	}
+}
+------------------------------------------------
+package cb;
+import java.io.Serializable;
+public class Sec implements Serializable{
+	private static final long serialVersionUID = -2396119136633968081L;
+	public String name;
+	public transient String password;
+	public Sec(String name, String password) {
+		this.name = name;
+		this.password = password;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+-------------------------------------
+输出：
+jack
+null
+

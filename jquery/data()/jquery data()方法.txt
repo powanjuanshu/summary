@@ -1,0 +1,32 @@
+向元素附加数据，然后取回该数据：
+$("#btn1").click(function(){
+  $("div").data("greeting", "Hello World");
+});
+$("#btn2").click(function(){
+  alert($("div").data("greeting"));
+});
+
+定义和用法
+data() 方法向被选元素附加数据，或者从被选元素获取数据。
+注释：这是底层级的方法；使用 .data() 更加方便。
+
+从元素返回数据
+从被选元素中返回附加的数据。
+语法
+$(selector).data(name)
+name	
+可选。规定要取回的数据的名称。如果没有规定名称，则该方法将以对象的形式从元素中返回所有存储的数据。
+
+向元素附加数据,向被选元素附加数据。
+语法
+$(selector).data(name,value)
+name	必需。规定要设置的数据的名称。
+value	必需。规定要设置的数据的值。
+
+使用对象向元素附加数据
+使用带有名称/值对的对象向被选元素添加数据。
+语法
+$(selector).data(object)
+
+参数	描述
+object	必需。规定包含名称/值对的对象。

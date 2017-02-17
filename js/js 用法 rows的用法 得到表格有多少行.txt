@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<body>
+<table border="1" id="b">
+	<tr>
+		<td>aaa</td>
+	</tr>
+	<tr>
+		<td>aaa</td>
+	</tr>
+</table>
+<script language="javascript" type="text/javascript">
+window.onload=function(){
+	var obj=document.getElementById("b");
+	var arr=obj.rows;
+	alert(arr.length);
+};
+</script>
+</body>

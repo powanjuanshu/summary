@@ -1,0 +1,15 @@
+package com;
+import java.util.Random;
+public class I {
+	public static void main(String[] args) {
+		Random random = new Random();
+		String str_s = "";
+		for(int i=0; i<10;i++){
+			int choice = random.nextInt(2) % 2 == 0 ? 65 : 97; // 取得大写还是小写
+			char str = (char)(choice + random.nextInt(26));
+			str_s += str;
+		}
+		System.out.println(str_s);
+	}
+}
+------------打出euNBrSGwMF

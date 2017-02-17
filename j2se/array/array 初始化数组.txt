@@ -1,0 +1,2 @@
+1.String[] s={"谢攀","卢青松","张宝聪"};
+2.MenuItem[] m={new MenuItem("新建"),new MenuItem("打开")};

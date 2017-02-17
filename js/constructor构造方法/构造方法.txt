@@ -1,0 +1,191 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>center</title>
+	<script type="text/javascript" src="content/jquery/jquery-1.9.1.js"></script>
+	
+	
+  </head>
+	<script type="text/javascript">
+	var a = 12, // 数字
+	    b = 'str', // 字符串
+	    c = false, // 布尔值
+	    d = [1, 'd', function() { return 5; }], // 数组
+	    e = { name: 'e' }, // 对象
+	    f = function() { return 'function'; }; // 函数
+    
+	console.log('a: ', a.constructor); // 输出:Number()
+	console.log('b: ', b.constructor); // 输出:String()
+	console.log('c: ', c.constructor); // 输出:Boolean()
+	console.log('d: ', d.constructor); // 输出:Array()
+	console.log('e: ', e.constructor); // 输出:Object()
+	console.log('f: ', f.constructor); // 输出:Function()
+	
+	function A(x,y){
+	    this.x = x;
+	    this.y = y;
+	}
+	A.prototype.FunX = function(){
+		alert("FunX:" + (this.x+this.y));//打印:15
+	};
+	var obj = new A(5,10);
+	alert(obj.x);//打印:5
+	alert(obj.y);//打印:10
+	obj.FunX();
+	A.prototype.FunY = function(){
+		alert("FunY:" + (this.x+this.y));//打印:15
+	};
+	obj.FunY();
+	</script>
+</html>
+-------------------------
+一、constructor
+constructor的值是一个函数。在JavaScript中，除了null和undefined外的类型的值、数组、函数以及对象，都有一个constructor属性，constructor属性的值是这个值、数组、函数或者对象的构造函数。如：
+var a = 12, // 数字
+    b = 'str', // 字符串
+    c = false, // 布尔值
+    d = [1, 'd', function() { return 5; }], // 数组
+    e = { name: 'e' }, // 对象
+    f = function() { return 'function'; }; // 函数
+console.log('a: ', a.constructor); // Number()
+console.log('b: ', b.constructor); // String()
+console.log('c: ', c.constructor); // Boolean()
+console.log('d: ', d.constructor); // Array()
+console.log('e: ', e.constructor); // Object()
+console.log('f: ', f.constructor); // Function()
+以上的构造函数都是JavaScript内置的，我们也可以自定义构造函数，如：
+function A(name) {
+    this.name = name;
+}
+var a = new A('a');
+console.log(a.constructor); // A(name)
+调用构造函数时，需要用new关键字，构造函数返回的是一个对象，看下面的代码就知道了：
+var a = 4;
+var b = new Number(4);
+console.log('a: ', typeof a); // a: number
+console.log('b: ', typeof b); // b: object
+
+二、 prototype
+prototype是函数的一个属性，默认情况下，一个函数的prototype属性的值是一个与函数同名的空对象，匿名函数的prototype属性名为Object。如：
+function fn() {}
+
+console.log(fn.prototype); // fn { }
+prototype属性主要用来实现JavaScript中的继承，如：
+function A(name) {
+    this.name = name;
+}
+
+A.prototype.show = function() {
+    console.log(this.name);
+};
+
+function B(name) {
+    this.name = name;
+}
+
+B.prototype = A.prototype;
+
+var test = new B('test');
+
+test.show(); // test
+这儿有一个问题，test的构造函数其实是A函数而不是B函数：
+复制代码 代码如下:
+console.log(test.constructor); // A(name)
+
+
+这是因为B.prototype = A.prototype把B.prototype的构造函数改成了A，所以需要还原B.prototype的构造函数：
+function A(name) {
+    this.name = name;
+}
+
+A.prototype.show = function() {
+    console.log(this.name);
+};
+
+function B(name) {
+    this.name = name;
+}
+
+B.prototype = A.prototype;
+B.prototype.constructor = B;
+
+var test = new B('test');
+
+test.show(); // test
+console.log(test.constructor); // B(name)
+之所以要这么做，是因为prototype的值是一个对象，且它的构造函数也就是它的constructor属性的值就是它所在的函数，即:
+console.log(A.prototype.constructor === A); // true
+-------------------------
+关于JavaScript构造函数，如今出现了很多JavaScript的框架，例如jQuery、Ext等等这些，这些将JavaScript作为一种面向对象的语言进行编程，那么JavaScript到底是怎么样实现面向对象的一些特征的呢，首先，我们来看看JavaScript怎么样来定义一个构造函数。
+
+function A(x) 
+{ 
+    this.x = x; 
+} 
+var obj = new A(5);
+alert(obj.x);
+这段代码十分简单，但是我们重要的是看到了一个十分惊讶的结果，obj被我们赋予了一个属性x，就如同我们在C#中使用某个类的实例的时候一样。那么这个属性是怎么样产生的呢？
+
+关键语句：this.x=x。这句话就是进行一个属性的申明与赋值，这里，我们肯定会问到，this是什么？为什么可以使用this.x来进行申明与赋值属性呢？
+
+其实this代表的就是我们刚刚实例化出来的obj，就相当于我们使用obj去调用了构造函数A里面的属性、方法等等。
+
+那么，我们怎么样去在构造函数中定义一个方法呢？
+
+复制代码
+function A(x,y) 
+{ 
+    this.x = x; 
+    this.y = y; 
+    A.prototype.FunX = function(){alert(x)}; 
+    A.prototype.FunY = function(){alert(y)}; 
+} 
+var obj = new A(5,10); 
+alert(obj.x); 
+alert(obj.y); 
+obj.FunX(); 
+obj.FunY();
+复制代码
+执行的结果十分简单，弹出5、10、5、10的结果，可以看到
+
+A.prototype.FunX = function(){alert(x)}; 
+A.prototype.FunY = function(){alert(y)};
+这两句代码定义了两个方法，分别是FunX和FunY。那么，如果现在出现了一种情况，如果我们需要临时的给A函数添加方法怎么办呢？
+
+复制代码
+function A(x,y) 
+{ 
+    this.x = x; 
+    this.y = y; 
+} 
+A.prototype.FunX = function(){alert("5")}; 
+var obj = new A(5,10); 
+alert(obj.x); 
+alert(obj.y); 
+obj.FunX(); 
+A.prototype.FunY = function(){alert("10")}; 
+obj.FunY();
+复制代码
+运行这段代码，我们可以看到，弹出的结果还是和以前的结果一样，但是我们将两个方法都定义在了外边，而且方法FunY是定义在实例化之后的，那么这里大家看出来了什么没？很显然，在我们使用obj.FunY()语句时候，代码会重新的去构造一下obj，然后再来执行此方法，那么如果代码改成这样？
+
+obj.FunY();
+A.prototype.FunY = function(){alert("10")};
+很显然，FunY()就不会去执行方法了。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

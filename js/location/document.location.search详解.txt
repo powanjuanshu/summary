@@ -1,0 +1,28 @@
+location.search属性:设置或取得当前url的查询字串
+Location对象的search属性用于设置或取得当前url的查询字串(? 符号及后面的部分),语法如下:
+location.search = search
+location.search实例
+例子1
+该例子通过location.search属性得到当前 url 的查询字串.
+假设当前页面的url是:http://www.5idev.com/p-javascript_location.shtml?part=1
+<script type="text/javascript">
+	alert(location.search);//也可以使用document.location.search;
+	alert(location.search.substring(1)); //打印:part=1
+</script>
+运行该例子,输出:
+?part=1
+
+例子2
+该例子通过 location.search属性来设置url的查询字串.
+假设当前页面的url是:http://www.5idev.com/p-javascript_location.shtml?part=1
+<html>
+<script type="text/javascript">
+function setSearch(){
+    location.search = "?part=2";//也可以使用document.location.search="?part=2";
+}
+</script>
+<body>
+<button onclick="setSearch()">设定查询字串</button>
+</body>
+</html>
+运行该例子,点击设定查询字串按钮,触发setSearch()函数,浏览器地址栏的url将变为http://www.5idev.com/p-javascript_location.shtml?part=2,而浏览器也将访问该url.

@@ -1,0 +1,72 @@
+package aa;
+public class Main {
+    // 用于建立十六进制字符的输出的小写字符数组
+    private static final char[] DIGITS_LOWER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+    // 用于建立十六进制字符的输出的大写字符数组
+    private static final char[] DIGITS_UPPER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	public static void main(String[] args) {
+		String str = "0d4d"; // 十六进制表示的字符串
+		byte[] strByte = hexStringToBytes(str); // 将16进制表示的字符串转换成字节数组
+		System.out.println(strByte[0]); // 二进制的十进制
+		System.out.println(strByte[1]); // 二进制的十进制
+		String st = bytesToHexString(strByte); // 将字节数组转换成16进制表示的字符串
+		System.out.println(st);
+	}
+	public static byte[] hexStringToBytes(String hex) {
+        hex = hex.toUpperCase();
+        int len = (hex.length() / 2);
+        byte[] result = new byte[len];
+        char[] achar = hex.toCharArray();
+        for (int i = 0; i < len; i++) {
+            int pos = i * 2;
+            result[i] = (byte) (hexToByte(achar[pos]) << 4 | hexToByte(achar[pos + 1]));
+        }
+        return result;
+    }
+	private static byte hexToByte(char c) {
+        byte b = (byte) "0123456789ABCDEF".indexOf(c);
+        return b;
+    }
+	
+     /**
+     * 将字节数组转换为十六进制字符串
+     * @return 十六进制String
+     */
+    public static String bytesToHexString(byte[] data) {
+        return encodeHexStr(data, true);
+    }
+    
+     /**
+     * 将字节数组转换为十六进制字符串
+     * @param toLowerCase true=转换成小写 ， false=转换成大写
+     * @return 十六进制String
+     */
+    public static String encodeHexStr(byte[] data, boolean toLowerCase) {
+        return encodeHexStr(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
+    }
+    
+     /**
+     * 将字节数组转换为十六进制字符串
+     * @param toDigits 用于控制输出的char[]
+     * @return 十六进制String
+     */
+    protected static String encodeHexStr(byte[] data, char[] toDigits) {
+        return new String(encodeHex(data, toDigits));
+    }
+    
+     /**
+     * 将字节数组转换为十六进制字符数组
+     * @param toDigits 用于控制输出的char[]
+     * @return 十六进制char[]
+     */
+    protected static char[] encodeHex(byte[] data, char[] toDigits) {
+        int l = data.length;
+        char[] out = new char[l << 1];
+        // two characters form the hex value.
+        for (int i = 0, j = 0; i < l; i++) {
+            out[j++] = toDigits[(0xF0 & data[i]) >>> 4];
+            out[j++] = toDigits[0x0F & data[i]];
+        }
+        return out;
+    }
+}

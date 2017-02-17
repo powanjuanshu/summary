@@ -1,0 +1,4 @@
+String line="sdfdf\\=werwer";  虽然是两个\但第一个是转义字符，所以相当于只有一个\
+System.out.println(line);  打出来也可以看出只有一个\
+
+String line="sdfdf\=werwer";    会报错，Invalid escape sequence (valid ones are  \b  \t  \n  \f  \r  \"  \'  \\ )，所以\后面必须只能跟这几个字符，否则报错

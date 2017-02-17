@@ -1,0 +1,9 @@
+package threedes;
+import org.joda.time.DateTime;
+public class Main2 {
+	public static void main(String[] args) {
+		DateTime dt = new DateTime();
+		dt = dt.minusHours(1); // ºı“ª–° ±
+		System.out.println(dt.toString("yyyy-MM-dd HH:mm:ss"));
+	}
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<SCRIPT LANGUAGE="JavaScript">
+ function show(){
+    document.getElementById("a").value=document.getElementById("t").value;//还有一种方法是获得索引再获得其value值
+    var obj=document.getElementById("t");
+    var index=obj.selectedIndex;//选中的索引，下标从0开始，如果select为多选则取第一个的索引
+    var text=obj.options[index].text;//选中的文本，这里也可以写成obj.options(index).text
+    var value=obj.options[index].value;//选中的值，这里也可以写成obj.options(index).value
+    alert(text);
+    alert(value);
+ }
+</SCRIPT>
+<BODY>
+<select id="t">
+	<option value="s0">---请选择---</option>
+	<option value="s1">jack</option>
+	<option value="s2">rose</option>
+</select>
+<input type="text" id="a" />
+<input type="button" value="取值" onclick="show()" />
+</BODY>
+</HTML>

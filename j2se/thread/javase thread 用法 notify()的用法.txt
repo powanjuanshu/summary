@@ -1,0 +1,107 @@
+三线程打印ABC的问题：
+建立三个线程，A线程打印10次A，B线程打印10次B,C线程打印10次C，要求线程同时运行，交替打印10次ABC。这个问题用Object的wait()，notify()就可以很方便的解决。
+-------------------
+package thread;
+public class Test {
+	public static void main(String[] args) throws InterruptedException {
+		Test ts=new Test();
+		ts.test();
+	}
+	public void test() throws InterruptedException{
+		Object lock1=new Object();
+		Object lock2=new Object();
+		Object lock3=new Object();
+		ThreadA threadA=new ThreadA(lock1, lock2);
+		ThreadB threadB=new ThreadB(lock2, lock3);
+		ThreadC threadC=new ThreadC(lock1, lock3);
+		
+		threadA.start();
+		Thread.sleep(1);//为了避免这种与JVM调度有关的不确定性。需要让A,B,C三个线程以确定的顺序启动
+		threadB.start();
+		Thread.sleep(1);//为了避免这种与JVM调度有关的不确定性。需要让A,B,C三个线程以确定的顺序启动
+		threadC.start();
+		Thread.sleep(1);//为了避免这种与JVM调度有关的不确定性。需要让A,B,C三个线程以确定的顺序启动
+	}
+	class ThreadA extends Thread{
+		public Object lock1;
+		public Object lock2;
+		public ThreadA(Object lock1,Object lock2) {
+			this.lock1=lock1;
+			this.lock2=lock2;
+		}
+		@Override
+		public void run() {
+			int count=10;
+			while(count>0){
+				synchronized (lock1) {
+					synchronized (lock2) {
+						System.out.println("A");
+						count--;
+						lock2.notify();
+					}
+					
+					try {
+						if(count>0)
+						lock1.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+	class ThreadB extends Thread{
+		public Object lock2;
+		public Object lock3;
+		public ThreadB(Object lock2,Object lock3) {
+			this.lock2=lock2;
+			this.lock3=lock3;
+		}
+		@Override
+		public void run() {
+			int count=10;
+			while(count>0){
+				synchronized (lock2) {
+					synchronized (lock3) {
+						System.out.println("B");
+						count--;
+						lock3.notify();
+					}
+					try {
+						if(count>0)
+						lock2.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+	class ThreadC extends Thread{
+		public Object lock1;
+		public Object lock3;
+		public ThreadC(Object lock1,Object lock3) {
+			this.lock1=lock1;
+			this.lock3=lock3;
+		}
+		@Override
+		public void run() {
+			int count=10;
+			while(count>0){
+				synchronized (lock3) {
+					synchronized (lock1) {
+						System.out.println("C");
+						count--;
+						lock1.notify();
+					}
+					try {
+						if(count>0)
+						lock3.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+}

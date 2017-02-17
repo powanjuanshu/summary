@@ -1,0 +1,11 @@
+package com;
+public class B {
+	public void a(Object object){
+		System.out.println(object instanceof Number);//true
+		System.out.println(object.toString());//101
+	}
+	public static void main(String[] args) {
+		long a=101;
+		new B().a(a);
+	}
+}

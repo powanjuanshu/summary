@@ -1,0 +1,2 @@
+解决这个异常需要加入：jsp-api.jar在tomcat安装目录的libs中有、 
+同样如果servlet异常需要加入servlet-api.jar tomcat也有的。

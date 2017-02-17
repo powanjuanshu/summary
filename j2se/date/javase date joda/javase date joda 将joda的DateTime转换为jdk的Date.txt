@@ -1,0 +1,14 @@
+package threedes;
+
+import java.util.Date;
+
+import org.joda.time.DateTime;
+
+public class Main2 {
+	public static void main(String[] args) {
+		DateTime dt = new DateTime(2014, 9, 11, 16, 21, 54, 231); // 指定时间2014-09-11 16:21:54231
+		System.out.println(dt.toString("yyyy-MM-dd HH:mm:ss SSS"));
+		Date date = dt.toDate(); // 将joda的DateTime转换为jdk的Date
+		System.out.println(date.toLocaleString());
+	}
+}

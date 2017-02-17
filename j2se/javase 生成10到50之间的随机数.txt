@@ -1,0 +1,2 @@
+Random random=new Random();
+int number=random.nextInt(41)+10;//random.nextInt(41)生成0到40之间的整数

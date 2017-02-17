@@ -1,0 +1,14 @@
+package com;
+public class Tes {
+	public static void main(String[] args) {
+		String s="jack.23.female.武汉市.430200.";
+		String[] st=s.split("\\.");	   //如果是split(".")将报错
+		System.out.println(st.length);	   //打出5
+		System.out.println(st[0]);
+		System.out.println(st[1]);
+		System.out.println(st[2]);
+		System.out.println(st[3]);
+		System.out.println(st[4]);
+	}
+}
+--------------split 的实现直接调用的 matcher 类的 split 的方法。我们知道，“ . ”在正则表达式中有特殊的含义，因此我们使用的时候必须进行转义

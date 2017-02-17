@@ -1,0 +1,14 @@
+package com;
+import java.io.FileReader;
+import java.io.IOException;
+public class Tt {
+	public static void main(String[] args) throws IOException {
+		FileReader fr=new FileReader("d:/abc.txt");
+		int c=fr.read();
+		while(c!=-1){
+			System.out.println((char)c);  //遇到回车会输出四个空字符
+			c=fr.read();	//读取下一个字符
+		}
+		fr.close();
+	}
+}

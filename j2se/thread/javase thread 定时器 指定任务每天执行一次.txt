@@ -1,0 +1,22 @@
+package com;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+public class Ta {
+	public static void main(String[] args) throws ParseException {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date dat=new Date();
+		String s=sdf.format(dat);
+		String st=s.substring(0,10)+" 09:50:10";
+		Date d=sdf.parse(st);
+		Timer t=new Timer();
+		t.schedule(new TimerTask() {
+			public void run() {
+				System.out.println("xixihaha");
+			}
+		},d,24*60*60*1000);
+		System.out.println("Ö÷Ïß³Ì");
+	}	
+}

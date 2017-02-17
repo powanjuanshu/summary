@@ -1,0 +1,8 @@
+package com;
+public class A {
+	public static void main(String[] args){
+		String s="86+1520ÖÐ¹úd¡ñ¡ñ¡øf2125382";
+		s=s.replaceAll("^86","");
+		System.out.println(s);
+	}
+}

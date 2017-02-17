@@ -1,0 +1,32 @@
+1.#unzip jetty-distribution-7.6.13.v20130916
+2.#mv jetty-distribution-7.6.13.v20130916 /home/install_packet
+3.#cd /home/install_packet/jetty-distribution-7.6.13.v20130916
+4.添加jetty的环境变量:
+  vi /etc/profile
+	set java environment
+	export JAVA_HOME=/root/jdk1.6.0_20
+	export JETTY_HOME=/usr/jetty-distribution-7.6.13.v20130916
+	export PATH=$PATH:$JAVA_HOME/bin:$JETTY_HOME/bin
+	export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+	export JAVA_HOME PATH CLASSPATH JETTY_HOME
+  . /etc/profile
+5.#./jetty.sh start (或者#java -jar start.jar)
+6.在浏览器中输入:http://192.168.242.99:880/xxx/index.html
+  如果看到页面就表示启动成功
+
+
+jetty目录结构如下:
+* contexts 热部署目录
+* etc jetty配置文件目录
+* examples jetty示例
+* extras jetty可选扩展
+* lib 包含jetty所需的jar文件
+* LICENSES 就是LICENSES
+* modules 子模块
+* patches 补丁patches
+* pom.xml is jetty的maven2构建文件
+* project-website jetty7网站
+* README.txt readme.txt
+* start.jar is jetty7主程序
+* VERSION.txt
+* webapps应用路径，发布的引用基本都放这里

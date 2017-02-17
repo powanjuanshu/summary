@@ -1,0 +1,4 @@
+cd /bestpayserver/project/paycenter-web/
+jar xf /bestpayserver/project/paycenter-web/*.war   //如果在当前目录也可简写成：jar xf *.war
+
+将/bestpayserver/project/paycenter-web/目录下的所有war包解压到当前目录

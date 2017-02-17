@@ -1,0 +1,32 @@
+package com;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+public class Tt {
+	public static void main(String[] args) {
+		try {
+			FileInputStream in=new FileInputStream("d:/abc.txt");
+			FileOutputStream out=new FileOutputStream("d:/def.txt");
+			BufferedInputStream bufferedin=new BufferedInputStream(in);
+			BufferedOutputStream bufferedout=new BufferedOutputStream(out);
+			byte[] b=new byte[1]; 
+			while(true){
+				int len=bufferedin.read(b);
+				if(len==-1){
+					break;
+				}
+				bufferedout.write(b,0,len);
+			}
+			bufferedout.flush();
+			bufferedin.close();
+			bufferedout.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

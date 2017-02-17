@@ -1,0 +1,70 @@
+java中子类可以通过继承公共方法访问父类的私有变量啊
+就算不是父子关系,一个类也可以通过另一个类的公共方法访问它的私有变量了
+像我们经常用的实体Bean都是这么实现的
+
+java的子类有一个隐含的父类的对象的引用.在调用d.setName()方法时,d自动向上转型成了Animal,所以这里调用的是Animal的setName方法,Animal的方法当然能访问它自己的私有属性啊.
+另一方面Animal类将属性name封装了起来,子类并不能看见这个属性,但Animal类通过一个公有方法使子类可以操作这个属性.不知道我理解的对不对. 
+
+父类的任何私有成员变量其实是被子类继承的,这些继承来的成员对子类虽然不可见,但是可以通过
+父类的方法去操作他们.
+
+每当你new一个子类对象的时候,子类对象都隐式内置了一个父类对象.java创建对象的三个步骤就是,申请内存,调用构造方法,返回对象引用.所以说,为了那个内置的父类对象,也需要进行初始化. 
+
+package com.exte;
+public class Parent {
+    private String username;
+    public Parent() {
+        System.out.println("construct");
+    }
+    public String getUsername() {
+        System.out.println("getUsername");
+        System.out.println("this:" + this.username);
+        return username;
+    }
+    public void setUsername(String username) {
+        System.out.println("setUsername");
+        this.username = username;
+    }
+}
+
+package com.exte;
+public class Child extends Parent {
+	
+}
+
+package com.exte;
+import com.refl.*;
+import java.lang.reflect.Field;
+public class Main {
+    public static void main(String[] args) {
+        Class clazz2 = Parent.class;
+        Field[] array2 = clazz2.getDeclaredFields();
+        System.out.println("a1:"+array2.length);
+        for (Field f:array2) {
+            System.out.println(f.getName());
+        }
+        Class clazz = Child.class;
+        Field[] array = clazz.getFields();
+        System.out.println("a2:"+array.length);
+        for (Field f:array) {
+            System.out.println(f.getName());
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+
+        <meta name="description" content="java学习培训,框架技术,深入浅出struts、hibernate、spring,企业架构、工具技术、服务器技术,数据库技术,oracle、mysql,jquery学习,.net培训,移动编程,android,iOS,php教程,"/>
+        <meta name="keywords" content="私塾在线,java初级,java中级视频,java高级视频,android4就业,maven视频,slf4j视频,hibernate4视频,s2s3h4,"/>
+
+        <title>java中wait/notify机制 - lou的笔记 - 记笔记 - 私塾在线 - 只做精品视频课程服务</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+     
+
+<link href="http://sishuok.com/common/css/css-min.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="/forum/templates/default/styles/style.css?1371708956163" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    var ctx = 'http://sishuok.com';
+    var forumCtx = '/forum';
+	var ssonlineUrl='http://sishuok.com';
+</script>
+<script language="javascript" src="http://sishuok.com/common/js/jquery/jquery-1.3.2.min.js"></script>
+<script language="javascript" src="http://sishuok.com/common/js/application.js?1"></script>
+    </head>
+
+    <body  leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+        <div id="main">
+            <div class="index">
+              <div style="border-top:2px solid #ff7b01;width: 100%;"></div>
+<script type="text/javascript" src="/forum/templates/default/js/pagination.js?1303021619718"></script>
+<table cellspacing="0" cellpadding="0" width="99%" align="center"  border="0">
+	<tr >
+		<td align="left" valign="top" width="80%" style="padding-left: 20px;">
+		    <br/>
+<script type="text/javascript">
+<!--
+
+function quote(username, textId) {
+	var quoteContent = document.getElementById(textId).innerHTML;
+	quoteContent = "<font>&nbsp;</font><div style='border: 1px solid #aabbcc;'><span class='bold' style='font-size: medium; font-family: arial black,avant garde;'>"+username+"写</span><blockquote class='"+username+"引用'>"+quoteContent+"</blockquote></div><font>&nbsp;</font>";
+	var content = tinyMCE.get('content').getContent();
+	tinyMCE.get('content').setContent(content+quoteContent);
+	
+}
+//-->
+</script>
+
+				<!-- TOPICS LISTING -->
+
+
+
+
+<!--script>
+    var ad_id = 0;
+	var blog_ad = new Array();
+
+	blog_ad.push("<a href='http://sishuok.com/presentcourse?fromblog' title='视频课程免费赠送了，还等什么，前往领取吧！！' style='color:red;font-size: 18px;' target='_blank'>视频课程免费赠送了，还等什么，前往领取吧！！</a><br/><br/><a href='http://sishuok.com/board/161?fromblog' title='独家Android4就业经典视频课程，2012年首发！！' style='color:red;font-size: 18px;' target='_blank'>独家Android4就业经典视频课程，2012年首发！！</a><br/><br/><a href='http://javass.cn/javapeixunxinwen/08.html?fromblog' title='2012 最给力的Java就业解决方案——Java私塾首推：远程学习+地面冲刺=高薪就业' style='color:red;font-size: 18px;' target='_blank'>2012 最给力的Java就业解决方案——Java私塾首推：远程学习+地面冲刺=高薪就业</a>");
+	var adLength = blog_ad.length - 1; 
+	function update(pre) {if(pre) {ad_id = ad_id - 1;if(ad_id < 0) {ad_id=0;}} else {ad_id = ad_id + 1;if(ad_id > adLength) {ad_id=adLength;}};document.getElementById("ad_first").innerHTML = blog_ad[ad_id];}
+</script>
+<div style="border: 1px dotted #00A0EF; padding: 10px;margin-bottom: 10px; width: 700px;" class="blue">
+  <span id="ad_first"><script type="text/javascript">document.write(blog_ad[ad_id]);</script></span>
+  
+</div-->
+
+                    <div class="div_content_all">
+                        <span class="postdetails">2012-02-28 20:29:26<br /></span>
+                        <span class="topictitle">
+							<a href="/forum/blogPost/list/3674.html;jsessionid=A4459A7878767A74203533C1CB737989" title="java中wait/notify机制" class="blogtitle">
+							
+								java中wait/notify机制							</a>						</span>
+						<br/>
+					  <br/>
+						<br/>
+
+
+
+						   <div class="div_content_text_all">
+							   <p>通常，多线程之间需要协调工作。例如，浏览器的一个显示图片的线程displayThread想要执行显示图片的任务，必须等待下载线程 downloadThread将该图片下载完毕。如果图片还没有下载完，displayThread可以暂停，当downloadThread完成了任务 后，再通知displayThread“图片准备完毕，可以显示了”，这时，displayThread继续执行。<br /> 以上逻辑简单的说就是：如果条件不满足，则等待。当条件满足时，等待该条件的线程将被唤醒。在Java中，这个机制的实现依赖于wait/notify。等待机制与锁机制是密切关联的。例如：<br /> synchronized(obj) {while(!condition) {obj.wait();}obj.doSomething();}&nbsp;&nbsp;<br /> <br /> 当线程A获得了obj锁后，发现条件condition不满足，无法继续下一处理，于是线程A就wait()。<br /> 在另一线程B中，如果B更改了某些条件，使得线程A的condition条件满足了，就可以唤醒线程A：<br /> synchronized(obj) {condition = true;obj.notify();} <br /> <br /> 需要注意的概念是：<br /> ◆调用obj的wait(), notify()方法前，必须获得obj锁，也就是必须写在synchronized(obj) {...} 代码段内。<br /> ◆调用obj.wait()后，线程A就释放了obj的锁，否则线程B无法获得obj锁，也就无法在synchronized(obj) {...} 代码段内唤醒A。<br /> ◆当obj.wait()方法返回后，线程A需要再次获得obj锁，才能继续执行。<br /> ◆如果A1,A2,A3都在obj.wait()，则B调用obj.notify()只能唤醒A1,A2,A3中的一个（具体哪一个由JVM决定）。<br /> ◆obj.notifyAll()则能全部唤醒A1,A2,A3，但是要继续执行obj.wait()的下一条语句，必须获得obj锁，因此，A1,A2,A3只有一个有机会获得锁继续执行，例如A1，其余的需要等待A1释放obj锁之后才能继续执行。<br /> ◆当B调用obj.notify/notifyAll的时候，B正持有obj锁，因此，A1,A2,A3虽被唤醒，但是仍无法获得obj锁。直到B退出synchronized块，释放obj锁后，A1,A2,A3中的一个才有机会获得锁继续执行。</p>
+						   </div>
+
+
+
+                                 <script type="text/javascript"><!--
+							google_ad_client = "ca-pub-5014907946493114";
+							/* 私塾在线 */
+							google_ad_slot = "5445862139";
+							google_ad_width = 690;
+							google_ad_height = 90;
+							//-->
+							</script>
+							<script type="text/javascript"
+							src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+						</script>
+						<!-- POST LISTING -->
+                    </div>
+                    <!-- END OF TOPICS LISTING -->
+<!-- SyntaxHighlighter 1.5.1 -->
+<script language="javascript" src="/forum/tinymce/editor.js"></script>
+<script language="javascript" src="/forum/tinymce/syntaxHighlighter/Scripts/shCore.js"></script>
+<script type="text/javascript">
+highlightAll();
+</script>
+<a class="bshareDiv" href="http://www.bshare.cn/share"></a><script type="text/javascript" charset="utf-8"src="http://static.bshare.cn/b/buttonLite.js#uuid=841c9e6a-10b0-4e3b-90d2-ddebdbc41244&amp;style=3&amp;fs=4&amp;textcolor=#000&amp;bgcolor=#DDD&amp;text=分享到..."></script>		</td>
+	</tr>
+</table>
+
+
+<div id="user_tip" class="customer_bar customer_bar_container blue" style="display: none;">
+      <div style="width: 40px">
+          <a id="customer_btn_index"><img style="float: left;" src="http://sishuok.com/common/images/none_1_1.gif" width="40px" height="40px"/></a>
+      </div>
+      <div>
+
+
+          <div>
+              <!--<span class="customer_bar_item w_70">&nbsp;<a id="customer_btn_question">ta的问题</a></span>-->
+              <span class="customer_bar_item w_70">&nbsp;<a id="customer_btn_blog">ta的笔记</a></span>
+              <span class="customer_bar_item" style="padding-right: 0;">&nbsp;<a id="customer_btn_bbs">ta的交流</a></span>
+              <span class="customer_bar_item w_70">&nbsp;<a id="customer_btn_index2">ta的资料</a></span>
+          </div>
+          <div>
+
+              <span class="customer_bar_item w_70">&nbsp;<a id="customer_btn_msg">发消息</a></span>
+              <span class="customer_bar_item w_70" style="padding-right: 0;">&nbsp;<a id="customer_btn_ask">问问题</a></span>
+          </div>
+      </div>
+
+
+	</div>
+</div>
+</div>
+<a href="#top"></a>
+
+</body>
+</html>
+<script type="text/javascript" src="http://sishuok.com/common/js/ad.js"></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try{
+var pageTracker = _gat._getTracker("UA-25378051-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+<div style="width: 0px;height: 0px;display: none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F280074a10bea1abe79ad6d6dc08e4736' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>

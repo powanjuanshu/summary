@@ -1,0 +1,12 @@
+package com;
+import java.io.IOException;
+import java.util.Vector;
+public class I {
+	public static void main(String[] args) throws IOException {
+		Vector<String> v1 = new Vector<String>();
+		v1.addElement("张三");
+		v1.addElement("男");
+		v1.addElement("1991-1-1");
+		System.out.println(v1.firstElement());//打出张三
+	}
+}

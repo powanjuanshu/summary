@@ -1,0 +1,53 @@
+document.location的用法实例
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+aaa
+</body>
+<script type="text/javascript">
+alert("当前位置:"+document.URL);//打出:http://localhost:8080/integral_market/static/aaa.html
+alert("当前位置:"+document.location);//打出:http://localhost:8080/integral_market/static/aaa.html
+alert("当前位置的url路径:"+document.location.pathname);//打出:/integral_market/static/aaa.html
+alert("当前位置的url协议:"+document.location.protocol);//打出:http:
+alert("当前位置的url协议:"+document.location.port);//打出:8080
+</script>
+</html>
+------------------------
+<html>
+     <head>
+         <title>document.location </title>
+     </head>
+     <body>
+         <b>document.location使用举例 </b ><p>
+          <script type ="text/javascript">
+             document.write( " 当前位置： " + document.location + " <p> " );
+             document.write( " 当前位置的url路径： " + document.location.pathname + " <p> " );    
+             document.write( " 当前位置的url协议： " + document.location.protocol + " <p> " );
+             document.write( " 当前位置的url端口： " + document.location.port + " <p> " );
+             // 设置新的location 
+             //document.location.href= " http://www.baidu.com " ;
+             window.open('http://www.baidu.com');
+          </script>
+     </body>
+ </html> 
+复制代码
+运行后，打印结果是：
+
+document.location使用举例
+
+当前位置： http://localhost/yacol/js/document.html
+
+当前位置的url路径： /yacol/js/document.html
+
+当前位置的url协议： http:
+
+当前位置的url端口：
+
+　　　　　document.location.href= " http://www.baidu.com " ;//转到百度
+            window.open('http://www.baidu.com');//在新窗口打开百度
+
+ 

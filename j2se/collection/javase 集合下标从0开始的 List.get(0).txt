@@ -1,0 +1,13 @@
+package com;
+import java.util.ArrayList;
+public class A {
+	public static void main(String[] args) {
+		ArrayList<String> s=new ArrayList<String>();
+		s.add("a");
+		s.add("b");
+		s.add("c");
+		System.out.println(s.get(0));
+		System.out.println(s.get(1));
+		System.out.println(s.get(2));
+	}
+}

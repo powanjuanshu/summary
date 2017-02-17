@@ -1,0 +1,13 @@
+Inserts all the elements from a collection into a LinkedList object. 
+----
+import java.util.*;
+public class MyClass{
+    public static void main(String[] args){
+        ArrayList aList = new ArrayList();
+        LinkedList lList = new LinkedList();
+        aList.add("Craig");
+        aList.add("Sally");
+        lList.addAll(aList);
+        System.out.println(lList);
+    }
+}

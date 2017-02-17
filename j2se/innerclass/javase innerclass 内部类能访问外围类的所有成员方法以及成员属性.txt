@@ -1,0 +1,20 @@
+package com;
+public class Inner {
+	private String s="abc";
+	private static void aa(){
+		System.out.println("aa");
+	}
+	private void bb(){
+		System.out.println("bb");
+	}
+	public class Content{
+		public void a(){
+			s="jack"
+			System.out.println(s);
+			Inner.aa();
+			new Inner().bb();
+		}
+	}
+}
+
+

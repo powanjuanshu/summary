@@ -1,0 +1,21 @@
+
+
+
+
+
+package com;
+import java.util.HashMap;
+public class A {
+  public static void main(String[] args) {
+    HashMap<String,Integer> i=new HashMap<String,Integer>();//范型里面不能写int,即原生数据类型
+    i.put("a",1);
+    i.put("a",2);
+    i.put("b",3);
+    System.out.println(i.size()); // 2,第一个被覆盖所以只有2个
+    System.out.println(i.get("a")); // 2,第一个被更新
+    System.out.println(i.get("d")); // 不报错,为null
+    System.out.println(i.containsKey("a")); // true
+    System.out.println(i.containsValue(1)); // false,第一个被覆盖,所以这个会被认为没有
+    System.out.println(i.containsValue(2)); // true
+  }
+}

@@ -1,0 +1,45 @@
+package com;
+public class Inner{
+	public static void main(String[] args){
+		new Inner().a();
+	}
+	public void a(){
+		new InnerClass().b();
+		System.out.println(new InnerClass().st);
+		InnerClass i=new InnerClass();
+		i.st="jiba";
+		System.out.println(i.st);
+	}
+	class InnerClass{
+		public String st="jack";
+		public void b(){
+			System.out.println(st);
+		}
+	}
+}
+--------------------------------
+package com;
+public class Tt {
+	public static void main(String[] args) {
+		String s=Thread.currentThread().getName();
+		System.out.println(s);
+		Thread t1=new Thread(new Tf("线程1"),"名字为jack"); //此处内部类只能用static修饰符修饰才能在main方法中new这个内部类
+	}
+	
+	public static class Tf implements Runnable{
+		String s=null;
+		public Tf(String st){
+			s=st;
+		}
+		@Override
+		public void run() {
+			try {
+				Thread.sleep(1000*10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println(s);
+		}
+		
+	}
+}

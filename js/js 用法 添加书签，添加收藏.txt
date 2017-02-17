@@ -1,0 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="<%=path%>/resources/plugins/ext3/resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="<%=path%>/resources/css/comm.css" />
+<script type="text/javascript" src="<%=path%>/resources/plugins/ext3/ext-base.js"></script>
+<script type="text/javascript" src="<%=path%>/resources/plugins/ext3/ext-all.js"></script>
+<script type="text/javascript" src="<%=path%>/resources/plugins/ext3/plugins/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=path%>/resources/plugins/ext3/plugins/ComboBoxTree.js"></script>
+<script type="text/javascript" src="<%=path%>/resources/plugins/ext3/plugins/MultiComboBox.js"></script>
+<script type="text/javascript" src="<%=path%>/resources/plugins/ext3/plugins/SearchField.js"></script>
+<script type="text/javascript" src="<%=path%>/resources/plugins/ext3/plugins/ComboBoxTreeCheckbox.js"></script>
+<style type="text/css">
+	.nav {
+ 		background-image:url(resources/plugins/ext3/icons/cog.png);
+  	}
+</style>
+<title>Insert title here</title>
+</head>
+<script type="text/javaScript">
+	function addBookmark(title, url){
+		if(window.sidebar){
+			window.sidebar.addPanel(title, url, ""); 
+		}else if(document.all){
+			window.external.AddFavorite(url, title);
+		}else if(window.opera && window.print){
+			return true;
+		}
+	}
+	</script>
+<body>
+<a onclick="addBookmark('中国电信融合支付综合管理系统','<%=basePath%>')" href="javascript:">加入收藏</a>
+</body>
+</html>

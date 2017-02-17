@@ -1,0 +1,111 @@
+将json对象转换成字符串
+-------------
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script type="text/javascript"  src="<%=request.getContextPath()%>/js/JSON-js/json2.js"></script>
+</head>
+<script type="text/javascript">
+function d(){
+	var xxx={myarr:["a","b","c","d"],count:4};
+	alert(xxx);
+	var str=JSON.stringify(xxx);
+	alert(str);
+}
+</script>
+<body>
+<a href="#" onclick="d()">将json对象转换为字符串</a>
+</body>
+</html>
+---------------
+与后台交互的demo：
+index.jsp:
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript"  src="<%=request.getContextPath()%>/js/jquery-1.6.2.js"></script>
+<script type="text/javascript"  src="<%=request.getContextPath()%>/js/JSON-js/json2.js"></script>
+</head>
+<script type="text/javascript">
+function c(){
+	var options={
+		url:'jsonTest01.do',
+		type:'POST',
+		dataType:'json',//指定返回的解析类型，也可以是xml
+		data:{
+			name:'lilei',
+			sex:'1'
+		},
+		success:function(rs){
+			alert(rs);
+			alert(JSON.stringify(rs));
+			alert(rs.userName);
+		},
+		error:function(rs){
+			alert(2);
+		},
+		timeout:3000
+	};
+	$.ajax(options);
+}
+</script>
+<body>
+<a href="#" onclick="c()">json</a>
+</body>
+</html>
+--------
+Test02Action.java:
+package com.neusoft.gazelle.core.action;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.json.annotations.JSON;
+import com.opensymphony.xwork2.ActionSupport;
+//用这个json插件，必须继承json-default这个包，因为这个包里有一个拦截器
+@ParentPackage(value = "json-default")
+public class Test02Action extends ActionSupport{
+	private String userName;
+	private String password;
+	private String fuck="jb";
+	@Action(value="jsonTest01",results={@Result(name="input",type="json")})
+	public String jsonTest01() throws Exception{
+		System.out.println("xxyy");
+		HttpServletRequest request= ServletActionContext.getRequest();
+		HttpServletResponse response= ServletActionContext.getResponse();
+		String name=request.getParameter("name");
+		String sex=request.getParameter("sex");
+		System.out.println(name);
+		System.out.println(sex);
+		userName="jack";
+		password="rose";
+		return "input";
+	}
+	//未指定，所以默认会将这个属性组装成json对象的一部分
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	@JSON(name="jack")//组装这个属性的时候，那个key会为jack
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	@JSON(serialize=false)//组装json对象的时候不把这个属性组装成json对象的一部分，默认会将所有的属性都组装成json对象
+	public String getFuck() {
+		return fuck;
+	}
+	public void setFuck(String fuck) {
+		this.fuck = fuck;
+	}
+}
+

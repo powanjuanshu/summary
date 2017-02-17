@@ -1,0 +1,10 @@
+package com;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+public class I {
+	public static void main(String[] args) {
+		String patern="yyyyMMddhhmmssSSS";
+		SimpleDateFormat sdf=new SimpleDateFormat(patern);		
+		System.out.println(sdf.format(new Date()));
+	}
+}

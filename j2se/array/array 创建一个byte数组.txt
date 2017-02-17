@@ -1,0 +1,6 @@
+package com;
+public class Tt {
+	public static void main(String[] args) {
+		byte[] b=new byte[1]; 
+	}
+}

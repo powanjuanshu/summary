@@ -1,0 +1,22 @@
+package ftp;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import org.apache.commons.net.ftp.FTPClient;
+public class Ftp {
+	public static void main(String[] args) throws Exception {
+		FTPClient client=new FTPClient();
+		File file=new File("F:/ftp/text01.txt");
+		InputStream is=new FileInputStream(file);
+		System.out.println(is);
+		client.connect("10.207.54.39");//client.connect("10.207.54.39",21)默认21可以省略
+		boolean login=client.login("xxx", "xxx");
+		System.out.println(login);
+		client.changeWorkingDirectory("/zhouxixi/");//可以是根目录下的目录（zhouxixi,/zhouxixix,/zhouxixi/都可以），如果找不到目录则会上传到ftp根目录，
+		//如果文件名为中文，则应写成boolean flag=client.storeFile(new String("/zhouxixi/李杰.txt".getBytes("GBK"),"iso-8859-1"), is);
+		boolean flag=client.storeFile(new String("/zhouxixi/李杰.txt".getBytes("GBK"),"iso-8859-1"), is);//只写文件名则默认上传到根目录下，如果前面加目录则上传到跟目录下的指定目录下（/zhouxixi/jack.txt）
+		System.out.println(flag);
+		is.close();
+		client.disconnect();
+	}
+}

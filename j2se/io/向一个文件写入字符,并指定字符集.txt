@@ -1,0 +1,19 @@
+package com;
+import java.io.IOException;
+import java.io.PrintWriter;
+public class Tu {
+	public static void main(String[] args) throws IOException {
+		String name = "张松伟";
+		int age = 22;
+		float score = 32.5f;
+		char sex = '男';
+		PrintWriter pw = new PrintWriter("e:/abc.txt", "UTF-8");
+		pw.printf("姓名：%s;年龄：%d;性别：%c;分数：%5.2f;", name, age, sex, score);
+		pw.println();
+		pw.println("多多指教");
+		pw.write(name.toCharArray());
+		pw.close();
+	}
+}
+------------------------------
+文本文件的字符集，是指打开文件->文件->另存为->编码->UTF-8，可以指定文本文件的字符集为UTF-8，防止乱码

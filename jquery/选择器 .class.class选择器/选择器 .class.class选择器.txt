@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <style type="text/css">
+		
+    </style>
+    </head>
+    <body>
+       	<input class="intro" id="open_pop_win" type="button" value="Show"></input>
+       	<p class="demo">click or double click here.</p>
+		<span class="intro demo">aaa</span>
+    </body>
+    <script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+   	<script type="text/javascript">
+	$(function(){
+		init();
+	})
+	function init(){
+		var eles = $(".intro.demo")//所有class=intro且class=demo的元素,aaa变红
+		eles.css("background-color","red");
+	
+	}
+   	</script> 
+</html>

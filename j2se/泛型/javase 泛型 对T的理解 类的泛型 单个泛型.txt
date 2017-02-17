@@ -1,0 +1,16 @@
+package com.abc;
+import java.util.ArrayList;
+import java.util.List;
+public class Main3 <E> { // 可以贴着写Main2<E>,定义完类型参数后,可以在定义位置之后的类的几乎任意地方(静态块，静态属性，静态方法除外)使用类型参数,就像使用普通的类型一样).注意，父类定义的类型参数不能被子类继承
+	public static void main(String[] args) {
+		Main3<String> m = new Main3<String>();
+		List<String> a = m.add("123");
+		System.out.println(a);
+	}
+	public List<E> add (E t) {
+		System.out.println(t);
+		List<E> e = new ArrayList<E>();
+		e.add(t);
+		return e;
+	}
+}

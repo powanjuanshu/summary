@@ -1,0 +1,9 @@
+package com;
+import java.util.Calendar;
+public class E{
+	public static void main(String[] args){
+		Calendar c=Calendar.getInstance();
+		c.add(Calendar.DATE,1);//在本月日期上加一，比如现在是20月9日
+		System.out.println(c.get(Calendar.DAY_OF_MONTH));//打出为10
+	}
+}

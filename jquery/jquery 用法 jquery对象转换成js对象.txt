@@ -1,0 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<script type="text/javascript" src="jquery.easyui.min.js"></script>
+<script>
+$(function(){
+	var a=$("#a");//jqeury对象
+	var b=a[0];//js对象或称为DOM对象，a.get(0)，或a.get()[0]两种方法也可以得到js对象
+	b.style.background="orange";
+});
+</script>
+<div id="a">aaaaa</div>
+-------------------------
+1. DOM 对象转成 jQuery 对象
+
+对于已经是一个 DOM 对象，只需要用 $() 把DOM对象包装起来，就可以获得一个 jQuery 对象了，$(DOM 对象)     注： var是定义变量
+
+如：　var v = document.getElementById("v");        //DOM对象
+
+           var $v = $(v);        //jQuery 对象  
+
+转换后，就可以任意使用 jQuery 的方法。
+
+2. jQuery 对象转成 DOM 对象
+
+两种转换方式讲一个 jQuery 对象转换成 DOM 对象： [index] 和 .get(index)；
+
+(1) jQuery 对象是一个数据对象，可以通过 [index] 的方法，来得到相应的 DOM 对象。
+
+   如： var $v = $("#v");          //jQuery 对象
+
+            var v = $v[0];               //DOM 对象
+
+            alert(v.checked);                  //检测这个checkbox是否被选中
+
+   (2) jQuery 本身提供，通过.get(index) 方法得到相应的 DOM 对象
+
+     如：var   $v = $("#v");           //jQuery 对象
+
+             var v = $v.get(0);            //DOM对象 ( $v.get()[0] 也可以 )
+
+             alert(v.checked);             //检测这个 checkbox 是否被选中
+
+通过以上方法，可以任意的相互转换 jQuery 对象和 DOM 对象，需要再强调的是： DOM 对象才能使用DOM 中的方法，jQuery 对象是不可以使用ＤＯＭ中的方法。   

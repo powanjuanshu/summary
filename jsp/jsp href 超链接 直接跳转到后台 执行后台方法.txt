@@ -1,0 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<title>模拟列表框</title>
+<a target=_blank href="download-batch-info!newPhoneClean.action?fileName=a.txt">下载</a>
+-------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<p>class DirectExecutor implements Executor {<br />
+  public void execute(Runnable r) {<br />
+  r.run();<br />
+  }<br />
+  }<br />
+  常见的是，任务是在某个不是调用者线程的线程中执行的。以下执行程序将为每个任务生成一个新线程。 <br />
+  class ThreadPerTaskExecutor implements Executor {<br />
+  public void execute(Runnable r) {<br />
+  new Thread(r).start();<br />
+  }<br />
+  许多 Executor 实现都对调度任务的方式和时间强加了某种限制。以下执行程序使任务提交与第二个执行程序保持连续，这说明了一个复合执行程序。<br />
+  class SerialExecutor implements Executor {<br />
+  final Queue&lt;Runnable&gt; tasks = new ArrayDeque&lt;Runnable&gt;();<br />
+  final Executor executor;<br />
+  Runnable active;</p>
+<p> SerialExecutor(Executor executor) {<br />
+  this.executor = executor;<br />
+  }</p>
+<p> public synchronized void execute(final Runnable r) {<br />
+  tasks.offer(new Runnable() {<br />
+  public void run() {<br />
+  try {<br />
+  r.run();<br />
+  } finally {<br />
+  scheduleNext();<br />
+  }<br />
+  }<br />
+  });<br />
+  if (active == null) {<br />
+  scheduleNext();<br />
+  }<br />
+  }</p>
+<p> protected synchronized void scheduleNext() {<br />
+  if ((active = tasks.poll()) != null) {<br />
+  executor.execute(active);<br />
+  }<br />
+  }<br />
+  }此包中提供的 Executor 实现实现了 ExecutorService，这是一个使用更广泛的接口。ThreadPoolExecutor 类提供一个可扩展的线程池实现。Executors 类为这些 Executor 提供了便捷的工厂方法。 </p>
+<p>实现<br />
+  - AbstractExecutorService, ScheduledThreadPoolExecutor, ThreadPoolExecutor </p>
+<p>ThreadPoolExecutor （线程池执行器）是个最常用到的类，以它为例：<br />
+  可修改得属性如下：<br />
+  - 任务队列的类型<br />
+  - 最大线程数<br />
+  - 最小线程数<br />
+  - 预热(预分配)和立即(分配)线程<br />
+  - 保持活跃直到工作线程结束<br />
+  - 以后如果需要可能被一个新的代替<br />
+  - 饱和(Saturation)协议<br />
+  - 阻塞，丢弃，生产者运行，等等</p>
+<p>线程池类为 java.util.concurrent.ThreadPoolExecutor，常用构造方法为：</p>
+<p>ThreadPoolExecutor(int corePoolSize, int maximumPoolSize,<br />
+  long keepAliveTime, TimeUnit unit,<br />
+  BlockingQueue&lt;Runnable&gt; workQueue,<br />
+  RejectedExecutionHandler handler)</p>
+<p>corePoolSize： 线程池维护线程的最少数量<br />
+  maximumPoolSize：线程池维护线程的最大数量<br />
+  keepAliveTime： 线程池维护线程所允许的空闲时间<br />
+  unit： 线程池维护线程所允许的空闲时间的单位<br />
+  workQueue： 线程池所使用的缓冲队列<br />
+  handler： 线程池对拒绝任务的处理策略</p>
+<p>一个任务通过 execute(Runnable)方法被添加到线程池，任务就是一个 Runnable类型的对象，任务的执行方法就是 Runnable类型对象的run()方法。<br />
+  当一个任务通过execute(Runnable)方法欲添加到线程池时：<br />
+  如果此时线程池中的数量小于corePoolSize，即使线程池中的线程都处于空闲状态，也要创建新的线程来处理被添加的任务。<br />
+  如果此时线程池中的数量等于 corePoolSize，但是缓冲队列 workQueue未满，那么任务被放入缓冲队列。<br />
+  如果此时线程池中的数量大于corePoolSize，缓冲队列workQueue满，并且线程池中的数量小于maximumPoolSize，建新的线程来处理被添加的任务。<br />
+  如果此时线程池中的数量大于corePoolSize，缓冲队列workQueue满，并且线程池中的数量等于maximumPoolSize，那么通过 handler所指定的策略来处理此任务。<br />
+  也就是：处理任务的优先级为：<br />
+  核心线程corePoolSize、任务队列workQueue、最大线程maximumPoolSize，如果三者都满了，使用handler处理被拒绝的任务。<br />
+  当线程池中的线程数量大于 corePoolSize时，如果某线程空闲时间超过keepAliveTime，线程将被终止。这样，线程池可以动态的调整池中的线程数。<br />
+  unit可选的参数为java.util.concurrent.TimeUnit中的几个静态属性：<br />
+  NANOSECONDS、MICROSECONDS、MILLISECONDS、SECONDS。<br />
+  workQueue我常用的是：java.util.concurrent.ArrayBlockingQueue<br />
+  handler有四个选择：<br />
+  ThreadPoolExecutor.AbortPolicy()<br />
+  抛出java.util.concurrent.RejectedExecutionException异常<br />
+  ThreadPoolExecutor.CallerRunsPolicy()<br />
+  重试添加当前的任务，他会自动重复调用execute()方法<br />
+  ThreadPoolExecutor.DiscardOldestPolicy()<br />
+  抛弃旧的任务<br />
+  ThreadPoolExecutor.DiscardPolicy()<br />
+  抛弃当前的任务</p>
+<p>二、一般用法举例<br />
+  //------------------------------------------------------------<br />
+  //TestThreadPool.java<br />
+  //package cn.simple.exercise;</p>
+<p>import java.io.Serializable;<br />
+  import java.util.concurrent.ArrayBlockingQueue;<br />
+  import java.util.concurrent.ThreadPoolExecutor;<br />
+  import java.util.concurrent.TimeUnit;</p>
+<p>public class TestThreadPool {</p>
+<p>private static int produceTaskSleepTime = 2;<br />
+  private static int consumeTaskSleepTime = 2000;<br />
+  private static int produceTaskMaxNumber = 10;</p>
+<p>public static void main(String[] args) {</p>
+<p>//构造一个线程池<br />
+  ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 4, 3,<br />
+  TimeUnit.SECONDS, new ArrayBlockingQueue&lt;Runnable&gt;(3),<br />
+  new ThreadPoolExecutor.DiscardOldestPolicy());</p>
+<p>for(int i=1;i&lt;=produceTaskMaxNumber;i++){<br />
+  try {<br />
+  //产生一个任务，并将其加入到线程池<br />
+  String task = &quot;task@ &quot; + i;<br />
+  System.out.println(&quot;put &quot; + task);<br />
+  threadPool.execute(new ThreadPoolTask(task));</p>
+<p>//便于观察，等待一段时间<br />
+  Thread.sleep(produceTaskSleepTime);<br />
+  } catch (Exception e) {<br />
+  e.printStackTrace();<br />
+  }<br />
+  }<br />
+  }</p>
+<p>/**<br />
+  * 线程池执行的任务<br />
+  * @author hdpan<br />
+  */<br />
+  public static class ThreadPoolTask implements Runnable,Serializable{<br />
+  private static final long serialVersionUID = 0;<br />
+  //保存任务所需要的数据<br />
+  private Object threadPoolTaskData;</p>
+<p>ThreadPoolTask(Object tasks){<br />
+  this.threadPoolTaskData = tasks;<br />
+  }<br />
+  public void run(){<br />
+  //处理一个任务，这里的处理方式太简单了，仅仅是一个打印语句<br />
+  System.out.println(&quot;start ..&quot;+threadPoolTaskData);<br />
+  try {<br />
+  ////便于观察，等待一段时间<br />
+  Thread.sleep(consumeTaskSleepTime);<br />
+  } catch (Exception e) {<br />
+  e.printStackTrace();<br />
+  }<br />
+  threadPoolTaskData = null;<br />
+  }<br />
+  public Object getTask(){<br />
+  return this.threadPoolTaskData;<br />
+  }<br />
+  }<br />
+  }<br />
+  //------------------------------------------------------------<br />
+  说明：<br />
+  1、在这段程序中，一个任务就是一个Runnable类型的对象，也就是一个ThreadPoolTask类型的对象。</p>
+<p>2、一般来说任务除了处理方式外，还需要处理的数据，处理的数据通过构造方法传给任务。</p>
+<p>3、在这段程序中，main()方法相当于一个残忍的领导，他派发出许多任务，丢给一个叫 threadPool的任劳任怨的小组来做。</p>
+<p>这个小组里面队员至少有两个，如果他们两个忙不过来，任务就被放到任务列表里面。</p>
+<p>如果积压的任务过多，多到任务列表都装不下(超过3个)的时候，就雇佣新的队员来帮忙。但是基于成本的考虑，不能雇佣太多的队员，至多只能雇佣 4个。</p>
+<p>如果四个队员都在忙时，再有新的任务，这个小组就处理不了了，任务就会被通过一种策略来处理，我们的处理方式是不停的派发，直到接受这个任务为止(更残忍！呵呵)。</p>
+<p>因为队员工作是需要成本的，如果工作很闲，闲到 3SECONDS都没有新的任务了，那么有的队员就会被解雇了，但是，为了小组的正常运转，即使工作再闲，小组的队员也不能少于两个。</p>
+<p>4、通过调整 produceTaskSleepTime和 consumeTaskSleepTime的大小来实现对派发任务和处理任务的速度的控制，改变这两个值就可以观察不同速率下程序的工作情况。</p>
+<p>5、通过调整4中所指的数据，再加上调整任务丢弃策略，换上其他三种策略，就可以看出不同策略下的不同处理方式。</p>
+<p>6、对于其他的使用方法，参看jdk的帮助，很容易理解和使用。</p>
+</body>
+</html>

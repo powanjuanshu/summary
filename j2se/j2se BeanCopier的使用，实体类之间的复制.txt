@@ -1,0 +1,43 @@
+package com.test;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import org.springframework.cglib.beans.BeanCopier;
+@ToString
+@AllArgsConstructor
+public class AModel {
+	@Getter
+	@Setter
+	private String username;
+	@Getter
+	@Setter
+	private String password; // 如果没有getter和setter方法，则此成员变量无法复制过去
+	
+	public static void main(String[] args) {
+		AModel a = new AModel("jack", "123");
+		BModel b = new BModel();
+		BeanCopier beanCopier = BeanCopier.create(AModel.class, BModel.class, false); // 第三个表示是否使用转换器，false表示不使用
+		beanCopier.copy(a, b, null); // 第三个参数为转换器
+		System.out.println(b.toString()); // 两个model的成员变量必须要有getter和setter方法
+	}
+}
+---------------
+package com.test;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@ToString
+public class BModel {
+	@Getter
+	@Setter
+	private String username;
+	@Getter
+	@Setter
+	private String password; // 如果没有getter和setter方法，则此成员变量无法复制过去
+	private String account;
+}

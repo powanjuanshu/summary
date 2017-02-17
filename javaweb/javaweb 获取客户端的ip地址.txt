@@ -1,0 +1,73 @@
+package com.mipo;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class AccountQuery extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		System.out.println("doget");
+		String cilentIp = getClientIpAddr(req);
+		System.out.println(cilentIp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+	
+	/**
+    * 取实际用户的访问地址。
+    *
+    * @param request 当前请求。
+    * @return 客户端IP地址。
+    */
+
+   public String getClientIpAddr(HttpServletRequest request) {
+       String ip = request.getHeader("X-Forwarded-For");
+       System.out.println("a1" +ip);
+       if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+           ip = request.getHeader("Proxy-Client-IP");
+           System.out.println("a2" +ip);
+       }
+       if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+           ip = request.getHeader("WL-Proxy-Client-IP");
+           System.out.println("a3" +ip);
+       }
+       if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+           ip = request.getHeader("HTTP_CLIENT_IP");
+           System.out.println("a4" +ip);
+       }
+       if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+           ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+           System.out.println("a5" +ip);
+       }
+       if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+           ip = request.getRemoteAddr();
+           System.out.println("a6" +ip);
+       }
+       //处理多级代理ip异常
+       return doMultiLevelAgencyIp(ip);
+   }
+   /***
+    * 取首个IP地址(多个ip情况下)
+    * 
+    * @param oldClientIp
+    * @return
+    */
+   private String doMultiLevelAgencyIp(String oldClientIp){
+       String newClientIp = oldClientIp;
+       //如果ip地址大于15位，则为多IP
+       if(oldClientIp.length()>15&&oldClientIp.contains(",")){
+           newClientIp = oldClientIp.split(",")[0].trim();
+       }
+       return newClientIp;
+   }
+	
+}

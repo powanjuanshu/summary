@@ -1,0 +1,276 @@
+//模拟jquery支持$()只支持ID方式 val() html() addClass() removeClass() attr() removeAttr()等
+//使用方法和jquery一模一样
+//支持链式编程
+//模仿jquery
+
+//对象原型
+function Jquery(nodeID) {
+	this.nodeID = nodeID;
+}
+
+//模拟jquery.val()
+Jquery.prototype.val = function(name) {
+	if (typeof (name) == "undefined") {
+		return document.getElementById(this.nodeID).value;
+	} else {
+		document.getElementById(this.nodeID).value = name;
+	}
+	return this;
+}
+
+//模拟jquery.html()
+Jquery.prototype.html = function(innerhtml) {
+	if (typeof (innerhtml) == "undefined") {
+		return document.getElementById(this.nodeID).innerHTML;
+	} else {
+		document.getElementById(this.nodeID).innerHTML = innerhtml;
+	}
+	return this;
+}
+
+//模拟jquery.addClass()
+Jquery.prototype.addClass = function(classname) {
+	if (typeof (classname) != "undefined") {
+		document.getElementById(this.nodeID).className += " " + classname;
+	}
+	return this;
+}
+
+//模拟jquery.removeClass()
+Jquery.prototype.removeClass = function(classname) {
+	var node = document.getElementById(this.nodeID);
+	if (typeof (classname) != "undefined") {
+		node.className = node.className.replace(classname, "");
+	}
+	return this;
+}
+
+//模拟jquery.removeClass()
+Jquery.prototype.removeClass = function(classname) {
+	var node = document.getElementById(this.nodeID);
+	if (typeof (classname) != "undefined") {
+		node.className = node.className.replace(classname, "");
+	}
+	return this;
+}
+
+//模拟jquery.attr()
+Jquery.prototype.attr = function(type, value) {
+	var node = document.getElementById(this.nodeID);
+	if (typeof (value) == "undefined") {
+		if (type == "innerHTML") {
+			return node.innerHTML;
+		} else if (type == "src") {
+			return node.src;
+		} else if (type == "name") {
+			return node.name;
+		} else if (type == "value") {
+			return node.value;
+		} else if (type == "alt") {
+			return node.alt;
+		} else if (type == "title") {
+			return node.title;
+		} else if (type == "class") {
+			return node.className;
+		} else if (type == "id") {
+			return node.id;
+		} else if (type == "href") {
+			return node.href;
+		}
+	} else {
+		if (type == "innerHTML") {
+			node.innerHTML = value;
+		} else if (type == "src") {
+			node.src = value;
+		} else if (type == "name") {
+			node.name = value;
+		} else if (type == "value") {
+			node.value = value;
+		} else if (type == "alt") {
+			node.alt = value;
+		} else if (type == "title") {
+			node.title = value;
+		} else if (type == "class") {
+			node.className = value;
+		} else if (type == "id") {
+			node.id = value;
+		} else if (type == "href") {
+			node.href = value;
+		}
+	}
+	return this;
+}
+
+//模拟jquery.removeAttr()
+Jquery.prototype.removeAttr = function(type) {
+	var node = document.getElementById(this.nodeID);
+	if (typeof (type) != "undefined") {
+		if (type == "innerHTML") {
+			node.innerHTML = "";
+		} else if (type == "src") {
+			node.src = "";
+		} else if (type == "name") {
+			node.name = "";
+		} else if (type == "value") {
+			node.value = "";
+		} else if (type == "alt") {
+			node.alt = "";
+		} else if (type == "title") {
+			node.title = "";
+		} else if (type == "class") {
+			node.className = "";
+		} else if (type == "id") {
+			node.id = "";
+		} else if (type == "href") {
+			node.href = "";
+		}
+	}
+	return this;
+}
+
+//模拟jquery中通过id获取对象的方法
+function $(content) {
+	if (content.charAt(0) == "#") {
+		return new Jquery(content.substr(1));
+	}
+}
+---------------------------------------
+//模拟JQuery
+//1.首先模拟一个jquery对象,在这里起名叫xjs，如下代码：
+var xjs = function(selector) {
+	return document.getElementById(selector);
+}
+alert(xjs("d1").innerHTML);
+
+//但是现在通过xjs返回的是一个dom对象，这跟jquery返回的是一个jquery对象不同。为了让xjs返回本身自己，需要扩展xjs。
+var xjs = function(selector) {
+    return xjs.fn.init(selector);
+}
+xjs.fn = xjs.prototype = {
+	init: function(selector) {
+		if (typeof selector == "string") {
+			this[0] = document.getElementById(selector);
+			return this;
+		}
+	}
+}
+//以上代码不对selector合法性检查，就认为其实一个合法的id。像上面代码扩展xjs对象，通过xjs.fn.init返回其本身，这样我通过xjs("")获取的对象就是一个xjs自己了。
+
+//2.给xjs起个简单的别名如$
+window.$ = window.xjs = xjs;
+//这样就能直接用$("")的形式来使用了。
+
+//3.防止命名冲突
+(function() {
+    var xjs = function(selector) {
+        return xjs.fn.init(selector);
+    }
+    xjs.fn = xjs.prototype = {
+        init: function(selector) {
+            if (typeof selector == "string") {
+                this[0] = document.getElementById(selector);
+                return this;
+            }
+        }
+    }
+    window.$ = window.xjs = xjs;
+})();
+
+//4.实现xjs.html()方法
+//因为通过$或xjs返回的对象已经是自己本身了，所以要使用innerHTML这类的js属性或方法就必须要把xjs对象转换成dom对象。所以可以跟jquery一样来实现自己的方法。
+(function() {
+    xjs.fn = xjs.prototype = {
+        init: function(selector) {
+            if (typeof selector == "string") {
+                this[0] = document.getElementById(selector);
+                return this;
+            }
+        },
+        html: function() {
+            if (arguments.length == 0) {
+                return this[0].innerHTML;
+            } else {
+                this[0].innerHTML = arguments[0];
+            }
+        },
+        version: "8.8.8"
+    }
+//如果不传参数则获取对象的html内容，如果传入参数，则设置对象的html内为传入的值。
+
+//为了使xjs实例对象继承xjs原型初始的里的方法和属性，通过把xjs原型赋给xjs对象
+//xjs.fn.init.prototype = xjs.fn;
+//这样，在使用的时候就能通过下面的形式来获取version属性
+//alert(t.version);
+//到此为止，一个简单模拟的xjs就完成了，完整代码如下
+(function() {
+    var xjs = function(selector) {
+        return xjs.fn.init(selector);
+    }
+    xjs.fn = xjs.prototype = {
+        init: function(selector) {
+            if (typeof selector == "string") {
+                this[0] = document.getElementById(selector);
+                return this;
+            }
+        },
+        html: function() {
+            if (arguments.length == 0) {
+                return this[0].innerHTML;
+            }
+            else {
+                this[0].innerHTML = arguments[0];
+            }
+        },
+        version: "8.8.8"
+    }
+    xjs.fn.init.prototype = xjs.fn;
+    window.$ = window.xjs = xjs;
+})();
+//在页面中引入上面这个Js文件后，就能像下面一样使用了
+//var t = $("d1");
+//t.html("hello");
+//alert(t.html());
+//alert(t.version);
+//上面的d1为一个html元素的id
+
+    
+    
+    
+ 
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

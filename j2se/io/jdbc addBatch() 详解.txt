@@ -1,0 +1,58 @@
+package com;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+public class F {
+	public static void main(String[] args) {
+		BufferedReader br=null;
+		try {
+			ArrayList<String> ar=new ArrayList<String>();
+			FileReader fr=new FileReader("d:/xxx.txt");
+			br=new BufferedReader(fr);
+			String s=br.readLine();	//创建变量s用于存储从文件中读取的第一行数据
+			while(s!=null){			//判断s变量是否接收到数据
+				ar.add(s);
+				if(ar.size()==4){
+					saveData(ar);
+					ar=new ArrayList<String>();
+				}
+				s=br.readLine();
+			}
+			if(ar.size()>0){
+				saveData(ar);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public static void saveData(ArrayList<String> arr) throws Exception{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL","scott","tiger");
+		try {
+			PreparedStatement ps=conn.prepareStatement("insert into cpic_a values(?,?)");;
+			for(String str:arr){
+				String[] array=str.split("\\^");
+				ps.setString(1,array[0]);
+				ps.setString(2,array[1]);
+				ps.addBatch();
+			}
+			ps.executeBatch();
+			conn.commit();
+		} catch (Exception e) {
+			conn.rollback();
+			e.printStackTrace();
+		}finally{
+			conn.close();
+		}
+	}
+}

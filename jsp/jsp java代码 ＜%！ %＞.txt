@@ -1,0 +1,14 @@
+<%!%>是声明标签,因为Jsp页在到tomcat的时候会被编译为java文件,jsp页面里面的所有东西都会包含在一个方法里,
+如果不用声明标签去声明这是个方法就会报错了,因为方法里面不能有方法
+-------------
+<%@ page contentType="image/jpeg"%>
+<%@ page import="java.awt.*,java.awt.image.*,java.util.*,javax.imageio.*"%>
+<%!	Color getRandColor(int fc, int bc) {
+		Random random = new Random();
+		if (fc > 255) fc = 255;
+		if (bc > 255) bc = 255;
+		int r = fc + random.nextInt(bc - fc);
+		int g = fc + random.nextInt(bc - fc);
+		int b = fc + random.nextInt(bc - fc);
+		return new Color(r, g, b);
+}%>

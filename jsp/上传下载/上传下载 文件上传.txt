@@ -1,0 +1,62 @@
+upload.jsp:
+---------------------------------------------------
+<%@ page language="java" contentType="text/html;charset=utf-8"%>
+<html>
+<head>
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+	function a() {
+		$('#a').form('submit',{
+			url:"batch-info-import!upload.action",
+			cache:false,
+			error:function(){
+				alert("文件上传失败！");
+			},
+			success:function(data){
+				
+			}
+		});
+	}
+</script>
+</head>
+<body>
+<form id="a" enctype="multipart/form-data" method="post">
+<input name="b" type="file">
+<input type="button" onclick="a()" value="提交">
+</form>
+</body>
+</html>
+---------------------------------------------------
+package com.cpic.action;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.opensymphony.xwork2.ActionSupport;
+@SuppressWarnings("serial")
+public class BatchInfoImportAction extends ActionSupport{
+	private File b;
+	@Autowired
+	public File getB(){
+		return b;
+	}
+	public void setB(File uploadFile){
+		this.b=uploadFile;
+	}
+	public void upload() throws IOException{
+		FileInputStream input=new FileInputStream(b);
+		FileOutputStream output=new FileOutputStream("E:/Temp/uuu.txt");
+		byte[] b=new byte[1024*115];
+		int len;
+		while((len=input.read(b))!=-1){
+			output.write(b,0,len);
+		}
+		output.flush();
+		output.close();
+		input.close();
+	}
+}
+
+

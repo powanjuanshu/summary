@@ -1,0 +1,55 @@
+[1] 方式一: 
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+  String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+  System.out.println(path); // 打印 http://localhost:8888/paycashier
+%>
+<html>
+<head>
+  <title>商户测试页面</title>
+  <script type="text/javascript">
+    window.onload = function() {
+      document.getElementById("btn").onclick = function () { // 必须写在加载里面,如果在外面则会无法绑定会找不到元素btn报错
+        alert(1);
+      }
+    }
+  </script>
+</head>
+<body>
+  <form id="form" name="form" action="<%=path%>/paywg/WGCGI.do" method="post">
+    数据:<textarea id="data" name="data" style="width: 650px;height: 450px">{"bigOrderNo":"2015011712000000000105","bigReqNo":"2015011712000000000105","bigOrderDate":"20150117","bigOrderAmt":"5000","pgUrl":"http://192.168.242.1/pay/html","bgUrl":"http://192.168.242.1/pay/html","orderFields":[{"mchntCode": "201412311234567","INST_Id":"20140123","tradeCode": "0001","reqSeq": "2015011200000000","orderNo": "2015011200000000","orderDate": "20150112","orderAmt": "5000","productAmt":"250","attachAmt":"150","logisticsAmt":"12","userId":"23","validateFlag":"23","valiDate":34,"oldOrderNo":"35","oldOrderReqNo":"65","bizInfo":{"inAccountNo":"15011600001738"}}],"serviceCode": "201412311234567"}</textarea><br>
+    验签:<input id="sign" name="sign" value="9D4F058ACCF32DC8665324AA1689BA45FB0C45B8E048A7B3F90DB88EA142BD3FA71F92BFB9051CB3BCF1CC2FC38B9D20FE5D23F47A46F8CFAFE4BAB796548708D904A007EF7056E58C922F2D2E8274F4620DE06084906C83BBD8D57906912A299D39D3677EF790E0CDE9267130FA1713D741F9DF0250E8AE835782BBBB0FF4421B0A13E26E80B330C371FDCAFB411F8525AAF51865009D6D3FB22E922E14228E7874252C05606563C93BC9529706228F" style="width: 650px;"><br>
+  </form>
+  <input id="btn" name="btn" type="button" value="提交">
+</body>
+</html>
+
+[2] 方式二:
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+  String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+  System.out.println(path); // 打印 http://localhost:8888/paycashier
+%>
+<html>
+<head>
+  <title>商户测试页面</title>
+  <script type="text/javascript">
+    function submit () {
+      document.getElementById("bestPay").submit(); // 也可以简写成bestPay.submit();
+    }
+  </script>
+</head>
+<body>
+  <form id="bestPay" name="bestPay" action="<%=path%>/paywg/WGCGI.do" method="post">
+    数据:<textarea id="data" name="data" style="width: 650px;height: 450px">{"bigOrderNo":"2015011712000000000105","bigReqNo":"2015011712000000000105","bigOrderDate":"20150117","bigOrderAmt":"5000","pgUrl":"http://192.168.242.1/pay/html","bgUrl":"http://192.168.242.1/pay/html","orderFields":[{"mchntCode": "201412311234567","INST_Id":"20140123","tradeCode": "0001","reqSeq": "2015011200000000","orderNo": "2015011200000000","orderDate": "20150112","orderAmt": "5000","productAmt":"250","attachAmt":"150","logisticsAmt":"12","userId":"23","validateFlag":"23","valiDate":34,"oldOrderNo":"35","oldOrderReqNo":"65","bizInfo":{"inAccountNo":"15011600001738"}}],"serviceCode": "201412311234567"}</textarea><br>
+    验签:<input id="sign" name="sign" value="9D4F058ACCF32DC8665324AA1689BA45FB0C45B8E048A7B3F90DB88EA142BD3FA71F92BFB9051CB3BCF1CC2FC38B9D20FE5D23F47A46F8CFAFE4BAB796548708D904A007EF7056E58C922F2D2E8274F4620DE06084906C83BBD8D57906912A299D39D3677EF790E0CDE9267130FA1713D741F9DF0250E8AE835782BBBB0FF4421B0A13E26E80B330C371FDCAFB411F8525AAF51865009D6D3FB22E922E14228E7874252C05606563C93BC9529706228F" style="width: 650px;"><br>
+  </form>
+  <input id="btn" name="btn" type="button" value="提交" onclick="submit()">
+</body>
+</html>
+
+
+
+
+
+

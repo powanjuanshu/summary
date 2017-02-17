@@ -1,0 +1,42 @@
+--------------通用写法
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<body>
+<table border="1" id="b">
+	<tr>
+		<td>aaa</td>
+	</tr>
+	<tr>
+		<td>bbb</td>
+	</tr>
+</table>
+<script language="javascript" type="text/javascript">
+window.onload=function(){
+	var obj=document.getElementById("b");
+	var arr=obj.childNodes;//得到其实是<thead><tbody><tfoot>中的<tbody>,所以其length是1，在火狐中直接得到的就是tr的数组，所以在火狐中其length是2
+	var tbody=arr[0];
+	var trs=tbody.childNodes;//获取子元素，只获取它的下一级子元素
+	var tr2=trs.item(1);//获得第二个子节点，不准用tr作为变量名，不然会报错
+	alert(tr2.innerText);//打出bbb
+};
+</script>
+</body>
+------------------特殊写法
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<body>
+<table border="1">
+	<tr id="a">
+		<td>aaa</td>
+		<td>bbb</td>
+		<td>ccc</td>
+	</tr>
+</table>
+<script language="javascript" type="text/javascript">
+window.onload=function(){
+	var text=document.getElementById("a").firstChild.innerText;
+	alert(text);
+}
+</script>
+</body>

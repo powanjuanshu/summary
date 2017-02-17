@@ -1,0 +1,36 @@
+package com.bestpay.paycenter.entry.http.cache;
+
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
+import java.awt.print.Book;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * User: hum_jacky
+ * Date: 14-5-12
+ * Time: 上午11:05
+ */
+public class Main2 {
+    public static void main(String[] args) throws Exception {
+        LoadingCache<String, Book> cache= CacheBuilder.newBuilder().expireAfterAccess(8, TimeUnit.SECONDS).maximumSize(10).build(new CacheLoader<String, Book>() {
+            @Override
+            public Book load(String key) throws Exception {
+                System.out.println("key："+key);
+                // 这里可以通过key来查找数据库，获取信息，装载到cache缓冲（类似于HashMap）中
+                Book b=new Book();
+                return b;
+            }
+        });
+        Book b=cache.apply("q"); // 类似于HashMap的put方法，不过调用一次apply就会调用上面的load方法，并将数据存在缓存中，如果下次再取这个key那么不会再去执行上面的load方法，这个方法已淘汰，建议使用get()和getUnchecked()
+        System.out.println(b);
+        Book b2=cache.apply("q");
+        System.out.println(b2);
+
+        Thread.sleep(10000);
+        Book b3=cache.apply("q");
+        System.out.println(b3);
+    }
+}

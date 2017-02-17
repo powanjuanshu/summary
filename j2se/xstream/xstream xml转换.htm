@@ -1,0 +1,67 @@
+<style type="text/css">
+<!--
+.STYLE1 {color: #FF0000}
+-->
+</style>
+<p>转换方法：
+  
+</p>
+<p>1 
+  把实体类转换成
+  XML
+  文件 </p>
+<p class="STYLE1">//实例化一个
+  XStream</p>
+<p>XStream stream = 
+  new
+  XStream(); </p>
+<p class="STYLE1">//
+  命名一个别名，
+  
+  指定别名和类名  </p>
+<p>stream.alias(
+  "User"
+  , User.
+  class
+  );  </p>
+<p class="STYLE1">//toXML(
+  Object arg0
+  )
+  方法把相应的类转化  </p>
+<p>String xml = stream.toXML(
+  new
+  User(1,
+  "tom"
+  ,
+  "123"
+  ));  </p>
+<p>2 
+  把
+  XML
+  文件转化成实体类
+  
+  在
+  客户端
+  内的
+  实体类
+  一定要有一个
+  无参
+  的构造方法  </p>
+<p class="STYLE1">//
+  实例化一个
+  XStream  </p>
+<p>XStream xStream = 
+  new
+  XStream();</p>
+<p class="STYLE1"> //
+  客户端的别名一定要和服务器端一样，且必须有</p>
+<p> xStream.alias(
+  "User"
+  , User.
+  class
+  );  </p>
+<p class="STYLE1">//fromXML()
+  方法把存放着
+  XML
+  信息的字符串转化成实体类  </p>
+<p>User u = (User) xStream.fromXML(str); </p>

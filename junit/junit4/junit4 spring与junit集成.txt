@@ -1,0 +1,14 @@
+package com.spdbccc.account.entry.bizfront.test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+// @RunWith表示junit会跑SpringJUnit4ClassRunner这个类而取代自带的Runner类,从而使spring支持junit
+@RunWith(SpringJUnit4ClassRunner.class) // junit与spring集成,作为spring3.0，SpringJunit4classRunner需要Junit4.5以上,只有有这句下面的注解才起作用
+@ContextConfiguration(locations = {"classpath:spring/spring-common.xml"}) // 如果没有上面的@RunWith(SpringJUnit4ClassRunner.class),那么这句话不起作用
+public class BastTest {
+    @Test
+    public void test () {
+        System.out.println("SpringJUnit4ClassRunner....");
+    }
+}

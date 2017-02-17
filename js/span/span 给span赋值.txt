@@ -1,0 +1,18 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title></title>
+    <script>
+        window.onload = function() { // document.onload不行
+            var hint1 = document.getElementById("hint1");
+            var hint2 = document.getElementById("hint2");
+            hint1.innerHTML = "<font color='#7fffd4'>发送成功</font>";
+            hint2.innerText = "<font color='#7fffd4'>发送成功</font>";
+        };
+    </script>
+</head>
+<body>
+    <span id="hint1"></span>
+    <span id="hint2"></span>
+</body>
+</html>

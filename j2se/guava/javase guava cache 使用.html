@@ -1,0 +1,474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>guava cache 使用 -  - ITeye技术网站</title>
+    <meta name="description" content="  	google guava框架实现的缓存可以很方便的对需要的缓存对象设置生命周期,及缓存对象的弱引用 强应用 软引用等      	public static void main(String[] args) throws InterruptedException {  		Cache&lt;String, Book&gt; cahce=CacheBuilder.newBuilder().exp ..." />
+    <meta name="keywords" content=" guava cache 使用" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1393920955" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">897457487</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://897457487.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://897457487.iteye.com" class="p-author" target="_blank">897457487</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1328130">guava cache 使用</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/198292">guava</a></li><li><a href="/category/149773">java</a></li> </ul>
+        <div class='news_tag'>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <div>
+<span style="white-space: pre;">	</span>google guava框架实现的缓存可以很方便的对需要的缓存对象设置生命周期,及缓存对象的弱引用 强应用 软引用等</div>
+<div><br></div>
+<div>
+<pre name="code" class="java">	public static void main(String[] args) throws InterruptedException {
+		Cache&lt;String, Book&gt; cahce=CacheBuilder.newBuilder().expireAfterAccess(8, TimeUnit.SECONDS).maximumSize(10).build(new CacheLoader&lt;String, Book&gt;() {
+			@Override
+			public Book load(String key) throws Exception {
+				Book b=new Book();
+				return b;
+			}
+		});
+		Book b=cahce.apply("q");
+		System.out.println(b);
+		Book b2=cahce.apply("q");
+		System.out.println(b2);
+		Thread.currentThread();
+		Thread.sleep(TimeUnit.SECONDS.toMillis(10));
+		Book b3=cahce.apply("q");
+		System.out.println(b3);
+	}</pre>
+</div>
+<div><br></div>
+<div>输出:</div>
+<div>
+<div>org.zero.resource.Book@be2358</div>
+<div>org.zero.resource.Book@be2358</div>
+<div>org.zero.resource.Book@32fb4f</div>
+</div>
+<div><br></div>
+<div>可见对象book对象的缓存在8秒后被移除.</div>
+<div><br></div>
+<div><br></div>
+<div>下面来看<span style="white-space: pre; background-color: #fafafa;">maximumSize(1) 的作用,是指最大缓存对象的数目</span>
+</div>
+<div><br></div>
+<div>
+<pre name="code" class="java">	public static void main(String[] args) throws InterruptedException {
+		CacheBuilder&lt;String, Book&gt; cahceBuilder=CacheBuilder.newBuilder().expireAfterAccess(8, TimeUnit.SECONDS).maximumSize(1).removalListener(new RemovalListener&lt;String, Book&gt;() {
+			@Override
+			public void onRemoval(RemovalNotification&lt;String, Book&gt; rn) {
+				System.out.println(rn.getKey()+"被移除");
+			}
+		
+		});
+		Cache&lt;String, Book&gt; cahce=cahceBuilder.build(new CacheLoader&lt;String, Book&gt;() {
+			@Override
+			public Book load(String key) throws Exception {
+				Book b=new Book();
+				return b;
+			}
+		});
+		Book book_1_0=cahce.apply("book_1");//缓存book_1对象
+		System.out.println(book_1_0);
+		Book book_2_0=cahce.apply("book_2");//因为maximumSize设为1,故不能同时缓存两个或两个以上的对象,所以必须先移除之前的缓存对象book_1 再缓存book_2对象
+		System.out.println(book_2_0);
+		Book book_1_1=cahce.apply("book_1");//获取book_1 对象,如果存在则返回,否则创建新的对象,并将之缓存(book_2会被移除).
+		System.out.println(book_1_1);
+
+<span style="white-space: pre;">		</span>
+		Book book_2_1=cahce.apply("book_2");
+		System.out.println(book_2_1);//<span style="white-space: normal; background-color: #ffffff;">org.zero.resource.Book@133f1d7</span>
+		Book book_2_1_=cahce.apply("book_2");
+		System.out.println(book_2_1_);//<span style="white-space: normal; background-color: #ffffff;">org.zero.resource.Book@133f1d7</span>
+		
+	}</pre>
+ </div>
+<div>输出:</div>
+<div><br></div>
+<div>
+<div>org.zero.resource.Book@1ed2ae8</div>
+<div>book_1被移除</div>
+<div>org.zero.resource.Book@32fb4f</div>
+<div>book_2被移除</div>
+<div>org.zero.resource.Book@1113708</div>
+<div>book_1被移除</div>
+<div>org.zero.resource.Book@133f1d7</div>
+<div>org.zero.resource.Book@133f1d7</div>
+</div>
+<div><br></div>
+<div>当<span style="white-space: pre; background-color: #fafafa;">maximumSize</span>设置为2或更大值时,输出:</div>
+<div>
+<div>org.zero.resource.Book@1ed2ae8</div>
+<div>org.zero.resource.Book@19c26f5</div>
+<div>org.zero.resource.Book@1ed2ae8</div>
+<div>org.zero.resource.Book@19c26f5</div>
+<div>org.zero.resource.Book@19c26f5</div>
+<div>可见,并未移除任何对象</div>
+</div>
+<div><br></div>
+<div><br></div>
+<div><br></div>
+  </div>
+
+  
+
+
+  <IFRAME SRC="/iframe_ggbd/794" SCROLLING=no WIDTH=468 HEIGHT=60 FRAMEBORDER=0></IFRAME>
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/1330079" class="next" title="google chrome 浏览器无法调试flash的解决方法">google chrome 浏览器无法调试flash的解决 ...</a>
+      |
+      <a href="/blog/1292204" class="pre" title="powerdesigner 导出oracle sql 去除引号">powerdesigner 导出oracle sql 去除引号</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2011-12-27 21:07</li>
+      <li>浏览 3340</li>
+      <li><a href="#comments">评论(1)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/opensource">开源软件</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/1328130" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc2324605">
+  <div class="comment_title">
+    1 楼
+    <a href='http://1025250620.iteye.com' target='_blank' title='1025250620'>1025250620</a>
+    2013-09-05&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">如何设置它的淘汰策略~</div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1328130;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'guava cache 使用');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'guava cache 使用');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://897457487.iteye.com'><img alt="897457487的博客" class="logo" src="http://www.iteye.com/images/user-logo.gif?1324994303" title="897457487的博客: " /></a></div>
+  <div id="blog_owner_name">897457487</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 21764 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1324994303" title="男" /></li>
+              <li>来自: HEYUAN</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://53873039oycg.iteye.com' target='_blank'><img alt="53873039oycg的博客" class="logo" src="http://www.iteye.com/upload/logo/user/790305/4747c5fa-e726-3516-93c9-cea95d7cdc86-thumb.jpg?1357621963" title="53873039oycg的博客: " /></a></div>
+                <div class="left"><a href='http://53873039oycg.iteye.com' target='_blank' title='53873039oycg'>53873039oycg</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://focus2008.iteye.com' target='_blank'><img alt="focus2008的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="focus2008的博客: " /></a></div>
+                <div class="left"><a href='http://focus2008.iteye.com' target='_blank' title='focus2008'>focus2008</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://dylinshi126.iteye.com' target='_blank'><img alt="dylinshi126的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="dylinshi126的博客: " /></a></div>
+                <div class="left"><a href='http://dylinshi126.iteye.com' target='_blank' title='dylinshi126'>dylinshi126</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://258xiaolei-sina-com.iteye.com' target='_blank'><img alt="即可偶的博客" class="logo" src="http://www.iteye.com/upload/logo/user/246135/764a9e22-12f3-3c30-b9a9-0a919384a40a-thumb.jpg?1273313983" title="即可偶的博客: " /></a></div>
+                <div class="left"><a href='http://258xiaolei-sina-com.iteye.com' target='_blank' title='即可偶'>即可偶</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (42)</a></li>
+                
+                  <li><a href="/category/149773">java (17)</a></li>
+                
+                  <li><a href="/category/149774">javascript (2)</a></li>
+                
+                  <li><a href="/category/149775">jquery (4)</a></li>
+                
+                  <li><a href="/category/149782">linux (0)</a></li>
+                
+                  <li><a href="/category/149783">php (1)</a></li>
+                
+                  <li><a href="/category/149784">.net (0)</a></li>
+                
+                  <li><a href="/category/176977">flex (3)</a></li>
+                
+                  <li><a href="/category/188138">spring (1)</a></li>
+                
+                  <li><a href="/category/192813">jee (2)</a></li>
+                
+                  <li><a href="/category/193683">数据库 (2)</a></li>
+                
+                  <li><a href="/category/198292">guava (2)</a></li>
+                
+                  <li><a href="/category/208424">NoSql (1)</a></li>
+                
+                  <li><a href="/category/208425">在线书籍 (1)</a></li>
+                
+                  <li><a href="/category/229228">lucene (2)</a></li>
+                
+                  <li><a href="/category/235671">swt (3)</a></li>
+                
+                  <li><a href="/category/252408">eclipse (4)</a></li>
+                
+                  <li><a href="/category/253445">swing (2)</a></li>
+                
+                  <li><a href="/category/257043">cat (0)</a></li>
+                
+                  <li><a href="/category/296283">MongoDB (1)</a></li>
+                
+                  <li><a href="/category/297479">netty (1)</a></li>
+                
+                  <li><a href="/category/297480">nio (1)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (0)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2014-05">2014-05</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2013-11">2013-11</a> (4)</li>
+                
+                  <li><a href="/blog/monthblog/2013-09">2013-09</a> (1)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://malson.iteye.com' target='_blank' title='malson'>malson</a>： 
+                  果然可以了！多谢<br />
+                  <a href="/blog/1245149#bc2331985">关于springmvc 无法使用aop拦截的解决方案 </a>
+                </li>
+                
+                <li>
+                  <a href='http://1025250620.iteye.com' target='_blank' title='1025250620'>1025250620</a>： 
+                  如何设置它的淘汰策略~<br />
+                  <a href="/blog/1328130#bc2324605">guava cache 使用</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2014 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+    
+  </body>
+</html>

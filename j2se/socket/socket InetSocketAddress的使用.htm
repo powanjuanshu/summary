@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>InetSocketAddress的使用 -  - ITeye技术网站</title>
+    <meta name="description" content=" 使用NIO的InetSocketAddress建立网络通信非常方便，包括服务端和客户端：  服务端创建一个ServerSocketChannel，等待客户端发起链接请求，下面的例子比较简单，开启服务端等待客户端请求，接收到客户端的连接后，给客户端发送数据。     Server段代码：  import java.io.IOException;  import java.io.OutputStrea ..." />
+    <meta name="keywords" content="nio, InetSocketAddress, 网络通信 InetSocketAddress的使用" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1379405503" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1326191326" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1358214518" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1348819953" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1325907333" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1324994303" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1358214518" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1324994303" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">zhangbaoming815</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://zhangbaoming815.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://zhangbaoming815.iteye.com" class="p-author" target="_blank">zhangbaoming815</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/1921229">InetSocketAddress的使用</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/234321">java</a></li> </ul>
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/nio">nio</a><a href="http://www.iteye.com/blogs/tag/InetSocketAddress">InetSocketAddress</a><a href="http://www.iteye.com/blogs/tag/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1">网络通信</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <div class="iteye-blog-content-contain" style="font-size: 14px;">
+<p>使用NIO的InetSocketAddress建立网络通信非常方便，包括服务端和客户端：</p>
+<p>服务端创建一个ServerSocketChannel，等待客户端发起链接请求，下面的例子比较简单，开启服务端等待客户端请求，接收到客户端的连接后，给客户端发送数据。</p>
+<p> </p>
+<p>Server段代码：</p>
+<pre class="java" name="code">import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+
+public class Server2
+{
+    public static void main(String[] args) throws IOException
+    {
+        InetSocketAddress socketAddress = new InetSocketAddress("localhost", 5555);
+        
+        ServerSocketChannel server = ServerSocketChannel.open();
+        
+        server.socket().bind(socketAddress);
+        
+        SocketChannel channel = null;
+        
+        while((channel = server.accept()) != null)
+        {
+            OutputStream out = channel.socket().getOutputStream();
+            
+            while(true)
+            {
+                out.write("hello world !!".getBytes());
+                
+                out.flush();
+            }
+        }
+    }
+}</pre>
+<p> </p>
+<p>client段代码：</p>
+<pre class="java" name="code">import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
+
+public class Client2
+{
+    public static void main(String[] args) throws IOException, InterruptedException
+    {
+        InetSocketAddress socketAddress = new InetSocketAddress("localhost", 5555);
+        SocketChannel channel = SocketChannel.open(socketAddress);
+        channel.configureBlocking(false);
+        
+        ByteBuffer buffer = ByteBuffer.allocate(20);
+        
+        while(true)
+        {
+            int n = channel.read(buffer);
+            
+            System.out.println(n);
+            
+            System.out.println("receive data : " + new String(buffer.array(), 0, n));
+            
+            Thread.sleep(1000);
+            
+            buffer.flip();
+        }
+    }
+}</pre>
+<p> </p>
+</div>
+  </div>
+
+  
+
+
+  <IFRAME SRC="/iframe_ggbd/794" SCROLLING=no WIDTH=468 HEIGHT=60 FRAMEBORDER=0></IFRAME>
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/1921665" class="next" title="hadoop源码解析copyFromLocal">hadoop源码解析copyFromLocal</a>
+      |
+      <a href="/blog/1917168" class="pre" title="scala的map类型">scala的map类型</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2013-08-07 09:36</li>
+      <li>浏览 48</li>
+      <li><a href="#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/1921229" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1921229;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'InetSocketAddress的使用');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'InetSocketAddress的使用');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://zhangbaoming815.iteye.com'><img alt="zhangbaoming815的博客" class="logo" src="http://www.iteye.com/upload/logo/user/703908/904a8a0e-4ac5-34e9-909c-8566cf31c89e.jpg?1341496792" title="zhangbaoming815的博客: " /></a></div>
+  <div id="blog_owner_name">zhangbaoming815</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 14192 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1324994303" title="男" /></li>
+              <li>来自: 北京</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://justt0.iteye.com' target='_blank'><img alt="JustT0的博客" class="logo" src="http://www.iteye.com/upload/logo/user/894775/6014d951-f27d-329b-a244-508003cebd70-thumb.png?1379597451" title="JustT0的博客: Just The Beginning" /></a></div>
+                <div class="left"><a href='http://justt0.iteye.com' target='_blank' title='JustT0'>JustT0</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://dylinshi126.iteye.com' target='_blank'><img alt="dylinshi126的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="dylinshi126的博客: " /></a></div>
+                <div class="left"><a href='http://dylinshi126.iteye.com' target='_blank' title='dylinshi126'>dylinshi126</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://itfuwen.iteye.com' target='_blank'><img alt="itfuwen的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1324994303" title="itfuwen的博客: " /></a></div>
+                <div class="left"><a href='http://itfuwen.iteye.com' target='_blank' title='itfuwen'>itfuwen</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://lxm1247983646.iteye.com' target='_blank'><img alt="lxm1247983646的博客" class="logo" src="http://www.iteye.com/upload/logo/user/568900/51f2c785-681c-3452-9cff-9a37ce32c2ee-thumb.jpg?1318406794" title="lxm1247983646的博客: " /></a></div>
+                <div class="left"><a href='http://lxm1247983646.iteye.com' target='_blank' title='lxm1247983646'>lxm1247983646</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (55)</a></li>
+                
+                  <li><a href="/category/230132">alogrithms (1)</a></li>
+                
+                  <li><a href="/category/231485">db4o (5)</a></li>
+                
+                  <li><a href="/category/231590">File (7)</a></li>
+                
+                  <li><a href="/category/231829">DB (1)</a></li>
+                
+                  <li><a href="/category/232851">hadoop (14)</a></li>
+                
+                  <li><a href="/category/233404">JavaCard (1)</a></li>
+                
+                  <li><a href="/category/234321">java (9)</a></li>
+                
+                  <li><a href="/category/239375">android (1)</a></li>
+                
+                  <li><a href="/category/239679">J2EE (1)</a></li>
+                
+                  <li><a href="/category/241758">html5 (3)</a></li>
+                
+                  <li><a href="/category/242545">script (2)</a></li>
+                
+                  <li><a href="/category/246329">ibatis (2)</a></li>
+                
+                  <li><a href="/category/247969">php (5)</a></li>
+                
+                  <li><a href="/category/287339">scala (3)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (2)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2013-08">2013-08</a> (3)</li>
+                
+                  <li><a href="/blog/monthblog/2013-07">2013-07</a> (3)</li>
+                
+                  <li><a href="/blog/monthblog/2013-04">2013-04</a> (2)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2012 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js" type="text/javascript"></script>
+
+    
+    
+  </body>
+</html>

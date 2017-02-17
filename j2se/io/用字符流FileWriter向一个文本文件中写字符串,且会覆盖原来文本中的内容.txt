@@ -1,0 +1,15 @@
+package com;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+public class Tt {
+	public static void main(String[] args) throws IOException {
+		FileWriter fw=new FileWriter("d:/abc.txt");
+		fw.write("this is my ");
+		fw.write("stu");
+		fw.write("ent");
+		fw.write(".");
+		fw.write(" 这是我的文件");	//没有换行，且会覆盖原来里面的数据
+		fw.close();
+	}
+}

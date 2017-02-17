@@ -1,0 +1,48 @@
+ javascript 判断变量是否为null
+个人方法：
+if(String(test) == "null")
+有错，请大家指出，谢谢。
+
+ 
+以下是网上的一些资料：
+以下是不正确的用法：
+var exp = null;
+if (exp == null){
+    alert("is null");
+}
+exp为undefined 时，也会得到与null相同的结果，虽然null和undefined不一样。
+
+var exp = null;
+if (!exp){
+    alert("is null");
+}
+
+如果 exp 为 undefined 或者数字零，也会得到与 null 相同的结果，虽然 null 和二者不一样。
+
+var exp = null;
+if (typeof(exp) == "null")
+{
+    alert("is null");
+}
+
+为了向下兼容，exp 为 null 时，typeof 总返回 object。
+
+var exp = null;
+if (isNull(exp))
+{
+    alert("is null");
+}
+
+JavaScript 中没有 isNull 这个函数。
+
+以下是正确的用法：
+
+var exp = null;
+if (!exp && typeof(exp)!="undefined" && exp!=0)
+{
+    alert("is null");
+}　
+
+尽管如此，我们在DOM应用中，一般只需要用 (!exp) 来判断就可以了，因为 DOM 应用中，可能返回 null，可能返回 undefined，如果具体判断 null 还是 undefined 会使程序过于复杂。
+
+------------------------------------------------------------------------

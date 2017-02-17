@@ -1,0 +1,57 @@
+﻿JAVA 的checked异常和unchecked异常 .
+分类： Java 2012-08-01 09:32 111人阅读 评论(0) 收藏 举报 
+什么是unchecked异常? 即RuntimeException（运行时异常）
+不需要try...catch...或throws 机制去处理的异常
+
+•列举最常用的五种RuntimeException: 这是JAVA认证考试中最常见的题目,事实上,runtime exception中最常见的,经常碰到的,也就5,6种,如下:
+ArithmeticException 
+	int a=0;
+	int b= 3/a; 
+ClassCastException： 
+	Object x = new Integer(0);
+	System.out.println((String)x); 
+IndexOutOfBoundsException
+    ArrayIndexOutOfBoundsException,
+    StringIndexOutOfBoundsException  
+	int [] numbers = { 1, 2, 3 };
+	int sum = numbers[3]; 
+IllegalArgumentException
+    NumberFormatException 
+	int a = Interger.parseInt("test"); 
+NullPointerExceptionextends   
+
+•除了RuntimeException，其他继承自java.lang.Exception得异常统称为Checked Exception,他们有多少种呢?
+下面是JDK API中列出的异常类:
+除了RuntimeException以外的,都是checked Exception
+java.lang.Object
+  java.lang.Throwable
+      java.lang.Exception
+所有已实现的接口：
+Serializable
+直接已知子类：
+AclNotFoundException, ActivationException, AlreadyBoundException, ApplicationException, AWTException, BackingStoreException, BadAttributeValueExpException, BadBinaryOpValueExpException, BadLocationException, BadStringOperationException, BrokenBarrierException, CertificateException, ClassNotFoundException, CloneNotSupportedException, DataFormatException, DatatypeConfigurationException, DestroyFailedException, ExecutionException, ExpandVetoException, FontFormatException, GeneralSecurityException, GSSException, IllegalAccessException, IllegalClassFormatException, InstantiationException, InterruptedException, IntrospectionException, InvalidApplicationException, InvalidMidiDataException, InvalidPreferencesFormatException, InvalidTargetObjectTypeException, InvocationTargetException, IOException, JAXBException, JMException, KeySelectorException, LastOwnerException, LineUnavailableException, MarshalException, MidiUnavailableException, MimeTypeParseException, MimeTypeParseException, NamingException, NoninvertibleTransformException, NoSuchFieldException, NoSuchMethodException, NotBoundException, NotOwnerException, ParseException, ParserConfigurationException, PrinterException, PrintException, PrivilegedActionException, PropertyVetoException, RefreshFailedException, RemarshalException, RuntimeException, SAXException, ScriptException, ServerNotActiveException, SOAPException, SQLException, TimeoutException, TooManyListenersException, TransformerException, TransformException, UnmodifiableClassException, UnsupportedAudioFileException, UnsupportedCallbackException, UnsupportedFlavorException, UnsupportedLookAndFeelException, URIReferenceException, URISyntaxException, UserException, XAException, XMLParseException, XMLSignatureException, XMLStreamException, XPathException 
+
+
+
+这篇文章来自甲骨文官网，发觉这些官网确实是学习的好地方，“穿第一手鞋子”果然感觉不错。最近发觉这英语啊，确实是重要。
+
+我从中主要是复习了一遍一些概念，比如checked exception，以前按照其字面意思，很容易和runtime exception搞混，以为两者是相同的东西（checked，已经经过检查的，被检查的，已经被检查过的，已经被检查过的异常，这是过去分词的常见意思，表示被动或者已经完成，那我很容易就错误地理解为“已经被检查过后的异常，也就是编译通得过，只是在运行的时候可能会抛出异常”，于是就这样理解错了）。其实checked的意思是“必须被检查的，被谁检查这就不理了，可能是被程序员或者是编译器检查，自然就是需要在运行之前做好异常处理，所谓的编译时异常（记得国内是有这种提法）”。第二个的确是有unchecked exception的说法，看人家官方的文件都是这么说的，而且后面还注释，unchecked exception就是runtime exception。第三个英文还告诫了程序员不要贪方便避开进行异常处理，处理编译时异常是有好处的，也解释了为什么运行时异常不需要人为处理。
+
+ 
+-------------------------------------来自官网 ---------------------------------------------------------------------------------------------------------------------
+
+Unchecked Exceptions — The Controversy
+
+Because the Java programming language does not require methods to catch or to specify unchecked exceptions (RuntimeException, Error, and their subclasses), programmers may be tempted to write code that throws only unchecked exceptions or to make all their exception subclasses inherit from RuntimeException. Both of these shortcuts allow programmers to write code without bothering with compiler errors and without bothering to specify or to catch any exceptions. Although this may seem convenient to the programmer, it sidesteps the intent of the catch or specifyrequirement and can cause problems for others using your classes.
+
+Why did the designers decide to force a method to specify all uncaught checked exceptions that can be thrown within its scope? Any Exception that can be thrown by a method is part of the method's public programming interface. Those who call a method must know about the exceptions that a method can throw so that they can decide what to do about them. These exceptions are as much a part of that method's programming interface as its parameters and return value.
+
+The next question might be: "If it's so good to document a method's API, including the exceptions it can throw, why not specify runtime exceptions too?" Runtime exceptions represent problems that are the result of a programming problem, and as such, the API client code cannot reasonably be expected to recover from them or to handle them in any way. Such problems include arithmetic exceptions, such as dividing by zero; pointer exceptions, such as trying to access an object through a null reference; and indexing exceptions, such as attempting to access an array element through an index that is too large or too small.
+
+Runtime exceptions can occur anywhere in a program, and in a typical one they can be very numerous. Having to add runtime exceptions in every method declaration would reduce a program's clarity. Thus, the compiler does not require that you catch or specify runtime exceptions (although you can).
+
+One case where it is common practice to throw a RuntimeException is when the user calls a method incorrectly. For example, a method can check if one of its arguments is incorrectly null. If an argument is null, the method might throw aNullPointerException, which is an unchecked exception.
+
+Generally speaking, do not throw a RuntimeException or create a subclass of RuntimeException simply because you don't want to be bothered with specifying the exceptions your methods can throw.
+
+Here's the bottom line guideline: If a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover from the exception, make it an unchecked exception.

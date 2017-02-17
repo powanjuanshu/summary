@@ -1,0 +1,17 @@
+package com;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+public class Maa {
+	public static void main(String[] args) {
+		Map<Integer, String> m=new HashMap<Integer, String>();
+		m.put(3, "jb");
+		m.put(1, "jack");
+		m.put(2, "rose");
+		Set<Entry<Integer, String>> t=m.entrySet();
+		for(Entry<Integer, String> e:t){
+			System.out.println(e.getValue());
+		}
+	}
+}

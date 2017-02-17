@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+ 		<script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+ 		<style type="text/css">
+ 			.cls01{
+				font-style:italic;
+			}
+			.cls02{
+				background:red;
+			}
+ 		</style>
+ 		
+		<script type="text/javascript">
+			$(function(){
+				init();
+			})
+			function init(){
+				$("#title").on("click", del_class);
+				$("#btn").on("click", show_class);
+			}
+			function del_class(){
+				$("#title").removeClass("cls02");//原来是红色背景斜体字,点击后无背景斜体字
+			}
+			function show_class(){
+				alert($("#title").attr("class"));//点击title前打印:cls01 cls02,点击title后打印:cls01
+			}
+		</script>
+
+	</head>
+
+	<body>
+		<p class="cls01 cls02" id="title">积分商城</p>
+		<button id="btn">按钮</button>
+	</body>
+</html>
+----------------------------------------------------
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+ 		<script type="text/javascript" src="theme1/script/jquery-1.10.2.min.js"></script>
+ 		<style type="text/css">
+ 			.cls01{
+				font-style:italic;
+			}
+			.cls02{
+				background:red;
+			}
+ 		</style>
+		<script type="text/javascript">
+			$(function(){
+				init();
+			})
+			function init(){
+				$("#title").on("click", del_class);
+				$("#btn").on("click", show_class);
+			}
+			function del_class(){
+				$("#title").removeClass();//不带参数是删除所有class样式类,原来是红色背景斜体字,点击后所有效果消失无背景色无斜体
+			}
+			function show_class(){
+				alert($("#title").attr("class"));//点击title前打印:cls01 cls02,点击title后打印空白
+			}
+		</script>
+
+	</head>
+
+	<body>
+		<p class="cls01 cls02" id="title">积分商城</p>
+		<button id="btn">按钮</button>
+	</body>
+</html>

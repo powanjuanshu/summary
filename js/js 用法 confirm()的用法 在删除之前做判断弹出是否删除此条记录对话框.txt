@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<script>
+function a(){
+	var v=confirm("是否要删除此条记录?");
+	alert(v);
+	if(v){
+		alert("删除成功");//后面可以写业务逻辑代码
+	}else{
+		return;//什么都不做返回
+	}
+}
+</script>
+<input type="button" value="删除" onclick="a()"></input>
+

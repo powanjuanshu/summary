@@ -1,0 +1,15 @@
+package com;
+import java.io.File;
+public class Tes {
+	public static void main(String[] args) {
+		File file=new File("d:/ccdz-c");
+		String[] names=file.list();
+		for(String s:names){
+			System.out.println(s);
+		}
+		File[] files=file.listFiles();
+		for(File f:files){
+			System.out.println(f.getName());
+		}
+	}
+}

@@ -1,0 +1,20 @@
+package com.bestpay.paycenter.entry.http.converter;
+
+import com.google.common.collect.ImmutableMap;
+import java.util.Map;
+
+/**
+ * User: hum_jacky
+ * Date: 14-5-13
+ * Time: 下午1:46
+ */
+public class Main{
+    public static void main(String[]args) throws Exception {
+        Map map = ImmutableMap.<String, String>builder()
+        .put("aaa", "aaa1")
+        .put("bbb", "aaa2")
+        .put("ccc", "aaa3")
+        .build();
+        map.put("ddd","aaa4"); // 一个不变的Map，如果试图改变其中的内容，它会抛出异常UnsupportedOperationException
+    }
+}

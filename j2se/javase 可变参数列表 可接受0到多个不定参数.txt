@@ -1,0 +1,18 @@
+package com;
+
+public class Main {
+	public static void main(String[] args) {
+		 byte[] a1 = {0x01,0x02,0x03};
+		 byte[] a2 = {0x03,0x02,0x01};
+		 byte[] a3 = {0x03,0x02,0x01};
+		 say(a1,a2,a3); // 0个到多个不定参数
+	}
+	public static void say(byte[] ... mess){ // 这里mess可以当成数组来处理
+		System.out.println(mess.length);
+		System.out.println(mess[0][0]);
+		for (byte[] b : mess) {
+			System.out.println(b[2]);
+		}
+	}
+	
+}

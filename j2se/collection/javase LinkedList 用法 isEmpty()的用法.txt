@@ -1,0 +1,11 @@
+package com;
+
+import java.util.LinkedList;
+
+public class A{
+	public static void main(String[] args){
+		LinkedList<String> l=new LinkedList<String>();
+		l.add("aa");
+		System.out.println(l.isEmpty());//返回假，如果没有上面的add则返回真
+	}
+}

@@ -1,0 +1,1961 @@
+From: =?gb2312?B?0tHTySBXaW5kb3dzIEludGVybmV0IEV4cGxvcmVyIDEwILGjtOY=?=
+Subject: =?gb2312?B?alF1ZXJ5IENTUyCy2df3IC0gY3NzKCkgt723qA==?=
+Date: Thu, 27 Oct 2016 14:12:52 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_00AE_01D2305C.349D6360"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.1.7601.17609
+
+这是 MIME 格式的多方邮件。
+
+------=_NextPart_000_00AE_01D2305C.349D6360
+Content-Type: text/html;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.w3school.com.cn/jquery/css_css.asp
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE html PUBLIC "" ""><HTML lang=3D"zh-cn"><HEAD><META =
+content=3D"IE=3D10.000"=20
+http-equiv=3D"X-UA-Compatible">
+=20
+<META charset=3D"gbk">=20
+<META name=3D"robots" content=3D"all">=20
+<META name=3D"author" content=3D"w3school.com.cn"> <LINK =
+href=3D"http://www.w3school.com.cn/c5.css"=20
+rel=3D"stylesheet" type=3D"text/css"> <TITLE>jQuery CSS =B2=D9=D7=F7 - =
+css() =B7=BD=B7=A8</TITLE>=20
+<META name=3D"GENERATOR" content=3D"MSHTML 10.00.9200.17457"></HEAD>=20
+<BODY class=3D"browserscripting">
+<DIV id=3D"wrapper">
+<DIV id=3D"header"><A title=3D"w3school =D4=DA=CF=DF=BD=CC=B3=CC" =
+style=3D"float: left;" =
+href=3D"http://www.w3school.com.cn/index.html">w3school=20
+=D4=DA=CF=DF=BD=CC=B3=CC</A>
+<DIV id=3D"ad_head">
+<SCRIPT type=3D"text/javascript"><!--=0A=
+google_ad_client =3D "pub-3381531532877742";=0A=
+/* 728x90, =B4=B4=BD=A8=D3=DA 08-12-1 */=0A=
+google_ad_slot =3D "7423315034";=0A=
+google_ad_width =3D 728;=0A=
+google_ad_height =3D 90;=0A=
+//-->=0A=
+</SCRIPT>
+=20
+<SCRIPT src=3D"http://pagead2.googlesyndication.com/pagead/show_ads.js" =
+type=3D"text/javascript"></SCRIPT>
+ </DIV></DIV>
+<DIV id=3D"navfirst">
+<UL id=3D"menu">
+  <LI id=3D"h"><A title=3D"HTML =CF=B5=C1=D0=BD=CC=B3=CC" =
+href=3D"http://www.w3school.com.cn/h.asp">HTML=20
+  =CF=B5=C1=D0=BD=CC=B3=CC</A></LI>
+  <LI id=3D"b"><A title=3D"=E4=AF=C0=C0=C6=F7=BD=C5=B1=BE=BD=CC=B3=CC"=20
+  =
+href=3D"http://www.w3school.com.cn/b.asp">=E4=AF=C0=C0=C6=F7=BD=C5=B1=BE<=
+/A></LI>
+  <LI id=3D"s"><A title=3D"=B7=FE=CE=F1=C6=F7=BD=C5=B1=BE=BD=CC=B3=CC"=20
+  =
+href=3D"http://www.w3school.com.cn/s.asp">=B7=FE=CE=F1=C6=F7=BD=C5=B1=BE<=
+/A></LI>
+  <LI id=3D"d"><A title=3D"ASP.NET =BD=CC=B3=CC"=20
+  href=3D"http://www.w3school.com.cn/d.asp">ASP.NET =
+=BD=CC=B3=CC</A></LI>
+  <LI id=3D"x"><A title=3D"XML =CF=B5=C1=D0=BD=CC=B3=CC" =
+href=3D"http://www.w3school.com.cn/x.asp">XML=20
+  =CF=B5=C1=D0=BD=CC=B3=CC</A></LI>
+  <LI id=3D"ws"><A title=3D"Web Services =CF=B5=C1=D0=BD=CC=B3=CC" =
+href=3D"http://www.w3school.com.cn/ws.asp">Web=20
+  Services =CF=B5=C1=D0=BD=CC=B3=CC</A></LI>
+  <LI id=3D"w"><A title=3D"=BD=A8=D5=BE=CA=D6=B2=E1"=20
+  =
+href=3D"http://www.w3school.com.cn/w.asp">=BD=A8=D5=BE=CA=D6=B2=E1</A></L=
+I></UL></DIV>
+<DIV id=3D"navsecond">
+<DIV id=3D"course">
+<H2>jQuery =BD=CC=B3=CC</H2>
+<UL>
+  <LI><A title=3D"jQuery =BD=CC=B3=CC"=20
+  href=3D"http://www.w3school.com.cn/jquery/index.asp">jQuery =
+=BD=CC=B3=CC</A></LI>
+  <LI><A title=3D"jQuery =BC=F2=BD=E9" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_intro.asp">jQuery=20
+  =BC=F2=BD=E9</A></LI>
+  <LI><A title=3D"jQuery =B0=B2=D7=B0" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_install.asp">jQuery=20
+  =B0=B2=D7=B0</A></LI>
+  <LI><A title=3D"jQuery =D3=EF=B7=A8" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_syntax.asp">jQuery=20
+  =D3=EF=B7=A8</A></LI>
+  <LI><A title=3D"jQuery =D1=A1=D4=F1=C6=F7" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_selectors.asp">jQuery=20
+  =D1=A1=D4=F1=C6=F7</A></LI>
+  <LI><A title=3D"jQuery =CA=C2=BC=FE" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_events.asp">jQuery=20
+  =CA=C2=BC=FE</A></LI></UL>
+<H2>jQuery =D0=A7=B9=FB</H2>
+<UL>
+  <LI><A title=3D"jQuery jQuery =D0=A7=B9=FB - =
+=D2=FE=B2=D8=BA=CD=CF=D4=CA=BE" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_hide_show.asp">jQuery=20
+  =D2=FE=B2=D8/=CF=D4=CA=BE</A></LI>
+  <LI><A title=3D"jQuery jQuery =D0=A7=B9=FB - =B5=AD=C8=EB=B5=AD=B3=F6" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_fade.asp">jQuery=20
+  =B5=AD=C8=EB=B5=AD=B3=F6</A></LI>
+  <LI><A title=3D"jQuery =D0=A7=B9=FB - =BB=AC=B6=AF" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_slide.asp">jQuery=20
+  =BB=AC=B6=AF</A></LI>
+  <LI><A title=3D"jQuery =D0=A7=B9=FB - =B6=AF=BB=AD" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_animate.asp">jQuery=20
+  =B6=AF=BB=AD</A></LI>
+  <LI><A title=3D"jQuery =CD=A3=D6=B9=B6=AF=BB=AD" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_stop.asp">jQuery=20
+  stop()</A></LI>
+  <LI><A title=3D"jQuery =BB=D8=B5=F7=BA=AF=CA=FD" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_callback.asp">jQuery=20
+  Callback</A></LI>
+  <LI><A title=3D"jQuery - Chaining" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_chaining.asp">jQuery=20
+  Chaining</A></LI></UL>
+<H2>jQuery HTML</H2>
+<UL>
+  <LI><A title=3D"jQuery - =BB=F1=C8=A1=C4=DA=C8=DD=BA=CD=CA=F4=D0=D4" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_dom_get.asp">jQuery=20
+  =BB=F1=C8=A1</A></LI>
+  <LI><A title=3D"jQuery - =C9=E8=D6=C3=C4=DA=C8=DD=BA=CD=CA=F4=D0=D4" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_dom_set.asp">jQuery=20
+  =C9=E8=D6=C3</A></LI>
+  <LI><A title=3D"jQuery - =CC=ED=BC=D3=D4=AA=CB=D8" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_dom_add.asp">jQuery=20
+  =CC=ED=BC=D3</A></LI>
+  <LI><A title=3D"jQuery - =C9=BE=B3=FD=D4=AA=CB=D8" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_dom_remove.asp">jQuery=20
+  =C9=BE=B3=FD</A></LI>
+  <LI><A title=3D"jQuery - =BB=F1=C8=A1=BA=CD=C9=E8=D6=C3 CSS =C0=E0" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_css_classes.asp">jQuery =
+
+  CSS =C0=E0</A></LI>
+  <LI><A title=3D"jQuery - css() =B7=BD=B7=A8" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_css.asp">jQuery=20
+  css()</A></LI>
+  <LI><A title=3D"jQuery - =B3=DF=B4=E7" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_dimensions.asp">jQuery=20
+  =B3=DF=B4=E7</A></LI></UL>
+<H2>jQuery =B1=E9=C0=FA</H2>
+<UL>
+  <LI><A title=3D"jQuery =B1=E9=C0=FA" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_traversing.asp">jQuery=20
+  =B1=E9=C0=FA</A></LI>
+  <LI><A title=3D"jQuery =B1=E9=C0=FA - =D7=E6=CF=C8" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_traversing_ancestors.asp=
+">jQuery=20
+  =D7=E6=CF=C8</A></LI>
+  <LI><A title=3D"jQuery =B1=E9=C0=FA - =BA=F3=B4=FA" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_traversing_descendants.a=
+sp">jQuery=20
+  =BA=F3=B4=FA</A></LI>
+  <LI><A title=3D"jQuery =B1=E9=C0=FA - =CD=AC=B0=FB" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_traversing_siblings.asp"=
+>jQuery=20
+  =CD=AC=B0=FB</A></LI>
+  <LI><A title=3D"jQuery =B1=E9=C0=FA - =B9=FD=C2=CB" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_traversing_filtering.asp=
+">jQuery=20
+  =B9=FD=C2=CB</A></LI></UL>
+<H2>jQuery AJAX</H2>
+<UL>
+  <LI><A title=3D"jQuery - AJAX =BC=F2=BD=E9" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ajax_intro.asp">jQuery=20
+  AJAX =BC=F2=BD=E9</A></LI>
+  <LI><A title=3D"jQuery - AJAX load() =B7=BD=B7=A8" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ajax_load.asp">jQuery=20
+  =BC=D3=D4=D8</A></LI>
+  <LI><A title=3D"jQuery - AJAX get() =BA=CD post() =B7=BD=B7=A8" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ajax_get_post.asp">jQuer=
+y=20
+  Get/Post</A></LI></UL>
+<H2>jQuery =D4=D3=CF=EE</H2>
+<UL>
+  <LI><A title=3D"jQuery - noConflict() =B7=BD=B7=A8" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_noconflict.asp">jQuery=20
+  noConflict()</A></LI></UL>
+<H2>jQuery =CA=B5=C0=FD</H2>
+<UL>
+  <LI><A title=3D"jQuery =CA=B5=C0=FD" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_examples.asp">jQuery=20
+  =CA=B5=C0=FD</A></LI>
+  <LI><A title=3D"jQuery =B2=E2=D1=E9" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_quiz.asp">jQuery=20
+  =B2=E2=D1=E9</A></LI></UL>
+<H2>jQuery =B2=CE=BF=BC=CA=D6=B2=E1</H2>
+<UL>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_reference.asp">jQuery=20
+  =B2=CE=BF=BC=CA=D6=B2=E1</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - =D1=A1=D4=F1=C6=F7" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_selectors.asp">jQuer=
+y=20
+  =D1=A1=D4=F1=C6=F7</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - =CA=C2=BC=FE" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_events.asp">jQuery=20
+  =CA=C2=BC=FE</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - =D0=A7=B9=FB" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_effects.asp">jQuery =
+
+  =D0=A7=B9=FB</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - =
+=CE=C4=B5=B5=B2=D9=D7=F7" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_manipulation.asp">jQ=
+uery=20
+  =CE=C4=B5=B5=B2=D9=D7=F7</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - =
+=CA=F4=D0=D4=B2=D9=D7=F7" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_attributes.asp">jQue=
+ry=20
+  =CA=F4=D0=D4=B2=D9=D7=F7</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - CSS =B2=D9=D7=F7" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_css.asp">jQuery=20
+  CSS =B2=D9=D7=F7</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - Ajax" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_ajax.asp">jQuery=20
+  Ajax</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - =B1=E9=C0=FA" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_traversing.asp">jQue=
+ry=20
+  =B1=E9=C0=FA</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - =CA=FD=BE=DD" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_data.asp">jQuery=20
+  =CA=FD=BE=DD</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - DOM =
+=D4=AA=CB=D8=B7=BD=B7=A8" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_dom_element_methods.=
+asp">jQuery=20
+  DOM =D4=AA=CB=D8</A></LI>
+  <LI><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - =BA=CB=D0=C4" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_core.asp">jQuery=20
+  =BA=CB=D0=C4</A></LI>
+  <LI><A title=3D"jQuery =CA=F4=D0=D4" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_prop.asp">jQuery=20
+  =CA=F4=D0=D4</A></LI></UL></DIV>
+<DIV id=3D"selected">
+<H2>=BD=A8=D5=BE=CA=D6=B2=E1</H2>
+<UL>
+  <LI><A title=3D"=CD=F8=D5=BE=B9=B9=BD=A8"=20
+  =
+href=3D"http://www.w3school.com.cn/site/index.asp">=CD=F8=D5=BE=B9=B9=BD=A8=
+</A></LI>
+  <LI><A title=3D"=CD=F2=CE=AC=CD=F8=C1=AA=C3=CB (W3C)"=20
+  =
+href=3D"http://www.w3school.com.cn/w3c/index.asp">=CD=F2=CE=AC=CD=F8=C1=AA=
+=C3=CB (W3C)</A></LI>
+  <LI><A title=3D"=E4=AF=C0=C0=C6=F7=D0=C5=CF=A2"=20
+  =
+href=3D"http://www.w3school.com.cn/browsers/index.asp">=E4=AF=C0=C0=C6=F7=
+=D0=C5=CF=A2</A></LI>
+  <LI><A title=3D"=CD=F8=D5=BE=C6=B7=D6=CA"=20
+  =
+href=3D"http://www.w3school.com.cn/quality/index.asp">=CD=F8=D5=BE=C6=B7=D6=
+=CA</A></LI>
+  <LI><A title=3D"=D3=EF=D2=E5=CD=F8"=20
+  =
+href=3D"http://www.w3school.com.cn/semweb/index.asp">=D3=EF=D2=E5=CD=F8</=
+A></LI>
+  <LI><A title=3D"=D6=B0=D2=B5=B9=E6=BB=AE"=20
+  =
+href=3D"http://www.w3school.com.cn/careers/index.asp">=D6=B0=D2=B5=B9=E6=BB=
+=AE</A></LI>
+  <LI><A title=3D"=CD=F8=D5=BE=D6=F7=BB=FA"=20
+  =
+href=3D"http://www.w3school.com.cn/hosting/index.asp">=CD=F8=D5=BE=D6=F7=BB=
+=FA</A></LI></UL>
+<H2><A title=3D"=B9=D8=D3=DA W3School" id=3D"link_about" =
+href=3D"http://www.w3school.com.cn/about/index.asp">=B9=D8=D3=DA=20
+W3School</A></H2>
+<H2><A title=3D"=B0=EF=D6=FA W3School" id=3D"link_help" =
+href=3D"http://www.w3school.com.cn/about/about_helping.asp">=B0=EF=D6=FA =
+
+W3School</A></H2></DIV></DIV>
+<DIV id=3D"maincontent">
+<H1>jQuery CSS =B2=D9=D7=F7 - css() =B7=BD=B7=A8</H1>
+<DIV class=3D"backtoreference">
+<P><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - CSS =B2=D9=D7=F7" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_css.asp">jQuery=20
+CSS =B2=D9=D7=F7=B2=CE=BF=BC=CA=D6=B2=E1</A></P></DIV>
+<DIV>
+<H2>=CA=B5=C0=FD</H2>
+<P>=C9=E8=D6=C3 &lt;p&gt; =D4=AA=CB=D8=B5=C4=D1=D5=C9=AB=A3=BA</P>
+<PRE>$(".btn1").click(function(){=0A=
+  <CODE>$("p").css("color","red");</CODE>=0A=
+});=0A=
+</PRE>
+<P class=3D"tiy"><A =
+href=3D"http://www.w3school.com.cn/tiy/t.asp?f=3Djquery_css_name_value"=20
+target=3D"_blank">=C7=D7=D7=D4=CA=D4=D2=BB=CA=D4</A></P></DIV>
+<DIV>
+<H2>=B6=A8=D2=E5=BA=CD=D3=C3=B7=A8</H2>
+<P>css() =
+=B7=BD=B7=A8=B7=B5=BB=D8=BB=F2=C9=E8=D6=C3=C6=A5=C5=E4=B5=C4=D4=AA=CB=D8=B5=
+=C4=D2=BB=B8=F6=BB=F2=B6=E0=B8=F6=D1=F9=CA=BD=CA=F4=D0=D4=A1=A3</P></DIV>=
+
+<DIV>
+<H2>=B7=B5=BB=D8 CSS =CA=F4=D0=D4=D6=B5</H2>
+<P>=B7=B5=BB=D8=B5=DA=D2=BB=B8=F6=C6=A5=C5=E4=D4=AA=CB=D8=B5=C4 CSS =
+=CA=F4=D0=D4=D6=B5=A1=A3</P>
+<P =
+class=3D"note"><SPAN>=D7=A2=CA=CD=A3=BA</SPAN>=B5=B1=D3=C3=D3=DA=B7=B5=BB=
+=D8=D2=BB=B8=F6=D6=B5=CA=B1=A3=AC=B2=BB=D6=A7=B3=D6=BC=F2=D0=B4=B5=C4 =
+CSS =CA=F4=D0=D4=A3=A8=B1=C8=C8=E7 "background" =BA=CD=20
+"border"=A3=A9=A1=A3</P>
+<PRE>$(<I>selector</I>).css(<I>name</I>)</PRE>
+<TABLE class=3D"dataintable">
+  <TBODY>
+  <TR>
+    <TH style=3D"width: 25%;">=B2=CE=CA=FD</TH>
+    <TH>=C3=E8=CA=F6</TH></TR>
+  <TR>
+    <TD><I>name</I></TD>
+    <TD>=B1=D8=D0=E8=A1=A3=B9=E6=B6=A8 CSS =
+=CA=F4=D0=D4=B5=C4=C3=FB=B3=C6=A1=A3=B8=C3=B2=CE=CA=FD=BF=C9=B0=FC=BA=AC=C8=
+=CE=BA=CE CSS =CA=F4=D0=D4=A1=A3=B1=C8=C8=E7 =
+"color"=A1=A3</TD></TR></TBODY></TABLE>
+<H3>=CA=B5=C0=FD</H3>
+<P>=C8=A1=B5=C3=B5=DA=D2=BB=B8=F6=B6=CE=C2=E4=B5=C4 color =
+=D1=F9=CA=BD=CA=F4=D0=D4=B5=C4=D6=B5=A3=BA</P>
+<PRE>$("p").<CODE>css("color")</CODE>;</PRE>
+<P class=3D"tiy"><A =
+href=3D"http://www.w3school.com.cn/tiy/t.asp?f=3Djquery_css_name"=20
+target=3D"_blank">=C7=D7=D7=D4=CA=D4=D2=BB=CA=D4</A></P></DIV>
+<DIV>
+<H2>=C9=E8=D6=C3 CSS =CA=F4=D0=D4</H2>
+<P>=C9=E8=D6=C3=CB=F9=D3=D0=C6=A5=C5=E4=D4=AA=CB=D8=B5=C4=D6=B8=B6=A8 =
+CSS =CA=F4=D0=D4=A1=A3</P>
+<PRE>$(<I>selector</I>).css(<I>name</I>,<I>value</I>)</PRE>
+<TABLE class=3D"dataintable">
+  <TBODY>
+  <TR>
+    <TH style=3D"width: 25%;">=B2=CE=CA=FD</TH>
+    <TH>=C3=E8=CA=F6</TH></TR>
+  <TR>
+    <TD><I>name</I></TD>
+    <TD>=B1=D8=D0=E8=A1=A3=B9=E6=B6=A8 CSS =
+=CA=F4=D0=D4=B5=C4=C3=FB=B3=C6=A1=A3=B8=C3=B2=CE=CA=FD=BF=C9=B0=FC=BA=AC=C8=
+=CE=BA=CE CSS =CA=F4=D0=D4=A3=AC=B1=C8=C8=E7 "color"=A1=A3</TD></TR>
+  <TR>
+    <TD><I>value</I></TD>
+    <TD>
+      <P>=BF=C9=D1=A1=A1=A3=B9=E6=B6=A8 CSS =
+=CA=F4=D0=D4=B5=C4=D6=B5=A1=A3=B8=C3=B2=CE=CA=FD=BF=C9=B0=FC=BA=AC=C8=CE=BA=
+=CE CSS =CA=F4=D0=D4=D6=B5=A3=AC=B1=C8=C8=E7 "red"=A1=A3</P>
+      =
+<P>=C8=E7=B9=FB=C9=E8=D6=C3=C1=CB=BF=D5=D7=D6=B7=FB=B4=AE=D6=B5=A3=AC=D4=F2=
+=B4=D3=D4=AA=CB=D8=D6=D0=C9=BE=B3=FD=D6=B8=B6=A8=CA=F4=D0=D4=A1=A3</P></T=
+D></TR></TBODY></TABLE>
+<H3>=CA=B5=C0=FD</H3>
+<P>=BD=AB=CB=F9=D3=D0=B6=CE=C2=E4=B5=C4=D1=D5=C9=AB=C9=E8=CE=AA=BA=EC=C9=AB=
+=A3=BA</P>
+<PRE>$("p").<CODE>css("color","red")</CODE>;</PRE>
+<P class=3D"tiy"><A =
+href=3D"http://www.w3school.com.cn/tiy/t.asp?f=3Djquery_css_name_value"=20
+target=3D"_blank">=C7=D7=D7=D4=CA=D4=D2=BB=CA=D4</A></P></DIV>
+<DIV>
+<H2>=CA=B9=D3=C3=BA=AF=CA=FD=C0=B4=C9=E8=D6=C3 CSS =CA=F4=D0=D4</H2>
+<P>=C9=E8=D6=C3=CB=F9=D3=D0=C6=A5=C5=E4=B5=C4=D4=AA=CB=D8=D6=D0=D1=F9=CA=BD=
+=CA=F4=D0=D4=B5=C4=D6=B5=A1=A3</P>
+<P>=B4=CB=BA=AF=CA=FD=B7=B5=BB=D8=D2=AA=C9=E8=D6=C3=B5=C4=CA=F4=D0=D4=D6=B5=
+=A1=A3=BD=D3=CA=DC=C1=BD=B8=F6=B2=CE=CA=FD=A3=ACindex =
+=CE=AA=D4=AA=CB=D8=D4=DA=B6=D4=CF=F3=BC=AF=BA=CF=D6=D0=B5=C4=CB=F7=D2=FD=CE=
+=BB=D6=C3=A3=ACvalue =
+=CA=C7=D4=AD=CF=C8=B5=C4=CA=F4=D0=D4=D6=B5=A1=A3</P>
+<PRE>$(<I>selector</I>).css(<I>name</I>,<I>function(index,value)</I>)</PR=
+E>
+<TABLE class=3D"dataintable">
+  <TBODY>
+  <TR>
+    <TH style=3D"width: 25%;">=B2=CE=CA=FD</TH>
+    <TH>=C3=E8=CA=F6</TH></TR>
+  <TR>
+    <TD><I>name</I></TD>
+    <TD>=B1=D8=D0=E8=A1=A3=B9=E6=B6=A8 CSS =
+=CA=F4=D0=D4=B5=C4=C3=FB=B3=C6=A1=A3=B8=C3=B2=CE=CA=FD=BF=C9=B0=FC=BA=AC=C8=
+=CE=BA=CE CSS =CA=F4=D0=D4=A3=AC=B1=C8=C8=E7 "color"=A1=A3</TD></TR>
+  <TR>
+    <TD><I>function(index,value)</I></TD>
+    <TD>
+      <P>=B9=E6=B6=A8=B7=B5=BB=D8 CSS =
+=CA=F4=D0=D4=D0=C2=D6=B5=B5=C4=BA=AF=CA=FD=A1=A3</P>
+      <UL class=3D"listintable">
+        <LI>index - =
+=BF=C9=D1=A1=A1=A3=BD=D3=CA=DC=D1=A1=D4=F1=C6=F7=B5=C4 index =
+=CE=BB=D6=C3</LI>
+        <LI>oldvalue - =BF=C9=D1=A1=A1=A3=BD=D3=CA=DC CSS =
+=CA=F4=D0=D4=B5=C4=B5=B1=C7=B0=D6=B5=A1=A3</LI></UL></TD></TR></TBODY></T=
+ABLE>
+<H3>=CA=B5=C0=FD 1</H3>
+<P>=BD=AB=CB=F9=D3=D0=B6=CE=C2=E4=B5=C4=D1=D5=C9=AB=C9=E8=CE=AA=BA=EC=C9=AB=
+=A3=BA</P>
+<PRE>$("button").click(function(){=0A=
+    $("p").<CODE>css("color",<SPAN class=3D"marked">function(){return =
+"red";}</SPAN>)</CODE>;=0A=
+    });=0A=
+</PRE>
+<P class=3D"tiy"><A =
+href=3D"http://www.w3school.com.cn/tiy/t.asp?f=3Djquery_css_name_function=
+_2"=20
+target=3D"_blank">=C7=D7=D7=D4=CA=D4=D2=BB=CA=D4</A></P>
+<H3>=CA=B5=C0=FD 2</H3>
+<P>=D6=F0=BD=A5=D4=F6=BC=D3 div =B5=C4=BF=ED=B6=C8=A3=BA</P>
+<PRE>$("div").click(function() {=0A=
+  $(this).<CODE>css(=0A=
+    "width", <SPAN class=3D"marked">function(index, value) {return =
+parseFloat(value) * 1.2;}</SPAN>=0A=
+  );</CODE>=0A=
+});=0A=
+</PRE>
+<P class=3D"tiy"><A =
+href=3D"http://www.w3school.com.cn/tiy/t.asp?f=3Djquery_css_name_function=
+"=20
+target=3D"_blank">=C7=D7=D7=D4=CA=D4=D2=BB=CA=D4</A></P></DIV>
+<DIV>
+<H2>=C9=E8=D6=C3=B6=E0=B8=F6 CSS =CA=F4=D0=D4/=D6=B5=B6=D4</H2>
+<PRE>$(<I>selector</I>).css({<I>property:value</I>, =
+<I>property:value</I>, ...})</PRE>
+<P>=B0=D1=A1=B0=C3=FB/=D6=B5=B6=D4=A1=B1=B6=D4=CF=F3=C9=E8=D6=C3=CE=AA=CB=
+=F9=D3=D0=C6=A5=C5=E4=D4=AA=CB=D8=B5=C4=D1=F9=CA=BD=CA=F4=D0=D4=A1=A3</P>=
+
+<P>=D5=E2=CA=C7=D2=BB=D6=D6=D4=DA=CB=F9=D3=D0=C6=A5=C5=E4=B5=C4=D4=AA=CB=D8=
+=C9=CF=C9=E8=D6=C3=B4=F3=C1=BF=D1=F9=CA=BD=CA=F4=D0=D4=B5=C4=D7=EE=BC=D1=B7=
+=BD=CA=BD=A1=A3</P>
+<TABLE class=3D"dataintable">
+  <TBODY>
+  <TR>
+    <TH style=3D"width: 25%;">=B2=CE=CA=FD</TH>
+    <TH>=C3=E8=CA=F6</TH></TR>
+  <TR>
+    <TD>{<I>property:value</I>}</TD>
+    <TD>
+      =
+<P>=B1=D8=D0=E8=A1=A3=B9=E6=B6=A8=D2=AA=C9=E8=D6=C3=CE=AA=D1=F9=CA=BD=CA=F4=
+=D0=D4=B5=C4=A1=B0=C3=FB=B3=C6/=D6=B5=B6=D4=A1=B1=B6=D4=CF=F3=A1=A3</P>
+      <P>=B8=C3=B2=CE=CA=FD=BF=C9=B0=FC=BA=AC=C8=F4=B8=C9=B6=D4 CSS =
+=CA=F4=D0=D4=C3=FB=B3=C6/=D6=B5=A1=A3=B1=C8=C8=E7=20
+  {"color":"red","font-weight":"bold"}</P></TD></TR></TBODY></TABLE>
+<H3>=CA=B5=C0=FD</H3>
+<PRE>$("p").css({=0A=
+  "color":"white",=0A=
+  "background-color":"#98bf21",=0A=
+  "font-family":"Arial",=0A=
+  "font-size":"20px",=0A=
+  "padding":"5px"=0A=
+  });=0A=
+</PRE>
+<P class=3D"tiy"><A =
+href=3D"http://www.w3school.com.cn/tiy/t.asp?f=3Djquery_css_property_sets=
+"=20
+target=3D"_blank">=C7=D7=D7=D4=CA=D4=D2=BB=CA=D4</A></P></DIV>
+<DIV class=3D"backtoreference">
+<P><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1 - CSS =B2=D9=D7=F7" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_ref_css.asp">jQuery=20
+CSS =B2=D9=D7=F7=B2=CE=BF=BC=CA=D6=B2=E1</A></P></DIV></DIV>
+<DIV id=3D"sidebar">
+<DIV id=3D"searchui">
+<FORM id=3D"searchform" action=3D"http://www.google.com.hk/search" =
+method=3D"get">
+<P><LABEL for=3D"searched_content">Search:</LABEL></P>
+<P><INPUT name=3D"sitesearch" type=3D"hidden" =
+value=3D"w3school.com.cn"></P>
+<P><INPUT name=3D"as_q" =
+title=3D"=D4=DA=B4=CB=CA=E4=C8=EB=CB=D1=CB=F7=C4=DA=C8=DD=A1=A3" =
+class=3D"box" id=3D"searched_content" type=3D"text">=20
+<INPUT title=3D"=CB=D1=CB=F7=A3=A1" class=3D"button" type=3D"submit" =
+value=3D"Go"> </P></FORM></DIV>
+<DIV id=3D"tools">
+<H5 id=3D"tools_reference"><A title=3D"jQuery =B2=CE=BF=BC=CA=D6=B2=E1" =
+href=3D"http://www.w3school.com.cn/jquery/jquery_reference.asp">jQuery=20
+=B2=CE=BF=BC=CA=D6=B2=E1</A></H5>
+<H5 id=3D"tools_quiz"><A=20
+href=3D"http://www.w3school.com.cn/jquery/jquery_quiz.asp">jQuery=20
+=B2=E2=D1=E9</A></H5></DIV>
+<DIV id=3D"ad">
+<SCRIPT type=3D"text/javascript"><!--=0A=
+google_ad_client =3D "ca-pub-3381531532877742";=0A=
+/* sidebar-160x600 */=0A=
+google_ad_slot =3D "3772569310";=0A=
+google_ad_width =3D 160;=0A=
+google_ad_height =3D 600;=0A=
+//-->=0A=
+</SCRIPT>
+=20
+<SCRIPT src=3D"http://pagead2.googlesyndication.com/pagead/show_ads.js" =
+type=3D"text/javascript"></SCRIPT>
+ </DIV></DIV>
+<DIV id=3D"footer">
+<P>W3School =
+=CC=E1=B9=A9=B5=C4=C4=DA=C8=DD=BD=F6=D3=C3=D3=DA=C5=E0=D1=B5=A1=A3=CE=D2=C3=
+=C7=B2=BB=B1=A3=D6=A4=C4=DA=C8=DD=B5=C4=D5=FD=C8=B7=D0=D4=A1=A3=CD=A8=B9=FD=
+=CA=B9=D3=C3=B1=BE=D5=BE=C4=DA=C8=DD=CB=E6=D6=AE=B6=F8=C0=B4=B5=C4=B7=E7=CF=
+=D5=D3=EB=B1=BE=D5=BE=CE=DE=B9=D8=A1=A3W3School=20
+=BC=F2=CC=E5=D6=D0=CE=C4=B0=E6=B5=C4=CB=F9=D3=D0=C4=DA=C8=DD=BD=F6=B9=A9=B2=
+=E2=CA=D4=A3=AC=B6=D4=C8=CE=BA=CE=B7=A8=C2=C9=CE=CA=CC=E2=BC=B0=B7=E7=CF=D5=
+=B2=BB=B3=D0=B5=A3=C8=CE=BA=CE=D4=F0=C8=CE=A1=A3 </P>
+<P>=B5=B1=CA=B9=D3=C3=B1=BE=D5=BE=CA=B1=A3=AC=B4=FA=B1=ED=C4=FA=D2=D1=BD=D3=
+=CA=DC=C1=CB=B1=BE=D5=BE=B5=C4<A title=3D"=B9=D8=D3=DA=CA=B9=D3=C3" =
+href=3D"http://www.w3school.com.cn/about/about_use.asp">=CA=B9=D3=C3=CC=F5=
+=BF=EE</A>=BA=CD<A=20
+title=3D"=B9=D8=D3=DA=D2=FE=CB=BD"=20
+href=3D"http://www.w3school.com.cn/about/about_privacy.asp">=D2=FE=CB=BD=CC=
+=F5=BF=EE</A>=A1=A3=B0=E6=C8=A8=CB=F9=D3=D0=A3=AC=B1=A3=C1=F4=D2=BB=C7=D0=
+=C8=A8=C0=FB=A1=A3
+ =D4=DE=D6=FA=C9=CC=A3=BA<A =
+title=3D"=C9=CF=BA=A3=D3=AE=BF=C6=CD=B6=D7=CA=D3=D0=CF=DE=B9=AB=CB=BE" =
+href=3D"http://www.yktz.net/">=C9=CF=BA=A3=D3=AE=BF=C6=CD=B6=D7=CA=D3=D0=CF=
+=DE=B9=AB=CB=BE</A>=A1=A3 <A =
+href=3D"http://www.miitbeian.gov.cn/">=C3=C9ICP=B1=B806004630=BA=C5</A>=20
+</P></DIV></DIV></BODY></HTML>
+
+------=_NextPart_000_00AE_01D2305C.349D6360
+Content-Type: text/css;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.w3school.com.cn/c5.css
+
+* {
+	margin: 0px; padding: 0px; border: 0px currentColor;
+}
+body {
+	font-family: Verdana, Arial, "=CB=CE=CC=E5"; font-size: 12px;
+}
+strong {
+	color: rgb(0, 0, 0); font-family: "=CE=A2=C8=ED=D1=C5=BA=DA"; =
+font-size: 14px; font-weight: 800;
+}
+body#homefirst div#maincontent {
+	font-family: "=CE=A2=C8=ED=D1=C5=BA=DA";
+}
+div#maincontent h1 {
+	font-family: "=CE=A2=C8=ED=D1=C5=BA=DA";
+}
+div#maincontent h2 {
+	font-family: "=CE=A2=C8=ED=D1=C5=BA=DA";
+}
+div#sidebar div#ad h2 {
+	font-family: "=CE=A2=C8=ED=D1=C5=BA=DA";
+}
+pre {
+	font-family: Consolas, "Courier New", Courier, monospace;
+}
+pre code {
+	font-family: Consolas, "Courier New", Courier, monospace;
+}
+div#maincontent input {
+	font-family: Consolas, "Courier New", Courier, monospace;
+}
+div#maincontent select {
+	font-family: Consolas, "Courier New", Courier, monospace;
+}
+div#maincontent textarea {
+	font-family: Consolas, "Courier New", Courier, monospace;
+}
+h2 {
+	font-weight: bold;
+}
+h3 {
+	font-weight: bold;
+}
+h4 {
+	font-weight: bold;
+}
+h5 {
+	font-weight: bold;
+}
+h6 {
+	font-weight: bold;
+}
+em {
+	font-weight: bold;
+}
+p.note span {
+	font-weight: bold;
+}
+p.important span {
+	font-weight: bold;
+}
+p.tip span {
+	font-weight: bold;
+}
+p.inherited {
+	font-weight: bold;
+}
+p.inherited span {
+	font-weight: bold;
+}
+p.gototop {
+	font-weight: bold;
+}
+.html5_new_note span {
+	font-weight: bold;
+}
+body#homesecond div#navsecond li {
+	font-weight: bold;
+}
+.tiy {
+	font-weight: normal;
+}
+div#maincontent h1 {
+	font-size: 26px; font-weight: 400;
+}
+div#maincontent h2 {
+	font-size: 14px;
+}
+div#sidebar div#ad h2 {
+	font-size: 14px;
+}
+body#homefirst div#maincontent h3 {
+	font-size: 14px;
+}
+div#navsecond h2 {
+	font-size: 12px;
+}
+div#sidebar h2 {
+	font-size: 12px;
+}
+div#maincontent h3 {
+	font-size: 12px;
+}
+div#maincontent h4 {
+	font-size: 12px;
+}
+div#maincontent button {
+	font-size: 12px;
+}
+div#maincontent input {
+	font-size: 12px;
+}
+div#maincontent select {
+	font-size: 12px;
+}
+div#maincontent textarea {
+	font-size: 12px;
+}
+body#homefirst div#maincontent div#w3 h2 {
+	font-size: 20px;
+}
+em {
+	font-style: normal;
+}
+pre code {
+	color: rgb(0, 0, 221);
+}
+.html5_new_note {
+	background: url("/i/html5_new_note.png") no-repeat left top rgb(255, =
+255, 255); padding-left: 20px;
+}
+.html5_new_note span {
+	color: blue;
+}
+p.gototop {
+	text-align: right;
+}
+div#maincontent button {
+	margin-top: 15px;
+}
+html {
+	background: rgb(249, 249, 249); overflow: scroll; -ms-overflow-x: =
+hidden; min-width: 966px;
+}
+body {
+	background: url("/ui/holder.gif") repeat-y top rgb(249, 249, 249); =
+margin: 0px; padding: 0px; border: 0px currentColor; text-align: center;
+}
+div#wrapper {
+	background: url("/ui/wrapper.gif") repeat-y left top; margin: 0px auto; =
+padding: 0px; border: 0px currentColor; width: 1129px; text-align: left;
+}
+div#navsecond {
+	margin: 0px 0px 0px 6px; padding: 0px; border: 0px currentColor; width: =
+180px; float: left;
+}
+html > body div#navsecond {
+	margin-left: 12px;
+}
+div#maincontent {
+	margin: 0px; padding: 0px; border: 0px currentColor; width: 740px; =
+float: left;
+}
+div#sidebar {
+	margin: 0px; padding: 0px; border: 0px currentColor; width: 180px; =
+float: left;
+}
+div#footer {
+	background: rgb(182, 182, 182); margin: 0px 0px 0px 12px; padding: 0px; =
+width: 1100px; height: 46px; clear: both; border-top-color: rgb(255, =
+255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: =
+10px; border-bottom-width: 10px; border-top-style: solid; =
+border-bottom-style: solid;
+}
+div#footer p {
+	margin: 5px 10px 0px;
+}
+div#header {
+	margin: 0px 0px 0px 12px; padding: 0px; border: 0px currentColor; =
+width: 1100px; height: 90px; background-color: rgb(239, 239, 239);
+}
+div#header_index {
+	margin: 0px 0px 0px 12px; padding: 0px; border: 0px currentColor; =
+width: 1100px; height: 90px; background-color: rgb(239, 239, 239);
+}
+div#header a {
+	margin: 0px; padding: 0px; border: 0px currentColor; text-indent: =
+-9999px; overflow: hidden;
+}
+div#header_index a {
+	margin: 0px; padding: 0px; border: 0px currentColor; text-indent: =
+-9999px; overflow: hidden;
+}
+div#header_index h1 {
+	margin: 0px; padding: 0px; border: 0px currentColor; text-indent: =
+-9999px; overflow: hidden;
+}
+div#header a:link {
+	background: url("/ui/bg.gif") no-repeat 0px -120px; margin: 0px; =
+padding: 0px; border: 0px currentColor; width: 372px; height: 90px; =
+display: block;
+}
+div#header a:visited {
+	background: url("/ui/bg.gif") no-repeat 0px -120px; margin: 0px; =
+padding: 0px; border: 0px currentColor; width: 372px; height: 90px; =
+display: block;
+}
+div#header a:hover {
+	background: url("/ui/bg.gif") no-repeat 0px -210px;
+}
+div#header div#ad_head {
+	width: 728px; height: 90px; float: right; background-color: rgb(239, =
+239, 239);
+}
+div#header_index a:link {
+	background: url("/ui/head_index.gif") no-repeat left top; margin: 0px; =
+padding: 0px; border: 0px currentColor; width: 1100px; height: 90px; =
+display: block;
+}
+div#header_index a:visited {
+	background: url("/ui/head_index.gif") no-repeat left top; margin: 0px; =
+padding: 0px; border: 0px currentColor; width: 1100px; height: 90px; =
+display: block;
+}
+div#header_index a:hover {
+	background: url("/ui/head_index.gif") no-repeat 0px -90px;
+}
+body#homefirst div#maincontent div {
+	padding-top: 0px;
+}
+body#homefirst div#maincontent div#w3 {
+	text-align: center;
+}
+body#homefirst div#maincontent div#partner {
+	width: 307px; float: left;
+}
+body#homefirst div#maincontent div#update {
+	margin: 0px; width: 300px; float: left;
+}
+body#homefirst div#maincontent div#w3 h2 {
+	margin-top: 20px;
+}
+body#homefirst div#maincontent h3 {
+	margin-top: 15px;
+}
+body#homefirst div#maincontent div.idea {
+	padding: 0px; min-height: 118px;
+}
+body#homefirst div#maincontent div.idea img {
+	margin: 0px; float: left;
+}
+div#navfirst {
+	background: rgb(255, 255, 255); margin: 0px 0px 0px 12px; padding: 0px; =
+border: 0px currentColor; width: 1100px; height: 55px;
+}
+div#navfirst ul#menu {
+	background: url("/ui/bg.gif") no-repeat left top; margin: 0px; padding: =
+0px; width: 1100px; height: 55px; position: relative;
+}
+div#navfirst ul#menu li {
+	list-style: none; margin: 0px; padding: 0px; top: 0px; position: =
+absolute;
+}
+ul#menu li {
+	height: 55px; display: block;
+}
+ul#menu a {
+	height: 55px; display: block;
+}
+div#navfirst ul#menu li a {
+	text-indent: -9999px; overflow: hidden; text-decoration: none;
+}
+#h {
+	left: 0px; width: 155px;
+}
+#b {
+	left: 155px; width: 157px;
+}
+#s {
+	left: 312px; width: 167px;
+}
+#d {
+	left: 479px; width: 158px;
+}
+#x {
+	left: 637px; width: 101px;
+}
+#m {
+	left: 738px; width: 185px;
+}
+#w {
+	left: 923px; width: 177px;
+}
+#h a:hover {
+	background: url("/ui/bg.gif") no-repeat 0px -55px;
+}
+#b a:hover {
+	background: url("/ui/bg.gif") no-repeat -155px -55px;
+}
+#s a:hover {
+	background: url("/ui/bg.gif") no-repeat -312px -55px;
+}
+#d a:hover {
+	background: url("/ui/bg.gif") no-repeat -479px -55px;
+}
+#x a:hover {
+	background: url("/ui/bg.gif") no-repeat -637px -55px;
+}
+#m a:hover {
+	background: url("/ui/bg.gif") no-repeat -738px -55px;
+}
+#w a:hover {
+	background: url("/ui/bg.gif") no-repeat -923px -55px;
+}
+body.html #h {
+	background: url("/ui/bg.gif") no-repeat 0px -55px;
+}
+body.browserscripting #b {
+	background: url("/ui/bg.gif") no-repeat -155px -55px;
+}
+body.serverscripting #s {
+	background: url("/ui/bg.gif") no-repeat -312px -55px;
+}
+body.dotnet #d {
+	background: url("/ui/bg.gif") no-repeat -479px -55px;
+}
+body.xml #x {
+	background: url("/ui/bg.gif") no-repeat -637px -55px;
+}
+body.multimedia #m {
+	background: url("/ui/bg.gif") no-repeat -738px -55px;
+}
+body.webbuilding #w {
+	background: url("/ui/bg.gif") no-repeat -923px -55px;
+}
+#ws {
+	left: 738px; width: 185px;
+}
+#ws a:hover {
+	background: url("/ui/bg.gif") no-repeat -738px -55px;
+}
+body.webservices #ws {
+	background: url("/ui/bg.gif") no-repeat -738px -55px;
+}
+a:link {
+	color: rgb(144, 11, 9); text-decoration: underline;
+}
+a:visited {
+	color: rgb(144, 11, 9); text-decoration: underline;
+}
+a:hover {
+	color: rgb(255, 0, 0); text-decoration: underline;
+}
+a:active {
+	color: rgb(255, 0, 0); text-decoration: underline;
+}
+div#navsecond li.currentLink a:link {
+	color: rgb(255, 0, 0); text-decoration: none;
+}
+div#navsecond li.currentLink a:visited {
+	color: rgb(255, 0, 0); text-decoration: none;
+}
+div#navsecond li.currentLink a:hover {
+	color: rgb(255, 0, 0); text-decoration: underline;
+}
+div#navsecond a:link {
+	color: rgb(0, 0, 0); text-decoration: none;
+}
+div#navsecond a:visited {
+	color: rgb(0, 0, 0); text-decoration: none;
+}
+div#navsecond a:hover {
+	color: rgb(0, 0, 0); text-decoration: underline;
+}
+div#navsecond a:active {
+	color: rgb(0, 0, 0); text-decoration: underline;
+}
+div#navsecond a#link_help {
+	color: rgb(4, 121, 167);
+}
+div#navsecond a#link_about {
+	color: rgb(4, 121, 167);
+}
+div#maincontent .partner a {
+	color: rgb(4, 121, 167);
+}
+div#footer a:link {
+	color: rgb(0, 0, 0); text-decoration: none;
+}
+div#footer a:visited {
+	color: rgb(0, 0, 0); text-decoration: none;
+}
+div#footer a:hover {
+	color: rgb(0, 0, 0); text-decoration: underline;
+}
+div#footer a:active {
+	color: rgb(0, 0, 0); text-decoration: underline;
+}
+div#maincontent p {
+	margin: 12px 0px 0px; line-height: 150%;
+}
+div#maincontent h1 {
+	margin: 15px 0px 0px 15px;
+}
+div#maincontent h3 {
+	margin: 20px 0px 0px;
+}
+div#maincontent h4 {
+	margin: 20px 0px 0px;
+}
+div#navsecond h2 {
+	margin: 10px 0px 0px 12px;
+}
+div#sidebar h2 {
+	margin: 10px 0px 0px 12px;
+}
+body#homesecond div#navsecond li {
+	margin: 5px 0px 0px;
+}
+div.backtoreference p {
+	margin: 0px;
+}
+div#w3school p {
+	margin-left: 15px;
+}
+div#maincontent div p:first-child {
+	margin: 0px;
+}
+p.important span {
+	color: rgb(221, 0, 0);
+}
+p.tip span {
+	color: rgb(255, 153, 85);
+}
+p.inherited {
+	color: rgb(255, 0, 0);
+}
+p.inherited span {
+	color: rgb(153, 153, 153);
+}
+p.chinese span {
+	color: rgb(0, 0, 255);
+}
+pre {
+	background: rgb(245, 245, 245); margin: 10px 0px 0px; padding: 10px; =
+border: 1px dotted rgb(119, 136, 85); width: 685px;
+}
+pre code {
+	color: rgb(0, 0, 221);
+}
+pre span {
+	color: rgb(153, 153, 153);
+}
+pre span.code_comment {
+	color: rgb(153, 153, 153);
+}
+blockquote {
+	margin: 15px;
+}
+div#maincontent ul {
+	margin-top: 10px; margin-bottom: 0px; margin-left: 35px;
+}
+div#maincontent ol {
+	margin-top: 10px; margin-bottom: 0px; margin-left: 35px;
+}
+div#maincontent li {
+	margin-top: 3px;
+}
+div#navsecond ul {
+	margin: 0px; padding: 0px;
+}
+div#navsecond li {
+	margin: 0px; padding: 0px;
+}
+div#sidebar ul {
+	margin: 0px; padding: 0px;
+}
+div#sidebar li {
+	margin: 0px; padding: 0px;
+}
+div#navsecond ul {
+	margin-left: 12px;
+}
+div#sidebar ul {
+	margin-left: 12px;
+}
+div#navsecond li {
+	list-style: none;
+}
+div#sidebar li {
+	list-style: none;
+}
+div#navsecond li.list_apart {
+	margin-top: 10px;
+}
+img {
+	border: 0px currentColor;
+}
+div#maincontent img {
+	margin: 25px 0px 0px 25px;
+}
+div#maincontent div {
+	border-width: 1px 0px; border-style: solid none; border-color: rgb(170, =
+170, 170) currentColor; margin: 0px 0px 0px 15px; padding: 20px 0px; =
+width: 710px;
+}
+body#homesecond dl {
+	margin: 0px; padding: 0px;
+}
+body#homesecond dt {
+	margin: 0px; padding: 0px; font-size: 14px; font-weight: bold;
+}
+body#homesecond dd {
+	margin: 10px 0px 0px; padding: 0px; color: rgb(0, 0, 136);
+}
+body#homesecond dd p {
+	margin: 0px; padding: 0px;
+}
+div#maincontent div#toc div {
+	margin: 15px 0px 35px; padding: 0px; border: 0px currentColor;
+}
+div#toc img {
+	margin: 0px 10px 0px 0px; float: left;
+}
+div#toc div dt {
+	margin-top: 0px;
+}
+div#toc div dl {
+	margin-top: 0px;
+}
+div#example dl {
+	margin: 10px 0px 0px;
+}
+div.example dl {
+	margin: 10px 0px 0px;
+}
+div#moreexamples dl {
+	margin: 10px 0px 0px;
+}
+div#toc dl {
+	margin: 10px 0px 0px;
+}
+div#referencelist dl {
+	margin: 10px 0px 0px;
+}
+div#example dt {
+	margin: 15px 0px 5px;
+}
+div.example dt {
+	margin: 15px 0px 5px;
+}
+div#moreexamples dt {
+	margin: 15px 0px 5px;
+}
+div#toc dt {
+	margin: 15px 0px 5px;
+}
+div#referencelist dt {
+	margin: 15px 0px 5px;
+}
+div#example dd {
+	margin: 0px;
+}
+div.example dd {
+	margin: 0px;
+}
+div#moreexamples dd {
+	margin: 0px;
+}
+div#toc dd {
+	margin: 0px;
+}
+div#referencelist dd {
+	margin: 0px;
+}
+dl.define {
+	margin: 10px 0px 0px;
+}
+dl.define dt {
+	margin: 15px 0px 3px; color: rgb(4, 121, 167); font-weight: bold;
+}
+dl.define dd {
+	margin: 10px 0px 0px 10px; line-height: 150%;
+}
+span.deprecated {
+	color: rgb(232, 0, 0);
+}
+.marked {
+	color: rgb(221, 0, 0);
+}
+p.gototop {
+	text-align: right;
+}
+div#maincontent canvas.canvas_example {
+	background: rgb(255, 255, 255); border: 1px solid rgb(211, 211, 211); =
+width: 300px; height: 150px; margin-top: 15px;
+}
+div#maincontent div.panel {
+	background: rgb(229, 238, 204); margin: 0px; padding: 5px; border: 1px =
+solid rgb(195, 195, 195); width: 400px; text-align: center;
+}
+p.flip {
+	background: rgb(229, 238, 204); margin: 0px; padding: 5px; border: 1px =
+solid rgb(195, 195, 195); width: 400px; text-align: center;
+}
+div#maincontent p.flip {
+	margin-top: 15px;
+}
+div.panel {
+	display: none;
+}
+div#maincontent input[type=3Dtext] {
+	margin: 15px 0px 0px; border: 1px solid rgb(190, 190, 190); height: =
+30px; padding-left: 10px;
+}
+div#maincontent input[type=3Dsubmit] {
+	border: 1px solid rgb(190, 190, 190); height: 30px; padding-right: 5px; =
+padding-left: 5px;
+}
+button {
+	border: 1px solid rgb(190, 190, 190); height: 30px; padding-right: 5px; =
+padding-left: 5px;
+}
+div#maincontent input[type=3Dsubmit]:hover {
+	border: 1px solid rgb(153, 153, 153);
+}
+button:hover {
+	border: 1px solid rgb(153, 153, 153);
+}
+div#maincontent select {
+	margin: 15px 0px 0px; border: 1px solid rgb(190, 190, 190); height: =
+25px;
+}
+table.dataintable {
+	border: 1px solid rgb(170, 170, 170); width: 100%; margin-top: 10px; =
+border-collapse: collapse;
+}
+table.dataintable th {
+	padding: 5px 15px 5px 6px; border: 1px solid rgb(170, 170, 170); =
+text-align: left; vertical-align: baseline; background-color: rgb(213, =
+213, 213);
+}
+table.dataintable td {
+	padding: 6px 15px 6px 6px; border: 1px solid rgb(170, 170, 170); =
+vertical-align: text-top; background-color: rgb(239, 239, 239);
+}
+table.dataintable pre {
+	margin: 0px; padding: 0px; border: 0px currentColor; width: auto; =
+background-color: transparent;
+}
+table.dataintable p {
+	margin: 0px 0px 2px;
+}
+div#maincontent table.dataintable ul {
+	margin: 0px; padding: 0px; list-style-type: none;
+}
+div#maincontent table.dataintable li {
+	margin: 0px; padding: 0px; list-style-type: none;
+}
+table.dataintable td em {
+	color: rgb(0, 0, 255); font-weight: normal;
+}
+table.dataintable .table_value {
+	color: rgb(15, 147, 210);
+}
+.no_wrap {
+	white-space: nowrap;
+}
+div#maincontent table.dataintable ul.listintable {
+	margin: 20px; padding: 0px;
+}
+div#maincontent table.dataintable ul.listintable li {
+	list-style-type: disc;
+}
+table.dataintable td.html5_new {
+	background: url("/i/table_bg_html5.gif") no-repeat right top rgb(239, =
+239, 239);
+}
+tr.notsupported {
+	color: rgb(153, 153, 153);
+}
+#jsref table.browsersupport td {
+	width: 20%;
+}
+#tags table.browsersupport td {
+	width: 20%;
+}
+#cssref table.browsersupport td {
+	width: 20%;
+}
+#jsref table.browsersupport th {
+	color: rgb(51, 51, 51); font-weight: 400;
+}
+#tags table.browsersupport th {
+	color: rgb(51, 51, 51); font-weight: 400;
+}
+#cssref table.browsersupport th {
+	color: rgb(51, 51, 51); font-weight: 400;
+}
+#jsref table.browsersupport {
+	width: 50%;
+}
+#tags table.browsersupport {
+	width: 50%;
+}
+#cssref table.browsersupport {
+	width: 50%;
+}
+table.browsersupport .bsIE {
+	background-image: url("/i/compatible_ie.gif");
+}
+table.browsersupport .bsFirefox {
+	background-image: url("/i/compatible_firefox.gif");
+}
+table.browsersupport .bsChrome {
+	background-image: url("/i/compatible_chrome.gif");
+}
+table.browsersupport .bsSafari {
+	background-image: url("/i/compatible_safari.gif");
+}
+table.browsersupport .bsOpera {
+	background-image: url("/i/compatible_opera.gif");
+}
+table.browsersupport .bsNoIE {
+	background-image: url("/i/incompatible_ie.gif");
+}
+table.browsersupport .bsNoFirefox {
+	background-image: url("/i/incompatible_firefox.gif");
+}
+table.browsersupport .bsNoChrome {
+	background-image: url("/i/incompatible_chrome.gif");
+}
+table.browsersupport .bsNoSafari {
+	background-image: url("/i/incompatible_safari.gif");
+}
+table.browsersupport .bsNoOpera {
+	background-image: url("/i/incompatible_opera.gif");
+}
+table.browsersupport .bsPreIE {
+	background-image: url("/i/precompatible_ie.gif");
+}
+table.browsersupport .bsPreFirefox {
+	background-image: url("/i/precompatible_firefox.gif");
+}
+table.browsersupport .bsPreChrome {
+	background-image: url("/i/precompatible_chrome.gif");
+}
+table.browsersupport .bsPreSafari {
+	background-image: url("/i/precompatible_safari.gif");
+}
+table.browsersupport .bsPreOpera {
+	background-image: url("/i/precompatible_opera.gif");
+}
+table.browsersupport {
+	width: 70%; margin-top: 15px; border-collapse: collapse;
+}
+table.browsersupport td {
+	background: no-repeat center rgb(255, 255, 255); padding: 3px; border: =
+1px solid rgb(218, 218, 218); height: 32px; vertical-align: middle;
+}
+table.browsersupport td.bsProperty {
+	width: 20%; font-family: courier new; white-space: nowrap;
+}
+table.browsersupport th {
+	padding: 3px; border: 1px solid rgb(195, 195, 195); height: 15px; =
+text-align: center; vertical-align: middle; background-color: rgb(239, =
+239, 239);
+}
+div#tpn {
+	background: rgb(255, 255, 255); margin: 0px; padding: 0px; border: 0px =
+currentColor; width: 230px; height: 29px;
+}
+div#bpn {
+	background: rgb(255, 255, 255); margin: 0px; padding: 0px; border: 0px =
+currentColor; width: 230px; height: 29px;
+}
+div#tpn ul.prenext {
+	background: url("/ui/bg.gif") no-repeat 0px -570px; margin: 0px; =
+padding: 0px; border: 0px currentColor; width: 230px; height: 29px; =
+position: relative;
+}
+div#bpn ul.prenext {
+	background: url("/ui/bg.gif") no-repeat 0px -570px; margin: 0px; =
+padding: 0px; border: 0px currentColor; width: 230px; height: 29px; =
+position: relative;
+}
+div#tpn ul.prenext li {
+	list-style: none; margin: 0px; padding: 0px; top: 0px; overflow: =
+hidden; position: absolute;
+}
+div#bpn ul.prenext li {
+	list-style: none; margin: 0px; padding: 0px; top: 0px; overflow: =
+hidden; position: absolute;
+}
+ul.prenext li {
+	height: 29px; display: block;
+}
+ul.prenext a {
+	height: 29px; display: block;
+}
+div#tpn ul.prenext a {
+	text-indent: -9999px; text-decoration: none;
+}
+div#bpn ul.prenext a {
+	text-indent: -9999px; text-decoration: none;
+}
+.pre {
+	left: 0px; width: 105px;
+}
+.next {
+	left: 125px; width: 105px;
+}
+.pre a:hover {
+	background: url("/ui/bg.gif") no-repeat 0px -619px;
+}
+.next a:hover {
+	background: url("/ui/bg.gif") no-repeat -125px -619px;
+}
+div#course {
+	background: url("/ui/bg.gif") no-repeat 0px -690px; padding: 45px 0px =
+10px;
+}
+div#afterschool {
+	background: url("/ui/bg.gif") no-repeat -362px -690px; padding: 45px =
+0px 10px;
+}
+div#selected {
+	background: url("/ui/bg.gif") no-repeat -362px -690px; padding: 45px =
+0px 10px;
+}
+div#tools {
+	background: url("/ui/bg.gif") no-repeat -181px -690px; margin: 0px; =
+padding: 66px 0px 10px 34px;
+}
+body#homesecond div#tools {
+	background: url("/ui/bg.gif") no-repeat -181px -690px; margin: 0px; =
+padding: 45px 0px 10px;
+}
+div#books {
+	background: url("/ui/bg.gif") no-repeat -450px -326px; margin: 0px; =
+padding: 45px 0px 0px 15px;
+}
+div#ad {
+	background: url("/ui/bg.gif") no-repeat -543px -690px; margin: 0px; =
+padding: 66px 0px 10px 10px;
+}
+div#sidebar div#ad h2 {
+	margin: 0px 0px 25px 25px; color: rgb(0, 0, 0);
+}
+div#ad span {
+	margin: 0px 0px 15px;
+}
+div#tools h5 {
+	margin: 0px 0px 12px; padding: 0px; overflow: hidden;
+}
+div#tools h5#tools_reference {
+	width: 112px; height: 68px; text-indent: -9999px;
+}
+div#tools h5#tools_example {
+	width: 112px; height: 68px; text-indent: -9999px;
+}
+div#tools h5#tools_quiz {
+	width: 112px; height: 68px; text-indent: -9999px;
+}
+div#tools h5#tools_search {
+	width: 112px; height: 68px; text-indent: -9999px;
+}
+div#tools h5#tools_reference a {
+	margin: 0px; padding: 0px; width: 100%; height: 100%; text-decoration: =
+none; display: block;
+}
+div#tools h5#tools_example a {
+	margin: 0px; padding: 0px; width: 100%; height: 100%; text-decoration: =
+none; display: block;
+}
+div#tools h5#tools_quiz a {
+	margin: 0px; padding: 0px; width: 100%; height: 100%; text-decoration: =
+none; display: block;
+}
+div#tools h5#tools_search a {
+	margin: 0px; padding: 0px; width: 100%; height: 100%; text-decoration: =
+none; display: block;
+}
+div#tools h5#tools_reference a {
+	background: url("/ui/bg.gif") no-repeat 0px -320px;
+}
+div#tools h5#tools_reference a:hover {
+	background: url("/ui/bg.gif") no-repeat -113px -320px;
+}
+div#tools h5#tools_example a {
+	background: url("/ui/bg.gif") no-repeat 0px -389px;
+}
+div#tools h5#tools_example a:hover {
+	background: url("/ui/bg.gif") no-repeat -113px -389px;
+}
+div#tools h5#tools_quiz a {
+	background: url("/ui/bg.gif") no-repeat 0px -458px;
+}
+div#tools h5#tools_quiz a:hover {
+	background: url("/ui/bg.gif") no-repeat -113px -458px;
+}
+div#searchui {
+	margin: 15px 0px 15px 5px; padding: 0px;
+}
+div#searchui p {
+	margin: 0px 0px 5px; padding: 0px;
+}
+#searchui label {
+	margin: 0px 0px 0px 2px; text-transform: uppercase; letter-spacing: =
+2px; font-size: 11px;
+}
+#searchui input.button {
+	background: rgb(174, 65, 65); font: 12px/normal Verdana, Arial, =
+Helvetica, sans-serif; margin: 0px; padding: 0px; width: 25px; height: =
+20px; color: rgb(255, 255, 255); font-size-adjust: none; font-stretch: =
+normal;
+}
+#searchui input.box {
+	background: rgb(253, 253, 253); font: 12px/normal Verdana, Arial, =
+Helvetica, sans-serif; margin: 0px 0px 0px 2px; width: 135px; height: =
+20px; font-size-adjust: none; font-stretch: normal;
+}
+div#maincontent p.tiy {
+	padding: 6px 16px; outline: 0px; border: currentColor; transition:0.2s =
+ease-out; text-align: center; color: rgb(255, 255, 255); overflow: =
+hidden; text-decoration: none; margin-bottom: 10px; vertical-align: =
+middle; display: inline-block; white-space: nowrap; cursor: pointer; =
+box-shadow: 0px 1px 3px rgba(0,0,0,0.12), 0px 1px 2px rgba(0,0,0,0.24); =
+background-color: rgb(248, 142, 139);
+}
+div#maincontent p:last-child.tiy {
+	margin-bottom: 0px;
+}
+div#maincontent p.tiy a:link {
+	color: rgb(255, 255, 255); text-decoration: none;
+}
+div#maincontent p.tiy a:visited {
+	color: rgb(255, 255, 255); text-decoration: none;
+}
+div#maincontent p.tiy:hover {
+	color: rgb(255, 255, 255); text-decoration: none; background-color: =
+rgb(244, 85, 81);
+}
+div#maincontent p.tiy a:active {
+	color: rgb(255, 255, 255); text-decoration: none;
+}
+
+------=_NextPart_000_00AE_01D2305C.349D6360
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://pagead2.googlesyndication.com/pagead/show_ads.js
+
+(function(){var m=3Dthis,aa=3Dfunction(a,b,c){return =
+a.call.apply(a.bind,arguments)},ba=3Dfunction(a,b,c){if(!a)throw =
+Error();if(2<arguments.length){var =
+d=3DArray.prototype.slice.call(arguments,2);return function(){var =
+c=3DArray.prototype.slice.call(arguments);Array.prototype.unshift.apply(c=
+,d);return a.apply(b,c)}}return function(){return =
+a.apply(b,arguments)}},q=3Dfunction(a,b,c){q=3DFunction.prototype.bind&&-=
+1!=3DFunction.prototype.bind.toString().indexOf("native =
+code")?aa:ba;return q.apply(null,arguments)},ca=3DDate.now||=0A=
+function(){return+new Date};var r=3D(new Date).getTime();var =
+t=3D{'"':'\\"',"\\":"\\\\","/":"\\/","\b":"\\b","\f":"\\f","\n":"\\n","\r=
+":"\\r","\t":"\\t","\x0B":"\\u000b"},da=3D/\uffff/.test("\uffff")?/[\\\"\=
+x00-\x1f\x7f-\uffff]/g:/[\\\"\x00-\x1f\x7f-\xff]/g,ea=3Dfunction(){},z=3D=
+function(a,b,c){switch(typeof b){case "string":fa(b,c);break;case =
+"number":c.push(isFinite(b)&&!isNaN(b)?String(b):"null");break;case =
+"boolean":c.push(String(b));break;case =
+"undefined":c.push("null");break;case =
+"object":if(null=3D=3Db){c.push("null");break}if(b instanceof =
+Array||void 0!=3Db.length&&=0A=
+b.splice){var d=3Db.length;c.push("[");for(var =
+f=3D"",e=3D0;e<d;e++)c.push(f),z(a,b[e],c),f=3D",";c.push("]");break}c.pu=
+sh("{");d=3D"";for(f in =
+b)b.hasOwnProperty(f)&&(e=3Db[f],"function"!=3Dtypeof =
+e&&(c.push(d),fa(f,c),c.push(":"),z(a,e,c),d=3D","));c.push("}");break;ca=
+se "function":break;default:throw Error("Unknown type: "+typeof =
+b);}},fa=3Dfunction(a,b){b.push('"');b.push(a.replace(da,function(a){if(a=
+ in t)return t[a];var =
+b=3Da.charCodeAt(0),c=3D"\\u";16>b?c+=3D"000":256>b?c+=3D"00":4096>b&&(c+=
+=3D"0");return t[a]=3Dc+b.toString(16)}));=0A=
+b.push('"')};var A=3DString.prototype.trim?function(a){return =
+a.trim()}:function(a){return =
+a.replace(/^[\s\xa0]+|[\s\xa0]+$/g,"")},na=3Dfunction(a){if(!ga.test(a))r=
+eturn =
+a;-1!=3Da.indexOf("&")&&(a=3Da.replace(ha,"&amp;"));-1!=3Da.indexOf("<")&=
+&(a=3Da.replace(ia,"&lt;"));-1!=3Da.indexOf(">")&&(a=3Da.replace(ja,"&gt;=
+"));-1!=3Da.indexOf('"')&&(a=3Da.replace(ka,"&quot;"));-1!=3Da.indexOf("'=
+")&&(a=3Da.replace(la,"&#39;"));-1!=3Da.indexOf("\x00")&&(a=3Da.replace(m=
+a,"&#0;"));return =
+a},ha=3D/&/g,ia=3D/</g,ja=3D/>/g,ka=3D/"/g,la=3D/'/g,ma=3D/\x00/g,ga=3D/[=
+\x00&<>"']/,=0A=
+B=3D{"\x00":"\\0","\b":"\\b","\f":"\\f","\n":"\\n","\r":"\\r","\t":"\\t",=
+"\x0B":"\\x0B",'"':'\\"',"\\":"\\\\","<":"<"},C=3D{"'":"\\'"},D=3Dfunctio=
+n(a,b){return a<b?-1:a>b?1:0};var E=3Dfunction(a){E[" "](a);return =
+a};E[" "]=3Dfunction(){};var pa=3Dfunction(a,b){var =
+c=3Doa;Object.prototype.hasOwnProperty.call(c,a)||(c[a]=3Db(a))};var =
+qa=3Dfunction(a){try{var =
+b;if(b=3D!!a&&null!=3Da.location.href)a:{try{E(a.foo);b=3D!0;break =
+a}catch(c){}b=3D!1}return =
+b}catch(c){return!1}},ra=3Dfunction(a,b){for(var c in =
+a)Object.prototype.hasOwnProperty.call(a,c)&&b.call(void =
+0,a[c],c,a)},sa=3Dfunction(a){var b=3Da.length;if(0=3D=3Db)return =
+0;for(var =
+c=3D305419896,d=3D0;d<b;d++)c^=3D(c<<5)+(c>>2)+a.charCodeAt(d)&4294967295=
+;return 0<c?c:4294967296+c};var =
+ta=3Dfunction(a,b){this.j=3Da;this.o=3Db},ua=3Dfunction(a,b,c){this.url=3D=
+a;this.j=3Db;this.G=3D!!c;this.depth=3Dnull};var =
+va=3Dfunction(a,b){a.addEventListener?a.addEventListener("load",b,!1):a.a=
+ttachEvent&&a.attachEvent("onload",b)};var =
+wa=3Dfunction(a,b,c,d,f){this.w=3Dc||4E3;this.s=3Da||"&";this.A=3Db||",$"=
+;this.u=3Dvoid =
+0!=3D=3Dd?d:"trn";this.C=3Df||null;this.v=3D!1;this.o=3D{};this.B=3D0;thi=
+s.j=3D[]},xa=3Dfunction(a,b){var =
+c=3D{};c[a]=3Db;return[c]},F=3Dfunction(a,b,c,d){a.j.push(b);a.o[b]=3Dxa(=
+c,d)},Aa=3Dfunction(a,b,c,d){b=3Db+"//"+c+d;var =
+f=3Dya(a)-d.length-0;if(0>f)return"";a.j.sort(function(a,b){return =
+a-b});d=3Dnull;c=3D"";for(var e=3D0;e<a.j.length;e++)for(var =
+g=3Da.j[e],h=3Da.o[g],k=3D0;k<h.length;k++){if(!f){d=3Dnull=3D=3Dd?g:d;br=
+eak}var l=3Dza(h[k],a.s,a.A);if(l){l=3Dc+l;=0A=
+if(f>=3Dl.length){f-=3Dl.length;b+=3Dl;c=3Da.s;break}else =
+a.v&&(c=3Df,l[c-1]=3D=3Da.s&&--c,b+=3Dl.substr(0,c),c=3Da.s,f=3D0);d=3Dnu=
+ll=3D=3Dd?g:d}}e=3D"";a.u&&null!=3Dd&&(e=3Dc+a.u+"=3D"+(a.C||d));return =
+b+e+""},ya=3Dfunction(a){if(!a.u)return a.w;var b=3D1,c;for(c in =
+a.o)b=3Dc.length>b?c.length:b;return =
+a.w-a.u.length-b-a.s.length-1},za=3Dfunction(a,b,c,d,f){var =
+e=3D[];ra(a,function(a,h){(a=3DBa(a,b,c,d,f))&&e.push(h+"=3D"+a)});return=
+ =
+e.join(b)},Ba=3Dfunction(a,b,c,d,f){if(null=3D=3Da)return"";b=3Db||"&";c=3D=
+c||",$";"string"=3D=3Dtypeof c&&(c=3Dc.split(""));if(a instanceof=0A=
+Array){if(d=3Dd||0,d<c.length){for(var =
+e=3D[],g=3D0;g<a.length;g++)e.push(Ba(a[g],b,c,d+1,f));return =
+e.join(c[d])}}else if("object"=3D=3Dtypeof a)return =
+f=3Df||0,2>f?encodeURIComponent(za(a,b,c,d,f+1)):"...";return =
+encodeURIComponent(String(a))};var =
+Da=3Dfunction(a,b,c,d,f){if((d?a.v:Math.random())<(f||a.j))try{var e;c =
+instanceof wa?e=3Dc:(e=3Dnew wa,ra(c,function(a,b){var =
+c=3De,d=3Dc.B++;a=3Dxa(b,a);c.j.push(d);c.o[d]=3Da}));var =
+g=3DAa(e,a.u,a.o,a.s+b+"&");g&&Ca(g)}catch(h){}},Ca=3Dfunction(a){m.googl=
+e_image_requests||(m.google_image_requests=3D[]);var =
+b=3Dm.document.createElement("img");b.src=3Da;m.google_image_requests.pus=
+h(b)};var =
+Ea=3Dfunction(a,b,c){this.u=3Da;this.w=3Db;this.s=3Dc;this.o=3Dnull;this.=
+v=3Dthis.j},Fa=3Dfunction(a,b,c){this.s=3Da;this.j=3Db||"";this.o=3Dc||-1=
+},Ha=3Dfunction(a,b,c,d){var f;try{f=3Dc()}catch(h){var e=3Da.s;try{var =
+g=3DGa(h),e=3D(d||a.v).call(a,b,g,void 0,void =
+0)}catch(k){a.j("pAR",k)}if(!e)throw h;}finally{}return =
+f},Ia=3Dfunction(a,b){var c=3DG;return function(){for(var =
+d=3D[],f=3D0;f<arguments.length;++f)d[f]=3Darguments[f];return =
+Ha(c,a,function(){return b.apply(void 0,d)})}};=0A=
+Ea.prototype.j=3Dfunction(a,b,c,d,f){try{var e=3Df||this.w,g=3Dnew =
+wa;g.v=3D!0;F(g,1,"context",a);b instanceof =
+Fa||(b=3DGa(b));F(g,2,"msg",b.s.substring(0,512));b.j&&F(g,3,"file",b.j);=
+0<b.o&&F(g,4,"line",b.o.toString());b=3D{};if(this.o)try{this.o(b)}catch(=
+w){}if(d)try{d(b)}catch(w){}d=3D[b];g.j.push(5);g.o[5]=3Dd;var =
+h;f=3Dm;d=3D[];var =
+k,l=3Dnull;do{b=3Df;qa(b)?(k=3Db.location.href,l=3Db.document&&b.document=
+.referrer||null):(k=3Dl,l=3Dnull);d.push(new =
+ua(k||"",b));try{f=3Db.parent}catch(w){f=3Dnull}}while(f&&b!=3Df);k=3D0;f=
+or(var p=3Dd.length-=0A=
+1;k<=3Dp;++k)d[k].depth=3Dp-k;b=3Dm;if(b.location&&b.location.ancestorOri=
+gins&&b.location.ancestorOrigins.length=3D=3Dd.length-1)for(k=3D1;k<d.len=
+gth;++k){var =
+n=3Dd[k];n.url||(n.url=3Db.location.ancestorOrigins[k-1]||"",n.G=3D!0)}fo=
+r(var u=3Dnew =
+ua(m.location.href,m,!1),x=3Dd.length-1,p=3Dx;0<=3Dp;--p){var =
+v=3Dd[p];if(v.url&&!v.G){u=3Dv;break}}var =
+v=3Dnull,y=3Dd.length&&d[x].url;0!=3Du.depth&&y&&(v=3Dd[x]);h=3Dnew =
+ta(u,v);h.o&&F(g,6,"top",h.o.url||"");F(g,7,"url",h.j.url||"");Da(this.u,=
+e,g,!1,c)}catch(w){try{Da(this.u,e,{context:"ecmserr",=0A=
+rctx:a,msg:Ja(w),url:h.j.url},!1,c)}catch(Ib){}}return this.s};var =
+Ga=3Dfunction(a){return new =
+Fa(Ja(a),a.fileName,a.lineNumber)},Ja=3Dfunction(a){var =
+b=3Da.toString();a.name&&-1=3D=3Db.indexOf(a.name)&&(b+=3D": =
+"+a.name);a.message&&-1=3D=3Db.indexOf(a.message)&&(b+=3D": =
+"+a.message);if(a.stack){a=3Da.stack;var =
+c=3Db;try{-1=3D=3Da.indexOf(c)&&(a=3Dc+"\n"+a);for(var =
+d;a!=3Dd;)d=3Da,a=3Da.replace(/((https?:\/..*\/)[^\/:]*:\d+(?:.|\n)*)\2/,=
+"$1");b=3Da.replace(/\n */g,"\n")}catch(f){b=3Dc}}return b};var =
+Ka=3Ddocument,H=3Dwindow,La=3Dnull,I=3DKa.getElementsByTagName("script");=
+I&&I.length&&(La=3DI[I.length-1]);var Ma=3DLa;var =
+J=3Dfunction(a){a=3DparseFloat(a);return =
+isNaN(a)||1<a||0>a?0:a},Na=3D/^([\w-]+\.)*([\w-]{2,})(\:[0-9]+)?$/,Oa=3Df=
+unction(a,b){return a?(a=3Da.match(Na))?a[0]:b:b};var =
+Pa=3DJ("0.0"),Qa=3DJ("0.10"),Ra=3DJ("0.05"),Sa=3DJ("0.05"),Ta=3DJ("0.1"),=
+Ua=3DJ("0.001"),Va=3DJ(""),Wa=3DJ("0.001");var =
+Xa=3Dfunction(){return"r20161020"},Ya=3D/^true$/.test("false")?!0:!1,Za=3D=
+/^true$/.test("false")?!0:!1,$a=3D/^true$/.test("false")?!0:!1,ab=3D$a||!=
+Za;var =
+bb=3DArray.prototype.forEach?function(a,b,c){Array.prototype.forEach.call=
+(a,b,c)}:function(a,b,c){for(var d=3Da.length,f=3D"string"=3D=3Dtypeof =
+a?a.split(""):a,e=3D0;e<d;e++)e in f&&b.call(c,f[e],e,a)};var K;a:{var =
+cb=3Dm.navigator;if(cb){var db=3Dcb.userAgent;if(db){K=3Ddb;break =
+a}}K=3D""}var L=3Dfunction(a){return-1!=3DK.indexOf(a)};var =
+eb=3DL("Opera"),M=3DL("Trident")||L("MSIE"),fb=3DL("Edge"),N=3DL("Gecko")=
+&&!(-1!=3DK.toLowerCase().indexOf("webkit")&&!L("Edge"))&&!(L("Trident")|=
+|L("MSIE"))&&!L("Edge"),gb=3D-1!=3DK.toLowerCase().indexOf("webkit")&&!L(=
+"Edge"),hb=3Dfunction(){var a=3Dm.document;return a?a.documentMode:void =
+0},ib;=0A=
+a:{var jb=3D"",kb=3Dfunction(){var =
+a=3DK;if(N)return/rv\:([^\);]+)(\)|;)/.exec(a);if(fb)return/Edge\/([\d\.]=
++)/.exec(a);if(M)return/\b(?:MSIE|rv)[: =
+]([^\);]+)(\)|;)/.exec(a);if(gb)return/WebKit\/(\S+)/.exec(a);if(eb)retur=
+n/(?:Version)[ \/]?(\S+)/.exec(a)}();kb&&(jb=3Dkb?kb[1]:"");if(M){var =
+lb=3Dhb();if(null!=3Dlb&&lb>parseFloat(jb)){ib=3DString(lb);break =
+a}}ib=3Djb}=0A=
+var mb=3Dib,oa=3D{},nb=3Dfunction(a){pa(a,function(){for(var =
+b=3D0,c=3DA(String(mb)).split("."),d=3DA(String(a)).split("."),f=3DMath.m=
+ax(c.length,d.length),e=3D0;0=3D=3Db&&e<f;e++){var =
+g=3Dc[e]||"",h=3Dd[e]||"";do{g=3D/(\d*)(\D*)(.*)/.exec(g)||["","","",""];=
+h=3D/(\d*)(\D*)(.*)/.exec(h)||["","","",""];if(0=3D=3Dg[0].length&&0=3D=3D=
+h[0].length)break;b=3DD(0=3D=3Dg[1].length?0:parseInt(g[1],10),0=3D=3Dh[1=
+].length?0:parseInt(h[1],10))||D(0=3D=3Dg[2].length,0=3D=3Dh[2].length)||=
+D(g[2],h[2]);g=3Dg[3];h=3Dh[3]}while(0=3D=3Db)}return 0<=3Db})},ob;var =
+pb=3Dm.document;=0A=
+ob=3Dpb&&M?hb()||("CSS1Compat"=3D=3Dpb.compatMode?parseInt(mb,10):5):void=
+ 0;var qb;if(!(qb=3D!N&&!M)){var =
+rb;if(rb=3DM)rb=3D9<=3DNumber(ob);qb=3Drb}qb||N&&nb("1.9.1");M&&nb("9");v=
+ar sb=3DObject.prototype.hasOwnProperty,tb=3Dfunction(a,b){for(var c in =
+a)sb.call(a,c)&&b.call(void =
+0,a[c],c,a)},O=3Dfunction(a){return!(!a||!a.call)&&"function"=3D=3D=3Dtyp=
+eof a},ub=3Dfunction(a,b){for(var =
+c=3D1,d=3Darguments.length;c<d;++c)a.push(arguments[c])},vb=3Dfunction(){=
+var a;a=3D(a=3DH.google_ad_modifications)?a.loeids||[]:[];var =
+b=3DP.D.l;if(a.indexOf)return a=3Da.indexOf(b),0<a||0=3D=3D=3Da;for(var =
+c=3D0;c<a.length;c++)if(a[c]=3D=3D=3Db)return!0;return!1},wb=3Dfunction(a=
+){"google_onload_fired"in a||(a.google_onload_fired=3D!1,va(a,=0A=
+function(){a.google_onload_fired=3D!0}))},xb=3Dfunction(a){a=3Da.google_u=
+nique_id;return"number"=3D=3D=3Dtypeof =
+a?a:0},yb=3D!!window.google_async_iframe_id;var =
+zb,G,Q,R=3D[],Ab=3D1E-4>Math.random(),Bb=3D!(!H.performance||!H.performan=
+ce.now);zb=3Dnew =
+function(){this.u=3D"http:"=3D=3D=3DH.location.protocol?"http:":"https:";=
+this.o=3D"pagead2.googlesyndication.com";this.s=3D"/pagead/gen_204?id=3D"=
+;this.j=3D.01;this.v=3DMath.random()};G=3Dnew Ea(zb,"jserror",!0);=0A=
+var Eb=3Dfunction(a,b){var c=3DCb;if(Ab){var =
+d=3DBb?H.performance.now():ca();Ha(G,a,b,c);b=3DMath.round((Bb?H.performa=
+nce.now():ca())-d);R.push(a+"."+b);Q||(Q=3DH.setTimeout(Db,500))}else =
+Ha(G,a,b,c)},Cb=3DG.j,Db=3Dfunction(){R.length&&(Da(zb,"execution_time",{=
+data:R.join(","),nav_api:Bb?1:0},!0,Ab?1:0),R=3D[],H.clearTimeout(Q),Q=3D=
+void 0)},Fb=3Dfunction(a,b){return Ia(a,b)};var =
+Gb=3DL("Safari")&&!((L("Chrome")||L("CriOS"))&&!L("Edge")||L("Coast")||L(=
+"Opera")||L("Edge")||L("Silk")||L("Android"))&&!(L("iPhone")&&!L("iPod")&=
+&!L("iPad")||L("iPad")||L("iPod"));var =
+S=3Dnull,Hb=3Dnull,Jb=3DN||gb&&!Gb||eb||"function"=3D=3Dtypeof =
+m.btoa,Kb=3Dfunction(a,b){var =
+c;if(Jb&&!b)c=3Dm.btoa(a);else{c=3D[];for(var =
+d=3D0,f=3D0;f<a.length;f++){for(var =
+e=3Da.charCodeAt(f);255<e;)c[d++]=3De&255,e>>=3D8;c[d++]=3De}if(!S)for(S=3D=
+{},Hb=3D{},a=3D0;65>a;a++)S[a]=3D"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm=
+nopqrstuvwxyz0123456789+/=3D".charAt(a),Hb[a]=3D"ABCDEFGHIJKLMNOPQRSTUVWX=
+YZabcdefghijklmnopqrstuvwxyz0123456789-_.".charAt(a);b=3Db?Hb:S;a=3D[];fo=
+r(d=3D0;d<c.length;d+=3D3){var =
+g=3Dc[d],h=3D(f=3Dd+1<c.length)?c[d+1]:0,k=3D(e=3Dd+2<c.length)?=0A=
+c[d+2]:0,l=3Dg>>2,g=3D(g&3)<<4|h>>4,h=3D(h&15)<<2|k>>6,k=3Dk&63;e||(k=3D6=
+4,f||(h=3D64));a.push(b[l],b[g],b[h],b[k])}c=3Da.join("")}return c};var =
+T=3D"google_ad_block google_ad_channel google_ad_client google_ad_format =
+google_ad_height google_ad_host google_ad_host_channel =
+google_ad_host_tier_id google_ad_modifications google_ad_output =
+google_ad_region google_ad_section google_ad_slot google_ad_type =
+google_ad_unit_key google_ad_dom_fingerprint google_ad_width =
+google_adtest google_allow_expandable_ads google_alternate_ad_url =
+google_alternate_color google_ama google_analytics_domain_name =
+google_analytics_uacct google_analytics_url_parameters =
+google_auto_format google_available_width google_captcha_token =
+google_city google_color_bg google_color_border google_color_line =
+google_color_link google_color_text google_color_url google_container_id =
+google_content_recommendation_ui_type =
+google_content_recommendation_columns_num =
+google_content_recommendation_rows_num google_contents google_core_dbp =
+google_country google_cpm google_ctr_threshold google_cust_age =
+google_cust_ch google_cust_criteria google_cust_gender google_cust_id =
+google_cust_interests google_cust_job google_cust_l google_cust_lh =
+google_cust_u_url google_disable_video_autoplay =
+google_delay_requests_count google_delay_requests_delay google_ed =
+google_eids google_enable_content_recommendations google_enable_ose =
+google_encoding google_floating_ad_position google_font_face =
+google_font_size google_frame_id google_gl google_hints =
+google_is_split_slot google_image_size google_kw google_kw_type =
+google_lact google_language google_loeid google_max_num_ads =
+google_max_radlink_len google_mtl google_native_settings_key google_nofo =
+google_num_radlinks google_num_radlinks_per_unit =
+google_only_ads_with_video google_only_pyv_ads =
+google_only_userchoice_ads google_override_format google_page_url =
+google_pgb_reactive google_previous_watch google_previous_searches =
+google_referrer_url google_region google_responsive_formats =
+google_reuse_colors google_rl_dest_url google_rl_filtering =
+google_rl_mode google_rt google_safe google_safe_for_responsive_override =
+google_scs google_source_type google_sui google_skip =
+google_tag_for_child_directed_treatment google_tag_info =
+google_tag_origin google_targeting google_tdsma google_tfs google_tl =
+google_ui_features google_video_doc_id google_video_product_type =
+google_video_url_to_fetch google_webgl_support google_with_pyv_ads =
+google_yt_pt google_yt_up".split(" "),=0A=
+Lb=3D{google_ad_modifications:!0,google_analytics_domain_name:!0,google_a=
+nalytics_uacct:!0},Mb=3Dfunction(a){return(a=3Da.innerText||a.innerHTML)&=
+&(a=3Da.replace(/^\s+/,"").split(/\r?\n/,1)[0].match(/^\x3c!--+(.*?)(?:--=
++>)?\s*$/))&&/google_ad_client/.test(a[1])?a[1]:null},Nb=3Dfunction(a){if=
+(a=3Da.innerText||a.innerHTML)if(a=3Da.replace(/^\s+|\s+$/g,"").replace(/=
+\s*(\r?\n)+\s*/g,";"),(a=3Da.match(/^\x3c!--+(.*?)(?:--+>)?$/)||a.match(/=
+^\/*\s*<!\[CDATA\[(.*?)(?:\/*\s*\]\]>)?$/i))&&/google_ad_client/.test(a[1=
+]))return a[1];=0A=
+return null},Qb=3Dfunction(a){var b;try{a:{var =
+c=3Da.document.getElementsByTagName("script"),d=3Da.navigator&&a.navigato=
+r.userAgent||"",f;if(!(f=3D/appbankapppuzdradb|daumapps|fban|fbios|fbav|f=
+b_iab|gsa\/|messengerforios|naver|niftyappmobile|nonavigation|pinterest|t=
+witter|ucbrowser|yjnewsapp|youtube/i.test(d))){var =
+e;if(e=3D/i(phone|pad|pod)/i.test(d)){var =
+g;if(g=3D/applewebkit/i.test(d)&&!/version|safari/i.test(d)){var =
+h;try{h=3D!(!H.navigator.j&&!(Ya&&H.google_top_window||H.top).navigator.j=
+)}catch(u){h=3D!1}g=3D=0A=
+!h}e=3Dg}f=3De}for(var d=3Df?Mb:Nb,k=3Dc.length-1;0<=3Dk;k--){var =
+l=3Dc[k];if(!l.google_parsed_script){l.google_parsed_script=3D!0;var =
+p=3Dd(l);if(p){b=3Dp;break =
+a}}}b=3Dnull}}catch(u){return!1}if(!b)return!1;try{for(var =
+c=3D/(google_\w+) *=3D *(['"]?[\w.-]+['"]?) =
+*(?:;|$)/gm,k=3D{},n;n=3Dc.exec(b);)k[n[1]]=3DOb(n[2]);Pb(k,a)}catch(u){r=
+eturn!1}return!!a.google_ad_client},Rb=3Dfunction(a){a.google_page_url&&(=
+a.google_page_url=3DString(a.google_page_url));var =
+b=3D[];tb(a,function(a,d){if(null!=3Da){var c;try{var e=3D[];z(new =
+ea,a,e);c=3De.join("")}catch(g){}c&&=0A=
+(c=3Dc.replace(/\//g,"\\$&"),ub(b,d,"=3D",c,";"))}});return =
+b.join("")},Sb=3Dfunction(a){for(var b=3D0,c=3DT.length;b<c;b++){var =
+d=3DT[b];Lb[d]||(a[d]=3Dnull)}},Ob=3Dfunction(a){switch(a){case =
+"true":return!0;case "false":return!1;case "null":return null;case =
+"undefined":break;default:try{var =
+b=3Da.match(/^(?:'(.*)'|"(.*)")$/);if(b)return =
+b[1]||b[2]||"";if(/^[-+]?\d*(\.\d+)?$/.test(a)){var =
+c=3DparseFloat(a);return c=3D=3D=3Dc?c:void =
+0}}catch(d){}}},Pb=3Dfunction(a,b){for(var c=3D0;c<T.length;c++){var =
+d=3DT[c];null=3D=3Db[d]&&null!=3D=0A=
+a[d]&&(b[d]=3Da[d])}};var Tb=3Dfunction(a,b,c){if(!a)return null;for(var =
+d=3D0;d<a.length;++d)if((a[d].ad_slot||b)=3D=3Db&&(a[d].ad_tag_origin||c)=
+=3D=3Dc)return a[d];return null};var =
+Ub=3D{client:"google_ad_client",format:"google_ad_format",slotname:"googl=
+e_ad_slot",output:"google_ad_output",ad_type:"google_ad_type",pse:"google=
+_pstate_expt"};G.s=3D!Ya;var Vb=3D!1;var =
+Wb=3Dnull,Xb=3Dfunction(){if(!Wb){for(var =
+a=3Dwindow,b=3Da,c=3D0;a&&a!=3Da.parent;)if(a=3Da.parent,c++,qa(a))b=3Da;=
+else break;Wb=3Db}return Wb};var =
+Yb=3D{m:"10573511",l:"10573512"},Zb=3D{m:"10583695",l:"10583696"},$b=3D{m=
+:"10573695",l:"10573696"},ac=3D{m:"10593695",l:"10593696"},bc=3D{m:"40890=
+30",l:"4089031"},cc=3D{m:"4089035",l:"4089036"},P=3D{U:{},ga:{m:"45384810=
+2",l:"453848103"},ba:{m:"24819308",l:"24819309",P:"24819320",W:"24819321"=
+},aa:{m:"24819330",l:"24819331"},Y:{m:"86724438",l:"86724439"},M:{m:"1057=
+3581",l:"10573582"},V:{m:"26835105",l:"26835106"},L:{m:"20040000",l:"2004=
+0001"},R:{m:"20040016",l:"20040017"},T:{O:"314159230",$:"314159231"},Z:{d=
+a:"27285692",=0A=
+fa:"27285712",ea:"27285713"},ca:{m:"27415010",l:"27415011"},X:{m:"9009130=
+0",l:"90091301"},D:{m:"62710000",l:"62710001"}},Vb=3D!1;var =
+U=3Dfunction(a,b){b&&a.push(b)},V=3Dfunction(a,b,c){for(var =
+d=3D0;d<c.length;d++)if(a.location&&a.location.hash=3D=3D"#google_plle_"+=
+c[d])return c[d];var f;a:{try{var e=3Dwindow.top.location.hash;if(e){var =
+g=3De.match(/\bdeid=3D([\d,]+)/);f=3Dg&&g[1]||"";break =
+a}}catch(k){}f=3D""}if(a=3D(a=3Df.match(new =
+RegExp("\\b("+c.join("|")+")\\b")))&&a[0]||null)c=3Da;else =
+if(Vb)c=3Dnull;else =
+a:{if(!(1E-4>Math.random())&&(a=3DMath.random(),a<b)){b=3Dwindow;try{var =
+h=3Dnew =
+Uint32Array(1);b.crypto.getRandomValues(h);a=3Dh[0]/65536/65536}catch(k){=
+a=3D=0A=
+Math.random()}c=3Dc[Math.floor(a*c.length)];break a}c=3Dnull}return =
+c};var =
+dc=3Dfunction(a,b,c){Eb("files::getSrc",function(){if("https:"=3D=3DH.loc=
+ation.protocol&&"http"=3D=3Dc)throw c=3D"https",Error("Requested url =
+"+a+b);});return[c,"://",a,b].join("")},ec=3Dfunction(a,b,c){c||(c=3Dab?"=
+https":"http");return dc(a,b,c)};var =
+W=3Dfunction(a){this.j=3Da;a.google_iframe_oncopy||(a.google_iframe_oncop=
+y=3D{handlers:{},upd:q(this.u,this)});this.s=3Da.google_iframe_oncopy},fc=
+=3Dfunction(a,b){var c=3Dnew =
+RegExp("\\b"+a+"=3D(\\d+)"),d=3Dc.exec(b);d&&(b=3Db.replace(c,a+"=3D"+(+d=
+[1]+1||1)));return =
+b};W.prototype.set=3Dfunction(a,b){this.s.handlers[a]=3Db;this.j.addEvent=
+Listener&&this.j.addEventListener("load",q(this.o,this,a),!1)};=0A=
+W.prototype.o=3Dfunction(a){a=3Dthis.j.document.getElementById(a);try{var=
+ =
+b=3Da.contentWindow.document;if(a.onload&&b&&(!b.body||!b.body.firstChild=
+))a.onload()}catch(c){}};W.prototype.u=3Dfunction(a,b){var =
+c=3Dfc("rx",a);a:{if(a&&(a=3Da.match("dt=3D([^&]+)"))&&2=3D=3Da.length){a=
+=3Da[1];break a}a=3D""}a=3D(new =
+Date).getTime()-a;c=3Dc.replace(/&dtd=3D(\d+|-?M)/,"&dtd=3D"+(1E5<=3Da?"M=
+":0<=3Da?a:"-M"));this.set(b,c);return c};var gc=3Dna("var =
+i=3Dthis.id,s=3Dwindow.google_iframe_oncopy,H=3Ds&&s.handlers,h=3DH&&H[i]=
+,w=3Dthis.contentWindow,d;try{d=3Dw.document}catch(e){}if(h&&d&&(!d.body|=
+|!d.body.firstChild)){if(h.call){setTimeout(h,0)}else =
+if(h.match){try{h=3Ds.upd(h,i)}catch(e){}w.location.replace(h)}}");var =
+hc=3Dfunction(a){if(!a)return"";(a=3Da.toLowerCase())&&"ca-"!=3Da.substri=
+ng(0,3)&&(a=3D"ca-"+a);return a};N||gb||M&&nb(11);var ic=3D/MSIE =
+[2-7]|PlayStation|Gecko\/20090226|Android 2\.|Opera/i;var X=3Dnull;var =
+jc=3D{"120x90":!0,"160x90":!0,"180x90":!0,"200x90":!0,"468x15":!0,"728x15=
+":!0};var =
+Y=3Dfunction(a){this.u=3D[];this.o=3Da||window;this.j=3D0;this.s=3Dnull;t=
+his.B=3D0},Z,kc=3Dfunction(a){try{return =
+a.sz()}catch(b){return!1}},lc=3Dfunction(a){return!!a&&("object"=3D=3D=3D=
+typeof a||"function"=3D=3D=3Dtypeof =
+a)&&kc(a)&&O(a.nq)&&O(a.nqa)&&O(a.al)&&O(a.rl)},mc=3Dfunction(){if(Z&&kc(=
+Z))return Z;var a=3DXb(),b=3Da.google_jobrunner;return =
+lc(b)?Z=3Db:a.google_jobrunner=3DZ=3Dnew =
+Y(a)},nc=3Dfunction(a,b){mc().nq(a,b)},oc=3Dfunction(a,b){mc().nqa(a,b)};=0A=
+Y.prototype.C=3Dfunction(a,b){0!=3Dthis.j||0!=3Dthis.u.length||b&&b!=3Dwi=
+ndow?this.v(a,b):(this.j=3D2,this.A(new =
+pc(a,window)))};Y.prototype.v=3Dfunction(a,b){this.u.push(new =
+pc(a,b||this.o));qc(this)};Y.prototype.I=3Dfunction(a){this.j=3D1;if(a){v=
+ar =
+b=3DFb("sjr::timeout",q(this.w,this,!0));this.s=3Dthis.o.setTimeout(b,a)}=
+};Y.prototype.w=3Dfunction(a){a&&++this.B;1=3D=3Dthis.j&&(null!=3Dthis.s&=
+&(this.o.clearTimeout(this.s),this.s=3Dnull),this.j=3D0);qc(this)};Y.prot=
+otype.J=3Dfunction(){return!(!window||!Array)};Y.prototype.H=3Dfunction()=
+{return this.B};=0A=
+var qc=3Dfunction(a){var =
+b=3DFb("sjr::tryrun",q(a.K,a));a.o.setTimeout(b,0)};Y.prototype.K=3Dfunct=
+ion(){if(0=3D=3Dthis.j&&this.u.length){var =
+a=3Dthis.u.shift();this.j=3D2;var =
+b=3DFb("sjr::run",q(this.A,this,a));a.j.setTimeout(b,0);qc(this)}};Y.prot=
+otype.A=3Dfunction(a){this.j=3D0;a.o()};Y.prototype.nq=3DY.prototype.C;Y.=
+prototype.nqa=3DY.prototype.v;Y.prototype.al=3DY.prototype.I;Y.prototype.=
+rl=3DY.prototype.w;Y.prototype.sz=3DY.prototype.J;Y.prototype.tc=3DY.prot=
+otype.H;var pc=3Dfunction(a,b){this.o=3Da;this.j=3Db};var =
+rc=3Dyb?1=3D=3Dxb(H):!xb(H),sc=3Dfunction(){var =
+a=3D$a?"https":"http",b=3DE("script"),c;a:{if(Ya)try{var =
+d=3DH.google_cafe_host||H.top.google_cafe_host;if(d){c=3Dd;break =
+a}}catch(f){}c=3DOa("","pagead2.googlesyndication.com")}return["<",b,' =
+src=3D"',ec(c,["/pagead/js/",Xa(),"/r20161020/show_ads_impl.js"].join("")=
+,a),'"></',b,">"].join("")},tc=3Dfunction(a,b,=0A=
+c,d){return function(){var f=3D!1;d&&mc().al(3E4);try{var =
+e=3Da.document.getElementById(b).contentWindow;if(qa(e)){var =
+g=3Da.document.getElementById(b).contentWindow,h=3Dg.document;h.body&&h.b=
+ody.firstChild||(/Firefox/.test(navigator.userAgent)?h.open("text/html","=
+replace"):h.open(),g.google_async_iframe_close=3D!0,h.write(c))}else{for(=
+var =
+k=3Da.document.getElementById(b).contentWindow,e=3Dc,e=3DString(e),g=3D['=
+"'],h=3D0;h<e.length;h++){var =
+l=3De.charAt(h),p=3Dl.charCodeAt(0),n=3Dh+1,u;if(!(u=3DB[l])){var =
+x;if(31<p&&127>p)x=3D=0A=
+l;else{var v=3Dl;if(v in C)x=3DC[v];else if(v in =
+B)x=3DC[v]=3DB[v];else{var y=3Dvoid =
+0,w=3Dv.charCodeAt(0);if(31<w&&127>w)y=3Dv;else{if(256>w){if(y=3D"\\x",16=
+>w||256<w)y+=3D"0"}else =
+y=3D"\\u",4096>w&&(y+=3D"0");y+=3Dw.toString(16).toUpperCase()}x=3DC[v]=3D=
+y}}u=3Dx}g[n]=3Du}g.push('"');k.location.replace("javascript:"+g.join("")=
+)}f=3D!0}catch(Ib){k=3DXb().google_jobrunner,lc(k)&&k.rl()}f&&(f=3Dfc("go=
+ogle_async_rrc",c),(new =
+W(a)).set(b,tc(a,b,f,!1)))}},uc=3Dfunction(a){var =
+b=3D["<iframe"];tb(a,function(a,d){null!=3Da&&b.push(" "+d+'=3D"'+na(a)+=0A=
+'"')});b.push("></iframe>");return =
+b.join("")},vc=3Dfunction(a){if(!X)a:{for(var =
+b=3D[m.top],c=3D[],d=3D0,f;f=3Db[d++];){c.push(f);try{if(f.frames)for(var=
+ =
+e=3Df.frames.length,g=3D0;g<e&&1024>b.length;++g)b.push(f.frames[g])}catc=
+h(k){}}for(b=3D0;b<c.length;b++)try{var =
+h=3Dc[b].frames.google_esf;if(h){X=3Dh;break =
+a}}catch(k){}X=3Dnull}if(!X){c=3D{style:"display:none"};if(/[^a-z0-9-]/.t=
+est(a))return"";c["data-ad-client"]=3Dhc(a);c.id=3D"google_esf";c.name=3D=
+"google_esf";a=3Dec(Oa("","googleads.g.doubleclick.net"),=0A=
+["/pagead/html/",Xa(),"/r20161020/zrt_lookup.html"].join(""));c.src=3Da;r=
+eturn uc(c)}return""},wc=3Dfunction(a,b){var =
+c=3Db.google_ad_output,d=3Db.google_ad_format;d||"html"!=3Dc&&null!=3Dc||=
+(d=3Db.google_ad_width+"x"+b.google_ad_height);c=3D!b.google_ad_slot||b.g=
+oogle_override_format||!jc[b.google_ad_width+"x"+b.google_ad_height]&&"aa=
+"=3D=3Db.google_loader_used;d&&c?d=3Dd.toLowerCase():d=3D"";b.google_ad_f=
+ormat=3Dd;if("number"!=3Dtypeof b.google_reactive_sra_index||=0A=
+!b.google_ad_unit_key){for(var =
+d=3D[b.google_ad_slot,b.google_ad_format,b.google_ad_type,b.google_ad_wid=
+th,b.google_ad_height],c=3D[],f=3D0,e=3DMa.parentElement;e&&25>f;e=3De.pa=
+rentNode,++f)c.push(9!=3D=3De.nodeType&&e.id||"");(c=3Dc.join())&&d.push(=
+c);b.google_ad_unit_key=3Dsa(d.join(":")).toString();d=3DMa;c=3D[];for(f=3D=
+0;d&&25>f;++f){var =
+e=3D(e=3D9!=3D=3Dd.nodeType&&d.id)?"/"+e:"",g;a:{if(d&&d.nodeName&&d.pare=
+ntElement){g=3Dd.nodeName.toString().toLowerCase();for(var =
+h=3Dd.parentElement.childNodes,k=3D0,l=3D0;l<h.length;++l){var p=3D=0A=
+h[l];if(p.nodeName&&p.nodeName.toString().toLowerCase()=3D=3D=3Dg){if(d=3D=
+=3D=3Dp){g=3D"."+k;break =
+a}++k}}}g=3D""}c.push((d.nodeName&&d.nodeName.toString().toLowerCase())+e=
++g);d=3Dd.parentElement}d=3Dc.join()+":";c=3D[];if(a)try{for(var =
+n=3Da.parent,f=3D0;n&&n!=3D=3Da&&25>f;++f){for(var =
+u=3Dn.frames,e=3D0;e<u.length;++e)if(a=3D=3D=3Du[e]){c.push(e);break}a=3D=
+n;n=3Da.parent}}catch(x){}b.google_ad_dom_fingerprint=3Dsa(d+c.join()).to=
+String()}};(function(a){G.o=3Dfunction(b){bb(a,function(a){a(b)})}})([fun=
+ction(a){a.shv=3DXa()},function(a){ra(Ub,function(b,c){try{null!=3Dm[b]&&=
+(a[c]=3Dm[b])}catch(d){}})}]);=0A=
+Eb("sa::main",function(){var =
+a=3Dwindow,b=3Da.google_ad_modifications=3Da.google_ad_modifications||{};=
+if(!b.plle){b.plle=3D!0;var =
+c=3Db.eids=3Db.eids||[],b=3Db.loeids=3Db.loeids||[],d,f,e;d=3DZb;U(c,V(a,=
+Ra,[d.m,d.l]));d=3D$b;U(c,V(a,Sa,[d.m,d.l]));d=3Dbc;U(c,V(a,Pa,[d.m,d.l])=
+);d=3Dcc;U(c,V(a,Qa,[d.m,d.l]));d=3Dac;U(c,V(a,Ta,[d.m,d.l]));d=3DP.M;f=3D=
+V(a,Ua,[d.m,d.l]);U(b,f);f=3D=3Dd.m?e=3DYb.m:f=3D=3Dd.l?e=3DYb.l:e=3D"";U=
+(c,e);Ka.body||(d=3DP.L,U(b,V(a,Va,[d.m,d.l])));d=3DP.D;f=3DV(a,Wa,[d.m,d=
+.l]);U(b,f)}b=3Da.google_ad_slot;c=3Da.google_ad_modifications;=0A=
+!c||Tb(c.ad_whitelist,b,void =
+0)?c=3Dnull:(e=3Dc.space_collapsing||"none",c=3D(b=3DTb(c.ad_blacklist,b)=
+)?{F:!0,N:b.space_collapsing||e}:c.remove_ads_by_default?{F:!0,N:e}:null)=
+;if(c&&c.F)Sb(a);else =
+if(wb(a),vb()&&(c=3D{4205305285:!0,1042763955:!0,743687745:!0,3202442099:=
+!0,1772659378:!0,1597266327:!0,992473904:!0,1044106310:!0,3632594523:!0,3=
+117125756:!0,3960366076:!0},"js"=3D=3DH.google_ad_output&&H.google_ad_cli=
+ent&&c[sa(H.google_ad_client)]&&(H.google_enable_async=3D!0)),!1=3D=3D=3D=
+window.google_enable_async||ic.test(navigator.userAgent)||=0A=
+window.google_container_id||window.google_ad_output&&"html"!=3Dwindow.goo=
+gle_ad_output&&("js"!=3Dwindow.google_ad_output||!0!=3D=3Dwindow.google_e=
+nable_async))a.google_loader_used=3D"sb",a.google_start_time=3Dr,wc(a,a),=
+document.write(vc(a.google_ad_client)+sc());else{rc&&(e=3Da.google_ad_cli=
+ent,c=3Dnavigator,a&&e&&c&&(c=3Da.document,e=3Dhc(e),/[^a-z0-9-]/.test(e)=
+||((b=3DA("r20160913"))&&(b+=3D"/"),b=3Dec("pagead2.googlesyndication.com=
+","/pub-config/"+b+e+".js"),e=3Dc.createElement("script"),e.src=3Db,(c=3D=
+c.getElementsByTagName("script")[0])&&=0A=
+c.parentNode&&c.parentNode.insertBefore(e,c))));a.google_unique_id?++a.go=
+ogle_unique_id:a.google_unique_id=3D1;e=3D{};null=3D=3Da.google_ad_client=
+&&Qb(a)&&(e.google_loader_features_used=3D2048);Pb(a,e);e.google_loader_u=
+sed=3D"sa";Sb(a);c=3DE("script");b=3D{};d=3De.google_ad_height;b.width=3D=
+'"'+e.google_ad_width+'"';b.height=3D'"'+d+'"';b.frameborder=3D'"0"';b.ma=
+rginwidth=3D'"0"';b.marginheight=3D'"0"';b.vspace=3D'"0"';b.hspace=3D'"0"=
+';b.allowtransparency=3D'"true"';b.scrolling=3D'"no"';b.allowfullscreen=3D=
+'"true"';b.onload=3D'"'+gc+'"';=0A=
+var g;d=3Da.document;f=3Db.id;for(var =
+h=3D0;!f||d.getElementById(f);)f=3D"aswift_"+h++;b.id=3Df;b.name=3Df;var =
+h=3De.google_ad_width,k=3De.google_ad_height;f=3D["<iframe"];for(g in =
+b)b.hasOwnProperty(g)&&ub(f,g+"=3D"+b[g]);f.push('style=3D"left:0;positio=
+n:absolute;top:0;"');f.push("></iframe>");g=3Db.id;h=3D"border:none;heigh=
+t:"+k+"px;margin:0;padding:0;position:relative;visibility:visible;width:"=
++h+"px;background-color:transparent";d.write(['<ins =
+id=3D"',g+"_expand",'" style=3D"display:inline-table;',h,'"><ins =
+id=3D"',g+"_anchor",=0A=
+'" style=3D"display:block;',h,'">',f.join(" =
+"),"</ins></ins>"].join(""));g=3Db.id;wc(a,e);var =
+b=3DRb(e),l;a:{try{if(window.JSON&&window.JSON.stringify&&window.encodeUR=
+IComponent){var =
+p=3Dwindow.encodeURIComponent(window.JSON.stringify(e)),n;try{n=3DKb(p)}c=
+atch(u){n=3D"#"+Kb(p,!0)}l=3Dn;break a}}catch(u){G.j("sblob",u,void =
+0,void 0)}l=3D""}p=3Dvc(e.google_ad_client);n=3D(new =
+Date).getTime();l=3D["<!doctype =
+html><html><body>",p,"<",c,">",b,"google_show_ads_impl=3Dtrue;google_uniq=
+ue_id=3D",xb(a),';google_async_iframe_id=3D"',g,=0A=
+'";google_start_time=3D',r,";",l?'google_pub_vars =3D =
+"'+l+'";':"","google_bpp=3D",n>r?n-r:1,";google_async_rrc=3D0;google_ifra=
+me_start_time=3Dnew =
+Date().getTime();</",c,">",sc(),"</body></html>"].join("");(a.document.ge=
+tElementById(g)?nc:oc)(tc(a,g,l,!0))}});}).call(this);=0A=
+
+------=_NextPart_000_00AE_01D2305C.349D6360--

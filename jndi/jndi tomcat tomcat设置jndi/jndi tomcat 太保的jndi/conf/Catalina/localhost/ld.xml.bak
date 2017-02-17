@@ -1,0 +1,3 @@
+<Context path="/ld" reloadable="true" docBase="D:\workspaces\lifeteleweb\trunk\shgt-ec-min\WebContent" workDir="D:\apache-tomcat-6.0.32\work\lifeteledata">
+	<Loader delegate="true"/>
+</Context>

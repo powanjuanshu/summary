@@ -1,0 +1,17 @@
+package cb;
+
+import java.util.Properties;
+
+public class MyFirstNIOServer {
+	public static void main(String[] args) throws Exception {
+		Properties talks = new Properties();
+		talks.load(new FileInputStream("E:\\talk.properties"));
+		String newMsg = talks.getProperty("aaa");
+		System.out.println(newMsg);
+	}
+}
+-------------------
+aaa=jack
+bbb=rose
+
+

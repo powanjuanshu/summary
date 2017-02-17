@@ -1,0 +1,103 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>center</title>
+  </head>
+  
+  <body>
+  	<input type="button" value="send" onclick="cli()"/>
+  </body>
+  
+	<script type="text/javascript">
+	var jQue = function(){}
+	
+	jQue.prototype={
+			jquery: "1.2.1",
+			init: function(username){
+				alert("init.."+username);
+			}
+	};
+	new jQue().init("jck");
+	
+	jQue.prototype={
+			jquery2: "1.2.1",
+			init2: function(username){
+				alert("init2.."+username);
+			}
+	};
+	new jQue().init("ros");//报错没有这个方法:Uncaught TypeError: Object #<Object> has no method 'init';说明prototype定义两次会覆盖
+	
+	
+	</script>
+</html>
+--------------------
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>center</title>
+	<!-- <script type="text/javascript" src="jquery-1.10.2.js"></script> -->
+	<!-- <script type="text/javascript" src="jque.js"></script> -->
+	
+	
+  </head>
+  
+  <body>
+  	<input type="button" value="send" onclick="cli()"/>
+  </body>
+  
+	<script type="text/javascript">
+	/* var jQue = function(username){
+		return new jQue.prototype.init( username );
+	}
+	
+	
+	jQue.prototype={
+			jquery: "1.2.1",
+			init: function(username){
+				alert("init.."+username);
+			}
+	};
+	jQue("jac").init(); */
+	
+	
+	//debugger;
+	 
+	var xjQuex2 = function () {
+		return new xjQuex2.prototype.init();
+	};
+	xjQuex2.prototype = {
+		init:function () {
+			alert("init...");
+		}
+	}
+	xjQuex2.prototype.extend = function () {//这种不会覆盖
+		alert("jqy...");
+	}
+	
+	xjQuex2.prototype.init.prototype = xjQuex2.prototype;
+	
+	
+	alert(typeof xjQuex2);
+	var xxx = xjQuex2();
+	alert(typeof xxx);
+	
+	
+	var obj = xjQuex2();
+	console.log(obj);
+	console.log(xjQuex2);
+	obj.extend();
+	
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+

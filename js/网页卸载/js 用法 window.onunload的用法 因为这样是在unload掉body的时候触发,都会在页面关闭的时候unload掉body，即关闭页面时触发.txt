@@ -1,0 +1,7 @@
+window.onunload=function(){
+			alert(123);
+			Ext.Ajax.request({
+        		url:'logout.jsp',
+        		method:'POST'
+	    	});
+		};

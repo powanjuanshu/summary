@@ -1,0 +1,62 @@
+[1]
+* @Inherited表明是否一个使用某个annotation的父类可以让此annotation应用于子类
+
+[2]
+package cn;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+@Documented // 在使用此注解的时候，使用javadoc生成文档时，会将此注解写进去，如果没有此注解，则生成doc文档时不会讲此注释信息写入doc文档
+@Inherited // 表示使用此注解的时候，父类使用此注解，那么其子类也会继承的使用此注解，子类不必显示的使用此注解，如果没有则默认不会继承
+@Retention(value=RetentionPolicy.RUNTIME) // 使用Retention定义一个注解的保存范围，【一共有三种保存范围：SOURCE（此注解的信息只会保留在*.java源文件中，编译之后不会保存在*.class文件中），CLASS（此注解的信息会保留在*.java源文件中和编译之后的*.class文件中，此注解信息不会加载到虚拟机JVM中执行，默认为此范围），RUNTIME（此注解的信息会保存在源文件*.java，类文件*.class，也会加载到虚拟机JVM中执行）】
+@Target(ElementType.TYPE) // 此处表示此注解只能用在类上面【如果不写，默认此注解可以用在任何位置】【一共有这么多目标：TYPE,FIELD,METHOD,PARAMETER,CONSTRUCTOR,LOCAL_VARIABLE,ANNOTATION_TYPE（只能用在注解上，注解上使用注解）,PACKAGE】
+public @interface FuckAnnotat { // 默认继承了Annotation接口，和Enum枚举类似。但不能写个接口，然后显示的继承Annotation，这样是没用的，不能使用的
+	public String value() default "jack"; // 默认值为jack，在使用此注解时不写value="xxx"程序不会报错
+	public String name();
+}
+
+package cn;
+@FuckAnnotat(name = "rose")
+public class Person {
+	public void say () {
+		System.out.println("person");
+	}
+}
+
+package cn;
+public class Student extends Person {
+	public void say () {
+		System.out.println("student");
+	}
+}
+
+package cn;
+import java.lang.annotation.Annotation;
+public class Test {
+	public static void main(String[] args) throws Exception {
+		Class<?> c = null;
+		c = Class.forName("cn.Student");
+		Annotation ann[] = c.getAnnotations();
+		for (Annotation a:ann) {
+			System.out.println(a);
+		}
+		if (c.isAnnotationPresent(FuckAnnotat.class)) {
+			FuckAnnotat fa = null;
+			fa = c.getAnnotation(FuckAnnotat.class);
+			String val = fa.value();
+			String nam = fa.name();
+			System.out.println("xxx:" + val);
+			System.out.println("hhh:" + nam);
+		}
+	}
+}
+因为父类继承了子类的注解,所以会打印出:
+@com.annotation.FuckAnnotat(value=jack, name=rose)
+xxx:jack
+hhh:rose
+
+
+

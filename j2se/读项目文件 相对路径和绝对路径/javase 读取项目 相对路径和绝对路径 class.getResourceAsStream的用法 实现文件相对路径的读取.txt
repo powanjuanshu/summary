@@ -1,0 +1,16 @@
+package com.bestpay.http;
+
+import java.io.InputStream;
+
+public class Main6 {
+	public static void main(String[] args) throws Exception {
+		InputStream is = Main6.class.getResourceAsStream("autoreply.txt"); // 前面没有/,表示这个类的路径下面找这个文件,即/com/bestpay/http/,即会去这个包下找autoreply.txt这个文件,实现了相对路径文件的读取
+		InputStream is2 = Main6.class.getResourceAsStream("/com/bestpay/abc.txt"); // 前面有/,表示项目的工程目录,即项目的类路径,例如工程名叫做myproject,"/"代表了myproject,
+		byte[] b = new byte[1024];
+		byte[] c = new byte[1024];
+		is.read(b);
+		is2.read(c);
+		System.out.println("xx:"+new String(b));
+		System.out.println("yy:"+new String(c));
+	}
+}

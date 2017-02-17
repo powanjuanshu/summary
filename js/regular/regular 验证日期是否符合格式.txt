@@ -1,0 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<script type="text/javascript" src="jquery-1.7.1.js"></script>
+<script type="text/javascript" src="jquery.easyui.min.js"></script>
+<script  type="text/javascript">
+	var reg=/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$/;//必须以连续4个数字，然后-，然后连续1个或2个数字，然后-，然后连续1个或2个数字
+	var str='2012-23-97';
+	var result=reg.exec(str);//如果不匹配返回ull
+	alert(result);
+</script>

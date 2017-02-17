@@ -1,0 +1,50 @@
+<c:set var="ctx" value="${pageContext.request.contextPath}"></c:set>
+用的时候${ctx}即可
+
+
+
+
+
+
+
+
+
+
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="aaa"></c:set>
+${ctx}//打出aaa
+------等价于
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="aaa"></c:set>
+<c:out value="${ctx}"></c:out>
+------例子
+<c:set value="${test.testinfo}" var="test2" scope="session"/>将test.testinfo的值保存到session的test2中，其中test是一个javabean的实例，testinfo是test对象的属性。 
+<c:set value="${test.testinfo}" var="test2" scope="session"/>将test.testinfo的值保存到session的test2中，其中test是一个javabean的实例，testinfo是test对象的属性。 
+<c:set target="${cust.address}" property="city" value="${city}"/>将对象cust.address的city属性值保存到变量city中。//如果指定了target属性, 那么property属性也必须指定。
+
+------
+名 称      说 明             			EL   类型      必须  默认值 
+value 	   要被储存的值      			Y    Object    否    无 
+var 	   欲存入的变量名称  			N    String    否    无 
+scope 	   var变量的JSP范围  			N    String    否    pagescope 
+target     为一JavaBean或java.util.Map对象 	Y    Object    否    无 
+property   指定target对象的属性 		Y    String    否    无 
+-----如果指定了target属性, 那么property属性也必须指定。
+<c:set>标签用于保存数据。 
+　　语法1：将value的值储存至范围为scope的varName变量之中： 
+　　<c:set value="value" var="varName" [scope="{ page|request|session|application }"]/> 
+　　语法2：将本体内容的数据储存至范围为scope的varName变量之中： 
+　　<c:set var="varName" [scope="{ page|request|session|application }"]> 
+　　… 本体内容 
+　　</c:set> 
+　　语法3：将value的值储存至target对象的属性中： 
+　　c:set value="value" target="target" property="propertyName" /> 
+　　语法4：将本体内容的数据储存至target对象的属性中： 
+　　<c:set target="target" property="propertyName"> 
+　　… 本体内容 
+　　</c:set> 
+-----
+
+

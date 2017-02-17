@@ -1,0 +1,22 @@
+ <#--ÇþµÀ²éÑ¯-->
+     function query(channel_id){
+     	alert(channel_id);
+         event.preventDefault();
+         alert("yyyy");
+         $.ajax({
+			type : "post",
+			data: {channel_id:channel_id},
+		    dataType : "json",
+		    url : "/channels/getChannelInfo.json?rnd="+new Date().getTime(),
+		    success: function (data) {
+		     alert("xxx");
+		     
+		     
+		     
+		     
+		     var json_data = JSON.stringify(data);
+		     alert(json_data);
+		     
+		     alert("kkk");
+		    }
+	     });

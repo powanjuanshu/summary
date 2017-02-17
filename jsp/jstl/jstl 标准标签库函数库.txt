@@ -1,0 +1,14 @@
+1.<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+2.  <%
+    	request.setAttribute("school","襄樊学院");
+    	request.setAttribute("s",new String[]{"武汉","荆州","襄樊","宜昌"});
+    %>
+    ${fn:length(school)}<br/>
+    ${fn:length(s) }<br/>
+    ${fn:join(s,"#") }<br/>
+    ${s[3] }<br/>
+    数组长度>3显示第三个
+    <c:if test="${fn:lengh(s) gt 3}">
+    	${s[3] }
+    </c:if>
+    ${fn:replace(school,"襄樊","北京") }

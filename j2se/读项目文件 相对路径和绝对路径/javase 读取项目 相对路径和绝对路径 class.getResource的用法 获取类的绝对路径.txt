@@ -1,0 +1,12 @@
+package com.bestpay.http;
+
+public class Main5 {
+	public static void main(String[] args) throws Exception {
+		// linux环境为【file:/bestpayserver/project/paycenter-web/WEB-INF/classes/com/bestpay/paycenter/entry/http/controller/weixin/】
+		// windows环境为【file:/F:/workspace/jjj/bin/com/bestpay/http/】
+		System.out.println(Main5.class.getResource("")); // 返回这个类的绝对路径,格式如上,如果没指定是返回这个类的父目录的绝对路径
+		System.out.println(Main5.class.getResource("/com/bestpay")); // 如果指定了包的路径,则返回指定包的绝对路径
+		System.out.println(Main5.class.getResource("com")); // 如果前面没有/,那么返回null
+		System.out.println(Main5.class.getResource("/bestpay")); // 如果包名不正确,那么返回null
+	}
+}

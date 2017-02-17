@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+	var a1 = parseInt("17", 8);//八进制
+	var a2 = parseInt("17", 10);//十进制,默认是10进制
+	var a3 = Number("17");//只能带一个参数,js严格区分大小写,所以如果写成number("17")会报错
+	alert(a1);//打出15
+	alert(a2);//打出17
+	alert(a3);//打出17
+	alert(Number(new Boolean(true)));//打出:1
+	alert(Number(new Boolean(false)));//打出:0
+	alert(Number(new Date()));//打出:1256657776588,如果参数是 Date 对象，Number() 返回从 1970 年 1 月 1 日至今的毫秒数
+	alert(Number(new String("999")));//打出:999
+	alert(Number(new String("999 888")));//打出:NaN,如果对象的值无法转换为数字，那么 Number()函数返回 NaN
+</script>
+</html>
+--------------------------------------------------------------------
+在js中，如果你使用parseInt("08"),一般都会认为会返回8，然而实际上返回了0.但是用Number("08")返回的才是8. 
+..但是parseInt("08", 10)是可以返回8的。 
+
+为搞清楚两者的区别， 
+
+参考了别人写的parseInt&Number的区别： 
+
+parseInt 
+Parses a string argument and returns an integer of the specified radix or base. 
+核心函数 
+实现版本 Navigator 2.0: If the first character of the string specified in parseInt(string) cannot be converted to a number, returns "NaN" on Solaris and Irix and 0 on all other platforms.Navigator 3.0, LiveWire 2.0: Returns "NaN" on all platforms if the first character of the string specified in parseInt(string) cannot be converted to a number. 
+
+语法 
+parseInt(string,radix) 
+参数 
+string A string that represents the value you want to parse. 
+radix (Optional) An integer that represents the radix of the return value. 
+
+描述 
+The parseInt function is a built-in JavaScript function. 
+The parseInt function parses its first argument, a string, and attempts to return an integer of the specified radix (base). For example, a radix of 10 indicates to convert to a decimal number, 8 octal, 16 hexadecimal, and so on. For radixes above 10, the letters of the alphabet indicate numerals greater than 9. For example, for hexadecimal numbers (base 16), A through F are used. 
+
+If parseInt encounters a character that is not a numeral in the specified radix, it ignores it and all succeeding characters and returns the integer value parsed up to that point. parseInt truncates numbers to integer values. 
+
+If the radix is not specified or is specified as 0, JavaScript assumes the following: 
+
+If the input string begins with "0x", the radix is 16 (hexadecimal). 
+
+If the input string begins with "0", the radix is eight (octal). 
+
+If the input string begins with any other value, the radix is 10 (decimal). 
+If the first character cannot be converted to a number, parseInt returns "NaN". 
+For arithmetic purposes, the "NaN" value is not a number in any radix. You can call the isNaN function to determine if the result of parseInt is "NaN". If "NaN" is passed on to arithmetic operations, the operation results will also be "NaN". 
+
+示例 
+The following示例 all return 15: 
+parseInt("F", 16) 
+parseInt("17", 8) 
+parseInt("15", 10) 
+parseInt(15.99, 10) 
+parseInt("FXX123", 16) 
+parseInt("1111", 2) 
+parseInt("15*3", 10) The following示例 all return "NaN": 
+
+parseInt("Hello", 8) 
+parseInt("0x7", 10) 
+parseInt("FFF", 10) Even though the radix is specified differently, the following示例 all return 17 because the input string begins with "0x". 
+
+parseInt("0x11", 16) 
+parseInt("0x11", 0) 
+parseInt("0x11") 
+----------------------------------------------- 
+将指定对象转换为数字。 
+核心函数 
+实现版本 Navigator 4.0, Netscape Server 3.0 
+
+语法 
+Number(obj) 
+参数 
+obj 一个对象。 
+
+描述 
+如果对象是 Date 类型的对象，Number 将返回自格林威治标准时间 1970 年 1 月 1 日起已经经过的毫秒数，在此日期之后的是正数，之前的是负数。 
+如果 obj 是一个没有数字格式的字符串，Number 将返回 NaN。 
+
+示例 
+下面的例子将把 Date 对象转换为数值型值： 
+<SCRIPT> 
+d = new Date ("December 17, 1995 03:24:00"); 
+document.write (Number(d) + "<BR>"); 
+
+
+
+
+

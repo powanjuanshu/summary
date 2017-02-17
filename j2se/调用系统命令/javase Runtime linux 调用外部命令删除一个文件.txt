@@ -1,0 +1,13 @@
+package com;
+public class DeleteFile{
+	public static void main(String[] args){
+		try {
+			Runtime.getRuntime().exec("rm -r /cpic/jtlftm/CPIC_TS_FileServer/abc.txt");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+----------------------------
+É¾³ýÎÄ¼þ
+

@@ -1,0 +1,1 @@
+out 对应的类类型是：javax.servlet.jsp.JspWriter，代表输出流的对象。作用域为page（页面执行期）

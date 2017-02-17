@@ -1,0 +1,12 @@
+package com.abc;
+
+public class Main5 {
+	public static void main(String[] args) {
+		String resp = new Main5().update("xxx");
+		System.out.println(resp);
+	}
+	public <T> T update (T t) {
+		System.out.println(t);
+		return t;
+	}
+}

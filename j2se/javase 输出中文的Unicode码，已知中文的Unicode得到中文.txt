@@ -1,0 +1,9 @@
+package com;
+public class Yu {
+	public static void main(String[] args) {
+		System.out.println((int)'жа');
+		System.out.println((char)20013);
+		System.out.println(Integer.toHexString('жа'));
+		System.out.println('\u4e2d');
+	}
+}

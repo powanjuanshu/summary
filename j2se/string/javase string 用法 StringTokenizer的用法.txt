@@ -1,0 +1,26 @@
+package threedes;
+import java.util.StringTokenizer;
+public class Main3 {
+	public static void main(String[] args) {
+      String s = new String("The Java platform is the ideal platform for network computing");
+      StringTokenizer st = new StringTokenizer(s);
+      int count = st.countTokens();
+      System.out.println(count); // 10
+      while (st.hasMoreElements()) {
+      	System.out.println(st.nextElement());
+      }
+  }
+}
+-------------------
+package threedes;
+import java.util.StringTokenizer;
+public class Main4 {
+	public static void main(String[] args) {
+		String s = new String("The=Java=platform=is=the=ideal=platform=for=network=computing");
+      StringTokenizer st = new StringTokenizer(s, "=", true); // 第二个参数是分隔字符,第三个参数表示分隔符号是否作为标记返回，如果不指定分隔字符，默认的是：\t\n\r\f，java默认的分隔符是“空格”、“制表符(‘\t’)”、“换行符(‘\n’)”、“回车符(‘\r’)”。
+      System.out.println(st.countTokens()); // 19
+      while( st.hasMoreElements() ){
+      	System.out.println( st.nextToken() );
+      }
+	}
+}

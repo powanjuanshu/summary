@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script type="text/javascript">
+  function toUnicode(theString) {
+        var unicodeString = '';
+        for (var i = 0; i < theString.length; i++) {
+            var theUnicode = theString.charCodeAt(i).toString(16).toUpperCase();
+            while (theUnicode.length < 4) {
+                theUnicode = '0' + theUnicode;
+            }
+            theUnicode = '\\u' + theUnicode;
+            unicodeString += theUnicode;
+        }
+        return unicodeString;
+    }
+
+	var unicode_url = toUnicode("http://nihao.com/临沂市");
+	alert(unicode_url);
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

@@ -1,0 +1,18 @@
+package com;
+public class Tt {
+	public static void main(String[] args) {
+		Thread t=new Thread(new A());
+		t.start();
+		for(int i=1;i<=10000;i++){
+			System.out.println("main线程"+i);
+		}
+	}
+	public static class A implements Runnable{
+		@Override
+		public void run() {
+			for(int i=1;i<=10000;i++){
+				System.out.println("开启a线程"+i);
+			}
+		}
+	}
+}

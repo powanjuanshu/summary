@@ -1,0 +1,9 @@
+package com.cairh.xpe.products.bills.backend.action;
+public class Test {
+	/**
+	 * this is a <tt>HashMap</tt> HashMap class
+	 */
+	public Test(){
+		
+	}
+}
