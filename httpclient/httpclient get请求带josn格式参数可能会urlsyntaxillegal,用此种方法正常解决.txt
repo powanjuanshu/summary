@@ -1,0 +1,57 @@
+package com.test;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import com.alibaba.fastjson.JSONObject;
+
+public class Tttes {
+	public static void main(String[] args) throws Exception {
+	JSONObject json = new JSONObject();  
+        List<NameValuePair> params = new ArrayList<NameValuePair>();  
+        params.add(new BasicNameValuePair("version", "1.0.0"));  
+        params.add(new BasicNameValuePair("format", "json"));
+        params.add(new BasicNameValuePair("method", "Resource.Search"));
+        params.add(new BasicNameValuePair("json", "{\"book\":\"01010101-001\",\"subject\":\"01\",\"publisherVer\":\"01\",\"unit1\":\"04\",\"unit2\":\"001\",\"rrtlevel1\":\"08\"}"));
+        params.add(new BasicNameValuePair("page", "1"));
+        params.add(new BasicNameValuePair("limit", "10"));
+        params.add(new BasicNameValuePair("order", "downloadcount"));
+        //要传递的参数.  
+        String url = "http://172.16.16.73:9999/api?" + URLEncodedUtils.format(params, HTTP.UTF_8);  
+        //拼接路径字符串将参数包含进去  
+        json = get(url);  
+        System.out.println(json.get("UserId"));  
+}
+
+public static JSONObject get(String url) {        
+        HttpClient client = new DefaultHttpClient();  
+        HttpGet get = new HttpGet(url);  
+        JSONObject json = null;  
+        try {  
+            HttpResponse res = client.execute(get);  
+            if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                HttpEntity entity = res.getEntity();
+                String ret = EntityUtils.toString(entity); // 将返回报文实体转换为字符串
+                System.out.println(ret);
+                //json = new JSONObject(new JSONTokener(new InputStreamReader(entity.getContent(), HTTP.UTF_8)));  
+            }  
+        } catch (Exception e) {  
+            throw new RuntimeException(e);
+        } finally{  
+            //关闭连接 ,释放资源  
+            client.getConnectionManager().shutdown();
+        }
+        return json;
+    }
+}
+

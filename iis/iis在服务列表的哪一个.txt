@@ -1,0 +1,7 @@
+在开始运行窗口输入命令:
+services.msc打开服务列表
+找到World Wide Web Publishing Service,开启或停止这一项就是操作iis服务
+
+
+
+

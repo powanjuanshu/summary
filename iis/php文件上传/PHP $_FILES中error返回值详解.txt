@@ -1,0 +1,55 @@
+PHP $_FILES中error返回值详解
+
+用PHP上传文件时，我们会用程序去监听浏览器发送过来的文件信息，首先会通 过$_FILES[fieldName]['error']的不同数值来判断此欲上传的文件状态是否正常。$_FILES[fieldName] ['error']==0代表一切正常，其它数值的具体含义请参考下面一段程序的注释部分，如有翻译不到之处还望指正
+..$_FILES['file']['error']值 
+
+UPLOAD_ERR_OK: 0 //正常，上传成功 
+
+UPLOAD_ERR_INI_SIZE: 1 //上传文件大小超过服务器允许上传的最大值，php.ini中设置upload_max_filesize选项限制的值 
+
+UPLOAD_ERR_FORM_SIZE: 2 //上传文件大小超过HTML表单中隐藏域MAX_FILE_SIZE选项指定的值 
+
+UPLOAD_ERR_NO_TMP_DIR: 6 //没有找不到临时文件夹 
+
+UPLOAD_ERR_CANT_WRITE: 7 //文件写入失败 
+
+UPLOAD_ERR_EXTENSION: 8 //php文件上传扩展没有打开 
+
+UPLOAD_ERR_PARTIAL: 3 //文件只有部分被上传 
+
+
+
+复制代码 代码如下:
+switch($_FILES[$field]['error']) {   
+
+    case 1:    
+        // 文件大小超出了服务器的空间大小    
+        $this->setError("The file is too large (server).");    
+break;    
+
+case 2:    
+        // 要上传的文件大小超出浏览器限制    
+        $this->setError("The file is too large (form).");    
+        break;    
+
+    case 3:    
+        // 文件仅部分被上传    
+        $this->setError("The file was only partially uploaded.");    
+        break;    
+
+    case 4:    
+        // 没有找到要上传的文件    
+        $this->setError("No file was uploaded.");    
+        break;    
+
+    case 5:    
+        // 服务器临时文件夹丢失    
+        $this->setError("The servers temporary folder is missing.");    
+        break;    
+
+    case 6:    
+        // 文件写入到临时文件夹出错    
+        $this->setError("Failed to write to the temporary folder.");    
+        break;    
+}
+

@@ -1,0 +1,6 @@
+进入command命令窗口,输入命令:
+开启服务:net start w3svc
+停止服务:net stop w3svc
+
+在开始运行中输入命令:
+重启服务:iisreset

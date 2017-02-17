@@ -1,0 +1,4 @@
+Just in case you have that error again go to Settings -> Maven -> Runner and add
+
+-Dmaven.multiModuleProjectDirectory=$M2_HOME
+to VM Options.
